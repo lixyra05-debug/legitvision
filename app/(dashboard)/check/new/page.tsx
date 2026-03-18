@@ -217,21 +217,21 @@ export default function NewCheckPage() {
         .update({ status: "pending" })
         .eq("id", analysis.id);
 
-      // Debit 1 credit
-      const newBalance = profile.credits_remaining - 1;
-      await supabase
-        .from("profiles")
-        .update({ credits_remaining: newBalance })
-        .eq("id", user.id);
-
-      await supabase.from("credits_transactions").insert({
-        user_id: user.id,
-        type: "usage",
-        amount: -1,
-        balance_after: newBalance,
-        description: `Analyse ${selectedBrand.name} ${selectedModel.name}`,
-        analysis_id: analysis.id,
+      // Call the AI analysis API
+      const analyzeResponse = await fetch("/api/analyze", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ analysisId: analysis.id }),
       });
+
+      const analyzeResult = await analyzeResponse.json();
+
+      if (!analyzeResponse.ok) {
+        setSubmitError(
+          analyzeResult.error ?? "Erreur lors de l'analyse."
+        );
+        return;
+      }
 
       router.push(`/check/${analysis.id}`);
     } catch {
