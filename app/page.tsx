@@ -10,6 +10,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
+import { UserMenu } from "@/components/auth/UserMenu";
 
 const STEPS = [
   {
@@ -106,12 +107,7 @@ export default function LandingPage() {
             >
               Tarifs
             </Link>
-            <Link
-              href="/auth"
-              className="inline-flex h-9 items-center rounded-lg bg-emerald-500 px-4 text-sm font-medium text-white transition-colors hover:bg-emerald-400"
-            >
-              Se connecter
-            </Link>
+            <UserMenu />
           </div>
         </div>
       </nav>
