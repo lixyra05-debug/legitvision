@@ -8,6 +8,17 @@
   }
 }
 
+/* Scroll fade-in animations */
+.fade-in-hidden {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.fade-in-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @layer base {
   :root {
     --background: oklch(1 0 0);
