@@ -185,6 +185,11 @@ export default function NewCheckPage() {
           });
 
         if (uploadError) {
+          // Mark analysis as failed so it doesn't stay stuck on "uploading"
+          await supabase
+            .from("analyses")
+            .update({ status: "failed" })
+            .eq("id", analysis.id);
           setSubmitError(`Erreur upload photo "${photoType}": ${uploadError.message}`);
           return;
         }
@@ -206,25 +211,35 @@ export default function NewCheckPage() {
           });
 
         if (photoRecordError) {
+          await supabase
+            .from("analyses")
+            .update({ status: "failed" })
+            .eq("id", analysis.id);
           setSubmitError("Erreur lors de l'enregistrement des photos.");
           return;
         }
       }
 
-      // Update analysis status to pending
-      await supabase
-        .from("analyses")
-        .update({ status: "pending" })
-        .eq("id", analysis.id);
-
-      // Call the AI analysis API
+      // Call the AI analysis API.
+      // Note: the route accepts both "uploading" and "pending" status,
+      // so no client-side status update is needed before calling it.
       const analyzeResponse = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ analysisId: analysis.id }),
       });
 
-      const analyzeResult = await analyzeResponse.json();
+      // Safely parse JSON — the route may return an HTML error page on
+      // unexpected crashes, which would throw on .json().
+      let analyzeResult: { error?: string } = {};
+      try {
+        analyzeResult = await analyzeResponse.json();
+      } catch {
+        setSubmitError(
+          "Le serveur a retourné une réponse invalide. Vérifiez les logs serveur."
+        );
+        return;
+      }
 
       if (!analyzeResponse.ok) {
         setSubmitError(
