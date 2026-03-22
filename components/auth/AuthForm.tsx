@@ -39,10 +39,10 @@ export function AuthForm() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") ?? "/dashboard";
+  const redirect = searchParams?.get("redirect") ?? "/dashboard";
 
   // Show callback error from URL
-  const urlError = searchParams.get("error");
+  const urlError = searchParams?.get("error");
 
   const supabase = createClient();
 

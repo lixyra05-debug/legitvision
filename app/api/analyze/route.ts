@@ -14,6 +14,8 @@ export const maxDuration = 60; // Vercel function timeout
 const PROCESSABLE_STATUSES = ["pending", "uploading"];
 
 export async function POST(request: NextRequest) {
+  console.log("[analyze] POST /api/analyze — start");
+
   // 1. Verify auth via user client (reads cookies — does NOT bypass RLS)
   const supabase = createClient();
   const {
@@ -21,11 +23,14 @@ export async function POST(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
+    console.log("[analyze] Auth failed — no user");
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
+  console.log("[analyze] Authenticated user:", user.id);
 
   // 2. Guard: ANTHROPIC_API_KEY must be set
   if (!process.env.ANTHROPIC_API_KEY) {
+    console.log("[analyze] ANTHROPIC_API_KEY is missing");
     return NextResponse.json(
       { error: "Clé API IA manquante. Vérifiez la configuration du serveur." },
       { status: 500 }
@@ -39,11 +44,13 @@ export async function POST(request: NextRequest) {
     analysisId = body.analysisId;
     if (!analysisId) throw new Error();
   } catch {
+    console.log("[analyze] Invalid request body — analysisId missing");
     return NextResponse.json(
       { error: "analysisId requis" },
       { status: 400 }
     );
   }
+  console.log("[analyze] analysisId:", analysisId);
 
   // 4. Use admin client for all DB operations — bypasses RLS,
   //    ownership is enforced manually via .eq("user_id", user.id).
@@ -58,15 +65,18 @@ export async function POST(request: NextRequest) {
     .single();
 
   if (analysisError || !analysis) {
+    console.log("[analyze] Analysis not found:", analysisId, analysisError?.message);
     return NextResponse.json(
       { error: "Analyse introuvable" },
       { status: 404 }
     );
   }
+  console.log("[analyze] Analysis found, status:", analysis.status);
 
   // Accept both "pending" and "uploading" — the client-side status update
   // to "pending" can fail silently when RLS UPDATE policies are not configured.
   if (!PROCESSABLE_STATUSES.includes(analysis.status)) {
+    console.log("[analyze] Analysis already processed, status:", analysis.status);
     return NextResponse.json(
       { error: "Cette analyse a déjà été traitée" },
       { status: 409 }
@@ -88,11 +98,13 @@ export async function POST(request: NextRequest) {
   ]);
 
   if (!brand || !model) {
+    console.log("[analyze] Brand or model not found:", analysis.brand_id, analysis.model_id);
     return NextResponse.json(
       { error: "Marque ou modèle introuvable" },
       { status: 404 }
     );
   }
+  console.log("[analyze] Brand:", brand.name, "— Model:", model.name);
 
   // 7. Fetch analysis photos
   const { data: photos } = await admin
@@ -102,13 +114,16 @@ export async function POST(request: NextRequest) {
     .order("order_index");
 
   if (!photos || photos.length === 0) {
+    console.log("[analyze] No photos found for analysis:", analysisId);
     return NextResponse.json(
       { error: "Aucune photo trouvée pour cette analyse" },
       { status: 400 }
     );
   }
+  console.log("[analyze] Photos found:", photos.length);
 
   // 8. Update status to analyzing
+  console.log("[analyze] Updating status to 'analyzing'...");
   await admin
     .from("analyses")
     .update({ status: "analyzing" })
@@ -116,6 +131,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // 9. Download photos from Supabase Storage
+    console.log("[analyze] Downloading photos from Storage...");
     const images: ImageInput[] = await Promise.all(
       photos.map(async (photo) => {
         const { data, error } = await admin.storage
@@ -141,6 +157,7 @@ export async function POST(request: NextRequest) {
     );
 
     // 10. Run AI analysis
+    console.log("[analyze] Calling Claude Vision API...");
     const result = await runAnalysis({
       images,
       brandName: brand.name,
@@ -149,12 +166,16 @@ export async function POST(request: NextRequest) {
       authenticationPoints: model.authentication_points,
     });
 
+    console.log("[analyze] AI result — score:", result.overallScore, "confidence:", result.confidence, "verdict:", result.verdict);
+
     // 11. Determine if expert review is needed
     const needsExpertReview =
       (result.overallScore >= 40 && result.overallScore <= 60) ||
       result.confidence === "low";
 
     const finalStatus = needsExpertReview ? "expert_review" : "completed";
+
+    console.log("[analyze] Final status:", finalStatus);
 
     // 12. Save results
     await admin
@@ -170,6 +191,7 @@ export async function POST(request: NextRequest) {
       })
       .eq("id", analysisId);
 
+    console.log("[analyze] Done — returning success");
     return NextResponse.json({
       success: true,
       analysisId,
@@ -179,6 +201,7 @@ export async function POST(request: NextRequest) {
       status: finalStatus,
     });
   } catch (error) {
+    console.error("[analyze] Error during analysis:", error);
     // Mark analysis as failed so it doesn't stay stuck
     await admin
       .from("analyses")
