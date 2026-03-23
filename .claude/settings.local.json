@@ -11,7 +11,27 @@
       "Bash(pnpm add:*)",
       "Bash(pnpm build:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(tr:*)",
+      "Bash(python3:*)",
+      "Bash(lsof:*)",
+      "Bash(xargs:*)",
+      "Bash(pnpm dev)",
+      "WebFetch(domain:supabase.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:medium.com)",
+      "Bash(curl:*)",
+      "Bash(pnpm approve-builds:*)",
+      "Bash(find /Users/volanthector/legitvision/node_modules/tailwindcss -name jiti*)",
+      "Bash(node:*)",
+      "Bash(find /Users/volanthector/legitvision/.next -name *.css)",
+      "Bash(/dev/null ls:*)",
+      "Bash(find /Users/volanthector/legitvision/.next/server -name layout*)",
+      "Bash(pnpm install:*)",
+      "Bash(git --version)",
+      "Bash(git check-ignore:*)",
+      "Bash(cat:*)"
     ]
   }
 }
