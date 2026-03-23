@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ShieldCheck, Plus, Coins } from "lucide-react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { PlanBanner } from "@/components/stripe/PlanBanner";
+import { SuccessBanner } from "@/components/stripe/SuccessBanner";
 import {
   getScoreColor,
   getScoreBgColor,
@@ -16,7 +18,11 @@ export const metadata = {
   title: "Dashboard — LegitVision",
 };
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: { session_id?: string };
+}) {
   const supabase = createClient();
   const {
     data: { user },
@@ -86,6 +92,9 @@ export default async function DashboardPage() {
       </nav>
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+        {/* Bandeau succès Stripe */}
+        {searchParams.session_id && <SuccessBanner />}
+
         {/* Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -106,6 +115,16 @@ export default async function DashboardPage() {
             Nouvelle analyse
           </Link>
         </div>
+
+        {/* Bandeau plan actuel */}
+        {profile && (
+          <div className="mt-6">
+            <PlanBanner
+              plan={(profile.subscription_plan as "free" | "pro" | "business") ?? "free"}
+              creditsRemaining={profile.credits_remaining}
+            />
+          </div>
+        )}
 
         {/* Analyses list */}
         {formattedAnalyses.length === 0 ? (

@@ -56,6 +56,27 @@ export async function POST(request: NextRequest) {
   //    ownership is enforced manually via .eq("user_id", user.id).
   const admin = createAdminClient();
 
+  // 4b. Fetch profile — vérifier le plan et les crédits côté serveur
+  const { data: profile } = await admin
+    .from("profiles")
+    .select("credits_remaining, subscription_plan")
+    .eq("id", user.id)
+    .single();
+
+  const isBusinessPlan = profile?.subscription_plan === "business";
+
+  if (!isBusinessPlan) {
+    if (!profile || profile.credits_remaining < 1) {
+      console.log("[analyze] Crédits insuffisants — user:", user.id);
+      return NextResponse.json(
+        { error: "Crédits insuffisants. Rechargez votre compte pour continuer." },
+        { status: 402 }
+      );
+    }
+  } else {
+    console.log("[analyze] Plan Business — bypass credit check");
+  }
+
   // 5. Fetch the analysis record (scoped to the authenticated user)
   const { data: analysis, error: analysisError } = await admin
     .from("analyses")
@@ -190,6 +211,26 @@ export async function POST(request: NextRequest) {
         ai_raw_response: result.aiRawResponse,
       })
       .eq("id", analysisId);
+
+    // 13. Déduire 1 crédit (sauf plan Business)
+    if (!isBusinessPlan && profile) {
+      const newBalance = profile.credits_remaining - 1;
+      await Promise.all([
+        admin
+          .from("profiles")
+          .update({ credits_remaining: newBalance })
+          .eq("id", user.id),
+        admin.from("credits_transactions").insert({
+          user_id: user.id,
+          type: "usage",
+          amount: -1,
+          balance_after: newBalance,
+          description: `Analyse ${analysisId}`,
+          analysis_id: analysisId,
+        }),
+      ]);
+      console.log("[analyze] Crédit déduit — nouveau solde:", newBalance);
+    }
 
     console.log("[analyze] Done — returning success");
     return NextResponse.json({
