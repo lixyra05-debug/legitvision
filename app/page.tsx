@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
-import { PricingButton } from "@/components/stripe/PricingButton";
 
 const STEPS = [
   {
@@ -43,7 +42,6 @@ const STATS = [
 
 const PLANS = [
   {
-    planId: "free" as const,
     name: "Free",
     price: "0€",
     period: "",
@@ -56,10 +54,9 @@ const PLANS = [
     ],
     cta: "Commencer gratuitement",
     popular: false,
-    isAuthRedirect: true,
+    href: "/auth",
   },
   {
-    planId: "pro" as const,
     name: "Pro",
     price: "14,99€",
     period: "/mois",
@@ -73,10 +70,9 @@ const PLANS = [
     ],
     cta: "Passer au Pro",
     popular: true,
-    isAuthRedirect: false,
+    href: "/checkout?plan=pro",
   },
   {
-    planId: "business" as const,
     name: "Business",
     price: "29,99€",
     period: "/mois",
@@ -91,7 +87,7 @@ const PLANS = [
     ],
     cta: "Passer au Business",
     popular: false,
-    isAuthRedirect: false,
+    href: "/checkout?plan=business",
   },
 ];
 
@@ -272,13 +268,16 @@ export default function LandingPage() {
                     ))}
                   </ul>
                   <div className="mt-8">
-                    <PricingButton
-                      planId={plan.planId}
-                      isPopular={plan.popular}
-                      isAuthRedirect={plan.isAuthRedirect}
+                    <Link
+                      href={plan.href}
+                      className={`inline-flex h-11 w-full items-center justify-center rounded-xl text-sm font-semibold transition-all ${
+                        plan.popular
+                          ? "bg-emerald-500 text-white hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
+                          : "border border-white/10 text-foreground hover:border-white/20 hover:bg-white/5"
+                      }`}
                     >
                       {plan.cta}
-                    </PricingButton>
+                    </Link>
                   </div>
                 </div>
               </FadeIn>

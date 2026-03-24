@@ -39,14 +39,25 @@ export async function middleware(request: NextRequest) {
   if (!user && isProtected) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth";
-    url.searchParams.set("redirect", request.nextUrl.pathname);
+    // Preserve full URL including query params (e.g. /checkout?plan=pro)
+    const fullPath = request.nextUrl.pathname + request.nextUrl.search;
+    url.searchParams.set("redirect", fullPath);
     return NextResponse.redirect(url);
   }
 
-  // If user is logged in and visits /auth, redirect to /dashboard
+  // If user is logged in and visits /auth, honor redirect param or go to /dashboard
   if (user && request.nextUrl.pathname === "/auth") {
+    const redirectTo = request.nextUrl.searchParams.get("redirect");
+    if (redirectTo) {
+      // Safety: only allow same-origin redirects
+      const target = new URL(redirectTo, request.nextUrl.origin);
+      if (target.origin === request.nextUrl.origin) {
+        return NextResponse.redirect(target);
+      }
+    }
     const url = request.nextUrl.clone();
     url.pathname = "/dashboard";
+    url.search = "";
     return NextResponse.redirect(url);
   }
 

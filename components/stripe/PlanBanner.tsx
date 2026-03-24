@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Zap, Loader2, Crown, Infinity } from "lucide-react";
+import Link from "next/link";
+import { Zap, Crown, Infinity } from "lucide-react";
 import type { PlanId } from "@/lib/stripe/config";
 
 interface PlanBannerProps {
@@ -11,28 +10,6 @@ interface PlanBannerProps {
 }
 
 export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-
-  const handleUpgrade = async (targetPlan: "pro" | "business") => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/stripe/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ planId: targetPlan }),
-      });
-      const data = await res.json();
-      if (res.ok && data.url) {
-        window.location.href = data.url;
-      } else {
-        router.refresh();
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // Plan Business — bandeau de statut
   if (plan === "business") {
     return (
@@ -67,14 +44,13 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
             </p>
           </div>
         </div>
-        <button
-          onClick={() => handleUpgrade("business")}
-          disabled={loading}
-          className="flex items-center gap-1.5 rounded-lg bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 transition-colors hover:bg-emerald-500/20 disabled:opacity-60"
+        <Link
+          href="/checkout?plan=business"
+          className="flex items-center gap-1.5 rounded-lg bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 transition-colors hover:bg-emerald-500/20"
         >
-          {loading ? <Loader2 className="size-3 animate-spin" /> : <Crown className="size-3" />}
+          <Crown className="size-3" />
           Passer Business
-        </button>
+        </Link>
       </div>
     );
   }
@@ -89,22 +65,20 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
         </p>
       </div>
       <div className="flex gap-2">
-        <button
-          onClick={() => handleUpgrade("pro")}
-          disabled={loading}
-          className="flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-400 transition-colors hover:bg-emerald-500/20 disabled:opacity-60"
+        <Link
+          href="/checkout?plan=pro"
+          className="flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-400 transition-colors hover:bg-emerald-500/20"
         >
-          {loading ? <Loader2 className="size-3 animate-spin" /> : <Zap className="size-3" />}
+          <Zap className="size-3" />
           Pro — 14,99€/mois
-        </button>
-        <button
-          onClick={() => handleUpgrade("business")}
-          disabled={loading}
-          className="flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-white/20 hover:text-foreground disabled:opacity-60"
+        </Link>
+        <Link
+          href="/checkout?plan=business"
+          className="flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-white/20 hover:text-foreground"
         >
-          {loading ? <Loader2 className="size-3 animate-spin" /> : <Crown className="size-3" />}
+          <Crown className="size-3" />
           Business
-        </button>
+        </Link>
       </div>
     </div>
   );
