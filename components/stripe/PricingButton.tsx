@@ -24,6 +24,7 @@ export function PricingButton({
   const [error, setError] = useState<string | null>(null);
 
   const handleClick = async () => {
+    // Plan Free → aller s'inscrire
     if (isAuthRedirect) {
       router.push("/auth");
       return;
@@ -39,23 +40,34 @@ export function PricingButton({
         body: JSON.stringify({ planId }),
       });
 
-      const data = await res.json();
+      // Réponse non-JSON possible si crash serveur
+      let data: { url?: string; error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        setError("Le serveur a retourné une réponse inattendue.");
+        return;
+      }
 
       if (!res.ok) {
-        // L'utilisateur n'est pas connecté → rediriger vers /auth
         if (res.status === 401) {
-          router.push("/auth");
+          // Non connecté : aller s'authentifier puis revenir sur la landing
+          // pour pouvoir re-cliquer sur le bouton (maintenant connecté → Stripe s'ouvrira)
+          router.push(`/auth?redirect=${encodeURIComponent("/")}`);
           return;
         }
-        setError(data.error ?? "Une erreur est survenue");
+        setError(data.error ?? "Une erreur est survenue. Réessayez.");
         return;
       }
 
       if (data.url) {
+        // Redirection vers Stripe Checkout (page hébergée par Stripe)
         window.location.href = data.url;
+      } else {
+        setError("Impossible d'obtenir l'URL de paiement. Réessayez.");
       }
     } catch {
-      setError("Une erreur est survenue. Veuillez réessayer.");
+      setError("Erreur réseau. Vérifiez votre connexion et réessayez.");
     } finally {
       setLoading(false);
     }

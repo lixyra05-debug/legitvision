@@ -1,10 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ShieldCheck, Plus, Coins } from "lucide-react";
+import { ShieldCheck, Plus, Coins, Trash2 } from "lucide-react";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { PlanBanner } from "@/components/stripe/PlanBanner";
 import { SuccessBanner } from "@/components/stripe/SuccessBanner";
+import { deleteAnalysis } from "./actions";
 import {
   getScoreColor,
   getScoreBgColor,
@@ -13,6 +14,8 @@ import {
   type AnalysisWithDetails,
   type Profile,
 } from "@/lib/types";
+
+const DELETABLE_STATUSES = ["failed", "uploading", "pending"];
 
 export const metadata = {
   title: "Dashboard — LegitVision",
@@ -147,55 +150,82 @@ export default async function DashboardPage({
           </div>
         ) : (
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {formattedAnalyses.map((analysis) => (
-              <Link
-                key={analysis.id}
-                href={`/check/${analysis.id}`}
-                className="group rounded-2xl border border-white/5 bg-card p-5 transition-colors hover:border-emerald-500/20"
-              >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="font-heading text-sm font-semibold">
-                      {analysis.brand_name}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {analysis.model_name}
-                    </p>
-                  </div>
-                  {analysis.overall_score != null ? (
-                    <div
-                      className={`flex size-12 items-center justify-center rounded-xl border ${getScoreBgColor(analysis.overall_score)}`}
-                    >
-                      <span
-                        className={`font-heading text-lg font-bold ${getScoreColor(analysis.overall_score)}`}
+            {formattedAnalyses.map((analysis) => {
+              const isDeletable = DELETABLE_STATUSES.includes(analysis.status);
+              const deleteAction = deleteAnalysis.bind(null, analysis.id);
+
+              return (
+                <div
+                  key={analysis.id}
+                  className="group relative rounded-2xl border border-white/5 bg-card transition-colors hover:border-emerald-500/20"
+                >
+                  {/* Bouton Supprimer — visible au survol pour les analyses bloquées */}
+                  {isDeletable && (
+                    <form action={deleteAction}>
+                      <button
+                        type="submit"
+                        title="Supprimer cette analyse"
+                        className="absolute right-3 top-3 z-10 flex size-7 items-center justify-center rounded-lg text-muted-foreground opacity-0 transition-opacity hover:bg-red-500/10 hover:text-red-400 group-hover:opacity-100"
                       >
-                        {analysis.overall_score}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="flex h-7 items-center rounded-full bg-white/5 px-3 text-xs text-muted-foreground">
-                      {getStatusLabel(analysis.status)}
-                    </div>
+                        <Trash2 className="size-4" />
+                      </button>
+                    </form>
                   )}
-                </div>
 
-                {analysis.verdict && (
-                  <p
-                    className={`mt-3 text-sm font-medium ${getScoreColor(analysis.overall_score ?? 0)}`}
+                  <Link
+                    href={`/check/${analysis.id}`}
+                    className="block p-5"
                   >
-                    {getVerdictLabel(analysis.verdict)}
-                  </p>
-                )}
+                    <div className="flex items-start justify-between">
+                      <div className="pr-6">
+                        <p className="font-heading text-sm font-semibold">
+                          {analysis.brand_name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {analysis.model_name}
+                        </p>
+                      </div>
+                      {analysis.overall_score != null ? (
+                        <div
+                          className={`flex size-12 shrink-0 items-center justify-center rounded-xl border ${getScoreBgColor(analysis.overall_score)}`}
+                        >
+                          <span
+                            className={`font-heading text-lg font-bold ${getScoreColor(analysis.overall_score)}`}
+                          >
+                            {analysis.overall_score}
+                          </span>
+                        </div>
+                      ) : (
+                        <div
+                          className={`flex h-7 shrink-0 items-center rounded-full px-3 text-xs ${
+                            analysis.status === "failed"
+                              ? "bg-red-500/10 text-red-400"
+                              : "bg-white/5 text-muted-foreground"
+                          }`}
+                        >
+                          {getStatusLabel(analysis.status)}
+                        </div>
+                      )}
+                    </div>
 
-                <p className="mt-3 text-xs text-muted-foreground">
-                  {new Date(analysis.created_at).toLocaleDateString("fr-FR", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </p>
-              </Link>
-            ))}
+                    {analysis.verdict && (
+                      <p
+                        className={`mt-3 text-sm font-medium ${getScoreColor(analysis.overall_score ?? 0)}`}
+                      >
+                        {getVerdictLabel(analysis.verdict)}
+                      </p>
+                    )}
+
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      {new Date(analysis.created_at).toLocaleDateString(
+                        "fr-FR",
+                        { day: "numeric", month: "long", year: "numeric" }
+                      )}
+                    </p>
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         )}
       </main>
