@@ -34,8 +34,8 @@ const STEPS = [
 ];
 
 const STATS = [
-  { value: "10 000+", label: "Articles analysés" },
-  { value: "95%", label: "Taux de précision" },
+  { value: "IA Vision", label: "Analyse en temps réel" },
+  { value: "8 zones", label: "Points d'authentification" },
   { value: "< 30s", label: "Temps d'analyse" },
   { value: "24/7", label: "Disponibilité" },
 ];
@@ -190,6 +190,21 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Encadré sécurité ── */}
+      <section className="border-t border-white/5 py-10">
+        <div className="mx-auto max-w-6xl px-4">
+          <FadeIn>
+            <div className="flex flex-col items-center gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 px-6 py-5 text-center sm:flex-row sm:text-left">
+              <span className="text-2xl shrink-0">🔒</span>
+              <p className="text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">Vos photos sont analysées de manière sécurisée et ne sont jamais partagées.</span>{" "}
+                Données hébergées en Europe, supprimées après 30 jours, conformément au RGPD.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── Social proof / Stats ── */}
       <section className="border-t border-white/5 bg-card/50 py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4">
@@ -315,18 +330,18 @@ export default function LandingPage() {
             <span>© {new Date().getFullYear()} LegitVision</span>
           </div>
           <div className="flex gap-6 text-sm text-muted-foreground">
-            <Link href="#" className="transition-colors hover:text-foreground">
+            <Link href="/mentions-legales" className="transition-colors hover:text-foreground">
               Mentions légales
             </Link>
-            <Link href="#" className="transition-colors hover:text-foreground">
+            <Link href="/cgu" className="transition-colors hover:text-foreground">
               CGU
             </Link>
-            <Link href="#" className="transition-colors hover:text-foreground">
+            <Link href="/confidentialite" className="transition-colors hover:text-foreground">
               Confidentialité
             </Link>
-            <Link href="#" className="transition-colors hover:text-foreground">
+            <a href="mailto:contact@legitvision.com" className="transition-colors hover:text-foreground">
               Contact
-            </Link>
+            </a>
           </div>
         </div>
       </footer>
