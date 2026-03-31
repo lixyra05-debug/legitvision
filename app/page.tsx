@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { FaqAccordion } from "@/components/landing/FaqAccordion";
 
 const STEPS = [
   {
@@ -108,13 +109,23 @@ export default function LandingPage() {
               LegitVision
             </span>
           </Link>
-          <div className="flex items-center gap-6">
-            <Link
-              href="#pricing"
-              className="hidden text-sm text-muted-foreground transition-colors hover:text-foreground sm:inline"
-            >
-              Tarifs
-            </Link>
+          <div className="flex items-center gap-4">
+            <nav className="hidden items-center gap-5 md:flex">
+              {[
+                { href: "#how-it-works", label: "Comment ça marche" },
+                { href: "#brands", label: "Marques" },
+                { href: "#faq", label: "FAQ" },
+                { href: "#pricing", label: "Tarifs" },
+              ].map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
             <UserMenu />
           </div>
         </div>
@@ -396,7 +407,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Marques et catégories ── */}
-      <section className="border-t border-white/5 bg-card/30 py-20 sm:py-28">
+      <section id="brands" className="border-t border-white/5 bg-card/30 py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
@@ -563,6 +574,78 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── FAQ ── */}
+      <section id="faq" className="border-t border-white/5 py-20 sm:py-28">
+        <div className="mx-auto max-w-3xl px-4">
+          <FadeIn className="text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              Questions fréquentes
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Tout ce que vous devez savoir avant de commencer
+            </p>
+          </FadeIn>
+          <FadeIn delay={150} className="mt-10">
+            <FaqAccordion />
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── Qui sommes-nous ── */}
+      <section id="team" className="border-t border-white/5 bg-card/30 py-20 sm:py-28">
+        <div className="mx-auto max-w-4xl px-4">
+          <FadeIn className="text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              Qui sommes-nous ?
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
+              LegitVision est né d&apos;une passion pour le streetwear et le luxe, et d&apos;une frustration
+              face aux contrefaçons. Notre mission : rendre l&apos;authentification accessible à tous
+              grâce à l&apos;intelligence artificielle.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={150}>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+
+              {/* Fondateur Tech */}
+              <div className="flex flex-col items-center gap-5 rounded-2xl border border-white/5 bg-card p-8 text-center">
+                <div className="flex size-16 items-center justify-center rounded-2xl bg-emerald-500/10 ring-1 ring-emerald-500/20">
+                  <span className="font-heading text-xl font-bold text-emerald-400">H.V.</span>
+                </div>
+                <div>
+                  <p className="font-heading font-semibold">H.V.</p>
+                  <p className="mt-0.5 text-xs font-medium uppercase tracking-widest text-emerald-500">
+                    Co-fondateur &amp; Tech
+                  </p>
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Passionné de sneakers et développeur, je construis la technologie derrière LegitVision.
+                </p>
+              </div>
+
+              {/* Co-fondateur Business */}
+              <div className="flex flex-col items-center gap-5 rounded-2xl border border-white/5 bg-card p-8 text-center">
+                <div className="flex size-16 items-center justify-center rounded-2xl bg-white/5 ring-1 ring-white/10">
+                  <span className="font-heading text-xl font-bold text-muted-foreground">A.</span>
+                </div>
+                <div>
+                  <p className="font-heading font-semibold">Associé</p>
+                  <p className="mt-0.5 text-xs font-medium uppercase tracking-widest text-muted-foreground">
+                    Co-fondateur &amp; Business
+                  </p>
+                </div>
+                <p className="text-sm leading-relaxed text-muted-foreground">
+                  Expert du marché luxe, je m&apos;assure que LegitVision répond aux vrais besoins
+                  des acheteurs.
+                </p>
+              </div>
+
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── CTA final ── */}
       <section className="border-t border-white/5 py-20 sm:py-28">
         <FadeIn className="mx-auto max-w-6xl px-4 text-center">
@@ -591,19 +674,13 @@ export default function LandingPage() {
             <ShieldCheck className="size-4 text-emerald-500" />
             <span>© {new Date().getFullYear()} LegitVision</span>
           </div>
-          <div className="flex gap-6 text-sm text-muted-foreground">
-            <Link href="/mentions-legales" className="transition-colors hover:text-foreground">
-              Mentions légales
-            </Link>
-            <Link href="/cgu" className="transition-colors hover:text-foreground">
-              CGU
-            </Link>
-            <Link href="/confidentialite" className="transition-colors hover:text-foreground">
-              Confidentialité
-            </Link>
-            <a href="mailto:contact@legitvision.com" className="transition-colors hover:text-foreground">
-              Contact
-            </a>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground sm:justify-end">
+            <Link href="#faq" className="transition-colors hover:text-foreground">FAQ</Link>
+            <Link href="#team" className="transition-colors hover:text-foreground">À propos</Link>
+            <Link href="/mentions-legales" className="transition-colors hover:text-foreground">Mentions légales</Link>
+            <Link href="/cgu" className="transition-colors hover:text-foreground">CGU</Link>
+            <Link href="/confidentialite" className="transition-colors hover:text-foreground">Confidentialité</Link>
+            <a href="mailto:contact@legitvision.com" className="transition-colors hover:text-foreground">Contact</a>
           </div>
         </div>
       </footer>
