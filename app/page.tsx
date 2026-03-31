@@ -13,6 +13,9 @@ import {
   Watch,
   Shirt,
   Clock,
+  Star,
+  UserCheck,
+  FileText,
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -46,6 +49,36 @@ const STATS = [
   { value: "24/7", label: "Disponibilité" },
 ];
 
+const TESTIMONIALS = [
+  {
+    initials: "S.M.",
+    stars: 5,
+    quote:
+      "J'ai acheté une paire de Jordan 1 sur Vinted et j'avais un doute. LegitVision m'a donné un score de 35/100 avec des détails précis sur les coutures et le logo. J'ai annulé l'achat. Deux semaines plus tard, le vendeur a été signalé pour contrefaçon.",
+    name: "Sarah M.",
+    role: "Acheteuse sneakers",
+    city: "Paris",
+  },
+  {
+    initials: "K.B.",
+    stars: 5,
+    quote:
+      "Je revends des sacs Louis Vuitton vintage. Avant LegitVision, je payais 30€ par authentification chez un expert. Maintenant je fais une pré-vérification en 30 secondes pour quelques euros. Ça me fait gagner un temps fou.",
+    name: "Kevin B.",
+    role: "Revendeur luxe",
+    city: "Lyon",
+  },
+  {
+    initials: "L.D.",
+    stars: 4,
+    quote:
+      "Le rapport est super détaillé : score par zone, OCR des étiquettes, recommandations. C'est pas une certification officielle mais ça donne une très bonne indication avant d'acheter. Je recommande pour le prix.",
+    name: "Laura D.",
+    role: "Collectionneuse",
+    city: "Bordeaux",
+  },
+];
+
 const PLANS = [
   {
     name: "Free",
@@ -60,6 +93,7 @@ const PLANS = [
     ],
     cta: "Commencer gratuitement",
     popular: false,
+    badge: null as string | null,
     href: "/auth",
   },
   {
@@ -76,6 +110,7 @@ const PLANS = [
     ],
     cta: "Passer au Pro",
     popular: true,
+    badge: null as string | null,
     href: "/checkout?plan=pro",
   },
   {
@@ -86,13 +121,13 @@ const PLANS = [
     credits: "Analyses illimitées",
     features: [
       "Analyses illimitées",
-      "Toutes les catégories",
-      "Revue expert prioritaire",
-      "API access",
-      "Support dédié",
+      "Support prioritaire par email",
+      "Revue expert incluse",
+      "Rapport PDF exportable",
     ],
     cta: "Passer au Business",
     popular: false,
+    badge: "Idéal revendeurs" as string | null,
     href: "/checkout?plan=business",
   },
 ];
@@ -406,6 +441,71 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Témoignages ── */}
+      <section className="border-t border-white/5 py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4">
+          <FadeIn className="text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              Ce que disent nos utilisateurs
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Ils ont vérifié leurs articles avec LegitVision
+            </p>
+          </FadeIn>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-3">
+            {TESTIMONIALS.map((t, i) => (
+              <FadeIn key={t.name} delay={i * 150}>
+                <div className="flex h-full flex-col rounded-2xl border border-white/5 bg-card p-6">
+                  {/* En-tête : avatar + étoiles */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex size-10 items-center justify-center rounded-xl bg-emerald-500/10 ring-1 ring-emerald-500/20">
+                      <span className="font-heading text-sm font-bold text-emerald-400">
+                        {t.initials}
+                      </span>
+                    </div>
+                    <div className="flex gap-0.5">
+                      {Array.from({ length: t.stars }).map((_, j) => (
+                        <Star
+                          key={j}
+                          className="size-3.5 fill-yellow-400 text-yellow-400"
+                        />
+                      ))}
+                      {Array.from({ length: 5 - t.stars }).map((_, j) => (
+                        <Star
+                          key={`e${j}`}
+                          className="size-3.5 text-white/15"
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Citation */}
+                  <div className="mt-5 flex-1">
+                    <div className="mb-2 font-heading text-3xl leading-none text-emerald-500/25 select-none">
+                      &ldquo;
+                    </div>
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {t.quote}
+                    </p>
+                  </div>
+
+                  {/* Auteur */}
+                  <div className="mt-5 border-t border-white/5 pt-5">
+                    <p className="text-sm font-semibold text-foreground">
+                      {t.name}
+                    </p>
+                    <p className="mt-0.5 text-xs text-muted-foreground">
+                      {t.role} · {t.city}
+                    </p>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Marques et catégories ── */}
       <section id="brands" className="border-t border-white/5 bg-card/30 py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4">
@@ -525,6 +625,11 @@ export default function LandingPage() {
                       Populaire
                     </span>
                   )}
+                  {plan.badge && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/15 bg-card px-4 py-1 text-xs font-semibold text-foreground">
+                      {plan.badge}
+                    </span>
+                  )}
                   <div>
                     <h3 className="font-heading text-lg font-semibold">
                       {plan.name}
@@ -641,6 +746,71 @@ export default function LandingPage() {
                 </p>
               </div>
 
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── Revue expert ── */}
+      <section className="border-t border-white/5 py-20 sm:py-28">
+        <div className="mx-auto max-w-4xl px-4">
+          <FadeIn className="text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              Besoin d&apos;un avis d&apos;expert ?
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
+              Pour les articles de grande valeur ou les cas ambigus, notre équipe
+              d&apos;experts peut réaliser une revue manuelle approfondie de votre analyse.
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={150}>
+            <div className="mt-10 grid gap-6 sm:grid-cols-3">
+              {[
+                {
+                  icon: Clock,
+                  title: "Revue sous 24h",
+                  desc: "Résultat garanti en moins d'une journée ouvrable.",
+                },
+                {
+                  icon: UserCheck,
+                  title: "Expert spécialisé par marque",
+                  desc: "Chaque revue est assignée à un expert de la marque concernée.",
+                },
+                {
+                  icon: FileText,
+                  title: "Rapport complémentaire détaillé",
+                  desc: "Observations supplémentaires et recommandation finale argumentée.",
+                },
+              ].map(({ icon: Icon, title, desc }) => (
+                <div
+                  key={title}
+                  className="flex flex-col items-center gap-3 rounded-2xl border border-white/5 bg-card p-6 text-center"
+                >
+                  <div className="flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
+                    <Icon className="size-5 text-emerald-500" />
+                  </div>
+                  <p className="font-heading font-semibold">{title}</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-white/5 bg-card px-6 py-5 text-center">
+              <p className="text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">
+                  Inclus dans le plan Pro et Business.
+                </span>{" "}
+                Disponible à l&apos;unité pour le plan Free{" "}
+                <span className="font-medium text-foreground">(4,99€)</span>.
+              </p>
+              <a
+                href="mailto:contact@legitvision.com"
+                className="group mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-emerald-400 transition-colors hover:text-emerald-300"
+              >
+                En savoir plus
+                <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+              </a>
             </div>
           </FadeIn>
         </div>
