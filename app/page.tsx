@@ -8,6 +8,11 @@ import {
   BarChart3,
   Check,
   ArrowRight,
+  CheckCircle2,
+  ShoppingBag,
+  Watch,
+  Shirt,
+  Clock,
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -225,6 +230,263 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Exemple de rapport ── */}
+      <section className="border-t border-white/5 py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4">
+          <FadeIn className="text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              Découvrez nos rapports
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Un rapport clair et détaillé pour chaque article analysé
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={150}>
+            {/* Card avec léger effet de perspective */}
+            <div className="mx-auto mt-14 max-w-3xl">
+              <div
+                className="overflow-hidden rounded-2xl border border-white/10 bg-card shadow-2xl shadow-black/60"
+                style={{ transform: "perspective(1200px) rotateX(2deg) rotateY(-4deg)" }}
+              >
+                {/* En-tête du rapport */}
+                <div className="flex flex-col gap-3 border-b border-white/5 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                      Rapport d&apos;analyse · Exemple
+                    </p>
+                    <p className="mt-0.5 font-heading text-lg font-semibold">
+                      Louis Vuitton Neverfull MM
+                    </p>
+                    <p className="text-xs text-muted-foreground">Maroquinerie · Sac à main</p>
+                  </div>
+                  <div className="flex items-center gap-2 self-start rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 sm:self-auto">
+                    <CheckCircle2 className="size-3.5 text-emerald-400" />
+                    <span className="text-xs font-semibold text-emerald-400">
+                      Probablement authentique
+                    </span>
+                  </div>
+                </div>
+
+                {/* Corps du rapport */}
+                <div className="grid gap-6 p-6 sm:grid-cols-2 sm:gap-8">
+                  {/* Colonne gauche — Jauge + sous-scores */}
+                  <div className="flex flex-col items-center gap-6">
+                    {/* Jauge statique SVG — score 84 */}
+                    <div className="relative flex items-center justify-center" style={{ width: 148, height: 148 }}>
+                      <svg width={148} height={148} style={{ transform: "rotate(-90deg)" }}>
+                        {/* Track de fond */}
+                        <circle
+                          cx={74} cy={74} r={62}
+                          fill="none"
+                          stroke="rgba(255,255,255,0.07)"
+                          strokeWidth={12}
+                        />
+                        {/* Arc coloré — 84/100 */}
+                        <circle
+                          cx={74} cy={74} r={62}
+                          fill="none"
+                          stroke="#10b981"
+                          strokeWidth={12}
+                          strokeLinecap="round"
+                          strokeDasharray="389.56"
+                          strokeDashoffset="62.33"
+                          style={{ filter: "drop-shadow(0 0 10px rgba(16, 185, 129, 0.4))" }}
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center gap-0.5">
+                        <span className="font-heading text-[40px] font-bold leading-none tabular-nums text-emerald-500">
+                          84
+                        </span>
+                        <span className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                          sur 100
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Sous-scores */}
+                    <div className="w-full space-y-3">
+                      {[
+                        { label: "Alignement monogramme", score: 90 },
+                        { label: "Qualité des coutures", score: 85 },
+                        { label: "Texture canvas", score: 90 },
+                        { label: "Ferrures & hardware", score: 85 },
+                      ].map((s) => (
+                        <div key={s.label}>
+                          <div className="mb-1 flex items-center justify-between text-xs">
+                            <span className="text-muted-foreground">{s.label}</span>
+                            <span className="tabular-nums font-medium text-foreground">
+                              {s.score}/100
+                            </span>
+                          </div>
+                          <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+                            <div
+                              className="h-1.5 rounded-full bg-emerald-500"
+                              style={{ width: `${s.score}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Colonne droite — Observations */}
+                  <div className="flex flex-col gap-3">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                      Observations détaillées
+                    </p>
+                    {[
+                      {
+                        zone: "Alignement monogramme",
+                        score: 90,
+                        obs: "Le monogramme LV est parfaitement centré et symétrique sur les coutures, conforme aux standards des ateliers Vuitton.",
+                      },
+                      {
+                        zone: "Qualité des coutures",
+                        score: 85,
+                        obs: "Points réguliers au fil jaune moutarde caractéristique, tension uniforme sans irrégularités visibles.",
+                      },
+                      {
+                        zone: "Ferrures & hardware",
+                        score: 85,
+                        obs: "Les clips et fermoirs dorés présentent le relief et la finition attendus sur une pièce authentique.",
+                      },
+                    ].map((f) => (
+                      <div
+                        key={f.zone}
+                        className="rounded-xl border border-emerald-500/15 bg-emerald-500/5 p-4"
+                      >
+                        <div className="flex flex-wrap items-center gap-2">
+                          <CheckCircle2 className="size-4 shrink-0 text-emerald-500" />
+                          <span className="text-sm font-semibold text-foreground">
+                            {f.zone}
+                          </span>
+                          <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-400">
+                            Conforme
+                          </span>
+                          <span className="ml-auto text-xs tabular-nums text-muted-foreground">
+                            {f.score}/100
+                          </span>
+                        </div>
+                        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                          {f.obs}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA sous la card */}
+              <div className="mt-8 text-center">
+                <Link
+                  href="/auth"
+                  className="group inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-7 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
+                >
+                  Analysez votre premier article gratuitement
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <p className="mt-3 text-xs text-muted-foreground">
+                  3 analyses offertes — sans carte bancaire
+                </p>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── Marques et catégories ── */}
+      <section className="border-t border-white/5 bg-card/30 py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4">
+          <FadeIn className="text-center">
+            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              Marques et catégories
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Des protocoles d&apos;authentification spécifiques à chaque marque
+            </p>
+          </FadeIn>
+
+          <FadeIn delay={150}>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+              {/* Sneakers */}
+              <div className="rounded-2xl border border-white/5 bg-card p-6">
+                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
+                  <Zap className="size-5 text-emerald-500" />
+                </div>
+                <h3 className="font-heading text-base font-semibold">Sneakers</h3>
+                <ul className="mt-4 space-y-2">
+                  {["Nike", "Jordan", "adidas", "New Balance", "Yeezy"].map((brand) => (
+                    <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="size-1.5 rounded-full bg-emerald-500 shrink-0" />
+                      {brand}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Sacs */}
+              <div className="rounded-2xl border border-white/5 bg-card p-6">
+                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
+                  <ShoppingBag className="size-5 text-emerald-500" />
+                </div>
+                <h3 className="font-heading text-base font-semibold">Sacs</h3>
+                <ul className="mt-4 space-y-2">
+                  <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="size-1.5 rounded-full bg-emerald-500 shrink-0" />
+                    Louis Vuitton
+                  </li>
+                  <li className="mt-3 text-xs italic text-muted-foreground/60">
+                    + d&apos;autres marques prochainement
+                  </li>
+                </ul>
+              </div>
+
+              {/* Montres */}
+              <div className="rounded-2xl border border-white/5 bg-card/50 p-6 opacity-70">
+                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-white/5">
+                  <Watch className="size-5 text-muted-foreground" />
+                </div>
+                <h3 className="font-heading text-base font-semibold text-muted-foreground">
+                  Montres
+                </h3>
+                <div className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground/60">
+                  <Clock className="size-3" />
+                  Bientôt disponible
+                </div>
+              </div>
+
+              {/* Vêtements */}
+              <div className="rounded-2xl border border-white/5 bg-card/50 p-6 opacity-70">
+                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-white/5">
+                  <Shirt className="size-5 text-muted-foreground" />
+                </div>
+                <h3 className="font-heading text-base font-semibold text-muted-foreground">
+                  Vêtements
+                </h3>
+                <div className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground/60">
+                  <Clock className="size-3" />
+                  Bientôt disponible
+                </div>
+              </div>
+
+            </div>
+
+            <p className="mt-8 text-center text-sm text-muted-foreground">
+              Nous ajoutons régulièrement de nouvelles marques.{" "}
+              <a
+                href="mailto:contact@legitvision.com"
+                className="text-emerald-400 transition-colors hover:text-emerald-300"
+              >
+                Contactez-nous
+              </a>{" "}
+              pour demander une marque spécifique.
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── Pricing ── */}
       <section id="pricing" className="border-t border-white/5 py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4">
@@ -306,11 +568,11 @@ export default function LandingPage() {
         <FadeIn className="mx-auto max-w-6xl px-4 text-center">
           <BarChart3 className="mx-auto mb-6 size-10 text-emerald-500" />
           <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            Prêt à vérifier votre prochain achat ?
+            Vérifiez votre prochain achat gratuitement
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-            Rejoignez les milliers d&apos;acheteurs qui vérifient leurs
-            articles avant d&apos;acheter.
+            3 analyses offertes à l&apos;inscription, sans carte bancaire.
+            Résultat en moins de 30 secondes.
           </p>
           <Link
             href="/auth"
