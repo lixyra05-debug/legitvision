@@ -516,6 +516,10 @@ export default function LandingPage() {
             <p className="mt-4 text-muted-foreground">
               Des protocoles d&apos;authentification spécifiques à chaque marque
             </p>
+            <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs font-medium text-emerald-400">
+              <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+              70+ modèles disponibles dans 4 catégories
+            </div>
           </FadeIn>
 
           <FadeIn delay={150}>
@@ -528,9 +532,17 @@ export default function LandingPage() {
                 </div>
                 <h3 className="font-heading text-base font-semibold">Sneakers</h3>
                 <ul className="mt-4 space-y-2">
-                  {["Nike", "Jordan", "adidas", "New Balance", "Yeezy"].map((brand) => (
+                  {[
+                    "Nike",
+                    "Jordan",
+                    "adidas",
+                    "New Balance",
+                    "Yeezy",
+                    "Travis Scott",
+                    "Off-White",
+                  ].map((brand) => (
                     <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <span className="size-1.5 rounded-full bg-emerald-500 shrink-0" />
+                      <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
                       {brand}
                     </li>
                   ))}
@@ -544,55 +556,89 @@ export default function LandingPage() {
                 </div>
                 <h3 className="font-heading text-base font-semibold">Sacs</h3>
                 <ul className="mt-4 space-y-2">
-                  <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="size-1.5 rounded-full bg-emerald-500 shrink-0" />
-                    Louis Vuitton
-                  </li>
-                  <li className="mt-3 text-xs italic text-muted-foreground/60">
-                    + d&apos;autres marques prochainement
-                  </li>
+                  {[
+                    "Louis Vuitton",
+                    "Gucci",
+                    "Chanel",
+                    "Dior",
+                    "Hermès",
+                    "Prada",
+                    "Saint Laurent",
+                    "Goyard",
+                    "Balenciaga",
+                    "Celine",
+                    "Fendi",
+                    "Bottega Veneta",
+                  ].map((brand) => (
+                    <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                      {brand}
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               {/* Montres */}
-              <div className="rounded-2xl border border-white/5 bg-card/50 p-6 opacity-70">
-                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-white/5">
-                  <Watch className="size-5 text-muted-foreground" />
+              <div className="rounded-2xl border border-white/5 bg-card p-6">
+                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
+                  <Watch className="size-5 text-emerald-500" />
                 </div>
-                <h3 className="font-heading text-base font-semibold text-muted-foreground">
-                  Montres
-                </h3>
-                <div className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground/60">
-                  <Clock className="size-3" />
-                  Bientôt disponible
-                </div>
+                <h3 className="font-heading text-base font-semibold">Montres</h3>
+                <ul className="mt-4 space-y-2">
+                  {[
+                    "Rolex",
+                    "Omega",
+                    "Audemars Piguet",
+                    "Patek Philippe",
+                    "Cartier",
+                    "TAG Heuer",
+                    "Richard Mille",
+                    "Hublot",
+                  ].map((brand) => (
+                    <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                      {brand}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Vêtements */}
-              <div className="rounded-2xl border border-white/5 bg-card/50 p-6 opacity-70">
-                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-white/5">
-                  <Shirt className="size-5 text-muted-foreground" />
+              <div className="rounded-2xl border border-white/5 bg-card p-6">
+                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
+                  <Shirt className="size-5 text-emerald-500" />
                 </div>
-                <h3 className="font-heading text-base font-semibold text-muted-foreground">
-                  Vêtements
-                </h3>
-                <div className="mt-4 flex items-center gap-1.5 text-xs text-muted-foreground/60">
-                  <Clock className="size-3" />
-                  Bientôt disponible
-                </div>
+                <h3 className="font-heading text-base font-semibold">Vêtements</h3>
+                <ul className="mt-4 space-y-2">
+                  {[
+                    "Supreme",
+                    "Moncler",
+                    "Canada Goose",
+                    "Stone Island",
+                    "Palm Angels",
+                    "The North Face",
+                    "Essentials",
+                    "Arc'teryx",
+                  ].map((brand) => (
+                    <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                      {brand}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
             </div>
 
             <p className="mt-8 text-center text-sm text-muted-foreground">
-              Nous ajoutons régulièrement de nouvelles marques.{" "}
+              Une marque manquante ?{" "}
               <a
                 href="mailto:contact@legitvision.com"
                 className="text-emerald-400 transition-colors hover:text-emerald-300"
               >
                 Contactez-nous
               </a>{" "}
-              pour demander une marque spécifique.
+              pour la demander.
             </p>
           </FadeIn>
         </div>
