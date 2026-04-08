@@ -36,16 +36,59 @@ export async function POST(request: NextRequest) {
 
   try {
     switch (event.type) {
-      // ── Souscription créée et payée ──────────────────────────────────────
+      // ── Checkout complété (abonnement ou paiement unique) ────────────────
       case "checkout.session.completed": {
         const session = event.data.object as import("stripe").Stripe.Checkout.Session;
+        const userId = session.client_reference_id ?? session.metadata?.supabase_user_id;
+
+        if (!userId) {
+          console.error("[webhook/stripe] checkout.session.completed: userId manquant", session.id);
+          break;
+        }
+
+        // ── Paiement unique : ajouter 1 crédit ──────────────────────────────
+        if (session.mode === "payment") {
+          const { data: profile, error: profileError } = await admin
+            .from("profiles")
+            .select("id, credits_remaining")
+            .eq("id", userId)
+            .single();
+
+          if (profileError || !profile) {
+            console.error("[webhook/stripe] single: profil non trouvé pour user", userId);
+            break;
+          }
+
+          const newBalance = profile.credits_remaining + 1;
+          await admin
+            .from("profiles")
+            .update({ credits_remaining: newBalance })
+            .eq("id", userId);
+
+          const paymentIntentId =
+            typeof session.payment_intent === "string"
+              ? session.payment_intent
+              : session.payment_intent?.id ?? null;
+
+          await admin.from("credits_transactions").insert({
+            user_id: userId,
+            type: "purchase",
+            amount: 1,
+            balance_after: newBalance,
+            description: "Achat utilisation unique — 1 crédit",
+            stripe_payment_id: paymentIntentId,
+          });
+
+          console.log(`[webhook/stripe] Paiement unique: +1 crédit → user ${userId} (balance: ${newBalance})`);
+          break;
+        }
+
+        // ── Abonnement : mettre à jour le plan ──────────────────────────────
         if (session.mode !== "subscription") break;
 
-        const userId = session.client_reference_id ?? session.metadata?.supabase_user_id;
         const planId = session.metadata?.plan as PlanId | undefined;
-
-        if (!userId || !planId) {
-          console.error("[webhook/stripe] checkout.session.completed: metadata manquante", session.id);
+        if (!planId) {
+          console.error("[webhook/stripe] checkout.session.completed: planId manquant", session.id);
           break;
         }
 
@@ -59,7 +102,6 @@ export async function POST(request: NextRequest) {
             ? session.subscription
             : session.subscription?.id;
 
-        // Mettre à jour le plan dans profiles
         const { error } = await admin
           .from("profiles")
           .update({

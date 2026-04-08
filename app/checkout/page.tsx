@@ -4,7 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getPriceId } from "@/lib/stripe/server";
 import Stripe from "stripe";
 
-const PAID_PLANS = ["pro", "business"] as const;
+const PAID_PLANS = ["pro", "business", "single"] as const;
 type PaidPlanId = (typeof PAID_PLANS)[number];
 
 export default async function CheckoutPage({
@@ -51,8 +51,8 @@ export default async function CheckoutPage({
     profile_error: profileError?.message ?? null,
   });
 
-  // ── 4. Already on this plan → dashboard ──────────────────────────────────
-  if (profile?.subscription_plan === planId) {
+  // ── 4. Already on this plan → dashboard (skip for single — always allowed) ─
+  if (planId !== "single" && profile?.subscription_plan === planId) {
     console.log(
       "[checkout] Already on plan:",
       planId,
@@ -66,9 +66,8 @@ export default async function CheckoutPage({
   console.log("[checkout] Env vars:", {
     STRIPE_SECRET_KEY: stripeKey ? "✓ set" : "✗ MISSING",
     STRIPE_PRO_PRICE_ID: process.env.STRIPE_PRO_PRICE_ID ? "✓ set" : "✗ MISSING",
-    STRIPE_BUSINESS_PRICE_ID: process.env.STRIPE_BUSINESS_PRICE_ID
-      ? "✓ set"
-      : "✗ MISSING",
+    STRIPE_BUSINESS_PRICE_ID: process.env.STRIPE_BUSINESS_PRICE_ID ? "✓ set" : "✗ MISSING",
+    STRIPE_SINGLE_PRICE_ID: process.env.STRIPE_SINGLE_PRICE_ID ? "✓ set" : "✗ MISSING",
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL ?? "(not set)",
   });
 
@@ -112,26 +111,51 @@ export default async function CheckoutPage({
       console.log("[checkout] Existing Stripe customer:", customerId);
     }
 
-    const priceId = getPriceId(planId);
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ?? "https://legitvision.vercel.app";
 
-    console.log("[checkout] Creating session:", { planId, priceId, baseUrl });
+    let session: import("stripe").Stripe.Checkout.Session;
 
-    const session = await stripe.checkout.sessions.create({
-      customer: customerId,
-      client_reference_id: user.id,
-      mode: "subscription",
-      line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${baseUrl}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/#pricing`,
-      subscription_data: {
+    if (planId === "single") {
+      // ── Paiement unique (1 analyse, mode: "payment") ─────────────────────
+      const singlePriceId = process.env.STRIPE_SINGLE_PRICE_ID;
+      if (!singlePriceId) throw new Error("STRIPE_SINGLE_PRICE_ID non défini");
+
+      console.log("[checkout] Creating one-time payment session:", { planId, singlePriceId, baseUrl });
+
+      session = await stripe.checkout.sessions.create({
+        customer: customerId,
+        client_reference_id: user.id,
+        mode: "payment",
+        line_items: [{ price: singlePriceId, quantity: 1 }],
+        success_url: `${baseUrl}/dashboard?session_id={CHECKOUT_SESSION_ID}&purchased=single`,
+        cancel_url: `${baseUrl}/#pricing`,
+        payment_intent_data: {
+          metadata: { supabase_user_id: user.id, plan: "single" },
+        },
+        metadata: { supabase_user_id: user.id, plan: "single" },
+        locale: "fr",
+      });
+    } else {
+      // ── Abonnement récurrent (pro / business) ─────────────────────────────
+      const priceId = getPriceId(planId as "pro" | "business");
+      console.log("[checkout] Creating subscription session:", { planId, priceId, baseUrl });
+
+      session = await stripe.checkout.sessions.create({
+        customer: customerId,
+        client_reference_id: user.id,
+        mode: "subscription",
+        line_items: [{ price: priceId, quantity: 1 }],
+        success_url: `${baseUrl}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/#pricing`,
+        subscription_data: {
+          metadata: { supabase_user_id: user.id, plan: planId },
+        },
         metadata: { supabase_user_id: user.id, plan: planId },
-      },
-      metadata: { supabase_user_id: user.id, plan: planId },
-      allow_promotion_codes: true,
-      locale: "fr",
-    });
+        allow_promotion_codes: true,
+        locale: "fr",
+      });
+    }
 
     sessionUrl = session.url;
     console.log("[checkout] Session created:", session.id, "| URL obtained:", !!sessionUrl);

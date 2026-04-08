@@ -23,25 +23,16 @@ import { UserMenu } from "@/components/auth/UserMenu";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
 
 const CATEGORY_IMAGES = {
-  sneakers: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80",
-  sacs: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80",
-  montres: "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=500&q=80",
-  vetements: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=500&q=80",
+  sneakers: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=600&q=80",
+  sacs: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80",
+  montres: "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=600&q=80",
+  vetements: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80",
 };
 
 const BRAND_LOGOS: Record<string, string> = {
   "Nike": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/200px-Logo_NIKE.svg.png",
   "Jordan": "https://upload.wikimedia.org/wikipedia/en/thumb/3/37/Jumpman_logo.svg/120px-Jumpman_logo.svg.png",
   "adidas": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/200px-Adidas_Logo.svg.png",
-  "Louis Vuitton": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Louis_Vuitton_logo_and_wordmark.svg/200px-Louis_Vuitton_logo_and_wordmark.svg.png",
-  "Gucci": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/1960s_Gucci_Logo.svg/150px-1960s_Gucci_Logo.svg.png",
-  "Chanel": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Chanel_logo-no_words.svg/120px-Chanel_logo-no_words.svg.png",
-  "Dior": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Dior_Logo.svg/200px-Dior_Logo.svg.png",
-  "Hermès": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Herm%C3%A8s_-_Logo.svg/200px-Herm%C3%A8s_-_Logo.svg.png",
-  "Rolex": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Rolex_logo.svg/150px-Rolex_logo.svg.png",
-  "Supreme": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Supreme_Logo.svg/200px-Supreme_Logo.svg.png",
-  "Moncler": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Moncler_logo.svg/200px-Moncler_logo.svg.png",
-  "Prada": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Prada-Logo.svg/200px-Prada-Logo.svg.png",
 };
 
 const STEPS = [
@@ -551,14 +542,14 @@ export default function LandingPage() {
 
               {/* Sneakers */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
-                <div className="relative -mx-6 -mt-6 mb-6 h-40 overflow-hidden rounded-t-2xl">
+                <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
                   <Image src={CATEGORY_IMAGES.sneakers} alt="Sneakers" fill style={{ objectFit: "cover" }} unoptimized />
                 </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Zap className="size-5 text-emerald-500" />
                 </div>
                 <h3 className="font-heading text-base font-semibold">Sneakers</h3>
-                <ul className="mt-4 space-y-2">
+                <div className="mt-4 flex flex-wrap gap-2">
                   {[
                     "Nike",
                     "Jordan",
@@ -568,34 +559,34 @@ export default function LandingPage() {
                     "Travis Scott",
                     "Off-White",
                   ].map((brand) => (
-                    <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
                       <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
                       {BRAND_LOGOS[brand] && (
                         <Image
                           src={BRAND_LOGOS[brand]}
                           alt={`Logo ${brand}`}
-                          height={20}
-                          width={60}
+                          height={16}
+                          width={48}
                           unoptimized
                           style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
                         />
                       )}
                       {brand}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
               {/* Sacs */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
-                <div className="relative -mx-6 -mt-6 mb-6 h-40 overflow-hidden rounded-t-2xl">
+                <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
                   <Image src={CATEGORY_IMAGES.sacs} alt="Sacs de luxe" fill style={{ objectFit: "cover" }} unoptimized />
                 </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <ShoppingBag className="size-5 text-emerald-500" />
                 </div>
                 <h3 className="font-heading text-base font-semibold">Sacs</h3>
-                <ul className="mt-4 space-y-2">
+                <div className="mt-4 flex flex-wrap gap-2">
                   {[
                     "Louis Vuitton",
                     "Gucci",
@@ -610,34 +601,34 @@ export default function LandingPage() {
                     "Fendi",
                     "Bottega Veneta",
                   ].map((brand) => (
-                    <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
                       <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
                       {BRAND_LOGOS[brand] && (
                         <Image
                           src={BRAND_LOGOS[brand]}
                           alt={`Logo ${brand}`}
-                          height={20}
-                          width={60}
+                          height={16}
+                          width={48}
                           unoptimized
                           style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
                         />
                       )}
                       {brand}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
               {/* Montres */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
-                <div className="relative -mx-6 -mt-6 mb-6 h-40 overflow-hidden rounded-t-2xl">
+                <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
                   <Image src={CATEGORY_IMAGES.montres} alt="Montres de luxe" fill style={{ objectFit: "cover" }} unoptimized />
                 </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Watch className="size-5 text-emerald-500" />
                 </div>
                 <h3 className="font-heading text-base font-semibold">Montres</h3>
-                <ul className="mt-4 space-y-2">
+                <div className="mt-4 flex flex-wrap gap-2">
                   {[
                     "Rolex",
                     "Omega",
@@ -648,34 +639,34 @@ export default function LandingPage() {
                     "Richard Mille",
                     "Hublot",
                   ].map((brand) => (
-                    <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
                       <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
                       {BRAND_LOGOS[brand] && (
                         <Image
                           src={BRAND_LOGOS[brand]}
                           alt={`Logo ${brand}`}
-                          height={20}
-                          width={60}
+                          height={16}
+                          width={48}
                           unoptimized
                           style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
                         />
                       )}
                       {brand}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
               {/* Vêtements */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
-                <div className="relative -mx-6 -mt-6 mb-6 h-40 overflow-hidden rounded-t-2xl">
+                <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
                   <Image src={CATEGORY_IMAGES.vetements} alt="Vêtements de luxe" fill style={{ objectFit: "cover" }} unoptimized />
                 </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Shirt className="size-5 text-emerald-500" />
                 </div>
                 <h3 className="font-heading text-base font-semibold">Vêtements</h3>
-                <ul className="mt-4 space-y-2">
+                <div className="mt-4 flex flex-wrap gap-2">
                   {[
                     "Supreme",
                     "Moncler",
@@ -686,22 +677,22 @@ export default function LandingPage() {
                     "Essentials",
                     "Arc'teryx",
                   ].map((brand) => (
-                    <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
                       <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
                       {BRAND_LOGOS[brand] && (
                         <Image
                           src={BRAND_LOGOS[brand]}
                           alt={`Logo ${brand}`}
-                          height={20}
-                          width={60}
+                          height={16}
+                          width={48}
                           unoptimized
                           style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
                         />
                       )}
                       {brand}
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
             </div>
