@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Camera,
   Cpu,
@@ -20,6 +21,28 @@ import {
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
+
+const CATEGORY_IMAGES = {
+  sneakers: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80",
+  sacs: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80",
+  montres: "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=500&q=80",
+  vetements: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=500&q=80",
+};
+
+const BRAND_LOGOS: Record<string, string> = {
+  "Nike": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/200px-Logo_NIKE.svg.png",
+  "Jordan": "https://upload.wikimedia.org/wikipedia/en/thumb/3/37/Jumpman_logo.svg/120px-Jumpman_logo.svg.png",
+  "adidas": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/200px-Adidas_Logo.svg.png",
+  "Louis Vuitton": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Louis_Vuitton_logo_and_wordmark.svg/200px-Louis_Vuitton_logo_and_wordmark.svg.png",
+  "Gucci": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/1960s_Gucci_Logo.svg/150px-1960s_Gucci_Logo.svg.png",
+  "Chanel": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Chanel_logo-no_words.svg/120px-Chanel_logo-no_words.svg.png",
+  "Dior": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Dior_Logo.svg/200px-Dior_Logo.svg.png",
+  "Hermès": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Herm%C3%A8s_-_Logo.svg/200px-Herm%C3%A8s_-_Logo.svg.png",
+  "Rolex": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Rolex_logo.svg/150px-Rolex_logo.svg.png",
+  "Supreme": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Supreme_Logo.svg/200px-Supreme_Logo.svg.png",
+  "Moncler": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Moncler_logo.svg/200px-Moncler_logo.svg.png",
+  "Prada": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Prada-Logo.svg/200px-Prada-Logo.svg.png",
+};
 
 const STEPS = [
   {
@@ -81,51 +104,52 @@ const TESTIMONIALS = [
 
 const PLANS = [
   {
-    name: "Free",
-    price: "0€",
-    period: "",
-    description: "Pour essayer le service",
-    credits: "3 analyses / mois",
+    name: "Utilisation unique",
+    price: "3,99€",
+    period: "/ analyse",
+    description: "Pour une vérification ponctuelle",
+    credits: "1 analyse complète",
     features: [
-      "Rapport détaillé avec score",
-      "Sneakers uniquement",
-      "Résultat en 30 secondes",
+      "Toutes catégories",
+      "Rapport détaillé",
+      "Résultats < 30s",
     ],
-    cta: "Commencer gratuitement",
+    cta: "Analyser maintenant",
     popular: false,
     badge: null as string | null,
-    href: "/auth",
+    href: "/checkout?plan=single",
   },
   {
-    name: "Pro",
-    price: "14,99€",
+    name: "Mensuel",
+    price: "19,99€",
     period: "/mois",
     description: "Pour les acheteurs réguliers",
-    credits: "30 analyses / mois",
+    credits: "10 analyses / mois",
     features: [
-      "Toutes les catégories",
-      "Rapport détaillé avec score",
+      "Toutes catégories",
       "Revue expert si doute",
+      "Support prioritaire",
       "Historique complet",
     ],
-    cta: "Passer au Pro",
+    cta: "Choisir ce forfait",
     popular: true,
-    badge: null as string | null,
+    badge: "Le plus populaire" as string | null,
     href: "/checkout?plan=pro",
   },
   {
-    name: "Business",
-    price: "29,99€",
+    name: "Premium",
+    price: "39,99€",
     period: "/mois",
     description: "Pour les revendeurs et pros",
-    credits: "Analyses illimitées",
+    credits: "50 analyses / mois",
     features: [
-      "Analyses illimitées",
-      "Support prioritaire par email",
+      "Toutes catégories",
       "Revue expert incluse",
-      "Rapport PDF exportable",
+      "Support 24/7",
+      "Rapport PDF",
+      "Historique illimité",
     ],
-    cta: "Passer au Business",
+    cta: "Choisir ce forfait",
     popular: false,
     badge: "Idéal revendeurs" as string | null,
     href: "/checkout?plan=business",
@@ -526,7 +550,10 @@ export default function LandingPage() {
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
               {/* Sneakers */}
-              <div className="rounded-2xl border border-white/5 bg-card p-6">
+              <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
+                <div className="relative -mx-6 -mt-6 mb-6 h-40 overflow-hidden rounded-t-2xl">
+                  <Image src={CATEGORY_IMAGES.sneakers} alt="Sneakers" fill style={{ objectFit: "cover" }} unoptimized />
+                </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Zap className="size-5 text-emerald-500" />
                 </div>
@@ -543,6 +570,16 @@ export default function LandingPage() {
                   ].map((brand) => (
                     <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                      {BRAND_LOGOS[brand] && (
+                        <Image
+                          src={BRAND_LOGOS[brand]}
+                          alt={`Logo ${brand}`}
+                          height={20}
+                          width={60}
+                          unoptimized
+                          style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                        />
+                      )}
                       {brand}
                     </li>
                   ))}
@@ -550,7 +587,10 @@ export default function LandingPage() {
               </div>
 
               {/* Sacs */}
-              <div className="rounded-2xl border border-white/5 bg-card p-6">
+              <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
+                <div className="relative -mx-6 -mt-6 mb-6 h-40 overflow-hidden rounded-t-2xl">
+                  <Image src={CATEGORY_IMAGES.sacs} alt="Sacs de luxe" fill style={{ objectFit: "cover" }} unoptimized />
+                </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <ShoppingBag className="size-5 text-emerald-500" />
                 </div>
@@ -572,6 +612,16 @@ export default function LandingPage() {
                   ].map((brand) => (
                     <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                      {BRAND_LOGOS[brand] && (
+                        <Image
+                          src={BRAND_LOGOS[brand]}
+                          alt={`Logo ${brand}`}
+                          height={20}
+                          width={60}
+                          unoptimized
+                          style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                        />
+                      )}
                       {brand}
                     </li>
                   ))}
@@ -579,7 +629,10 @@ export default function LandingPage() {
               </div>
 
               {/* Montres */}
-              <div className="rounded-2xl border border-white/5 bg-card p-6">
+              <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
+                <div className="relative -mx-6 -mt-6 mb-6 h-40 overflow-hidden rounded-t-2xl">
+                  <Image src={CATEGORY_IMAGES.montres} alt="Montres de luxe" fill style={{ objectFit: "cover" }} unoptimized />
+                </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Watch className="size-5 text-emerald-500" />
                 </div>
@@ -597,6 +650,16 @@ export default function LandingPage() {
                   ].map((brand) => (
                     <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                      {BRAND_LOGOS[brand] && (
+                        <Image
+                          src={BRAND_LOGOS[brand]}
+                          alt={`Logo ${brand}`}
+                          height={20}
+                          width={60}
+                          unoptimized
+                          style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                        />
+                      )}
                       {brand}
                     </li>
                   ))}
@@ -604,7 +667,10 @@ export default function LandingPage() {
               </div>
 
               {/* Vêtements */}
-              <div className="rounded-2xl border border-white/5 bg-card p-6">
+              <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
+                <div className="relative -mx-6 -mt-6 mb-6 h-40 overflow-hidden rounded-t-2xl">
+                  <Image src={CATEGORY_IMAGES.vetements} alt="Vêtements de luxe" fill style={{ objectFit: "cover" }} unoptimized />
+                </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Shirt className="size-5 text-emerald-500" />
                 </div>
@@ -622,6 +688,16 @@ export default function LandingPage() {
                   ].map((brand) => (
                     <li key={brand} className="flex items-center gap-2 text-sm text-muted-foreground">
                       <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                      {BRAND_LOGOS[brand] && (
+                        <Image
+                          src={BRAND_LOGOS[brand]}
+                          alt={`Logo ${brand}`}
+                          height={20}
+                          width={60}
+                          unoptimized
+                          style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                        />
+                      )}
                       {brand}
                     </li>
                   ))}
@@ -666,13 +742,13 @@ export default function LandingPage() {
                       : "border-white/5 bg-card hover:border-white/10"
                   }`}
                 >
-                  {plan.popular && (
+                  {plan.popular && !plan.badge && (
                     <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-4 py-1 text-xs font-semibold text-white">
                       Populaire
                     </span>
                   )}
                   {plan.badge && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/15 bg-card px-4 py-1 text-xs font-semibold text-foreground">
+                    <span className={`absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1 text-xs font-semibold ${plan.popular ? "bg-emerald-500 text-white" : "border border-white/15 bg-card text-foreground"}`}>
                       {plan.badge}
                     </span>
                   )}
