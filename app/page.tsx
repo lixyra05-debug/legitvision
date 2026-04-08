@@ -23,10 +23,10 @@ import { UserMenu } from "@/components/auth/UserMenu";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
 
 const CATEGORY_IMAGES = {
-  sneakers: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=600&q=80",
-  sacs: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=80",
-  montres: "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=600&q=80",
-  vetements: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=600&q=80",
+  sneakers: "/images/sneakers.png",
+  sacs: "/images/bags.png",
+  montres: "/images/watches.png",
+  vetements: "/images/clothing.png",
 };
 
 const BRAND_LOGOS: Record<string, string> = {
@@ -543,7 +543,7 @@ export default function LandingPage() {
               {/* Sneakers */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
                 <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
-                  <Image src={CATEGORY_IMAGES.sneakers} alt="Sneakers" fill style={{ objectFit: "cover" }} unoptimized />
+                  <Image src={CATEGORY_IMAGES.sneakers} alt="Sneakers" fill style={{ objectFit: "cover" }} />
                 </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Zap className="size-5 text-emerald-500" />
@@ -580,7 +580,7 @@ export default function LandingPage() {
               {/* Sacs */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
                 <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
-                  <Image src={CATEGORY_IMAGES.sacs} alt="Sacs de luxe" fill style={{ objectFit: "cover" }} unoptimized />
+                  <Image src={CATEGORY_IMAGES.sacs} alt="Sacs de luxe" fill style={{ objectFit: "cover" }} />
                 </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <ShoppingBag className="size-5 text-emerald-500" />
@@ -622,7 +622,7 @@ export default function LandingPage() {
               {/* Montres */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
                 <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
-                  <Image src={CATEGORY_IMAGES.montres} alt="Montres de luxe" fill style={{ objectFit: "cover" }} unoptimized />
+                  <Image src={CATEGORY_IMAGES.montres} alt="Montres de luxe" fill style={{ objectFit: "cover" }} />
                 </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Watch className="size-5 text-emerald-500" />
@@ -660,7 +660,7 @@ export default function LandingPage() {
               {/* Vêtements */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
                 <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
-                  <Image src={CATEGORY_IMAGES.vetements} alt="Vêtements de luxe" fill style={{ objectFit: "cover" }} unoptimized />
+                  <Image src={CATEGORY_IMAGES.vetements} alt="Vêtements de luxe" fill style={{ objectFit: "cover" }} />
                 </div>
                 <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
                   <Shirt className="size-5 text-emerald-500" />
