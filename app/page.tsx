@@ -21,6 +21,7 @@ import {
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
+import { BrandSearch } from "@/components/landing/BrandSearch";
 
 const CATEGORY_IMAGES = {
   sneakers: "/images/sneakers.png",
@@ -30,9 +31,36 @@ const CATEGORY_IMAGES = {
 };
 
 const BRAND_LOGOS: Record<string, string> = {
-  "Nike": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/200px-Logo_NIKE.svg.png",
-  "Jordan": "https://upload.wikimedia.org/wikipedia/en/thumb/3/37/Jumpman_logo.svg/120px-Jumpman_logo.svg.png",
-  "adidas": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/200px-Adidas_Logo.svg.png",
+  // Sneakers
+  "Nike": "/images/brands/nike.jpg",
+  "Jordan": "/images/brands/jordan.jpg",
+  "adidas": "/images/brands/adidas.png",
+  "New Balance": "/images/brands/new-balance.png",
+  "Yeezy": "/images/brands/yeezy.png",
+  "Travis Scott": "/images/brands/travis-scott.png",
+  "Off-White": "/images/brands/off-white.png",
+  // Sacs
+  "Louis Vuitton": "/images/brands/louis-vuitton.png",
+  "Gucci": "/images/brands/gucci.png",
+  "Chanel": "/images/brands/chanel.png",
+  "Dior": "/images/brands/dior.png",
+  "Hermès": "/images/brands/hermes.png",
+  "Prada": "/images/brands/prada.png",
+  "Saint Laurent": "/images/brands/saint-laurent.png",
+  "Goyard": "/images/brands/goyard.png",
+  "Balenciaga": "/images/brands/balenciaga.png",
+  "Celine": "/images/brands/celine.png",
+  "Fendi": "/images/brands/fendi.png",
+  "Bottega Veneta": "/images/brands/bottega-veneta.png",
+  // Vêtements
+  "Supreme": "/images/brands/supreme.png",
+  "Moncler": "/images/brands/moncler.png",
+  "Canada Goose": "/images/brands/canada-goose.png",
+  "Stone Island": "/images/brands/stone-island.png",
+  "Palm Angels": "/images/brands/palm-angels.png",
+  "Essentials": "/images/brands/essentials.png",
+  "Arc'teryx": "/images/brands/arcteryx.png",
+  // Montres : pas de logos
 };
 
 const STEPS = [
@@ -538,7 +566,10 @@ export default function LandingPage() {
           </FadeIn>
 
           <FadeIn delay={150}>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-10">
+              <BrandSearch />
+            </div>
+            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 
               {/* Sneakers */}
               <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
@@ -549,7 +580,7 @@ export default function LandingPage() {
                   <Zap className="size-5 text-emerald-500" />
                 </div>
                 <h3 className="font-heading text-base font-semibold">Sneakers</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap justify-center gap-3">
                   {[
                     "Nike",
                     "Jordan",
@@ -559,20 +590,29 @@ export default function LandingPage() {
                     "Travis Scott",
                     "Off-White",
                   ].map((brand) => (
-                    <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
-                      <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                      {BRAND_LOGOS[brand] && (
-                        <Image
-                          src={BRAND_LOGOS[brand]}
-                          alt={`Logo ${brand}`}
-                          height={16}
-                          width={48}
-                          unoptimized
-                          style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
-                        />
-                      )}
-                      {brand}
-                    </div>
+                    BRAND_LOGOS[brand] ? (
+                      <div
+                        key={brand}
+                        className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
+                        title={brand}
+                      >
+                        <div className="flex h-7 w-16 items-center justify-center">
+                          <Image
+                            src={BRAND_LOGOS[brand]}
+                            alt={brand}
+                            height={28}
+                            width={64}
+                            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                          />
+                        </div>
+                        <span className="text-[11px] text-muted-foreground/80">{brand}</span>
+                      </div>
+                    ) : (
+                      <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
+                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                        {brand}
+                      </div>
+                    )
                   ))}
                 </div>
               </div>
@@ -586,7 +626,7 @@ export default function LandingPage() {
                   <ShoppingBag className="size-5 text-emerald-500" />
                 </div>
                 <h3 className="font-heading text-base font-semibold">Sacs</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap justify-center gap-3">
                   {[
                     "Louis Vuitton",
                     "Gucci",
@@ -601,20 +641,29 @@ export default function LandingPage() {
                     "Fendi",
                     "Bottega Veneta",
                   ].map((brand) => (
-                    <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
-                      <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                      {BRAND_LOGOS[brand] && (
-                        <Image
-                          src={BRAND_LOGOS[brand]}
-                          alt={`Logo ${brand}`}
-                          height={16}
-                          width={48}
-                          unoptimized
-                          style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
-                        />
-                      )}
-                      {brand}
-                    </div>
+                    BRAND_LOGOS[brand] ? (
+                      <div
+                        key={brand}
+                        className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
+                        title={brand}
+                      >
+                        <div className="flex h-7 w-16 items-center justify-center">
+                          <Image
+                            src={BRAND_LOGOS[brand]}
+                            alt={brand}
+                            height={28}
+                            width={64}
+                            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                          />
+                        </div>
+                        <span className="text-[11px] text-muted-foreground/80">{brand}</span>
+                      </div>
+                    ) : (
+                      <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
+                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                        {brand}
+                      </div>
+                    )
                   ))}
                 </div>
               </div>
@@ -628,7 +677,7 @@ export default function LandingPage() {
                   <Watch className="size-5 text-emerald-500" />
                 </div>
                 <h3 className="font-heading text-base font-semibold">Montres</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap justify-center gap-3">
                   {[
                     "Rolex",
                     "Omega",
@@ -639,20 +688,29 @@ export default function LandingPage() {
                     "Richard Mille",
                     "Hublot",
                   ].map((brand) => (
-                    <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
-                      <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                      {BRAND_LOGOS[brand] && (
-                        <Image
-                          src={BRAND_LOGOS[brand]}
-                          alt={`Logo ${brand}`}
-                          height={16}
-                          width={48}
-                          unoptimized
-                          style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
-                        />
-                      )}
-                      {brand}
-                    </div>
+                    BRAND_LOGOS[brand] ? (
+                      <div
+                        key={brand}
+                        className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
+                        title={brand}
+                      >
+                        <div className="flex h-7 w-16 items-center justify-center">
+                          <Image
+                            src={BRAND_LOGOS[brand]}
+                            alt={brand}
+                            height={28}
+                            width={64}
+                            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                          />
+                        </div>
+                        <span className="text-[11px] text-muted-foreground/80">{brand}</span>
+                      </div>
+                    ) : (
+                      <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
+                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                        {brand}
+                      </div>
+                    )
                   ))}
                 </div>
               </div>
@@ -666,7 +724,7 @@ export default function LandingPage() {
                   <Shirt className="size-5 text-emerald-500" />
                 </div>
                 <h3 className="font-heading text-base font-semibold">Vêtements</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap justify-center gap-3">
                   {[
                     "Supreme",
                     "Moncler",
@@ -677,20 +735,29 @@ export default function LandingPage() {
                     "Essentials",
                     "Arc'teryx",
                   ].map((brand) => (
-                    <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
-                      <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                      {BRAND_LOGOS[brand] && (
-                        <Image
-                          src={BRAND_LOGOS[brand]}
-                          alt={`Logo ${brand}`}
-                          height={16}
-                          width={48}
-                          unoptimized
-                          style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
-                        />
-                      )}
-                      {brand}
-                    </div>
+                    BRAND_LOGOS[brand] ? (
+                      <div
+                        key={brand}
+                        className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
+                        title={brand}
+                      >
+                        <div className="flex h-7 w-16 items-center justify-center">
+                          <Image
+                            src={BRAND_LOGOS[brand]}
+                            alt={brand}
+                            height={28}
+                            width={64}
+                            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                          />
+                        </div>
+                        <span className="text-[11px] text-muted-foreground/80">{brand}</span>
+                      </div>
+                    ) : (
+                      <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
+                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                        {brand}
+                      </div>
+                    )
                   ))}
                 </div>
               </div>
