@@ -26,7 +26,7 @@ import { BrandSearch } from "@/components/landing/BrandSearch";
 const CATEGORY_IMAGES = {
   sneakers: "/images/sneakers.png",
   sacs: "/images/bags.png",
-  montres: "/images/watches.png",
+  montres: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&q=80",
   vetements: "/images/clothing.png",
 };
 
@@ -596,13 +596,13 @@ export default function LandingPage() {
                         className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
                         title={brand}
                       >
-                        <div className="flex h-8 w-16 items-center justify-center rounded-lg bg-white p-1.5">
+                        <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
                           <Image
                             src={BRAND_LOGOS[brand]}
                             alt={brand}
-                            height={32}
-                            width={64}
-                            style={{ objectFit: "contain" }}
+                            height={28}
+                            width={56}
+                            style={{ objectFit: "contain", width: "auto", height: "28px" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -647,13 +647,13 @@ export default function LandingPage() {
                         className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
                         title={brand}
                       >
-                        <div className="flex h-8 w-16 items-center justify-center rounded-lg bg-white p-1.5">
+                        <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
                           <Image
                             src={BRAND_LOGOS[brand]}
                             alt={brand}
-                            height={32}
-                            width={64}
-                            style={{ objectFit: "contain" }}
+                            height={28}
+                            width={56}
+                            style={{ objectFit: "contain", width: "auto", height: "28px" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -694,13 +694,13 @@ export default function LandingPage() {
                         className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
                         title={brand}
                       >
-                        <div className="flex h-8 w-16 items-center justify-center rounded-lg bg-white p-1.5">
+                        <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
                           <Image
                             src={BRAND_LOGOS[brand]}
                             alt={brand}
-                            height={32}
-                            width={64}
-                            style={{ objectFit: "contain" }}
+                            height={28}
+                            width={56}
+                            style={{ objectFit: "contain", width: "auto", height: "28px" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -741,13 +741,13 @@ export default function LandingPage() {
                         className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
                         title={brand}
                       >
-                        <div className="flex h-8 w-16 items-center justify-center rounded-lg bg-white p-1.5">
+                        <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
                           <Image
                             src={BRAND_LOGOS[brand]}
                             alt={brand}
-                            height={32}
-                            width={64}
-                            style={{ objectFit: "contain" }}
+                            height={28}
+                            width={56}
+                            style={{ objectFit: "contain", width: "auto", height: "28px" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>

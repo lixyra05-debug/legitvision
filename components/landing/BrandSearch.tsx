@@ -164,7 +164,7 @@ export function BrandSearch() {
               {results.map((result) => (
                 <Link
                   key={result.id}
-                  href="/dashboard/check/new"
+                  href="/check/new"
                   onClick={() => setOpen(false)}
                   className="flex items-center justify-between px-5 py-3 transition-colors hover:bg-white/5"
                 >
