@@ -3,6 +3,7 @@ import Image from "next/image";
 import {
   Camera,
   Cpu,
+  Eye,
   FileCheck,
   ShieldCheck,
   Zap,
@@ -775,6 +776,120 @@ export default function LandingPage() {
               pour la demander.
             </p>
           </FadeIn>
+        </div>
+      </section>
+
+      {/* ── Fonctionnalités ── */}
+      <section className="border-t border-white/5 py-20 sm:py-28">
+        <div className="mx-auto max-w-6xl px-4">
+          <FadeIn className="text-center">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-400">
+              Fonctionnalités
+            </span>
+            <h2 className="mt-4 font-heading text-3xl font-bold tracking-tight sm:text-4xl">
+              Fonctionnalités complètes
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              L&apos;outil d&apos;authentification ultime
+            </p>
+          </FadeIn>
+
+          <div className="mt-16 grid gap-6 sm:grid-cols-2">
+
+            {/* Card 1 — Analyse IA (avec glow emerald) */}
+            <FadeIn delay={0}>
+              <div
+                className="group relative flex h-full flex-col rounded-[20px] border border-emerald-500/25 p-8 transition-all hover:-translate-y-0.5 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-500/10"
+                style={{ background: "#1E1E26" }}
+              >
+                <div className="pointer-events-none absolute inset-0 rounded-[20px] bg-emerald-500/[0.03]" />
+                <div className="mb-5 flex size-14 items-center justify-center rounded-2xl bg-emerald-500/15">
+                  <Eye className="size-7 text-emerald-500" />
+                </div>
+                <h3 className="font-sora text-xl font-semibold">
+                  Analyse IA avancée
+                </h3>
+                <p className="mt-3 flex-1 font-sora text-sm leading-[1.7] text-muted-foreground">
+                  Notre modèle de vision artificielle analyse chaque photo selon 8 zones d&apos;authentification spécifiques : coutures, matériaux, logos, étiquettes, hardware, alignement, typographie et finitions.
+                </p>
+                <div className="mt-6">
+                  <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
+                    8 zones analysées
+                  </span>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 2 — Résultats en temps réel */}
+            <FadeIn delay={100}>
+              <div
+                className="flex h-full flex-col rounded-[20px] border p-8 transition-all hover:-translate-y-0.5 hover:border-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/5"
+                style={{ background: "#1E1E26", borderColor: "rgba(255,255,255,0.08)" }}
+              >
+                <div className="mb-5 flex size-14 items-center justify-center rounded-2xl bg-emerald-500/10">
+                  <Zap className="size-7 text-emerald-500" />
+                </div>
+                <h3 className="font-sora text-xl font-semibold">
+                  Résultats en 30 secondes
+                </h3>
+                <p className="mt-3 flex-1 font-sora text-sm leading-[1.7] text-muted-foreground">
+                  Pas besoin d&apos;attendre des heures. Uploadez vos photos, notre IA traite l&apos;analyse en temps réel et vous délivre un rapport complet avec score de confiance en moins de 30 secondes.
+                </p>
+                <div className="mt-6">
+                  <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
+                    &lt; 30 secondes
+                  </span>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 3 — Rapport ultra-détaillé */}
+            <FadeIn delay={200}>
+              <div
+                className="flex h-full flex-col rounded-[20px] border p-8 transition-all hover:-translate-y-0.5 hover:border-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/5"
+                style={{ background: "#1E1E26", borderColor: "rgba(255,255,255,0.08)" }}
+              >
+                <div className="mb-5 flex size-14 items-center justify-center rounded-2xl bg-emerald-500/10">
+                  <FileText className="size-7 text-emerald-500" />
+                </div>
+                <h3 className="font-sora text-xl font-semibold">
+                  Rapport ultra-détaillé
+                </h3>
+                <p className="mt-3 flex-1 font-sora text-sm leading-[1.7] text-muted-foreground">
+                  Score global sur 100, sous-scores par zone, détection OCR des codes et numéros de série, comparaison avec les standards du fabricant, et recommandations personnalisées.
+                </p>
+                <div className="mt-6">
+                  <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
+                    Score sur 100
+                  </span>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Card 4 — Sécurité & Confidentialité */}
+            <FadeIn delay={300}>
+              <div
+                className="flex h-full flex-col rounded-[20px] border p-8 transition-all hover:-translate-y-0.5 hover:border-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/5"
+                style={{ background: "#1E1E26", borderColor: "rgba(255,255,255,0.08)" }}
+              >
+                <div className="mb-5 flex size-14 items-center justify-center rounded-2xl bg-emerald-500/10">
+                  <ShieldCheck className="size-7 text-emerald-500" />
+                </div>
+                <h3 className="font-sora text-xl font-semibold">
+                  Données protégées RGPD
+                </h3>
+                <p className="mt-3 flex-1 font-sora text-sm leading-[1.7] text-muted-foreground">
+                  Vos photos sont hébergées en Europe sur des serveurs sécurisés. Elles sont automatiquement supprimées après 30 jours. Nous ne partageons jamais vos données avec des tiers.
+                </p>
+                <div className="mt-6">
+                  <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
+                    Hébergé en EU 🇪🇺
+                  </span>
+                </div>
+              </div>
+            </FadeIn>
+
+          </div>
         </div>
       </section>
 
