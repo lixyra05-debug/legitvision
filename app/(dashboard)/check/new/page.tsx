@@ -134,8 +134,16 @@ export default function NewCheckPage() {
       });
   }, [selectedBrand, supabase]);
 
-  const protocol: PhotoSlot[] = selectedModel
-    ? (selectedBrand?.photo_protocol ?? [])
+  // Normalize photo_protocol: old brands (migration 001) used "type" instead of "name".
+  // Migration 005 fixes the DB, but this fallback handles any stale data in-flight.
+  const protocol: PhotoSlot[] = selectedModel && selectedBrand
+    ? (selectedBrand.photo_protocol as unknown as Array<{ name?: string; type?: string; label: string; required: boolean }>).map(
+        (slot) => ({
+          name: (slot.name ?? slot.type ?? ""),
+          label: slot.label,
+          required: slot.required,
+        })
+      )
     : [];
 
   const requiredSlots = protocol.filter((s) => s.required);
