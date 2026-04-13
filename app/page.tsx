@@ -40,6 +40,13 @@ const BRAND_LOGOS: Record<string, string> = {
   "Yeezy": "/images/brands/yeezy.png",
   "Travis Scott": "/images/brands/travis-scott.png",
   "Off-White": "/images/brands/off-white.png",
+  "BAPE": "/images/brands/bape.webp",
+  "Converse": "/images/brands/converse.png",
+  "Vans": "/images/brands/vans.png",
+  "Puma": "/images/brands/puma.png",
+  "Reebok": "/images/brands/reebok.png",
+  "Salomon": "/images/brands/salomon.png",
+  "New Era": "/images/brands/new-era.png",
   // Sacs
   "Louis Vuitton": "/images/brands/louis-vuitton.png",
   "Gucci": "/images/brands/gucci.png",
@@ -53,6 +60,10 @@ const BRAND_LOGOS: Record<string, string> = {
   "Celine": "/images/brands/celine.png",
   "Fendi": "/images/brands/fendi.png",
   "Bottega Veneta": "/images/brands/bottega-veneta.png",
+  "Valentino": "/images/brands/valentino.png",
+  "Givenchy": "/images/brands/givenchy.png",
+  "Jacquemus": "/images/brands/jacquemus.png",
+  "Miu Miu": "/images/brands/miu-miu.png",
   // Vêtements
   "Supreme": "/images/brands/supreme.png",
   "Moncler": "/images/brands/moncler.png",
@@ -61,6 +72,16 @@ const BRAND_LOGOS: Record<string, string> = {
   "Palm Angels": "/images/brands/palm-angels.png",
   "Essentials": "/images/brands/essentials.png",
   "Arc'teryx": "/images/brands/arcteryx.png",
+  "Palace": "/images/brands/palace.png",
+  "CP Company": "/images/brands/cp-company.png",
+  "Stüssy": "/images/brands/stussy.png",
+  "Comme des Garçons": "/images/brands/comme-des-garcons.png",
+  "Carhartt WIP": "/images/brands/carhartt-wip.png",
+  "Anti Social Social Club": "/images/brands/anti-social-social-club.png",
+  "Fear of God": "/images/brands/fear-of-god.png",
+  "Trapstar": "/images/brands/trapstar.png",
+  "Represent": "/images/brands/represent.png",
+  "Kith": "/images/brands/kith.png",
   // Montres : pas de logos
 };
 
@@ -590,6 +611,13 @@ export default function LandingPage() {
                     "Yeezy",
                     "Travis Scott",
                     "Off-White",
+                    "BAPE",
+                    "Converse",
+                    "Vans",
+                    "Puma",
+                    "Reebok",
+                    "Salomon",
+                    "New Era",
                   ].map((brand) => (
                     BRAND_LOGOS[brand] ? (
                       <div
@@ -641,6 +669,10 @@ export default function LandingPage() {
                     "Celine",
                     "Fendi",
                     "Bottega Veneta",
+                    "Valentino",
+                    "Givenchy",
+                    "Jacquemus",
+                    "Miu Miu",
                   ].map((brand) => (
                     BRAND_LOGOS[brand] ? (
                       <div
@@ -735,6 +767,16 @@ export default function LandingPage() {
                     "The North Face",
                     "Essentials",
                     "Arc'teryx",
+                    "Palace",
+                    "CP Company",
+                    "Stüssy",
+                    "Comme des Garçons",
+                    "Carhartt WIP",
+                    "Anti Social Social Club",
+                    "Fear of God",
+                    "Trapstar",
+                    "Represent",
+                    "Kith",
                   ].map((brand) => (
                     BRAND_LOGOS[brand] ? (
                       <div
