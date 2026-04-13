@@ -596,13 +596,13 @@ export default function LandingPage() {
                         className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
                         title={brand}
                       >
-                        <div className="flex h-7 w-16 items-center justify-center">
+                        <div className="flex h-8 w-16 items-center justify-center rounded-lg bg-white p-1.5">
                           <Image
                             src={BRAND_LOGOS[brand]}
                             alt={brand}
-                            height={28}
+                            height={32}
                             width={64}
-                            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                            style={{ objectFit: "contain" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -647,13 +647,13 @@ export default function LandingPage() {
                         className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
                         title={brand}
                       >
-                        <div className="flex h-7 w-16 items-center justify-center">
+                        <div className="flex h-8 w-16 items-center justify-center rounded-lg bg-white p-1.5">
                           <Image
                             src={BRAND_LOGOS[brand]}
                             alt={brand}
-                            height={28}
+                            height={32}
                             width={64}
-                            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                            style={{ objectFit: "contain" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -694,13 +694,13 @@ export default function LandingPage() {
                         className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
                         title={brand}
                       >
-                        <div className="flex h-7 w-16 items-center justify-center">
+                        <div className="flex h-8 w-16 items-center justify-center rounded-lg bg-white p-1.5">
                           <Image
                             src={BRAND_LOGOS[brand]}
                             alt={brand}
-                            height={28}
+                            height={32}
                             width={64}
-                            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                            style={{ objectFit: "contain" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -741,13 +741,13 @@ export default function LandingPage() {
                         className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
                         title={brand}
                       >
-                        <div className="flex h-7 w-16 items-center justify-center">
+                        <div className="flex h-8 w-16 items-center justify-center rounded-lg bg-white p-1.5">
                           <Image
                             src={BRAND_LOGOS[brand]}
                             alt={brand}
-                            height={28}
+                            height={32}
                             width={64}
-                            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+                            style={{ objectFit: "contain" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
