@@ -7,8 +7,6 @@ import type { PlanId } from "@/lib/stripe/config";
 // Désactiver le body parsing automatique de Next.js — Stripe a besoin du corps brut
 export const dynamic = "force-dynamic";
 
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET!;
-
 export async function POST(request: NextRequest) {
   const body = await request.text();
   const signature = request.headers.get("stripe-signature");
@@ -17,7 +15,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Signature manquante" }, { status: 400 });
   }
 
-  if (!WEBHOOK_SECRET) {
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!webhookSecret) {
     console.error("[webhook/stripe] STRIPE_WEBHOOK_SECRET non défini");
     return NextResponse.json({ error: "Config manquante" }, { status: 500 });
   }
@@ -25,14 +24,13 @@ export async function POST(request: NextRequest) {
   // Vérifier la signature Stripe
   let event: import("stripe").Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(body, signature, WEBHOOK_SECRET);
+    event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
     console.error("[webhook/stripe] Signature invalide:", err);
     return NextResponse.json({ error: "Signature invalide" }, { status: 400 });
   }
 
   const admin = createAdminClient();
-  console.log("[webhook/stripe] Event reçu:", event.type, event.id);
 
   try {
     switch (event.type) {
@@ -78,8 +76,6 @@ export async function POST(request: NextRequest) {
             description: "Achat utilisation unique — 1 crédit",
             stripe_payment_id: paymentIntentId,
           });
-
-          console.log(`[webhook/stripe] Paiement unique: +1 crédit → user ${userId} (balance: ${newBalance})`);
           break;
         }
 
@@ -113,8 +109,6 @@ export async function POST(request: NextRequest) {
 
         if (error) {
           console.error("[webhook/stripe] Erreur update profil:", error.message);
-        } else {
-          console.log(`[webhook/stripe] Plan mis à jour → ${planId} pour user ${userId}`);
         }
         break;
       }
@@ -136,10 +130,7 @@ export async function POST(request: NextRequest) {
         const priceId: string | undefined = lineItem?.price?.id ?? lineItem?.pricing?.price_details?.price_id;
         const planId = priceId ? getPlanFromPriceId(priceId) : null;
 
-        if (!planId) {
-          console.warn("[webhook/stripe] invoice.paid: plan inconnu pour priceId", priceId);
-          break;
-        }
+        if (!planId) break;
 
         // Retrouver l'utilisateur via stripe_customer_id
         const { data: profile } = await admin
@@ -153,12 +144,10 @@ export async function POST(request: NextRequest) {
           break;
         }
 
-        // Pour Business, pas de recharge numérique (bypass dans /api/analyze)
-        // On log quand même la transaction pour l'historique
         const creditsToAdd = PLAN_CREDITS[planId];
         const newBalance =
           planId === "business"
-            ? profile.credits_remaining // pas de changement réel
+            ? profile.credits_remaining
             : profile.credits_remaining + creditsToAdd;
 
         if (planId !== "business") {
@@ -168,7 +157,6 @@ export async function POST(request: NextRequest) {
             .eq("id", profile.id);
         }
 
-        // Logger la transaction
         const description =
           planId === "business"
             ? `Renouvellement plan Business (illimité) — facture ${invoice.id}`
@@ -186,10 +174,6 @@ export async function POST(request: NextRequest) {
               : invoice.payment_intent.id
             : null,
         });
-
-        console.log(
-          `[webhook/stripe] invoice.paid: +${creditsToAdd} crédits → user ${profile.id} (plan ${planId})`
-        );
         break;
       }
 
@@ -214,7 +198,6 @@ export async function POST(request: NextRequest) {
           break;
         }
 
-        // Repasser en free avec 3 crédits
         await admin
           .from("profiles")
           .update({
@@ -224,7 +207,6 @@ export async function POST(request: NextRequest) {
           })
           .eq("id", profile.id);
 
-        // Logger le retour au plan free
         await admin.from("credits_transactions").insert({
           user_id: profile.id,
           type: "bonus",
@@ -233,13 +215,11 @@ export async function POST(request: NextRequest) {
           description: "Retour au plan Free après résiliation",
           stripe_payment_id: null,
         });
-
-        console.log(`[webhook/stripe] Abonnement résilié → retour Free pour user ${profile.id}`);
         break;
       }
 
       default:
-        console.log("[webhook/stripe] Event ignoré:", event.type);
+        break;
     }
   } catch (error) {
     console.error("[webhook/stripe] Erreur traitement event:", error);

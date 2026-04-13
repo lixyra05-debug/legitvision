@@ -1,0 +1,150 @@
+import type { AuthenticationPoint } from "@/lib/types";
+
+// ── Brand-specific authentication knowledge ──────────────────────────────────
+
+const BRAND_EXPERTISE: Record<string, string> = {
+  nike: "forme et placement du Swoosh (symétrie, angle, coutures), étiquettes de languette (police, code produit, pays), motif et densité de la semelle, codes produits intérieurs, qualité des matières (cuir, mesh, daim)",
+  adidas: "forme des 3 bandes (symétrie, espacement, coutures), qualité et placement du Trefoil, technologie Boost (grain, couleur), étiquettes taille (QR code format, police), qualité toecap shell",
+  jordan: "placement du Jumpman et Wings (proportions, embossage), qualité du cuir (grain, souplesse), étiquettes Nike Air (police, placement), numéros (23, 45), semelle translucide (clarté)",
+  "new balance": "qualité du logo N (broderie vs appliqué, symétrie), suède/cuir overlays (grain, nap), codes modèle (ENCAP, Fresh Foam mentions), étiquettes taille (format NB spécifique)",
+  bape: "qualité et positionnement du Ape Head (yeux, proportions), motif camo (régularité des pixels), coutures Shark Hoodie (dents alignées), étiquette col (police japonaise)",
+  converse: "étoile All Star (proportions, centrage), qualité canvas/cuir, patch talon (logo, police), semelle vulcanisée (motif diamant, régularité)",
+  vans: "side stripe (régularité, largeur constante), waffle sole (régularité des carreaux, flexibilité), étiquette intérieure (police, placement logo)",
+  puma: "Formstrip (coutures, proportions), qualité IMEVA/RS-X semelle (symétrie multicouche), étiquettes (PUMA Cat logo, police)",
+  reebok: "vecteur Union Jack (angles précis), qualité cuir Classic (piqûres régulières), Pump bladder (fonctionnement), étiquettes (police Reebok heritage)",
+  salomon: "qualité cordura/TPU, semelle Contagrip (profondeur crampons), Quick Lace system (fonctionnement), étiquette de taille (codes usine)",
+  "louis vuitton": "alignement monogramme LV (jamais coupé aux coutures), code date (LSXX modern / XXXX vintage), qualité toile enduite (rigidité, odeur), ferrures (gravure LV, poids, finition), estampille dorée intérieure (police, placement)",
+  chanel: "numéro de série holographique (11 chiffres, authenticité sticker), cuir matelassé (diamants réguliers, profondeur), ferrures CC (poids, gravure, finition), coutures bord-à-bord (régularité), authenticity card (hologramme matching)",
+  "hermès": "marquage à chaud HERMÈS PARIS MADE IN FRANCE (police, depth), lettre aveugle artisan (format année), qualité cuir (grain, odeur), ferrures palladium/or (poids, gravure précise), coutures en selle (régularité, résistance tirage)",
+  gucci: "monogramme GG (alignement, netteté, régularité), ferrures avec gravure Gucci (police, depth), étiquette intérieure (police serif, espacement lettres), doublure (tissu, couleur, logo imprimé)",
+  prada: "triangle Prada (vissé métal vs cousu, police Helvetica exacte), nappa/saffiano (texture en croix régulière, rigidité), étiquette blanche intérieure (typo, espacement), coutures régulières et tension constante",
+  dior: "oblique canvas (alignement motif CD, netteté), ferrures dorées D.I.O.R (lettres individuelles vissées, poids), estampille intérieure (police Christian Dior spécifique), code S (format S-XXXXXXXX visible)",
+  balenciaga: "police Balenciaga (espacement précis entre lettres, épaisseur des traits), semelles Triple S (3 couches distinctes, proportions), qualité mesh/cuir, étiquette composition (typo, placement)",
+  "bottega veneta": "intrecciato (maille régulière, largeur constante, orientation 45°), cuir nappa veau (souplesse, grain fin), ferrures minimalistes (poids, finition mate/brillante), broderie étiquette intérieure",
+  "saint laurent": "YSL logo (proportions, épaisseur), qualité cuir de veau (grain, odeur), ferrures (poids, finition), étampille intérieure (police YSL Paris)",
+  celine: "CELINE PARIS en lettres capitales sans accent (police précise, espacement), ferrures (gravure, poids), cuir box (brillance, rigidité), coutures régulières (tension uniforme)",
+  fendi: "double F logo (proportions Zucca, alignement), ferrures (gravure FENDI, finition), cuir/nylon (qualité, odeur), doublure (tissu, impression logo)",
+  goyard: "motif Goyardine (dots réguliers en Y, alignement), lettres chevrons (régularité, netteté), cuir de bœuf naturel (vachette, patine), gravure Goyard Paris sur ferrures",
+  jacquemus: "qualité cuir/matières (souplesse, finition bords), logo JACQUEMUS (police, placement), fermetures magnétiques (alignement), proportions micro-sac (symétrie)",
+  "miu miu": "logo MIU MIU (police, espacement), qualité cuir (grain, odeur), ferrures (poids, finition), motif nappa matelassé (régularité diamants)",
+  valentino: "VALENTINO GARAVANI (police précise, espacement), Rockstuds (régularité placement, solidité fixation), qualité cuir, ferrures (poids, finition métal)",
+  givenchy: "G logo (proportions, finition), qualité cuir (grain, bords finis), coutures régulières, étampille intérieure (police Givenchy Paris)",
+  supreme: "Box Logo (broderie: fil, densité, alignement parfait), étiquette col (police Supreme, placement, couleur fil), tissu (poids Hanes vs Supreme authentique), qualité print sérigraphie",
+  "off-white": "Helvetica Neue (espacement arrows/quotes EXACT, épaisseur traits), grille orange étiquette (typo Futura, espacement), coutures extérieures exposées (régularité), zip Talon (qualité)",
+  "stone island": "patch bussole (broderie qualité: fil, régularité, compass pointing N), étiquette col en rouleau (police, placement), garment dye (uniformité couleur, pas de zones décolorées)",
+  "the north face": "half-dome logo (proportions, police TNF), qualité nylon/Gore-Tex (imperméabilisation, couture soudée), zips YKK (fluidité, marquage), coutures taped (régularité)",
+  carhartt: "patch Carhartt (qualité broderie, police script), qualité denim/canvas (poids, couleur uniforme), coutures triple piqûre (régularité), étiquette WIP (police, placement)",
+  kith: "logo Kith (police, couleur, broderie qualité), qualité tissu (poids, texture), étiquette col (placement, police Kith), finition générale",
+  default: "logos et monogrammes (alignement, symétrie, proportions), qualité des matériaux (grain, odeur, souplesse), coutures et finitions (régularité, tension), étiquettes intérieures (police, placement, typo), ferrures et accessoires (poids, gravure, finition)",
+};
+
+function getBrandExpertise(brandName: string): string {
+  const key = brandName.toLowerCase();
+  // Direct match first
+  if (BRAND_EXPERTISE[key]) return BRAND_EXPERTISE[key];
+  // Partial match (e.g. "Jordan Brand" → "jordan")
+  for (const [k, v] of Object.entries(BRAND_EXPERTISE)) {
+    if (key.includes(k) || k.includes(key)) return v;
+  }
+  return BRAND_EXPERTISE.default;
+}
+
+const CATEGORY_LABEL: Record<string, string> = {
+  sneakers: "chaussures de sport et streetwear",
+  bag: "maroquinerie et accessoires de luxe",
+  clothing: "vêtements streetwear et luxe",
+  watch: "horlogerie de luxe",
+};
+
+// ── Main export ───────────────────────────────────────────────────────────────
+
+export function getAuthenticationPrompt(
+  brandName: string,
+  modelName: string,
+  category: string,
+  authenticationPoints: AuthenticationPoint[],
+  photoDescriptions: string[]
+): { systemPrompt: string; userPrompt: string } {
+  const expertise = getBrandExpertise(brandName);
+  const categoryLabel = CATEGORY_LABEL[category] ?? category;
+
+  const systemPrompt = `Tu es un expert senior en authentification ${categoryLabel}, spécialisé dans la marque ${brandName} depuis 15 ans. Tu analyses des ${modelName} avec une précision chirurgicale.
+
+EXPERTISE ${brandName.toUpperCase()} — Marqueurs d'authenticité clés :
+${expertise}
+
+RÈGLES ABSOLUES :
+- Tu ne certifies JAMAIS l'authenticité. Tu donnes une ESTIMATION DE PROBABILITÉ basée sur l'analyse visuelle.
+- Tes observations sont factuelles, précises et ancrées dans ce que tu vois sur les photos.
+- Tu mentionnes les preuves visuelles spécifiques qui justifient chaque score.
+- Tu réponds UNIQUEMENT en JSON valide, sans texte avant ou après.
+
+MÉTHODOLOGIE :
+1. Examine chaque photo en la reliant à son type (vue de face, semelle, étiquette, etc.)
+2. Pour chaque point d'authentification, compare avec les standards ${brandName} ${modelName}
+3. Cherche : logos mal positionnés, polices incorrectes, coutures irrégulières, matériaux non conformes
+4. Vérifie la cohérence entre les photos (même article, même coloris)
+5. Extrais les données OCR visibles (codes produit, numéros de série, pays de fabrication)
+6. Pondère ton score final en favor des zones les plus discriminantes pour ${brandName}
+
+FORMAT DE RÉPONSE (JSON strict) :
+{
+  "overall_score": <number 0-100>,
+  "confidence_level": "<high|medium|low|insufficient>",
+  "verdict": "<likely_authentic|likely_fake|inconclusive>",
+  "sub_scores": {
+    "<zone_id>": <number 0-100>
+  },
+  "findings": [
+    {
+      "zone": "<zone_id>",
+      "observation": "<description factuelle précise en français>",
+      "score": <number 0-100>,
+      "severity": "<critical|important|minor>"
+    }
+  ],
+  "missing_evidence": ["<élément manquant pour affiner l'analyse>"],
+  "ocr_extracted": {
+    "size_label_text": "<texte extrait de l'étiquette taille ou vide>",
+    "product_code": "<code produit ou vide>",
+    "manufacturing_info": "<pays, usine si visible ou vide>"
+  },
+  "recommendations": ["<conseil actionnable en français>"],
+  "analyst_summary": "<résumé 2-3 phrases en français de l'analyse ${brandName} ${modelName}>"
+}`;
+
+  const pointsList = authenticationPoints
+    .map(
+      (p, i) =>
+        `${i + 1}. **${p.label}** (zone: \`${p.zone}\`, poids: ${(p.weight * 100).toFixed(0)}%)`
+    )
+    .join("\n");
+
+  const photosList = photoDescriptions
+    .map((desc, i) => `- Photo ${i + 1} : ${desc}`)
+    .join("\n");
+
+  const userPrompt = `Analyse ces ${photoDescriptions.length} photos pour estimer la probabilité d'authenticité de ce ${brandName} ${modelName}.
+
+**Article :** ${brandName} ${modelName}
+**Catégorie :** ${categoryLabel}
+
+**Photos fournies :**
+${photosList}
+
+**Points d'authentification spécifiques ${brandName} ${modelName} — par ordre d'importance :**
+${pointsList}
+
+Pour chaque zone, attribue un score de 0 à 100 basé sur la conformité avec les standards ${brandName} ${modelName} authentiques :
+- 90-100 : parfaitement conforme, aucun doute
+- 70-89 : conforme avec quelques imperfections mineures
+- 50-69 : présence d'anomalies significatives
+- 30-49 : plusieurs indicateurs suspects
+- 0-29 : clairement non conforme aux standards ${brandName}
+
+⚠️ Concentre-toi en priorité sur les détails les plus difficiles à reproduire fidèlement pour ${brandName}.
+
+Réponds UNIQUEMENT avec le JSON structuré demandé, sans aucun texte additionnel.`;
+
+  return { systemPrompt, userPrompt };
+}

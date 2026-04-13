@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { LogOut, User, LayoutDashboard } from "lucide-react";
+import { LogOut, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
@@ -101,14 +101,6 @@ export function UserMenu() {
             >
               <LayoutDashboard className="size-4" />
               Dashboard
-            </Link>
-            <Link
-              href="/dashboard/profile"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
-            >
-              <User className="size-4" />
-              Mon profil
             </Link>
           </div>
 

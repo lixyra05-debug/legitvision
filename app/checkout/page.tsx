@@ -13,7 +13,6 @@ export default async function CheckoutPage({
   searchParams: { plan?: string };
 }) {
   const rawPlan = searchParams.plan;
-  console.log("[checkout] ▶ Start — plan:", rawPlan);
 
   // ── 1. Auth ──────────────────────────────────────────────────────────────
   const supabase = createClient();
@@ -21,58 +20,33 @@ export default async function CheckoutPage({
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log("[checkout] User:", user?.id ?? "not authenticated");
-
   if (!user) {
-    // Properly encode the redirect URL so ?plan=pro is not stripped
     const redirectParam = encodeURIComponent(`/checkout?plan=${rawPlan ?? "pro"}`);
-    console.log("[checkout] → /auth (not authenticated)");
     redirect(`/auth?redirect=${redirectParam}`);
   }
 
   // ── 2. Validate plan ─────────────────────────────────────────────────────
   const planId = rawPlan as PaidPlanId;
   if (!rawPlan || !PAID_PLANS.includes(planId)) {
-    console.log("[checkout] Invalid plan:", rawPlan, "→ /#pricing");
     redirect("/#pricing");
   }
 
   // ── 3. Fetch profile ─────────────────────────────────────────────────────
   const admin = createAdminClient();
-  const { data: profile, error: profileError } = await admin
+  const { data: profile } = await admin
     .from("profiles")
     .select("stripe_customer_id, subscription_plan")
     .eq("id", user.id)
     .single();
 
-  console.log("[checkout] Profile:", {
-    subscription_plan: profile?.subscription_plan ?? null,
-    has_stripe_customer: !!profile?.stripe_customer_id,
-    profile_error: profileError?.message ?? null,
-  });
-
   // ── 4. Already on this plan → dashboard (skip for single — always allowed) ─
   if (planId !== "single" && profile?.subscription_plan === planId) {
-    console.log(
-      "[checkout] Already on plan:",
-      planId,
-      "→ /dashboard (already subscribed)"
-    );
     redirect("/dashboard");
   }
 
   // ── 5. Env vars check ────────────────────────────────────────────────────
   const stripeKey = process.env.STRIPE_SECRET_KEY;
-  console.log("[checkout] Env vars:", {
-    STRIPE_SECRET_KEY: stripeKey ? "✓ set" : "✗ MISSING",
-    STRIPE_PRO_PRICE_ID: process.env.STRIPE_PRO_PRICE_ID ? "✓ set" : "✗ MISSING",
-    STRIPE_BUSINESS_PRICE_ID: process.env.STRIPE_BUSINESS_PRICE_ID ? "✓ set" : "✗ MISSING",
-    STRIPE_SINGLE_PRICE_ID: process.env.STRIPE_SINGLE_PRICE_ID ? "✓ set" : "✗ MISSING",
-    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL ?? "(not set)",
-  });
-
   if (!stripeKey) {
-    console.error("[checkout] ✗ STRIPE_SECRET_KEY manquante — impossible de créer la session");
     redirect("/#pricing");
   }
 
@@ -97,18 +71,12 @@ export default async function CheckoutPage({
         metadata: { supabase_user_id: user.id },
       });
       customerId = customer.id;
-      console.log("[checkout] New Stripe customer created:", customerId);
 
       // Save customer ID (best effort — don't block checkout if this fails)
-      const { error: updateError } = await admin
+      await admin
         .from("profiles")
         .update({ stripe_customer_id: customerId })
         .eq("id", user.id);
-      if (updateError) {
-        console.warn("[checkout] Could not save stripe_customer_id:", updateError.message);
-      }
-    } else {
-      console.log("[checkout] Existing Stripe customer:", customerId);
     }
 
     const baseUrl =
@@ -120,8 +88,6 @@ export default async function CheckoutPage({
       // ── Paiement unique (1 analyse, mode: "payment") ─────────────────────
       const singlePriceId = process.env.STRIPE_SINGLE_PRICE_ID;
       if (!singlePriceId) throw new Error("STRIPE_SINGLE_PRICE_ID non défini");
-
-      console.log("[checkout] Creating one-time payment session:", { planId, singlePriceId, baseUrl });
 
       session = await stripe.checkout.sessions.create({
         customer: customerId,
@@ -139,7 +105,6 @@ export default async function CheckoutPage({
     } else {
       // ── Abonnement récurrent (pro / business) ─────────────────────────────
       const priceId = getPriceId(planId as "pro" | "business");
-      console.log("[checkout] Creating subscription session:", { planId, priceId, baseUrl });
 
       session = await stripe.checkout.sessions.create({
         customer: customerId,
@@ -158,20 +123,17 @@ export default async function CheckoutPage({
     }
 
     sessionUrl = session.url;
-    console.log("[checkout] Session created:", session.id, "| URL obtained:", !!sessionUrl);
   } catch (err) {
     console.error(
-      "[checkout] ✗ Stripe error:",
+      "[checkout] Stripe error:",
       err instanceof Error ? err.message : String(err)
     );
   }
 
   // ── 7. Redirect — OUTSIDE try/catch ───────────────────────────────────────
   if (!sessionUrl) {
-    console.log("[checkout] No session URL → /#pricing");
     redirect("/#pricing");
   }
 
-  console.log("[checkout] ✓ Redirecting to Stripe Checkout");
   redirect(sessionUrl);
 }

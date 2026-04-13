@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import sharp from "sharp";
-import { SYSTEM_PROMPT, buildUserPrompt } from "./prompts";
+import { getAuthenticationPrompt } from "./authentication-prompts";
 import { calculateWeightedScore } from "./scoring";
 import type { AuthenticationPoint, Confidence, Verdict } from "@/lib/types";
 
@@ -85,14 +85,14 @@ export async function runAnalysis({
     (img) => `${img.label} (${img.photoType})`
   );
 
-  // Build the user prompt
-  const userPrompt = buildUserPrompt({
+  // Build specialized prompts for this brand + model
+  const { systemPrompt, userPrompt } = getAuthenticationPrompt(
     brandName,
     modelName,
     category,
-    photoDescriptions,
     authenticationPoints,
-  });
+    photoDescriptions,
+  );
 
   // Build content blocks: images first, then text
   const content: Anthropic.Messages.ContentBlockParam[] = [];
@@ -118,7 +118,7 @@ export async function runAnalysis({
   const response = await anthropic.messages.create({
     model: "claude-sonnet-4-20250514",
     max_tokens: 4096,
-    system: SYSTEM_PROMPT,
+    system: systemPrompt,
     messages: [
       {
         role: "user",
