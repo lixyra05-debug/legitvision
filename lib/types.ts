@@ -37,12 +37,20 @@ export interface Brand {
   created_at: string;
 }
 
+export interface Collaboration {
+  name: string;
+  detail: string;
+}
+
 export interface Model {
   id: string;
   brand_id: string;
   name: string;
   slug: string;
   authentication_points: AuthenticationPoint[];
+  variants: string[];
+  collaborations: Collaboration[];
+  specific_auth_points: string[] | null;
   min_photos: number;
   max_photos: number;
   is_active: boolean;
@@ -64,6 +72,8 @@ export interface Analysis {
   ai_raw_response: unknown | null;
   expert_id: string | null;
   expert_notes: string | null;
+  variant_selected: string | null;
+  collab_selected: string | null;
   created_at: string;
   updated_at: string;
 }

@@ -34,9 +34,13 @@ export async function POST(request: NextRequest) {
 
   // 3. Parse request body
   let analysisId: string;
+  let variantSelected: string | null = null;
+  let collabSelected: string | null = null;
   try {
     const body = await request.json();
     analysisId = body.analysisId;
+    variantSelected = body.variant_selected ?? null;
+    collabSelected = body.collab_selected ?? null;
     if (!analysisId) throw new Error();
   } catch {
     return NextResponse.json(
@@ -126,10 +130,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 8. Update status to analyzing
+  // 8. Update status to analyzing + store variant/collab metadata
   await admin
     .from("analyses")
-    .update({ status: "analyzing" })
+    .update({
+      status: "analyzing",
+      variant_selected: variantSelected,
+      collab_selected: collabSelected,
+    })
     .eq("id", analysisId);
 
   try {
@@ -165,6 +173,9 @@ export async function POST(request: NextRequest) {
       modelName: model.name,
       category: analysis.category,
       authenticationPoints: model.authentication_points,
+      variantSelected,
+      collabSelected,
+      specificAuthPoints: model.specific_auth_points ?? null,
     });
 
     // 11. Determine if expert review is needed

@@ -65,12 +65,18 @@ export async function runAnalysis({
   modelName,
   category,
   authenticationPoints,
+  variantSelected,
+  collabSelected,
+  specificAuthPoints,
 }: {
   images: ImageInput[];
   brandName: string;
   modelName: string;
   category: string;
   authenticationPoints: AuthenticationPoint[];
+  variantSelected?: string | null;
+  collabSelected?: string | null;
+  specificAuthPoints?: string[] | null;
 }): Promise<AnalysisOutput> {
   // Preprocess all images
   const processedImages = await Promise.all(
@@ -92,6 +98,9 @@ export async function runAnalysis({
     category,
     authenticationPoints,
     photoDescriptions,
+    variantSelected,
+    collabSelected,
+    specificAuthPoints,
   );
 
   // Build content blocks: images first, then text

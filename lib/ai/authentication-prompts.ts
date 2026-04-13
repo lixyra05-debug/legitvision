@@ -63,15 +63,41 @@ export function getAuthenticationPrompt(
   modelName: string,
   category: string,
   authenticationPoints: AuthenticationPoint[],
-  photoDescriptions: string[]
+  photoDescriptions: string[],
+  variantSelected?: string | null,
+  collabSelected?: string | null,
+  specificAuthPoints?: string[] | null,
 ): { systemPrompt: string; userPrompt: string } {
-  const expertise = getBrandExpertise(brandName);
+  const expertise =
+    specificAuthPoints && specificAuthPoints.length > 0
+      ? specificAuthPoints.join(", ")
+      : getBrandExpertise(brandName);
   const categoryLabel = CATEGORY_LABEL[category] ?? category;
 
-  const systemPrompt = `Tu es un expert senior en authentification ${categoryLabel}, spécialisé dans la marque ${brandName} depuis 15 ans. Tu analyses des ${modelName} avec une précision chirurgicale.
+  // Build model identity string
+  const variantStr = variantSelected && variantSelected !== "Standard"
+    ? ` version ${variantSelected}`
+    : "";
+  const collabStr = collabSelected
+    ? ` — Édition spéciale ${collabSelected}`
+    : "";
+  const modelIdentity = `${brandName} ${modelName}${variantStr}${collabStr}`;
+
+  // Collab-specific instructions
+  const collabSection = collabSelected
+    ? `\nÉDITION SPÉCIALE ${collabSelected.toUpperCase()} :
+Cette pièce est une collaboration limitée. Sois particulièrement attentif aux :
+- Tags, étiquettes et packaging spécifiques à la collab
+- Détails exclusifs (coloris, broderies, impressions propres à la collab)
+- Numéros de lot / certificats d'authenticité collab
+- Qualité généralement supérieure aux modèles standards : toute dégradation est suspecte\n`
+    : "";
+
+  const systemPrompt = `Tu es un expert senior en authentification ${categoryLabel}, spécialisé dans la marque ${brandName} depuis 15 ans. Tu analyses des ${modelIdentity} avec une précision chirurgicale.
 
 EXPERTISE ${brandName.toUpperCase()} — Marqueurs d'authenticité clés :
 ${expertise}
+${collabSection}
 
 RÈGLES ABSOLUES :
 - Tu ne certifies JAMAIS l'authenticité. Tu donnes une ESTIMATION DE PROBABILITÉ basée sur l'analyse visuelle.
@@ -110,7 +136,7 @@ FORMAT DE RÉPONSE (JSON strict) :
     "manufacturing_info": "<pays, usine si visible ou vide>"
   },
   "recommendations": ["<conseil actionnable en français>"],
-  "analyst_summary": "<résumé 2-3 phrases en français de l'analyse ${brandName} ${modelName}>"
+  "analyst_summary": "<résumé 2-3 phrases en français de l'analyse ${modelIdentity}>"
 }`;
 
   const pointsList = authenticationPoints
@@ -124,10 +150,10 @@ FORMAT DE RÉPONSE (JSON strict) :
     .map((desc, i) => `- Photo ${i + 1} : ${desc}`)
     .join("\n");
 
-  const userPrompt = `Analyse ces ${photoDescriptions.length} photos pour estimer la probabilité d'authenticité de ce ${brandName} ${modelName}.
+  const userPrompt = `Analyse ces ${photoDescriptions.length} photos pour estimer la probabilité d'authenticité de ce ${modelIdentity}.
 
-**Article :** ${brandName} ${modelName}
-**Catégorie :** ${categoryLabel}
+**Article :** ${modelIdentity}
+**Catégorie :** ${categoryLabel}${variantSelected && variantSelected !== "Standard" ? `\n**Variante déclarée :** ${variantSelected}` : ""}${collabSelected ? `\n**Collaboration déclarée :** ${collabSelected} — vérifie les marqueurs spécifiques à cette collab` : ""}
 
 **Photos fournies :**
 ${photosList}
@@ -142,7 +168,7 @@ Pour chaque zone, attribue un score de 0 à 100 basé sur la conformité avec le
 - 30-49 : plusieurs indicateurs suspects
 - 0-29 : clairement non conforme aux standards ${brandName}
 
-⚠️ Concentre-toi en priorité sur les détails les plus difficiles à reproduire fidèlement pour ${brandName}.
+⚠️ Concentre-toi en priorité sur les détails les plus difficiles à reproduire fidèlement pour ${brandName}${collabSelected ? ` — et sur les marqueurs exclusifs de la collab ${collabSelected}` : ""}.
 
 Réponds UNIQUEMENT avec le JSON structuré demandé, sans aucun texte additionnel.`;
 

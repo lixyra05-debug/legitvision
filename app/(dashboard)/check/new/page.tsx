@@ -41,7 +41,11 @@ export default function NewCheckPage() {
   const [loadingBrands, setLoadingBrands] = useState(false);
   const [loadingModels, setLoadingModels] = useState(false);
 
-  // Step 3
+  // Step 3 — Variant & Collab
+  const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
+  const [selectedCollab, setSelectedCollab] = useState<string | null>(null);
+
+  // Step 4
   const [photos, setPhotos] = useState<Record<string, PhotoFile>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -81,7 +85,7 @@ export default function NewCheckPage() {
 
         if (modelData) {
           setSelectedModel(modelData as Model);
-          setStep(3); // Brand + model set → jump straight to photos
+          setStep(3); // Brand + model set → jump to variant/collab step
         } else {
           setStep(2); // Brand set, model not found → stay on picker
         }
@@ -151,19 +155,16 @@ export default function NewCheckPage() {
 
   const canProceed = () => {
     switch (step) {
-      case 1:
-        return category !== null;
-      case 2:
-        return selectedBrand !== null && selectedModel !== null;
-      case 3:
-        return allRequiredUploaded;
-      default:
-        return false;
+      case 1: return category !== null;
+      case 2: return selectedBrand !== null && selectedModel !== null;
+      case 3: return true; // variant/collab always skippable
+      case 4: return allRequiredUploaded;
+      default: return false;
     }
   };
 
   const handleNext = () => {
-    if (step < 3 && canProceed()) setStep(step + 1);
+    if (step < 4 && canProceed()) setStep(step + 1);
   };
   const handleBack = () => {
     if (step > 1) {
@@ -172,6 +173,10 @@ export default function NewCheckPage() {
         setSelectedModel(null);
       }
       if (step === 3) {
+        setSelectedVariant(null);
+        setSelectedCollab(null);
+      }
+      if (step === 4) {
         setPhotos({});
       }
       setStep(step - 1);
@@ -179,8 +184,7 @@ export default function NewCheckPage() {
   };
 
   const handleSubmit = useCallback(async () => {
-    if (!category || !selectedBrand || !selectedModel || !allRequiredUploaded)
-      return;
+    if (!category || !selectedBrand || !selectedModel || !allRequiredUploaded) return;
 
     setSubmitting(true);
     setSubmitError(null);
@@ -282,7 +286,11 @@ export default function NewCheckPage() {
       const analyzeResponse = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ analysisId: analysis.id }),
+        body: JSON.stringify({
+          analysisId: analysis.id,
+          variant_selected: selectedVariant !== "Standard" ? selectedVariant : null,
+          collab_selected: selectedCollab,
+        }),
       });
 
       // Safely parse JSON — the route may return an HTML error page on
@@ -316,6 +324,8 @@ export default function NewCheckPage() {
     selectedModel,
     allRequiredUploaded,
     photos,
+    selectedVariant,
+    selectedCollab,
     supabase,
     router,
   ]);
@@ -338,7 +348,7 @@ export default function NewCheckPage() {
       <main className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
         {/* Stepper indicator */}
         <div className="mb-10 flex items-center justify-center gap-2">
-          {[1, 2, 3].map((s) => (
+          {[1, 2, 3, 4].map((s) => (
             <div key={s} className="flex items-center gap-2">
               <div
                 className={`flex size-9 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
@@ -351,7 +361,7 @@ export default function NewCheckPage() {
               >
                 {s}
               </div>
-              {s < 3 && (
+              {s < 4 && (
                 <ChevronRight className="size-4 text-muted-foreground" />
               )}
             </div>
@@ -475,12 +485,115 @@ export default function NewCheckPage() {
           </div>
         )}
 
-        {/* Step 3: Photos */}
-        {step === 3 && (
+        {/* Step 3: Variante & Collaboration */}
+        {step === 3 && selectedModel && (
+          <div>
+            <h2 className="font-heading text-xl font-bold sm:text-2xl">
+              Variante &amp; Collaboration
+            </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Précisez la version pour une analyse encore plus ciblée — ou passez directement aux photos.
+            </p>
+
+            {/* Variantes */}
+            {selectedModel.variants && selectedModel.variants.length > 0 ? (
+              <div className="mt-6">
+                <p className="mb-3 text-sm font-medium text-foreground">
+                  Variante du{" "}
+                  <span className="text-emerald-400">
+                    {selectedBrand?.name} {selectedModel.name}
+                  </span>
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {selectedModel.variants.map((v) => (
+                    <button
+                      key={v}
+                      onClick={() => setSelectedVariant(selectedVariant === v ? null : v)}
+                      className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                        selectedVariant === v
+                          ? "border-emerald-500 bg-emerald-500/20 text-emerald-400"
+                          : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                      }`}
+                    >
+                      {v}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => setSelectedVariant("Standard")}
+                    className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                      selectedVariant === "Standard"
+                        ? "border-emerald-500 bg-emerald-500/20 text-emerald-400"
+                        : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                    }`}
+                  >
+                    Autre / Standard
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-6 rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 text-sm text-muted-foreground">
+                Aucune variante connue pour ce modèle.
+              </div>
+            )}
+
+            {/* Collaborations */}
+            {selectedModel.collaborations && selectedModel.collaborations.length > 0 && (
+              <div className="mt-6">
+                <p className="mb-3 text-sm font-medium text-foreground">
+                  Collaboration (optionnel)
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {selectedModel.collaborations.map((c) => (
+                    <button
+                      key={c.name}
+                      onClick={() => setSelectedCollab(selectedCollab === c.name ? null : c.name)}
+                      title={c.detail || undefined}
+                      className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                        selectedCollab === c.name
+                          ? "border-amber-500 bg-amber-500/20 text-amber-400"
+                          : "border-amber-500/20 bg-amber-500/5 text-amber-400/70 hover:border-amber-500/40 hover:text-amber-400"
+                      }`}
+                    >
+                      ✦ {c.name}
+                      {c.detail ? (
+                        <span className="ml-1.5 text-[10px] opacity-70">
+                          {c.detail}
+                        </span>
+                      ) : null}
+                    </button>
+                  ))}
+                  <button
+                    onClick={() => setSelectedCollab(null)}
+                    className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                      selectedCollab === null
+                        ? "border-white/20 bg-white/10 text-foreground"
+                        : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                    }`}
+                  >
+                    Pas de collab / Standard
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Récap sélection */}
+            {(selectedVariant || selectedCollab) && (
+              <div className="mt-6 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-sm">
+                <span className="text-muted-foreground">Analyse ciblée sur : </span>
+                <span className="font-semibold text-emerald-400">
+                  {[selectedBrand?.name, selectedModel?.name, selectedVariant !== "Standard" ? selectedVariant : null, selectedCollab].filter(Boolean).join(" — ")}
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Step 4: Photos */}
+        {step === 4 && (
           <div>
             <div className="mb-6 rounded-xl border border-white/5 bg-card p-4">
               <p className="text-sm text-muted-foreground">
-                {selectedBrand?.name} — {selectedModel?.name}
+                {[selectedBrand?.name, selectedModel?.name, selectedVariant !== "Standard" ? selectedVariant : null, selectedCollab].filter(Boolean).join(" — ")}
               </p>
             </div>
             <PhotoUploader
@@ -507,14 +620,14 @@ export default function NewCheckPage() {
             {step === 1 ? "Dashboard" : "Retour"}
           </button>
 
-          {step < 3 ? (
+          {step < 4 ? (
             <button
               onClick={handleNext}
               disabled={!canProceed()}
               className="flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-emerald-400 disabled:opacity-40 disabled:hover:bg-emerald-500"
             >
-              Suivant
-              <ArrowRight className="size-4" />
+              {step === 3 ? "Continuer →" : "Suivant"}
+              {step !== 3 && <ArrowRight className="size-4" />}
             </button>
           ) : (
             <button
