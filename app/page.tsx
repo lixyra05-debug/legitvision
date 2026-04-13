@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   Camera,
   Cpu,
@@ -11,9 +10,6 @@ import {
   Check,
   ArrowRight,
   CheckCircle2,
-  ShoppingBag,
-  Watch,
-  Shirt,
   Clock,
   Star,
   UserCheck,
@@ -23,67 +19,8 @@ import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
 import { BrandSearch } from "@/components/landing/BrandSearch";
+import { BrandsTabs } from "@/components/landing/BrandsTabs";
 
-const CATEGORY_IMAGES = {
-  sneakers: "/images/sneakers.png",
-  sacs: "/images/bags.png",
-  montres: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&q=80",
-  vetements: "/images/clothing.png",
-};
-
-const BRAND_LOGOS: Record<string, string> = {
-  // Sneakers
-  "Nike": "/images/brands/nike.jpg",
-  "Jordan": "/images/brands/jordan.jpg",
-  "adidas": "/images/brands/adidas.png",
-  "New Balance": "/images/brands/new-balance.png",
-  "Yeezy": "/images/brands/yeezy.png",
-  "Travis Scott": "/images/brands/travis-scott.png",
-  "Off-White": "/images/brands/off-white.png",
-  "BAPE": "/images/brands/bape.webp",
-  "Converse": "/images/brands/converse.png",
-  "Vans": "/images/brands/vans.png",
-  "Puma": "/images/brands/puma.png",
-  "Reebok": "/images/brands/reebok.png",
-  "Salomon": "/images/brands/salomon.png",
-  "New Era": "/images/brands/new-era.png",
-  // Sacs
-  "Louis Vuitton": "/images/brands/louis-vuitton.png",
-  "Gucci": "/images/brands/gucci.png",
-  "Chanel": "/images/brands/chanel.png",
-  "Dior": "/images/brands/dior.png",
-  "Hermès": "/images/brands/hermes.png",
-  "Prada": "/images/brands/prada.png",
-  "Saint Laurent": "/images/brands/saint-laurent.png",
-  "Goyard": "/images/brands/goyard.png",
-  "Balenciaga": "/images/brands/balenciaga.png",
-  "Celine": "/images/brands/celine.png",
-  "Fendi": "/images/brands/fendi.png",
-  "Bottega Veneta": "/images/brands/bottega-veneta.png",
-  "Valentino": "/images/brands/valentino.png",
-  "Givenchy": "/images/brands/givenchy.png",
-  "Jacquemus": "/images/brands/jacquemus.png",
-  "Miu Miu": "/images/brands/miu-miu.png",
-  // Vêtements
-  "Supreme": "/images/brands/supreme.png",
-  "Moncler": "/images/brands/moncler.png",
-  "Canada Goose": "/images/brands/canada-goose.png",
-  "Stone Island": "/images/brands/stone-island.png",
-  "Palm Angels": "/images/brands/palm-angels.png",
-  "Essentials": "/images/brands/essentials.png",
-  "Arc'teryx": "/images/brands/arcteryx.png",
-  "Palace": "/images/brands/palace.png",
-  "CP Company": "/images/brands/cp-company.png",
-  "Stüssy": "/images/brands/stussy.png",
-  "Comme des Garçons": "/images/brands/comme-des-garcons.png",
-  "Carhartt WIP": "/images/brands/carhartt-wip.png",
-  "Anti Social Social Club": "/images/brands/anti-social-social-club.png",
-  "Fear of God": "/images/brands/fear-of-god.png",
-  "Trapstar": "/images/brands/trapstar.png",
-  "Represent": "/images/brands/represent.png",
-  "Kith": "/images/brands/kith.png",
-  // Montres : pas de logos
-};
 
 const STEPS = [
   {
@@ -583,7 +520,7 @@ export default function LandingPage() {
             </p>
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs font-medium text-emerald-400">
               <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-              70+ modèles disponibles dans 4 catégories
+              340+ modèles disponibles dans 3 catégories
             </div>
           </FadeIn>
 
@@ -591,222 +528,9 @@ export default function LandingPage() {
             <div className="mt-10">
               <BrandSearch />
             </div>
-            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-
-              {/* Sneakers */}
-              <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
-                <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
-                  <Image src={CATEGORY_IMAGES.sneakers} alt="Sneakers" fill style={{ objectFit: "cover" }} />
-                </div>
-                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
-                  <Zap className="size-5 text-emerald-500" />
-                </div>
-                <h3 className="font-heading text-base font-semibold">Sneakers</h3>
-                <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  {[
-                    "Nike",
-                    "Jordan",
-                    "adidas",
-                    "New Balance",
-                    "Yeezy",
-                    "Travis Scott",
-                    "Off-White",
-                    "BAPE",
-                    "Converse",
-                    "Vans",
-                    "Puma",
-                    "Reebok",
-                    "Salomon",
-                    "New Era",
-                  ].map((brand) => (
-                    BRAND_LOGOS[brand] ? (
-                      <div
-                        key={brand}
-                        className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
-                        title={brand}
-                      >
-                        <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
-                          <Image
-                            src={BRAND_LOGOS[brand]}
-                            alt={brand}
-                            height={28}
-                            width={56}
-                            style={{ objectFit: "contain", width: "auto", height: "28px", mixBlendMode: "multiply" }}
-                          />
-                        </div>
-                        <span className="text-[11px] text-muted-foreground/80">{brand}</span>
-                      </div>
-                    ) : (
-                      <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
-                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                        {brand}
-                      </div>
-                    )
-                  ))}
-                </div>
-              </div>
-
-              {/* Sacs */}
-              <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
-                <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
-                  <Image src={CATEGORY_IMAGES.sacs} alt="Sacs de luxe" fill style={{ objectFit: "cover" }} />
-                </div>
-                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
-                  <ShoppingBag className="size-5 text-emerald-500" />
-                </div>
-                <h3 className="font-heading text-base font-semibold">Sacs</h3>
-                <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  {[
-                    "Louis Vuitton",
-                    "Gucci",
-                    "Chanel",
-                    "Dior",
-                    "Hermès",
-                    "Prada",
-                    "Saint Laurent",
-                    "Goyard",
-                    "Balenciaga",
-                    "Celine",
-                    "Fendi",
-                    "Bottega Veneta",
-                    "Valentino",
-                    "Givenchy",
-                    "Jacquemus",
-                    "Miu Miu",
-                  ].map((brand) => (
-                    BRAND_LOGOS[brand] ? (
-                      <div
-                        key={brand}
-                        className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
-                        title={brand}
-                      >
-                        <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
-                          <Image
-                            src={BRAND_LOGOS[brand]}
-                            alt={brand}
-                            height={28}
-                            width={56}
-                            style={{ objectFit: "contain", width: "auto", height: "28px", mixBlendMode: "multiply" }}
-                          />
-                        </div>
-                        <span className="text-[11px] text-muted-foreground/80">{brand}</span>
-                      </div>
-                    ) : (
-                      <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
-                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                        {brand}
-                      </div>
-                    )
-                  ))}
-                </div>
-              </div>
-
-              {/* Montres */}
-              <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
-                <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
-                  <Image src={CATEGORY_IMAGES.montres} alt="Montres de luxe" fill style={{ objectFit: "cover" }} />
-                </div>
-                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
-                  <Watch className="size-5 text-emerald-500" />
-                </div>
-                <h3 className="font-heading text-base font-semibold">Montres</h3>
-                <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  {[
-                    "Rolex",
-                    "Omega",
-                    "Audemars Piguet",
-                    "Patek Philippe",
-                    "Cartier",
-                    "TAG Heuer",
-                    "Richard Mille",
-                    "Hublot",
-                  ].map((brand) => (
-                    BRAND_LOGOS[brand] ? (
-                      <div
-                        key={brand}
-                        className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
-                        title={brand}
-                      >
-                        <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
-                          <Image
-                            src={BRAND_LOGOS[brand]}
-                            alt={brand}
-                            height={28}
-                            width={56}
-                            style={{ objectFit: "contain", width: "auto", height: "28px", mixBlendMode: "multiply" }}
-                          />
-                        </div>
-                        <span className="text-[11px] text-muted-foreground/80">{brand}</span>
-                      </div>
-                    ) : (
-                      <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
-                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                        {brand}
-                      </div>
-                    )
-                  ))}
-                </div>
-              </div>
-
-              {/* Vêtements */}
-              <div className="overflow-hidden rounded-2xl border border-white/5 bg-card p-6">
-                <div className="relative -mx-6 -mt-6 mb-6 aspect-video overflow-hidden rounded-t-2xl">
-                  <Image src={CATEGORY_IMAGES.vetements} alt="Vêtements de luxe" fill style={{ objectFit: "cover" }} />
-                </div>
-                <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
-                  <Shirt className="size-5 text-emerald-500" />
-                </div>
-                <h3 className="font-heading text-base font-semibold">Vêtements</h3>
-                <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  {[
-                    "Supreme",
-                    "Moncler",
-                    "Canada Goose",
-                    "Stone Island",
-                    "Palm Angels",
-                    "The North Face",
-                    "Essentials",
-                    "Arc'teryx",
-                    "Palace",
-                    "CP Company",
-                    "Stüssy",
-                    "Comme des Garçons",
-                    "Carhartt WIP",
-                    "Anti Social Social Club",
-                    "Fear of God",
-                    "Trapstar",
-                    "Represent",
-                    "Kith",
-                  ].map((brand) => (
-                    BRAND_LOGOS[brand] ? (
-                      <div
-                        key={brand}
-                        className="group flex flex-col items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-3 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
-                        title={brand}
-                      >
-                        <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
-                          <Image
-                            src={BRAND_LOGOS[brand]}
-                            alt={brand}
-                            height={28}
-                            width={56}
-                            style={{ objectFit: "contain", width: "auto", height: "28px", mixBlendMode: "multiply" }}
-                          />
-                        </div>
-                        <span className="text-[11px] text-muted-foreground/80">{brand}</span>
-                      </div>
-                    ) : (
-                      <div key={brand} className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm font-medium text-white">
-                        <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-                        {brand}
-                      </div>
-                    )
-                  ))}
-                </div>
-              </div>
-
+            <div className="mt-8">
+              <BrandsTabs />
             </div>
-
             <p className="mt-8 text-center text-sm text-muted-foreground">
               Une marque manquante ?{" "}
               <a
