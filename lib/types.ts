@@ -15,7 +15,7 @@ export type Verdict = "likely_authentic" | "likely_fake" | "inconclusive";
 export type Confidence = "high" | "medium" | "low";
 
 export interface PhotoSlot {
-  type: string;
+  name: string;
   label: string;
   required: boolean;
 }

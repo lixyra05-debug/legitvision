@@ -79,7 +79,7 @@ export function PhotoUploader({
 
   const requiredCount = protocol.filter((s) => s.required).length;
   const uploadedRequired = protocol.filter(
-    (s) => s.required && photos[s.type]
+    (s) => s.required && photos[s.name]
   ).length;
   const allRequiredDone = uploadedRequired === requiredCount;
 
@@ -151,14 +151,14 @@ export function PhotoUploader({
 
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {protocol.map((slot) => {
-          const photo = photos[slot.type];
-          const error = errors[slot.type];
+          const photo = photos[slot.name];
+          const error = errors[slot.name];
 
           return (
-            <div key={slot.type} className="flex flex-col gap-2">
+            <div key={slot.name} className="flex flex-col gap-2">
               <button
                 type="button"
-                onClick={() => inputRefs.current[slot.type]?.click()}
+                onClick={() => inputRefs.current[slot.name]?.click()}
                 className={`relative aspect-square overflow-hidden rounded-xl border-2 border-dashed transition-colors ${
                   photo
                     ? "border-emerald-500/30"
@@ -178,7 +178,7 @@ export function PhotoUploader({
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleRemove(slot.type);
+                        handleRemove(slot.name);
                       }}
                       className="absolute right-2 top-2 flex size-7 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-red-500"
                     >
@@ -216,14 +216,14 @@ export function PhotoUploader({
 
               <input
                 ref={(el) => {
-                  inputRefs.current[slot.type] = el;
+                  inputRefs.current[slot.name] = el;
                 }}
                 type="file"
                 accept="image/jpeg,image/png,image/webp"
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-                  if (file) handleFileSelect(slot.type, file);
+                  if (file) handleFileSelect(slot.name, file);
                   e.target.value = "";
                 }}
               />

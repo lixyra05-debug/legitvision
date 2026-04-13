@@ -139,7 +139,7 @@ export default function NewCheckPage() {
     : [];
 
   const requiredSlots = protocol.filter((s) => s.required);
-  const allRequiredUploaded = requiredSlots.every((s) => photos[s.type]);
+  const allRequiredUploaded = requiredSlots.every((s) => photos[s.name]);
 
   const canProceed = () => {
     switch (step) {

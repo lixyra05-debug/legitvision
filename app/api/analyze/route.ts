@@ -166,7 +166,7 @@ export async function POST(request: NextRequest) {
         }
 
         const protocol = brand.photo_protocol as PhotoSlot[];
-        const slot = protocol.find((s) => s.type === photo.photo_type);
+        const slot = protocol.find((s) => s.name === photo.photo_type);
 
         return {
           buffer: Buffer.from(await data.arrayBuffer()),
