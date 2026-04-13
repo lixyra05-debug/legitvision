@@ -232,7 +232,7 @@ export default function LandingPage() {
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
               <Link
-                href="/auth"
+                href="/auth?redirect=%2Fcheck%2Fnew"
                 className="group inline-flex h-12 items-center gap-2 rounded-xl bg-emerald-500 px-8 text-base font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
               >
                 Analyser un article
@@ -470,7 +470,7 @@ export default function LandingPage() {
               {/* CTA sous la card */}
               <div className="mt-8 text-center">
                 <Link
-                  href="/auth"
+                  href="/auth?redirect=%2Fcheck%2Fnew"
                   className="group inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-7 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
                 >
                   Analysez votre premier article gratuitement
@@ -603,7 +603,7 @@ export default function LandingPage() {
                             alt={brand}
                             height={28}
                             width={56}
-                            style={{ objectFit: "contain", width: "auto", height: "28px" }}
+                            style={{ objectFit: "contain", width: "auto", height: "28px", mixBlendMode: "multiply" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -654,7 +654,7 @@ export default function LandingPage() {
                             alt={brand}
                             height={28}
                             width={56}
-                            style={{ objectFit: "contain", width: "auto", height: "28px" }}
+                            style={{ objectFit: "contain", width: "auto", height: "28px", mixBlendMode: "multiply" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -701,7 +701,7 @@ export default function LandingPage() {
                             alt={brand}
                             height={28}
                             width={56}
-                            style={{ objectFit: "contain", width: "auto", height: "28px" }}
+                            style={{ objectFit: "contain", width: "auto", height: "28px", mixBlendMode: "multiply" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -748,7 +748,7 @@ export default function LandingPage() {
                             alt={brand}
                             height={28}
                             width={56}
-                            style={{ objectFit: "contain", width: "auto", height: "28px" }}
+                            style={{ objectFit: "contain", width: "auto", height: "28px", mixBlendMode: "multiply" }}
                           />
                         </div>
                         <span className="text-[11px] text-muted-foreground/80">{brand}</span>
@@ -1123,7 +1123,7 @@ export default function LandingPage() {
             Résultat en moins de 30 secondes.
           </p>
           <Link
-            href="/auth"
+            href="/auth?redirect=%2Fcheck%2Fnew"
             className="group mt-10 inline-flex h-12 items-center gap-2 rounded-xl bg-emerald-500 px-8 text-base font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
           >
             Créer un compte gratuit

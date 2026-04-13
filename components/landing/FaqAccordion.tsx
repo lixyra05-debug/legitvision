@@ -26,7 +26,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Combien coûte une analyse ?",
-    a: "L'inscription est gratuite et inclut 3 analyses offertes. Le plan Pro à 14,99 €/mois offre 30 analyses, et le plan Business à 29,99 €/mois offre des analyses illimitées.",
+    a: "L'inscription est gratuite et inclut 3 analyses offertes. Le plan Mensuel à 19,99 €/mois offre 10 analyses, et le plan Premium à 39,99 €/mois offre 50 analyses.",
   },
   {
     q: "Combien de temps prend une analyse ?",

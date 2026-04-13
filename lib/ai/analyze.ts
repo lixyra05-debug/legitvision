@@ -4,9 +4,9 @@ import { SYSTEM_PROMPT, buildUserPrompt } from "./prompts";
 import { calculateWeightedScore } from "./scoring";
 import type { AuthenticationPoint, Confidence, Verdict } from "@/lib/types";
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
+function getAnthropicClient(): Anthropic {
+  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+}
 
 // ── Types ──
 
@@ -49,20 +49,6 @@ export interface AnalysisOutput {
 }
 
 // ── Image preprocessing ──
-
-function getMediaType(
-  filename: string
-): "image/jpeg" | "image/png" | "image/webp" {
-  const ext = filename.toLowerCase().split(".").pop();
-  switch (ext) {
-    case "png":
-      return "image/png";
-    case "webp":
-      return "image/webp";
-    default:
-      return "image/jpeg";
-  }
-}
 
 export async function preprocessImage(buffer: Buffer): Promise<Buffer> {
   return sharp(buffer)
@@ -116,7 +102,7 @@ export async function runAnalysis({
       type: "image",
       source: {
         type: "base64",
-        media_type: getMediaType(img.filename),
+        media_type: "image/jpeg", // preprocessImage() converts all images to JPEG
         data: img.buffer.toString("base64"),
       },
     });
@@ -128,6 +114,7 @@ export async function runAnalysis({
   });
 
   // Call Claude Vision API
+  const anthropic = getAnthropicClient();
   const response = await anthropic.messages.create({
     model: "claude-sonnet-4-20250514",
     max_tokens: 4096,

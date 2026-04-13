@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, type Dispatch, type SetStateAction } from "react";
 import { Camera, X, AlertCircle, Check } from "lucide-react";
 import type { PhotoSlot } from "@/lib/types";
 
@@ -18,7 +18,7 @@ interface PhotoFile {
 interface PhotoUploaderProps {
   protocol: PhotoSlot[];
   photos: Record<string, PhotoFile>;
-  onPhotosChange: (photos: Record<string, PhotoFile>) => void;
+  onPhotosChange: Dispatch<SetStateAction<Record<string, PhotoFile>>>;
 }
 
 function validateImage(
@@ -99,30 +99,38 @@ export function PhotoUploader({
       });
 
       const preview = URL.createObjectURL(file);
-      onPhotosChange({
-        ...photos,
-        [slotType]: {
-          file,
-          preview,
-          width: result.width,
-          height: result.height,
-        },
+      onPhotosChange((prev) => {
+        const existing = prev[slotType];
+        if (existing) {
+          URL.revokeObjectURL(existing.preview);
+        }
+        return {
+          ...prev,
+          [slotType]: {
+            file,
+            preview,
+            width: result.width,
+            height: result.height,
+          },
+        };
       });
     },
-    [photos, onPhotosChange]
+    [onPhotosChange]
   );
 
   const handleRemove = useCallback(
     (slotType: string) => {
-      const current = photos[slotType];
-      if (current) {
-        URL.revokeObjectURL(current.preview);
-      }
-      const next = { ...photos };
-      delete next[slotType];
-      onPhotosChange(next);
+      onPhotosChange((prev) => {
+        const existing = prev[slotType];
+        if (existing) {
+          URL.revokeObjectURL(existing.preview);
+        }
+        const next = { ...prev };
+        delete next[slotType];
+        return next;
+      });
     },
-    [photos, onPhotosChange]
+    [onPhotosChange]
   );
 
   return (

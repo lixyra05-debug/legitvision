@@ -72,6 +72,7 @@ export interface AnalysisFinding {
   zone: string;
   observation: string;
   score: number;
+  severity?: "critical" | "important" | "minor";
 }
 
 export interface AnalysisWithDetails extends Analysis {
@@ -86,7 +87,7 @@ export interface Profile {
   avatar_url: string | null;
   role: "user" | "expert" | "admin";
   credits_remaining: number;
-  subscription_plan: "free" | "starter" | "pro" | "business";
+  subscription_plan: "free" | "pro" | "business";
   stripe_customer_id: string | null;
   stripe_subscription_id: string | null;
   created_at: string;

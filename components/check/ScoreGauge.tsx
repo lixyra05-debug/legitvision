@@ -13,6 +13,11 @@ const COLOR_MAP = {
     glow: "rgba(234, 179, 8, 0.4)",
     text: "text-yellow-500",
   },
+  orange: {
+    stroke: "#f97316",
+    glow: "rgba(249, 115, 22, 0.4)",
+    text: "text-orange-500",
+  },
   red: {
     stroke: "#ef4444",
     glow: "rgba(239, 68, 68, 0.4)",
@@ -23,8 +28,9 @@ const COLOR_MAP = {
 type ColorVariant = keyof typeof COLOR_MAP;
 
 function colorVariant(score: number): ColorVariant {
-  if (score >= 75) return "emerald";
-  if (score >= 45) return "yellow";
+  if (score >= 90) return "emerald";
+  if (score >= 70) return "yellow";
+  if (score >= 50) return "orange";
   return "red";
 }
 
