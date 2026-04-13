@@ -46,6 +46,54 @@ export default function NewCheckPage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
+  // Pre-select brand/model from URL query params (?brand=Nike&model=Air+Jordan+1)
+  // Using window.location.search (client-side only) avoids the Suspense requirement
+  // that useSearchParams() would impose in Next.js 14.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const brandParam = params.get("brand");
+    const modelParam = params.get("model");
+    if (!brandParam) return;
+
+    async function preselect() {
+      // Fetch brand by name (case-insensitive)
+      const { data: brandData } = await supabase
+        .from("brands")
+        .select("*")
+        .ilike("name", brandParam!)
+        .eq("is_active", true)
+        .maybeSingle();
+
+      if (!brandData) return;
+
+      setCategory(brandData.category as Category);
+      setSelectedBrand(brandData as Brand);
+
+      if (modelParam) {
+        // Fetch model by name within this brand
+        const { data: modelData } = await supabase
+          .from("models")
+          .select("*")
+          .eq("brand_id", brandData.id)
+          .ilike("name", modelParam!)
+          .eq("is_active", true)
+          .maybeSingle();
+
+        if (modelData) {
+          setSelectedModel(modelData as Model);
+          setStep(3); // Brand + model set → jump straight to photos
+        } else {
+          setStep(2); // Brand set, model not found → stay on picker
+        }
+      } else {
+        setStep(2); // Brand set, no model param → stay on picker
+      }
+    }
+
+    preselect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // run once on mount only
+
   // Fetch brands when category changes
   useEffect(() => {
     if (!category) return;

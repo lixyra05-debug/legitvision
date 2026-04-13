@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Search } from "lucide-react";
-import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
 interface Brand {
@@ -23,6 +22,7 @@ interface SearchResult {
   id: string;
   name: string;
   subtitle: string;
+  brandName?: string; // for models: used as ?brand= query param
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -102,9 +102,35 @@ export function BrandSearch() {
               id: `m-${m.id}`,
               name: m.name,
               subtitle: m.brand_name,
+              brandName: m.brand_name,
             })
           ),
       ].slice(0, 8);
+
+  async function handleResultClick(result: SearchResult) {
+    setOpen(false);
+
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      window.location.href = "/auth?redirect=/check/new";
+      return;
+    }
+
+    // Build URL with pre-selection params
+    const params = new URLSearchParams();
+    if (result.type === "brand") {
+      params.set("brand", result.name);
+    } else {
+      if (result.brandName) params.set("brand", result.brandName);
+      params.set("model", result.name);
+    }
+
+    window.location.href = `/check/new?${params.toString()}`;
+  }
 
   return (
     <div ref={containerRef} className="relative mx-auto mb-10 max-w-xl">
@@ -162,11 +188,10 @@ export function BrandSearch() {
           ) : (
             <div className="divide-y divide-white/5">
               {results.map((result) => (
-                <Link
+                <button
                   key={result.id}
-                  href="/check/new"
-                  onClick={() => setOpen(false)}
-                  className="flex items-center justify-between px-5 py-3 transition-colors hover:bg-white/5"
+                  onClick={() => handleResultClick(result)}
+                  className="flex w-full items-center justify-between px-5 py-3 text-left transition-colors hover:bg-white/5"
                 >
                   <div>
                     <p className="text-sm font-medium text-white">
@@ -179,7 +204,7 @@ export function BrandSearch() {
                   <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-400">
                     {result.type === "brand" ? "Marque" : "Modèle"}
                   </span>
-                </Link>
+                </button>
               ))}
             </div>
           )}
