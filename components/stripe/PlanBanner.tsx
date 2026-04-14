@@ -59,9 +59,9 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
   return (
     <div className="flex flex-col gap-3 rounded-xl border border-white/10 bg-card px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <p className="text-sm font-semibold">Plan Free</p>
+        <p className="text-sm font-semibold">Aucun abonnement actif</p>
         <p className="mt-0.5 text-xs text-muted-foreground">
-          {creditsRemaining} crédit{creditsRemaining > 1 ? "s" : ""} restant{creditsRemaining > 1 ? "s" : ""} — renouvelés chaque mois
+          Souscrivez un forfait pour analyser vos articles
         </p>
       </div>
       <div className="flex gap-2">
@@ -70,7 +70,7 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
           className="flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-400 transition-colors hover:bg-emerald-500/20"
         >
           <Zap className="size-3" />
-          Pro — 14,99€/mois
+          Pro — 19,99€/mois
         </Link>
         <Link
           href="/checkout?plan=business"

@@ -101,9 +101,10 @@ export function BrandsTabs() {
       <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {brands.map((brand) =>
           brand.logo ? (
-            <div
+            <button
               key={`${active}-${brand.name}`}
-              className="group flex flex-col items-center gap-2 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-4 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10"
+              onClick={() => { window.location.href = '/check/new?brand=' + encodeURIComponent(brand.name); }}
+              className="group flex flex-col items-center gap-2 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-4 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 cursor-pointer text-left w-full"
             >
               <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
                 <Image
@@ -125,11 +126,12 @@ export function BrandsTabs() {
               <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
                 {brand.models} modèle{brand.models > 1 ? "s" : ""}
               </span>
-            </div>
+            </button>
           ) : (
-            <div
+            <button
               key={`${active}-${brand.name}`}
-              className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-4 transition-all hover:border-emerald-500/50"
+              onClick={() => { window.location.href = '/check/new?brand=' + encodeURIComponent(brand.name); }}
+              className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-4 transition-all hover:border-emerald-500/50 cursor-pointer w-full"
             >
               <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white">
                 <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
@@ -138,7 +140,7 @@ export function BrandsTabs() {
               <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
                 {brand.models} modèle{brand.models > 1 ? "s" : ""}
               </span>
-            </div>
+            </button>
           )
         )}
       </div>

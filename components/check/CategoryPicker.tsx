@@ -1,6 +1,6 @@
 "use client";
 
-import { Footprints, ShoppingBag, Watch, Shirt } from "lucide-react";
+import { Footprints, ShoppingBag, Shirt } from "lucide-react";
 import type { Category } from "@/lib/types";
 
 const CATEGORIES: {
@@ -20,12 +20,6 @@ const CATEGORIES: {
     label: "Sacs",
     description: "Louis Vuitton, Gucci, Chanel…",
     icon: ShoppingBag,
-  },
-  {
-    value: "watch",
-    label: "Montres",
-    description: "Rolex, Omega, Audemars Piguet…",
-    icon: Watch,
   },
   {
     value: "clothing",

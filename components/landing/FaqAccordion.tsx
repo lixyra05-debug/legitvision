@@ -22,11 +22,11 @@ const FAQ_ITEMS = [
   },
   {
     q: "Quelles marques sont supportées ?",
-    a: "Actuellement : Nike, Jordan, adidas, New Balance et Yeezy pour les sneakers, et Louis Vuitton pour les sacs. Nous ajoutons régulièrement de nouvelles marques. Contactez-nous pour demander une marque spécifique.",
+    a: "Nous couvrons plus de 340 modèles dans 3 catégories : sneakers, sacs et vêtements. Nike, Jordan, adidas, New Balance, Louis Vuitton et bien d'autres marques sont disponibles. Nous ajoutons régulièrement de nouveaux modèles. Contactez-nous pour demander une marque spécifique.",
   },
   {
     q: "Combien coûte une analyse ?",
-    a: "L'inscription est gratuite et inclut 3 analyses offertes. Le plan Mensuel à 19,99 €/mois offre 10 analyses, et le plan Premium à 39,99 €/mois offre 50 analyses.",
+    a: "L'utilisation unique coûte 3,99€. Le forfait Mensuel est à 19,99€/mois pour 10 analyses. Le Premium est à 29,99€/mois pour 50 analyses. Aucune analyse gratuite n'est incluse.",
   },
   {
     q: "Combien de temps prend une analyse ?",

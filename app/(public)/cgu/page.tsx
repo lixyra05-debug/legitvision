@@ -22,7 +22,7 @@ export default function CguPage() {
         <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
           Conditions Générales d&apos;Utilisation
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Dernière mise à jour : mars 2026</p>
+        <p className="mt-2 text-sm text-muted-foreground">Dernière mise à jour : avril 2026</p>
 
         <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
           <p className="text-amber-400 text-sm font-medium">
@@ -94,14 +94,9 @@ export default function CguPage() {
                 <div className="bg-card px-4 py-3 text-foreground font-medium">Prix</div>
               </div>
               <div className="grid grid-cols-3 gap-px bg-white/5">
-                <div className="bg-card px-4 py-3 text-muted-foreground">Free</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">3 / mois</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">Gratuit</div>
-              </div>
-              <div className="grid grid-cols-3 gap-px bg-white/5">
                 <div className="bg-card px-4 py-3 text-muted-foreground">Pro</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">30 / mois</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">14,99 € / mois</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">10 / mois</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">19,99 € / mois</div>
               </div>
               <div className="grid grid-cols-3 gap-px bg-white/5">
                 <div className="bg-card px-4 py-3 text-muted-foreground">Business</div>

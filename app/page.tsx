@@ -4,16 +4,14 @@ import {
   Cpu,
   Eye,
   FileCheck,
+  FileText,
   ShieldCheck,
   Zap,
   BarChart3,
   Check,
   ArrowRight,
   CheckCircle2,
-  Clock,
   Star,
-  UserCheck,
-  FileText,
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -116,7 +114,7 @@ const PLANS = [
   },
   {
     name: "Premium",
-    price: "39,99€",
+    price: "29,99€",
     period: "/mois",
     description: "Pour les revendeurs et pros",
     credits: "50 analyses / mois",
@@ -129,7 +127,7 @@ const PLANS = [
     ],
     cta: "Choisir ce forfait",
     popular: false,
-    badge: "Idéal revendeurs" as string | null,
+    badge: "Meilleure valeur" as string | null,
     href: "/checkout?plan=business",
   },
 ];
@@ -186,7 +184,7 @@ export default function LandingPage() {
             <p className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
               Prenez quelques photos, notre IA analyse chaque détail et vous
               donne un score de confiance en moins de 30 secondes. Sneakers,
-              sacs, montres, vêtements.
+              sacs, vêtements.
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row">
               <Link
@@ -672,8 +670,42 @@ export default function LandingPage() {
           </FadeIn>
 
           <div className="mt-16 grid gap-8 sm:grid-cols-3">
-            {PLANS.map((plan, i) => (
+            {PLANS.map((plan, i) => {
+              const isPremium = plan.name === "Premium";
+              return (
               <FadeIn key={plan.name} delay={i * 150}>
+                {/* Premium : wrapper gradient doré */}
+                {isPremium ? (
+                  <div className="relative rounded-2xl bg-gradient-to-br from-amber-400/50 via-yellow-300/20 to-amber-600/50 p-[1.5px] shadow-xl shadow-amber-500/20">
+                    <div className="relative flex flex-col rounded-2xl bg-card p-8">
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-amber-400 to-yellow-500 px-4 py-1 text-xs font-bold text-black shadow-lg shadow-amber-500/30">
+                        ⭐ {plan.badge}
+                      </span>
+                      <div>
+                        <h3 className="font-heading text-lg font-semibold text-amber-300">{plan.name}</h3>
+                        <p className="mt-1 text-sm text-muted-foreground">{plan.description}</p>
+                      </div>
+                      <div className="mt-6">
+                        <span className="font-heading text-4xl font-bold text-amber-300">{plan.price}</span>
+                        <span className="text-sm text-muted-foreground">{plan.period}</span>
+                      </div>
+                      <div className="mt-2 text-sm font-medium text-amber-400">{plan.credits}</div>
+                      <ul className="mt-8 flex-1 space-y-3">
+                        {plan.features.map((feature) => (
+                          <li key={feature} className="flex items-start gap-3 text-sm text-muted-foreground">
+                            <Check className="mt-0.5 size-4 shrink-0 text-amber-400" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="mt-8">
+                        <Link href={plan.href} className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-gradient-to-r from-amber-400 to-yellow-500 text-sm font-bold text-black transition-all hover:from-amber-300 hover:to-yellow-400 hover:shadow-lg hover:shadow-amber-500/30">
+                          {plan.cta}
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
                 <div
                   className={`relative flex flex-col rounded-2xl border p-8 transition-colors ${
                     plan.popular
@@ -686,7 +718,7 @@ export default function LandingPage() {
                       Populaire
                     </span>
                   )}
-                  {plan.badge && (
+                  {plan.badge && !isPremium && (
                     <span className={`absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1 text-xs font-semibold ${plan.popular ? "bg-emerald-500 text-white" : "border border-white/15 bg-card text-foreground"}`}>
                       {plan.badge}
                     </span>
@@ -734,8 +766,10 @@ export default function LandingPage() {
                     </Link>
                   </div>
                 </div>
+                )}
               </FadeIn>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -765,9 +799,11 @@ export default function LandingPage() {
               Qui sommes-nous ?
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
-              LegitVision est né d&apos;une passion pour le streetwear et le luxe, et d&apos;une frustration
-              face aux contrefaçons. Notre mission : rendre l&apos;authentification accessible à tous
-              grâce à l&apos;intelligence artificielle.
+              LegitVision est propulsé par <span className="font-semibold text-foreground">LYXIRIA</span>, une entreprise naissante fondée par de jeunes passionnés de tech et de luxe.
+              Nous avons décidé de créer ce service pour aider les gens à vérifier l&apos;authenticité de leurs produits.
+              Parce qu&apos;on a tous déjà eu peur de se faire arnaquer en achetant un article de luxe au prix fort,
+              alors qu&apos;il s&apos;agit d&apos;une contrefaçon.
+              Notre mission : rendre l&apos;authentification accessible à tous grâce à l&apos;IA.
             </p>
           </FadeIn>
 
@@ -812,66 +848,18 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Revue expert ── */}
-      <section className="border-t border-white/5 py-20 sm:py-28">
-        <div className="mx-auto max-w-4xl px-4">
-          <FadeIn className="text-center">
-            <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-              Besoin d&apos;un avis d&apos;expert ?
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-muted-foreground">
-              Pour les articles de grande valeur ou les cas ambigus, notre équipe
-              d&apos;experts peut réaliser une revue manuelle approfondie de votre analyse.
-            </p>
-          </FadeIn>
-
-          <FadeIn delay={150}>
-            <div className="mt-10 grid gap-6 sm:grid-cols-3">
-              {[
-                {
-                  icon: Clock,
-                  title: "Revue sous 24h",
-                  desc: "Résultat garanti en moins d'une journée ouvrable.",
-                },
-                {
-                  icon: UserCheck,
-                  title: "Expert spécialisé par marque",
-                  desc: "Chaque revue est assignée à un expert de la marque concernée.",
-                },
-                {
-                  icon: FileText,
-                  title: "Rapport complémentaire détaillé",
-                  desc: "Observations supplémentaires et recommandation finale argumentée.",
-                },
-              ].map(({ icon: Icon, title, desc }) => (
-                <div
-                  key={title}
-                  className="flex flex-col items-center gap-3 rounded-2xl border border-white/5 bg-card p-6 text-center"
-                >
-                  <div className="flex size-11 items-center justify-center rounded-xl bg-emerald-500/10">
-                    <Icon className="size-5 text-emerald-500" />
-                  </div>
-                  <p className="font-heading font-semibold">{title}</p>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{desc}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 rounded-2xl border border-white/5 bg-card px-6 py-5 text-center">
-              <p className="text-sm text-muted-foreground">
+      {/* ── Disclaimer expert ── */}
+      <section className="border-t border-white/5 py-14 sm:py-20">
+        <div className="mx-auto max-w-3xl px-4">
+          <FadeIn>
+            <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 px-6 py-6 text-center">
+              <ShieldCheck className="mx-auto mb-3 size-8 text-amber-400" />
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Pour les articles de grande valeur, nous recommandons de croiser nos résultats avec un expert indépendant.{" "}
                 <span className="font-medium text-foreground">
-                  Inclus dans le plan Pro et Business.
-                </span>{" "}
-                Disponible à l&apos;unité pour le plan Free{" "}
-                <span className="font-medium text-foreground">(4,99€)</span>.
+                  Notre analyse IA est un outil de pré-authentification, pas une certification.
+                </span>
               </p>
-              <a
-                href="mailto:contact@legitvision.com"
-                className="group mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-emerald-400 transition-colors hover:text-emerald-300"
-              >
-                En savoir plus
-                <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
-              </a>
             </div>
           </FadeIn>
         </div>
@@ -882,17 +870,16 @@ export default function LandingPage() {
         <FadeIn className="mx-auto max-w-6xl px-4 text-center">
           <BarChart3 className="mx-auto mb-6 size-10 text-emerald-500" />
           <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
-            Vérifiez votre prochain achat gratuitement
+            Vérifiez votre prochain achat maintenant
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-            3 analyses offertes à l&apos;inscription, sans carte bancaire.
-            Résultat en moins de 30 secondes.
+            Résultat en moins de 30 secondes. Sneakers, sacs, vêtements.
           </p>
           <Link
             href="/auth?redirect=%2Fcheck%2Fnew"
             className="group mt-10 inline-flex h-12 items-center gap-2 rounded-xl bg-emerald-500 px-8 text-base font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
           >
-            Créer un compte gratuit
+            Commencer maintenant
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </FadeIn>
