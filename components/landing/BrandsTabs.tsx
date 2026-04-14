@@ -11,6 +11,13 @@ type BrandEntry = {
 
 type Category = "sneakers" | "vetements" | "sacs";
 
+// Maps tab ID → DB category value
+const DB_CATEGORY: Record<Category, string> = {
+  sneakers: "sneakers",
+  vetements: "clothing",
+  sacs: "bag",
+};
+
 const BRANDS: Record<Category, BrandEntry[]> = {
   sneakers: [
     { name: "Nike", models: 20, logo: "/images/brands/nike.jpg" },
@@ -22,9 +29,17 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Vans", models: 6, logo: "/images/brands/vans.png" },
     { name: "Puma", models: 5, logo: "/images/brands/puma.png" },
     { name: "Reebok", models: 5, logo: "/images/brands/reebok.png" },
-    { name: "New Era", models: 2, logo: "/images/brands/new-era.png" },
     { name: "Salomon", models: 4, logo: "/images/brands/salomon.png" },
-    { name: "New Balance Collab Extrêmes", models: 1 },
+    { name: "Balenciaga", models: 4, logo: "/images/brands/balenciaga.png" },
+    { name: "Louis Vuitton", models: 4, logo: "/images/brands/louis-vuitton.png" },
+    { name: "Dior", models: 4, logo: "/images/brands/dior.png" },
+    { name: "Gucci", models: 4, logo: "/images/brands/gucci.png" },
+    { name: "Prada", models: 3, logo: "/images/brands/prada.png" },
+    { name: "Chanel", models: 2, logo: "/images/brands/chanel.png" },
+    { name: "Hermès", models: 2, logo: "/images/brands/hermes.png" },
+    { name: "Bottega Veneta", models: 2, logo: "/images/brands/bottega-veneta.png" },
+    { name: "Maison Margiela", models: 3 },
+    { name: "New Era", models: 2, logo: "/images/brands/new-era.png" },
   ],
   vetements: [
     { name: "Supreme", models: 11, logo: "/images/brands/supreme.png" },
@@ -41,8 +56,10 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Fear of God", models: 5, logo: "/images/brands/fear-of-god.png" },
     { name: "Balenciaga", models: 7, logo: "/images/brands/balenciaga.png" },
     { name: "Louis Vuitton", models: 5, logo: "/images/brands/louis-vuitton.png" },
-    { name: "Gucci", models: 5, logo: "/images/brands/gucci.png" },
-    { name: "Dior", models: 4, logo: "/images/brands/dior.png" },
+    { name: "Gucci", models: 6, logo: "/images/brands/gucci.png" },
+    { name: "Dior", models: 5, logo: "/images/brands/dior.png" },
+    { name: "Moncler", models: 4 },
+    { name: "Canada Goose", models: 4 },
     { name: "Trapstar", models: 4, logo: "/images/brands/trapstar.png" },
     { name: "Represent", models: 3, logo: "/images/brands/represent.png" },
     { name: "Kith", models: 4, logo: "/images/brands/kith.png" },
@@ -103,7 +120,7 @@ export function BrandsTabs() {
           brand.logo ? (
             <button
               key={`${active}-${brand.name}`}
-              onClick={() => { window.location.href = '/check/new?brand=' + encodeURIComponent(brand.name); }}
+              onClick={() => { window.location.href = '/check/new?brand=' + encodeURIComponent(brand.name) + '&category=' + DB_CATEGORY[active]; }}
               className="group flex flex-col items-center gap-2 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-4 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 cursor-pointer text-left w-full"
             >
               <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
@@ -130,7 +147,7 @@ export function BrandsTabs() {
           ) : (
             <button
               key={`${active}-${brand.name}`}
-              onClick={() => { window.location.href = '/check/new?brand=' + encodeURIComponent(brand.name); }}
+              onClick={() => { window.location.href = '/check/new?brand=' + encodeURIComponent(brand.name) + '&category=' + DB_CATEGORY[active]; }}
               className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-4 transition-all hover:border-emerald-500/50 cursor-pointer w-full"
             >
               <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white">

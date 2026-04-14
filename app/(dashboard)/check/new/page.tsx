@@ -56,17 +56,18 @@ export default function NewCheckPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const brandParam = params.get("brand");
+    const categoryParam = params.get("category");
     const modelParam = params.get("model");
     if (!brandParam) return;
 
     async function preselect() {
-      // Fetch brand by name (case-insensitive)
-      const { data: brandData } = await supabase
-        .from("brands")
-        .select("*")
-        .ilike("name", brandParam!)
-        .eq("is_active", true)
-        .maybeSingle();
+      // Fetch brand by name (case-insensitive), filtered by category if provided.
+      // Category filter is required when multiple DB entries share the same brand name
+      // (multi-category brands like Balenciaga, Dior, Gucci, etc.).
+      const { data: brandData } = await (categoryParam
+        ? supabase.from("brands").select("*").ilike("name", brandParam!).eq("is_active", true).eq("category", categoryParam)
+        : supabase.from("brands").select("*").ilike("name", brandParam!).eq("is_active", true)
+      ).maybeSingle();
 
       if (!brandData) return;
 

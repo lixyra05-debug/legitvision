@@ -429,11 +429,11 @@ export default function LandingPage() {
                   href="/auth?redirect=%2Fcheck%2Fnew"
                   className="group inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-7 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
                 >
-                  Analysez votre premier article gratuitement
+                  Vérifiez votre prochain article
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </Link>
                 <p className="mt-3 text-xs text-muted-foreground">
-                  3 analyses offertes — sans carte bancaire
+                  Première analyse à 3,99€ · Sans abonnement
                 </p>
               </div>
             </div>
@@ -665,7 +665,7 @@ export default function LandingPage() {
               Tarifs simples, sans surprise
             </h2>
             <p className="mt-4 text-muted-foreground">
-              Commencez gratuitement, passez au Pro quand vous êtes prêt
+              Des tarifs clairs, adaptés à chaque usage
             </p>
           </FadeIn>
 
