@@ -1,21 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Sora } from "next/font/google";
+import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-});
-
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +23,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={cn("dark antialiased", inter.variable, spaceGrotesk.variable, sora.variable)}
+      className={cn("dark antialiased", inter.variable)}
     >
       <body className="bg-background text-foreground min-h-screen">
         {children}
