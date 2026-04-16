@@ -89,6 +89,25 @@
   50% { opacity: 0.3; }
 }
 
+/* ── Dashboard particle animation ── */
+@keyframes float-particle {
+  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+  25%       { transform: translate(5px, -8px); opacity: 0.6; }
+  50%       { transform: translate(-3px, -12px); opacity: 0.8; }
+  75%       { transform: translate(7px, -5px); opacity: 0.4; }
+}
+
+/* ── Dashboard history scrollbar ── */
+.history-scroll::-webkit-scrollbar { width: 3px; }
+.history-scroll::-webkit-scrollbar-track { background: transparent; }
+.history-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+.history-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
