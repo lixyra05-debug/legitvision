@@ -4,7 +4,7 @@ import { useRef, useState, useCallback, type Dispatch, type SetStateAction } fro
 import { Camera, X, AlertCircle, Check } from "lucide-react";
 import type { PhotoSlot } from "@/lib/types";
 
-const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
 const MAX_SIZE_MB = 10;
 const MIN_DIMENSION = 800;
 
@@ -28,7 +28,7 @@ function validateImage(
     if (!ACCEPTED_TYPES.includes(file.type)) {
       resolve({
         valid: false,
-        error: "Format accepté : JPEG, PNG ou WebP",
+        error: "Format accepté : JPEG, PNG, WebP ou HEIC",
         width: 0,
         height: 0,
       });
@@ -227,7 +227,7 @@ export function PhotoUploader({
                   inputRefs.current[slot.name] = el;
                 }}
                 type="file"
-                accept="image/jpeg,image/png,image/webp"
+                accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0];

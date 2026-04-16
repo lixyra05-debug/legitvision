@@ -50,11 +50,19 @@ export interface AnalysisOutput {
 
 // ── Image preprocessing ──
 
-export async function preprocessImage(buffer: Buffer): Promise<Buffer> {
-  return sharp(buffer)
-    .resize(1568, 1568, { fit: "inside", withoutEnlargement: true })
-    .jpeg({ quality: 90 })
-    .toBuffer();
+export async function preprocessImage(buffer: Buffer, filename?: string): Promise<Buffer> {
+  try {
+    return await sharp(buffer)
+      .resize(1568, 1568, { fit: "inside", withoutEnlargement: true })
+      .jpeg({ quality: 90 })
+      .toBuffer();
+  } catch (err) {
+    console.error(`[preprocessImage] Failed to process image${filename ? ` "${filename}"` : ""}:`, err);
+    throw new AnalysisError(
+      `Impossible de traiter l'image${filename ? ` "${filename}"` : ""}. Format non supporté ou fichier corrompu.`,
+      "IMAGE_PROCESSING_ERROR"
+    );
+  }
 }
 
 // ── Main analysis function ──
@@ -80,11 +88,24 @@ export async function runAnalysis({
 }): Promise<AnalysisOutput> {
   // Preprocess all images
   const processedImages = await Promise.all(
-    images.map(async (img) => ({
-      ...img,
-      buffer: await preprocessImage(img.buffer),
-    }))
+    images.map(async (img) => {
+      console.log(`[runAnalysis] Processing image: ${img.filename} (${img.buffer.length} bytes)`);
+      return {
+        ...img,
+        buffer: await preprocessImage(img.buffer, img.filename),
+      };
+    })
   );
+
+  // Warn if any image is too large for Anthropic after preprocessing (~5 MB base64 limit)
+  for (const img of processedImages) {
+    const base64Size = Math.ceil((img.buffer.length * 4) / 3);
+    if (base64Size > 5 * 1024 * 1024) {
+      console.error(
+        `[runAnalysis] Image "${img.filename}" too large after preprocessing: ${img.buffer.length} bytes (base64: ~${base64Size} bytes)`
+      );
+    }
+  }
 
   // Build photo descriptions for the prompt
   const photoDescriptions = processedImages.map(
@@ -195,10 +216,17 @@ export function handleAnalysisError(
   error: unknown
 ): { message: string; code: string } {
   if (error instanceof AnalysisError) {
+    console.error(`[handleAnalysisError] AnalysisError [${error.code}]:`, error.message);
     return { message: error.message, code: error.code };
   }
 
-  const err = error as { status?: number; message?: string };
+  const err = error as { status?: number; message?: string; error?: unknown };
+  console.error("[handleAnalysisError] Unexpected error:", {
+    status: err.status,
+    message: err.message,
+    error: err.error,
+    raw: error,
+  });
 
   if (err.status === 429) {
     return {
@@ -209,9 +237,10 @@ export function handleAnalysisError(
   }
 
   if (err.status === 400) {
+    console.error("[handleAnalysisError] Anthropic 400 — likely image too large or invalid format");
     return {
       message:
-        "Une ou plusieurs photos sont invalides. Vérifiez le format et la taille.",
+        "Une ou plusieurs photos sont invalides. Vérifiez le format (JPEG/PNG/WebP) et la taille (max 10 MB).",
       code: "BAD_REQUEST",
     };
   }
