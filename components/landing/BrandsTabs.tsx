@@ -41,7 +41,7 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Maison Margiela", models: 3, logo: "/images/brands/maison-margiela.png" },
     { name: "New Era", models: 2, logo: "/images/brands/new-era.png" },
     { name: "Asics", models: 5, logo: "/images/brands/asics.png" },
-    { name: "ON", models: 5 },
+    { name: "ON Running", models: 5, logo: "/images/brands/on-running.png" },
   ],
   vetements: [
     { name: "Supreme", models: 11, logo: "/images/brands/supreme.png" },
@@ -91,42 +91,18 @@ const BRANDS: Record<Category, BrandEntry[]> = {
   ],
 };
 
-// ── Category banner metadata ─────────────────────────────────────────────────
+// ── Category banner images ───────────────────────────────────────────────────
 
-type CategoryMeta = {
-  label: string;
-  sublabel: string;
-  emoji: string;
-  accent: string;
-  glowColor: string;
-  borderColor: string;
+const CATEGORY_BANNER: Record<Category, string> = {
+  sneakers: "/images/sneakers.png",
+  vetements: "/images/clothing.png",
+  sacs: "/images/bags.png",
 };
 
-const CATEGORY_META: Record<Category, CategoryMeta> = {
-  sneakers: {
-    label: "Sneakers",
-    sublabel: "Nike · Jordan · adidas · New Balance · BAPE · Salomon",
-    emoji: "👟",
-    accent: "#10B981",
-    glowColor: "rgba(16,185,129,0.12)",
-    borderColor: "rgba(16,185,129,0.35)",
-  },
-  vetements: {
-    label: "Vêtements",
-    sublabel: "Supreme · Off-White · Balenciaga · Stone Island · Moncler",
-    emoji: "👕",
-    accent: "#818CF8",
-    glowColor: "rgba(129,140,248,0.1)",
-    borderColor: "rgba(129,140,248,0.35)",
-  },
-  sacs: {
-    label: "Sacs & Maroquinerie",
-    sublabel: "Louis Vuitton · Chanel · Hermès · Gucci · Prada · Dior",
-    emoji: "👜",
-    accent: "#D4A843",
-    glowColor: "rgba(212,168,67,0.1)",
-    borderColor: "rgba(212,168,67,0.35)",
-  },
+const CATEGORY_ALT: Record<Category, string> = {
+  sneakers: "Sneakers — Nike, Jordan, adidas, New Balance",
+  vetements: "Vêtements — Supreme, Off-White, Stone Island",
+  sacs: "Sacs & Maroquinerie — Louis Vuitton, Chanel, Hermès",
 };
 
 const TABS: { id: Category; label: string; emoji: string }[] = [
@@ -204,143 +180,21 @@ export function BrandsTabs() {
 
   return (
     <div>
-      {/* ── Category banner ── */}
-      <div
-        className="relative mb-6 h-36 overflow-hidden rounded-2xl sm:h-[200px]"
-        style={{ border: "1px solid rgba(255,255,255,0.06)" }}
-      >
-        {(Object.keys(CATEGORY_META) as Category[]).map((key) => {
-          const meta = CATEGORY_META[key];
-          const brandCount = BRANDS[key].length;
-          const totalModels = BRANDS[key].reduce((s, b) => s + b.models, 0);
-
-          return (
-            <div
-              key={key}
-              aria-hidden={active !== key}
-              style={{
-                position: "absolute",
-                inset: 0,
-                opacity: active === key ? 1 : 0,
-                transition: "opacity 0.45s ease",
-                background: "#141416",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                padding: "0 24px 20px",
-                overflow: "hidden",
-                pointerEvents: active === key ? "auto" : "none",
-              }}
-            >
-              {/* Radial glow — left */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: `radial-gradient(ellipse at 15% 60%, ${meta.glowColor} 0%, transparent 65%)`,
-                  pointerEvents: "none",
-                }}
-              />
-
-              {/* Top border light streak */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  height: 1,
-                  background: `linear-gradient(90deg, transparent 0%, ${meta.borderColor} 30%, ${meta.borderColor} 70%, transparent 100%)`,
-                  pointerEvents: "none",
-                }}
-              />
-
-              {/* Ghost emoji — right */}
-              <div
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  right: 16,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  fontSize: 100,
-                  lineHeight: 1,
-                  opacity: 0.1,
-                  userSelect: "none",
-                  pointerEvents: "none",
-                  filter: "grayscale(20%)",
-                }}
-              >
-                {meta.emoji}
-              </div>
-
-              {/* Stats badge — top right */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: 14,
-                  right: 14,
-                  padding: "3px 11px",
-                  borderRadius: 9999,
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  fontSize: 11,
-                  color: "#8A8A8E",
-                  lineHeight: 1.6,
-                }}
-              >
-                {brandCount} marques · {totalModels}+ modèles
-              </div>
-
-              {/* Bottom fade overlay */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: 72,
-                  background:
-                    "linear-gradient(to top, rgba(10,10,11,0.75), transparent)",
-                  pointerEvents: "none",
-                }}
-              />
-
-              {/* Text content */}
-              <div style={{ position: "relative", zIndex: 1 }}>
-                <p
-                  style={{
-                    fontSize: 10,
-                    fontWeight: 600,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: meta.accent,
-                    marginBottom: 6,
-                  }}
-                >
-                  Catégorie
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-space-grotesk)",
-                    fontSize: 24,
-                    fontWeight: 700,
-                    color: "#F5F5F7",
-                    lineHeight: 1.1,
-                    marginBottom: 5,
-                  }}
-                >
-                  {meta.label}
-                </p>
-                <p
-                  style={{ fontSize: 12, color: "#8A8A8E", lineHeight: 1.4 }}
-                >
-                  {meta.sublabel}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+      {/* ── Category banner (image swap) ── */}
+      <div className="relative mb-6 h-[140px] overflow-hidden rounded-2xl sm:h-[200px]">
+        {(Object.keys(CATEGORY_BANNER) as Category[]).map((key) => (
+          <Image
+            key={key}
+            src={CATEGORY_BANNER[key]}
+            alt={CATEGORY_ALT[key]}
+            fill
+            priority={key === "sneakers"}
+            sizes="(max-width: 640px) 100vw, 1200px"
+            className={`object-cover transition-opacity duration-500 ${
+              active === key ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
       </div>
 
       {/* ── Tab buttons ── */}
