@@ -22,9 +22,11 @@ export function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const idCounterRef = useRef(0);
+  const typingTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (open && messages.length === 0) {
@@ -47,10 +49,19 @@ export function ChatWidget() {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, typing]);
+
+  useEffect(() => {
+    return () => {
+      if (typingTimerRef.current) {
+        window.clearTimeout(typingTimerRef.current);
+      }
+    };
+  }, []);
 
   function submit(e?: React.FormEvent) {
     e?.preventDefault();
+    if (typing) return;
     const trimmed = input.trim();
     if (!trimmed) return;
     const userMsg: ChatMessage = {
@@ -58,13 +69,19 @@ export function ChatWidget() {
       role: "user",
       text: trimmed,
     };
-    const botMsg: ChatMessage = {
-      id: ++idCounterRef.current,
-      role: "bot",
-      text: matchResponse(trimmed),
-    };
-    setMessages((prev) => [...prev, userMsg, botMsg]);
+    setMessages((prev) => [...prev, userMsg]);
     setInput("");
+    setTyping(true);
+    const reply = matchResponse(trimmed);
+    const delay = 900 + Math.random() * 800;
+    typingTimerRef.current = window.setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        { id: ++idCounterRef.current, role: "bot", text: reply },
+      ]);
+      setTyping(false);
+      typingTimerRef.current = null;
+    }, delay);
   }
 
   return (
@@ -100,7 +117,7 @@ export function ChatWidget() {
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
+                  className={`max-w-[85%] whitespace-pre-line rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
                     msg.role === "user"
                       ? "bg-emerald-500 text-white"
                       : "bg-card text-foreground"
@@ -110,6 +127,28 @@ export function ChatWidget() {
                 </div>
               </div>
             ))}
+            {typing && (
+              <div className="flex justify-start">
+                <div
+                  className="flex items-center gap-1 rounded-2xl bg-card px-4 py-3"
+                  aria-label="L'assistant écrit"
+                  role="status"
+                >
+                  <span
+                    className="size-1.5 animate-bounce rounded-full bg-muted-foreground/70"
+                    style={{ animationDelay: "0ms" }}
+                  />
+                  <span
+                    className="size-1.5 animate-bounce rounded-full bg-muted-foreground/70"
+                    style={{ animationDelay: "150ms" }}
+                  />
+                  <span
+                    className="size-1.5 animate-bounce rounded-full bg-muted-foreground/70"
+                    style={{ animationDelay: "300ms" }}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           <form
@@ -125,7 +164,7 @@ export function ChatWidget() {
             />
             <button
               type="submit"
-              disabled={!input.trim()}
+              disabled={!input.trim() || typing}
               className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500 text-white transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-40"
               aria-label="Envoyer"
             >

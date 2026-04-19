@@ -2,7 +2,10 @@ import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 
 export const metadata = {
-  title: "Conditions Générales d'Utilisation — LegitVision",
+  title: "Conditions Générales d'Utilisation",
+  description:
+    "Conditions Générales d'Utilisation de LegitVision : règles d'usage du service d'authentification IA, responsabilités, tarifs (à partir de 3,99 €/scan) et limites d'utilisation.",
+  alternates: { canonical: "/cgu" },
 };
 
 export default function CguPage() {
@@ -190,8 +193,8 @@ export default function CguPage() {
             </h2>
             <p className="text-muted-foreground">
               L&apos;utilisateur peut résilier son compte à tout moment en contactant{" "}
-              <a href="mailto:contact@legitvision.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                contact@legitvision.com
+              <a href="mailto:legitvison.contact@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                legitvison.contact@gmail.com
               </a>.
               La résiliation entraîne la suppression définitive du compte et des données associées
               dans un délai de 30 jours, à l&apos;exception des données devant être conservées au titre
@@ -223,8 +226,8 @@ export default function CguPage() {
             <p className="text-muted-foreground">
               Les présentes CGU sont soumises au droit français. En cas de litige, l&apos;utilisateur
               peut adresser une réclamation à{" "}
-              <a href="mailto:contact@legitvision.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                contact@legitvision.com
+              <a href="mailto:legitvison.contact@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                legitvison.contact@gmail.com
               </a>.
               À défaut de résolution amiable, le litige sera soumis aux tribunaux compétents du ressort
               de Paris.
@@ -245,7 +248,7 @@ export default function CguPage() {
             <Link href="/mentions-legales" className="transition-colors hover:text-foreground">Mentions légales</Link>
             <Link href="/cgu" className="text-foreground">CGU</Link>
             <Link href="/confidentialite" className="transition-colors hover:text-foreground">Confidentialité</Link>
-            <a href="mailto:contact@legitvision.com" className="transition-colors hover:text-foreground">Contact</a>
+            <a href="mailto:legitvison.contact@gmail.com" className="transition-colors hover:text-foreground">Contact</a>
           </div>
         </div>
       </footer>

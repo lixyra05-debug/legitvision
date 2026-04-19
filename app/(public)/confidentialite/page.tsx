@@ -2,7 +2,10 @@ import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 
 export const metadata = {
-  title: "Politique de confidentialité — LegitVision",
+  title: "Politique de confidentialité",
+  description:
+    "Politique de confidentialité de LegitVision : comment nous collectons, traitons et protégeons vos données personnelles et vos photos d'analyse. Conforme RGPD, hébergement UE.",
+  alternates: { canonical: "/confidentialite" },
 };
 
 export default function ConfidentialitePage() {
@@ -43,8 +46,8 @@ export default function ConfidentialitePage() {
               <p><span className="text-foreground font-medium">Localisation :</span> Paris, France</p>
               <p>
                 <span className="text-foreground font-medium">Contact DPO :</span>{" "}
-                <a href="mailto:contact@legitvision.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                  contact@legitvision.com
+                <a href="mailto:legitvison.contact@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                  legitvison.contact@gmail.com
                 </a>
               </p>
             </div>
@@ -262,8 +265,8 @@ export default function ConfidentialitePage() {
             <div className="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
               <p className="text-muted-foreground">
                 Pour exercer vos droits, contactez-nous à{" "}
-                <a href="mailto:contact@legitvision.com" className="text-emerald-400 hover:text-emerald-300 transition-colors font-medium">
-                  contact@legitvision.com
+                <a href="mailto:legitvison.contact@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors font-medium">
+                  legitvison.contact@gmail.com
                 </a>{" "}
                 en précisant votre demande. Nous nous engageons à y répondre dans un délai d&apos;un mois.
               </p>
@@ -304,8 +307,8 @@ export default function ConfidentialitePage() {
             </p>
             <div className="mt-4 rounded-xl border border-white/5 bg-card p-5">
               <p className="text-foreground font-medium">LegitVision — Protection des données</p>
-              <a href="mailto:contact@legitvision.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                contact@legitvision.com
+              <a href="mailto:legitvison.contact@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                legitvison.contact@gmail.com
               </a>
             </div>
           </section>
@@ -324,7 +327,7 @@ export default function ConfidentialitePage() {
             <Link href="/mentions-legales" className="transition-colors hover:text-foreground">Mentions légales</Link>
             <Link href="/cgu" className="transition-colors hover:text-foreground">CGU</Link>
             <Link href="/confidentialite" className="text-foreground">Confidentialité</Link>
-            <a href="mailto:contact@legitvision.com" className="transition-colors hover:text-foreground">Contact</a>
+            <a href="mailto:legitvison.contact@gmail.com" className="transition-colors hover:text-foreground">Contact</a>
           </div>
         </div>
       </footer>

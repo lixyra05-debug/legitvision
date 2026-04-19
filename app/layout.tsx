@@ -115,7 +115,7 @@ const organizationJsonLd = {
       contactPoint: {
         "@type": "ContactPoint",
         contactType: "customer support",
-        email: "contact@legitvision.com",
+        email: "legitvison.contact@gmail.com",
         availableLanguage: ["French", "English"],
       },
     },

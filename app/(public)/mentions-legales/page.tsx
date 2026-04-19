@@ -2,7 +2,10 @@ import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 
 export const metadata = {
-  title: "Mentions légales — LegitVision",
+  title: "Mentions légales",
+  description:
+    "Mentions légales de LegitVision : éditeur, hébergeur, coordonnées de contact et informations obligatoires sur l'entreprise et le service d'authentification IA.",
+  alternates: { canonical: "/mentions-legales" },
 };
 
 export default function MentionsLegalesPage() {
@@ -41,8 +44,8 @@ export default function MentionsLegalesPage() {
               </p>
               <p>
                 <span className="text-foreground font-medium">Contact :</span>{" "}
-                <a href="mailto:contact@legitvision.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                  contact@legitvision.com
+                <a href="mailto:legitvison.contact@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                  legitvison.contact@gmail.com
                 </a>
               </p>
             </div>
@@ -107,8 +110,8 @@ export default function MentionsLegalesPage() {
               </Link>.
               Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez
               de droits sur vos données personnelles. Pour les exercer, contactez-nous à{" "}
-              <a href="mailto:contact@legitvision.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
-                contact@legitvision.com
+              <a href="mailto:legitvison.contact@gmail.com" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                legitvison.contact@gmail.com
               </a>.
             </p>
           </section>
@@ -150,7 +153,7 @@ export default function MentionsLegalesPage() {
             <Link href="/mentions-legales" className="text-foreground">Mentions légales</Link>
             <Link href="/cgu" className="transition-colors hover:text-foreground">CGU</Link>
             <Link href="/confidentialite" className="transition-colors hover:text-foreground">Confidentialité</Link>
-            <a href="mailto:contact@legitvision.com" className="transition-colors hover:text-foreground">Contact</a>
+            <a href="mailto:legitvison.contact@gmail.com" className="transition-colors hover:text-foreground">Contact</a>
           </div>
         </div>
       </footer>

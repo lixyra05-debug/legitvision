@@ -49,7 +49,7 @@ export function renderWelcomeEmail({
 <p style="margin:0;color:${MUTED};font-size:12px;line-height:1.6;">
   <a href="${safeUnsub}" style="color:${MUTED};text-decoration:underline;">Se désinscrire</a>
   &nbsp;•&nbsp;
-  <a href="mailto:contact@legitvision.com" style="color:${ACCENT};text-decoration:none;">contact@legitvision.com</a>
+  <a href="mailto:legitvison.contact@gmail.com" style="color:${ACCENT};text-decoration:none;">legitvison.contact@gmail.com</a>
 </p>`;
 
   return renderEmailShell({
