@@ -3,6 +3,46 @@ import { stripe, getPlanFromPriceId } from "@/lib/stripe/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PLAN_CREDITS } from "@/lib/stripe/config";
 import type { PlanId } from "@/lib/stripe/config";
+import { renderPaymentConfirmationEmail } from "@/lib/emails/payment-confirmation";
+import { sendTransactionalEmail } from "@/lib/emails/send";
+
+const PLAN_EMAIL_LABELS: Record<string, string> = {
+  "one-time": "Utilisation unique",
+  pro: "Pro — 19,99 €/mois (10 analyses)",
+  business: "Business — 29,99 €/mois (50 analyses)",
+};
+
+async function sendPaymentEmail(args: {
+  userId: string;
+  planKey: string;
+  amountLabel: string;
+  creditsAfter: number | null;
+}) {
+  try {
+    const admin = createAdminClient();
+    const { data: authUser } = await admin.auth.admin.getUserById(args.userId);
+    const email = authUser?.user?.email;
+    if (!email) return;
+    const name =
+      (authUser.user?.user_metadata?.full_name as string | undefined) ??
+      email.split("@")[0] ??
+      "";
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://legitvision.vercel.app";
+    await sendTransactionalEmail({
+      to: email,
+      subject: "Merci pour votre achat — LegitVision",
+      html: renderPaymentConfirmationEmail({
+        name,
+        planLabel: PLAN_EMAIL_LABELS[args.planKey] ?? args.planKey,
+        amountLabel: args.amountLabel,
+        creditsAfter: args.creditsAfter,
+        dashboardUrl: `${appUrl}/dashboard`,
+      }),
+    });
+  } catch (err) {
+    console.error("[webhook/stripe] envoi email paiement échoué:", err);
+  }
+}
 
 // Désactiver le body parsing automatique de Next.js — Stripe a besoin du corps brut
 export const dynamic = "force-dynamic";
@@ -76,6 +116,13 @@ export async function POST(request: NextRequest) {
             description: "Achat utilisation unique — 1 crédit",
             stripe_payment_id: paymentIntentId,
           });
+
+          await sendPaymentEmail({
+            userId,
+            planKey: "one-time",
+            amountLabel: "3,99 €",
+            creditsAfter: newBalance,
+          });
           break;
         }
 
@@ -110,6 +157,26 @@ export async function POST(request: NextRequest) {
         if (error) {
           console.error("[webhook/stripe] Erreur update profil:", error.message);
         }
+
+        const amountLabel =
+          planId === "pro"
+            ? "19,99 €/mois"
+            : planId === "business"
+              ? "29,99 €/mois"
+              : "";
+
+        const { data: updatedProfile } = await admin
+          .from("profiles")
+          .select("credits_remaining")
+          .eq("id", userId)
+          .single();
+
+        await sendPaymentEmail({
+          userId,
+          planKey: planId,
+          amountLabel,
+          creditsAfter: updatedProfile?.credits_remaining ?? null,
+        });
         break;
       }
 

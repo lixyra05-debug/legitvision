@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bienvenue sur LegitVision</title>
+  <style>
+    @media (max-width: 620px) {
+      .container { width: 100% !important; padding: 0 16px !important; }
+      .card { padding: 24px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0;padding:0;background:#0A0A0B;color:#FAFAFA;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <span style="display:none;visibility:hidden;opacity:0;color:transparent;height:0;width:0;overflow:hidden;">Confirmez votre email pour activer votre compte LegitVision.</span>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0A0A0B;padding:32px 0;">
+    <tr>
+      <td align="center">
+        <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:100%;">
+          <tr>
+            <td style="padding:0 0 24px 0;" align="left">
+              <span style="display:inline-block;font-size:18px;font-weight:700;letter-spacing:-0.01em;color:#FAFAFA;">
+                <span style="color:#10B981;">Legit</span>Vision
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td class="card" style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:16px;padding:40px;">
+              <h1 style="margin:0 0 16px 0;color:#FAFAFA;font-size:28px;line-height:1.25;font-weight:700;letter-spacing:-0.02em;">
+                Bienvenue sur LegitVision !
+              </h1>
+              <p style="margin:0 0 16px 0;color:#A1A1AA;font-size:15px;line-height:1.7;">
+                Merci d'avoir rejoint LegitVision. Notre IA analyse vos articles de luxe
+                (sneakers, sacs, vêtements) en moins de 30 secondes pour vous aider à
+                éviter les contrefaçons avant d'acheter.
+              </p>
+              <p style="margin:0 0 32px 0;color:#A1A1AA;font-size:15px;line-height:1.7;">
+                Confirmez votre email pour activer votre compte :
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 32px 0;">
+                <tr>
+                  <td style="background:#10B981;border-radius:10px;">
+                    <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 28px;color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;border-radius:10px;">
+                      Confirmer mon email
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:0;color:#A1A1AA;font-size:13px;line-height:1.7;">
+                Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :<br/>
+                <a href="{{ .ConfirmationURL }}" style="color:#10B981;text-decoration:none;word-break:break-all;">{{ .ConfirmationURL }}</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 8px 0 8px;">
+              <p style="margin:0 0 8px 0;color:#A1A1AA;font-size:12px;line-height:1.6;">
+                Vous recevez cet email car vous avez créé un compte sur LegitVision ({{ .Email }}).
+              </p>
+              <p style="margin:0;color:#A1A1AA;font-size:12px;line-height:1.6;">
+                Contact : <a href="mailto:contact@legitvision.com" style="color:#10B981;text-decoration:none;">contact@legitvision.com</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

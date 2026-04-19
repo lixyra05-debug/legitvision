@@ -35,6 +35,13 @@ const BRAND_EXPERTISE: Record<string, string> = {
   "the north face": "half-dome logo (proportions, police TNF), qualité nylon/Gore-Tex (imperméabilisation, couture soudée), zips YKK (fluidité, marquage), coutures taped (régularité)",
   carhartt: "patch Carhartt (qualité broderie, police script), qualité denim/canvas (poids, couleur uniforme), coutures triple piqûre (régularité), étiquette WIP (police, placement)",
   kith: "logo Kith (police, couleur, broderie qualité), qualité tissu (poids, texture), étiquette col (placement, police Kith), finition générale",
+  asics: "logo ASICS Tiger stripes (symétrie, angles, coutures), semelle GEL visible (transparence, couleur, motif), étiquette languette (police Asics, code produit format XXX-XXXX, pays), mesh/suède qualité, numéro de modèle gravé semelle",
+  "on running": "logo ON (proportions cercle + point), CloudTec pods semelle (nombre, alignement, fermeté caoutchouc), Speedboard visible, étiquette intérieure Swiss Engineered (police, placement), qualité mesh engineered",
+  "chrome hearts": "argent sterling .925 (poids, patine naturelle, poinçon CH), gravures Gothic (symétrie croix/dagger/fleur-de-lys), étiquette col typographie Gothic exclusive, qualité cuir (odeur, grain), tags prix originaux présents (marque ultra-contrefaite)",
+  longchamp: "toile nylon Le Pliage (texture, rigidité, couleur uniforme), cuir Russie poignées (grain, patine), ferrures gravées LONGCHAMP PARIS (police, profondeur), étiquette intérieure made in France/Tunisie (typo, placement), coutures régulières",
+  guess: "logo Guess triangle (police, proportions, broderie/appliqué), qualité PU/cuir (grain, souplesse), ferrures dorées (poids, finition, gravure G), étiquette intérieure (police Guess, made in China typique), doublure signature",
+  "michael kors": "logo MK entrelacé (symétrie, alignement, gravure ferrures), qualité saffiano/pebbled leather (texture en croix, uniformité), étiquette intérieure MICHAEL KORS (police, couleur, numéro série cuir collé), ferrures dorées (poids, finition)",
+  "vanessa bruno": "toile cabas (tissage serré, couleur uniforme), paillettes cousues (régularité, densité, pas de colle visible), poignées cuir (grain, finition bords), étiquette intérieure VANESSA BRUNO PARIS (police, placement, made in France)",
   default: "logos et monogrammes (alignement, symétrie, proportions), qualité des matériaux (grain, odeur, souplesse), coutures et finitions (régularité, tension), étiquettes intérieures (police, placement, typo), ferrures et accessoires (poids, gravure, finition)",
 };
 

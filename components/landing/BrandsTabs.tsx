@@ -40,6 +40,8 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Bottega Veneta", models: 2, logo: "/images/brands/bottega-veneta.png" },
     { name: "Maison Margiela", models: 3, logo: "/images/brands/maison-margiela.png" },
     { name: "New Era", models: 2, logo: "/images/brands/new-era.png" },
+    { name: "Asics", models: 5, logo: "/images/brands/asics.png" },
+    { name: "ON", models: 5 },
   ],
   vetements: [
     { name: "Supreme", models: 11, logo: "/images/brands/supreme.png" },
@@ -63,6 +65,7 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Trapstar", models: 4, logo: "/images/brands/trapstar.png" },
     { name: "Represent", models: 3, logo: "/images/brands/represent.png" },
     { name: "Kith", models: 4, logo: "/images/brands/kith.png" },
+    { name: "Chrome Hearts", models: 7, logo: "/images/brands/chrome-hearts.png" },
   ],
   sacs: [
     { name: "Louis Vuitton", models: 20, logo: "/images/brands/louis-vuitton.png" },
@@ -81,6 +84,10 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Goyard", models: 7, logo: "/images/brands/goyard.png" },
     { name: "Jacquemus", models: 9, logo: "/images/brands/jacquemus.png" },
     { name: "Miu Miu", models: 7, logo: "/images/brands/miu-miu.png" },
+    { name: "Longchamp", models: 6, logo: "/images/brands/longchamp.jpeg" },
+    { name: "Guess", models: 5, logo: "/images/brands/guess.png" },
+    { name: "Michael Kors", models: 6 },
+    { name: "Vanessa Bruno", models: 5, logo: "/images/brands/vanessa-bruno.png" },
   ],
 };
 

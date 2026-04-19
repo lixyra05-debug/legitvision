@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   Camera,
@@ -16,8 +17,71 @@ import {
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
+import { FAQ_ITEMS } from "@/components/landing/faq-data";
 import { BrandSearch } from "@/components/landing/BrandSearch";
 import { BrandsTabs } from "@/components/landing/BrandsTabs";
+
+const SITE_URL = "https://legitvision.vercel.app";
+
+export const metadata: Metadata = {
+  title:
+    "Authentification sneakers, sacs & luxe par IA — 30 secondes, 3,99 €",
+  description:
+    "Scannez vos articles de luxe avant d'acheter. IA Vision, 8 zones d'authentification analysées, score de confiance en moins de 30 secondes. Sneakers, sacs, vêtements. À partir de 3,99 €.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "LegitVision — Scannez avant d'acheter.",
+    description:
+      "1 paire sur 4 est une contrefaçon. Vérifiez l'authenticité de vos articles de luxe par IA en 30 secondes, pour 3,99 €.",
+    url: SITE_URL,
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "LegitVision — Authentification d'articles de luxe par IA",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LegitVision — Scannez avant d'acheter.",
+    description:
+      "Authentification d'articles de luxe par IA. 3,99 € / scan, 30 secondes, 8 zones analysées.",
+    images: ["/og-image.png"],
+  },
+};
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
+};
+
+const serviceJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "Authentification d'articles de luxe par IA",
+  provider: { "@id": `${SITE_URL}/#organization` },
+  areaServed: { "@type": "Country", name: "France" },
+  description:
+    "Vérification d'authenticité par IA Vision pour sneakers, sacs et vêtements de luxe. Analyse de 8 zones d'authentification en moins de 30 secondes.",
+  offers: {
+    "@type": "Offer",
+    price: "3.99",
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+    url: `${SITE_URL}/auth?redirect=%2Fcheck%2Fnew`,
+  },
+};
 
 const STEPS = [
   {
@@ -137,6 +201,14 @@ const PLANS = [
 export default function LandingPage() {
   return (
     <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
 
       {/* ── Navigation ── */}
       <nav
