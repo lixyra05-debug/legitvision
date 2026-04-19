@@ -178,7 +178,7 @@ export function BrandSearch() {
             <div className="px-5 py-4 text-sm text-muted-foreground">
               Aucun résultat —{" "}
               <a
-                href="mailto:legitvison.contact@gmail.com"
+                href="mailto:legitvision.contact@gmail.com"
                 className="text-emerald-400 transition-colors hover:text-emerald-300"
               >
                 contactez-nous

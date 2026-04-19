@@ -1020,7 +1020,7 @@ export default function LandingPage() {
             <p className="mt-8 text-center text-sm" style={{ color: "var(--text-secondary)" }}>
               Une marque manquante ?{" "}
               <a
-                href="mailto:legitvison.contact@gmail.com"
+                href="mailto:legitvision.contact@gmail.com"
                 className="transition-colors"
                 style={{ color: "#10B981" }}
               >
@@ -1489,7 +1489,7 @@ export default function LandingPage() {
             <Link href="/mentions-legales" className="transition-colors hover:text-foreground">Mentions légales</Link>
             <Link href="/cgu" className="transition-colors hover:text-foreground">CGU</Link>
             <Link href="/confidentialite" className="transition-colors hover:text-foreground">Confidentialité</Link>
-            <a href="mailto:legitvison.contact@gmail.com" className="transition-colors hover:text-foreground">Contact</a>
+            <a href="mailto:legitvision.contact@gmail.com" className="transition-colors hover:text-foreground">Contact</a>
           </div>
         </div>
       </footer>

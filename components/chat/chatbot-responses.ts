@@ -3,7 +3,7 @@ export type ChatbotRule = {
   response: string;
 };
 
-const CONTACT_EMAIL = "legitvison.contact@gmail.com";
+const CONTACT_EMAIL = "legitvision.contact@gmail.com";
 
 export const CHATBOT_RULES: ChatbotRule[] = [
   {

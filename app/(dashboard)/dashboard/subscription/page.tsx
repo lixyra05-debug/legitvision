@@ -140,10 +140,10 @@ export default async function SubscriptionPage() {
         <p className="mt-6 text-xs text-muted-foreground">
           Besoin d&apos;aide ?{" "}
           <a
-            href="mailto:legitvison.contact@gmail.com"
+            href="mailto:legitvision.contact@gmail.com"
             className="text-emerald-400 hover:text-emerald-300"
           >
-            legitvison.contact@gmail.com
+            legitvision.contact@gmail.com
           </a>
         </p>
       </main>

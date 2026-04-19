@@ -19,7 +19,7 @@ const DEFAULT_FOOTER = `
   LegitVision — Authentification d'articles de luxe par IA.
 </p>
 <p style="margin:0;color:${MUTED};font-size:12px;line-height:1.6;">
-  Contact : <a href="mailto:legitvison.contact@gmail.com" style="color:${ACCENT};text-decoration:none;">legitvison.contact@gmail.com</a>
+  Contact : <a href="mailto:legitvision.contact@gmail.com" style="color:${ACCENT};text-decoration:none;">legitvision.contact@gmail.com</a>
 </p>
 `;
 
