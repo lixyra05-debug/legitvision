@@ -226,9 +226,9 @@ export default function LandingPage() {
             <Image
               src="/images/legitvision-logo.png"
               alt="LegitVision"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
+              width={180}
+              height={48}
+              className="h-12 w-auto"
               priority
               unoptimized
             />
