@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ShieldCheck, Plus, Coins, Trash2 } from "lucide-react";
+import Image from "next/image";
+import { Plus, Coins, Trash2 } from "lucide-react";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { PlanBanner } from "@/components/stripe/PlanBanner";
 import { SuccessBanner } from "@/components/stripe/SuccessBanner";
@@ -71,11 +72,16 @@ export default async function DashboardPage({
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2">
-            <ShieldCheck className="size-6 text-emerald-500" />
-            <span className="font-heading text-lg font-bold tracking-tight">
-              LegitVision
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/legitvision-logo.png"
+              alt="LegitVision"
+              width={120}
+              height={32}
+              className="h-8 w-auto"
+              priority
+              unoptimized
+            />
           </Link>
           <div className="flex items-center gap-4">
             {profile && (

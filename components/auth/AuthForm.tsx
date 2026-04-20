@@ -5,8 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ShieldCheck, Loader2, Mail } from "lucide-react";
+import { Loader2, Mail } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const AUTH_ERRORS: Record<string, string> = {
   "Invalid login credentials": "Email ou mot de passe incorrect.",
@@ -129,11 +130,16 @@ export function AuthForm() {
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <Link href="/" className="mb-8 flex items-center justify-center gap-2">
-          <ShieldCheck className="size-8 text-emerald-500" />
-          <span className="font-heading text-2xl font-bold tracking-tight">
-            LegitVision
-          </span>
+        <Link href="/" className="mb-8 flex items-center justify-center">
+          <Image
+            src="/images/legitvision-logo.png"
+            alt="LegitVision"
+            width={180}
+            height={48}
+            className="h-12 w-auto"
+            priority
+            unoptimized
+          />
         </Link>
 
         {/* Tabs */}

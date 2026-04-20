@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = {
   title: "Politique de confidentialité",
@@ -14,9 +14,16 @@ export default function ConfidentialitePage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4">
-          <Link href="/" className="flex items-center gap-2">
-            <ShieldCheck className="size-6 text-emerald-500" />
-            <span className="font-heading text-lg font-bold tracking-tight">LegitVision</span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/legitvision-logo.png"
+              alt="LegitVision"
+              width={120}
+              height={32}
+              className="h-8 w-auto"
+              priority
+              unoptimized
+            />
           </Link>
         </div>
       </nav>
@@ -319,9 +326,16 @@ export default function ConfidentialitePage() {
       {/* Footer */}
       <footer className="border-t border-white/5 py-8 mt-12">
         <div className="mx-auto max-w-3xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <ShieldCheck className="size-4 text-emerald-500" />
-            <span>© {new Date().getFullYear()} LegitVision</span>
+          <div className="flex items-center gap-3 text-sm text-muted-foreground">
+            <Image
+              src="/images/legitvision-logo.png"
+              alt="LegitVision"
+              width={90}
+              height={24}
+              className="h-6 w-auto"
+              unoptimized
+            />
+            <span>© {new Date().getFullYear()}</span>
           </div>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <Link href="/mentions-legales" className="transition-colors hover:text-foreground">Mentions légales</Link>

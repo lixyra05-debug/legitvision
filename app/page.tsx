@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Camera,
   Cpu,
@@ -221,11 +222,16 @@ export default function LandingPage() {
         }}
       >
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2.5">
-            <ShieldCheck className="size-5 text-emerald-500" />
-            <span className="font-heading text-base font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>
-              LegitVision
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/legitvision-logo.png"
+              alt="LegitVision"
+              width={120}
+              height={32}
+              className="h-8 w-auto"
+              priority
+              unoptimized
+            />
           </Link>
           <div className="flex items-center gap-5">
             <nav className="hidden items-center gap-6 md:flex">
@@ -1477,10 +1483,17 @@ export default function LandingPage() {
         <div
           className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 sm:flex-row sm:justify-between"
         >
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="size-4 text-emerald-500" />
+          <div className="flex items-center gap-3">
+            <Image
+              src="/images/legitvision-logo.png"
+              alt="LegitVision"
+              width={90}
+              height={24}
+              className="h-6 w-auto"
+              unoptimized
+            />
             <span className="text-sm" style={{ color: "var(--text-tertiary)" }}>
-              © {new Date().getFullYear()} LegitVision
+              © {new Date().getFullYear()}
             </span>
           </div>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm sm:justify-end" style={{ color: "var(--text-tertiary)" }}>

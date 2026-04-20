@@ -1,10 +1,18 @@
 import Link from "next/link";
-import { ShieldCheck } from "lucide-react";
+import Image from "next/image";
 
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background text-foreground">
-      <ShieldCheck className="size-12 text-emerald-500" />
+      <Image
+        src="/images/legitvision-logo.png"
+        alt="LegitVision"
+        width={180}
+        height={48}
+        className="h-12 w-auto"
+        priority
+        unoptimized
+      />
       <div className="text-center">
         <h1 className="font-heading text-6xl font-bold text-emerald-500">404</h1>
         <p className="mt-2 text-muted-foreground">Cette page n&apos;existe pas.</p>
