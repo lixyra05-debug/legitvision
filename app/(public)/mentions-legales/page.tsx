@@ -18,9 +18,9 @@ export default function MentionsLegalesPage() {
             <Image
               src="/images/legitvision-logo.png"
               alt="LegitVision"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
+              width={240}
+              height={64}
+              className="h-16 w-auto"
               priority
               unoptimized
             />

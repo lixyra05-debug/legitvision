@@ -76,9 +76,9 @@ export default async function DashboardPage({
             <Image
               src="/images/legitvision-logo.png"
               alt="LegitVision"
-              width={180}
-              height={48}
-              className="h-12 w-auto"
+              width={240}
+              height={64}
+              className="h-16 w-auto"
               priority
               unoptimized
             />
