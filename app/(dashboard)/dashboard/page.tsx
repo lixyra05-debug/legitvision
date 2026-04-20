@@ -74,11 +74,11 @@ export default async function DashboardPage({
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/legitvision-logo.png"
+              src="/images/legitvision-logo.svg"
               alt="LegitVision"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
+              width={150}
+              height={40}
+              className="h-10 w-auto"
               priority
               unoptimized
             />
