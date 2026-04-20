@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { stripe } from "@/lib/stripe/server";
-import { ArrowLeft, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { CancelButton } from "./CancelButton";
 
 export const metadata = {
@@ -26,7 +26,9 @@ function formatDate(unixSec: number): string {
 
 export default async function SubscriptionPage() {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) redirect("/auth?redirect=/dashboard/subscription");
 
   const { data: profile } = await supabase
@@ -37,6 +39,7 @@ export default async function SubscriptionPage() {
 
   const plan = profile?.subscription_plan ?? "free";
   const planLabel = PLAN_LABELS[plan] ?? plan;
+  const credits = profile?.credits_remaining ?? 0;
 
   let cancelAtPeriodEnd = false;
   let periodEnd: number | null = null;
@@ -52,6 +55,11 @@ export default async function SubscriptionPage() {
       // Subscription may have been deleted server-side; fall through.
     }
   }
+
+  const hasActiveSubscription =
+    plan !== "free" &&
+    !!profile?.stripe_subscription_id &&
+    (status === "active" || status === "trialing");
 
   return (
     <div className="min-h-screen bg-background">
@@ -75,67 +83,86 @@ export default async function SubscriptionPage() {
           Consultez votre plan et résiliez à tout moment.
         </p>
 
-        <div className="mt-10 rounded-2xl border border-white/10 bg-card p-6">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                Plan actuel
+        {!hasActiveSubscription ? (
+          <div className="relative mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-10 backdrop-blur-xl">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
+            />
+            <div className="relative flex flex-col items-center text-center">
+              <div className="flex size-16 items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/10">
+                <Sparkles className="size-8 text-emerald-400" />
+              </div>
+              <h2 className="mt-6 font-heading text-xl font-bold tracking-tight">
+                Vous n&apos;avez aucun abonnement actif
+              </h2>
+              <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+                Souscrivez à un plan pour analyser vos articles en illimité et
+                bénéficier du support prioritaire.
               </p>
-              <p className="mt-1 font-heading text-xl font-semibold">{planLabel}</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {profile?.credits_remaining ?? 0} crédit
-                {(profile?.credits_remaining ?? 0) > 1 ? "s" : ""} disponible
-                {(profile?.credits_remaining ?? 0) > 1 ? "s" : ""}
-              </p>
-            </div>
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10">
-              <ShieldCheck className="size-6 text-emerald-400" />
-            </div>
-          </div>
-
-          {plan === "free" && (
-            <div className="mt-6 border-t border-white/5 pt-6">
-              <p className="text-sm text-muted-foreground">
-                Vous n&apos;avez pas d&apos;abonnement actif.
-              </p>
+              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-muted-foreground">
+                <span>Crédits disponibles</span>
+                <span className="font-semibold text-foreground">{credits}</span>
+              </div>
               <Link
-                href="/pricing"
-                className="mt-4 inline-flex h-10 items-center rounded-lg bg-emerald-500 px-5 text-sm font-medium text-white transition-colors hover:bg-emerald-400"
+                href="/#pricing"
+                className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
               >
-                Voir les formules
+                Voir nos offres
+                <ArrowRight className="size-4" />
               </Link>
             </div>
-          )}
-
-          {plan !== "free" && cancelAtPeriodEnd && periodEnd && (
-            <div className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
-              <p className="text-sm text-amber-400">
-                Résiliation programmée. Votre abonnement restera actif jusqu&apos;au{" "}
-                <span className="font-semibold">{formatDate(periodEnd)}</span>.
-                Vous ne serez plus facturé après cette date.
-              </p>
-            </div>
-          )}
-
-          {plan !== "free" && !cancelAtPeriodEnd && status === "active" && (
-            <div className="mt-6 border-t border-white/5 pt-6">
-              <p className="text-sm text-muted-foreground">
-                Vous pouvez résilier à tout moment. L&apos;abonnement restera actif
-                jusqu&apos;à la fin de la période déjà payée.
-              </p>
-              <div className="mt-4">
-                <CancelButton />
+          </div>
+        ) : (
+          <div className="relative mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-xl">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-24 right-0 size-48 rounded-full bg-emerald-500/10 blur-3xl"
+            />
+            <div className="relative">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                    Plan actuel
+                  </p>
+                  <p className="mt-1 font-heading text-xl font-semibold">
+                    {planLabel}
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {credits} crédit{credits > 1 ? "s" : ""} disponible
+                    {credits > 1 ? "s" : ""}
+                  </p>
+                </div>
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
+                  <ShieldCheck className="size-6 text-emerald-400" />
+                </div>
               </div>
-            </div>
-          )}
 
-          {plan !== "free" && !profile?.stripe_subscription_id && (
-            <div className="mt-6 border-t border-white/5 pt-6 text-sm text-muted-foreground">
-              Aucun ID d&apos;abonnement Stripe associé. Si vous avez souscrit récemment,
-              rafraîchissez la page dans quelques instants.
+              {cancelAtPeriodEnd && periodEnd && (
+                <div className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+                  <p className="text-sm text-amber-400">
+                    Résiliation programmée. Votre abonnement restera actif
+                    jusqu&apos;au{" "}
+                    <span className="font-semibold">{formatDate(periodEnd)}</span>.
+                    Vous ne serez plus facturé après cette date.
+                  </p>
+                </div>
+              )}
+
+              {!cancelAtPeriodEnd && (
+                <div className="mt-6 border-t border-white/5 pt-6">
+                  <p className="text-sm text-muted-foreground">
+                    Vous pouvez résilier à tout moment. L&apos;abonnement restera
+                    actif jusqu&apos;à la fin de la période déjà payée.
+                  </p>
+                  <div className="mt-4">
+                    <CancelButton />
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         <p className="mt-6 text-xs text-muted-foreground">
           Besoin d&apos;aide ?{" "}
