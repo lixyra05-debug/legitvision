@@ -214,11 +214,11 @@ export function ReportView({ data }: { data: ReportData }) {
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4">
           <Link href="/dashboard" className="flex items-center">
             <Image
-              src="/images/legitvision-logo.svg"
+              src="/images/legitvision-logo.png"
               alt="LegitVision"
-              width={150}
-              height={40}
-              className="h-10 w-auto"
+              width={120}
+              height={32}
+              className="h-8 w-auto"
               priority
               unoptimized
             />

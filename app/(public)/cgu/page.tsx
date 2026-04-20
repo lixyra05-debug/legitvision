@@ -16,11 +16,11 @@ export default function CguPage() {
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4">
           <Link href="/" className="flex items-center">
             <Image
-              src="/images/legitvision-logo.svg"
+              src="/images/legitvision-logo.png"
               alt="LegitVision"
-              width={150}
-              height={40}
-              className="h-10 w-auto"
+              width={120}
+              height={32}
+              className="h-8 w-auto"
               priority
               unoptimized
             />
@@ -249,11 +249,11 @@ export default function CguPage() {
         <div className="mx-auto max-w-3xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <Image
-              src="/images/legitvision-logo.svg"
+              src="/images/legitvision-logo.png"
               alt="LegitVision"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
+              width={90}
+              height={24}
+              className="h-6 w-auto"
               unoptimized
             />
             <span>© {new Date().getFullYear()}</span>

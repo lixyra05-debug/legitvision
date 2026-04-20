@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background text-foreground">
       <Image
-        src="/images/legitvision-logo.svg"
+        src="/images/legitvision-logo.png"
         alt="LegitVision"
         width={180}
         height={48}

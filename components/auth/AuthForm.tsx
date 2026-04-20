@@ -132,7 +132,7 @@ export function AuthForm() {
         {/* Logo */}
         <Link href="/" className="mb-8 flex items-center justify-center">
           <Image
-            src="/images/legitvision-logo.svg"
+            src="/images/legitvision-logo.png"
             alt="LegitVision"
             width={180}
             height={48}
