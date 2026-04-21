@@ -1346,65 +1346,6 @@ export default function LandingPage() {
               Notre mission : rendre l&apos;authentification accessible à tous grâce à l&apos;IA.
             </p>
           </FadeIn>
-
-          <FadeIn delay={150}>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2">
-              <div
-                className="flex flex-col items-center gap-5 rounded-2xl p-8 text-center"
-                style={{ background: "var(--bg-card)", border: "1px solid var(--border-subtle)" }}
-              >
-                <div
-                  className="flex size-16 items-center justify-center rounded-2xl"
-                  style={{
-                    background: "rgba(16,185,129,0.08)",
-                    border: "1px solid rgba(16,185,129,0.2)",
-                  }}
-                >
-                  <span className="font-heading text-xl font-bold" style={{ color: "#10B981" }}>H.V.</span>
-                </div>
-                <div>
-                  <p className="font-heading font-semibold" style={{ color: "var(--text-primary)" }}>H.V.</p>
-                  <p
-                    className="mt-0.5 text-xs font-medium uppercase tracking-widest"
-                    style={{ color: "#10B981" }}
-                  >
-                    Co-fondateur &amp; Tech
-                  </p>
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                  Passionné de sneakers et développeur, je construis la technologie derrière LegitVision.
-                </p>
-              </div>
-
-              <div
-                className="flex flex-col items-center gap-5 rounded-2xl p-8 text-center"
-                style={{ background: "var(--bg-card)", border: "1px solid var(--border-subtle)" }}
-              >
-                <div
-                  className="flex size-16 items-center justify-center rounded-2xl"
-                  style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                  }}
-                >
-                  <span className="font-heading text-xl font-bold" style={{ color: "var(--text-tertiary)" }}>A.</span>
-                </div>
-                <div>
-                  <p className="font-heading font-semibold" style={{ color: "var(--text-primary)" }}>Associé</p>
-                  <p
-                    className="mt-0.5 text-xs font-medium uppercase tracking-widest"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    Co-fondateur &amp; Business
-                  </p>
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                  Expert du marché luxe, je m&apos;assure que LegitVision répond aux vrais besoins
-                  des acheteurs.
-                </p>
-              </div>
-            </div>
-          </FadeIn>
         </div>
       </section>
 
