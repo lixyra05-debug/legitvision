@@ -671,6 +671,210 @@ export const brands: Brand[] = [
       },
     ],
   },
+  {
+    slug: "supreme",
+    name: "Supreme",
+    category: "clothing",
+    logo: "/images/brands/supreme.png",
+    tagline: "La marque streetwear la plus contrefaite de l'histoire",
+    description:
+      "Supreme, fondée à New York en 1994 par James Jebbia, a érigé la rareté en stratégie commerciale : chaque drop hebdomadaire s'épuise en quelques secondes, créant un marché secondaire hystérique. Le Box Logo est devenu l'un des symboles textiles les plus contrefaits au monde. Près de 80 % des articles marqués « Supreme » en circulation seconde main sont des contrefaçons selon les estimations. La marque a été rachetée par VF Corporation en 2020 puis par EssilorLuxottica en 2024, mais sa méthode drop-scarcity inchangée maintient un gap hystérique entre offre et demande.",
+    priceRange: "50-1 500 € selon pièce",
+    productType: "pièce Supreme",
+    productPossessive: "une pièce de",
+    popularModels: ["box-logo-hoodie", "box-logo-tee"],
+    signals: [
+      {
+        title: "Police Futura Heavy Oblique du Box Logo",
+        description:
+          "Le Box Logo Supreme utilise exclusivement la police Futura Heavy Oblique. Sur les contrefaçons, la courbe du « S » est souvent trop arrondie, le « p » trop large, et l'espacement entre les lettres incorrect. Comparez millimètre par millimètre avec une photo authentique du drop exact.",
+        difficulty: 2,
+      },
+      {
+        title: "Étiquette intérieure cousue, pas imprimée",
+        description:
+          "Supreme coud ses étiquettes intérieures avec 8 à 12 points par centimètre sur un tissu tissé. Une étiquette imprimée ou thermo-collée est une contrefaçon immédiate. L'étiquette doit contenir le nom du produit, la saison, le pays de fabrication et la composition.",
+        difficulty: 1,
+      },
+      {
+        title: "Cohérence du drop (saison + année)",
+        description:
+          "Chaque article Supreme appartient à un drop précis (ex. FW21 = Fall/Winter 2021). L'étiquette intérieure, les photos du drop officiel sur supremenewyork.com et la date de production doivent concorder. Un Box Logo « rouge/blanc FW22 » qui n'a jamais existé dans ce coloris est une contrefaçon évidente.",
+        difficulty: 2,
+      },
+      {
+        title: "Qualité du coton et toucher",
+        description:
+          "Les hoodies Supreme utilisent un coton lourd 550-620 gsm avec intérieur brossé doux. Les contrefaçons utilisent du coton 350-450 gsm qui devient rêche après un lavage. Le toucher est le signal le plus discriminant en main.",
+        difficulty: 2,
+      },
+    ],
+    faqs: [
+      {
+        question: "Comment vérifier le drop d'un article Supreme ?",
+        answer:
+          "Consultez l'archive SupremeCommunity.com ou Grailed : chaque drop Supreme y est documenté avec photos officielles, colorways sortis, et date de release. Si votre article n'existe pas dans l'archive, c'est une contrefaçon. Si le colorway revendiqué n'a jamais été produit cette saison-là, c'est aussi une contrefaçon.",
+      },
+      {
+        question: "Les fakes Supreme sont-ils détectables à l'œil nu ?",
+        answer:
+          "Les fakes low-tier (15-30 €) sont détectables immédiatement : police mal alignée, couleurs saturées, étiquette imprimée. Les super-fakes (100-200 €) exigent une vérification de la police Futura au millimètre, du poids du tissu à la main, et de la cohérence avec l'archive du drop. LegitVision détecte les deux types via analyse IA.",
+      },
+    ],
+  },
+  {
+    slug: "off-white",
+    name: "Off-White",
+    category: "clothing",
+    logo: "/images/brands/off-white.png",
+    tagline: "L'héritage Virgil Abloh, le terrain des contrefacteurs",
+    description:
+      "Off-White, fondée par Virgil Abloh en 2013 et devenue propriété de LVMH en 2021, est l'une des marques streetwear haut de gamme les plus copiées au monde. Ses codes signatures — les flèches diagonales, les guillemets autour des mots, le zip tie rouge, la ceinture industrielle jaune — sont systématiquement reproduits à bas coût. Après le décès de Virgil Abloh fin 2021, la collection « c/o Virgil Abloh » a atteint des prix records sur le secondary, attirant massivement les contrefacteurs. Plus de 50 % des articles Off-White en circulation seconde main en Europe sont estimés contrefaits.",
+    priceRange: "200-2 500 € selon pièce",
+    productType: "pièce Off-White",
+    productPossessive: "une pièce de",
+    popularModels: ["arrows-tee", "industrial-belt"],
+    signals: [
+      {
+        title: "Angle précis des flèches à 45°",
+        description:
+          "Les flèches Off-White authentiques sont imprimées à un angle précis de 45° avec un espacement constant de 4,2 mm entre chaque flèche. Les contrefaçons présentent souvent un angle approximatif (40° à 50°) ou un espacement irrégulier. Mesurez avec une règle.",
+        difficulty: 2,
+      },
+      {
+        title: "Étiquette OEKO-TEX et composition précise",
+        description:
+          "Off-White inclut obligatoirement une étiquette OEKO-TEX (certification textile) avec numéro de licence valide. La composition doit correspondre exactement à ce qui est communiqué sur off---white.com. Une étiquette OEKO-TEX absente ou au numéro invérifiable trahit une contrefaçon.",
+        difficulty: 2,
+      },
+      {
+        title: "Zip tie rouge signature avec numéro de série",
+        description:
+          "Les articles Off-White sont livrés avec un zip tie rouge attaché portant un numéro de série unique à 6-8 chiffres. Les contrefaçons incluent souvent un zip tie mais avec un numéro générique ou répété sur plusieurs pièces. Ce numéro doit être associé à un seul article dans les archives internes.",
+        difficulty: 1,
+      },
+      {
+        title: "Qualité du sérigraphie des guillemets",
+        description:
+          "Les guillemets « » autour des mots (« FOR WALKING », « SHOELACES ») sont imprimés en sérigraphie haute densité, restant craquelés après 50+ lavages sans s'effacer. Une impression qui s'efface, déteint ou se fissure après peu de lavages est une contrefaçon.",
+        difficulty: 3,
+      },
+    ],
+    faqs: [
+      {
+        question: "Comment vérifier le zip tie Off-White ?",
+        answer:
+          "Photographiez le zip tie et le numéro lisiblement. Le numéro doit être 6-8 chiffres sans lettre, gravé en creux (pas imprimé en surface). Demandez au vendeur le zip tie avec l'article : son absence n'est pas rédhibitoire mais sa présence avec un numéro cohérent est un signal positif majeur.",
+      },
+      {
+        question: "Les pièces c/o Virgil sont-elles plus contrefaites ?",
+        answer:
+          "Oui. La collection posthume c/o Virgil Abloh (drops 2022-2023) a vu ses prix doubler voire tripler sur le secondary, déclenchant une vague massive de super-fakes. Les Arrows hoodies c/o Virgil à 400-500 € sur Vinted/Grailed sont à 85 % des contrefaçons — le prix authentique secondaire tourne autour de 800-1 400 €.",
+      },
+    ],
+  },
+  {
+    slug: "stone-island",
+    name: "Stone Island",
+    category: "clothing",
+    logo: "/images/brands/stone-island.png",
+    tagline: "Le badge compass, terrain de jeu privilégié des contrefacteurs",
+    description:
+      "Stone Island, fondée par Massimo Osti en 1982 puis rachetée par Moncler en 2020, est devenue depuis 2015 l'une des marques techwear/streetwear premium les plus recherchées au monde. Sa patch compass (la fameuse boussole cousue sur la manche gauche) symbolise son ADN techno : chaque pièce utilise des teintures expérimentales et des traitements brevetés. Cette patch est aussi le sigle le plus contrefait du segment. Plus de 40 % des Stone Island en circulation seconde main à moins de 300 € sont des contrefaçons selon les marchands professionnels. Les super-fakes atteignent désormais un niveau où le tissu et la coupe sont techniquement convaincants.",
+    priceRange: "250-1 800 € selon pièce",
+    productType: "pièce Stone Island",
+    productPossessive: "une pièce de",
+    popularModels: ["patch-hoodie", "jacket"],
+    signals: [
+      {
+        title: "Broderie compass patch (pas imprimée)",
+        description:
+          "La patch compass Stone Island authentique est brodée au fil, avec une densité de 18-22 points par cm² et un relief tangible au toucher. Les contrefaçons utilisent souvent une impression thermo-collée qui donne un aspect lisse et plat. Passez le doigt sur la boussole : elle doit être en relief.",
+        difficulty: 1,
+      },
+      {
+        title: "Bouton spécifique sur la patch",
+        description:
+          "La patch Stone Island est fixée au vêtement par 2 boutons métalliques spécifiques (pas des coutures). Ces boutons sont gravés « STONE ISLAND » sur leur tête. Les contrefaçons utilisent soit des coutures, soit des boutons génériques sans gravure. Ouvrez la patch pour vérifier : elle doit se détacher en dévissant les boutons.",
+        difficulty: 1,
+      },
+      {
+        title: "Étiquette composition et traitement",
+        description:
+          "Stone Island mentionne explicitement sur son étiquette composition les traitements techniques appliqués (ex. « GARMENT DYED », « OLD DYE », « ICE JACKET THERMOSENSITIVE »). Ces traitements sont brevetés. Une étiquette qui mentionne juste « 100 % COTTON » sans précision de traitement est suspecte.",
+        difficulty: 2,
+      },
+      {
+        title: "Numéro de série à 17 chiffres",
+        description:
+          "Chaque pièce Stone Island authentique porte un numéro de série à 17 chiffres sur une étiquette intérieure blanche. Ce numéro suit un format structuré : lot + modèle + taille + date. Les contrefaçons ont souvent un numéro trop court, répétitif entre pièces, ou manquant.",
+        difficulty: 2,
+      },
+    ],
+    faqs: [
+      {
+        question: "Peut-on vérifier le numéro Stone Island en ligne ?",
+        answer:
+          "Non, Stone Island ne met pas à disposition de vérificateur public. Le numéro de série sert d'outil interne pour le SAV mais n'est pas interrogeable. Pour vérifier l'authenticité, il faut donc s'appuyer sur les signaux physiques : broderie de la patch, boutons, traitements textiles, coupe et poids du tissu.",
+      },
+      {
+        question: "Les fakes Stone Island sont-ils détectables au toucher ?",
+        answer:
+          "Oui, c'est même le signal le plus discriminant. Les pièces Stone Island authentiques sont traitées (garment dyed, ice jacket) ce qui donne au tissu un toucher spécifique — souvent plus rigide ou plus texturé que du coton standard. Les contrefaçons utilisent du coton générique qui se révèle immédiatement au toucher comparé à une pièce authentique.",
+      },
+    ],
+  },
+  {
+    slug: "bape",
+    name: "BAPE",
+    category: "clothing",
+    logo: "/images/brands/bape.webp",
+    tagline: "A Bathing Ape — 30 ans d'ADN streetwear hypercopié",
+    description:
+      "BAPE (A Bathing Ape), fondée par Nigo à Tokyo en 1993, est l'une des marques streetwear les plus influentes de l'histoire du hip-hop et du Japon contemporain. Ses motifs Shark et ABC Camo sont aujourd'hui les imprimés streetwear les plus contrefaits au monde avec le Box Logo Supreme. Depuis le rachat par I.T Group en 2011 et l'expansion globale (ouvertures NYC, LA, Paris), la hype BAPE a explosé, faisant exploser en parallèle le volume de contrefaçons. Environ 70 % des BAPE en circulation seconde main à moins de 250 € sont des contrefaçons — les super-fakes du quartier Canal Street NYC et des usines chinoises de Putian atteignent désormais un niveau de sophistication élevé.",
+    priceRange: "150-2 000 € selon pièce",
+    productType: "pièce BAPE",
+    productPossessive: "une pièce de",
+    popularModels: ["shark-hoodie", "abc-camo-hoodie"],
+    signals: [
+      {
+        title: "Position et orientation des dents du Shark",
+        description:
+          "Le motif Shark Hoodie a 7 dents supérieures et 7 dents inférieures avec un angle précis de 22° par rapport à la ligne médiane. Les contrefaçons présentent souvent 6 ou 8 dents, ou un angle approximatif. Comptez et mesurez sur photo zoomée.",
+        difficulty: 1,
+      },
+      {
+        title: "Qualité de l'impression ABC Camo",
+        description:
+          "Le camo BAPE ABC authentique utilise une impression mate à 4 couleurs distinctes (pas de dégradé). Les formes des têtes de singe sont nettes avec un contour clair. Les contrefaçons ont souvent des bords flous, des couleurs saturées ou brillantes, ou un 5e ton parasite issu du process low-cost.",
+        difficulty: 2,
+      },
+      {
+        title: "Étiquette intérieure A BATHING APE + made in Japan",
+        description:
+          "Les hoodies BAPE authentiques sont produits soit au Japon soit en Chine (usines officielles), avec une étiquette intérieure tissée « A BATHING APE » et un triangle rouge avec « NOWHERE CO. LTD. ». Les contrefaçons omettent souvent le triangle NOWHERE ou utilisent une étiquette imprimée au lieu de tissée.",
+        difficulty: 2,
+      },
+      {
+        title: "Oreilles de requin cousues sur la capuche",
+        description:
+          "Le Shark Hoodie BAPE a ses oreilles de requin cousues séparément sur la capuche (non imprimées). Elles doivent être en relief, solidement attachées avec des coutures visibles. Les contrefaçons les impriment à plat ou les cousent mal, avec des fils qui dépassent.",
+        difficulty: 3,
+      },
+    ],
+    faqs: [
+      {
+        question: "Les BAPE sont-elles authentifiées par la marque ?",
+        answer:
+          "BAPE propose depuis 2021 un service SAV avec authentification sur les produits achetés en boutique officielle (avec preuve d'achat). Pour les achats seconde main, aucune authentification officielle n'est possible. Il faut passer par des services tiers (LegitVision, Legit App, ou plateformes comme StockX qui authentifient leurs pièces BAPE revendues).",
+      },
+      {
+        question: "Le Shark Hoodie Full Zip est-il plus contrefait ?",
+        answer:
+          "Oui. Le Full Zip Shark (retail 380 €, marché 600-1 100 € selon coloris) est le modèle BAPE le plus contrefait au monde. La complexité du motif Shark rend les super-fakes techniquement convaincantes. Vérifiez systématiquement : nombre de dents (14 total), angle 22°, coutures des oreilles, zip YKK gravé, étiquette intérieure tissée avec triangle NOWHERE.",
+      },
+    ],
+  },
 ];
 
 export function getBrandBySlug(slug: string): Brand | undefined {
