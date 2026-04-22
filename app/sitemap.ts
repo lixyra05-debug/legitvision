@@ -5,6 +5,10 @@ import {
   getBrandSlugsWithModels,
   getAllModelParams,
 } from "@/lib/seo/data/models";
+import {
+  getAllGuideParams,
+  getBrandSlugsWithSignals,
+} from "@/lib/seo/guide-page-data-builder";
 
 const BASE_URL = "https://legitvision.vercel.app";
 
@@ -88,6 +92,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
+  const guideHub: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/guide`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+  ];
+
+  const guideBrandHubs: MetadataRoute.Sitemap = getBrandSlugsWithSignals().map(
+    (slug) => ({
+      url: `${BASE_URL}/guide/${slug}`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    }),
+  );
+
+  const guideSignalPages: MetadataRoute.Sitemap = getAllGuideParams().map(
+    (p) => ({
+      url: `${BASE_URL}/guide/${p.brand}/${p.signal}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    }),
+  );
+
   return [
     ...staticEntries,
     ...seoHub,
@@ -96,5 +127,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...legitCheckHub,
     ...legitCheckBrandHubs,
     ...legitCheckModelPages,
+    ...guideHub,
+    ...guideBrandHubs,
+    ...guideSignalPages,
   ];
 }
