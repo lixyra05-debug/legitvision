@@ -86,6 +86,9 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
   category: "technology",
+  verification: {
+    google: "VOhBjPTzBpcjDAFaqoWEK-CJlyJp5poSUQLhV1gy-Ms",
+  },
 };
 
 const organizationJsonLd = {
