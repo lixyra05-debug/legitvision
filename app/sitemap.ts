@@ -1,11 +1,13 @@
 import type { MetadataRoute } from "next";
+import { platforms } from "@/lib/seo/data/platforms";
+import { intersections } from "@/lib/seo/data/intersections";
 
 const BASE_URL = "https://legitvision.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  return [
+  const staticEntries: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/`,
       lastModified: now,
@@ -31,4 +33,29 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.3,
     },
   ];
+
+  const seoHub: MetadataRoute.Sitemap = [
+    {
+      url: `${BASE_URL}/acheter-authentique`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+  ];
+
+  const platformHubs: MetadataRoute.Sitemap = platforms.map((platform) => ({
+    url: `${BASE_URL}/acheter-authentique/${platform.slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  const leafPages: MetadataRoute.Sitemap = intersections.map((i) => ({
+    url: `${BASE_URL}/acheter-authentique/${i.platformSlug}/${i.brandSlug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...seoHub, ...platformHubs, ...leafPages];
 }
