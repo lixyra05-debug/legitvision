@@ -177,6 +177,7 @@ export function PhotoUploader({
               >
                 {photo ? (
                   <>
+                    {/* eslint-disable-next-line @next/next/no-img-element -- blob:// preview from URL.createObjectURL, next/image cannot optimize */}
                     <img
                       src={photo.preview}
                       alt={slot.label}

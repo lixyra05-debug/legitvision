@@ -265,7 +265,7 @@ export const gucciModels: ModelData[] = [
       {
         question: "Le Horsebit peut-il être remplacé en cas de casse ?",
         answer:
-          "Oui, Gucci Repair Service peut remplacer un Horsebit cassé avec pièce d'origine (délai 2-4 mois, coût 150-300 € selon pièce). Une Horsebit avec pièce de remplacement est 100 % authentique. Les contrefaçons ont souvent un mors de remplacement chinois non-Gucci.",
+          "Oui, Gucci Repair Service peut remplacer un Horsebit cassé avec pièce d'origine (délai 2-4 mois, coût 150-300 € selon pièce). Une Horsebit avec pièce de remplacement reste reconnue comme authentique par Gucci. Les contrefaçons ont souvent un mors de remplacement chinois non-Gucci.",
       },
     ],
   },

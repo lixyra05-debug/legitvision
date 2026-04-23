@@ -98,7 +98,7 @@ export const vestiaireIntersections: Intersection[] = [
       "Chanel est le segment premium de Vestiaire Collective, avec le prix moyen des sacs listés dépassant 6 500 € en 2025 (contre 2 800 € en 2019 avant les hausses retail Chanel). L'authentification systématique sur les articles > 100 € offre une sécurité exceptionnelle, avec un taux de contrefaçons résiduelles estimé à 0,3-0,7 % selon les modèles. Les Classic Flap et 2.55 en caviar et lambskin sont les segments les plus sécurisés ; les sacs Boy, 19 et Gabrielle présentent un risque légèrement supérieur car plus récents et moins documentés dans les bases historiques. Pour un Chanel > 8 000 €, la prime Vestiaire face à Vinted se justifie pleinement.",
     faqs: [
       {
-        question: "Un Classic Flap sur Vestiaire est-il vraiment authentique à 100 % ?",
+        question: "Un Classic Flap sur Vestiaire est-il fiablement authentifié ?",
         answer:
           "À 99,5-99,8 % selon les statistiques internes. L'équipe d'authentification Chanel Vestiaire inspecte hologramme, carte, matelassage, quincaillerie CC, cuir, et plusieurs signaux secondaires. Les cas de contestation existent mais sont extrêmement rares sur Classic Flap. Pour un niveau de certitude absolue, vous pouvez ajouter une expertise Entrupy (200-500 €) après réception.",
       },

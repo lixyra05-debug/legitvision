@@ -82,13 +82,15 @@ function buildRelatedPages(currentSignal: GuideSignal): RelatedPage[] {
       sublabel: m.tagline,
     }));
 
+  const brandName = getBrandBySlug(brandSlug)?.name ?? brandSlug;
+
   const sameBrandPlatforms: RelatedPage[] = intersections
     .filter((i) => i.brandSlug === brandSlug)
     .slice(0, 2)
     .map((i) => {
       const platform = platforms.find((p) => p.slug === i.platformSlug);
       return {
-        label: `Acheter ${currentSignal.brandSlug.replace(/-/g, " ")} authentique sur ${platform?.name ?? i.platformSlug}`,
+        label: `Acheter ${brandName} authentique sur ${platform?.name ?? i.platformSlug}`,
         href: `/acheter-authentique/${i.platformSlug}/${i.brandSlug}`,
         sublabel: platform?.tagline ?? "",
       };
@@ -101,7 +103,7 @@ function buildRelatedPages(currentSignal: GuideSignal): RelatedPage[] {
       sublabel: "66 guides d'authentification par signal et marque",
     },
     {
-      label: `Tous les guides ${currentSignal.brandSlug.replace(/-/g, " ")}`,
+      label: `Tous les guides ${brandName}`,
       href: `${BASE_PATH}/${brandSlug}`,
       sublabel: `${getSignalsByBrand(brandSlug).length} signaux spécifiques`,
     },

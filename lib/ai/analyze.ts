@@ -89,7 +89,6 @@ export async function runAnalysis({
   // Preprocess all images
   const processedImages = await Promise.all(
     images.map(async (img) => {
-      console.log(`[runAnalysis] Processing image: ${img.filename} (${img.buffer.length} bytes)`);
       return {
         ...img,
         buffer: await preprocessImage(img.buffer, img.filename),
@@ -147,7 +146,11 @@ export async function runAnalysis({
   const anthropic = getAnthropicClient();
   const response = await anthropic.messages.create({
     model: "claude-sonnet-4-20250514",
-    max_tokens: 4096,
+    max_tokens: 16000,
+    thinking: {
+      type: "enabled",
+      budget_tokens: 2000,
+    },
     system: systemPrompt,
     messages: [
       {
