@@ -72,6 +72,21 @@ export async function POST(request: NextRequest) {
 
   const admin = createAdminClient();
 
+  // Idempotence : insertion atomique dans stripe_events. Si l'event.id existe
+  // déjà (Postgres code 23505 = unique_violation), Stripe a retransmis — on
+  // renvoie 200 sans retraiter pour éviter double crédit.
+  const { error: dedupError } = await admin
+    .from("stripe_events")
+    .insert({ id: event.id, event_type: event.type });
+
+  if (dedupError) {
+    if (dedupError.code === "23505") {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+    console.error("[webhook/stripe] Erreur dédup:", dedupError);
+    return NextResponse.json({ error: "Erreur interne" }, { status: 500 });
+  }
+
   try {
     switch (event.type) {
       // ── Checkout complété (abonnement ou paiement unique) ────────────────

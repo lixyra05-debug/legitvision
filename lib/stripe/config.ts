@@ -36,7 +36,7 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
   pro: {
     id: "pro",
     name: "Pro",
-    priceFormatted: "14,99€",
+    priceFormatted: "19,99€",
     periodLabel: "/mois",
     creditsPerMonth: 30,
     description: "Pour les acheteurs réguliers",

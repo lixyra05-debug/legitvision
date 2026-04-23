@@ -95,6 +95,26 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // 5b. Guard anti-double-clic: refuser si une autre analyse est déjà en cours
+  //     (status "analyzing" < 30s) pour cet utilisateur. Protège contre les
+  //     doubles soumissions inter-analyses.
+  const thirtySecondsAgo = new Date(Date.now() - 30_000).toISOString();
+  const { data: inProgress } = await admin
+    .from("analyses")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("status", "analyzing")
+    .gte("created_at", thirtySecondsAgo)
+    .neq("id", analysisId)
+    .limit(1);
+
+  if (inProgress && inProgress.length > 0) {
+    return NextResponse.json(
+      { error: "Une analyse est déjà en cours. Veuillez patienter." },
+      { status: 429 }
+    );
+  }
+
   // 6. Fetch brand and model
   const [{ data: brand }, { data: model }] = await Promise.all([
     admin
@@ -130,15 +150,26 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 8. Update status to analyzing + store variant/collab metadata
-  await admin
+  // 8. Update ATOMIQUE status pending/uploading → analyzing. Si aucune ligne
+  //    n'est retournée, un autre POST concurrent a déjà réservé l'analyse
+  //    (double-clic sur la même analysisId) — on refuse pour éviter double débit.
+  const { data: claimed } = await admin
     .from("analyses")
     .update({
       status: "analyzing",
       variant_selected: variantSelected,
       collab_selected: collabSelected,
     })
-    .eq("id", analysisId);
+    .eq("id", analysisId)
+    .in("status", PROCESSABLE_STATUSES)
+    .select("id");
+
+  if (!claimed || claimed.length === 0) {
+    return NextResponse.json(
+      { error: "Une analyse est déjà en cours. Veuillez patienter." },
+      { status: 429 }
+    );
+  }
 
   try {
     // 9. Download photos from Supabase Storage
