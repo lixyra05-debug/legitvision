@@ -29,6 +29,14 @@ const BRAND_EXPERTISE: Record<string, string> = {
   "miu miu": "logo MIU MIU (police, espacement), qualité cuir (grain, odeur), ferrures (poids, finition), motif nappa matelassé (régularité diamants)",
   valentino: "VALENTINO GARAVANI (police précise, espacement), Rockstuds (régularité placement, solidité fixation), qualité cuir, ferrures (poids, finition métal)",
   givenchy: "G logo (proportions, finition), qualité cuir (grain, bords finis), coutures régulières, étampille intérieure (police Givenchy Paris)",
+  "maison margiela": `La Replica GATS (German Army Trainer) est l'un des modèles les plus contrefaits de la maison. C'est une réplique fidèle des chaussures d'entraînement de l'armée allemande des années 1970, devenue iconique dans la mode. Points d'authentification critiques :
+- Les 4 points de couture blancs sur l'étiquette col : signature absolue de la maison. Ils doivent être cousus à la main, légèrement irréguliers et espacés de manière organique. Sur les contrefaçons, ils sont souvent imprimés, collés ou parfaitement symétriques (machine).
+- La semelle en gomme : reproduction fidèle de la semelle militaire allemande originale. La texture doit être granuleuse et spécifique, avec un motif de traction net. Les fausses ont souvent une gomme lisse ou un motif flou.
+- Le cuir : grain fin, souple mais structuré. Les bords sont nets et polis à la main (pas de traces de colle visibles). Les contrefaçons utilisent du cuir synthétique rigide avec des bords irréguliers.
+- L'étiquette intérieure : typographie Maison Margiela Paris, numéro de ligne 22 (ligne sneakers), mention Made in Italy. Police spécifique, espacement précis.
+- Le talon : forme arrondie caractéristique. La couture du contrefort est cachée et invisible de l'extérieur. Sur les faux, la couture est souvent visible ou le talon est trop anguleux.
+- La languette : épaisseur et souplesse du cuir spécifiques, marquage discret sans logo visible (la maison est connue pour son approche anti-logo).
+- La boîte : blanche, minimaliste, étiquette avec code article S57WS0236. Les fausses boîtes ont souvent une impression de moindre qualité ou un grammage de carton inférieur.`,
   supreme: "Box Logo (broderie: fil, densité, alignement parfait), étiquette col (police Supreme, placement, couleur fil), tissu (poids Hanes vs Supreme authentique), qualité print sérigraphie",
   "off-white": "Helvetica Neue (espacement arrows/quotes EXACT, épaisseur traits), grille orange étiquette (typo Futura, espacement), coutures extérieures exposées (régularité), zip Talon (qualité)",
   "stone island": "patch bussole (broderie qualité: fil, régularité, compass pointing N), étiquette col en rouleau (police, placement), garment dye (uniformité couleur, pas de zones décolorées)",
