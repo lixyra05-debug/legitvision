@@ -9,6 +9,8 @@ import {
   ArrowRight,
   Loader2,
   ChevronRight,
+  X,
+  Sparkles,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -49,6 +51,9 @@ export default function NewCheckPage() {
   const [photos, setPhotos] = useState<Record<string, PhotoFile>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // Paywall (zero-credit) modal state
+  const [showPaywall, setShowPaywall] = useState(false);
 
   // Pre-select brand/model from URL query params (?brand=Nike&model=Air+Jordan+1)
   // Using window.location.search (client-side only) avoids the Suspense requirement
@@ -207,9 +212,8 @@ export default function NewCheckPage() {
         .single();
 
       if (!profile || profile.credits_remaining < 1) {
-        setSubmitError(
-          "Crédits insuffisants. Rechargez votre compte pour continuer."
-        );
+        // Pas de crédit → afficher le modal paywall (3 formules Stripe)
+        setShowPaywall(true);
         return;
       }
 
@@ -374,12 +378,13 @@ export default function NewCheckPage() {
           ))}
         </div>
 
-        {/* Step 1: Category */}
+        {/* Step 1: Category — auto-advance vers step 2 dès la sélection */}
         {step === 1 && (
           <CategoryPicker
             selected={category}
             onSelect={(cat) => {
               setCategory(cat);
+              setStep(2);
             }}
           />
         )}
@@ -451,7 +456,10 @@ export default function NewCheckPage() {
                     {models.map((model) => (
                       <button
                         key={model.id}
-                        onClick={() => setSelectedModel(model)}
+                        onClick={() => {
+                          setSelectedModel(model);
+                          setStep(3);
+                        }}
                         className="flex flex-col items-center gap-2 rounded-2xl border border-white/5 bg-card p-6 text-center transition-colors hover:border-emerald-500/30 hover:bg-emerald-500/5"
                       >
                         <span className="font-heading font-semibold">
@@ -616,7 +624,7 @@ export default function NewCheckPage() {
           </div>
         )}
 
-        {/* Navigation buttons */}
+        {/* Navigation buttons — auto-advance pour step 1+2, bouton conservé pour step 3+4 */}
         <div className="mt-10 flex items-center justify-between">
           <button
             onClick={step === 1 ? () => router.push("/dashboard") : handleBack}
@@ -626,20 +634,21 @@ export default function NewCheckPage() {
             {step === 1 ? "Dashboard" : "Retour"}
           </button>
 
-          {step < 4 ? (
+          {step === 3 && (
             <button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-emerald-400 disabled:opacity-40 disabled:hover:bg-emerald-500"
+              className="flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-black transition-all hover:bg-emerald-400 disabled:opacity-40 disabled:hover:bg-emerald-500"
             >
-              {step === 3 ? "Continuer →" : "Suivant"}
-              {step !== 3 && <ArrowRight className="size-4" />}
+              Continuer aux photos
+              <ArrowRight className="size-4" />
             </button>
-          ) : (
+          )}
+          {step === 4 && (
             <button
               onClick={handleSubmit}
               disabled={!allRequiredUploaded || submitting}
-              className="flex items-center gap-2 rounded-lg bg-emerald-500 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25 disabled:opacity-40 disabled:hover:bg-emerald-500 disabled:hover:shadow-none"
+              className="flex items-center gap-2 rounded-lg bg-emerald-500 px-6 py-2.5 text-sm font-semibold text-black transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25 disabled:opacity-40 disabled:hover:bg-emerald-500 disabled:hover:shadow-none"
             >
               {submitting ? (
                 <>
@@ -653,6 +662,79 @@ export default function NewCheckPage() {
           )}
         </div>
       </main>
+
+      {/* ── Paywall modal — affiché si l'utilisateur n'a aucun crédit ───────── */}
+      {showPaywall && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="paywall-title"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-md"
+          onClick={() => setShowPaywall(false)}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-md overflow-hidden rounded-2xl border border-emerald-500/20 bg-card/95 p-8 shadow-2xl shadow-emerald-500/10 backdrop-blur-xl"
+          >
+            {/* Glow accent */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
+            />
+
+            <button
+              onClick={() => setShowPaywall(false)}
+              aria-label="Fermer"
+              className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-muted-foreground transition-colors hover:border-white/20 hover:bg-white/10 hover:text-foreground"
+            >
+              <X className="size-4" />
+            </button>
+
+            <div className="relative text-center">
+              <div className="mx-auto flex size-12 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
+                <Sparkles className="size-6 text-emerald-400" />
+              </div>
+              <h3
+                id="paywall-title"
+                className="mt-4 font-heading text-2xl font-bold"
+              >
+                Aucun crédit d&apos;analyse
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Choisissez une formule pour lancer votre analyse en 60 secondes.
+              </p>
+            </div>
+
+            <div className="relative mt-6 space-y-3">
+              <button
+                onClick={() => router.push("/checkout?plan=single")}
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-black shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] hover:bg-emerald-400 active:scale-100"
+              >
+                <span>Analyse unique</span>
+                <span className="font-heading text-base">3,99 €</span>
+              </button>
+              <button
+                onClick={() => router.push("/checkout?plan=pro")}
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
+              >
+                <span>10 analyses</span>
+                <span className="font-heading text-base">19,99 €/mois</span>
+              </button>
+              <button
+                onClick={() => router.push("/checkout?plan=business")}
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
+              >
+                <span>50 analyses</span>
+                <span className="font-heading text-base">29,99 €/mois</span>
+              </button>
+            </div>
+
+            <p className="relative mt-5 text-center text-[11px] text-muted-foreground/70">
+              Paiement sécurisé Stripe · Résiliable à tout moment
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
