@@ -56,6 +56,37 @@ export default function NewCheckPage() {
   // Paywall (zero-credit) modal state
   const [showPaywall, setShowPaywall] = useState(false);
 
+  // Garde d'entrée : fetch crédits + plan AVANT d'autoriser l'accès au flow.
+  // Si 0 crédits ET plan ≠ business → écran paywall plein écran (bloque tout).
+  const [creditsLoading, setCreditsLoading] = useState(true);
+  const [hasCredits, setHasCredits] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        router.push("/auth?redirect=/check/new");
+        return;
+      }
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("credits_remaining, subscription_plan")
+        .eq("id", user.id)
+        .single();
+      if (!mounted) return;
+      const isBusiness = profile?.subscription_plan === "business";
+      const credits = profile?.credits_remaining ?? 0;
+      setHasCredits(isBusiness || credits > 0);
+      setCreditsLoading(false);
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [router, supabase]);
+
   // Pre-select brand/model from URL query params (?brand=Nike&model=Air+Jordan+1)
   // Using window.location.search (client-side only) avoids the Suspense requirement
   // that useSearchParams() would impose in Next.js 14.
@@ -336,28 +367,106 @@ export default function NewCheckPage() {
     router,
   ]);
 
+  // Nav réutilisée par les 3 états (loading, paywall, flow normal)
+  const navbar = (
+    <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+        <Link href="/dashboard" className="flex items-center">
+          <Image
+            src="/images/legitvision-logo.png"
+            alt="LegitVision"
+            width={240}
+            height={64}
+            className="h-16 w-auto"
+            priority
+            unoptimized
+          />
+        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <UserMenu />
+        </div>
+      </div>
+    </nav>
+  );
+
+  // ── Garde 1 : loader pendant le fetch des crédits ──────────────────────────
+  if (creditsLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        {navbar}
+        <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
+          <Loader2 className="size-8 animate-spin text-emerald-500" />
+        </main>
+      </div>
+    );
+  }
+
+  // ── Garde 2 : écran paywall si 0 crédits (bloque l'accès au flow) ─────────
+  if (!hasCredits) {
+    return (
+      <div className="min-h-screen bg-background">
+        {navbar}
+        <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12">
+          <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-emerald-500/20 bg-card/95 p-8 shadow-2xl shadow-emerald-500/10 backdrop-blur-xl">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
+            />
+            <div className="relative text-center">
+              <div className="mx-auto flex size-12 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
+                <Sparkles className="size-6 text-emerald-400" />
+              </div>
+              <h1 className="mt-4 font-heading text-2xl font-bold">
+                Aucun crédit d&apos;analyse
+              </h1>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Vous devez disposer d&apos;un crédit pour lancer une analyse.
+                Choisissez une formule ci-dessous.
+              </p>
+            </div>
+            <div className="relative mt-6 space-y-3">
+              <button
+                onClick={() => router.push("/checkout?plan=single")}
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-black shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] hover:bg-emerald-400 active:scale-100"
+              >
+                <span>Analyse unique</span>
+                <span className="font-heading text-base">3,99 €</span>
+              </button>
+              <button
+                onClick={() => router.push("/checkout?plan=pro")}
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
+              >
+                <span>10 analyses</span>
+                <span className="font-heading text-base">19,99 €/mois</span>
+              </button>
+              <button
+                onClick={() => router.push("/checkout?plan=business")}
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
+              >
+                <span>50 analyses</span>
+                <span className="font-heading text-base">29,99 €/mois</span>
+              </button>
+            </div>
+            <div className="relative mt-5 flex items-center justify-between text-[11px] text-muted-foreground/70">
+              <span>Paiement sécurisé Stripe · Résiliable à tout moment</span>
+              <Link
+                href="/dashboard"
+                className="text-muted-foreground/70 transition-colors hover:text-foreground"
+              >
+                Retour
+              </Link>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // ── Flow normal : utilisateur a au moins 1 crédit (ou plan business) ──────
   return (
     <div className="min-h-screen bg-background">
-      {/* Nav */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/dashboard" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={240}
-              height={64}
-              className="h-16 w-auto"
-              priority
-              unoptimized
-            />
-          </Link>
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <UserMenu />
-          </div>
-        </div>
-      </nav>
+      {navbar}
 
       <main className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
         {/* Stepper indicator */}
