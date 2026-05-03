@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
 import { FAQ_ITEMS } from "@/components/landing/faq-data";
 import { BrandSearch } from "@/components/landing/BrandSearch";
@@ -250,6 +251,7 @@ export default function LandingPage() {
                 </Link>
               ))}
             </nav>
+            <ThemeToggle />
             <UserMenu />
           </div>
         </div>

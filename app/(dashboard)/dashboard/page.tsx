@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Plus, Coins, Trash2 } from "lucide-react";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { PlanBanner } from "@/components/stripe/PlanBanner";
 import { SuccessBanner } from "@/components/stripe/SuccessBanner";
 import { deleteAnalysis } from "./actions";
@@ -95,6 +96,7 @@ export default async function DashboardPage({
                 </span>
               </div>
             )}
+            <ThemeToggle />
             <UserMenu />
           </div>
         </div>

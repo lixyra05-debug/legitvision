@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { ScoreGauge } from "./ScoreGauge";
 import { FindingCard, type Finding } from "./FindingCard";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import type { Verdict, Confidence } from "@/lib/types";
 
 // ── Types ──
@@ -223,13 +224,16 @@ export function ReportView({ data }: { data: ReportData }) {
               unoptimized
             />
           </Link>
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft className="size-4" />
-            <span className="hidden sm:inline">Dashboard</span>
-          </Link>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="size-4" />
+              <span className="hidden sm:inline">Dashboard</span>
+            </Link>
+          </div>
         </div>
       </nav>
 

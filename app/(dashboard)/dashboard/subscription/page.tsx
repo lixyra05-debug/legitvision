@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { stripe } from "@/lib/stripe/server";
 import { ArrowLeft, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { CancelButton } from "./CancelButton";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const metadata = {
   title: "Gérer mon abonnement",
@@ -64,7 +65,7 @@ export default async function SubscriptionPage() {
   return (
     <div className="min-h-screen bg-background">
       <nav className="sticky top-0 z-40 border-b border-white/5 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-16 max-w-4xl items-center gap-3 px-4">
+        <div className="mx-auto flex h-16 max-w-4xl items-center justify-between gap-3 px-4">
           <Link
             href="/dashboard"
             className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -72,6 +73,7 @@ export default async function SubscriptionPage() {
             <ArrowLeft className="size-4" />
             Dashboard
           </Link>
+          <ThemeToggle />
         </div>
       </nav>
 

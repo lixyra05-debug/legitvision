@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk, Sora } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
+
+// Inline script exécuté SYNCHRONE avant React : applique la classe "dark"/"light"
+// sur <html> selon localStorage. Évite le flash (FOUC) au chargement.
+const themeInitScript = `(function(){try{var t=localStorage.getItem('legitvision-theme');document.documentElement.classList.add(t==='light'?'light':'dark');}catch(e){document.documentElement.classList.add('dark');}})();`;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -143,19 +148,25 @@ export default function RootLayout({
     <html
       lang="fr"
       className={cn(
-        "dark antialiased",
+        "antialiased",
         inter.variable,
         spaceGrotesk.variable,
         sora.variable,
       )}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="bg-background text-foreground min-h-screen">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        {children}
-        <ChatWidget />
+        <ThemeProvider>
+          {children}
+          <ChatWidget />
+        </ThemeProvider>
       </body>
     </html>
   );

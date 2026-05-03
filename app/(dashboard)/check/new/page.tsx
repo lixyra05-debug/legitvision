@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { CategoryPicker } from "@/components/check/CategoryPicker";
 import { PhotoUploader } from "@/components/check/PhotoUploader";
 import type { Category, Brand, Model, PhotoSlot } from "@/lib/types";
@@ -351,7 +352,10 @@ export default function NewCheckPage() {
               unoptimized
             />
           </Link>
-          <UserMenu />
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <UserMenu />
+          </div>
         </div>
       </nav>
 
