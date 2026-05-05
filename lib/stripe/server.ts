@@ -27,12 +27,14 @@ export const stripe = new Proxy({} as Stripe, {
   },
 });
 
-/** Résout le Stripe Price ID à partir du plan */
-export function getPriceId(planId: "pro" | "business"): string {
+/** Résout le Stripe Price ID à partir du plan (single = paiement unique 3,99€) */
+export function getPriceId(planId: "single" | "pro" | "business"): string {
   const id =
-    planId === "pro"
-      ? process.env.STRIPE_PRO_PRICE_ID
-      : process.env.STRIPE_BUSINESS_PRICE_ID;
+    planId === "single"
+      ? process.env.STRIPE_SINGLE_PRICE_ID
+      : planId === "pro"
+        ? process.env.STRIPE_PRO_PRICE_ID
+        : process.env.STRIPE_BUSINESS_PRICE_ID;
 
   if (!id) {
     throw new Error(

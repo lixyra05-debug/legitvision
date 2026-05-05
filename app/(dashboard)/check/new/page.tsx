@@ -61,6 +61,18 @@ export default function NewCheckPage() {
   const [creditsLoading, setCreditsLoading] = useState(true);
   const [hasCredits, setHasCredits] = useState(false);
 
+  // Erreur de checkout Stripe (lue depuis ?error=stripe_unavailable&reason=...)
+  // Affichée dans le banner rouge en haut de l'écran paywall.
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("error") === "stripe_unavailable") {
+      const reason = params.get("reason");
+      setCheckoutError(reason ? decodeURIComponent(reason) : "Erreur Stripe inconnue");
+    }
+  }, []);
+
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -407,7 +419,19 @@ export default function NewCheckPage() {
     return (
       <div className="min-h-screen bg-background">
         {navbar}
-        <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12">
+        <main className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 py-12">
+          {checkoutError && (
+            <div
+              role="alert"
+              className="mb-4 w-full max-w-md rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300"
+            >
+              <p className="font-semibold">Paiement Stripe indisponible</p>
+              <p className="mt-1 text-xs text-red-300/80">{checkoutError}</p>
+              <p className="mt-2 text-xs text-red-300/60">
+                Réessayez dans quelques minutes ou contactez le support.
+              </p>
+            </div>
+          )}
           <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-emerald-500/20 bg-card/95 p-8 shadow-2xl shadow-emerald-500/10 backdrop-blur-xl">
             <div
               aria-hidden

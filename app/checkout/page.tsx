@@ -4,6 +4,12 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getPriceId } from "@/lib/stripe/server";
 import Stripe from "stripe";
 
+// Construit l'URL de redirect d'erreur — ramène l'utilisateur sur le paywall
+// avec un message clair (au lieu de revenir silencieusement sur la landing).
+function buildErrorRedirect(reason: string): string {
+  return `/check/new?error=stripe_unavailable&reason=${encodeURIComponent(reason)}`;
+}
+
 const PAID_PLANS = ["pro", "business", "single"] as const;
 type PaidPlanId = (typeof PAID_PLANS)[number];
 
@@ -47,15 +53,16 @@ export default async function CheckoutPage({
   // ── 5. Env vars check ────────────────────────────────────────────────────
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
-    redirect("/#pricing");
+    redirect(buildErrorRedirect("STRIPE_SECRET_KEY non défini sur le serveur"));
   }
 
   // ── 6. Create Stripe session ──────────────────────────────────────────────
   // IMPORTANT: redirect() must be called OUTSIDE any try/catch.
   // In Next.js, redirect() throws a special NEXT_REDIRECT error.
   // If called inside a try/catch, the catch block swallows it and
-  // the redirect never happens. We store the URL in a variable instead.
+  // the redirect never happens. We store the URL/error in variables instead.
   let sessionUrl: string | null = null;
+  let stripeErrorMessage: string | null = null;
 
   try {
     const stripe = new Stripe(stripeKey, {
@@ -82,20 +89,19 @@ export default async function CheckoutPage({
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL ?? "https://legitvision.vercel.app";
 
+    const priceId = getPriceId(planId);
+
     let session: import("stripe").Stripe.Checkout.Session;
 
     if (planId === "single") {
       // ── Paiement unique (1 analyse, mode: "payment") ─────────────────────
-      const singlePriceId = process.env.STRIPE_SINGLE_PRICE_ID;
-      if (!singlePriceId) throw new Error("STRIPE_SINGLE_PRICE_ID non défini");
-
       session = await stripe.checkout.sessions.create({
         customer: customerId,
         client_reference_id: user.id,
         mode: "payment",
-        line_items: [{ price: singlePriceId, quantity: 1 }],
+        line_items: [{ price: priceId, quantity: 1 }],
         success_url: `${baseUrl}/dashboard?session_id={CHECKOUT_SESSION_ID}&purchased=single`,
-        cancel_url: `${baseUrl}/#pricing`,
+        cancel_url: `${baseUrl}/check/new`,
         payment_intent_data: {
           metadata: { supabase_user_id: user.id, plan: "single" },
         },
@@ -104,15 +110,13 @@ export default async function CheckoutPage({
       });
     } else {
       // ── Abonnement récurrent (pro / business) ─────────────────────────────
-      const priceId = getPriceId(planId as "pro" | "business");
-
       session = await stripe.checkout.sessions.create({
         customer: customerId,
         client_reference_id: user.id,
         mode: "subscription",
         line_items: [{ price: priceId, quantity: 1 }],
         success_url: `${baseUrl}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${baseUrl}/#pricing`,
+        cancel_url: `${baseUrl}/check/new`,
         subscription_data: {
           metadata: { supabase_user_id: user.id, plan: planId },
         },
@@ -124,15 +128,14 @@ export default async function CheckoutPage({
 
     sessionUrl = session.url;
   } catch (err) {
-    console.error(
-      "[checkout] Stripe error:",
-      err instanceof Error ? err.message : String(err)
-    );
+    stripeErrorMessage =
+      err instanceof Error ? err.message : String(err);
+    console.error("[checkout] Stripe error:", stripeErrorMessage);
   }
 
   // ── 7. Redirect — OUTSIDE try/catch ───────────────────────────────────────
   if (!sessionUrl) {
-    redirect("/#pricing");
+    redirect(buildErrorRedirect(stripeErrorMessage ?? "session_creation_failed"));
   }
 
   redirect(sessionUrl);
