@@ -18,7 +18,15 @@ import {
 import { ScoreGauge } from "./ScoreGauge";
 import { FindingCard, type Finding } from "./FindingCard";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import type { Verdict, Confidence } from "@/lib/types";
+
+const VERDICT_TO_KEY: Record<Verdict, "authentic" | "suspect" | "fake"> = {
+  likely_authentic: "authentic",
+  inconclusive: "suspect",
+  likely_fake: "fake",
+};
 
 // ── Types ──
 
@@ -190,7 +198,11 @@ export function ReportView({ data }: { data: ReportData }) {
   const isComplete =
     data.status === "completed" || data.status === "expert_review";
 
+  const { t } = useTranslation();
   const verdictCfg = data.verdict ? VERDICT_CONFIG[data.verdict] : null;
+  const verdictLabel = data.verdict
+    ? t(`results.${VERDICT_TO_KEY[data.verdict]}`)
+    : null;
   const confidenceCfg = data.confidence
     ? CONFIDENCE_CONFIG[data.confidence]
     : null;
@@ -225,6 +237,7 @@ export function ReportView({ data }: { data: ReportData }) {
             />
           </Link>
           <div className="flex items-center gap-3">
+            <LanguageToggle />
             <ThemeToggle />
             <Link
               href="/dashboard"
@@ -246,7 +259,7 @@ export function ReportView({ data }: { data: ReportData }) {
             >
               <verdictCfg.Icon className={`size-4 ${verdictCfg.color}`} />
               <span className={`text-sm font-semibold ${verdictCfg.color}`}>
-                {verdictCfg.label}
+                {verdictLabel}
               </span>
             </div>
           )}

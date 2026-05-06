@@ -5,6 +5,7 @@ import { stripe } from "@/lib/stripe/server";
 import { ArrowLeft, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { CancelButton } from "./CancelButton";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
 
 export const metadata = {
   title: "Gérer mon abonnement",
@@ -73,7 +74,10 @@ export default async function SubscriptionPage() {
             <ArrowLeft className="size-4" />
             Dashboard
           </Link>
-          <ThemeToggle />
+          <div className="flex items-center gap-3">
+            <LanguageToggle />
+            <ThemeToggle />
+          </div>
         </div>
       </nav>
 

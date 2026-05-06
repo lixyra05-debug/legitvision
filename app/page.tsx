@@ -18,10 +18,16 @@ import {
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { FaqAccordion } from "@/components/landing/FaqAccordion";
 import { FAQ_ITEMS } from "@/components/landing/faq-data";
 import { BrandSearch } from "@/components/landing/BrandSearch";
 import { BrandsTabs } from "@/components/landing/BrandsTabs";
+import {
+  HeroI18n,
+  DisclaimerI18n,
+  FooterLinksI18n,
+} from "@/components/landing/LandingI18nClient";
 
 const SITE_URL = "https://legitvision.vercel.app";
 
@@ -251,6 +257,7 @@ export default function LandingPage() {
                 </Link>
               ))}
             </nav>
+            <LanguageToggle />
             <ThemeToggle />
             <UserMenu />
           </div>
@@ -290,25 +297,7 @@ export default function LandingPage() {
                   Propulsé par l&apos;IA Vision
                 </span>
 
-                <h1
-                  className="font-heading text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  Vérifiez l&apos;authenticité
-                  <br />
-                  <span style={{ color: "#10B981" }}>de vos articles</span>
-                  <br />
-                  de luxe
-                </h1>
-
-                <p
-                  className="mt-6 max-w-lg text-base leading-relaxed sm:text-lg"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  Prenez quelques photos, notre IA analyse chaque détail et vous
-                  donne un score de confiance en moins de 30 secondes.
-                  Sneakers, sacs, vêtements.
-                </p>
+                <HeroI18n />
 
                 <div className="mt-10 flex flex-col gap-4 sm:flex-row">
                   <Link
@@ -1366,7 +1355,7 @@ export default function LandingPage() {
               <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
                 Pour les articles de grande valeur, nous recommandons de croiser nos résultats avec un expert indépendant.{" "}
                 <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>
-                  Notre analyse IA est un outil de pré-authentification, pas une certification.
+                  <DisclaimerI18n />
                 </span>
               </p>
             </div>
@@ -1442,9 +1431,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm sm:justify-end" style={{ color: "var(--text-tertiary)" }}>
             <Link href="#faq" className="transition-colors hover:text-foreground">FAQ</Link>
             <Link href="#team" className="transition-colors hover:text-foreground">À propos</Link>
-            <Link href="/mentions-legales" className="transition-colors hover:text-foreground">Mentions légales</Link>
-            <Link href="/cgu" className="transition-colors hover:text-foreground">CGU</Link>
-            <Link href="/confidentialite" className="transition-colors hover:text-foreground">Confidentialité</Link>
+            <FooterLinksI18n />
             <a href="mailto:legitvision.contact@gmail.com" className="transition-colors hover:text-foreground">Contact</a>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import {
   matchResponse,
   WELCOME_MESSAGE,
@@ -19,6 +20,7 @@ const pulseAnimation = {
 };
 
 export function ChatWidget() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -94,7 +96,7 @@ export function ChatWidget() {
                 <MessageCircle className="size-4 text-emerald-400" />
               </div>
               <div>
-                <p className="text-sm font-semibold leading-tight">LegitVision Assistant</p>
+                <p className="text-sm font-semibold leading-tight">{t("chatbot.title")}</p>
                 <p className="text-xs leading-tight text-muted-foreground">En ligne</p>
               </div>
             </div>
@@ -158,7 +160,7 @@ export function ChatWidget() {
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Posez votre question..."
+              placeholder={t("chatbot.placeholder")}
               className="h-9 flex-1"
               autoFocus
             />

@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk, Sora } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
 import "./globals.css";
 
 // Inline script exécuté SYNCHRONE avant React : applique la classe "dark"/"light"
@@ -164,8 +165,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <ThemeProvider>
-          {children}
-          <ChatWidget />
+          <LanguageProvider>
+            {children}
+            <ChatWidget />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

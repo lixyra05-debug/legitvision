@@ -15,6 +15,8 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { CategoryPicker } from "@/components/check/CategoryPicker";
 import { PhotoUploader } from "@/components/check/PhotoUploader";
 import type { Category, Brand, Model, PhotoSlot } from "@/lib/types";
@@ -29,6 +31,7 @@ interface PhotoFile {
 export default function NewCheckPage() {
   const router = useRouter();
   const supabase = createClient();
+  const { t } = useTranslation();
 
   // Stepper state
   const [step, setStep] = useState(1);
@@ -395,6 +398,7 @@ export default function NewCheckPage() {
           />
         </Link>
         <div className="flex items-center gap-3">
+          <LanguageToggle />
           <ThemeToggle />
           <UserMenu />
         </div>
@@ -442,11 +446,10 @@ export default function NewCheckPage() {
                 <Sparkles className="size-6 text-emerald-400" />
               </div>
               <h1 className="mt-4 font-heading text-2xl font-bold">
-                Aucun crédit d&apos;analyse
+                {t("check.noCredits")}
               </h1>
               <p className="mt-2 text-sm text-muted-foreground">
-                Vous devez disposer d&apos;un crédit pour lancer une analyse.
-                Choisissez une formule ci-dessous.
+                {t("check.buyCredits")}
               </p>
             </div>
             <div className="relative mt-6 space-y-3">
@@ -454,22 +457,22 @@ export default function NewCheckPage() {
                 onClick={() => router.push("/checkout?plan=single")}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-black shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] hover:bg-emerald-400 active:scale-100"
               >
-                <span>Analyse unique</span>
+                <span>{t("pricing.single")}</span>
                 <span className="font-heading text-base">3,99 €</span>
               </button>
               <button
                 onClick={() => router.push("/checkout?plan=pro")}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
               >
-                <span>10 analyses</span>
-                <span className="font-heading text-base">19,99 €/mois</span>
+                <span>{t("pricing.proDesc")}</span>
+                <span className="font-heading text-base">19,99 €{t("check.perMonth")}</span>
               </button>
               <button
                 onClick={() => router.push("/checkout?plan=business")}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
               >
-                <span>50 analyses</span>
-                <span className="font-heading text-base">29,99 €/mois</span>
+                <span>{t("pricing.premiumDesc")}</span>
+                <span className="font-heading text-base">29,99 €{t("check.perMonth")}</span>
               </button>
             </div>
             <div className="relative mt-5 flex items-center justify-between text-[11px] text-muted-foreground/70">
@@ -847,22 +850,22 @@ export default function NewCheckPage() {
                 onClick={() => router.push("/checkout?plan=single")}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-black shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] hover:bg-emerald-400 active:scale-100"
               >
-                <span>Analyse unique</span>
+                <span>{t("pricing.single")}</span>
                 <span className="font-heading text-base">3,99 €</span>
               </button>
               <button
                 onClick={() => router.push("/checkout?plan=pro")}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
               >
-                <span>10 analyses</span>
-                <span className="font-heading text-base">19,99 €/mois</span>
+                <span>{t("pricing.proDesc")}</span>
+                <span className="font-heading text-base">19,99 €{t("check.perMonth")}</span>
               </button>
               <button
                 onClick={() => router.push("/checkout?plan=business")}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
               >
-                <span>50 analyses</span>
-                <span className="font-heading text-base">29,99 €/mois</span>
+                <span>{t("pricing.premiumDesc")}</span>
+                <span className="font-heading text-base">29,99 €{t("check.perMonth")}</span>
               </button>
             </div>
 
