@@ -226,30 +226,21 @@ export async function POST(request: NextRequest) {
           break;
         }
 
+        // B-BIZ-2 : tous les plans (pro=10, business=50) ajoutent leurs crédits
         const creditsToAdd = PLAN_CREDITS[planId];
-        const newBalance =
-          planId === "business"
-            ? profile.credits_remaining
-            : profile.credits_remaining + creditsToAdd;
+        const newBalance = profile.credits_remaining + creditsToAdd;
 
-        if (planId !== "business") {
-          await admin
-            .from("profiles")
-            .update({ credits_remaining: newBalance })
-            .eq("id", profile.id);
-        }
-
-        const description =
-          planId === "business"
-            ? `Renouvellement plan Business (illimité) — facture ${invoice.id}`
-            : `Recharge mensuelle ${creditsToAdd} crédits — plan ${planId} — facture ${invoice.id}`;
+        await admin
+          .from("profiles")
+          .update({ credits_remaining: newBalance })
+          .eq("id", profile.id);
 
         await admin.from("credits_transactions").insert({
           user_id: profile.id,
           type: "purchase",
-          amount: planId === "business" ? 0 : creditsToAdd,
+          amount: creditsToAdd,
           balance_after: newBalance,
-          description,
+          description: `Recharge mensuelle ${creditsToAdd} crédits — plan ${planId} — facture ${invoice.id}`,
           stripe_payment_id: invoice.payment_intent
             ? typeof invoice.payment_intent === "string"
               ? invoice.payment_intent
@@ -261,6 +252,10 @@ export async function POST(request: NextRequest) {
 
       // ── Abonnement résilié ────────────────────────────────────────────────
       case "customer.subscription.deleted": {
+        // B-BIZ-1 : zéro crédit gratuit à la résiliation (cohérent mig 016 +
+        // paywall obligatoire). On bascule juste le plan en free et on retire
+        // l'ID subscription. Les crédits restants sont conservés (ce que
+        // l'user a déjà payé), mais aucun bonus ajouté.
         const subscription = event.data.object as import("stripe").Stripe.Subscription;
         const customerId =
           typeof subscription.customer === "string"
@@ -271,7 +266,7 @@ export async function POST(request: NextRequest) {
 
         const { data: profile } = await admin
           .from("profiles")
-          .select("id, credits_remaining")
+          .select("id")
           .eq("stripe_customer_id", customerId)
           .single();
 
@@ -285,18 +280,8 @@ export async function POST(request: NextRequest) {
           .update({
             subscription_plan: "free",
             stripe_subscription_id: null,
-            credits_remaining: 3,
           })
           .eq("id", profile.id);
-
-        await admin.from("credits_transactions").insert({
-          user_id: profile.id,
-          type: "bonus",
-          amount: 3,
-          balance_after: 3,
-          description: "Retour au plan Free après résiliation",
-          stripe_payment_id: null,
-        });
         break;
       }
 
@@ -304,9 +289,12 @@ export async function POST(request: NextRequest) {
         break;
     }
   } catch (error) {
+    // B-WHK-8 : Erreur runtime dans le switch — supprimer la marque idempotence
+    // pour permettre à Stripe de retenter (jusqu'à 3 fois sur 72h). Sinon le
+    // user a payé mais aucun crédit n'est ajouté.
     console.error("[webhook/stripe] Erreur traitement event:", error);
-    // Retourner 200 quand même pour éviter que Stripe ne réessaie
-    return NextResponse.json({ received: true, error: "Erreur interne" });
+    await admin.from("stripe_events").delete().eq("id", event.id);
+    return NextResponse.json({ error: "Erreur interne" }, { status: 500 });
   }
 
   return NextResponse.json({ received: true });

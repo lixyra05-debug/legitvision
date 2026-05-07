@@ -496,6 +496,17 @@ export default function NewCheckPage() {
       {navbar}
 
       <main className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
+        {/* M5 : banner stripe_unavailable visible aussi dans le flow normal */}
+        {checkoutError && (
+          <div
+            role="alert"
+            className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300"
+          >
+            <p className="font-semibold">Paiement Stripe indisponible</p>
+            <p className="mt-1 text-xs text-red-300/80">{checkoutError}</p>
+          </div>
+        )}
+
         {/* Stepper indicator */}
         <div className="mb-10 flex items-center justify-center gap-2">
           {[1, 2, 3, 4].map((s) => (

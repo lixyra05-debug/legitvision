@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { getPriceId } from "@/lib/stripe/server";
-import Stripe from "stripe";
+import { stripe, getPriceId, getOrCreateCustomer } from "@/lib/stripe/server";
 
 // Construit l'URL de redirect d'erreur — ramène l'utilisateur sur le paywall
 // avec un message clair (au lieu de revenir silencieusement sur la landing).
@@ -65,21 +64,15 @@ export default async function CheckoutPage({
   let stripeErrorMessage: string | null = null;
 
   try {
-    const stripe = new Stripe(stripeKey, {
-      apiVersion: "2026-02-25.clover",
-      typescript: true,
-    });
+    // M6 : utiliser le singleton stripe (lazy-init) + helper getOrCreateCustomer
+    const customerId = await getOrCreateCustomer(
+      user.id,
+      user.email!,
+      profile?.stripe_customer_id ?? null
+    );
 
-    // Get or create Stripe customer
-    let customerId = profile?.stripe_customer_id ?? null;
-    if (!customerId) {
-      const customer = await stripe.customers.create({
-        email: user.email!,
-        metadata: { supabase_user_id: user.id },
-      });
-      customerId = customer.id;
-
-      // Save customer ID (best effort — don't block checkout if this fails)
+    // Save customer ID si nouveau (best effort)
+    if (!profile?.stripe_customer_id) {
       await admin
         .from("profiles")
         .update({ stripe_customer_id: customerId })

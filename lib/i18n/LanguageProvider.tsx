@@ -59,6 +59,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (isValidLocale(stored)) {
         setLocaleState(stored);
+        // M8: synchroniser <html lang> dès le mount (pour SEO + a11y)
+        if (typeof document !== "undefined") {
+          document.documentElement.lang = stored;
+        }
       }
     } catch {
       // localStorage indisponible (private mode, quota) — on garde le défaut.

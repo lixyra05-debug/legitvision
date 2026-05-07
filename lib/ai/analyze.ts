@@ -19,8 +19,8 @@ export interface ImageInput {
 
 export interface AnalysisAIResult {
   overall_score: number;
-  confidence_level: string;
-  verdict: string;
+  confidence_level: "high" | "medium" | "low" | "insufficient";
+  verdict: "likely_authentic" | "likely_fake" | "inconclusive";
   sub_scores: Record<string, number>;
   findings: Array<{
     zone: string;
@@ -160,6 +160,14 @@ export async function runAnalysis({
     ],
   });
 
+  // M2: Détecter une réponse tronquée par limite de tokens (JSON probablement invalide)
+  if (response.stop_reason === "max_tokens") {
+    throw new AnalysisError(
+      "Réponse IA tronquée (limite de tokens atteinte). Réessayez avec moins de photos.",
+      "MAX_TOKENS"
+    );
+  }
+
   // Extract text response
   const textBlock = response.content.find((block) => block.type === "text");
   if (!textBlock || textBlock.type !== "text") {
@@ -184,6 +192,20 @@ export async function runAnalysis({
     throw new AnalysisError(
       "L'IA a retourné un format de réponse invalide.",
       "PARSE_ERROR"
+    );
+  }
+
+  // M1: Validation des champs requis (un JSON valide mais incomplet = erreur)
+  if (
+    typeof aiResult.overall_score !== "number" ||
+    !aiResult.sub_scores ||
+    typeof aiResult.sub_scores !== "object" ||
+    !aiResult.verdict ||
+    !aiResult.confidence_level
+  ) {
+    throw new AnalysisError(
+      "Réponse IA incomplète (champs requis manquants).",
+      "INVALID_RESPONSE"
     );
   }
 

@@ -38,7 +38,7 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
     name: "Pro",
     priceFormatted: "19,99€",
     periodLabel: "/mois",
-    creditsPerMonth: 30,
+    creditsPerMonth: 10,
     description: "Pour les acheteurs réguliers",
     features: [
       "Toutes les catégories",
@@ -54,10 +54,10 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
     name: "Business",
     priceFormatted: "29,99€",
     periodLabel: "/mois",
-    creditsPerMonth: null,
+    creditsPerMonth: 50,
     description: "Pour les revendeurs et pros",
     features: [
-      "Analyses illimitées",
+      "50 analyses par mois",
       "Toutes les catégories",
       "Revue expert prioritaire",
       "API access",
@@ -70,9 +70,9 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
 
 export const PAID_PLANS: PlanId[] = ["pro", "business"];
 
-/** Crédits accordés à la mise à niveau vers un plan payant */
+/** Crédits accordés à chaque facturation mensuelle (free = bonus à l'inscription, mais désactivé depuis mig 016) */
 export const PLAN_CREDITS: Record<PlanId, number> = {
-  free: 3,
-  pro: 30,
-  business: 9999, // valeur symbolique — le check est bypassé côté serveur
+  free: 0,
+  pro: 10,
+  business: 50,
 };

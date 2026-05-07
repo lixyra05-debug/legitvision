@@ -60,15 +60,12 @@ export async function POST(request: NextRequest) {
     .eq("id", user.id)
     .single();
 
-  const isBusinessPlan = profile?.subscription_plan === "business";
-
-  if (!isBusinessPlan) {
-    if (!profile || profile.credits_remaining < 1) {
-      return NextResponse.json(
-        { error: "Crédits insuffisants. Rechargez votre compte pour continuer." },
-        { status: 402 }
-      );
-    }
+  // B-BIZ-2 : Business consomme aussi des crédits (50/mois). Plus de bypass.
+  if (!profile || profile.credits_remaining < 1) {
+    return NextResponse.json(
+      { error: "Crédits insuffisants. Rechargez votre compte pour continuer." },
+      { status: 402 }
+    );
   }
 
   // 5. Fetch the analysis record (scoped to the authenticated user)
@@ -180,9 +177,8 @@ export async function POST(request: NextRequest) {
           .download(photo.storage_path);
 
         if (error || !data) {
-          throw new Error(
-            `Impossible de télécharger la photo : ${photo.storage_path}`
-          );
+          // M3: pas de leak du storage_path interne dans le message
+          throw new Error("Impossible de télécharger une photo. Réessayez.");
         }
 
         const protocol = brand.photo_protocol as PhotoSlot[];
@@ -230,23 +226,24 @@ export async function POST(request: NextRequest) {
       })
       .eq("id", analysisId);
 
-    // 13. Déduire 1 crédit (sauf plan Business)
-    if (!isBusinessPlan && profile) {
-      const newBalance = profile.credits_remaining - 1;
-      await Promise.all([
-        admin
-          .from("profiles")
-          .update({ credits_remaining: newBalance })
-          .eq("id", user.id),
-        admin.from("credits_transactions").insert({
-          user_id: user.id,
-          type: "usage",
-          amount: -1,
-          balance_after: newBalance,
-          description: `Analyse ${analysisId}`,
-          analysis_id: analysisId,
-        }),
-      ]);
+    // 13. Déduire 1 crédit ATOMIQUEMENT via RPC (B-RACE — fix TOCTOU)
+    //     La RPC fait UPDATE conditionnel + INSERT credits_transactions dans
+    //     une seule transaction. Si crédits < 1 au moment du débit (race),
+    //     l'erreur est loggée mais l'analyse réussit (l'user a payé Claude
+    //     côté coût mais pas côté crédit — situation rare grâce aux guards).
+    const { error: decrementError } = await admin.rpc(
+      "decrement_credits_atomic",
+      {
+        p_user_id: user.id,
+        p_analysis_id: analysisId,
+        p_description: `Analyse ${analysisId}`,
+      }
+    );
+    if (decrementError) {
+      console.error(
+        "[analyze] decrement_credits_atomic failed (race condition or insufficient credits):",
+        decrementError.message
+      );
     }
 
     return NextResponse.json({

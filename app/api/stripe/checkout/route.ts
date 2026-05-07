@@ -89,6 +89,14 @@ export async function POST(request: NextRequest) {
       locale: "fr",
     });
 
+    // M4 : guard contre session.url null
+    if (!session.url) {
+      console.error("[stripe/checkout] session.url is null", { sessionId: session.id });
+      return NextResponse.json(
+        { error: "Erreur création session Stripe (URL manquante)" },
+        { status: 500 }
+      );
+    }
     return NextResponse.json({ url: session.url });
   } catch (error) {
     console.error("[stripe/checkout] Error:", error);
