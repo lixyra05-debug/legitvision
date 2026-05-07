@@ -1,0 +1,90 @@
+"use client";
+
+import Link from "next/link";
+import { Plus } from "lucide-react";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
+
+/**
+ * Composants client pour la page /dashboard (server component avec metadata).
+ * Permet l'i18n FR/EN sans casser le SSR.
+ */
+
+export function DashboardGreeting({
+  firstName,
+  count,
+}: {
+  firstName: string;
+  count: number;
+}) {
+  const { t } = useTranslation();
+  const isMultiple = count > 1;
+  return (
+    <>
+      <h1 className="font-heading text-2xl font-bold sm:text-3xl">
+        {t("dashboard.greeting")}, {firstName} 👋
+      </h1>
+      <p className="mt-1 text-sm text-muted-foreground">
+        {count === 0
+          ? t("dashboard.readyFirstCheck")
+          : `${count} ${
+              isMultiple
+                ? t("dashboard.analysesCountPlural")
+                : t("dashboard.analysesCount")
+            } ${
+              isMultiple
+                ? t("dashboard.analysesPerformedPlural")
+                : t("dashboard.analysesPerformed")
+            }`}
+      </p>
+    </>
+  );
+}
+
+export function DashboardNewAnalysisButton() {
+  const { t } = useTranslation();
+  return (
+    <Link
+      href="/check/new"
+      className="inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
+    >
+      <Plus className="size-4" />
+      {t("dashboard.newAnalysis")}
+    </Link>
+  );
+}
+
+export function DashboardEmptyState() {
+  const { t } = useTranslation();
+  return (
+    <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-20 text-center">
+      <div className="mb-4 flex size-16 items-center justify-center rounded-2xl bg-emerald-500/10">
+        <Plus className="size-8 text-emerald-500" />
+      </div>
+      <p className="text-lg font-medium">{t("dashboard.noAnalyses")}</p>
+      <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+        {t("dashboard.noAnalysesDesc")}
+      </p>
+      <Link
+        href="/check/new"
+        className="mt-6 inline-flex h-10 items-center gap-2 rounded-lg bg-emerald-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-emerald-400"
+      >
+        <Plus className="size-4" />
+        {t("dashboard.startAnalysis")}
+      </Link>
+    </div>
+  );
+}
+
+export function DashboardCreditsLabel() {
+  const { t } = useTranslation();
+  return (
+    <span className="hidden text-muted-foreground sm:inline">
+      {t("dashboard.credits")}
+    </span>
+  );
+}
+
+export function DeleteAnalysisTitle() {
+  const { t } = useTranslation();
+  return t("dashboard.deleteAnalysis");
+}

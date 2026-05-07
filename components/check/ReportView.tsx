@@ -371,7 +371,7 @@ export function ReportView({ data }: { data: ReportData }) {
               <div className="space-y-4 rounded-2xl border border-white/5 bg-card p-6">
                 <SectionTitle
                   icon={Eye}
-                  title="Scores par zone"
+                  title={t("results.subScoresTitle")}
                   count={subScoreEntries.length}
                 />
                 <div className="mt-2 grid gap-4 sm:grid-cols-2">

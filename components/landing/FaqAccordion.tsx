@@ -2,14 +2,17 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { FAQ_ITEMS } from "./faq-data";
+import { getFaqItems } from "./faq-data";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 export function FaqAccordion() {
   const [open, setOpen] = useState<number | null>(null);
+  const { locale } = useTranslation();
+  const items = getFaqItems(locale);
 
   return (
     <div className="space-y-2">
-      {FAQ_ITEMS.map((item, i) => (
+      {items.map((item, i) => (
         <div
           key={i}
           className="overflow-hidden rounded-xl border border-white/5 bg-card transition-colors hover:border-white/10"

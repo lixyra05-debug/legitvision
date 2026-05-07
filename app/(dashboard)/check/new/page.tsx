@@ -546,10 +546,10 @@ export default function NewCheckPage() {
             {!selectedBrand ? (
               <>
                 <h2 className="font-heading text-xl font-bold sm:text-2xl">
-                  Quelle marque ?
+                  {t("check.brand")}
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Sélectionnez la marque de votre article
+                  {t("check.brandSubtitle")}
                 </p>
                 {loadingBrands ? (
                   <div className="mt-12 flex justify-center">
@@ -557,7 +557,7 @@ export default function NewCheckPage() {
                   </div>
                 ) : brands.length === 0 ? (
                   <p className="mt-8 text-center text-sm text-muted-foreground">
-                    Aucune marque disponible pour cette catégorie.
+                    {t("check.brandEmpty")}
                   </p>
                 ) : (
                   <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -582,17 +582,17 @@ export default function NewCheckPage() {
                   className="mb-6 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
                 >
                   <ArrowLeft className="size-4" />
-                  Retour aux marques
+                  {t("check.backToBrands")}
                 </button>
                 <h2 className="font-heading text-xl font-bold sm:text-2xl">
-                  Quel modèle{" "}
+                  {t("check.modelTitlePrefix")}{" "}
                   <span className="text-emerald-500">
                     {selectedBrand.name}
                   </span>{" "}
                   ?
                 </h2>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Sélectionnez le modèle exact
+                  {t("check.modelSubtitle")}
                 </p>
                 {loadingModels ? (
                   <div className="mt-12 flex justify-center">
@@ -600,7 +600,7 @@ export default function NewCheckPage() {
                   </div>
                 ) : models.length === 0 ? (
                   <p className="mt-8 text-center text-sm text-muted-foreground">
-                    Aucun modèle disponible pour cette marque.
+                    {t("check.modelEmpty")}
                   </p>
                 ) : (
                   <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -631,7 +631,7 @@ export default function NewCheckPage() {
                   className="mb-6 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
                 >
                   <ArrowLeft className="size-4" />
-                  Retour aux modèles
+                  {t("check.backToModels")}
                 </button>
                 <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6">
                   <p className="text-sm text-muted-foreground">
@@ -654,10 +654,10 @@ export default function NewCheckPage() {
         {step === 3 && selectedModel && (
           <div>
             <h2 className="font-heading text-xl font-bold sm:text-2xl">
-              Variante &amp; Collaboration
+              {t("check.variantTitle")}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Précisez la version pour une analyse encore plus ciblée — ou passez directement aux photos.
+              {t("check.variantSubtitle")}
             </p>
 
             {/* Variantes */}
@@ -791,7 +791,7 @@ export default function NewCheckPage() {
               disabled={!canProceed()}
               className="flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-black transition-all hover:bg-emerald-400 disabled:opacity-40 disabled:hover:bg-emerald-500"
             >
-              Continuer aux photos
+              {t("check.continueToPhotos")}
               <ArrowRight className="size-4" />
             </button>
           )}
@@ -804,10 +804,10 @@ export default function NewCheckPage() {
               {submitting ? (
                 <>
                   <Loader2 className="size-4 animate-spin" />
-                  Upload en cours…
+                  {t("check.uploading")}
                 </>
               ) : (
-                "Lancer l'analyse"
+                t("check.analyze")
               )}
             </button>
           )}

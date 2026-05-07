@@ -2,10 +2,15 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { stripe } from "@/lib/stripe/server";
-import { ArrowLeft, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
-import { CancelButton } from "./CancelButton";
+import { ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import {
+  SubscriptionPageHeader,
+  SubscriptionNoActive,
+  SubscriptionActive,
+  SubscriptionContactNote,
+} from "@/components/dashboard/SubscriptionI18nClient";
 
 export const metadata = {
   title: "Gérer mon abonnement",
@@ -82,103 +87,20 @@ export default async function SubscriptionPage() {
       </nav>
 
       <main className="mx-auto max-w-2xl px-4 py-12">
-        <h1 className="font-heading text-3xl font-bold tracking-tight">
-          Gérer mon abonnement
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Consultez votre plan et résiliez à tout moment.
-        </p>
+        <SubscriptionPageHeader />
 
         {!hasActiveSubscription ? (
-          <div className="relative mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-10 backdrop-blur-xl">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
-            />
-            <div className="relative flex flex-col items-center text-center">
-              <div className="flex size-16 items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/10">
-                <Sparkles className="size-8 text-emerald-400" />
-              </div>
-              <h2 className="mt-6 font-heading text-xl font-bold tracking-tight">
-                Vous n&apos;avez aucun abonnement actif
-              </h2>
-              <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-                Souscrivez à un plan pour analyser vos articles en illimité et
-                bénéficier du support prioritaire.
-              </p>
-              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-muted-foreground">
-                <span>Crédits disponibles</span>
-                <span className="font-semibold text-foreground">{credits}</span>
-              </div>
-              <Link
-                href="/#pricing"
-                className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
-              >
-                Voir nos offres
-                <ArrowRight className="size-4" />
-              </Link>
-            </div>
-          </div>
+          <SubscriptionNoActive credits={credits} />
         ) : (
-          <div className="relative mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-xl">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -top-24 right-0 size-48 rounded-full bg-emerald-500/10 blur-3xl"
-            />
-            <div className="relative">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                    Plan actuel
-                  </p>
-                  <p className="mt-1 font-heading text-xl font-semibold">
-                    {planLabel}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {credits} crédit{credits > 1 ? "s" : ""} disponible
-                    {credits > 1 ? "s" : ""}
-                  </p>
-                </div>
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
-                  <ShieldCheck className="size-6 text-emerald-400" />
-                </div>
-              </div>
-
-              {cancelAtPeriodEnd && periodEnd && (
-                <div className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
-                  <p className="text-sm text-amber-400">
-                    Résiliation programmée. Votre abonnement restera actif
-                    jusqu&apos;au{" "}
-                    <span className="font-semibold">{formatDate(periodEnd)}</span>.
-                    Vous ne serez plus facturé après cette date.
-                  </p>
-                </div>
-              )}
-
-              {!cancelAtPeriodEnd && (
-                <div className="mt-6 border-t border-white/5 pt-6">
-                  <p className="text-sm text-muted-foreground">
-                    Vous pouvez résilier à tout moment. L&apos;abonnement restera
-                    actif jusqu&apos;à la fin de la période déjà payée.
-                  </p>
-                  <div className="mt-4">
-                    <CancelButton />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          <SubscriptionActive
+            planLabel={planLabel}
+            credits={credits}
+            cancelAtPeriodEnd={cancelAtPeriodEnd}
+            formattedPeriodEnd={periodEnd ? formatDate(periodEnd) : null}
+          />
         )}
 
-        <p className="mt-6 text-xs text-muted-foreground">
-          Besoin d&apos;aide ?{" "}
-          <a
-            href="mailto:legitvision.contact@gmail.com"
-            className="text-emerald-400 hover:text-emerald-300"
-          >
-            legitvision.contact@gmail.com
-          </a>
-        </p>
+        <SubscriptionContactNote />
       </main>
     </div>
   );

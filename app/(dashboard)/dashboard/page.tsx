@@ -2,12 +2,18 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Plus, Coins, Trash2 } from "lucide-react";
+import { Coins, Trash2 } from "lucide-react";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { PlanBanner } from "@/components/stripe/PlanBanner";
 import { SuccessBanner } from "@/components/stripe/SuccessBanner";
+import {
+  DashboardGreeting,
+  DashboardNewAnalysisButton,
+  DashboardEmptyState,
+  DashboardCreditsLabel,
+} from "@/components/dashboard/DashboardI18nClient";
 import { deleteAnalysis } from "./actions";
 import {
   getScoreColor,
@@ -92,9 +98,7 @@ export default async function DashboardPage({
                 <span className="font-medium">
                   {profile.credits_remaining}
                 </span>
-                <span className="hidden text-muted-foreground sm:inline">
-                  crédits
-                </span>
+                <DashboardCreditsLabel />
               </div>
             )}
             <LanguageToggle />
@@ -111,22 +115,12 @@ export default async function DashboardPage({
         {/* Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="font-heading text-2xl font-bold sm:text-3xl">
-              Bonjour, {firstName} 👋
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {formattedAnalyses.length === 0
-                ? "Prêt à vérifier votre premier article ?"
-                : `${formattedAnalyses.length} analyse${formattedAnalyses.length > 1 ? "s" : ""} effectuée${formattedAnalyses.length > 1 ? "s" : ""}`}
-            </p>
+            <DashboardGreeting
+              firstName={firstName ?? ""}
+              count={formattedAnalyses.length}
+            />
           </div>
-          <Link
-            href="/check/new"
-            className="inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
-          >
-            <Plus className="size-4" />
-            Nouvelle analyse
-          </Link>
+          <DashboardNewAnalysisButton />
         </div>
 
         {/* Bandeau plan actuel */}
@@ -141,23 +135,7 @@ export default async function DashboardPage({
 
         {/* Analyses list */}
         {formattedAnalyses.length === 0 ? (
-          <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-20 text-center">
-            <div className="mb-4 flex size-16 items-center justify-center rounded-2xl bg-emerald-500/10">
-              <Plus className="size-8 text-emerald-500" />
-            </div>
-            <p className="text-lg font-medium">Aucune analyse</p>
-            <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-              Vous n&apos;avez pas encore analysé d&apos;article. Lancez votre
-              première vérification !
-            </p>
-            <Link
-              href="/check/new"
-              className="mt-6 inline-flex h-10 items-center gap-2 rounded-lg bg-emerald-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-emerald-400"
-            >
-              <Plus className="size-4" />
-              Lancer une analyse
-            </Link>
-          </div>
+          <DashboardEmptyState />
         ) : (
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {formattedAnalyses.map((analysis) => {

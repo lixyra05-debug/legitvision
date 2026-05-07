@@ -27,6 +27,9 @@ import {
   HeroI18n,
   DisclaimerI18n,
   FooterLinksI18n,
+  HowItWorksI18n,
+  FaqTitleI18n,
+  FinalCtaI18n,
 } from "@/components/landing/LandingI18nClient";
 
 const SITE_URL = "https://legitvision.vercel.app";
@@ -551,15 +554,7 @@ export default function LandingPage() {
             >
               Processus
             </p>
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Comment ça marche
-            </h2>
-            <p className="mt-4 text-base" style={{ color: "var(--text-secondary)" }}>
-              Trois étapes simples pour vérifier votre article
-            </p>
+            <HowItWorksI18n />
           </FadeIn>
 
           <div className="mt-16 grid gap-6 sm:grid-cols-3">
@@ -1287,15 +1282,7 @@ export default function LandingPage() {
             >
               FAQ
             </p>
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Questions fréquentes
-            </h2>
-            <p className="mt-4" style={{ color: "var(--text-secondary)" }}>
-              Tout ce que vous devez savoir avant de commencer
-            </p>
+            <FaqTitleI18n />
           </FadeIn>
           <FadeIn delay={150} className="mt-10">
             <FaqAccordion />
@@ -1380,32 +1367,7 @@ export default function LandingPage() {
             />
 
             <BarChart3 className="mx-auto mb-6 size-10 text-emerald-500" />
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Vérifiez votre prochain achat maintenant
-            </h2>
-            <p
-              className="mx-auto mt-4 max-w-lg"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              Résultat en moins de 30 secondes. Sneakers, sacs, vêtements.
-            </p>
-            <Link
-              href="/auth?redirect=%2Fcheck%2Fnew"
-              className="group mt-10 inline-flex h-12 items-center gap-2 rounded-xl px-8 text-base font-semibold text-white transition-all"
-              style={{
-                background: "#10B981",
-                animation: "pulse-glow 3s ease-in-out infinite",
-              }}
-            >
-              Commencer maintenant
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <p className="mt-4 text-xs" style={{ color: "var(--text-tertiary)" }}>
-              Première analyse à 3,99€ · Sans abonnement
-            </p>
+            <FinalCtaI18n />
           </div>
         </FadeIn>
       </section>

@@ -4,10 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { MessageCircle, X, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
-import {
-  matchResponse,
-  WELCOME_MESSAGE,
-} from "./chatbot-responses";
+import { matchResponse } from "./chatbot-responses";
 
 type ChatMessage = {
   id: number;
@@ -32,8 +29,11 @@ export function ChatWidget() {
 
   useEffect(() => {
     if (open && messages.length === 0) {
-      setMessages([{ id: ++idCounterRef.current, role: "bot", text: WELCOME_MESSAGE }]);
+      setMessages([
+        { id: ++idCounterRef.current, role: "bot", text: t("chatbot.welcome") },
+      ]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, messages.length]);
 
   useEffect(() => {

@@ -1,4 +1,8 @@
-export const FAQ_ITEMS = [
+import type { Locale } from "@/lib/i18n/translations";
+
+export type FaqItem = { q: string; a: string };
+
+const FAQ_ITEMS_FR: FaqItem[] = [
   {
     q: "Comment fonctionne l'analyse par IA ?",
     a: "Notre IA Vision analyse chaque photo selon 8 zones d'authentification spécifiques au modèle (coutures, logo, matériaux, étiquettes...). Elle compare ces éléments avec des milliers de points de référence pour calculer un score de confiance.",
@@ -32,3 +36,50 @@ export const FAQ_ITEMS = [
     a: "Suivez notre guide photo intégré qui vous indique exactement quelles vues capturer. Utilisez un bon éclairage, un fond neutre, et une résolution d'au moins 800×800 pixels. Plus vos photos sont nettes, plus l'analyse sera précise.",
   },
 ];
+
+const FAQ_ITEMS_EN: FaqItem[] = [
+  {
+    q: "How does the AI analysis work?",
+    a: "Our Vision AI analyzes each photo across 8 authentication zones specific to the model (stitching, logo, materials, labels...). It compares these elements with thousands of reference points to compute a confidence score.",
+  },
+  {
+    q: "Does LegitVision certify authenticity?",
+    a: "No. LegitVision provides a probability estimate based on visual AI analysis. We do not issue certificates of authenticity. For an official certification, we recommend consulting a brand-approved expert.",
+  },
+  {
+    q: "What if the AI gets it wrong?",
+    a: "The AI can be wrong, which is why we provide a confidence score rather than a certification. If the score is between 40 and 60, the analysis is automatically flagged for review. We always recommend cross-checking our results with other sources.",
+  },
+  {
+    q: "Are my photos stored?",
+    a: "Your photos are securely hosted in Europe (Supabase, EU region). They are used only for the analysis and are automatically deleted after 30 days. We never share your images with third parties.",
+  },
+  {
+    q: "Which brands are supported?",
+    a: "We cover over 340 models across 3 categories: sneakers, bags and clothing. Nike, Jordan, adidas, New Balance, Louis Vuitton and many more brands are available. We regularly add new models. Contact us to request a specific brand.",
+  },
+  {
+    q: "How much does an analysis cost?",
+    a: "Single use costs €3.99. The Monthly plan is €19.99/month for 10 analyses. Premium is €29.99/month for 50 analyses. No free analysis is included.",
+  },
+  {
+    q: "How long does an analysis take?",
+    a: "The analysis runs in real time and usually takes under 30 seconds after the photos are uploaded.",
+  },
+  {
+    q: "How do I take good photos for the analysis?",
+    a: "Follow our built-in photo guide which tells you exactly which views to capture. Use good lighting, a neutral background, and a resolution of at least 800×800 pixels. The sharper your photos, the more accurate the analysis.",
+  },
+];
+
+const FAQ_BY_LOCALE: Record<Locale, FaqItem[]> = {
+  fr: FAQ_ITEMS_FR,
+  en: FAQ_ITEMS_EN,
+};
+
+export function getFaqItems(locale: Locale): FaqItem[] {
+  return FAQ_BY_LOCALE[locale] ?? FAQ_ITEMS_FR;
+}
+
+// Backward compat — pages SEO et anciens imports utilisent FAQ_ITEMS (FR par défaut)
+export const FAQ_ITEMS = FAQ_ITEMS_FR;
