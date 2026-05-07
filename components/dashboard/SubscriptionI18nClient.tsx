@@ -59,18 +59,33 @@ export function SubscriptionNoActive({ credits }: { credits: number }) {
 }
 
 export function SubscriptionActive({
-  planLabel,
+  plan,
   credits,
   cancelAtPeriodEnd,
-  formattedPeriodEnd,
+  periodEndUnix,
 }: {
-  planLabel: string;
+  plan: string;
   credits: number;
   cancelAtPeriodEnd: boolean;
-  formattedPeriodEnd: string | null;
+  periodEndUnix: number | null;
 }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const isMultiple = credits > 1;
+  const intlLocale = locale === "en" ? "en-US" : "fr-FR";
+  const planLabelKey =
+    plan === "pro"
+      ? "subscription.planPro"
+      : plan === "business"
+        ? "subscription.planBusiness"
+        : "subscription.planFree";
+  const planLabel = t(planLabelKey);
+  const formattedPeriodEnd = periodEndUnix
+    ? new Date(periodEndUnix * 1000).toLocaleDateString(intlLocale, {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : null;
   return (
     <div className="relative mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-xl">
       <div

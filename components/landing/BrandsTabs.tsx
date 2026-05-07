@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 type BrandEntry = {
   name: string;
@@ -105,15 +106,16 @@ const CATEGORY_ALT: Record<Category, string> = {
   sacs: "Sacs & Maroquinerie — Louis Vuitton, Chanel, Hermès",
 };
 
-const TABS: { id: Category; label: string; emoji: string }[] = [
-  { id: "sneakers", label: "Sneakers", emoji: "👟" },
-  { id: "vetements", label: "Vêtements", emoji: "👕" },
-  { id: "sacs", label: "Sacs", emoji: "👜" },
+const TABS: { id: Category; labelKey: string; emoji: string }[] = [
+  { id: "sneakers", labelKey: "brandsTabs.sneakers", emoji: "👟" },
+  { id: "vetements", labelKey: "brandsTabs.clothing", emoji: "👕" },
+  { id: "sacs", labelKey: "brandsTabs.bags", emoji: "👜" },
 ];
 
 // ── BrandLogo with error fallback ─────────────────────────────────────────────
 
 function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category }) {
+  const { t } = useTranslation();
   const [imgError, setImgError] = useState(false);
 
   const handleNav = () => {
@@ -136,7 +138,10 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
           {brand.name}
         </div>
         <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
-          {brand.models} modèle{brand.models > 1 ? "s" : ""}
+          {brand.models}{" "}
+          {brand.models > 1
+            ? t("brandsTabs.modelsCountPlural")
+            : t("brandsTabs.modelsCount")}
         </span>
       </button>
     );
@@ -175,6 +180,7 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function BrandsTabs() {
+  const { t } = useTranslation();
   const [active, setActive] = useState<Category>("sneakers");
   const brands = BRANDS[active];
 
@@ -210,7 +216,7 @@ export function BrandsTabs() {
             }`}
           >
             <span aria-hidden="true">{tab.emoji}</span>
-            {tab.label}
+            {t(tab.labelKey)}
           </button>
         ))}
       </div>

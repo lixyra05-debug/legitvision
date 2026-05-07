@@ -6,8 +6,10 @@ import { createClient } from "@/lib/supabase/client";
 import { LogOut, LayoutDashboard, CreditCard } from "lucide-react";
 import Link from "next/link";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 export function UserMenu() {
+  const { t } = useTranslation();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -59,7 +61,7 @@ export function UserMenu() {
         href="/auth"
         className="inline-flex h-9 items-center rounded-lg bg-emerald-500 px-4 text-sm font-medium text-white transition-colors hover:bg-emerald-400"
       >
-        Se connecter
+        {t("userMenu.signIn")}
       </Link>
     );
   }
@@ -100,7 +102,7 @@ export function UserMenu() {
               className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
             >
               <LayoutDashboard className="size-4" />
-              Dashboard
+              {t("userMenu.dashboard")}
             </Link>
             <Link
               href="/dashboard/subscription"
@@ -108,7 +110,7 @@ export function UserMenu() {
               className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
             >
               <CreditCard className="size-4" />
-              Gérer l&apos;abonnement
+              {t("userMenu.manageSubscription")}
             </Link>
           </div>
 
@@ -118,7 +120,7 @@ export function UserMenu() {
               className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/10"
             >
               <LogOut className="size-4" />
-              Se déconnecter
+              {t("userMenu.signOut")}
             </button>
           </div>
         </div>

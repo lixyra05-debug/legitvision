@@ -278,7 +278,7 @@ export default function NewCheckPage() {
         .single();
 
       if (analysisError || !analysis) {
-        setSubmitError("Erreur lors de la création de l'analyse.");
+        setSubmitError(t("check.errorCreate"));
         return;
       }
 
@@ -302,7 +302,7 @@ export default function NewCheckPage() {
             .from("analyses")
             .update({ status: "failed" })
             .eq("id", analysis.id);
-          setSubmitError(`Erreur upload photo "${photoType}": ${uploadError.message}`);
+          setSubmitError(`${t("check.errorUpload")} "${photoType}": ${uploadError.message}`);
           return;
         }
 
@@ -327,7 +327,7 @@ export default function NewCheckPage() {
             .from("analyses")
             .update({ status: "failed" })
             .eq("id", analysis.id);
-          setSubmitError("Erreur lors de l'enregistrement des photos.");
+          setSubmitError(t("check.errorPhotoRecord"));
           return;
         }
       }
@@ -352,21 +352,21 @@ export default function NewCheckPage() {
         analyzeResult = await analyzeResponse.json();
       } catch {
         setSubmitError(
-          "Le serveur a retourné une réponse invalide. Vérifiez les logs serveur."
+          t("check.errorInvalid")
         );
         return;
       }
 
       if (!analyzeResponse.ok) {
         setSubmitError(
-          analyzeResult.error ?? "Erreur lors de l'analyse."
+          analyzeResult.error ?? t("check.errorAnalysisFailed")
         );
         return;
       }
 
       router.push(`/check/${analysis.id}`);
     } catch {
-      setSubmitError("Une erreur inattendue est survenue.");
+      setSubmitError(t("check.errorUnexpected"));
     } finally {
       setSubmitting(false);
     }
@@ -432,7 +432,7 @@ export default function NewCheckPage() {
               <p className="font-semibold">Paiement Stripe indisponible</p>
               <p className="mt-1 text-xs text-red-300/80">{checkoutError}</p>
               <p className="mt-2 text-xs text-red-300/60">
-                Réessayez dans quelques minutes ou contactez le support.
+                {t("check.retryLater")}
               </p>
             </div>
           )}
@@ -476,7 +476,7 @@ export default function NewCheckPage() {
               </button>
             </div>
             <div className="relative mt-5 flex items-center justify-between text-[11px] text-muted-foreground/70">
-              <span>Paiement sécurisé Stripe · Résiliable à tout moment</span>
+              <span>{t("check.paymentSecure")}</span>
               <Link
                 href="/dashboard"
                 className="text-muted-foreground/70 transition-colors hover:text-foreground"
@@ -635,7 +635,7 @@ export default function NewCheckPage() {
                 </button>
                 <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6">
                   <p className="text-sm text-muted-foreground">
-                    Sélection
+                    {t("check.selection")}
                   </p>
                   <p className="mt-1 font-heading text-lg font-bold">
                     {selectedBrand.name} — {selectedModel.name}
@@ -697,7 +697,7 @@ export default function NewCheckPage() {
               </div>
             ) : (
               <div className="mt-6 rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 text-sm text-muted-foreground">
-                Aucune variante connue pour ce modèle.
+                {t("check.noVariants")}
               </div>
             )}
 
@@ -881,7 +881,7 @@ export default function NewCheckPage() {
             </div>
 
             <p className="relative mt-5 text-center text-[11px] text-muted-foreground/70">
-              Paiement sécurisé Stripe · Résiliable à tout moment
+              {t("check.paymentSecure")}
             </p>
           </div>
         </div>

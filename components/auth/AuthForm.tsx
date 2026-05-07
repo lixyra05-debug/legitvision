@@ -8,28 +8,23 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
-const AUTH_ERRORS: Record<string, string> = {
-  "Invalid login credentials": "Email ou mot de passe incorrect.",
-  "User already registered": "Un compte existe déjà avec cet email.",
-  "Password should be at least 6 characters":
-    "Le mot de passe doit contenir au moins 6 caractères.",
-  "Unable to validate email address: invalid format":
-    "Format d'email invalide.",
-  "Email rate limit exceeded":
-    "Trop de tentatives. Réessayez dans quelques minutes.",
+const AUTH_ERROR_KEYS: Record<string, string> = {
+  "Invalid login credentials": "auth.errorInvalidCreds",
+  "User already registered": "auth.errorAlreadyRegistered",
+  "Password should be at least 6 characters": "auth.errorPasswordShort",
+  "Unable to validate email address: invalid format": "auth.errorEmailFormat",
+  "Email rate limit exceeded": "auth.errorRateLimit",
   "For security purposes, you can only request this once every 60 seconds":
-    "Veuillez patienter 60 secondes avant de réessayer.",
-  callback_error: "Erreur lors de la connexion. Veuillez réessayer.",
+    "auth.errorWait60",
+  callback_error: "auth.errorCallback",
 };
-
-function translateError(message: string): string {
-  return AUTH_ERRORS[message] ?? `Erreur : ${message}`;
-}
 
 type Mode = "login" | "register";
 
 export function AuthForm() {
+  const { t } = useTranslation();
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,11 +36,14 @@ export function AuthForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams?.get("redirect") ?? "/dashboard";
-
-  // Show callback error from URL
   const urlError = searchParams?.get("error");
 
   const supabase = createClient();
+
+  function translateError(message: string): string {
+    const key = AUTH_ERROR_KEYS[message];
+    return key ? t(key) : `${t("auth.errorPrefix")} : ${message}`;
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -105,12 +103,12 @@ export function AuthForm() {
             <Mail className="size-8 text-emerald-500" />
           </div>
           <h2 className="font-heading text-2xl font-bold">
-            Vérifiez votre email
+            {t("auth.checkEmailTitle")}
           </h2>
           <p className="mt-3 text-sm text-muted-foreground">
-            Un lien de confirmation a été envoyé à{" "}
-            <span className="font-medium text-foreground">{email}</span>.
-            Cliquez dessus pour activer votre compte.
+            {t("auth.checkEmailDesc")}{" "}
+            <span className="font-medium text-foreground">{email}</span>
+            {t("auth.checkEmailDescSuffix")}
           </p>
           <button
             onClick={() => {
@@ -119,7 +117,7 @@ export function AuthForm() {
             }}
             className="mt-8 text-sm text-emerald-500 hover:text-emerald-400"
           >
-            Retour à la connexion
+            {t("auth.backToLogin")}
           </button>
         </div>
       </div>
@@ -129,7 +127,6 @@ export function AuthForm() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm">
-        {/* Logo */}
         <Link href="/" className="mb-8 flex items-center justify-center">
           <Image
             src="/images/legitvision-logo.png"
@@ -142,7 +139,6 @@ export function AuthForm() {
           />
         </Link>
 
-        {/* Tabs */}
         <div className="mb-8 flex rounded-lg border border-white/10 bg-card p-1">
           <button
             onClick={() => {
@@ -155,7 +151,7 @@ export function AuthForm() {
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            Se connecter
+            {t("auth.signIn")}
           </button>
           <button
             onClick={() => {
@@ -168,28 +164,26 @@ export function AuthForm() {
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            Créer un compte
+            {t("auth.register")}
           </button>
         </div>
 
-        {/* Error */}
         {(error || urlError) && (
           <div className="mb-6 rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
             {error ?? translateError(urlError!)}
           </div>
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           {mode === "register" && (
             <div className="space-y-2">
               <Label htmlFor="fullName" className="text-sm">
-                Nom complet
+                {t("auth.fullName")}
               </Label>
               <Input
                 id="fullName"
                 type="text"
-                placeholder="Jean Dupont"
+                placeholder={t("auth.fullNamePlaceholder")}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
@@ -200,12 +194,12 @@ export function AuthForm() {
 
           <div className="space-y-2">
             <Label htmlFor="email" className="text-sm">
-              Email
+              {t("auth.email")}
             </Label>
             <Input
               id="email"
               type="email"
-              placeholder="vous@exemple.com"
+              placeholder={t("auth.emailPlaceholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -215,13 +209,15 @@ export function AuthForm() {
 
           <div className="space-y-2">
             <Label htmlFor="password" className="text-sm">
-              Mot de passe
+              {t("auth.password")}
             </Label>
             <Input
               id="password"
               type="password"
               placeholder={
-                mode === "register" ? "6 caractères minimum" : "••••••••"
+                mode === "register"
+                  ? t("auth.passwordRegisterPlaceholder")
+                  : "••••••••"
               }
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -239,21 +235,19 @@ export function AuthForm() {
             {loading ? (
               <Loader2 className="size-5 animate-spin" />
             ) : mode === "login" ? (
-              "Se connecter"
+              t("auth.signIn")
             ) : (
-              "Créer mon compte"
+              t("auth.registerCta")
             )}
           </button>
         </form>
 
-        {/* Divider */}
         <div className="my-6 flex items-center gap-3">
           <div className="h-px flex-1 bg-white/10" />
-          <span className="text-xs text-muted-foreground">ou</span>
+          <span className="text-xs text-muted-foreground">{t("common.or")}</span>
           <div className="h-px flex-1 bg-white/10" />
         </div>
 
-        {/* Google OAuth */}
         <button
           onClick={handleGoogleLogin}
           className="flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-white/10 text-sm font-medium transition-colors hover:border-white/20 hover:bg-white/5"
@@ -276,13 +270,12 @@ export function AuthForm() {
               fill="#EA4335"
             />
           </svg>
-          Continuer avec Google
+          {t("auth.googleSignIn")}
         </button>
 
-        {/* Back to home */}
         <p className="mt-8 text-center text-xs text-muted-foreground">
           <Link href="/" className="hover:text-foreground">
-            ← Retour à l&apos;accueil
+            {t("auth.backHome")}
           </Link>
         </p>
       </div>

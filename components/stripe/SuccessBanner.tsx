@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { CheckCircle2, X } from "lucide-react";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 export function SuccessBanner() {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(true);
 
   // Retirer le session_id de l'URL sans recharger la page
@@ -21,10 +23,10 @@ export function SuccessBanner() {
         <CheckCircle2 className="size-5 shrink-0 text-emerald-500" />
         <div>
           <p className="text-sm font-semibold text-emerald-400">
-            Abonnement activé avec succès !
+            {t("successBanner.title")}
           </p>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Vos crédits ont été crédités. Profitez de LegitVision Pro.
+            {t("successBanner.desc")}
           </p>
         </div>
       </div>

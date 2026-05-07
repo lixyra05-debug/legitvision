@@ -23,14 +23,19 @@ interface PhotoUploaderProps {
   onPhotosChange: Dispatch<SetStateAction<Record<string, PhotoFile>>>;
 }
 
-function validateImage(
-  file: File
-): Promise<{ valid: boolean; error?: string; width: number; height: number }> {
+type ValidationResult = {
+  valid: boolean;
+  errorKey?: "format" | "size" | "min" | "read";
+  width: number;
+  height: number;
+};
+
+function validateImage(file: File): Promise<ValidationResult> {
   return new Promise((resolve) => {
     if (!ACCEPTED_TYPES.includes(file.type)) {
       resolve({
         valid: false,
-        error: "Format accepté : JPEG, PNG, WebP ou HEIC",
+        errorKey: "format",
         width: 0,
         height: 0,
       });
@@ -40,7 +45,7 @@ function validateImage(
     if (file.size > MAX_SIZE_MB * 1024 * 1024) {
       resolve({
         valid: false,
-        error: `Taille max : ${MAX_SIZE_MB} MB`,
+        errorKey: "size",
         width: 0,
         height: 0,
       });
@@ -52,7 +57,7 @@ function validateImage(
       if (img.width < MIN_DIMENSION || img.height < MIN_DIMENSION) {
         resolve({
           valid: false,
-          error: `Résolution min : ${MIN_DIMENSION}×${MIN_DIMENSION}px (reçu ${img.width}×${img.height})`,
+          errorKey: "min",
           width: img.width,
           height: img.height,
         });
@@ -63,7 +68,7 @@ function validateImage(
     img.onerror = () =>
       resolve({
         valid: false,
-        error: "Impossible de lire l'image",
+        errorKey: "read",
         width: 0,
         height: 0,
       });
@@ -76,7 +81,7 @@ export function PhotoUploader({
   photos,
   onPhotosChange,
 }: PhotoUploaderProps) {
-  const { locale } = useTranslation();
+  const { locale, t } = useTranslation();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
@@ -86,12 +91,31 @@ export function PhotoUploader({
   ).length;
   const allRequiredDone = uploadedRequired === requiredCount;
 
+  const buildErrorMessage = useCallback(
+    (key: NonNullable<ValidationResult["errorKey"]>, w: number, h: number): string => {
+      switch (key) {
+        case "format":
+          return t("check.photoErrorFormat");
+        case "size":
+          return `${t("check.photoErrorSize")} : ${MAX_SIZE_MB} MB`;
+        case "min":
+          return `${t("check.photoErrorMin")} : ${MIN_DIMENSION}×${MIN_DIMENSION}px (${t("check.photoErrorReceived")} ${w}×${h})`;
+        case "read":
+          return t("check.photoErrorRead");
+      }
+    },
+    [t],
+  );
+
   const handleFileSelect = useCallback(
     async (slotType: string, file: File) => {
       const result = await validateImage(file);
 
-      if (!result.valid) {
-        setErrors((prev) => ({ ...prev, [slotType]: result.error! }));
+      if (!result.valid && result.errorKey) {
+        setErrors((prev) => ({
+          ...prev,
+          [slotType]: buildErrorMessage(result.errorKey!, result.width, result.height),
+        }));
         return;
       }
 
@@ -141,10 +165,10 @@ export function PhotoUploader({
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-heading text-xl font-bold sm:text-2xl">
-            Photos de l&apos;article
+            {t("check.photos")}
           </h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Prenez des photos nettes et bien éclairées. Min 800×800px.
+            {t("check.photosHelpDesc")}
           </p>
         </div>
         <div className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-sm">

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 interface Brand {
   id: string;
@@ -25,14 +26,15 @@ interface SearchResult {
   brandName?: string; // for models: used as ?brand= query param
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  sneakers: "Sneakers",
-  bags: "Sacs",
-  watches: "Montres",
-  clothing: "Vêtements",
+const CATEGORY_LABEL_KEYS: Record<string, string> = {
+  sneakers: "brandsTabs.sneakers",
+  bags: "brandsTabs.bags",
+  watches: "brandsTabs.bags", // fallback (no watches tab key)
+  clothing: "brandsTabs.clothing",
 };
 
 export function BrandSearch() {
+  const { t } = useTranslation();
   const [query, setQuery] = useState("");
   const [brands, setBrands] = useState<Brand[]>([]);
   const [models, setModels] = useState<ModelRow[]>([]);
@@ -91,7 +93,9 @@ export function BrandSearch() {
               type: "brand",
               id: `b-${b.id}`,
               name: b.name,
-              subtitle: CATEGORY_LABELS[b.category] ?? b.category,
+              subtitle: CATEGORY_LABEL_KEYS[b.category]
+                ? t(CATEGORY_LABEL_KEYS[b.category])
+                : b.category,
             })
           ),
         ...models
@@ -148,7 +152,7 @@ export function BrandSearch() {
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
-          placeholder="Rechercher une marque ou un modèle..."
+          placeholder={t("brandSearch.placeholder")}
           className="flex-1 bg-transparent text-sm text-white outline-none placeholder:text-muted-foreground"
         />
         {query && (
@@ -176,14 +180,14 @@ export function BrandSearch() {
         >
           {results.length === 0 ? (
             <div className="px-5 py-4 text-sm text-muted-foreground">
-              Aucun résultat —{" "}
+              {t("brandSearch.noResults")} —{" "}
               <a
                 href="mailto:legitvision.contact@gmail.com"
                 className="text-emerald-400 transition-colors hover:text-emerald-300"
               >
-                contactez-nous
+                {t("common.contact")}
               </a>{" "}
-              pour demander cette marque.
+              {t("brandSearch.tryOther")}
             </div>
           ) : (
             <div className="divide-y divide-white/5">
@@ -202,7 +206,9 @@ export function BrandSearch() {
                     </p>
                   </div>
                   <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-400">
-                    {result.type === "brand" ? "Marque" : "Modèle"}
+                    {result.type === "brand"
+                      ? t("brandSearch.brand")
+                      : t("brandSearch.model")}
                   </span>
                 </button>
               ))}

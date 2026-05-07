@@ -49,58 +49,62 @@ export interface ReportData {
 
 // ── Constants ──
 
-const VERDICT_CONFIG: Record<
+// Visual config (icons + colors) — labels résolus via t() côté composant.
+const VERDICT_VISUAL: Record<
   Verdict,
-  { label: string; Icon: typeof ShieldCheck; color: string; bg: string }
+  { Icon: typeof ShieldCheck; color: string; bg: string }
 > = {
   likely_authentic: {
-    label: "Probablement authentique",
     Icon: ShieldCheck,
     color: "text-emerald-400",
     bg: "border-emerald-500/30 bg-emerald-500/10",
   },
   inconclusive: {
-    label: "Résultat non concluant",
     Icon: ShieldAlert,
     color: "text-yellow-400",
     bg: "border-yellow-500/30 bg-yellow-500/10",
   },
   likely_fake: {
-    label: "Probablement contrefait",
     Icon: ShieldX,
     color: "text-red-400",
     bg: "border-red-500/30 bg-red-500/10",
   },
 };
 
-const CONFIDENCE_CONFIG: Record<
+const CONFIDENCE_VISUAL: Record<
   Confidence,
-  { label: string; desc: string; color: string; bg: string }
+  { color: string; bg: string }
 > = {
   high: {
-    label: "Haute confiance",
-    desc: "L'IA a pu analyser clairement l'ensemble des éléments clés.",
     color: "text-emerald-400",
     bg: "border-emerald-500/20 bg-emerald-500/8",
   },
   medium: {
-    label: "Confiance modérée",
-    desc: "Certains éléments restent difficiles à évaluer avec les photos fournies.",
     color: "text-yellow-400",
     bg: "border-yellow-500/20 bg-yellow-500/8",
   },
   low: {
-    label: "Faible confiance",
-    desc: "Les photos ne permettent pas une analyse suffisamment précise.",
     color: "text-orange-400",
     bg: "border-orange-500/20 bg-orange-500/8",
   },
 };
 
-const OCR_LABELS: Record<string, string> = {
-  size_label_text: "Étiquette taille",
-  product_code: "Code produit",
-  manufacturing_info: "Infos fabrication",
+const CONFIDENCE_LABEL_KEY: Record<Confidence, string> = {
+  high: "results.confidenceHigh",
+  medium: "results.confidenceMedium",
+  low: "results.confidenceLow",
+};
+
+const CONFIDENCE_DESC_KEY: Record<Confidence, string> = {
+  high: "results.confidenceHighDesc",
+  medium: "results.confidenceMediumDesc",
+  low: "results.confidenceLowDesc",
+};
+
+const OCR_LABEL_KEY: Record<string, string> = {
+  size_label_text: "results.sizeLabelText",
+  product_code: "results.productCode",
+  manufacturing_info: "results.manufacturingInfo",
 };
 
 // ── Sub-components ──
@@ -199,12 +203,18 @@ export function ReportView({ data }: { data: ReportData }) {
     data.status === "completed" || data.status === "expert_review";
 
   const { t } = useTranslation();
-  const verdictCfg = data.verdict ? VERDICT_CONFIG[data.verdict] : null;
+  const verdictCfg = data.verdict ? VERDICT_VISUAL[data.verdict] : null;
   const verdictLabel = data.verdict
     ? t(`results.${VERDICT_TO_KEY[data.verdict]}`)
     : null;
   const confidenceCfg = data.confidence
-    ? CONFIDENCE_CONFIG[data.confidence]
+    ? CONFIDENCE_VISUAL[data.confidence]
+    : null;
+  const confidenceLabel = data.confidence
+    ? t(CONFIDENCE_LABEL_KEY[data.confidence])
+    : null;
+  const confidenceDesc = data.confidence
+    ? t(CONFIDENCE_DESC_KEY[data.confidence])
     : null;
 
   const subScoreEntries = data.subScores
@@ -267,7 +277,7 @@ export function ReportView({ data }: { data: ReportData }) {
             <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-1.5">
               <ShieldX className="size-4 text-red-400" />
               <span className="text-sm font-semibold text-red-400">
-                Analyse échouée
+                {t("results.analysisFailedShort")}
               </span>
             </div>
           )}
@@ -290,11 +300,10 @@ export function ReportView({ data }: { data: ReportData }) {
             <Loader2 className="size-12 animate-spin text-emerald-500" />
             <div className="text-center">
               <p className="font-heading text-lg font-semibold">
-                Analyse en cours…
+                {t("check.analyzing")}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                L&apos;IA examine les photos, cela peut prendre quelques
-                secondes.
+                {t("results.expertReviewDesc")}
               </p>
             </div>
           </div>
@@ -305,10 +314,10 @@ export function ReportView({ data }: { data: ReportData }) {
           <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-8 text-center">
             <ShieldX className="mx-auto size-10 text-red-500" />
             <p className="mt-3 font-heading text-lg font-semibold">
-              L&apos;analyse a échoué
+              {t("results.analysisFailedTitle")}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Une erreur est survenue lors du traitement. Veuillez réessayer.
+              {t("results.analysisFailedDesc")}
             </p>
           </div>
         )}
@@ -319,11 +328,10 @@ export function ReportView({ data }: { data: ReportData }) {
             <AlertCircle className="mt-0.5 size-5 shrink-0 text-yellow-500" />
             <div>
               <p className="text-sm font-semibold text-yellow-400">
-                Revue par un expert en cours
+                {t("results.expertReviewTitle")}
               </p>
               <p className="mt-0.5 text-sm text-muted-foreground">
-                Ce résultat est en cours de vérification par un expert humain.
-                Les résultats ci-dessous sont préliminaires.
+                {t("results.expertReviewDesc")}
               </p>
             </div>
           </div>
@@ -345,11 +353,11 @@ export function ReportView({ data }: { data: ReportData }) {
                     <span
                       className={`text-sm font-semibold ${confidenceCfg.color}`}
                     >
-                      {confidenceCfg.label}
+                      {confidenceLabel}
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-muted-foreground">
-                    {confidenceCfg.desc}
+                    {confidenceDesc}
                   </p>
                 </div>
               )}
@@ -358,7 +366,7 @@ export function ReportView({ data }: { data: ReportData }) {
                 <div className="mt-4 rounded-xl border border-white/5 bg-white/3 p-4">
                   <p className="text-sm leading-relaxed text-muted-foreground">
                     <span className="font-semibold text-foreground">
-                      Résumé :{" "}
+                      {t("results.summary")} :{" "}
                     </span>
                     {data.analystSummary}
                   </p>
@@ -387,7 +395,7 @@ export function ReportView({ data }: { data: ReportData }) {
               <div className="space-y-4">
                 <SectionTitle
                   icon={ShieldCheck}
-                  title="Observations détaillées"
+                  title={t("results.findingsTitle")}
                   count={findings.length}
                 />
                 <div className="space-y-3">
@@ -403,7 +411,7 @@ export function ReportView({ data }: { data: ReportData }) {
               <div className="space-y-4">
                 <SectionTitle
                   icon={AlertCircle}
-                  title="Éléments manquants"
+                  title={t("results.missingEvidenceTitle")}
                   count={missingEvidence.length}
                 />
                 <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-4">
@@ -425,7 +433,7 @@ export function ReportView({ data }: { data: ReportData }) {
             {/* OCR */}
             {ocrEntries.length > 0 && (
               <div className="space-y-4">
-                <SectionTitle icon={ScanText} title="Textes détectés (OCR)" />
+                <SectionTitle icon={ScanText} title={t("results.ocrTitle")} />
                 <div className="divide-y divide-white/5 rounded-xl border border-white/5 bg-card">
                   {ocrEntries.map(([key, value]) => (
                     <div
@@ -433,7 +441,9 @@ export function ReportView({ data }: { data: ReportData }) {
                       className="flex items-start justify-between gap-4 px-4 py-3"
                     >
                       <span className="text-sm text-muted-foreground">
-                        {OCR_LABELS[key] ?? key.replace(/_/g, " ")}
+                        {OCR_LABEL_KEY[key]
+                          ? t(OCR_LABEL_KEY[key])
+                          : key.replace(/_/g, " ")}
                       </span>
                       <span className="text-right font-mono text-sm text-foreground">
                         {value}
@@ -449,7 +459,7 @@ export function ReportView({ data }: { data: ReportData }) {
               <div className="space-y-4">
                 <SectionTitle
                   icon={Lightbulb}
-                  title="Recommandations"
+                  title={t("results.recommendationsTitle")}
                   count={recommendations.length}
                 />
                 <div className="space-y-2">
@@ -479,14 +489,14 @@ export function ReportView({ data }: { data: ReportData }) {
             className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 px-5 py-3 text-sm font-medium transition-colors hover:border-white/20 hover:bg-white/5"
           >
             <ArrowLeft className="size-4" />
-            Retour au dashboard
+            {t("nav.dashboard")}
           </Link>
           <Link
             href="/check/new"
             className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/20"
           >
             <Plus className="size-4" />
-            Nouvelle analyse
+            {t("results.newAnalysis")}
           </Link>
         </div>
       </main>

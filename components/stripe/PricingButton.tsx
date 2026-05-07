@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import type { PlanId } from "@/lib/stripe/config";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 interface PricingButtonProps {
   planId: PlanId;
@@ -20,6 +21,7 @@ export function PricingButton({
   isAuthRedirect = false,
 }: PricingButtonProps) {
   const router = useRouter();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,29 +47,26 @@ export function PricingButton({
       try {
         data = await res.json();
       } catch {
-        setError("Le serveur a retourné une réponse inattendue.");
+        setError(t("stripe.errorUnexpected"));
         return;
       }
 
       if (!res.ok) {
         if (res.status === 401) {
-          // Non connecté : aller s'authentifier puis revenir sur la landing
-          // pour pouvoir re-cliquer sur le bouton (maintenant connecté → Stripe s'ouvrira)
           router.push(`/auth?redirect=${encodeURIComponent("/")}`);
           return;
         }
-        setError(data.error ?? "Une erreur est survenue. Réessayez.");
+        setError(data.error ?? t("stripe.errorGeneric"));
         return;
       }
 
       if (data.url) {
-        // Redirection vers Stripe Checkout (page hébergée par Stripe)
         window.location.href = data.url;
       } else {
-        setError("Impossible d'obtenir l'URL de paiement. Réessayez.");
+        setError(t("stripe.errorNoUrl"));
       }
     } catch {
-      setError("Erreur réseau. Vérifiez votre connexion et réessayez.");
+      setError(t("stripe.errorNetwork"));
     } finally {
       setLoading(false);
     }
@@ -87,7 +86,7 @@ export function PricingButton({
         {loading ? (
           <>
             <Loader2 className="size-4 animate-spin" />
-            Redirection…
+            {t("stripe.redirecting")}
           </>
         ) : (
           children

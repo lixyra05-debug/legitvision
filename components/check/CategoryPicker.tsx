@@ -3,32 +3,33 @@
 import Image from "next/image";
 import { Footprints, ShoppingBag, Shirt } from "lucide-react";
 import type { Category } from "@/lib/types";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 const CATEGORIES: {
   value: Category;
-  label: string;
-  description: string;
+  labelKey: string;
+  descKey: string;
   icon: typeof Footprints;
   image: string;
 }[] = [
   {
     value: "sneakers",
-    label: "Sneakers",
-    description: "Nike, Jordan, adidas, New Balance…",
+    labelKey: "check.sneakers",
+    descKey: "check.sneakersDesc",
     icon: Footprints,
     image: "/images/sneakers.png",
   },
   {
     value: "bag",
-    label: "Sacs",
-    description: "Louis Vuitton, Gucci, Chanel…",
+    labelKey: "check.bags",
+    descKey: "check.bagsDesc",
     icon: ShoppingBag,
     image: "/images/bags.png",
   },
   {
     value: "clothing",
-    label: "Vêtements",
-    description: "Supreme, Off-White, Balenciaga…",
+    labelKey: "check.clothing",
+    descKey: "check.clothingDesc",
     icon: Shirt,
     image: "/images/clothing.png",
   },
@@ -40,13 +41,14 @@ interface CategoryPickerProps {
 }
 
 export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
+  const { t } = useTranslation();
   return (
     <div>
       <h2 className="font-heading text-xl font-bold sm:text-2xl">
-        Quelle catégorie ?
+        {t("check.categoryTitle")}
       </h2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Sélectionnez le type d&apos;article à vérifier
+        {t("check.categorySubtitle")}
       </p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
         {CATEGORIES.map((cat) => (
@@ -62,7 +64,7 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
             <div className="relative aspect-video w-full overflow-hidden rounded-t-xl bg-white/5">
               <Image
                 src={cat.image}
-                alt={cat.label}
+                alt={t(cat.labelKey)}
                 fill
                 unoptimized
                 sizes="(max-width: 640px) 50vw, 33vw"
@@ -86,10 +88,10 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
                 />
               </div>
               <span className="font-heading text-sm font-semibold">
-                {cat.label}
+                {t(cat.labelKey)}
               </span>
               <span className="mt-1 text-xs text-muted-foreground">
-                {cat.description}
+                {t(cat.descKey)}
               </span>
             </div>
           </button>

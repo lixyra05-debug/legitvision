@@ -16,20 +16,8 @@ export const metadata = {
   title: "Gérer mon abonnement",
 };
 
-const PLAN_LABELS: Record<string, string> = {
-  free: "Gratuit",
-  starter: "Starter",
-  pro: "Pro — 19,99 €/mois",
-  business: "Business — 29,99 €/mois",
-};
-
-function formatDate(unixSec: number): string {
-  return new Date(unixSec * 1000).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
+// Plan labels resolved client-side via SubscriptionActive component (i18n FR/EN).
+// Date formatting deferred to client (FormattedDate / SubscriptionActive).
 
 export default async function SubscriptionPage() {
   const supabase = createClient();
@@ -45,7 +33,6 @@ export default async function SubscriptionPage() {
     .single();
 
   const plan = profile?.subscription_plan ?? "free";
-  const planLabel = PLAN_LABELS[plan] ?? plan;
   const credits = profile?.credits_remaining ?? 0;
 
   let cancelAtPeriodEnd = false;
@@ -93,10 +80,10 @@ export default async function SubscriptionPage() {
           <SubscriptionNoActive credits={credits} />
         ) : (
           <SubscriptionActive
-            planLabel={planLabel}
+            plan={plan}
             credits={credits}
             cancelAtPeriodEnd={cancelAtPeriodEnd}
-            formattedPeriodEnd={periodEnd ? formatDate(periodEnd) : null}
+            periodEndUnix={periodEnd}
           />
         )}
 
