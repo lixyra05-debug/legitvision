@@ -3,6 +3,8 @@
 import { useRef, useState, useCallback, type Dispatch, type SetStateAction } from "react";
 import { Camera, X, AlertCircle, Check } from "lucide-react";
 import type { PhotoSlot } from "@/lib/types";
+import { useTranslation } from "@/lib/i18n/LanguageProvider";
+import { translatePhotoLabel } from "@/lib/i18n/photo-labels";
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
 const MAX_SIZE_MB = 10;
@@ -74,6 +76,7 @@ export function PhotoUploader({
   photos,
   onPhotosChange,
 }: PhotoUploaderProps) {
+  const { locale } = useTranslation();
   const [errors, setErrors] = useState<Record<string, string>>({});
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
@@ -180,7 +183,7 @@ export function PhotoUploader({
                     {/* eslint-disable-next-line @next/next/no-img-element -- blob:// preview from URL.createObjectURL, next/image cannot optimize */}
                     <img
                       src={photo.preview}
-                      alt={slot.label}
+                      alt={translatePhotoLabel(slot.label, locale)}
                       className="size-full object-cover"
                     />
                     <button
@@ -201,7 +204,7 @@ export function PhotoUploader({
                   <div className="flex size-full flex-col items-center justify-center gap-2 p-3">
                     <Camera className="size-8 text-muted-foreground" />
                     <span className="text-center text-xs text-muted-foreground">
-                      {slot.label}
+                      {translatePhotoLabel(slot.label, locale)}
                     </span>
                   </div>
                 )}
@@ -209,7 +212,7 @@ export function PhotoUploader({
 
               <div className="flex items-center gap-1">
                 <span className="truncate text-xs font-medium">
-                  {slot.label}
+                  {translatePhotoLabel(slot.label, locale)}
                 </span>
                 {slot.required && (
                   <span className="shrink-0 text-xs text-emerald-500">*</span>

@@ -13,13 +13,14 @@ import {
   DashboardNewAnalysisButton,
   DashboardEmptyState,
   DashboardCreditsLabel,
+  VerdictLabel,
+  StatusLabel,
+  FormattedDate,
 } from "@/components/dashboard/DashboardI18nClient";
 import { deleteAnalysis } from "./actions";
 import {
   getScoreColor,
   getScoreBgColor,
-  getVerdictLabel,
-  getStatusLabel,
   type AnalysisWithDetails,
   type Profile,
 } from "@/lib/types";
@@ -191,7 +192,7 @@ export default async function DashboardPage({
                               : "bg-white/5 text-muted-foreground"
                           }`}
                         >
-                          {getStatusLabel(analysis.status)}
+                          <StatusLabel status={analysis.status} />
                         </div>
                       )}
                     </div>
@@ -200,15 +201,12 @@ export default async function DashboardPage({
                       <p
                         className={`mt-3 text-sm font-medium ${getScoreColor(analysis.overall_score ?? 0)}`}
                       >
-                        {getVerdictLabel(analysis.verdict)}
+                        <VerdictLabel verdict={analysis.verdict} />
                       </p>
                     )}
 
                     <p className="mt-3 text-xs text-muted-foreground">
-                      {new Date(analysis.created_at).toLocaleDateString(
-                        "fr-FR",
-                        { day: "numeric", month: "long", year: "numeric" }
-                      )}
+                      <FormattedDate value={analysis.created_at} />
                     </p>
                   </Link>
                 </div>

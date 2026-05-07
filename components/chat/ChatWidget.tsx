@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { matchResponse } from "./chatbot-responses";
 
+// Helper pour basculer matchResponse selon locale courant (passé via closure du composant)
+
 type ChatMessage = {
   id: number;
   role: "bot" | "user";
@@ -17,7 +19,7 @@ const pulseAnimation = {
 };
 
 export function ChatWidget() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -74,7 +76,7 @@ export function ChatWidget() {
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setTyping(true);
-    const reply = matchResponse(trimmed);
+    const reply = matchResponse(trimmed, locale);
     const delay = 900 + Math.random() * 800;
     typingTimerRef.current = window.setTimeout(() => {
       setMessages((prev) => [

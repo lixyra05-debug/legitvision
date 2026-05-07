@@ -3,6 +3,12 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
+import {
+  getStatusLabel,
+  getVerdictLabel,
+  type AnalysisStatus,
+  type Verdict,
+} from "@/lib/types";
 
 /**
  * Composants client pour la page /dashboard (server component avec metadata).
@@ -87,4 +93,28 @@ export function DashboardCreditsLabel() {
 export function DeleteAnalysisTitle() {
   const { t } = useTranslation();
   return t("dashboard.deleteAnalysis");
+}
+
+/** Verdict label localized (delegates to lib/types.getVerdictLabel) */
+export function VerdictLabel({ verdict }: { verdict: Verdict }) {
+  const { locale } = useTranslation();
+  return <>{getVerdictLabel(verdict, locale)}</>;
+}
+
+/** Status label localized */
+export function StatusLabel({ status }: { status: AnalysisStatus }) {
+  const { locale } = useTranslation();
+  return <>{getStatusLabel(status, locale)}</>;
+}
+
+/** Date formatted according to current locale (fr-FR / en-US) */
+export function FormattedDate({ value }: { value: string }) {
+  const { locale } = useTranslation();
+  const intlLocale = locale === "en" ? "en-US" : "fr-FR";
+  const formatted = new Date(value).toLocaleDateString(intlLocale, {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  return <>{formatted}</>;
 }

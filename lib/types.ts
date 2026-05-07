@@ -1,5 +1,7 @@
 // Types TypeScript globaux pour LegitVision
 
+import type { Locale } from "./i18n/translations";
+
 export type Category = "sneakers" | "bag" | "watch" | "clothing";
 
 export type AnalysisStatus =
@@ -144,18 +146,44 @@ export function getScoreBgColor(score: number): string {
   return "bg-red-500/10 border-red-500/20";
 }
 
-export function getVerdictLabel(verdict: Verdict): string {
+export function getVerdictLabel(verdict: Verdict, locale: Locale = "fr"): string {
+  if (locale === "en") {
+    switch (verdict) {
+      case "likely_authentic":
+        return "Likely authentic";
+      case "likely_fake":
+        return "Likely counterfeit";
+      case "inconclusive":
+        return "Suspicious elements";
+    }
+  }
   switch (verdict) {
     case "likely_authentic":
       return "Probablement authentique";
     case "likely_fake":
       return "Probablement contrefait";
     case "inconclusive":
-      return "Résultat non concluant";
+      return "Éléments suspects";
   }
 }
 
-export function getStatusLabel(status: AnalysisStatus): string {
+export function getStatusLabel(status: AnalysisStatus, locale: Locale = "fr"): string {
+  if (locale === "en") {
+    switch (status) {
+      case "pending":
+        return "Pending";
+      case "uploading":
+        return "Uploading";
+      case "analyzing":
+        return "Analyzing";
+      case "completed":
+        return "Completed";
+      case "expert_review":
+        return "Expert review";
+      case "failed":
+        return "Failed";
+    }
+  }
   switch (status) {
     case "pending":
       return "En attente";
