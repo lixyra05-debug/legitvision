@@ -100,10 +100,10 @@ const CATEGORY_BANNER: Record<Category, string> = {
   sacs: "/images/bags.png",
 };
 
-const CATEGORY_ALT: Record<Category, string> = {
-  sneakers: "Sneakers — Nike, Jordan, adidas, New Balance",
-  vetements: "Vêtements — Supreme, Off-White, Stone Island",
-  sacs: "Sacs & Maroquinerie — Louis Vuitton, Chanel, Hermès",
+const CATEGORY_ALT_KEY: Record<Category, string> = {
+  sneakers: "brandsTabs.sneakers",
+  vetements: "brandsTabs.clothing",
+  sacs: "brandsTabs.bags",
 };
 
 const TABS: { id: Category; labelKey: string; emoji: string }[] = [
@@ -171,7 +171,10 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
         {brand.name}
       </span>
       <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
-        {brand.models} modèle{brand.models > 1 ? "s" : ""}
+        {brand.models}{" "}
+        {brand.models > 1
+          ? t("brandsTabs.modelsCountPlural")
+          : t("brandsTabs.modelsCount")}
       </span>
     </button>
   );
@@ -192,7 +195,7 @@ export function BrandsTabs() {
           <Image
             key={key}
             src={CATEGORY_BANNER[key]}
-            alt={CATEGORY_ALT[key]}
+            alt={t(CATEGORY_ALT_KEY[key])}
             fill
             priority={key === "sneakers"}
             sizes="(max-width: 640px) 100vw, 1200px"

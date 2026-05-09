@@ -2,18 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Camera,
-  Cpu,
-  Eye,
-  FileCheck,
-  FileText,
   ShieldCheck,
-  Zap,
   BarChart3,
-  Check,
   ArrowRight,
   CheckCircle2,
-  Star,
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -30,6 +22,28 @@ import {
   HowItWorksI18n,
   FaqTitleI18n,
   FinalCtaI18n,
+} from "@/components/landing/LandingI18nClient";
+import {
+  StepsSection,
+  StatsSection,
+  TestimonialsSection,
+  FeaturesSection,
+  PlansSection,
+  LandingLabel,
+  SecurityNoteI18n,
+  SectionH2,
+  SectionSub,
+  NavLinks,
+  HeroTrustTags,
+  AboutI18n,
+  SmallCtaI18n,
+  MockPhotoGrid,
+  MockSubscores,
+  MockFindings,
+} from "@/components/landing/LandingSectionsClient";
+import {
+  HeroPoweredByI18n,
+  ExpertNoteI18n,
 } from "@/components/landing/LandingI18nClient";
 
 const SITE_URL = "https://legitvision.vercel.app";
@@ -94,120 +108,9 @@ const serviceJsonLd = {
   },
 };
 
-const STEPS = [
-  {
-    icon: Camera,
-    step: "01",
-    title: "Prenez vos photos",
-    description:
-      "Suivez notre guide photo interactif pour capturer les détails essentiels de votre article.",
-  },
-  {
-    icon: Cpu,
-    step: "02",
-    title: "L'IA analyse",
-    description:
-      "Notre modèle de vision compare chaque détail avec des milliers de points d'authentification.",
-  },
-  {
-    icon: FileCheck,
-    step: "03",
-    title: "Rapport détaillé",
-    description:
-      "Recevez un score de confiance, des observations zone par zone et une recommandation claire.",
-  },
-];
-
-const STATS = [
-  { value: "IA Vision", label: "Analyse en temps réel" },
-  { value: "8 zones", label: "Points d'authentification" },
-  { value: "< 30s", label: "Temps d'analyse" },
-  { value: "24/7", label: "Disponibilité" },
-];
-
-const TESTIMONIALS = [
-  {
-    initials: "S.M.",
-    stars: 5,
-    quote:
-      "J'ai acheté une paire de Jordan 1 sur Vinted et j'avais un doute. LegitVision m'a donné un score de 35/100 avec des détails précis sur les coutures et le logo. J'ai annulé l'achat. Deux semaines plus tard, le vendeur a été signalé pour contrefaçon.",
-    name: "Sarah M.",
-    role: "Acheteuse sneakers",
-    city: "Paris",
-  },
-  {
-    initials: "K.B.",
-    stars: 5,
-    quote:
-      "Je revends des sacs Louis Vuitton vintage. Avant LegitVision, je payais 30€ par authentification chez un expert. Maintenant je fais une pré-vérification en 30 secondes pour quelques euros. Ça me fait gagner un temps fou.",
-    name: "Kevin B.",
-    role: "Revendeur luxe",
-    city: "Lyon",
-  },
-  {
-    initials: "L.D.",
-    stars: 4,
-    quote:
-      "Le rapport est super détaillé : score par zone, OCR des étiquettes, recommandations. C'est pas une certification officielle mais ça donne une très bonne indication avant d'acheter. Je recommande pour le prix.",
-    name: "Laura D.",
-    role: "Collectionneuse",
-    city: "Bordeaux",
-  },
-];
-
-const PLANS = [
-  {
-    name: "Utilisation unique",
-    price: "3,99€",
-    period: "/ analyse",
-    description: "Pour une vérification ponctuelle",
-    credits: "1 analyse complète",
-    features: [
-      "Toutes catégories",
-      "Rapport détaillé",
-      "Résultats < 30s",
-    ],
-    cta: "Analyser maintenant",
-    popular: false,
-    badge: null as string | null,
-    href: "/checkout?plan=single",
-  },
-  {
-    name: "Mensuel",
-    price: "19,99€",
-    period: "/mois",
-    description: "Pour les acheteurs réguliers",
-    credits: "10 analyses / mois",
-    features: [
-      "Toutes catégories",
-      "Revue expert si doute",
-      "Support prioritaire",
-      "Historique complet",
-    ],
-    cta: "Choisir ce forfait",
-    popular: true,
-    badge: "Le plus populaire" as string | null,
-    href: "/checkout?plan=pro",
-  },
-  {
-    name: "Premium",
-    price: "29,99€",
-    period: "/mois",
-    description: "Pour les revendeurs et pros",
-    credits: "50 analyses / mois",
-    features: [
-      "Toutes catégories",
-      "Revue expert incluse",
-      "Support 24/7",
-      "Rapport PDF",
-      "Historique illimité",
-    ],
-    cta: "Choisir ce forfait",
-    popular: false,
-    badge: "Meilleure valeur" as string | null,
-    href: "/checkout?plan=business",
-  },
-];
+// Arrays statiques FR remplacés par composants client i18n :
+// → StepsSection, StatsSection, TestimonialsSection, PlansSection
+// (cf. components/landing/LandingSectionsClient.tsx)
 
 export default function LandingPage() {
   return (
@@ -245,20 +148,7 @@ export default function LandingPage() {
           </Link>
           <div className="flex items-center gap-5">
             <nav className="hidden items-center gap-6 md:flex">
-              {[
-                { href: "#how-it-works", label: "Comment ça marche" },
-                { href: "#brands", label: "Marques" },
-                { href: "#faq", label: "FAQ" },
-                { href: "#pricing", label: "Tarifs" },
-              ].map(({ href, label }) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {label}
-                </Link>
-              ))}
+              <NavLinks />
             </nav>
             <LanguageToggle />
             <ThemeToggle />
@@ -297,7 +187,7 @@ export default function LandingPage() {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
                   </span>
-                  Propulsé par l&apos;IA Vision
+                  <HeroPoweredByI18n />
                 </span>
 
                 <HeroI18n />
@@ -311,7 +201,7 @@ export default function LandingPage() {
                       animation: "pulse-glow 3s ease-in-out infinite",
                     }}
                   >
-                    Analyser un article
+                    <LandingLabel tkey="hero.analyzeItem" />
                     <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                   <Link
@@ -322,22 +212,13 @@ export default function LandingPage() {
                       color: "var(--text-secondary)",
                     }}
                   >
-                    Comment ça marche
+                    <LandingLabel tkey="nav.howItWorks" />
                   </Link>
                 </div>
 
                 {/* Trust signals */}
                 <div className="mt-8 flex flex-wrap gap-5">
-                  {["< 30s résultat", "RGPD", "Hébergé EU"].map((item) => (
-                    <span
-                      key={item}
-                      className="flex items-center gap-1.5 text-xs"
-                      style={{ color: "var(--text-tertiary)" }}
-                    >
-                      <Check className="size-3 text-emerald-500" />
-                      {item}
-                    </span>
-                  ))}
+                  <HeroTrustTags />
                 </div>
               </div>
             </FadeIn>
@@ -391,52 +272,9 @@ export default function LandingPage() {
                       </span>
                     </div>
 
-                    {/* Photo grid simulation */}
+                    {/* Photo grid simulation — bilingue */}
                     <div className="grid grid-cols-3 gap-2 flex-1">
-                      {[
-                        { label: "Semelle", progress: 94 },
-                        { label: "Logo", progress: 88 },
-                        { label: "Coutures", progress: 91 },
-                        { label: "Languette", progress: 85 },
-                        { label: "Intérieur", progress: 90 },
-                        { label: "Hardware", progress: 87 },
-                      ].map((zone, i) => (
-                        <div
-                          key={zone.label}
-                          className="flex flex-col items-center justify-end rounded-lg p-2"
-                          style={{
-                            background: i === 1
-                              ? "rgba(16,185,129,0.08)"
-                              : "rgba(255,255,255,0.025)",
-                            border: i === 1
-                              ? "1px solid rgba(16,185,129,0.2)"
-                              : "1px solid rgba(255,255,255,0.04)",
-                          }}
-                        >
-                          <div
-                            className="mb-1.5 h-1 w-full rounded-full overflow-hidden"
-                            style={{ background: "rgba(255,255,255,0.06)" }}
-                          >
-                            <div
-                              className="h-1 rounded-full"
-                              style={{
-                                width: `${zone.progress}%`,
-                                background: zone.progress >= 90
-                                  ? "#10B981"
-                                  : zone.progress >= 80
-                                  ? "#FBBF24"
-                                  : "#F87171",
-                              }}
-                            />
-                          </div>
-                          <span
-                            className="text-[8px] font-medium"
-                            style={{ color: "var(--text-tertiary)" }}
-                          >
-                            {zone.label}
-                          </span>
-                        </div>
-                      ))}
+                      <MockPhotoGrid />
                     </div>
                   </div>
 
@@ -509,37 +347,7 @@ export default function LandingPage() {
           <div
             className="mx-auto max-w-6xl px-4 py-10"
           >
-            <div
-              className="grid grid-cols-2 gap-0 overflow-hidden rounded-2xl sm:grid-cols-4"
-              style={{
-                background: "var(--bg-glass)",
-                backdropFilter: "blur(20px)",
-                border: "1px solid var(--border-glass)",
-              }}
-            >
-              {STATS.map((stat, i) => (
-                <div
-                  key={stat.label}
-                  className="flex flex-col items-center py-8"
-                  style={{
-                    borderRight: i < STATS.length - 1 ? "1px solid var(--border-subtle)" : "none",
-                  }}
-                >
-                  <span
-                    className="font-heading text-2xl font-bold sm:text-3xl"
-                    style={{ color: "#10B981" }}
-                  >
-                    {stat.value}
-                  </span>
-                  <span
-                    className="mt-1.5 text-xs"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <StatsSection />
           </div>
         </FadeIn>
       </section>
@@ -552,59 +360,12 @@ export default function LandingPage() {
               className="mb-3 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: "#10B981" }}
             >
-              Processus
+              <LandingLabel tkey="landing.labelProcess" />
             </p>
             <HowItWorksI18n />
           </FadeIn>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-3">
-            {STEPS.map((step, i) => (
-              <FadeIn key={step.title} delay={i * 120}>
-                <div
-                  className="group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/15"
-                  style={{
-                    background: "var(--bg-card)",
-                    border: "1px solid var(--border-subtle)",
-                  }}
-                >
-                  {/* Ghost step number */}
-                  <span
-                    className="pointer-events-none absolute -right-2 -top-4 select-none font-heading text-[72px] font-bold leading-none"
-                    style={{ color: "rgba(255,255,255,0.03)" }}
-                  >
-                    {step.step}
-                  </span>
-
-                  <div
-                    className="mb-5 flex size-12 items-center justify-center rounded-xl"
-                    style={{ background: "rgba(16,185,129,0.1)" }}
-                  >
-                    <step.icon className="size-6 text-emerald-500" />
-                  </div>
-
-                  <div
-                    className="mb-3 text-[11px] font-semibold uppercase tracking-widest"
-                    style={{ color: "#10B981" }}
-                  >
-                    Étape {step.step}
-                  </div>
-
-                  <h3
-                    className="font-heading text-xl font-semibold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {step.title}
-                  </h3>
-                  <p
-                    className="mt-3 text-sm leading-relaxed"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    {step.description}
-                  </p>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <StepsSection />
         </div>
       </section>
 
@@ -621,10 +382,7 @@ export default function LandingPage() {
             >
               <span className="shrink-0 text-2xl">🔒</span>
               <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>
-                  Vos photos sont analysées de manière sécurisée et ne sont jamais partagées.
-                </span>{" "}
-                Données hébergées en Europe, supprimées après 30 jours, conformément au RGPD.
+                <SecurityNoteI18n />
               </p>
             </div>
           </FadeIn>
@@ -639,17 +397,10 @@ export default function LandingPage() {
               className="mb-3 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: "#10B981" }}
             >
-              Exemple
+              <LandingLabel tkey="landing.labelExample" />
             </p>
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Découvrez nos rapports
-            </h2>
-            <p className="mt-4" style={{ color: "var(--text-secondary)" }}>
-              Un rapport clair et détaillé pour chaque article analysé
-            </p>
+            <SectionH2 tkey="landing.reportsTitle" />
+            <SectionSub tkey="landing.reportsSubtitle" />
           </FadeIn>
 
           <FadeIn delay={150}>
@@ -736,124 +487,21 @@ export default function LandingPage() {
                       </div>
                     </div>
 
-                    {/* Subscores */}
+                    {/* Subscores — bilingue */}
                     <div className="w-full space-y-3">
-                      {[
-                        { label: "Alignement monogramme", score: 90 },
-                        { label: "Qualité des coutures", score: 85 },
-                        { label: "Texture canvas", score: 90 },
-                        { label: "Ferrures & hardware", score: 85 },
-                      ].map((s) => (
-                        <div key={s.label}>
-                          <div className="mb-1.5 flex items-center justify-between text-xs">
-                            <span style={{ color: "var(--text-secondary)" }}>{s.label}</span>
-                            <span
-                              className="tabular-nums font-medium"
-                              style={{ color: "var(--text-primary)" }}
-                            >
-                              {s.score}/100
-                            </span>
-                          </div>
-                          <div
-                            className="h-1.5 w-full overflow-hidden rounded-full"
-                            style={{ background: "rgba(255,255,255,0.04)" }}
-                          >
-                            <div
-                              className="h-1.5 rounded-full"
-                              style={{
-                                width: `${s.score}%`,
-                                background: "linear-gradient(90deg, #059669, #10B981)",
-                                boxShadow: "0 0 8px rgba(16,185,129,0.4)",
-                              }}
-                            />
-                          </div>
-                        </div>
-                      ))}
+                      <MockSubscores />
                     </div>
                   </div>
 
-                  {/* Right — Findings */}
+                  {/* Right — Findings — bilingue */}
                   <div className="flex flex-col gap-3">
-                    <p
-                      className="text-xs font-semibold uppercase tracking-widest"
-                      style={{ color: "var(--text-tertiary)" }}
-                    >
-                      Observations détaillées
-                    </p>
-                    {[
-                      {
-                        zone: "Alignement monogramme",
-                        score: 90,
-                        obs: "Le monogramme LV est parfaitement centré et symétrique sur les coutures, conforme aux standards des ateliers Vuitton.",
-                      },
-                      {
-                        zone: "Qualité des coutures",
-                        score: 85,
-                        obs: "Points réguliers au fil jaune moutarde caractéristique, tension uniforme sans irrégularités visibles.",
-                      },
-                      {
-                        zone: "Ferrures & hardware",
-                        score: 85,
-                        obs: "Les clips et fermoirs dorés présentent le relief et la finition attendus sur une pièce authentique.",
-                      },
-                    ].map((f) => (
-                      <div
-                        key={f.zone}
-                        className="rounded-xl p-4"
-                        style={{
-                          borderLeft: "2px solid #10B981",
-                          background: "rgba(16,185,129,0.04)",
-                          border: "none",
-                          borderLeftWidth: 2,
-                          borderLeftStyle: "solid",
-                          borderLeftColor: "#10B981",
-                        }}
-                      >
-                        <div className="flex flex-wrap items-center gap-2">
-                          <CheckCircle2 className="size-4 shrink-0 text-emerald-500" />
-                          <span
-                            className="text-sm font-semibold"
-                            style={{ color: "var(--text-primary)" }}
-                          >
-                            {f.zone}
-                          </span>
-                          <span
-                            className="rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide"
-                            style={{ background: "rgba(16,185,129,0.1)", color: "#10B981" }}
-                          >
-                            Conforme
-                          </span>
-                          <span
-                            className="ml-auto text-xs tabular-nums"
-                            style={{ color: "var(--text-tertiary)" }}
-                          >
-                            {f.score}/100
-                          </span>
-                        </div>
-                        <p
-                          className="mt-2 text-xs leading-relaxed"
-                          style={{ color: "var(--text-secondary)" }}
-                        >
-                          {f.obs}
-                        </p>
-                      </div>
-                    ))}
+                    <MockFindings />
                   </div>
                 </div>
               </div>
 
               <div className="mt-8 text-center">
-                <Link
-                  href="/auth?redirect=%2Fcheck%2Fnew"
-                  className="group inline-flex h-11 items-center gap-2 rounded-xl px-7 text-sm font-semibold text-white transition-all hover:shadow-lg"
-                  style={{ background: "#10B981" }}
-                >
-                  Vérifiez votre prochain article
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <p className="mt-3 text-xs" style={{ color: "var(--text-tertiary)" }}>
-                  Première analyse à 3,99€ · Sans abonnement
-                </p>
+                <SmallCtaI18n />
               </div>
             </div>
           </FadeIn>
@@ -868,98 +516,13 @@ export default function LandingPage() {
               className="mb-3 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: "#10B981" }}
             >
-              Avis
+              <LandingLabel tkey="landing.labelTestimonials" />
             </p>
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Ce que disent nos utilisateurs
-            </h2>
-            <p className="mt-4" style={{ color: "var(--text-secondary)" }}>
-              Ils ont vérifié leurs articles avec LegitVision
-            </p>
+            <SectionH2 tkey="landing.testimonialsMainTitle" />
+            <SectionSub tkey="landing.testimonialsMainSubtitle" />
           </FadeIn>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-3">
-            {TESTIMONIALS.map((t, i) => (
-              <FadeIn key={t.name} delay={i * 120}>
-                <div
-                  className="flex h-full flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
-                  style={{
-                    background: "var(--bg-card)",
-                    border: "1px solid var(--border-subtle)",
-                  }}
-                >
-                  {/* Header */}
-                  <div className="flex items-center justify-between">
-                    <div
-                      className="flex size-10 items-center justify-center rounded-xl"
-                      style={{
-                        background: "linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05))",
-                        border: "1px solid rgba(16,185,129,0.2)",
-                      }}
-                    >
-                      <span
-                        className="font-heading text-sm font-bold"
-                        style={{ color: "#10B981" }}
-                      >
-                        {t.initials}
-                      </span>
-                    </div>
-                    <div className="flex gap-0.5">
-                      {Array.from({ length: t.stars }).map((_, j) => (
-                        <Star
-                          key={j}
-                          className="size-3.5"
-                          style={{ fill: "#D4A843", color: "#D4A843" }}
-                        />
-                      ))}
-                      {Array.from({ length: 5 - t.stars }).map((_, j) => (
-                        <Star
-                          key={`e${j}`}
-                          className="size-3.5"
-                          style={{ color: "rgba(255,255,255,0.1)" }}
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Quote */}
-                  <div className="mt-5 flex-1">
-                    <div
-                      className="mb-2 font-heading text-3xl leading-none select-none"
-                      style={{ color: "rgba(16,185,129,0.15)" }}
-                    >
-                      &ldquo;
-                    </div>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      {t.quote}
-                    </p>
-                  </div>
-
-                  {/* Author */}
-                  <div
-                    className="mt-5 pt-5"
-                    style={{ borderTop: "1px solid var(--border-subtle)" }}
-                  >
-                    <p
-                      className="text-sm font-semibold"
-                      style={{ color: "var(--text-primary)" }}
-                    >
-                      {t.name}
-                    </p>
-                    <p className="mt-0.5 text-xs" style={{ color: "var(--text-tertiary)" }}>
-                      {t.role} · {t.city}
-                    </p>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <TestimonialsSection />
         </div>
       </section>
 
@@ -978,17 +541,10 @@ export default function LandingPage() {
               className="mb-3 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: "#10B981" }}
             >
-              Catalogue
+              <LandingLabel tkey="landing.labelCatalog" />
             </p>
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Marques et catégories
-            </h2>
-            <p className="mt-4" style={{ color: "var(--text-secondary)" }}>
-              Des protocoles d&apos;authentification spécifiques à chaque marque
-            </p>
+            <SectionH2 tkey="landing.brandsCategoriesTitle" />
+            <SectionSub tkey="landing.brandsCategoriesSubtitle" />
             <div
               className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium"
               style={{
@@ -998,7 +554,7 @@ export default function LandingPage() {
               }}
             >
               <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
-              340+ modèles disponibles dans 3 catégories
+              <LandingLabel tkey="landing.brandsCategoriesCount" />
             </div>
           </FadeIn>
 
@@ -1032,90 +588,13 @@ export default function LandingPage() {
               className="mb-3 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: "#10B981" }}
             >
-              Fonctionnalités
+              <LandingLabel tkey="landing.labelFeatures" />
             </p>
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              L&apos;outil d&apos;authentification ultime
-            </h2>
-            <p className="mt-4" style={{ color: "var(--text-secondary)" }}>
-              Tout ce dont vous avez besoin en un seul endroit
-            </p>
+            <SectionH2 tkey="landing.featuresMainTitle" />
+            <SectionSub tkey="landing.featuresMainSubtitle" />
           </FadeIn>
 
-          <div className="mt-16 grid gap-5 sm:grid-cols-2">
-            {[
-              {
-                icon: Eye,
-                title: "Analyse IA avancée",
-                desc: "Notre modèle de vision artificielle analyse chaque photo selon 8 zones d'authentification spécifiques : coutures, matériaux, logos, étiquettes, hardware, alignement, typographie et finitions.",
-                tag: "8 zones analysées",
-                highlight: true,
-              },
-              {
-                icon: Zap,
-                title: "Résultats en 30 secondes",
-                desc: "Pas besoin d'attendre des heures. Uploadez vos photos, notre IA traite l'analyse en temps réel et vous délivre un rapport complet avec score de confiance en moins de 30 secondes.",
-                tag: "< 30 secondes",
-                highlight: false,
-              },
-              {
-                icon: FileText,
-                title: "Rapport ultra-détaillé",
-                desc: "Score global sur 100, sous-scores par zone, détection OCR des codes et numéros de série, comparaison avec les standards du fabricant, et recommandations personnalisées.",
-                tag: "Score sur 100",
-                highlight: false,
-              },
-              {
-                icon: ShieldCheck,
-                title: "Données protégées RGPD",
-                desc: "Vos photos sont hébergées en Europe sur des serveurs sécurisés. Elles sont automatiquement supprimées après 30 jours. Nous ne partageons jamais vos données avec des tiers.",
-                tag: "Hébergé en EU 🇪🇺",
-                highlight: false,
-              },
-            ].map((feat, i) => (
-              <FadeIn key={feat.title} delay={i * 80}>
-                <div
-                  className={`group relative flex h-full flex-col rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 ${!feat.highlight ? "hover:border-emerald-500/15" : ""}`}
-                  style={{
-                    background: feat.highlight ? "rgba(16,185,129,0.04)" : "var(--bg-card)",
-                    border: feat.highlight
-                      ? "1px solid rgba(16,185,129,0.2)"
-                      : "1px solid var(--border-subtle)",
-                  }}
-                >
-                  <div
-                    className="mb-5 flex size-14 items-center justify-center rounded-2xl"
-                    style={{ background: "rgba(16,185,129,0.1)" }}
-                  >
-                    <feat.icon className="size-7 text-emerald-500" />
-                  </div>
-                  <h3
-                    className="font-heading text-xl font-semibold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {feat.title}
-                  </h3>
-                  <p
-                    className="mt-3 flex-1 text-sm leading-relaxed"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    {feat.desc}
-                  </p>
-                  <div className="mt-6">
-                    <span
-                      className="rounded-full px-3 py-1 text-xs font-semibold"
-                      style={{ background: "rgba(16,185,129,0.1)", color: "#10B981" }}
-                    >
-                      {feat.tag}
-                    </span>
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
+          <FeaturesSection />
         </div>
       </section>
 
@@ -1127,148 +606,13 @@ export default function LandingPage() {
               className="mb-3 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: "#10B981" }}
             >
-              Tarifs
+              <LandingLabel tkey="landing.labelPricing" />
             </p>
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Simples, sans surprise
-            </h2>
-            <p className="mt-4" style={{ color: "var(--text-secondary)" }}>
-              Des tarifs clairs, adaptés à chaque usage
-            </p>
+            <SectionH2 tkey="landing.pricingMainTitle" />
+            <SectionSub tkey="landing.pricingMainSubtitle" />
           </FadeIn>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-3">
-            {PLANS.map((plan, i) => {
-              const isPremium = plan.name === "Premium";
-              const isPopular = plan.popular;
-
-              return (
-                <FadeIn key={plan.name} delay={i * 120}>
-                  {isPremium ? (
-                    <div
-                      className="relative rounded-2xl p-[1.5px] shadow-xl"
-                      style={{
-                        background: "linear-gradient(135deg, rgba(180,130,50,0.5), rgba(230,180,60,0.2), rgba(180,130,50,0.5))",
-                        boxShadow: "0 20px 60px rgba(180,130,50,0.15)",
-                      }}
-                    >
-                      <div
-                        className="relative flex flex-col rounded-2xl p-8"
-                        style={{ background: "var(--bg-card)" }}
-                      >
-                        <span
-                          className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1 text-xs font-bold text-black shadow-lg"
-                          style={{ background: "linear-gradient(90deg, #D4A843, #F0C040)" }}
-                        >
-                          ⭐ {plan.badge}
-                        </span>
-                        <h3
-                          className="font-heading text-lg font-semibold"
-                          style={{ color: "#D4A843" }}
-                        >
-                          {plan.name}
-                        </h3>
-                        <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>{plan.description}</p>
-                        <div className="mt-6">
-                          <span className="font-heading text-4xl font-bold" style={{ color: "#D4A843" }}>
-                            {plan.price}
-                          </span>
-                          <span className="text-sm" style={{ color: "var(--text-secondary)" }}>{plan.period}</span>
-                        </div>
-                        <div className="mt-2 text-sm font-medium" style={{ color: "#D4A843" }}>{plan.credits}</div>
-                        <ul className="mt-8 flex-1 space-y-3">
-                          {plan.features.map((feature) => (
-                            <li key={feature} className="flex items-start gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
-                              <Check className="mt-0.5 size-4 shrink-0" style={{ color: "#D4A843" }} />
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="mt-8">
-                          <Link
-                            href={plan.href}
-                            className="inline-flex h-11 w-full items-center justify-center rounded-xl text-sm font-bold text-black transition-all hover:shadow-lg"
-                            style={{ background: "linear-gradient(90deg, #D4A843, #F0C040)" }}
-                          >
-                            {plan.cta}
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div
-                      className="relative flex flex-col rounded-2xl p-8 transition-all duration-300"
-                      style={{
-                        background: isPopular ? "rgba(16,185,129,0.04)" : "var(--bg-card)",
-                        border: isPopular
-                          ? "1px solid rgba(16,185,129,0.35)"
-                          : "1px solid var(--border-subtle)",
-                        boxShadow: isPopular ? "0 0 40px rgba(16,185,129,0.08)" : "none",
-                      }}
-                    >
-                      {isPopular && (
-                        <span
-                          className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-xs font-semibold text-white"
-                          style={{ background: "#10B981" }}
-                        >
-                          {plan.badge}
-                        </span>
-                      )}
-                      <h3
-                        className="font-heading text-lg font-semibold"
-                        style={{ color: "var(--text-primary)" }}
-                      >
-                        {plan.name}
-                      </h3>
-                      <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-                        {plan.description}
-                      </p>
-                      <div className="mt-6">
-                        <span
-                          className="font-heading text-4xl font-bold"
-                          style={{ color: "var(--text-primary)" }}
-                        >
-                          {plan.price}
-                        </span>
-                        <span className="text-sm" style={{ color: "var(--text-secondary)" }}>
-                          {plan.period}
-                        </span>
-                      </div>
-                      <div className="mt-2 text-sm font-medium text-emerald-400">{plan.credits}</div>
-                      <ul className="mt-8 flex-1 space-y-3">
-                        {plan.features.map((feature) => (
-                          <li key={feature} className="flex items-start gap-3 text-sm" style={{ color: "var(--text-secondary)" }}>
-                            <Check className="mt-0.5 size-4 shrink-0 text-emerald-500" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-8">
-                        <Link
-                          href={plan.href}
-                          className="inline-flex h-11 w-full items-center justify-center rounded-xl text-sm font-semibold transition-all hover:shadow-lg"
-                          style={
-                            isPopular
-                              ? { background: "#10B981", color: "#fff", animation: "pulse-glow 3s ease-in-out infinite" }
-                              : {
-                                  border: "1px solid rgba(255,255,255,0.08)",
-                                  color: "var(--text-primary)",
-                                  background: "transparent",
-                                }
-                          }
-                        >
-                          {plan.cta}
-                        </Link>
-                      </div>
-                    </div>
-                  )}
-                </FadeIn>
-              );
-            })}
-          </div>
+          <PlansSection />
         </div>
       </section>
 
@@ -1305,23 +649,14 @@ export default function LandingPage() {
               className="mb-3 text-[11px] font-medium uppercase tracking-widest"
               style={{ color: "#10B981" }}
             >
-              À propos
+              <LandingLabel tkey="footer.about" />
             </p>
-            <h2
-              className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Qui sommes-nous ?
-            </h2>
+            <SectionH2 tkey="landing.aboutTitle" />
             <p
               className="mx-auto mt-5 max-w-2xl"
               style={{ color: "var(--text-secondary)" }}
             >
-              LegitVision est propulsé par <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>LYXIRIA</span>, une entreprise naissante fondée par de jeunes passionnés de tech et de luxe.
-              Nous avons décidé de créer ce service pour aider les gens à vérifier l&apos;authenticité de leurs produits.
-              Parce qu&apos;on a tous déjà eu peur de se faire arnaquer en achetant un article de luxe au prix fort,
-              alors qu&apos;il s&apos;agit d&apos;une contrefaçon.
-              Notre mission : rendre l&apos;authentification accessible à tous grâce à l&apos;IA.
+              <AboutI18n />
             </p>
           </FadeIn>
         </div>
@@ -1340,7 +675,7 @@ export default function LandingPage() {
             >
               <ShieldCheck className="mx-auto mb-3 size-8" style={{ color: "#D4A843" }} />
               <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                Pour les articles de grande valeur, nous recommandons de croiser nos résultats avec un expert indépendant.{" "}
+                <ExpertNoteI18n />{" "}
                 <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>
                   <DisclaimerI18n />
                 </span>
