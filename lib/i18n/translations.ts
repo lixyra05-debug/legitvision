@@ -185,6 +185,9 @@ export const translations = {
         "Points réguliers au fil jaune moutarde caractéristique, tension uniforme sans irrégularités visibles.",
       mockObs3:
         "Les clips et fermoirs dorés présentent le relief et la finition attendus sur une pièce authentique.",
+      videoLabel: "Démo",
+      videoTitle: "Voir LegitVision en action",
+      videoSubtitle: "30 secondes pour comprendre comment l'IA analyse vos articles.",
     },
     plans: {
       single: {
@@ -648,6 +651,9 @@ export const translations = {
         "Regular stitches with characteristic mustard-yellow thread, uniform tension and no visible irregularities.",
       mockObs3:
         "The gold clips and clasps show the relief and finish expected on an authentic piece.",
+      videoLabel: "Demo",
+      videoTitle: "See LegitVision in action",
+      videoSubtitle: "30 seconds to understand how AI analyzes your items.",
     },
     plans: {
       single: {

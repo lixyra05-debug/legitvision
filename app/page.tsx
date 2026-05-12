@@ -341,6 +341,35 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* ── Vidéo de présentation ── */}
+      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+        <div className="mx-auto max-w-6xl px-4">
+          <FadeIn className="text-center">
+            <p
+              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
+              style={{ color: "#10B981" }}
+            >
+              <LandingLabel tkey="landing.videoLabel" />
+            </p>
+            <SectionH2 tkey="landing.videoTitle" />
+            <SectionSub tkey="landing.videoSubtitle" />
+          </FadeIn>
+          <FadeIn delay={150}>
+            <div className="mt-12 flex justify-center">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full max-w-[300px] rounded-2xl border border-white/5 shadow-2xl shadow-emerald-500/10"
+              >
+                <source src="/videos/hero-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* ── Stats band ── */}
       <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "0" }}>
         <FadeIn>
