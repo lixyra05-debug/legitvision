@@ -145,12 +145,9 @@ export async function runAnalysis({
   // Call Claude Vision API
   const anthropic = getAnthropicClient();
   const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-opus-4-8",
     max_tokens: 16000,
-    thinking: {
-      type: "enabled",
-      budget_tokens: 2000,
-    },
+    thinking: { type: "adaptive" },
     system: systemPrompt,
     messages: [
       {
