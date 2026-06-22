@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { stripe, getPriceId, getOrCreateCustomer } from "@/lib/stripe/server";
+import { z } from "zod";
 
 // Construit l'URL de redirect d'erreur — ramène l'utilisateur sur le paywall
 // avec un message clair (au lieu de revenir silencieusement sur la landing).
@@ -9,8 +10,12 @@ function buildErrorRedirect(reason: string): string {
   return `/check/new?error=stripe_unavailable&reason=${encodeURIComponent(reason)}`;
 }
 
-const PAID_PLANS = ["pro", "business", "single"] as const;
-type PaidPlanId = (typeof PAID_PLANS)[number];
+// D : message générique unique côté client (le détail est loggé serveur, jamais exposé).
+const GENERIC_PAYMENT_ERROR =
+  "Le service de paiement est momentanément indisponible. Réessayez dans quelques instants.";
+
+// C : les 3 plans valides. "single" = paiement unique ; "pro"/"business" = abonnement.
+const planParamSchema = z.enum(["single", "pro", "business"]);
 
 export default async function CheckoutPage({
   searchParams,
@@ -30,11 +35,12 @@ export default async function CheckoutPage({
     redirect(`/auth?redirect=${redirectParam}`);
   }
 
-  // ── 2. Validate plan ─────────────────────────────────────────────────────
-  const planId = rawPlan as PaidPlanId;
-  if (!rawPlan || !PAID_PLANS.includes(planId)) {
+  // ── 2. Validate plan (Zod : single | pro | business) ─────────────────────
+  const planParse = planParamSchema.safeParse(rawPlan);
+  if (!planParse.success) {
     redirect("/#pricing");
   }
+  const planId = planParse.data;
 
   // ── 3. Fetch profile ─────────────────────────────────────────────────────
   const admin = createAdminClient();
@@ -52,7 +58,8 @@ export default async function CheckoutPage({
   // ── 5. Env vars check ────────────────────────────────────────────────────
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
-    redirect(buildErrorRedirect("STRIPE_SECRET_KEY non défini sur le serveur"));
+    console.error("[checkout] STRIPE_SECRET_KEY non défini sur le serveur");
+    redirect(buildErrorRedirect(GENERIC_PAYMENT_ERROR));
   }
 
   // ── 5b. Changement de plan avec abonnement DÉJÀ actif (pro/business) ──────
@@ -97,7 +104,8 @@ export default async function CheckoutPage({
 
   // Redirections du CAS B — HORS try/catch (redirect() lève NEXT_REDIRECT).
   if (planChangeError) {
-    redirect(buildErrorRedirect(planChangeError));
+    // détail déjà loggé ci-dessus ; message générique côté client (D).
+    redirect(buildErrorRedirect(GENERIC_PAYMENT_ERROR));
   }
   if (planChangeDone) {
     redirect("/dashboard?plan_changed=1");
@@ -176,7 +184,8 @@ export default async function CheckoutPage({
 
   // ── 7. Redirect — OUTSIDE try/catch ───────────────────────────────────────
   if (!sessionUrl) {
-    redirect(buildErrorRedirect(stripeErrorMessage ?? "session_creation_failed"));
+    // détail déjà loggé (catch ci-dessus) ; message générique côté client (D).
+    redirect(buildErrorRedirect(GENERIC_PAYMENT_ERROR));
   }
 
   redirect(sessionUrl);

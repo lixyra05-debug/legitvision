@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { stripe } from "@/lib/stripe/server";
+import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 
 export async function POST() {
   const supabase = createClient();
@@ -8,6 +9,10 @@ export async function POST() {
   if (authError || !user) {
     return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
   }
+
+  // Rate-limit (A) : 5 résiliations/min/user.
+  const rl = await rateLimit(`cancel:${user.id}`, 5, 60);
+  if (!rl.success) return tooManyRequests(rl.reset);
 
   const { data: profile } = await supabase
     .from("profiles")
@@ -31,7 +36,11 @@ export async function POST() {
       cancelAt: sub.items.data[0]?.current_period_end ?? null,
     });
   } catch (e) {
-    const message = e instanceof Error ? e.message : "Erreur Stripe";
-    return NextResponse.json({ error: message }, { status: 500 });
+    // D : ne jamais renvoyer le message Stripe verbatim au client.
+    console.error("[stripe/cancel] error:", e);
+    return NextResponse.json(
+      { error: "Erreur lors de la résiliation. Réessayez ou contactez le support." },
+      { status: 500 },
+    );
   }
 }

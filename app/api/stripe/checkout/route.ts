@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { stripe, getPriceId, getOrCreateCustomer } from "@/lib/stripe/server";
-import type { PlanId } from "@/lib/stripe/config";
+import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
+import { z } from "zod";
 
-const PAID_PLANS = ["pro", "business"] as const;
-type PaidPlanId = (typeof PAID_PLANS)[number];
+// Cet endpoint ne gère QUE les abonnements (mode: subscription).
+// "single" (paiement unique) passe par app/checkout/page.tsx, jamais ici.
+const checkoutBodySchema = z.object({
+  planId: z.enum(["pro", "business"]),
+});
 
 export async function POST(request: NextRequest) {
   // 1. Auth
@@ -18,15 +22,22 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
-  // 2. Parse body
-  let planId: PlanId;
+  // 1b. Rate-limit (A) : 5 checkouts/min/user.
+  const rl = await rateLimit(`checkout:${user.id}`, 5, 60);
+  if (!rl.success) return tooManyRequests(rl.reset);
+
+  // 2. Parse + validation Zod du body (C)
+  let rawBody: unknown;
   try {
-    const body = await request.json();
-    planId = body.planId;
-    if (!PAID_PLANS.includes(planId as PaidPlanId)) throw new Error();
+    rawBody = await request.json();
   } catch {
     return NextResponse.json({ error: "Plan invalide" }, { status: 400 });
   }
+  const checkoutParsed = checkoutBodySchema.safeParse(rawBody);
+  if (!checkoutParsed.success) {
+    return NextResponse.json({ error: "Plan invalide" }, { status: 400 });
+  }
+  const planId = checkoutParsed.data.planId;
 
   // 3. Récupérer le profil (pour stripe_customer_id éventuel)
   const admin = createAdminClient();
@@ -69,7 +80,7 @@ export async function POST(request: NextRequest) {
       mode: "subscription",
       line_items: [
         {
-          price: getPriceId(planId as PaidPlanId),
+          price: getPriceId(planId),
           quantity: 1,
         },
       ],
@@ -99,9 +110,11 @@ export async function POST(request: NextRequest) {
     }
     return NextResponse.json({ url: session.url });
   } catch (error) {
+    // D : ne jamais renvoyer le message Stripe verbatim au client.
     console.error("[stripe/checkout] Error:", error);
-    const message =
-      error instanceof Error ? error.message : "Erreur interne";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: "Erreur lors de la création de la session de paiement. Réessayez." },
+      { status: 500 }
+    );
   }
 }

@@ -66,6 +66,70 @@ export async function preprocessImage(buffer: Buffer, filename?: string): Promis
   }
 }
 
+// ── Validation SERVEUR des photos (ne pas faire confiance au client) ──
+
+const ALLOWED_IMAGE_FORMATS = ["jpeg", "png", "webp"];
+const MIN_PHOTO_DIMENSION = 800;
+const MAX_PHOTO_BYTES = 10 * 1024 * 1024; // 10 Mo
+
+/** Erreur de validation de photo → mappée en HTTP 400 par la route (pas de débit). */
+export class PhotoValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "PhotoValidationError";
+  }
+}
+
+/**
+ * Valide une photo côté serveur AVANT tout appel à l'IA :
+ *  - format RÉEL via sharp (pas l'extension) ∈ {jpeg, png, webp}
+ *  - résolution minimale 800×800
+ *  - taille maximale 10 Mo
+ * Retourne une raison claire et actionnable si invalide.
+ */
+export async function validateImageBuffer(
+  buffer: Buffer,
+  label: string,
+): Promise<{ valid: true } | { valid: false; reason: string }> {
+  if (buffer.length > MAX_PHOTO_BYTES) {
+    return {
+      valid: false,
+      reason: `La photo "${label}" dépasse la taille maximale de 10 Mo.`,
+    };
+  }
+
+  let meta: sharp.Metadata;
+  try {
+    meta = await sharp(buffer).metadata();
+  } catch {
+    return {
+      valid: false,
+      reason: `La photo "${label}" est illisible ou n'est pas une image.`,
+    };
+  }
+
+  if (!meta.format || !ALLOWED_IMAGE_FORMATS.includes(meta.format)) {
+    return {
+      valid: false,
+      reason: `La photo "${label}" a un format non supporté (JPEG, PNG ou WebP requis).`,
+    };
+  }
+
+  if (
+    !meta.width ||
+    !meta.height ||
+    meta.width < MIN_PHOTO_DIMENSION ||
+    meta.height < MIN_PHOTO_DIMENSION
+  ) {
+    return {
+      valid: false,
+      reason: `La photo "${label}" est trop petite (résolution minimale 800×800 px).`,
+    };
+  }
+
+  return { valid: true };
+}
+
 // ── Main analysis function ──
 
 export async function runAnalysis({

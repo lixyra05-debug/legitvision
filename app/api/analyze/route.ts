@@ -4,11 +4,24 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import {
   runAnalysis,
   handleAnalysisError,
+  validateImageBuffer,
+  PhotoValidationError,
   type ImageInput,
 } from "@/lib/ai/analyze";
+import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 import type { Brand, Model, PhotoSlot } from "@/lib/types";
+import { z } from "zod";
 
 export const maxDuration = 60; // Vercel function timeout
+
+// Validation Zod du body (C). analysisId = UUID (table analyses.id UUID).
+const analyzeBodySchema = z.object({
+  analysisId: z.uuid(),
+  variant_selected: z.string().max(120).nullish(),
+  collab_selected: z.string().max(120).nullish(),
+});
+
+const MAX_PHOTOS = 15;
 
 // Statuses that indicate the analysis is ready to be processed
 const PROCESSABLE_STATUSES = ["pending", "uploading"];
@@ -24,6 +37,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
+  // 1b. Rate-limit (A) : 10 analyses/min/user. Dégrade proprement si Upstash non configuré.
+  const rl = await rateLimit(`analyze:${user.id}`, 10, 60);
+  if (!rl.success) return tooManyRequests(rl.reset);
+
   // 2. Guard: ANTHROPIC_API_KEY must be set
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
@@ -32,22 +49,20 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 3. Parse request body
-  let analysisId: string;
-  let variantSelected: string | null = null;
-  let collabSelected: string | null = null;
+  // 3. Parse + validation Zod du body (C)
+  let rawBody: unknown;
   try {
-    const body = await request.json();
-    analysisId = body.analysisId;
-    variantSelected = body.variant_selected ?? null;
-    collabSelected = body.collab_selected ?? null;
-    if (!analysisId) throw new Error();
+    rawBody = await request.json();
   } catch {
-    return NextResponse.json(
-      { error: "analysisId requis" },
-      { status: 400 }
-    );
+    return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
   }
+  const parsed = analyzeBodySchema.safeParse(rawBody);
+  if (!parsed.success) {
+    return NextResponse.json({ error: "Requête invalide." }, { status: 400 });
+  }
+  const analysisId = parsed.data.analysisId;
+  const variantSelected = parsed.data.variant_selected ?? null;
+  const collabSelected = parsed.data.collab_selected ?? null;
 
   // 4. Use admin client for all DB operations — bypasses RLS,
   //    ownership is enforced manually via .eq("user_id", user.id).
@@ -147,6 +162,14 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // B : borne le nombre de photos AVANT tout claim / appel IA
+  if (photos.length > MAX_PHOTOS) {
+    return NextResponse.json(
+      { error: `Trop de photos (maximum ${MAX_PHOTOS} par analyse).` },
+      { status: 400 }
+    );
+  }
+
   // 8. Update ATOMIQUE status pending/uploading → analyzing. Si aucune ligne
   //    n'est retournée, un autre POST concurrent a déjà réservé l'analyse
   //    (double-clic sur la même analysisId) — on refuse pour éviter double débit.
@@ -183,12 +206,19 @@ export async function POST(request: NextRequest) {
 
         const protocol = brand.photo_protocol as PhotoSlot[];
         const slot = protocol.find((s) => s.name === photo.photo_type);
+        const label = slot?.label ?? photo.photo_type;
+        const buffer = Buffer.from(await data.arrayBuffer());
+
+        // B : validation SERVEUR du contenu réel du bucket (format/résolution/taille).
+        //     Ne pas faire confiance à la validation client (PhotoUploader).
+        const check = await validateImageBuffer(buffer, label);
+        if (!check.valid) throw new PhotoValidationError(check.reason);
 
         return {
-          buffer: Buffer.from(await data.arrayBuffer()),
+          buffer,
           filename: photo.storage_path,
           photoType: photo.photo_type,
-          label: slot?.label ?? photo.photo_type,
+          label,
         };
       })
     );
@@ -269,6 +299,12 @@ export async function POST(request: NextRequest) {
       .from("analyses")
       .update({ status: "failed" })
       .eq("id", analysisId);
+
+    // B : photos invalides → 400 message clair (aucun crédit débité : le débit
+    // est en aval, sur le chemin succès uniquement).
+    if (error instanceof PhotoValidationError) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
 
     const { message, code } = handleAnalysisError(error);
     return NextResponse.json({ error: message, code }, { status: 500 });
