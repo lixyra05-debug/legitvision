@@ -12,7 +12,7 @@ Localisation : Paris, France
 - **Styling** : Tailwind CSS + shadcn/ui
 - **Backend** : Supabase (Auth, PostgreSQL, Storage, Edge Functions, Realtime)
 - **Paiement** : Stripe (Checkout, Webhooks, système de crédits)
-- **IA** : API Anthropic Claude Vision (claude-sonnet-4-20250514) — voir skill claude-vision-expert
+- **IA** : API Anthropic Claude Vision (claude-opus-4-8) — voir skill claude-vision-expert
 - **Orchestration** : n8n (pipeline IA, notifications, HITL)
 - **Déploiement** : Vercel
 - **Package Manager** : pnpm
@@ -21,19 +21,15 @@ Localisation : Paris, France
 ```
 /
 ├── app/
-│   ├── (public)/           # Pages publiques (landing, pricing)
-│   │   ├── page.tsx        # Landing page
-│   │   └── pricing/page.tsx
+│   ├── (public)/           # Pages publiques (landing, pages SEO)
+│   │   └── page.tsx        # Landing page
 │   ├── (auth)/             # Pages auth
 │   │   └── auth/page.tsx   # Login / Register
 │   ├── (dashboard)/        # Pages protégées (auth required)
 │   │   ├── dashboard/page.tsx
-│   │   ├── check/
-│   │   │   ├── new/page.tsx        # Nouvelle analyse (stepper 3 étapes)
-│   │   │   └── [id]/page.tsx       # Rapport d'analyse
-│   │   └── admin/
-│   │       ├── page.tsx            # Dashboard admin
-│   │       └── review/[id]/page.tsx # Revue expert
+│   │   └── check/
+│   │       ├── new/page.tsx        # Nouvelle analyse (stepper 3 étapes)
+│   │       └── [id]/page.tsx       # Rapport d'analyse
 │   ├── api/
 │   │   ├── analyze/route.ts        # Endpoint analyse IA
 │   │   ├── webhooks/
@@ -133,9 +129,17 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 8. User voit le rapport → /check/[id] avec score, sous-scores, findings, recommandations
 9. Si score entre 40-60 OU confiance "low" → flag pour expert review
 
-## Phase Actuelle : MVP (Semaine 1-2)
-Focus sur : Landing page, Auth, Dashboard, Nouvelle analyse (stepper + upload), Rapport, route API analyze.
-PAS ENCORE : Stripe, Admin panel, HITL, notifications email.
+## Phase Actuelle : EN PRODUCTION
+En prod : Landing, Auth, Dashboard, Nouvelle analyse (stepper + upload), Rapport, route API analyze, **paiements Stripe** (achat unique + abonnements Pro/Business).
+PAS ENCORE : Admin panel, HITL, notifications email transactionnelles (stub `lib/emails/send.ts`, non branché).
+
+## Audit 2026-06-21 — les 3 P0 sont RÉSOLUS (déployés en prod)
+- **P0-1 — Webhook Stripe** ✅ RÉSOLU. Avant : aucun endpoint enregistré → les clients payaient sans recevoir crédits/plan (`stripe_events` vide). Endpoint créé sur le compte **LYXIRIA `acct_1SITaCCMKNVmORd6`** (mode LIVE) → `https://legitvision.vercel.app/api/webhooks/stripe`, events `checkout.session.completed` + `invoice.paid` + `customer.subscription.deleted`. Vérifié en prod (2026-06-22) : `checkout.session.completed` reçu et enregistré dans `stripe_events`, crédit ajouté automatiquement (`credits_transactions`). Testé en réel.
+- **P0-2 — Modèle Claude Vision** ✅ RÉSOLU. `claude-sonnet-4-20250514` était retiré (404 sur chaque analyse). Remplacé dans `lib/ai/analyze.ts` par `claude-opus-4-8` + `thinking: { type: "adaptive" }` (les modèles 4.6+ rejettent `budget_tokens`).
+- **P0-3 — Faille RLS `profiles`** ✅ RÉSOLU. La policy UPDATE de `profiles` n'avait aucune restriction de colonne → un user pouvait se mettre `role='admin'` / crédits illimités / changer de plan (escalade + fuite cross-tenant). Fix en prod : fonction `lock_privileged_profile_cols()` + trigger `guard_profiles` (BEFORE UPDATE, bloque toute modif de `role`/`credits_remaining`/`subscription_plan`/`stripe_*` hors `service_role`). Audit prod confirmé : **0 compte compromis**.
+
+Autres correctifs déployés (post-audit) : route `/auth/callback` (OAuth Google), suppression du dossier `pages/` legacy (404 blanches → `app/not-found.tsx`), fix paiement iOS Safari (navigation top-level vers `/checkout`), CTA pricing `/pricing` (404) → `/#pricing`.
+P1 restants connus : catégorie « montres » absente du CategoryPicker, photos HEIC iPhone, double-abonnement à l'upgrade Pro↔Business.
 
 ## Commandes Utiles
 ```bash
