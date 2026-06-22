@@ -77,10 +77,10 @@ export default async function CheckoutPage({
           items: [{ id: currentItemId, price: getPriceId(planId) }],
           proration_behavior: "create_prorations",
         });
-        await admin
-          .from("profiles")
-          .update({ subscription_plan: planId })
-          .eq("id", user.id);
+        // NB : la MAJ de subscription_plan ET des crédits (delta) est faite par le
+        // webhook customer.subscription.updated = source de vérité unique. Ne PAS
+        // mettre à jour le plan ici, sinon le webhook verrait ancien == nouveau et
+        // ne créditerait jamais l'upgrade.
         planChangeDone = true;
       }
       // Abo non modifiable (canceled/incomplete) → on laisse le CAS A créer un nouvel abo.

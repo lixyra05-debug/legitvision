@@ -285,6 +285,71 @@ export async function POST(request: NextRequest) {
         break;
       }
 
+      // ── Changement de plan d'un abonnement existant (pro <-> business) ────
+      // Ajuste les crédits par DELTA. L'abonnement INITIAL (depuis 'free') est
+      // géré par checkout.session.completed + invoice.paid → ignoré ici pour
+      // éviter tout double-crédit.
+      case "customer.subscription.updated": {
+        const subscription = event.data.object as import("stripe").Stripe.Subscription;
+        const customerId =
+          typeof subscription.customer === "string"
+            ? subscription.customer
+            : subscription.customer?.id;
+
+        if (!customerId) break;
+
+        // Nouveau plan déduit du price de l'abonnement
+        const priceId = subscription.items.data[0]?.price?.id;
+        const newPlan = priceId ? getPlanFromPriceId(priceId) : null;
+        if (!newPlan) break;
+
+        const { data: profile } = await admin
+          .from("profiles")
+          .select("id, subscription_plan, credits_remaining")
+          .eq("stripe_customer_id", customerId)
+          .single();
+
+        if (!profile) {
+          console.error("[webhook/stripe] subscription.updated: profil non trouvé pour customer", customerId);
+          break;
+        }
+
+        const oldPlan = profile.subscription_plan as PlanId;
+
+        // Ne traiter QUE les vrais changements ENTRE plans payants (pro <-> business).
+        // free/starter/null = abonnement initial → déjà géré ailleurs (pas de delta ici).
+        if (oldPlan !== "pro" && oldPlan !== "business") break;
+        // Pas de changement de plan (renouvellement, MAJ carte, cancel_at_period_end, event redondant)
+        if (oldPlan === newPlan) break;
+
+        const delta = PLAN_CREDITS[newPlan] - PLAN_CREDITS[oldPlan];
+        const creditsToAdd = delta > 0 ? delta : 0; // downgrade : on ne retire rien
+        const newBalance = profile.credits_remaining + creditsToAdd;
+
+        // UPDATE conditionnel sur l'ancien plan : atomique (row-level) contre deux
+        // events subscription.updated concurrents — le 2e voit subscription_plan
+        // != oldPlan, ne touche aucune ligne, et ne re-crédite donc pas.
+        const { data: applied } = await admin
+          .from("profiles")
+          .update({ subscription_plan: newPlan, credits_remaining: newBalance })
+          .eq("id", profile.id)
+          .eq("subscription_plan", oldPlan)
+          .select("id");
+
+        if (!applied || applied.length === 0) break;
+
+        if (creditsToAdd > 0) {
+          await admin.from("credits_transactions").insert({
+            user_id: profile.id,
+            type: "purchase",
+            amount: creditsToAdd,
+            balance_after: newBalance,
+            description: `Changement de plan ${oldPlan} → ${newPlan} (+${creditsToAdd} crédits)`,
+          });
+        }
+        break;
+      }
+
       default:
         break;
     }
