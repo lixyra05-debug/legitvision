@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useCallback, type Dispatch, type SetStateAction } from "react";
-import { Camera, X, AlertCircle, Check } from "lucide-react";
+import { Camera, X, AlertCircle, Check, Loader2 } from "lucide-react";
 import type { PhotoSlot } from "@/lib/types";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { translatePhotoLabel } from "@/lib/i18n/photo-labels";
@@ -9,6 +9,22 @@ import { translatePhotoLabel } from "@/lib/i18n/photo-labels";
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"];
 const MAX_SIZE_MB = 10;
 const MIN_DIMENSION = 800;
+
+/** iOS exporte du HEIC/HEIF ; file.type est parfois vide → on teste aussi l'extension. */
+function isHeic(file: File): boolean {
+  const type = (file.type ?? "").toLowerCase();
+  if (type === "image/heic" || type === "image/heif") return true;
+  return /\.(heic|heif)$/i.test(file.name);
+}
+
+/** Convertit un HEIC/HEIF en JPEG côté client. Import dynamique (lib client-only → pas de SSR). */
+async function convertHeicToJpeg(file: File): Promise<File> {
+  const heic2any = (await import("heic2any")).default;
+  const out = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 });
+  const jpegBlob = Array.isArray(out) ? out[0] : out;
+  const base = file.name.replace(/\.[^./\\]+$/, "") || "photo";
+  return new File([jpegBlob], `${base}.jpg`, { type: "image/jpeg" });
+}
 
 interface PhotoFile {
   file: File;
@@ -83,6 +99,7 @@ export function PhotoUploader({
 }: PhotoUploaderProps) {
   const { locale, t } = useTranslation();
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [converting, setConverting] = useState<Record<string, boolean>>({});
   const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   const requiredCount = protocol.filter((s) => s.required).length;
@@ -109,7 +126,39 @@ export function PhotoUploader({
 
   const handleFileSelect = useCallback(
     async (slotType: string, file: File) => {
-      const result = await validateImage(file);
+      let workingFile = file;
+
+      // iPhone : convertir HEIC/HEIF → JPEG AVANT preview / validation / upload.
+      if (isHeic(file)) {
+        setConverting((prev) => ({ ...prev, [slotType]: true }));
+        setErrors((prev) => {
+          const next = { ...prev };
+          delete next[slotType];
+          return next;
+        });
+        try {
+          workingFile = await convertHeicToJpeg(file);
+        } catch (err) {
+          console.error("[PhotoUploader] Conversion HEIC échouée:", err);
+          setConverting((prev) => {
+            const next = { ...prev };
+            delete next[slotType];
+            return next;
+          });
+          setErrors((prev) => ({
+            ...prev,
+            [slotType]: t("check.photoErrorConvert"),
+          }));
+          return;
+        }
+        setConverting((prev) => {
+          const next = { ...prev };
+          delete next[slotType];
+          return next;
+        });
+      }
+
+      const result = await validateImage(workingFile);
 
       if (!result.valid && result.errorKey) {
         setErrors((prev) => ({
@@ -125,7 +174,7 @@ export function PhotoUploader({
         return next;
       });
 
-      const preview = URL.createObjectURL(file);
+      const preview = URL.createObjectURL(workingFile);
       onPhotosChange((prev) => {
         const existing = prev[slotType];
         if (existing) {
@@ -134,7 +183,7 @@ export function PhotoUploader({
         return {
           ...prev,
           [slotType]: {
-            file,
+            file: workingFile,
             preview,
             width: result.width,
             height: result.height,
@@ -142,7 +191,7 @@ export function PhotoUploader({
         };
       });
     },
-    [onPhotosChange]
+    [onPhotosChange, t, buildErrorMessage]
   );
 
   const handleRemove = useCallback(
@@ -188,13 +237,15 @@ export function PhotoUploader({
         {protocol.map((slot) => {
           const photo = photos[slot.name];
           const error = errors[slot.name];
+          const isConverting = !!converting[slot.name];
 
           return (
             <div key={slot.name} className="flex flex-col gap-2">
               <button
                 type="button"
+                disabled={isConverting}
                 onClick={() => inputRefs.current[slot.name]?.click()}
-                className={`relative aspect-square overflow-hidden rounded-xl border-2 border-dashed transition-colors ${
+                className={`relative aspect-square overflow-hidden rounded-xl border-2 border-dashed transition-colors disabled:cursor-wait ${
                   photo
                     ? "border-emerald-500/30"
                     : error
@@ -202,7 +253,14 @@ export function PhotoUploader({
                       : "border-white/10 hover:border-white/20"
                 }`}
               >
-                {photo ? (
+                {isConverting ? (
+                  <div className="flex size-full flex-col items-center justify-center gap-2 p-3">
+                    <Loader2 className="size-7 animate-spin text-emerald-500" />
+                    <span className="text-center text-xs text-muted-foreground">
+                      {t("check.photoConverting")}
+                    </span>
+                  </div>
+                ) : photo ? (
                   <>
                     {/* eslint-disable-next-line @next/next/no-img-element -- blob:// preview from URL.createObjectURL, next/image cannot optimize */}
                     <img
@@ -255,7 +313,7 @@ export function PhotoUploader({
                   inputRefs.current[slot.name] = el;
                 }}
                 type="file"
-                accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
+                accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.heic,.heif"
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0];

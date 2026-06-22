@@ -276,6 +276,9 @@ export const translations = {
       photoErrorMin: "Résolution min",
       photoErrorReceived: "reçu",
       photoErrorRead: "Impossible de lire l'image",
+      photoConverting: "Conversion de l'image…",
+      photoErrorConvert:
+        "Échec de la conversion de la photo HEIC. Réessayez ou choisissez une photo JPEG/PNG.",
       analyze: "Lancer l'analyse",
       analyzing: "Analyse en cours…",
       uploading: "Upload en cours…",
@@ -742,6 +745,9 @@ export const translations = {
       photoErrorMin: "Min resolution",
       photoErrorReceived: "got",
       photoErrorRead: "Cannot read the image",
+      photoConverting: "Converting image…",
+      photoErrorConvert:
+        "HEIC photo conversion failed. Try again or choose a JPEG/PNG photo.",
       analyze: "Start analysis",
       analyzing: "Analyzing…",
       uploading: "Uploading…",
