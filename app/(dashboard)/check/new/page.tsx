@@ -116,11 +116,16 @@ export default function NewCheckPage() {
       // Fetch brand by name (case-insensitive), filtered by category if provided.
       // Category filter is required when multiple DB entries share the same brand name
       // (multi-category brands like Balenciaga, Dior, Gucci, etc.).
-      const { data: brandData } = await (categoryParam
+      // .limit(1) au lieu de .maybeSingle() : les marques multi-catégories (Louis
+      // Vuitton, Hermès, Dior, Gucci, Prada, Chanel…) ont plusieurs lignes en base.
+      // Sans category, maybeSingle() lèverait une erreur "multiple rows" et casserait
+      // la pré-sélection. On prend la première ligne (la category est ajustable ensuite).
+      const { data: brandRows } = await (categoryParam
         ? supabase.from("brands").select("*").ilike("name", brandParam!).eq("is_active", true).eq("category", categoryParam)
         : supabase.from("brands").select("*").ilike("name", brandParam!).eq("is_active", true)
-      ).maybeSingle();
+      ).limit(1);
 
+      const brandData = brandRows?.[0];
       if (!brandData) return;
 
       setCategory(brandData.category as Category);
@@ -128,14 +133,15 @@ export default function NewCheckPage() {
 
       if (modelParam) {
         // Fetch model by name within this brand
-        const { data: modelData } = await supabase
+        const { data: modelRows } = await supabase
           .from("models")
           .select("*")
           .eq("brand_id", brandData.id)
           .ilike("name", modelParam!)
           .eq("is_active", true)
-          .maybeSingle();
+          .limit(1);
 
+        const modelData = modelRows?.[0];
         if (modelData) {
           setSelectedModel(modelData as Model);
           setStep(3); // Brand + model set → jump to variant/collab step

@@ -39,7 +39,7 @@ export function buildGuidePageData(
   const relatedPages = buildRelatedPages(signal);
   const trackingRef = `guide-${brand.slug}-${signal.slug}`;
   const ogImage = `/images/og/guide-${brand.slug}-${signal.slug}.png`;
-  const checkUrl = `/check/new?brand=${brand.slug}&source=seo&ref=${trackingRef}`;
+  const checkUrl = `/check/new?brand=${encodeURIComponent(brand.name)}&source=seo&ref=${trackingRef}`;
 
   return {
     brand,
