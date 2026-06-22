@@ -40,7 +40,7 @@ export default async function CheckoutPage({
   const admin = createAdminClient();
   const { data: profile } = await admin
     .from("profiles")
-    .select("stripe_customer_id, subscription_plan")
+    .select("stripe_customer_id, subscription_plan, stripe_subscription_id")
     .eq("id", user.id)
     .single();
 
@@ -53,6 +53,54 @@ export default async function CheckoutPage({
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
     redirect(buildErrorRedirect("STRIPE_SECRET_KEY non défini sur le serveur"));
+  }
+
+  // ── 5b. Changement de plan avec abonnement DÉJÀ actif (pro/business) ──────
+  // CAS B : ne PAS créer un 2e Checkout (= 2e abonnement = double facturation).
+  // On modifie l'abonnement existant en place ; Stripe gère le prorata et
+  // réutilise la carte enregistrée. redirect() reste HORS try/catch.
+  let planChangeDone = false;
+  let planChangeError: string | null = null;
+
+  if (planId !== "single" && profile?.stripe_subscription_id) {
+    try {
+      const sub = await stripe.subscriptions.retrieve(
+        profile.stripe_subscription_id
+      );
+      const modifiable = ["active", "trialing", "past_due", "unpaid"].includes(
+        sub.status
+      );
+      if (modifiable) {
+        const currentItemId = sub.items.data[0]?.id;
+        if (!currentItemId) throw new Error("Abonnement sans item facturable.");
+        await stripe.subscriptions.update(profile.stripe_subscription_id, {
+          items: [{ id: currentItemId, price: getPriceId(planId) }],
+          proration_behavior: "create_prorations",
+        });
+        await admin
+          .from("profiles")
+          .update({ subscription_plan: planId })
+          .eq("id", user.id);
+        planChangeDone = true;
+      }
+      // Abo non modifiable (canceled/incomplete) → on laisse le CAS A créer un nouvel abo.
+    } catch (err) {
+      // ID d'abonnement périmé (resource_missing) → fallback CAS A (nouveau Checkout),
+      // pas d'erreur bloquante. Toute autre erreur → message clair à l'utilisateur.
+      const code = (err as { code?: string }).code;
+      if (code !== "resource_missing") {
+        planChangeError = err instanceof Error ? err.message : String(err);
+        console.error("[checkout] plan change error:", planChangeError);
+      }
+    }
+  }
+
+  // Redirections du CAS B — HORS try/catch (redirect() lève NEXT_REDIRECT).
+  if (planChangeError) {
+    redirect(buildErrorRedirect(planChangeError));
+  }
+  if (planChangeDone) {
+    redirect("/dashboard?plan_changed=1");
   }
 
   // ── 6. Create Stripe session ──────────────────────────────────────────────

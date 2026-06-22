@@ -34,7 +34,7 @@ export const metadata = {
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: { session_id?: string };
+  searchParams: { session_id?: string; plan_changed?: string };
 }) {
   const supabase = createClient();
   const {
@@ -112,6 +112,7 @@ export default async function DashboardPage({
       <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
         {/* Bandeau succès Stripe */}
         {searchParams.session_id && <SuccessBanner />}
+        {searchParams.plan_changed && <SuccessBanner variant="planChange" />}
 
         {/* Header */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

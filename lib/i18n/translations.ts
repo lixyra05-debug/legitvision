@@ -401,6 +401,9 @@ export const translations = {
     successBanner: {
       title: "Abonnement activé avec succès !",
       desc: "Vos crédits ont été crédités. Profitez de LegitVision Pro.",
+      planChangeTitle: "Plan mis à jour avec succès !",
+      planChangeDesc:
+        "Votre abonnement a été modifié. Stripe applique le prorata automatiquement.",
     },
     footer: {
       legal: "Mentions légales",
@@ -868,6 +871,9 @@ export const translations = {
     successBanner: {
       title: "Subscription activated successfully!",
       desc: "Your credits have been added. Enjoy LegitVision Pro.",
+      planChangeTitle: "Plan updated successfully!",
+      planChangeDesc:
+        "Your subscription has been changed. Stripe applies proration automatically.",
     },
     footer: {
       legal: "Legal notice",

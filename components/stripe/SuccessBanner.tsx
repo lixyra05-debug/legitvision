@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { CheckCircle2, X } from "lucide-react";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
-export function SuccessBanner() {
+export function SuccessBanner({
+  variant = "purchase",
+}: {
+  variant?: "purchase" | "planChange";
+}) {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(true);
 
@@ -12,6 +16,7 @@ export function SuccessBanner() {
   useEffect(() => {
     const url = new URL(window.location.href);
     url.searchParams.delete("session_id");
+    url.searchParams.delete("plan_changed");
     window.history.replaceState({}, "", url.toString());
   }, []);
 
@@ -23,10 +28,10 @@ export function SuccessBanner() {
         <CheckCircle2 className="size-5 shrink-0 text-emerald-500" />
         <div>
           <p className="text-sm font-semibold text-emerald-400">
-            {t("successBanner.title")}
+            {t(variant === "planChange" ? "successBanner.planChangeTitle" : "successBanner.title")}
           </p>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            {t("successBanner.desc")}
+            {t(variant === "planChange" ? "successBanner.planChangeDesc" : "successBanner.desc")}
           </p>
         </div>
       </div>
