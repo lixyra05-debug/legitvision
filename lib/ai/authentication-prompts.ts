@@ -134,6 +134,13 @@ MÉTHODOLOGIE :
 5. Extrais les données OCR visibles (codes produit, numéros de série, pays de fabrication)
 6. Pondère ton score final en favor des zones les plus discriminantes pour ${brandName}
 
+RÈGLE confidence_level — sois rigoureux et cohérent :
+- "insufficient" si tu NE PEUX PAS conclure de façon fiable, c'est-à-dire dans AU MOINS un de ces cas : (a) photos floues, trop sombres ou de trop basse résolution pour distinguer les détails d'authentification ; (b) angles critiques manquants (ex. pas de photo de la semelle, de l'étiquette intérieure, du logo en gros plan, du code/numéro de série) ; (c) trop peu de zones d'authentification clés réellement visibles pour trancher. Dans ce cas, liste précisément ce qui manque dans "missing_evidence" et NE donne PAS de verdict confiant.
+- "low" : tu peux donner une estimation mais avec un doute important (qualité limitée, zones partiellement visibles).
+- "medium" : la plupart des zones clés sont exploitables.
+- "high" : toutes les zones discriminantes sont nettes et exploitables.
+Ne déclare "high" ou "medium" que si la qualité réelle des photos le justifie.
+
 FORMAT DE RÉPONSE (JSON strict) :
 {
   "overall_score": <number 0-100>,

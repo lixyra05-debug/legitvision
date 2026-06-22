@@ -330,6 +330,14 @@ export const translations = {
       ocrTitle: "Textes détectés (OCR)",
       recommendationsTitle: "Recommandations",
       missingEvidenceTitle: "Éléments manquants",
+      insufficientTitle: "Analyse non concluante — photos insuffisantes",
+      insufficientDesc:
+        "Les photos fournies ne permettent pas d'authentifier l'article de façon fiable (qualité, cadrage ou angles manquants).",
+      insufficientNoCredit: "Aucun crédit n'a été débité pour cette analyse.",
+      insufficientCta: "Reprendre de meilleures photos",
+      lowConfidenceWarnTitle: "Confiance faible — résultat indicatif",
+      lowConfidenceWarnDesc:
+        "Ce résultat est donné à titre indicatif : la qualité ou le nombre de photos limite la fiabilité de l'analyse.",
       analystSummary: "Synthèse de l'expert IA",
       summary: "Résumé",
       sizeLabelText: "Étiquette taille",
@@ -800,6 +808,14 @@ export const translations = {
       ocrTitle: "Detected text (OCR)",
       recommendationsTitle: "Recommendations",
       missingEvidenceTitle: "Missing elements",
+      insufficientTitle: "Inconclusive analysis — insufficient photos",
+      insufficientDesc:
+        "The photos provided do not allow a reliable authentication of the item (quality, framing or missing angles).",
+      insufficientNoCredit: "No credit was charged for this analysis.",
+      insufficientCta: "Retake better photos",
+      lowConfidenceWarnTitle: "Low confidence — indicative result",
+      lowConfidenceWarnDesc:
+        "This result is indicative only: the quality or number of photos limits the reliability of the analysis.",
       analystSummary: "AI expert summary",
       summary: "Summary",
       sizeLabelText: "Size label",

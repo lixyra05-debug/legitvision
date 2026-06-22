@@ -206,9 +206,12 @@ export async function POST(request: NextRequest) {
     });
 
     // 11. Determine if expert review is needed
+    // P1-3 : "insufficient" ne déclenche PAS de revue expert (un expert ne corrige
+    // pas des photos illisibles) → status restera "completed", et crédit non débité.
     const needsExpertReview =
-      (result.overallScore >= 40 && result.overallScore <= 60) ||
-      result.confidence === "low";
+      !result.insufficient &&
+      ((result.overallScore >= 40 && result.overallScore <= 60) ||
+        result.confidence === "low");
 
     const finalStatus = needsExpertReview ? "expert_review" : "completed";
 
@@ -231,19 +234,23 @@ export async function POST(request: NextRequest) {
     //     une seule transaction. Si crédits < 1 au moment du débit (race),
     //     l'erreur est loggée mais l'analyse réussit (l'user a payé Claude
     //     côté coût mais pas côté crédit — situation rare grâce aux guards).
-    const { error: decrementError } = await admin.rpc(
-      "decrement_credits_atomic",
-      {
-        p_user_id: user.id,
-        p_analysis_id: analysisId,
-        p_description: `Analyse ${analysisId}`,
-      }
-    );
-    if (decrementError) {
-      console.error(
-        "[analyze] decrement_credits_atomic failed (race condition or insufficient credits):",
-        decrementError.message
+    // P1-3 : si l'IA juge les photos insuffisantes (résultat non exploitable),
+    // on NE débite PAS le crédit — le client n'a pas eu de résultat utilisable.
+    if (!result.insufficient) {
+      const { error: decrementError } = await admin.rpc(
+        "decrement_credits_atomic",
+        {
+          p_user_id: user.id,
+          p_analysis_id: analysisId,
+          p_description: `Analyse ${analysisId}`,
+        }
       );
+      if (decrementError) {
+        console.error(
+          "[analyze] decrement_credits_atomic failed (race condition or insufficient credits):",
+          decrementError.message
+        );
+      }
     }
 
     return NextResponse.json({
@@ -253,6 +260,7 @@ export async function POST(request: NextRequest) {
       confidence: result.confidence,
       verdict: result.verdict,
       status: finalStatus,
+      insufficient: result.insufficient,
     });
   } catch (error) {
     console.error("[analyze] Error during analysis:", error);

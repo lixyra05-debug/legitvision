@@ -37,6 +37,7 @@ export interface ReportData {
   status: string;
   verdict: Verdict | null;
   confidence: Confidence | null;
+  aiConfidence: "high" | "medium" | "low" | "insufficient" | null;
   overallScore: number | null;
   subScores: Record<string, number> | null;
   findings: Finding[] | null;
@@ -202,6 +203,9 @@ export function ReportView({ data }: { data: ReportData }) {
   const isComplete =
     data.status === "completed" || data.status === "expert_review";
 
+  // P1-3 : l'IA a jugé les photos insuffisantes (lu via ai_raw_response.confidence_level)
+  const isInsufficient = data.aiConfidence === "insufficient";
+
   const { t } = useTranslation();
   const verdictCfg = data.verdict ? VERDICT_VISUAL[data.verdict] : null;
   const verdictLabel = data.verdict
@@ -323,7 +327,7 @@ export function ReportView({ data }: { data: ReportData }) {
         )}
 
         {/* ── EXPERT REVIEW NOTICE ── */}
-        {data.status === "expert_review" && (
+        {data.status === "expert_review" && data.confidence !== "low" && (
           <div className="flex items-start gap-3 rounded-xl border border-yellow-500/20 bg-yellow-500/8 p-4">
             <AlertCircle className="mt-0.5 size-5 shrink-0 text-yellow-500" />
             <div>
@@ -337,8 +341,64 @@ export function ReportView({ data }: { data: ReportData }) {
           </div>
         )}
 
+        {/* ── INSUFFICIENT — photos insuffisantes (P1-3) ── */}
+        {isComplete && isInsufficient && (
+          <div className="rounded-2xl border border-orange-500/30 bg-orange-500/8 p-6 text-center sm:p-8">
+            <ShieldAlert className="mx-auto size-10 text-orange-400" />
+            <p className="mt-3 font-heading text-lg font-semibold text-orange-300">
+              {t("results.insufficientTitle")}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {t("results.insufficientDesc")}
+            </p>
+            <p className="mt-2 text-xs text-muted-foreground/80">
+              {t("results.insufficientNoCredit")}
+            </p>
+            {missingEvidence.length > 0 && (
+              <div className="mt-5 rounded-xl border border-orange-500/20 bg-orange-500/5 p-4 text-left">
+                <p className="mb-2 text-sm font-semibold text-orange-300">
+                  {t("results.missingEvidenceTitle")}
+                </p>
+                <ul className="space-y-2">
+                  {missingEvidence.map((item, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-2 text-sm text-muted-foreground"
+                    >
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-orange-500" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <Link
+              href="/check/new"
+              className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-emerald-400"
+            >
+              <Plus className="size-4" />
+              {t("results.insufficientCta")}
+            </Link>
+          </div>
+        )}
+
+        {/* ── LOW CONFIDENCE WARNING (P1-3) ── */}
+        {isComplete && !isInsufficient && data.confidence === "low" && (
+          <div className="flex items-start gap-3 rounded-xl border border-orange-500/20 bg-orange-500/8 p-4">
+            <AlertCircle className="mt-0.5 size-5 shrink-0 text-orange-400" />
+            <div>
+              <p className="text-sm font-semibold text-orange-300">
+                {t("results.lowConfidenceWarnTitle")}
+              </p>
+              <p className="mt-0.5 text-sm text-muted-foreground">
+                {t("results.lowConfidenceWarnDesc")}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* ── MAIN REPORT (completed or expert_review) ── */}
-        {isComplete && data.overallScore !== null && (
+        {isComplete && !isInsufficient && data.overallScore !== null && (
           <>
             {/* Score + Confidence */}
             <div className="rounded-2xl border border-white/5 bg-card p-6">

@@ -3,12 +3,22 @@ import type { AuthenticationPoint, Confidence, Verdict } from "@/lib/types";
 interface ScoringInput {
   subScores: Record<string, number>;
   authenticationPoints: AuthenticationPoint[];
+  /** Confiance déclarée par l'IA (P1-3). Peut valoir "insufficient". */
+  aiConfidenceLevel?: "high" | "medium" | "low" | "insufficient";
 }
 
 interface ScoringResult {
   overallScore: number;
   confidence: Confidence;
   verdict: Verdict;
+  /** true si l'IA juge les photos insuffisantes pour conclure (P1-3). */
+  insufficient: boolean;
+}
+
+// Ordre de prudence : low < medium < high. On retient toujours la plus prudente.
+const CONFIDENCE_RANK: Record<Confidence, number> = { low: 1, medium: 2, high: 3 };
+function moreCautious(a: Confidence, b: Confidence): Confidence {
+  return CONFIDENCE_RANK[a] <= CONFIDENCE_RANK[b] ? a : b;
 }
 
 /**
@@ -18,6 +28,7 @@ interface ScoringResult {
 export function calculateWeightedScore({
   subScores,
   authenticationPoints,
+  aiConfidenceLevel,
 }: ScoringInput): ScoringResult {
   let weightedSum = 0;
   let totalWeight = 0;
@@ -32,37 +43,53 @@ export function calculateWeightedScore({
     }
   }
 
-  // If no zones matched, fall back to simple average of all sub_scores
+  // ── Score + confiance/verdict MÉCANIQUES (logique inchangée) ──
+  let overallScore: number;
+  let confidence: Confidence;
+  let verdict: Verdict;
+
   if (totalWeight === 0) {
+    // Aucune zone pondérée : fallback sur la moyenne simple des sub_scores
     const values = Object.values(subScores).filter(
       (v) => v != null && !isNaN(v)
     );
     if (values.length === 0) {
-      return {
-        overallScore: 0,
-        confidence: "low",
-        verdict: "inconclusive",
-      };
+      overallScore = 0;
+      confidence = "low";
+      verdict = "inconclusive";
+    } else {
+      overallScore = Math.round(
+        values.reduce((a, b) => a + b, 0) / values.length
+      );
+      confidence = "low";
+      verdict = getVerdict(overallScore);
     }
-    const avg = values.reduce((a, b) => a + b, 0) / values.length;
-    return {
-      overallScore: Math.round(avg),
-      confidence: "low",
-      verdict: getVerdict(Math.round(avg)),
-    };
+  } else {
+    overallScore = Math.round(weightedSum / totalWeight);
+    confidence = getConfidence(matchedZones / authenticationPoints.length);
+    verdict = getVerdict(overallScore);
   }
 
-  // Normalize: if total weight doesn't add up to 1 (some zones missing),
-  // divide by actual total weight
-  const overallScore = Math.round(weightedSum / totalWeight);
+  // ── Modération par la confiance déclarée par l'IA (P1-3) ──
+  // "insufficient" : photos insuffisantes → jamais de verdict confiant.
+  if (aiConfidenceLevel === "insufficient") {
+    return {
+      overallScore,
+      confidence: "low", // DB-valide ; le panneau "insufficient" est piloté côté UI via ai_raw_response.confidence_level
+      verdict: "inconclusive", // toujours inconclusive sur photos insuffisantes
+      insufficient: true,
+    };
+  }
+  // Sinon : la confiance finale est la PLUS PRUDENTE entre l'IA et le mécanique.
+  if (
+    aiConfidenceLevel === "high" ||
+    aiConfidenceLevel === "medium" ||
+    aiConfidenceLevel === "low"
+  ) {
+    confidence = moreCautious(confidence, aiConfidenceLevel);
+  }
 
-  // Confidence based on evidence ratio (matched zones / total zones)
-  const evidenceRatio = matchedZones / authenticationPoints.length;
-  const confidence = getConfidence(evidenceRatio);
-
-  const verdict = getVerdict(overallScore);
-
-  return { overallScore, confidence, verdict };
+  return { overallScore, confidence, verdict, insufficient: false };
 }
 
 function getConfidence(evidenceRatio: number): Confidence {

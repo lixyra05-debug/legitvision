@@ -9,6 +9,7 @@ interface AIRawResponse {
   missing_evidence?: string[];
   ocr_extracted?: Record<string, string>;
   recommendations?: string[];
+  confidence_level?: "high" | "medium" | "low" | "insufficient";
 }
 
 interface PageProps {
@@ -72,6 +73,7 @@ export default async function CheckReportPage({ params }: PageProps) {
     missingEvidence: raw?.missing_evidence ?? null,
     ocrExtracted: raw?.ocr_extracted ?? null,
     recommendations: raw?.recommendations ?? null,
+    aiConfidence: raw?.confidence_level ?? null,
     createdAt: row.created_at as string,
   };
 

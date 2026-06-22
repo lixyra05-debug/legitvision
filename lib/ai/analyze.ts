@@ -38,6 +38,7 @@ export interface AnalysisOutput {
   overallScore: number;
   confidence: Confidence;
   verdict: Verdict;
+  insufficient: boolean;
   subScores: Record<string, number>;
   findings: Array<{
     zone: string;
@@ -206,16 +207,18 @@ export async function runAnalysis({
     );
   }
 
-  // Calculate weighted score using model's authentication_points
-  const { overallScore, confidence, verdict } = calculateWeightedScore({
+  // Calculate weighted score using model's authentication_points + AI confidence (P1-3)
+  const { overallScore, confidence, verdict, insufficient } = calculateWeightedScore({
     subScores: aiResult.sub_scores ?? {},
     authenticationPoints,
+    aiConfidenceLevel: aiResult.confidence_level,
   });
 
   return {
     overallScore,
     confidence,
     verdict,
+    insufficient,
     subScores: aiResult.sub_scores ?? {},
     findings: aiResult.findings ?? [],
     aiRawResponse: aiResult,
