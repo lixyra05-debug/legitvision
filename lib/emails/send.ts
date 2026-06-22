@@ -1,3 +1,5 @@
+import { Resend } from "resend";
+
 type SendArgs = {
   to: string;
   subject: string;
@@ -7,26 +9,59 @@ type SendArgs = {
 
 type SendResult = { ok: boolean; id?: string; error?: string };
 
+// Domaine de TEST Resend : en mode test, les emails ne sont délivrés QU'À
+// l'adresse email du compte Resend. Un vrai domaine vérifié sera branché plus tard.
+const FROM = "LegitVision <onboarding@resend.dev>";
+
 /**
- * Envoi d'email transactionnel. STUB actuel : log console + return ok.
+ * Envoi d'un email transactionnel via Resend.
  *
- * Pour brancher Resend : importer @resend/node, lire process.env.RESEND_API_KEY,
- * remplacer le stub par resend.emails.send({ from, to, subject, html }).
+ * Contrat critique — un email ne doit JAMAIS bloquer un paiement / une analyse :
+ *  - Ne throw JAMAIS : toute erreur (réseau, API, clé absente) est attrapée,
+ *    loggée, et renvoyée sous forme { ok: false }. L'appelant continue normalement.
+ *  - Si RESEND_API_KEY est absent (dev local sans clé) : warning + skip propre,
+ *    aucun crash.
+ *  - Le client Resend est instancié À L'EXÉCUTION (après le check de la clé),
+ *    jamais au build / à l'import du module.
+ *
  * Le reste de l'app ne doit jamais importer directement un provider ;
  * toute modif du provider passe par ce fichier.
  */
 export async function sendTransactionalEmail(
   args: SendArgs,
 ): Promise<SendResult> {
-  if (!process.env.EMAIL_PROVIDER) {
-    console.info("[emails] stub send", {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    console.warn("[emails] RESEND_API_KEY absent — envoi ignoré", {
       to: args.to,
       subject: args.subject,
-      htmlBytes: args.html.length,
     });
-    return { ok: true };
+    return { ok: false, error: "RESEND_API_KEY manquant" };
   }
 
-  // TODO: brancher Resend/Brevo quand EMAIL_PROVIDER est défini.
-  return { ok: false, error: "Provider email non implémenté" };
+  try {
+    const resend = new Resend(apiKey);
+    const { data, error } = await resend.emails.send({
+      from: FROM,
+      to: args.to,
+      subject: args.subject,
+      html: args.html,
+      replyTo: args.replyTo,
+    });
+
+    if (error) {
+      console.error("[emails] Resend a renvoyé une erreur:", error);
+      return { ok: false, error: error.message };
+    }
+
+    return { ok: true, id: data?.id };
+  } catch (err) {
+    // Filet de sécurité : exception inattendue (réseau, SDK). Jamais de throw qui remonte.
+    console.error("[emails] Échec d'envoi (exception):", err);
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Erreur inconnue",
+    };
+  }
 }
