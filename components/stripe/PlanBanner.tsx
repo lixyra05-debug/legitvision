@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Zap, Crown, Infinity } from "lucide-react";
 import type { PlanId } from "@/lib/stripe/config";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
@@ -49,13 +48,13 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
             </p>
           </div>
         </div>
-        <Link
+        <a
           href="/checkout?plan=business"
           className="flex items-center gap-1.5 rounded-lg bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 transition-colors hover:bg-emerald-500/20"
         >
           <Crown className="size-3" />
           {t("planBanner.upgradeToBusiness")}
-        </Link>
+        </a>
       </div>
     );
   }
@@ -69,20 +68,20 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
         </p>
       </div>
       <div className="flex gap-2">
-        <Link
+        <a
           href="/checkout?plan=pro"
           className="flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-400 transition-colors hover:bg-emerald-500/20"
         >
           <Zap className="size-3" />
           {t("planBanner.proCta")}
-        </Link>
-        <Link
+        </a>
+        <a
           href="/checkout?plan=business"
           className="flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-white/20 hover:text-foreground"
         >
           <Crown className="size-3" />
           {t("planBanner.businessCta")}
-        </Link>
+        </a>
       </div>
     </div>
   );

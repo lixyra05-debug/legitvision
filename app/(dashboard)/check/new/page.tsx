@@ -454,21 +454,21 @@ export default function NewCheckPage() {
             </div>
             <div className="relative mt-6 space-y-3">
               <button
-                onClick={() => router.push("/checkout?plan=single")}
+                onClick={() => { window.location.href = "/checkout?plan=single"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-black shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] hover:bg-emerald-400 active:scale-100"
               >
                 <span>{t("pricing.single")}</span>
                 <span className="font-heading text-base">3,99 €</span>
               </button>
               <button
-                onClick={() => router.push("/checkout?plan=pro")}
+                onClick={() => { window.location.href = "/checkout?plan=pro"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
               >
                 <span>{t("pricing.proDesc")}</span>
                 <span className="font-heading text-base">19,99 €{t("check.perMonth")}</span>
               </button>
               <button
-                onClick={() => router.push("/checkout?plan=business")}
+                onClick={() => { window.location.href = "/checkout?plan=business"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
               >
                 <span>{t("pricing.premiumDesc")}</span>
@@ -858,21 +858,21 @@ export default function NewCheckPage() {
 
             <div className="relative mt-6 space-y-3">
               <button
-                onClick={() => router.push("/checkout?plan=single")}
+                onClick={() => { window.location.href = "/checkout?plan=single"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-black shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] hover:bg-emerald-400 active:scale-100"
               >
                 <span>{t("pricing.single")}</span>
                 <span className="font-heading text-base">3,99 €</span>
               </button>
               <button
-                onClick={() => router.push("/checkout?plan=pro")}
+                onClick={() => { window.location.href = "/checkout?plan=pro"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
               >
                 <span>{t("pricing.proDesc")}</span>
                 <span className="font-heading text-base">19,99 €{t("check.perMonth")}</span>
               </button>
               <button
-                onClick={() => router.push("/checkout?plan=business")}
+                onClick={() => { window.location.href = "/checkout?plan=business"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
               >
                 <span>{t("pricing.premiumDesc")}</span>
