@@ -137,7 +137,7 @@ export default function GuideHubPage() {
                             alt={brand.name}
                             fill
                             className="object-contain p-1.5"
-                            unoptimized
+                            sizes="48px"
                           />
                         </div>
                         <div className="min-w-0">

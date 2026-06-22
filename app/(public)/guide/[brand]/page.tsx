@@ -84,7 +84,7 @@ export default function BrandGuideHub({ params }: Props) {
                 alt={brand.name}
                 fill
                 className="object-contain p-1.5"
-                unoptimized
+                sizes="64px"
               />
             </div>
             <div>

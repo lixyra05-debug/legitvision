@@ -122,7 +122,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
                 alt={data.brand.name}
                 fill
                 className="object-contain p-1.5"
-                unoptimized
+                sizes="56px"
               />
             </div>
             <div className="flex flex-wrap gap-2">

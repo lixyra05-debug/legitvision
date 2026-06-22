@@ -137,7 +137,6 @@ export default function LandingPage() {
               height={64}
               className="h-16 w-auto"
               priority
-              unoptimized
             />
           </Link>
           <div className="flex items-center gap-5">
@@ -355,6 +354,8 @@ export default function LandingPage() {
                 muted
                 loop
                 playsInline
+                preload="none"
+                poster="/images/hero-poster.webp"
                 className="w-full max-w-[300px] rounded-2xl border border-white/5 shadow-2xl shadow-emerald-500/10"
               >
                 <source src="/videos/hero-video.mp4" type="video/mp4" />
@@ -748,7 +749,6 @@ export default function LandingPage() {
                 width={90}
                 height={24}
                 className="h-6 w-auto"
-                unoptimized
               />
               <span className="text-sm" style={{ color: "var(--text-tertiary)" }}>
                 © {new Date().getFullYear()}

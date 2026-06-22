@@ -17,21 +17,21 @@ const CATEGORIES: {
     labelKey: "check.sneakers",
     descKey: "check.sneakersDesc",
     icon: Footprints,
-    image: "/images/sneakers.png",
+    image: "/images/sneakers.webp",
   },
   {
     value: "bag",
     labelKey: "check.bags",
     descKey: "check.bagsDesc",
     icon: ShoppingBag,
-    image: "/images/bags.png",
+    image: "/images/bags.webp",
   },
   {
     value: "clothing",
     labelKey: "check.clothing",
     descKey: "check.clothingDesc",
     icon: Shirt,
-    image: "/images/clothing.png",
+    image: "/images/clothing.webp",
   },
 ];
 
@@ -66,7 +66,6 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
                 src={cat.image}
                 alt={t(cat.labelKey)}
                 fill
-                unoptimized
                 sizes="(max-width: 640px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />

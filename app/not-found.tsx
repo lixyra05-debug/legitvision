@@ -15,7 +15,6 @@ export default function NotFound() {
         height={48}
         className="h-12 w-auto"
         priority
-        unoptimized
       />
       <div className="text-center">
         <h1 className="font-heading text-6xl font-bold text-emerald-500">404</h1>

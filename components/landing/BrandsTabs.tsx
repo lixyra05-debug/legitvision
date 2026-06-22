@@ -95,9 +95,9 @@ const BRANDS: Record<Category, BrandEntry[]> = {
 // ── Category banner images ───────────────────────────────────────────────────
 
 const CATEGORY_BANNER: Record<Category, string> = {
-  sneakers: "/images/sneakers.png",
-  vetements: "/images/clothing.png",
-  sacs: "/images/bags.png",
+  sneakers: "/images/sneakers.webp",
+  vetements: "/images/clothing.webp",
+  sacs: "/images/bags.webp",
 };
 
 const CATEGORY_ALT_KEY: Record<Category, string> = {

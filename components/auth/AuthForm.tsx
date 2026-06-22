@@ -135,7 +135,6 @@ export function AuthForm() {
             height={48}
             className="h-12 w-auto"
             priority
-            unoptimized
           />
         </Link>
 

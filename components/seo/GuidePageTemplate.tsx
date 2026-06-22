@@ -156,7 +156,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
                 alt={data.brand.name}
                 fill
                 className="object-contain p-1.5"
-                unoptimized
+                sizes="56px"
               />
             </div>
             <div className="flex flex-wrap gap-2">

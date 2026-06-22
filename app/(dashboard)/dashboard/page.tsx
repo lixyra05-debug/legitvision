@@ -89,7 +89,6 @@ export default async function DashboardPage({
               height={64}
               className="h-16 w-auto"
               priority
-              unoptimized
             />
           </Link>
           <div className="flex items-center gap-4">

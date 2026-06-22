@@ -22,7 +22,6 @@ export default function ConfidentialitePage() {
               height={64}
               className="h-16 w-auto"
               priority
-              unoptimized
             />
           </Link>
         </div>
@@ -333,7 +332,6 @@ export default function ConfidentialitePage() {
               width={90}
               height={24}
               className="h-6 w-auto"
-              unoptimized
             />
             <span>© {new Date().getFullYear()}</span>
           </div>

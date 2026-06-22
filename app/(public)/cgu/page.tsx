@@ -22,7 +22,6 @@ export default function CguPage() {
               height={64}
               className="h-16 w-auto"
               priority
-              unoptimized
             />
           </Link>
         </div>
@@ -254,7 +253,6 @@ export default function CguPage() {
               width={90}
               height={24}
               className="h-6 w-auto"
-              unoptimized
             />
             <span>© {new Date().getFullYear()}</span>
           </div>
