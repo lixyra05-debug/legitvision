@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Footprints, ShoppingBag, Shirt } from "lucide-react";
+import { Footprints, ShoppingBag, Shirt, Watch } from "lucide-react";
 import type { Category } from "@/lib/types";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
@@ -10,7 +10,7 @@ const CATEGORIES: {
   labelKey: string;
   descKey: string;
   icon: typeof Footprints;
-  image: string;
+  image?: string;
 }[] = [
   {
     value: "sneakers",
@@ -32,6 +32,12 @@ const CATEGORIES: {
     descKey: "check.clothingDesc",
     icon: Shirt,
     image: "/images/clothing.png",
+  },
+  {
+    value: "watch",
+    labelKey: "check.watches",
+    descKey: "check.watchesDesc",
+    icon: Watch,
   },
 ];
 
@@ -62,14 +68,20 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
             }`}
           >
             <div className="relative aspect-video w-full overflow-hidden rounded-t-xl bg-white/5">
-              <Image
-                src={cat.image}
-                alt={t(cat.labelKey)}
-                fill
-                unoptimized
-                sizes="(max-width: 640px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+              {cat.image ? (
+                <Image
+                  src={cat.image}
+                  alt={t(cat.labelKey)}
+                  fill
+                  unoptimized
+                  sizes="(max-width: 640px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              ) : (
+                <div className="flex size-full items-center justify-center">
+                  <cat.icon className="size-12 text-muted-foreground transition-transform duration-500 group-hover:scale-110" />
+                </div>
+              )}
             </div>
             <div className="flex flex-col items-center p-6">
               <div
