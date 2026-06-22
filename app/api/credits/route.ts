@@ -26,11 +26,8 @@ export async function GET() {
     );
   }
 
-  const unlimited = profile.subscription_plan === "business";
-
   return NextResponse.json({
     credits_remaining: profile.credits_remaining,
     subscription_plan: profile.subscription_plan,
-    unlimited,
   });
 }

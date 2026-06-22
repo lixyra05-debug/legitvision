@@ -1,6 +1,6 @@
 "use client";
 
-import { Zap, Crown, Infinity } from "lucide-react";
+import { Zap, Crown } from "lucide-react";
 import type { PlanId } from "@/lib/stripe/config";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
@@ -19,8 +19,7 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
           <Crown className="size-5 text-emerald-500" />
           <div>
             <p className="text-sm font-semibold">{t("planBanner.businessName")}</p>
-            <p className="text-xs text-muted-foreground flex items-center gap-1">
-              <Infinity className="size-3" />
+            <p className="text-xs text-muted-foreground">
               {t("planBanner.businessDesc")}
             </p>
           </div>

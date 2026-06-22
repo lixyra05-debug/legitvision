@@ -110,7 +110,7 @@ export default function CguPage() {
               </div>
               <div className="grid grid-cols-3 gap-px bg-white/5">
                 <div className="bg-card px-4 py-3 text-muted-foreground">Business</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">Illimité</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">50 / mois</div>
                 <div className="bg-card px-4 py-3 text-muted-foreground">29,99 € / mois</div>
               </div>
             </div>

@@ -395,7 +395,7 @@ export const translations = {
     },
     planBanner: {
       businessName: "Plan Business",
-      businessDesc: "Analyses illimitées",
+      businessDesc: "50 analyses par mois",
       active: "Actif",
       proName: "Plan Pro",
       proCreditsRemaining: "crédit restant ce mois",
@@ -873,7 +873,7 @@ export const translations = {
     },
     planBanner: {
       businessName: "Business plan",
-      businessDesc: "Unlimited analyses",
+      businessDesc: "50 analyses per month",
       active: "Active",
       proName: "Pro plan",
       proCreditsRemaining: "credit left this month",
