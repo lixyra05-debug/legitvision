@@ -420,6 +420,10 @@ export const translations = {
       contact: "Contact",
       faq: "FAQ",
       about: "À propos",
+      guidesTitle: "Guides d'authentification",
+      verifyAuth: "Vérifier l'authenticité",
+      whereBuy: "Où acheter authentique",
+      brandGuides: "Guides par marque",
       disclaimer:
         "LegitVision est un outil de pré-authentification visuelle par intelligence artificielle. Nos résultats sont des estimations de probabilité, pas des certifications officielles.",
     },
@@ -898,6 +902,10 @@ export const translations = {
       contact: "Contact",
       faq: "FAQ",
       about: "About",
+      guidesTitle: "Authentication guides",
+      verifyAuth: "Check authenticity",
+      whereBuy: "Where to buy authentic",
+      brandGuides: "Brand guides",
       disclaimer:
         "LegitVision is an AI-powered visual pre-authentication tool. Our results are probability estimates, not official certifications.",
     },

@@ -51,7 +51,10 @@ export function buildPlatformBrandPageData(
   const relatedPages = buildRelatedPages(platform.slug, brand.slug);
 
   const trackingRef = `${platform.slug}-${brand.slug}`;
-  const ogImage = `/images/og/acheter-authentique-${platform.slug}-${brand.slug}.png`;
+  // schema.image (HowTo JSON-LD) → image OG racine : URL STABLE sans hash de build.
+  // og:image / twitter:image per-page sont gérés par opengraph-image.tsx (file
+  // convention), dont l'URL contient un hash de build non connu ici.
+  const ogImage = "/opengraph-image";
 
   return {
     category: "platform-brand",

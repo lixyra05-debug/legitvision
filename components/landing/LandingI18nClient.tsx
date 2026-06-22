@@ -181,3 +181,45 @@ export function FooterLinksI18n() {
     </>
   );
 }
+
+/**
+ * Maillage interne SEO : liens depuis la home vers les 3 hubs programmatiques
+ * (legit-check / acheter-authentique / guide). Indispensable pour que le
+ * PageRank de la home circule vers les pages SEO (auparavant orphelines).
+ */
+export function FooterSeoLinksI18n() {
+  const { t } = useTranslation();
+  return (
+    <div className="flex flex-col gap-3">
+      <span
+        className="text-xs font-semibold uppercase tracking-wider"
+        style={{ color: "var(--text-tertiary)" }}
+      >
+        {t("footer.guidesTitle")}
+      </span>
+      <div
+        className="flex flex-wrap gap-x-6 gap-y-2 text-sm"
+        style={{ color: "var(--text-tertiary)" }}
+      >
+        <Link
+          href="/legit-check"
+          className="transition-colors hover:text-foreground"
+        >
+          {t("footer.verifyAuth")}
+        </Link>
+        <Link
+          href="/acheter-authentique"
+          className="transition-colors hover:text-foreground"
+        >
+          {t("footer.whereBuy")}
+        </Link>
+        <Link
+          href="/guide"
+          className="transition-colors hover:text-foreground"
+        >
+          {t("footer.brandGuides")}
+        </Link>
+      </div>
+    </div>
+  );
+}

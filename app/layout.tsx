@@ -62,20 +62,14 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "LegitVision — Authentification d'articles de luxe par IA",
-      },
-    ],
+    // images fournies par app/opengraph-image.tsx (file convention),
+    // qui cascade aussi vers toutes les pages sans opengraph-image dédié.
   },
   twitter: {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: ["/og-image.png"],
+    // twitter:image retombe automatiquement sur openGraph.images (next/og).
   },
   robots: {
     index: true,

@@ -7,8 +7,6 @@ import {
 } from "@/lib/seo/guide-page-data-builder";
 import { buildAllGuideSchemas } from "@/lib/seo/guide-schema";
 
-const SITE_URL = "https://legitvision.vercel.app";
-
 export const revalidate = 86400;
 export const dynamicParams = false;
 
@@ -26,19 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: data.title,
     description: data.description,
     alternates: { canonical: `/guide/${params.brand}/${params.signal}` },
+    // og:image / twitter:image fournis par opengraph-image.tsx (file convention).
     openGraph: {
       title: data.title,
       description: data.description,
       url: data.canonical,
       type: "article",
-      images: [
-        {
-          url: `${SITE_URL}${data.ogImage}`,
-          width: 1200,
-          height: 630,
-          alt: `${data.brand.name} ${data.signal.name} — Guide d'authentification`,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",

@@ -5,8 +5,6 @@ import { buildLegitCheckPageData } from "@/lib/seo/legit-check-page-data-builder
 import { buildAllLegitCheckSchemas } from "@/lib/seo/legit-check-schema";
 import { getAllModelParams } from "@/lib/seo/data/models";
 
-const SITE_URL = "https://legitvision.vercel.app";
-
 export const revalidate = 86400;
 export const dynamicParams = false;
 
@@ -24,19 +22,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: data.title,
     description: data.description,
     alternates: { canonical: `/legit-check/${params.brand}/${params.model}` },
+    // og:image / twitter:image fournis par opengraph-image.tsx (file convention).
     openGraph: {
       title: data.title,
       description: data.description,
       url: data.canonical,
       type: "article",
-      images: [
-        {
-          url: `${SITE_URL}${data.ogImage}`,
-          width: 1200,
-          height: 630,
-          alt: `${data.brand.name} ${data.model.name} — Legit Check`,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",

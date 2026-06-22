@@ -38,7 +38,10 @@ export function buildLegitCheckPageData(
 
   const relatedPages = buildRelatedPages(brand.slug, model.slug);
   const trackingRef = `legit-check-${brand.slug}-${model.slug}`;
-  const ogImage = `/images/og/legit-check-${brand.slug}-${model.slug}.png`;
+  // schema.image (HowTo JSON-LD) → image OG racine : URL STABLE sans hash de build.
+  // og:image / twitter:image per-page sont gérés par opengraph-image.tsx (file
+  // convention), dont l'URL contient un hash de build non connu ici.
+  const ogImage = "/opengraph-image";
   const checkUrl = `/auth?source=seo&ref=${trackingRef}`;
 
   return {

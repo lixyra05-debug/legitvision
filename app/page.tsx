@@ -19,6 +19,7 @@ import {
   HeroI18n,
   DisclaimerI18n,
   FooterLinksI18n,
+  FooterSeoLinksI18n,
   HowItWorksI18n,
   FaqTitleI18n,
   FinalCtaI18n,
@@ -60,21 +61,14 @@ export const metadata: Metadata = {
       "1 paire sur 4 est une contrefaçon. Vérifiez l'authenticité de vos articles de luxe par IA en 30 secondes, pour 3,99 €.",
     url: SITE_URL,
     type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "LegitVision — Authentification d'articles de luxe par IA",
-      },
-    ],
+    // images fournies par app/opengraph-image.tsx (file convention).
   },
   twitter: {
     card: "summary_large_image",
     title: "LegitVision — Scannez avant d'acheter.",
     description:
       "Authentification d'articles de luxe par IA. 3,99 € / scan, 30 secondes, 8 zones analysées.",
-    images: ["/og-image.png"],
+    // twitter:image retombe automatiquement sur openGraph.images (next/og).
   },
 };
 
@@ -738,27 +732,34 @@ export default function LandingPage() {
 
       {/* ── Footer ── */}
       <footer style={{ borderTop: "1px solid var(--border-subtle)", padding: "40px 0" }}>
-        <div
-          className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-4 sm:flex-row sm:justify-between"
-        >
-          <div className="flex items-center gap-3">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={90}
-              height={24}
-              className="h-6 w-auto"
-              unoptimized
-            />
-            <span className="text-sm" style={{ color: "var(--text-tertiary)" }}>
-              © {new Date().getFullYear()}
-            </span>
+        <div className="mx-auto max-w-6xl px-4">
+          {/* Maillage interne SEO : liens vers les hubs d'authentification */}
+          <div className="mb-8 flex justify-center sm:justify-start">
+            <FooterSeoLinksI18n />
           </div>
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm sm:justify-end" style={{ color: "var(--text-tertiary)" }}>
-            <Link href="#faq" className="transition-colors hover:text-foreground">FAQ</Link>
-            <Link href="#team" className="transition-colors hover:text-foreground">À propos</Link>
-            <FooterLinksI18n />
-            <a href="mailto:legitvision.contact@gmail.com" className="transition-colors hover:text-foreground">Contact</a>
+          <div
+            className="flex flex-col items-center gap-6 border-t pt-8 sm:flex-row sm:justify-between"
+            style={{ borderColor: "var(--border-subtle)" }}
+          >
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/legitvision-logo.png"
+                alt="LegitVision"
+                width={90}
+                height={24}
+                className="h-6 w-auto"
+                unoptimized
+              />
+              <span className="text-sm" style={{ color: "var(--text-tertiary)" }}>
+                © {new Date().getFullYear()}
+              </span>
+            </div>
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm sm:justify-end" style={{ color: "var(--text-tertiary)" }}>
+              <Link href="#faq" className="transition-colors hover:text-foreground">FAQ</Link>
+              <Link href="#team" className="transition-colors hover:text-foreground">À propos</Link>
+              <FooterLinksI18n />
+              <a href="mailto:legitvision.contact@gmail.com" className="transition-colors hover:text-foreground">Contact</a>
+            </div>
           </div>
         </div>
       </footer>

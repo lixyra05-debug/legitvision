@@ -38,7 +38,10 @@ export function buildGuidePageData(
 
   const relatedPages = buildRelatedPages(signal);
   const trackingRef = `guide-${brand.slug}-${signal.slug}`;
-  const ogImage = `/images/og/guide-${brand.slug}-${signal.slug}.png`;
+  // schema.image (HowTo JSON-LD) → image OG racine : URL STABLE sans hash de build.
+  // og:image / twitter:image per-page sont gérés par opengraph-image.tsx (file
+  // convention), dont l'URL contient un hash de build non connu ici.
+  const ogImage = "/opengraph-image";
   const checkUrl = `/check/new?brand=${encodeURIComponent(brand.name)}&source=seo&ref=${trackingRef}`;
 
   return {
