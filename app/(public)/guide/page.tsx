@@ -8,6 +8,10 @@ import {
   getAllBrandSlugsWithSignals,
 } from "@/lib/seo/data/signals";
 import { SeoNav } from "@/components/seo/SeoNav";
+import {
+  buildBreadcrumbListSchema,
+  buildItemListSchema,
+} from "@/lib/seo/hub-schema";
 
 const SITE_URL = "https://legitvision.vercel.app";
 
@@ -15,7 +19,7 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title:
-    "Guides d'authentification signal × marque : 66 protocoles détaillés — LegitVision",
+    "Guides d'authentification signal × marque : 66 protocoles détaillés",
   description:
     "66 guides 2026 pour authentifier signal par signal : box logo Supreme, date code Louis Vuitton, hologramme Chanel, étiquette langue Nike, badge compass Stone Island, camo BAPE. Pré-authentification IA à 3,99 €.",
   alternates: { canonical: "/guide" },
@@ -48,8 +52,29 @@ export default function GuideHubPage() {
 
   const totalSignals = signals.length;
 
+  const hubSchemas = [
+    buildBreadcrumbListSchema([
+      { name: "Accueil", url: `${SITE_URL}/` },
+      { name: "Guides", url: `${SITE_URL}/guide` },
+    ]),
+    buildItemListSchema(
+      "Marques avec guides d'authentification",
+      brandsWithSignals.map((b) => ({
+        name: b.name,
+        url: `${SITE_URL}/guide/${b.slug}`,
+      })),
+    ),
+  ];
+
   return (
     <div className="min-h-screen bg-background">
+      {hubSchemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <SeoNav />
 
       <section className="relative overflow-hidden border-b border-white/5">

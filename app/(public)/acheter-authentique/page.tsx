@@ -2,6 +2,10 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { platforms } from "@/lib/seo/data/platforms";
 import { SeoNav } from "@/components/seo/SeoNav";
+import {
+  buildBreadcrumbListSchema,
+  buildItemListSchema,
+} from "@/lib/seo/hub-schema";
 
 const SITE_URL = "https://legitvision.vercel.app";
 
@@ -22,8 +26,29 @@ export const metadata: Metadata = {
 };
 
 export default function AcheterAuthentiqueHubPage() {
+  const hubSchemas = [
+    buildBreadcrumbListSchema([
+      { name: "Accueil", url: `${SITE_URL}/` },
+      { name: "Acheter authentique", url: `${SITE_URL}/acheter-authentique` },
+    ]),
+    buildItemListSchema(
+      "Plateformes couvertes",
+      platforms.map((p) => ({
+        name: p.name,
+        url: `${SITE_URL}/acheter-authentique/${p.slug}`,
+      })),
+    ),
+  ];
+
   return (
     <div className="min-h-screen bg-background">
+      {hubSchemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <SeoNav />
 
       <section className="relative overflow-hidden border-b border-white/5">

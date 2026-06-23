@@ -6,6 +6,10 @@ import { getPlatformBySlug, platforms } from "@/lib/seo/data/platforms";
 import { brands } from "@/lib/seo/data/brands";
 import { intersections } from "@/lib/seo/data/intersections";
 import { SeoNav } from "@/components/seo/SeoNav";
+import {
+  buildBreadcrumbListSchema,
+  buildItemListSchema,
+} from "@/lib/seo/hub-schema";
 
 const SITE_URL = "https://legitvision.vercel.app";
 
@@ -47,8 +51,33 @@ export default function PlatformHubPage({ params }: Props) {
     .map((i) => brands.find((b) => b.slug === i.brandSlug))
     .filter((b): b is NonNullable<typeof b> => Boolean(b));
 
+  const hubSchemas = [
+    buildBreadcrumbListSchema([
+      { name: "Accueil", url: `${SITE_URL}/` },
+      { name: "Acheter authentique", url: `${SITE_URL}/acheter-authentique` },
+      {
+        name: platform.name,
+        url: `${SITE_URL}/acheter-authentique/${platform.slug}`,
+      },
+    ]),
+    buildItemListSchema(
+      `Marques sur ${platform.name}`,
+      platformBrands.map((b) => ({
+        name: b.name,
+        url: `${SITE_URL}/acheter-authentique/${platform.slug}/${b.slug}`,
+      })),
+    ),
+  ];
+
   return (
     <div className="min-h-screen bg-background">
+      {hubSchemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <SeoNav />
 
       <section className="relative overflow-hidden border-b border-white/5">

@@ -18,7 +18,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps) {
   return {
-    title: `Rapport d'analyse — LegitVision`,
+    title: `Rapport d'analyse`,
     description: `Résultats de l'analyse #${params.id.slice(0, 8).toUpperCase()}`,
   };
 }

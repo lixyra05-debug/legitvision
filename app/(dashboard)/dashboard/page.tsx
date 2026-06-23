@@ -28,7 +28,7 @@ import {
 const DELETABLE_STATUSES = ["failed", "uploading", "pending"];
 
 export const metadata = {
-  title: "Dashboard — LegitVision",
+  title: "Dashboard",
 };
 
 export default async function DashboardPage({

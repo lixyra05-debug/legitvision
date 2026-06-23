@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Sora } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -18,11 +18,6 @@ const inter = Inter({
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
-});
-
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
 });
 
 const SITE_URL = "https://legitvision.vercel.app";
@@ -146,7 +141,6 @@ export default function RootLayout({
         "antialiased",
         inter.variable,
         spaceGrotesk.variable,
-        sora.variable,
       )}
       suppressHydrationWarning
     >

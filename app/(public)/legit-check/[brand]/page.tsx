@@ -8,6 +8,10 @@ import {
   getModelsByBrand,
 } from "@/lib/seo/data/models";
 import { SeoNav } from "@/components/seo/SeoNav";
+import {
+  buildBreadcrumbListSchema,
+  buildItemListSchema,
+} from "@/lib/seo/hub-schema";
 
 const SITE_URL = "https://legitvision.vercel.app";
 
@@ -48,8 +52,30 @@ export default function BrandLegitCheckHub({ params }: Props) {
   const brandModels = getModelsByBrand(brand.slug);
   if (brandModels.length === 0) notFound();
 
+  const hubSchemas = [
+    buildBreadcrumbListSchema([
+      { name: "Accueil", url: `${SITE_URL}/` },
+      { name: "Legit Check", url: `${SITE_URL}/legit-check` },
+      { name: brand.name, url: `${SITE_URL}/legit-check/${brand.slug}` },
+    ]),
+    buildItemListSchema(
+      `Modèles ${brand.name}`,
+      brandModels.map((m) => ({
+        name: m.name,
+        url: `${SITE_URL}/legit-check/${brand.slug}/${m.slug}`,
+      })),
+    ),
+  ];
+
   return (
     <div className="min-h-screen bg-background">
+      {hubSchemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <SeoNav />
 
       <section className="relative overflow-hidden border-b border-white/5">

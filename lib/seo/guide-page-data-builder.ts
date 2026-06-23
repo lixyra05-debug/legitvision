@@ -24,7 +24,7 @@ export function buildGuidePageData(
   const slugPath = `${BASE_PATH}/${brand.slug}/${signal.slug}`;
   const canonical = `${SITE_URL}${slugPath}`;
 
-  const title = `Comment reconnaître ${signal.name} × ${brand.name} : guide 2026`;
+  const title = `${signal.name} — ${brand.name}`;
   const description = `${signal.tagline}. Guide détaillé : ${signal.steps.length} étapes, ${signal.commonErrors.length} erreurs fréquentes, FAQ et pré-authentification IA ${brand.name} en 90 secondes à 3,99 €.`;
   const h1 = `Comment vérifier ${signal.name} sur un ${brand.name} authentique`;
   const subtitle = signal.tagline;

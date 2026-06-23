@@ -24,7 +24,7 @@ export function buildLegitCheckPageData(
   const slugPath = `${BASE_PATH}/${brand.slug}/${model.slug}`;
   const canonical = `${SITE_URL}${slugPath}`;
 
-  const title = `Legit Check ${brand.name} ${model.name} : ${model.signals.length} signaux pour authentifier en 2026`;
+  const title = `Legit Check ${brand.name} ${model.name}`;
   const description = `Guide d'authentification ${brand.name} ${model.name} : ${model.signals.length} signaux techniques, arnaques récurrentes, prix marché ${model.priceRange}. Pré-authentification IA en 90 secondes à 3,99 €.`;
   const h1 = `${brand.name} ${model.name} : comment reconnaître un modèle authentique`;
   const subtitle = `${model.tagline}. Prix marché ${model.priceRange} — retail ${model.retailYear}. Le guide 2026 pour éviter les contrefaçons.`;

@@ -7,6 +7,10 @@ import {
   getModelsByBrand,
 } from "@/lib/seo/data/models";
 import { SeoNav } from "@/components/seo/SeoNav";
+import {
+  buildBreadcrumbListSchema,
+  buildItemListSchema,
+} from "@/lib/seo/hub-schema";
 
 const SITE_URL = "https://legitvision.vercel.app";
 
@@ -14,7 +18,7 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title:
-    "Legit Check : 72 guides d'authentification par marque et modèle — LegitVision",
+    "Legit Check : 72 guides d'authentification par marque et modèle",
   description:
     "Guides 2026 pour authentifier 72 modèles de sneakers (Nike, Jordan, Adidas, Yeezy, New Balance), sacs de luxe (Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada) et streetwear (Supreme, Off-White, Stone Island, BAPE). Signaux techniques, arnaques, pré-authentification IA 3,99 €.",
   alternates: { canonical: "/legit-check" },
@@ -50,8 +54,29 @@ export default function LegitCheckHubPage() {
     0,
   );
 
+  const hubSchemas = [
+    buildBreadcrumbListSchema([
+      { name: "Accueil", url: `${SITE_URL}/` },
+      { name: "Legit Check", url: `${SITE_URL}/legit-check` },
+    ]),
+    buildItemListSchema(
+      "Marques disponibles en Legit Check",
+      brandsWithModels.map((b) => ({
+        name: b.name,
+        url: `${SITE_URL}/legit-check/${b.slug}`,
+      })),
+    ),
+  ];
+
   return (
     <div className="min-h-screen bg-background">
+      {hubSchemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
       <SeoNav />
 
       <section className="relative overflow-hidden border-b border-white/5">
