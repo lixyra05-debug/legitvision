@@ -26,10 +26,13 @@ const useUpstash = Boolean(url && token);
 
 const redis = useUpstash ? new Redis({ url: url as string, token: token as string }) : null;
 
-if (!useUpstash) {
+if (useUpstash) {
+  // Marqueur positif greppable dans les logs (jamais de secret loggé).
+  console.log("[rate-limit] mode=upstash — limites distribuées fiables (Redis).");
+} else {
   console.warn(
-    "[rate-limit] UPSTASH_REDIS_REST_URL/TOKEN absents — fallback in-memory " +
-      "(best-effort, par-instance). Configurez Upstash pour des limites fiables en prod.",
+    "[rate-limit] mode=in-memory — UPSTASH_REDIS_REST_URL/TOKEN absents " +
+      "(fallback best-effort, par-instance). Configurez Upstash pour des limites fiables en prod.",
   );
 }
 
