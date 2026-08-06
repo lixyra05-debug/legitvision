@@ -299,3 +299,25 @@ body::after {
 .light body::after {
   opacity: 0.015;
 }
+
+/* ── Respect de prefers-reduced-motion ──────────────────────────────────────
+   Le produit fait tourner des boucles infinies (pulse-glow, blink, float,
+   scan-line) et anime au scroll. Pour qui a demandé moins de mouvement, tout
+   s'arrête : les boucles ne jouent qu'une fois, les transitions deviennent
+   instantanées, et .fade-in-hidden devient visible sans attendre l'observer —
+   sinon le contenu resterait invisible si le JS ne s'exécute pas. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fade-in-hidden {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -15,6 +15,7 @@ import { FaqAccordion } from "@/components/landing/FaqAccordion";
 import { FAQ_ITEMS } from "@/components/landing/faq-data";
 import { BrandSearch } from "@/components/landing/BrandSearch";
 import { BrandsTabs } from "@/components/landing/BrandsTabs";
+import { AuthenticityCompare } from "@/components/landing/AuthenticityCompare";
 import {
   HeroI18n,
   DisclaimerI18n,
@@ -38,7 +39,6 @@ import {
   HeroTrustTags,
   AboutI18n,
   SmallCtaI18n,
-  MockPhotoGrid,
   MockSubscores,
   MockFindings,
 } from "@/components/landing/LandingSectionsClient";
@@ -207,173 +207,19 @@ export default function LandingPage() {
               </div>
             </FadeIn>
 
-            {/* Right: scanner visualization */}
+            {/* Right: comparateur d'authenticité — la thèse du produit, démontrée.
+                Remplace la simulation de scanner : deux « produits animés » côte à
+                côte se seraient concurrencés, et seul celui-ci prouve quelque chose. */}
             <FadeIn delay={200}>
               <div className="relative mx-auto max-w-sm lg:max-w-none">
-                {/* Scanner frame */}
-                <div
-                  className="relative overflow-hidden rounded-lg border border-line bg-surface"
-                  style={{ aspectRatio: "4/5", maxHeight: 460 }}
-                >
-                  {/* Viewfinder corners */}
-                  <div className="corner-tl" />
-                  <div className="corner-tr" />
-                  <div className="corner-bl" />
-                  <div className="corner-br" />
-
-                  {/* Animated scan line */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      left: 0,
-                      right: 0,
-                      height: 2,
-                      background:
-                        "linear-gradient(90deg, transparent 0%, hsl(var(--accent)) 20%, hsl(var(--accent)) 80%, transparent 100%)",
-                      animation: "scan-line var(--dur-ambient) linear infinite",
-                      zIndex: 10,
-                    }}
-                  />
-
-                  {/* Scanner content — simulated article photo grid */}
-                  <div className="absolute inset-0 flex flex-col gap-2 p-6">
-                    {/* Header label */}
-                    <div className="mb-2 flex items-center gap-2">
-                      <div
-                        className="size-1.5 rounded-full"
-                        style={{
-                          background: "hsl(var(--accent))",
-                          animation:
-                            "blink var(--dur-ambient) ease-in-out infinite",
-                        }}
-                      />
-                      <span
-                        className="text-[10px] font-medium uppercase tracking-widest"
-                        style={{ color: "hsl(var(--accent))" }}
-                      >
-                        Analyse en cours
-                      </span>
-                    </div>
-
-                    {/* Photo grid simulation — bilingue */}
-                    <div className="grid flex-1 grid-cols-3 gap-2">
-                      <MockPhotoGrid />
-                    </div>
-                  </div>
-
-                  {/* Bottom scan info bar */}
-                  <div
-                    className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-3"
-                    style={{
-                      background: "hsl(var(--background))",
-                      borderTop: "1px solid hsl(var(--line-subtle))",
-                    }}
-                  >
-                    <span
-                      className="text-[10px] text-subtle"
-                    >
-                      Nike · Air Jordan 1 Retro High
-                    </span>
-                    <span
-                      className="text-[10px]"
-                      style={{ color: "hsl(var(--accent))" }}
-                    >
-                      Score en calcul...
-                    </span>
-                  </div>
-                </div>
-
-                {/* Carte de score flottante — affiche un VERDICT. */}
-                <div
-                  className="absolute -bottom-6 -right-4 rounded-lg p-4 shadow-2xl"
-                  style={{
-                    background: "hsl(var(--surface-raised))",
-                    border: "1px solid hsl(var(--verdict-authentic) / 0.28)",
-                    animation: "float var(--dur-ambient) ease-in-out infinite",
-                    minWidth: 140,
-                  }}
-                >
-                  <p
-                    className="text-[10px] font-medium uppercase tracking-widest text-subtle"
-                  >
-                    Score final
-                  </p>
-                  <p
-                    className="mt-1 font-heading text-h2 font-bold tabular-nums"
-                    style={{ color: "hsl(var(--verdict-authentic))" }}
-                  >
-                    89
-                    <span
-                      className="text-ui font-normal text-subtle"
-                    >
-                      /100
-                    </span>
-                  </p>
-                  <div
-                    className="mt-2 flex items-center gap-1.5 rounded-full px-2 py-0.5"
-                    style={{ background: "hsl(var(--verdict-authentic) / 0.1)" }}
-                  >
-                    <CheckCircle2
-                      className="size-3"
-                      style={{ color: "hsl(var(--verdict-authentic))" }}
-                    />
-                    <span
-                      className="text-[10px] font-semibold"
-                      style={{ color: "hsl(var(--verdict-authentic))" }}
-                    >
-                      Probablement authentique
-                    </span>
-                  </div>
-                </div>
-
-                {/* Floating scan point indicators */}
-                <div
-                  className="absolute -left-3 top-1/3 flex size-6 items-center justify-center rounded-full"
-                  style={{
-                    background: "hsl(var(--surface-raised))",
-                    border: "1px solid hsl(var(--line))",
-                    animation: "blink var(--dur-ambient) ease-in-out infinite",
-                  }}
-                >
-                  <div
-                    className="size-2 rounded-full"
-                    style={{ background: "hsl(var(--muted-foreground))" }}
-                  />
-                </div>
+                <AuthenticityCompare />
+                <p className="mt-4 text-center text-caption text-muted-foreground lg:text-left">
+                  Faites glisser la poignée. Vous ne verrez pas la différence — l&apos;IA, si.
+                </p>
               </div>
             </FadeIn>
 
           </div>
-        </div>
-      </section>
-
-      {/* ── Vidéo de présentation ── */}
-      <section className="border-t border-line-subtle py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <FadeIn className="text-center">
-            <p
-              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
-            >
-              <LandingLabel tkey="landing.videoLabel" />
-            </p>
-            <SectionH2 tkey="landing.videoTitle" />
-            <SectionSub tkey="landing.videoSubtitle" />
-          </FadeIn>
-          <FadeIn delay={150}>
-            <div className="mt-12 flex justify-center">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="none"
-                poster="/images/hero-poster.webp"
-                className="w-full max-w-[300px] rounded-lg border border-line-subtle shadow-2xl"
-              >
-                <source src="/videos/hero-video.mp4" type="video/mp4" />
-              </video>
-            </div>
-          </FadeIn>
         </div>
       </section>
 
@@ -554,6 +400,36 @@ export default function LandingPage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* ── Vidéo de présentation ── */}
+      <section className="border-t border-line-subtle py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <FadeIn className="text-center">
+            <p
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
+            >
+              <LandingLabel tkey="landing.videoLabel" />
+            </p>
+            <SectionH2 tkey="landing.videoTitle" />
+            <SectionSub tkey="landing.videoSubtitle" />
+          </FadeIn>
+          <FadeIn delay={150}>
+            <div className="mt-12 flex justify-center">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/images/hero-poster.webp"
+                className="w-full max-w-[300px] rounded-lg border border-line-subtle shadow-2xl"
+              >
+                <source src="/videos/hero-video.mp4" type="video/mp4" />
+              </video>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
 
       {/* ── Témoignages ── */}
       <section className="border-t border-line-subtle py-16 sm:py-24">

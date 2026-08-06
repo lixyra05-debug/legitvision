@@ -13,6 +13,7 @@ import {
   Check,
 } from "lucide-react";
 import { FadeIn } from "@/components/layout/FadeIn";
+import { Counter } from "./Counter";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 /**
@@ -84,11 +85,18 @@ export function StepsSection() {
 }
 
 // ── 2. STATS — Bandeau métriques ────────────────────────────────────────────
-const STAT_DEFS = [
-  { valueKey: "landing.stat1Value", labelKey: "landing.stat1Label" },
-  { valueKey: "landing.stat2Value", labelKey: "landing.stat2Label" },
-  { valueKey: "landing.stat3Value", labelKey: "landing.stat3Label" },
-  { valueKey: "landing.stat4Value", labelKey: "landing.stat4Label" },
+// Les valeurs vivent dans le code : ce sont des nombres, ils ne se traduisent pas.
+// Seuls les libellés restent en i18n. Les 8 clés statNValue ont donc disparu.
+const STAT_DEFS: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  labelKey: string;
+}[] = [
+  { value: 47, labelKey: "landing.stat1Label" },
+  { value: 340, suffix: "+", labelKey: "landing.stat2Label" },
+  { value: 8, labelKey: "landing.stat3Label" },
+  { value: 30, prefix: "< ", suffix: "s", labelKey: "landing.stat4Label" },
 ];
 
 export function StatsSection() {
@@ -106,12 +114,12 @@ export function StatsSection() {
                 : "none",
           }}
         >
-          <span
+          <Counter
+            value={stat.value}
+            prefix={stat.prefix}
+            suffix={stat.suffix}
             className="font-heading text-h3 font-bold"
-            style={{ color: "hsl(var(--foreground))" }}
-          >
-            {t(stat.valueKey)}
-          </span>
+          />
           <span
             className="mt-2 text-caption"
             style={{ color: "hsl(var(--muted-foreground))" }}

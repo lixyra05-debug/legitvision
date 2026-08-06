@@ -1,0 +1,10 @@
+# Créé par pnpm 11 : il exige une décision explicite sur les paquets autorisés à
+# exécuter un script d'installation. Tant qu'ils ne sont pas tranchés,
+# `pnpm install` — et donc `pnpm build` — sort en erreur.
+allowBuilds:
+  # Dépendance déclarée du projet, utilisée par Next.js pour l'optimisation
+  # d'images. Son script installe le binaire natif : sans lui, sharp ne sert à rien.
+  sharp: true
+  # Résolveur natif tiré par eslint-config-next. Utilisé au lint uniquement,
+  # jamais expédié au navigateur.
+  unrs-resolver: true

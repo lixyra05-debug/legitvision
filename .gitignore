@@ -37,3 +37,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Sauvegardes locales d'assets (l'original reste dans l'historique git)
+.backup/
