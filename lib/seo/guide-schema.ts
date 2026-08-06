@@ -1,42 +1,43 @@
 import type { GuidePageData } from "./guide-types";
-
-const SITE_URL = "https://legitvision.vercel.app";
+import { siteUrl } from "@/lib/site-url";
+import { CONTENT_PUBLISHED, CONTENT_REVISED } from "./content-dates";
+import {
+  ARTICLE_AUTHOR,
+  ARTICLE_IS_PART_OF,
+  ARTICLE_PUBLISHER,
+  buildStepsItemListSchema,
+} from "./schema-parts";
 
 type JsonLd = Record<string, unknown>;
 
-export function buildGuideHowToSchema(data: GuidePageData): JsonLd {
+/**
+ * TechArticle (ex-HowTo). HowTo est déprécié depuis 2023 côté Google, n'a plus
+ * aucune surface SERP et ne porte pas `dateModified` — d'où l'absence totale de
+ * date sur les pages guide, qui plombait la citabilité par les moteurs IA.
+ * Les étapes partent dans un ItemList séparé (voir buildAllGuideSchemas).
+ */
+export function buildGuideArticleSchema(data: GuidePageData): JsonLd {
   return {
     "@context": "https://schema.org",
-    "@type": "HowTo",
+    "@type": "TechArticle",
+    "@id": `${data.canonical}#article`,
+    mainEntityOfPage: { "@type": "WebPage", "@id": data.canonical },
+    url: data.canonical,
+    headline: `Comment vérifier ${data.signal.name} sur un ${data.brand.name} authentique`,
     name: `Comment vérifier ${data.signal.name} sur un ${data.brand.name} authentique`,
     description: `Guide en ${data.steps.length} étapes pour pré-authentifier ${data.signal.name} sur ${data.brand.name} et détecter les contrefaçons.`,
-    image: `${SITE_URL}${data.ogImage}`,
-    totalTime: "PT3M",
-    estimatedCost: {
-      "@type": "MonetaryAmount",
-      currency: "EUR",
-      value: "0",
+    image: siteUrl(data.ogImage),
+    inLanguage: "fr-FR",
+    datePublished: CONTENT_PUBLISHED,
+    dateModified: CONTENT_REVISED.guide,
+    author: ARTICLE_AUTHOR,
+    publisher: ARTICLE_PUBLISHER,
+    isPartOf: ARTICLE_IS_PART_OF,
+    proficiencyLevel: "Beginner",
+    about: {
+      "@type": "Brand",
+      name: data.brand.name,
     },
-    tool: [
-      {
-        "@type": "HowToTool",
-        name: "Smartphone avec appareil photo",
-      },
-      {
-        "@type": "HowToTool",
-        name: "Éclairage neutre (LED 5000K ou lumière du jour)",
-      },
-      {
-        "@type": "HowToTool",
-        name: "Règle graduée ou mètre",
-      },
-    ],
-    step: data.steps.map((step, index) => ({
-      "@type": "HowToStep",
-      position: index + 1,
-      name: step.title,
-      text: step.description,
-    })),
   };
 }
 
@@ -71,7 +72,12 @@ export function buildGuideBreadcrumbSchema(data: GuidePageData): JsonLd {
 export function buildAllGuideSchemas(data: GuidePageData): JsonLd[] {
   return [
     buildGuideBreadcrumbSchema(data),
-    buildGuideHowToSchema(data),
+    buildGuideArticleSchema(data),
+    buildStepsItemListSchema(
+      `Protocole de vérification — ${data.signal.name} (${data.brand.name})`,
+      data.canonical,
+      data.steps,
+    ),
     buildGuideFAQSchema(data),
   ];
 }

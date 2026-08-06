@@ -1,6 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { SeoPageData } from "@/lib/seo/types";
+import { SITE_URL } from "@/lib/site-url";
+import {
+  CONTENT_REVISED,
+  formatContentDate,
+} from "@/lib/seo/content-dates";
 
 export function SeoHero({ data }: { data: SeoPageData }) {
   return (
@@ -18,7 +23,7 @@ export function SeoHero({ data }: { data: SeoPageData }) {
           <ol className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
             {data.breadcrumbs.map((crumb, i) => {
               const isLast = i === data.breadcrumbs.length - 1;
-              const path = crumb.url.replace("https://legitvision.vercel.app", "");
+              const path = crumb.url.replace(SITE_URL, "");
               return (
                 <li key={crumb.url} className="flex items-center gap-2">
                   {isLast ? (
@@ -67,6 +72,12 @@ export function SeoHero({ data }: { data: SeoPageData }) {
             <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-muted-foreground">
               Analyse IA 3,99 €
             </span>
+            <time
+              dateTime={CONTENT_REVISED.acheterAuthentique}
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-muted-foreground"
+            >
+              Mis à jour le {formatContentDate(CONTENT_REVISED.acheterAuthentique)}
+            </time>
           </div>
         </div>
 

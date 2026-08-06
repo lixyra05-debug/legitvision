@@ -1,3 +1,5 @@
+import { SITE_URL } from "@/lib/site-url";
+
 type ShellOptions = {
   title: string;
   preheader: string;
@@ -50,7 +52,7 @@ export function renderEmailShell({
         <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:100%;">
           <tr>
             <td style="padding:0 0 24px 0;" align="left">
-              <img src="https://legitvision.vercel.app/images/legitvision-logo.png" alt="LegitVision" height="40" style="height:40px;width:auto;display:block;border:0;outline:none;text-decoration:none;" />
+              <img src="${SITE_URL}/images/legitvision-logo.png" alt="LegitVision" height="40" style="height:40px;width:auto;display:block;border:0;outline:none;text-decoration:none;" />
             </td>
           </tr>
           <tr>

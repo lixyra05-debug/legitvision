@@ -9,8 +9,8 @@ import {
 import { getModelsByBrand } from "./data/models";
 import { intersections } from "./data/intersections";
 import { platforms } from "./data/platforms";
+import { SITE_URL } from "@/lib/site-url";
 
-const SITE_URL = "https://legitvision.vercel.app";
 const BASE_PATH = "/guide";
 
 export function buildGuidePageData(

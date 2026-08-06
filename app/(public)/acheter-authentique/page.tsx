@@ -6,8 +6,7 @@ import {
   buildBreadcrumbListSchema,
   buildItemListSchema,
 } from "@/lib/seo/hub-schema";
-
-const SITE_URL = "https://legitvision.vercel.app";
+import { SITE_URL } from "@/lib/site-url";
 
 export const revalidate = 86400;
 

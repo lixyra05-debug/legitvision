@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
+import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";
 
 // Inline script exécuté SYNCHRONE avant React : applique la classe "dark"/"light"
@@ -20,7 +21,6 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
 });
 
-const SITE_URL = "https://legitvision.vercel.app";
 const SITE_NAME = "LegitVision";
 const DEFAULT_TITLE =
   "LegitVision — Authentification d'articles de luxe par IA";

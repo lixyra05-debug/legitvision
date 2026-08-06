@@ -46,8 +46,7 @@ import {
   HeroPoweredByI18n,
   ExpertNoteI18n,
 } from "@/components/landing/LandingI18nClient";
-
-const SITE_URL = "https://legitvision.vercel.app";
+import { SITE_URL } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title:

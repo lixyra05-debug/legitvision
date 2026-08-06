@@ -6,8 +6,7 @@ import {
   getAllPlatformBrandParams,
 } from "@/lib/seo/page-data-builder";
 import { buildAllSchemas } from "@/lib/seo/schema";
-
-const SITE_URL = "https://legitvision.vercel.app";
+import { SITE_URL } from "@/lib/site-url";
 
 export const revalidate = 86400;
 export const dynamicParams = false;

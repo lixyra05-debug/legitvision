@@ -9,8 +9,8 @@ import {
   getModelsByBrand,
   models as allModels,
 } from "./data/models";
+import { SITE_URL } from "@/lib/site-url";
 
-const SITE_URL = "https://legitvision.vercel.app";
 const BASE_PATH = "/legit-check";
 
 export function buildLegitCheckPageData(

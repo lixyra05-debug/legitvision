@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { stripe, getPriceId, getOrCreateCustomer } from "@/lib/stripe/server";
 import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 import { z } from "zod";
+import { normalizeBaseUrl } from "@/lib/site-url";
 
 // Cet endpoint ne gère QUE les abonnements (mode: subscription).
 // "single" (paiement unique) passe par app/checkout/page.tsx, jamais ici.
@@ -72,7 +73,18 @@ export async function POST(request: NextRequest) {
     }
 
     // 6. Créer la Checkout Session
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? request.nextUrl.origin;
+    // DÉROGATION VOLONTAIRE à la source unique lib/site-url.ts.
+    // Partout ailleurs le dernier fallback est le domaine de prod. Pas ici :
+    // sur un preview deployment sans variable d'env, renvoyer success_url vers
+    // la prod ferait encaisser un vrai paiement pendant un test. L'origine de
+    // la requête ramène l'utilisateur sur le déploiement qui a lancé le
+    // checkout, quel qu'il soit. Les deux premiers maillons restent identiques
+    // à ceux de lib/site-url.ts.
+    const baseUrl = normalizeBaseUrl(
+      process.env.NEXT_PUBLIC_SITE_URL ??
+        process.env.NEXT_PUBLIC_APP_URL ??
+        request.nextUrl.origin,
+    );
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,

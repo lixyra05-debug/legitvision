@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { stripe, getPriceId, getOrCreateCustomer } from "@/lib/stripe/server";
 import { z } from "zod";
+import { SITE_URL } from "@/lib/site-url";
 
 // Construit l'URL de redirect d'erreur — ramène l'utilisateur sur le paywall
 // avec un message clair (au lieu de revenir silencieusement sur la landing).
@@ -135,8 +136,7 @@ export default async function CheckoutPage({
         .eq("id", user.id);
     }
 
-    const baseUrl =
-      process.env.NEXT_PUBLIC_APP_URL ?? "https://legitvision.vercel.app";
+    const baseUrl = SITE_URL;
 
     const priceId = getPriceId(planId);
 

@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const BASE_URL = "https://legitvision.vercel.app";
+import { SITE_URL as BASE_URL } from "@/lib/site-url";
 
 export default function robots(): MetadataRoute.Robots {
   return {

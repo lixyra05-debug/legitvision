@@ -9,34 +9,36 @@ import {
   getAllGuideParams,
   getBrandSlugsWithSignals,
 } from "@/lib/seo/guide-page-data-builder";
+import { CONTENT_REVISED } from "@/lib/seo/content-dates";
+import { SITE_URL as BASE_URL } from "@/lib/site-url";
 
-const BASE_URL = "https://legitvision.vercel.app";
-
+// `lastModified` lit lib/seo/content-dates.ts — la même source que le
+// `dateModified` des TechArticle et que le `<time>` visible des pages. Il
+// utilisait auparavant `new Date()`, donc l'horodatage du build : les 239 URLs
+// annonçaient une modification à chaque déploiement, contenu inchangé compris.
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   const staticEntries: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.site,
       changeFrequency: "weekly",
       priority: 1.0,
     },
     {
       url: `${BASE_URL}/mentions-legales`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.site,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${BASE_URL}/cgu`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.site,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${BASE_URL}/confidentialite`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.site,
       changeFrequency: "yearly",
       priority: 0.3,
     },
@@ -45,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const seoHub: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/acheter-authentique`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.hub,
       changeFrequency: "weekly",
       priority: 0.9,
     },
@@ -53,14 +55,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const platformHubs: MetadataRoute.Sitemap = platforms.map((platform) => ({
     url: `${BASE_URL}/acheter-authentique/${platform.slug}`,
-    lastModified: now,
+    lastModified: CONTENT_REVISED.hub,
     changeFrequency: "weekly",
     priority: 0.8,
   }));
 
   const leafPages: MetadataRoute.Sitemap = intersections.map((i) => ({
     url: `${BASE_URL}/acheter-authentique/${i.platformSlug}/${i.brandSlug}`,
-    lastModified: now,
+    lastModified: CONTENT_REVISED.acheterAuthentique,
     changeFrequency: "monthly",
     priority: 0.7,
   }));
@@ -68,7 +70,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const legitCheckHub: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/legit-check`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.hub,
       changeFrequency: "weekly",
       priority: 0.9,
     },
@@ -77,7 +79,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const legitCheckBrandHubs: MetadataRoute.Sitemap = getBrandSlugsWithModels().map(
     (slug) => ({
       url: `${BASE_URL}/legit-check/${slug}`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.hub,
       changeFrequency: "weekly",
       priority: 0.8,
     }),
@@ -86,7 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const legitCheckModelPages: MetadataRoute.Sitemap = getAllModelParams().map(
     (p) => ({
       url: `${BASE_URL}/legit-check/${p.brand}/${p.model}`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.legitCheck,
       changeFrequency: "monthly",
       priority: 0.7,
     }),
@@ -95,7 +97,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const guideHub: MetadataRoute.Sitemap = [
     {
       url: `${BASE_URL}/guide`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.hub,
       changeFrequency: "weekly",
       priority: 0.9,
     },
@@ -104,7 +106,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const guideBrandHubs: MetadataRoute.Sitemap = getBrandSlugsWithSignals().map(
     (slug) => ({
       url: `${BASE_URL}/guide/${slug}`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.hub,
       changeFrequency: "weekly",
       priority: 0.8,
     }),
@@ -113,7 +115,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const guideSignalPages: MetadataRoute.Sitemap = getAllGuideParams().map(
     (p) => ({
       url: `${BASE_URL}/guide/${p.brand}/${p.signal}`,
-      lastModified: now,
+      lastModified: CONTENT_REVISED.guide,
       changeFrequency: "monthly",
       priority: 0.7,
     }),

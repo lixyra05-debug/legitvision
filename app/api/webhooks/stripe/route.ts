@@ -5,6 +5,7 @@ import { PLAN_CREDITS } from "@/lib/stripe/config";
 import type { PlanId } from "@/lib/stripe/config";
 import { renderPaymentConfirmationEmail } from "@/lib/emails/payment-confirmation";
 import { sendTransactionalEmail } from "@/lib/emails/send";
+import { SITE_URL } from "@/lib/site-url";
 
 const PLAN_EMAIL_LABELS: Record<string, string> = {
   "one-time": "Utilisation unique",
@@ -27,7 +28,7 @@ async function sendPaymentEmail(args: {
       (authUser.user?.user_metadata?.full_name as string | undefined) ??
       email.split("@")[0] ??
       "";
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://legitvision.vercel.app";
+    const appUrl = SITE_URL;
     await sendTransactionalEmail({
       to: email,
       subject: "Merci pour votre achat — LegitVision",

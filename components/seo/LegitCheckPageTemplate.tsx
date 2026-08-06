@@ -5,6 +5,11 @@ import { SeoNav } from "./SeoNav";
 import { SignalCard } from "./SignalCard";
 import { SeoFAQ } from "./SeoFAQ";
 import { RelatedPagesGrid } from "./RelatedPagesGrid";
+import { SITE_URL } from "@/lib/site-url";
+import {
+  CONTENT_REVISED,
+  formatContentDate,
+} from "@/lib/seo/content-dates";
 
 const CATEGORY_LABELS = {
   sneakers: "Sneakers",
@@ -95,7 +100,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
             <ol className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
               {data.breadcrumbs.map((crumb, i) => {
                 const isLast = i === data.breadcrumbs.length - 1;
-                const path = crumb.url.replace("https://legitvision.vercel.app", "");
+                const path = crumb.url.replace(SITE_URL, "");
                 return (
                   <li key={crumb.url} className="flex items-center gap-2">
                     {isLast ? (
@@ -135,6 +140,12 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
               <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-muted-foreground">
                 {data.model.priceRange}
               </span>
+              <time
+                dateTime={CONTENT_REVISED.legitCheck}
+                className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-muted-foreground"
+              >
+                Mis à jour le {formatContentDate(CONTENT_REVISED.legitCheck)}
+              </time>
             </div>
           </div>
 
