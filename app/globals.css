@@ -2,52 +2,172 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Design Tokens (Dark = défaut) ── */
-:root {
-  --bg-primary: #0A0A0B;
-  --bg-card: #141416;
-  --bg-card-hover: #1A1A1E;
-  --bg-glass: rgba(20, 20, 22, 0.6);
-  --border-subtle: rgba(255, 255, 255, 0.04);
-  --border-hover: rgba(255, 255, 255, 0.08);
-  --border-glass: rgba(255, 255, 255, 0.06);
-  --text-primary: #F5F5F7;
-  --text-secondary: #8A8A8E;
-  --text-tertiary: #555558;
-  --accent: #10B981;
-  --accent-glow: rgba(16, 185, 129, 0.12);
-  --accent-glow-strong: rgba(16, 185, 129, 0.25);
-}
+/* ═══════════════════════════════════════════════════════════════════════════
+   SOCLE DESIGN SYSTEM — SOURCE UNIQUE DES TOKENS
+   ═══════════════════════════════════════════════════════════════════════════
 
-/* ── Light mode tokens ── */
-.light {
-  --bg-primary: #F5F5F7;
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #F0F0F2;
-  --bg-glass: rgba(255, 255, 255, 0.7);
-  --border-subtle: rgba(0, 0, 0, 0.06);
-  --border-hover: rgba(0, 0, 0, 0.12);
-  --border-glass: rgba(0, 0, 0, 0.06);
-  --text-primary: #1A1A1A;
-  --text-secondary: #5A5A5E;
-  --text-tertiary: #9A9A9E;
-  --accent: #10B981;
-  --accent-glow: rgba(16, 185, 129, 0.10);
-  --accent-glow-strong: rgba(16, 185, 129, 0.20);
+   Il y avait trois systèmes de tokens concurrents : un jeu hex/rgba maison
+   (--bg-primary, --text-primary, --accent…), un jeu HSL shadcn (--background,
+   --card, --primary…), et l'usage direct de la palette Tailwind. `--accent`
+   était déclaré DEUX FOIS, avec deux syntaxes incompatibles : `#10B981` d'un
+   côté, `160 84% 39%` de l'autre.
+
+   ARBITRAGE : une seule syntaxe, le triplet HSL sans wrapper. C'est la seule
+   forme compatible avec `<alpha-value>` de Tailwind, dont dépendent ~60 classes
+   du code (bg-background/80, text-foreground/60, ring-ring/50, bg-card/95…).
+   Passer en hex les aurait fait disparaître silencieusement.
+
+   Les seuls consommateurs directs de `var(--accent)` étaient dans ce fichier
+   (les coins du viseur) : ils sont désormais enveloppés dans `hsl()`.
+
+   Tout le reste dérive par substitution : `--card: var(--surface)`. Une valeur
+   n'est écrite qu'une fois.
+
+   ── Règle du vert ────────────────────────────────────────────────────────
+   L'emerald ne vit plus que dans --verdict-authentic. Il est RÉSERVÉ aux
+   verdicts d'authentification : ReportView, ScoreGauge, composants de verdict.
+   Nulle part ailleurs. L'accent d'interface est le champagne.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  :root,
+  .dark {
+    /* ── Fonds ───────────────────────────────────────────────────────── */
+    --background: 240 4.8% 4.1%; /* #0A0A0B — inchangé, c'est la marque */
+    --surface: 220 13.6% 8.6%; /* #131519 */
+    --surface-raised: 217.5 12.9% 12.2%; /* #1B1E23 */
+
+    /* ── Texte ───────────────────────────────────────────────────────── */
+    --foreground: 240 5.9% 93.3%; /* #EDEDEF — 16,9:1 */
+    --muted-foreground: 218.6 7.4% 63.1%; /* #9A9FA8 — 7,5:1 */
+    /* #71767F — 4,3:1. NE JAMAIS y mettre une information nécessaire :
+       ce ratio passe AA pour le texte ≥18px seulement, et rate le 4,5:1 du
+       texte courant. Réservé aux horodatages et mentions accessoires, dont
+       la disparition ne prive l'utilisateur de rien. */
+    --subtle-foreground: 218.6 5.8% 47.1%;
+
+    /* ── Bordures — opaques, plus de white/α ─────────────────────────── */
+    --line-subtle: 217.5 13.3% 11.8%; /* #1A1D22 */
+    --line: 218.2 12.6% 17.1%; /* #262A31 */
+    --line-strong: 217.5 12.1% 25.9%; /* #3A404A */
+
+    /* ── Accent d'interface : champagne ──────────────────────────────── */
+    --accent: 40.4 28.7% 66.5%; /* #C2B291 — 9,5:1 */
+    --accent-hover: 40.9 32.8% 73.7%; /* #D2C4A6 */
+    --accent-muted: 41.7 15% 47.1%; /* #8A7F66 */
+
+    /* ── Verdicts — RÉSERVÉS ─────────────────────────────────────────── */
+    --verdict-authentic: 160.1 84.1% 39.4%; /* #10B981 — 7,8:1 */
+    --verdict-fake: 358.1 75.1% 59%; /* #E5484D — 5,1:1 */
+    --verdict-inconclusive: 211.3 11.1% 59.4%; /* #8C97A3 — 6,7:1 */
+
+    /* ── Rôles shadcn — dérivés, jamais redéclarés ───────────────────── */
+    --card: var(--surface);
+    --card-foreground: var(--foreground);
+    --popover: var(--surface-raised);
+    --popover-foreground: var(--foreground);
+    --primary: var(--accent);
+    --primary-foreground: var(--background);
+    --secondary: var(--surface-raised);
+    --secondary-foreground: var(--foreground);
+    --muted: var(--surface-raised);
+    --accent-foreground: var(--background);
+    --destructive: var(--verdict-fake);
+    --destructive-foreground: var(--foreground);
+    --border: var(--line);
+    --input: var(--line-strong);
+    --ring: var(--accent);
+
+    /* ── Rayons ──────────────────────────────────────────────────────── */
+    --radius-sm: 0.5rem; /* 8px  — badges, petits boutons */
+    --radius-md: 0.75rem; /* 12px — contrôles, cartes, panneaux */
+    --radius-lg: 1rem; /* 16px — blocs majeurs, modales */
+    /* --radius-md était référencé par 4 classes rounded-[min(var(--radius-md),…)]
+       sans avoir jamais été défini : le min() les faisait retomber en silence sur
+       12px et 10px. À 0.75rem, ces 4 classes rendent exactement pareil qu'avant. */
+    --radius: var(--radius-md); /* compat shadcn */
+
+    /* ── Mouvement : une courbe, trois durées ────────────────────────── */
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+    --dur-fast: 120ms; /* survol, focus, couleur — doit passer inaperçu */
+    --dur-base: 220ms; /* défaut : apparition, translation, accordéon */
+    --dur-slow: 420ms; /* modales, panneaux, révélation du score */
+    --dur-ambient: 3s; /* boucles infinies (pulse, blink, float, scan) */
+  }
+
+  /* ── Mode clair ──────────────────────────────────────────────────────
+     DÉRIVÉ, PAS ARBITRÉ. La palette validée ne couvrait que le sombre ;
+     ces valeurs sont ma transposition (mêmes teintes, clartés inversées,
+     champagne assombri pour tenir le contraste sur fond pâle). Le thème
+     clair reste donc fonctionnel, mais il attend ta validation. */
+  .light {
+    --background: 220 14% 96.5%;
+    --surface: 0 0% 100%;
+    --surface-raised: 220 14% 93%;
+
+    --foreground: 220 14% 10%;
+    --muted-foreground: 219 8% 38%;
+    --subtle-foreground: 219 7% 52%;
+
+    --line-subtle: 220 13% 90%;
+    --line: 219 12% 83%;
+    --line-strong: 218 12% 70%;
+
+    --accent: 40 15.8% 37.3%; /* ≈ #6E6450 — 5,8:1 sur blanc */
+    --accent-hover: 40 16% 30%;
+    --accent-muted: 40 15% 55%;
+
+    --verdict-authentic: 160.1 84.1% 30%;
+    --verdict-fake: 358.1 65% 47%;
+    --verdict-inconclusive: 211.3 11.1% 42%;
+
+    --primary-foreground: 0 0% 100%;
+    --accent-foreground: 0 0% 100%;
+    --destructive-foreground: 0 0% 100%;
+  }
+
+  /* ── Alias de compatibilité ──────────────────────────────────────────
+     91 usages dans 5 fichiers (app/page.tsx, LandingSectionsClient,
+     LandingI18nClient, SeoNav, ChatWidget) lisent encore ces noms. Ce ne
+     sont plus des valeurs : ce sont des pointeurs vers les tokens ci-dessus,
+     donc la duplication est éteinte. Ils disparaissent au fur et à mesure du
+     reskin, surface par surface. Ne pas en ajouter. */
+  :root {
+    --bg-primary: hsl(var(--background));
+    --bg-card: hsl(var(--card));
+    --bg-glass: hsl(var(--surface) / 0.72);
+    --border-subtle: hsl(var(--line-subtle));
+    --border-glass: hsl(var(--line));
+    --text-primary: hsl(var(--foreground));
+    --text-secondary: hsl(var(--muted-foreground));
+    --text-tertiary: hsl(var(--subtle-foreground));
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 /* ── Scroll fade-in ── */
 .fade-in-hidden {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  transition:
+    opacity var(--dur-slow) var(--ease),
+    transform var(--dur-slow) var(--ease);
 }
 .fade-in-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* ── Glassmorphism card ── */
+/* ── Carte translucide (ChatWidget) ──────────────────────────────────────
+   Dernier vestige du glassmorphism dans ce fichier. Conservé tant que le
+   reskin n'a pas traité ChatWidget, seul consommateur. */
 .glass-card {
   background: var(--bg-glass);
   backdrop-filter: blur(20px) saturate(150%);
@@ -55,26 +175,11 @@
   border: 1px solid var(--border-glass);
 }
 
-/* ── Glow emerald hover ── */
-.glow-emerald {
-  position: relative;
-  transition: all 0.3s ease;
-}
-.glow-emerald::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: radial-gradient(ellipse at 50% 100%, var(--accent-glow-strong) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.glow-emerald:hover::after {
-  opacity: 1;
-}
-
-/* ── Scanner effect keyframes ── */
+/* ── Keyframes ambiantes ──────────────────────────────────────────────────
+   Les durées sont passées au point d'appel (app/page.tsx, LandingSectionsClient,
+   LandingI18nClient, ChatWidget) et valent encore 1.5s / 2s / 2.4s / 3s / 4s.
+   Elles convergeront toutes sur var(--dur-ambient) quand le reskin touchera ces
+   fichiers — hors périmètre de cette passe. */
 @keyframes scan-line {
   0% {
     top: 0%;
@@ -93,25 +198,41 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3), 0 0 60px rgba(16, 185, 129, 0.1);
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px hsl(var(--accent) / 0.22),
+      0 0 60px hsl(var(--accent) / 0.08);
   }
   50% {
-    box-shadow: 0 0 40px rgba(16, 185, 129, 0.5), 0 0 80px rgba(16, 185, 129, 0.2);
+    box-shadow:
+      0 0 40px hsl(var(--accent) / 0.36),
+      0 0 80px hsl(var(--accent) / 0.14);
   }
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
-/* ── Viewfinder corners ── */
+/* ── Coins du viseur ─────────────────────────────────────────────────────
+   Guide de cadrage photo, pas un verdict : passe donc du vert au champagne. */
 .corner-tl,
 .corner-tr,
 .corner-bl,
@@ -123,29 +244,29 @@
 .corner-tl {
   top: 12px;
   left: 12px;
-  border-top: 2px solid var(--accent);
-  border-left: 2px solid var(--accent);
+  border-top: 2px solid hsl(var(--accent));
+  border-left: 2px solid hsl(var(--accent));
 }
 .corner-tr {
   top: 12px;
   right: 12px;
-  border-top: 2px solid var(--accent);
-  border-right: 2px solid var(--accent);
+  border-top: 2px solid hsl(var(--accent));
+  border-right: 2px solid hsl(var(--accent));
 }
 .corner-bl {
   bottom: 12px;
   left: 12px;
-  border-bottom: 2px solid var(--accent);
-  border-left: 2px solid var(--accent);
+  border-bottom: 2px solid hsl(var(--accent));
+  border-left: 2px solid hsl(var(--accent));
 }
 .corner-br {
   bottom: 12px;
   right: 12px;
-  border-bottom: 2px solid var(--accent);
-  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid hsl(var(--accent));
+  border-right: 2px solid hsl(var(--accent));
 }
 
-/* ── Grain texture overlay ── */
+/* ── Grain ── */
 body::after {
   content: "";
   position: fixed;
@@ -158,85 +279,6 @@ body::after {
   background-size: 300px 300px;
 }
 
-@layer base {
-  :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 96%;
-    --card: 240 6% 8%;
-    --card-foreground: 0 0% 96%;
-    --popover: 240 6% 8%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 160 84% 39%;
-    --primary-foreground: 160 84% 10%;
-    --secondary: 240 6% 10%;
-    --secondary-foreground: 0 0% 96%;
-    --muted: 240 6% 10%;
-    --muted-foreground: 0 0% 54%;
-    --accent: 160 84% 39%;
-    --accent-foreground: 160 84% 10%;
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 97%;
-    --border: 0 0% 11%;
-    --input: 0 0% 13%;
-    --ring: 160 84% 39%;
-    --radius: 0.625rem;
-  }
-
-  .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 96%;
-    --card: 240 6% 8%;
-    --card-foreground: 0 0% 96%;
-    --popover: 240 6% 8%;
-    --popover-foreground: 0 0% 96%;
-    --primary: 160 84% 39%;
-    --primary-foreground: 160 84% 10%;
-    --secondary: 240 6% 10%;
-    --secondary-foreground: 0 0% 96%;
-    --muted: 240 6% 10%;
-    --muted-foreground: 0 0% 54%;
-    --accent: 160 84% 39%;
-    --accent-foreground: 160 84% 10%;
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 97%;
-    --border: 0 0% 11%;
-    --input: 0 0% 13%;
-    --ring: 160 84% 39%;
-  }
-
-  .light {
-    --background: 240 6% 96%;
-    --foreground: 0 0% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 160 84% 39%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 5% 90%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 240 5% 92%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 160 84% 39%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 72% 50%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 88%;
-    --input: 0 0% 90%;
-    --ring: 160 84% 39%;
-  }
-
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    background-color: var(--bg-primary);
-  }
-}
-
-/* ── Light mode : grain plus subtil sur fond pâle ── */
 .light body::after {
   opacity: 0.015;
 }
