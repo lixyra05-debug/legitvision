@@ -17,10 +17,20 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 /**
  * 5 sections client de la landing — i18n FR/EN.
- * Reproduction visuelle EXACTE des arrays statiques de app/page.tsx (Phase 5
- * de la refonte i18n). Charte Dark Premium préservée : tokens CSS variables,
- * accent emerald-500 + premium gold (#D4A843) sur Premium card, glassmorphism,
- * staggered FadeIn animations, hover lift, viewfinder corners cohérents.
+ *
+ * Design system : accent champagne (--accent) sur toute l'interface. La règle
+ * n'est pas « zéro vert » mais « le vert ne signifie que le verdict » : les seuls
+ * emerald tolérés ici sont --verdict-authentic dans MockSubscores et MockFindings,
+ * qui reproduisent la lecture d'un rapport. Un aperçu de rapport qui mentirait sur
+ * ses couleurs serait pire que du vert mal placé. Le gold #D4A843 de la carte
+ * Premium, orphelin de tout système, est absorbé par le champagne.
+ *
+ * Instrument Serif (font-display) est réservée aux h1/h2 de app/page.tsx et
+ * LandingI18nClient ; les h3 de ce fichier sont en Manrope, graisse semibold.
+ *
+ * Bordures opaques (--line-*) au lieu des voiles white/α, et bordures portées par
+ * des classes Tailwind et non plus par un `border:` inline — le raccourci inline
+ * écrasait les `hover:border-*`, qui n'ont donc jamais fonctionné.
  */
 
 // ── 1. STEPS — Comment ça marche ────────────────────────────────────────────
@@ -37,39 +47,35 @@ export function StepsSection() {
       {STEP_DEFS.map((step, i) => (
         <FadeIn key={step.step} delay={i * 120}>
           <div
-            className="group relative overflow-hidden rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/15"
-            style={{
-              background: "var(--bg-card)",
-              border: "1px solid var(--border-subtle)",
-            }}
+            className="group relative overflow-hidden rounded-lg border border-line-subtle bg-surface p-8 transition-[transform,border-color] duration-base hover:-translate-y-1 hover:border-accent/25"
           >
             <span
-              className="pointer-events-none absolute -right-2 -top-4 select-none font-heading text-[72px] font-bold leading-none"
-              style={{ color: "rgba(255,255,255,0.03)" }}
+              className="pointer-events-none absolute -right-2 -top-4 select-none text-[72px] font-bold leading-none"
+              style={{ color: "hsl(var(--line-strong) / 0.5)" }}
             >
               {step.step}
             </span>
             <div
-              className="mb-5 flex size-12 items-center justify-center rounded-xl"
-              style={{ background: "rgba(16,185,129,0.1)" }}
+              className="mb-6 flex size-12 items-center justify-center rounded-md"
+              style={{ background: "hsl(var(--accent) / 0.1)" }}
             >
-              <step.icon className="size-6 text-emerald-500" />
+              <step.icon className="size-6" style={{ color: "hsl(var(--accent))" }} />
             </div>
             <div
-              className="mb-3 text-[11px] font-semibold uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-semibold uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               {t("landing.stepLabel")} {step.step}
             </div>
             <h3
-              className="font-heading text-xl font-semibold"
-              style={{ color: "var(--text-primary)" }}
+              className="text-h4 font-semibold"
+              style={{ color: "hsl(var(--foreground))" }}
             >
               {t(step.titleKey)}
             </h3>
             <p
-              className="mt-3 text-sm leading-relaxed"
-              style={{ color: "var(--text-secondary)" }}
+              className="mt-3 text-ui"
+              style={{ color: "hsl(var(--muted-foreground))" }}
             >
               {t(step.descKey)}
             </p>
@@ -91,32 +97,27 @@ const STAT_DEFS = [
 export function StatsSection() {
   const { t } = useTranslation();
   return (
-    <div
-      className="grid grid-cols-2 gap-0 overflow-hidden rounded-2xl sm:grid-cols-4"
-      style={{
-        background: "var(--bg-glass)",
-        backdropFilter: "blur(20px)",
-        border: "1px solid var(--border-glass)",
-      }}
-    >
+    <div className="grid grid-cols-2 gap-0 overflow-hidden rounded-lg border border-line-subtle bg-surface sm:grid-cols-4">
       {STAT_DEFS.map((stat, i) => (
         <div
           key={stat.labelKey}
           className="flex flex-col items-center py-8"
           style={{
             borderRight:
-              i < STAT_DEFS.length - 1 ? "1px solid var(--border-subtle)" : "none",
+              i < STAT_DEFS.length - 1
+                ? "1px solid hsl(var(--line-subtle))"
+                : "none",
           }}
         >
           <span
-            className="font-heading text-2xl font-bold sm:text-3xl"
-            style={{ color: "#10B981" }}
+            className="text-h3 font-semibold"
+            style={{ color: "hsl(var(--accent))" }}
           >
             {t(stat.valueKey)}
           </span>
           <span
-            className="mt-1.5 text-xs"
-            style={{ color: "var(--text-secondary)" }}
+            className="mt-2 text-caption"
+            style={{ color: "hsl(var(--muted-foreground))" }}
           >
             {t(stat.labelKey)}
           </span>
@@ -160,25 +161,18 @@ export function TestimonialsSection() {
     <div className="mt-12 grid gap-6 sm:grid-cols-3">
       {TESTIMONIAL_DEFS.map((tm, i) => (
         <FadeIn key={tm.name} delay={i * 120}>
-          <div
-            className="flex h-full flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
-            style={{
-              background: "var(--bg-card)",
-              border: "1px solid var(--border-subtle)",
-            }}
-          >
+          <div className="flex h-full flex-col rounded-lg border border-line-subtle bg-surface p-6 transition-[transform,border-color] duration-base hover:-translate-y-1 hover:border-line">
             <div className="flex items-center justify-between">
               <div
-                className="flex size-10 items-center justify-center rounded-xl"
+                className="flex size-10 items-center justify-center rounded-md"
                 style={{
-                  background:
-                    "linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.05))",
-                  border: "1px solid rgba(16,185,129,0.2)",
+                  background: "hsl(var(--accent) / 0.1)",
+                  border: "1px solid hsl(var(--accent) / 0.22)",
                 }}
               >
                 <span
-                  className="font-heading text-sm font-bold"
-                  style={{ color: "#10B981" }}
+                  className="text-ui font-semibold"
+                  style={{ color: "hsl(var(--accent))" }}
                 >
                   {tm.initials}
                 </span>
@@ -188,45 +182,48 @@ export function TestimonialsSection() {
                   <Star
                     key={j}
                     className="size-3.5"
-                    style={{ fill: "#D4A843", color: "#D4A843" }}
+                    style={{
+                      fill: "hsl(var(--accent))",
+                      color: "hsl(var(--accent))",
+                    }}
                   />
                 ))}
                 {Array.from({ length: 5 - tm.stars }).map((_, j) => (
                   <Star
                     key={`e${j}`}
                     className="size-3.5"
-                    style={{ color: "rgba(255,255,255,0.1)" }}
+                    style={{ color: "hsl(var(--line-strong))" }}
                   />
                 ))}
               </div>
             </div>
-            <div className="mt-5 flex-1">
+            <div className="mt-6 flex-1">
               <div
-                className="mb-2 font-heading text-3xl leading-none select-none"
-                style={{ color: "rgba(16,185,129,0.15)" }}
+                className="mb-2 select-none text-h2 leading-none"
+                style={{ color: "hsl(var(--accent) / 0.2)" }}
               >
                 &ldquo;
               </div>
               <p
-                className="text-sm leading-relaxed"
-                style={{ color: "var(--text-secondary)" }}
+                className="text-ui"
+                style={{ color: "hsl(var(--muted-foreground))" }}
               >
                 {t(tm.quoteKey)}
               </p>
             </div>
             <div
-              className="mt-5 pt-5"
-              style={{ borderTop: "1px solid var(--border-subtle)" }}
+              className="mt-6 pt-6"
+              style={{ borderTop: "1px solid hsl(var(--line-subtle))" }}
             >
               <p
-                className="text-sm font-semibold"
-                style={{ color: "var(--text-primary)" }}
+                className="text-ui font-semibold"
+                style={{ color: "hsl(var(--foreground))" }}
               >
                 {tm.name}
               </p>
               <p
-                className="mt-0.5 text-xs"
-                style={{ color: "var(--text-tertiary)" }}
+                className="mt-0.5 text-caption"
+                style={{ color: "hsl(var(--subtle-foreground))" }}
               >
                 {t(tm.roleKey)} · {t(tm.cityKey)}
               </p>
@@ -273,46 +270,40 @@ const FEATURE_DEFS = [
 export function FeaturesSection() {
   const { t } = useTranslation();
   return (
-    <div className="mt-16 grid gap-5 sm:grid-cols-2">
+    <div className="mt-16 grid gap-6 sm:grid-cols-2">
       {FEATURE_DEFS.map((feat, i) => (
         <FadeIn key={feat.titleKey} delay={i * 80}>
           <div
-            className={`group relative flex h-full flex-col rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 ${
-              !feat.highlight ? "hover:border-emerald-500/15" : ""
+            className={`group relative flex h-full flex-col rounded-lg border p-8 transition-[transform,border-color] duration-base hover:-translate-y-1 ${
+              feat.highlight
+                ? "border-accent/25 bg-accent/[0.05]"
+                : "border-line-subtle bg-surface hover:border-accent/25"
             }`}
-            style={{
-              background: feat.highlight
-                ? "rgba(16,185,129,0.04)"
-                : "var(--bg-card)",
-              border: feat.highlight
-                ? "1px solid rgba(16,185,129,0.2)"
-                : "1px solid var(--border-subtle)",
-            }}
           >
             <div
-              className="mb-5 flex size-14 items-center justify-center rounded-2xl"
-              style={{ background: "rgba(16,185,129,0.1)" }}
+              className="mb-6 flex size-14 items-center justify-center rounded-lg"
+              style={{ background: "hsl(var(--accent) / 0.1)" }}
             >
-              <feat.icon className="size-7 text-emerald-500" />
+              <feat.icon className="size-7" style={{ color: "hsl(var(--accent))" }} />
             </div>
             <h3
-              className="font-heading text-xl font-semibold"
-              style={{ color: "var(--text-primary)" }}
+              className="text-h4 font-semibold"
+              style={{ color: "hsl(var(--foreground))" }}
             >
               {t(feat.titleKey)}
             </h3>
             <p
-              className="mt-3 flex-1 text-sm leading-relaxed"
-              style={{ color: "var(--text-secondary)" }}
+              className="mt-3 flex-1 text-ui"
+              style={{ color: "hsl(var(--muted-foreground))" }}
             >
               {t(feat.descKey)}
             </p>
             <div className="mt-6">
               <span
-                className="rounded-full px-3 py-1 text-xs font-semibold"
+                className="rounded-full px-3 py-1 text-caption font-semibold"
                 style={{
-                  background: "rgba(16,185,129,0.1)",
-                  color: "#10B981",
+                  background: "hsl(var(--accent) / 0.1)",
+                  color: "hsl(var(--accent))",
                 }}
               >
                 {t(feat.tagKey)}
@@ -372,86 +363,81 @@ export function PlansSection() {
         const badge = t(`plans.${plan.tier}.badge`);
 
         if (plan.premium) {
+          // Carte Premium : le dégradé or est remplacé par une bordure champagne
+          // pleine — un seul ton, aucun dégradé.
           return (
             <FadeIn key={plan.tier} delay={i * 120}>
               <div
-                className="relative rounded-2xl p-[1.5px] shadow-xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(180,130,50,0.5), rgba(230,180,60,0.2), rgba(180,130,50,0.5))",
-                  boxShadow: "0 20px 60px rgba(180,130,50,0.15)",
-                }}
+                className="relative flex h-full flex-col rounded-lg bg-surface p-8"
+                style={{ border: "1px solid hsl(var(--accent) / 0.55)" }}
               >
-                <div
-                  className="relative flex flex-col rounded-2xl p-8"
-                  style={{ background: "var(--bg-card)" }}
+                <span
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1 text-caption font-bold"
+                  style={{
+                    background: "hsl(var(--accent))",
+                    color: "hsl(var(--accent-foreground))",
+                  }}
                 >
+                  {badge}
+                </span>
+                <h3
+                  className="text-lead font-semibold"
+                  style={{ color: "hsl(var(--accent))" }}
+                >
+                  {name}
+                </h3>
+                <p
+                  className="mt-1 text-ui"
+                  style={{ color: "hsl(var(--muted-foreground))" }}
+                >
+                  {description}
+                </p>
+                <div className="mt-6">
                   <span
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full px-4 py-1 text-xs font-bold text-black shadow-lg"
+                    className="text-h1 font-semibold"
+                    style={{ color: "hsl(var(--accent))" }}
+                  >
+                    {price}
+                  </span>
+                  <span
+                    className="text-ui"
+                    style={{ color: "hsl(var(--muted-foreground))" }}
+                  >
+                    {period}
+                  </span>
+                </div>
+                <div
+                  className="mt-2 text-ui font-medium"
+                  style={{ color: "hsl(var(--accent))" }}
+                >
+                  {credits}
+                </div>
+                <ul className="mt-8 flex-1 space-y-3">
+                  {plan.features.map((featKey) => (
+                    <li
+                      key={featKey}
+                      className="flex items-start gap-3 text-ui"
+                      style={{ color: "hsl(var(--muted-foreground))" }}
+                    >
+                      <Check
+                        className="mt-0.5 size-4 shrink-0"
+                        style={{ color: "hsl(var(--accent))" }}
+                      />
+                      {t(`plans.${plan.tier}.${featKey}`)}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8">
+                  <Link
+                    href={plan.href}
+                    className="inline-flex h-11 w-full items-center justify-center rounded-md text-ui font-semibold transition-[background-color,box-shadow] hover:shadow-lg"
                     style={{
-                      background: "linear-gradient(90deg, #D4A843, #F0C040)",
+                      background: "hsl(var(--accent))",
+                      color: "hsl(var(--accent-foreground))",
                     }}
                   >
-                    ⭐ {badge}
-                  </span>
-                  <h3
-                    className="font-heading text-lg font-semibold"
-                    style={{ color: "#D4A843" }}
-                  >
-                    {name}
-                  </h3>
-                  <p
-                    className="mt-1 text-sm"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    {description}
-                  </p>
-                  <div className="mt-6">
-                    <span
-                      className="font-heading text-4xl font-bold"
-                      style={{ color: "#D4A843" }}
-                    >
-                      {price}
-                    </span>
-                    <span
-                      className="text-sm"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      {period}
-                    </span>
-                  </div>
-                  <div
-                    className="mt-2 text-sm font-medium"
-                    style={{ color: "#D4A843" }}
-                  >
-                    {credits}
-                  </div>
-                  <ul className="mt-8 flex-1 space-y-3">
-                    {plan.features.map((featKey) => (
-                      <li
-                        key={featKey}
-                        className="flex items-start gap-3 text-sm"
-                        style={{ color: "var(--text-secondary)" }}
-                      >
-                        <Check
-                          className="mt-0.5 size-4 shrink-0"
-                          style={{ color: "#D4A843" }}
-                        />
-                        {t(`plans.${plan.tier}.${featKey}`)}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-8">
-                    <Link
-                      href={plan.href}
-                      className="inline-flex h-11 w-full items-center justify-center rounded-xl text-sm font-bold text-black transition-all hover:shadow-lg"
-                      style={{
-                        background: "linear-gradient(90deg, #D4A843, #F0C040)",
-                      }}
-                    >
-                      {cta}
-                    </Link>
-                  </div>
+                    {cta}
+                  </Link>
                 </div>
               </div>
             </FadeIn>
@@ -461,64 +447,66 @@ export function PlansSection() {
         return (
           <FadeIn key={plan.tier} delay={i * 120}>
             <div
-              className="relative flex flex-col rounded-2xl p-8 transition-all duration-300"
-              style={{
-                background: plan.popular
-                  ? "rgba(16,185,129,0.04)"
-                  : "var(--bg-card)",
-                border: plan.popular
-                  ? "1px solid rgba(16,185,129,0.35)"
-                  : "1px solid var(--border-subtle)",
-                boxShadow: plan.popular
-                  ? "0 0 40px rgba(16,185,129,0.08)"
-                  : "none",
-              }}
+              className={`relative flex h-full flex-col rounded-lg border p-8 transition-[border-color] duration-base ${
+                plan.popular
+                  ? "border-accent/35 bg-accent/[0.05]"
+                  : "border-line-subtle bg-surface"
+              }`}
             >
               {plan.popular && (
                 <span
-                  className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-xs font-semibold text-white"
-                  style={{ background: "#10B981" }}
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-caption font-semibold"
+                  style={{
+                    background: "hsl(var(--accent))",
+                    color: "hsl(var(--accent-foreground))",
+                  }}
                 >
                   {badge}
                 </span>
               )}
               <h3
-                className="font-heading text-lg font-semibold"
-                style={{ color: "var(--text-primary)" }}
+                className="text-lead font-semibold"
+                style={{ color: "hsl(var(--foreground))" }}
               >
                 {name}
               </h3>
               <p
-                className="mt-1 text-sm"
-                style={{ color: "var(--text-secondary)" }}
+                className="mt-1 text-ui"
+                style={{ color: "hsl(var(--muted-foreground))" }}
               >
                 {description}
               </p>
               <div className="mt-6">
                 <span
-                  className="font-heading text-4xl font-bold"
-                  style={{ color: "var(--text-primary)" }}
+                  className="text-h1 font-semibold"
+                  style={{ color: "hsl(var(--foreground))" }}
                 >
                   {price}
                 </span>
                 <span
-                  className="text-sm"
-                  style={{ color: "var(--text-secondary)" }}
+                  className="text-ui"
+                  style={{ color: "hsl(var(--muted-foreground))" }}
                 >
                   {period}
                 </span>
               </div>
-              <div className="mt-2 text-sm font-medium text-emerald-400">
+              <div
+                className="mt-2 text-ui font-medium"
+                style={{ color: "hsl(var(--accent))" }}
+              >
                 {credits}
               </div>
               <ul className="mt-8 flex-1 space-y-3">
                 {plan.features.map((featKey) => (
                   <li
                     key={featKey}
-                    className="flex items-start gap-3 text-sm"
-                    style={{ color: "var(--text-secondary)" }}
+                    className="flex items-start gap-3 text-ui"
+                    style={{ color: "hsl(var(--muted-foreground))" }}
                   >
-                    <Check className="mt-0.5 size-4 shrink-0 text-emerald-500" />
+                    <Check
+                      className="mt-0.5 size-4 shrink-0"
+                      style={{ color: "hsl(var(--accent))" }}
+                    />
                     {t(`plans.${plan.tier}.${featKey}`)}
                   </li>
                 ))}
@@ -526,17 +514,18 @@ export function PlansSection() {
               <div className="mt-8">
                 <Link
                   href={plan.href}
-                  className="inline-flex h-11 w-full items-center justify-center rounded-xl text-sm font-semibold transition-all hover:shadow-lg"
+                  className="inline-flex h-11 w-full items-center justify-center rounded-md text-ui font-semibold transition-[background-color,border-color,box-shadow] hover:shadow-lg"
                   style={
                     plan.popular
                       ? {
-                          background: "#10B981",
-                          color: "#fff",
-                          animation: "pulse-glow 3s ease-in-out infinite",
+                          background: "hsl(var(--accent))",
+                          color: "hsl(var(--accent-foreground))",
+                          animation:
+                            "pulse-glow var(--dur-ambient) ease-in-out infinite",
                         }
                       : {
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          color: "var(--text-primary)",
+                          border: "1px solid hsl(var(--line-strong))",
+                          color: "hsl(var(--foreground))",
                           background: "transparent",
                         }
                   }
@@ -574,7 +563,7 @@ export function NavLinks() {
         <Link
           key={href}
           href={href}
-          className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          className="text-ui text-muted-foreground transition-colors hover:text-foreground"
         >
           {t(tkey)}
         </Link>
@@ -597,10 +586,10 @@ export function HeroTrustTags() {
       {HERO_TAGS.map((tkey) => (
         <span
           key={tkey}
-          className="flex items-center gap-1.5 text-xs"
-          style={{ color: "var(--text-tertiary)" }}
+          className="flex items-center gap-1.5 text-caption"
+          style={{ color: "hsl(var(--subtle-foreground))" }}
         >
-          <Check className="size-3 text-emerald-500" />
+          <Check className="size-3" style={{ color: "hsl(var(--accent))" }} />
           {t(tkey)}
         </span>
       ))}
@@ -631,36 +620,33 @@ export function MockPhotoGrid() {
       {MOCK_PHOTO_ZONES.map((zone, i) => (
         <div
           key={zone.tkey}
-          className="flex flex-col items-center justify-end rounded-lg p-2"
+          className="flex flex-col items-center justify-end rounded-sm p-2"
           style={{
             background:
-              i === 1 ? "rgba(16,185,129,0.08)" : "rgba(255,255,255,0.025)",
+              i === 1
+                ? "hsl(var(--accent) / 0.1)"
+                : "hsl(var(--surface-raised))",
             border:
               i === 1
-                ? "1px solid rgba(16,185,129,0.2)"
-                : "1px solid rgba(255,255,255,0.04)",
+                ? "1px solid hsl(var(--accent) / 0.28)"
+                : "1px solid hsl(var(--line-subtle))",
           }}
         >
           <div
-            className="mb-1.5 h-1 w-full rounded-full overflow-hidden"
-            style={{ background: "rgba(255,255,255,0.06)" }}
+            className="mb-1.5 h-1 w-full overflow-hidden rounded-full"
+            style={{ background: "hsl(var(--line))" }}
           >
             <div
               className="h-1 rounded-full"
               style={{
                 width: `${zone.progress}%`,
-                background:
-                  zone.progress >= 90
-                    ? "#10B981"
-                    : zone.progress >= 80
-                      ? "#10B981"
-                      : "#10B981",
+                background: "hsl(var(--accent))",
               }}
             />
           </div>
           <span
             className="text-[10px]"
-            style={{ color: "var(--text-tertiary)" }}
+            style={{ color: "hsl(var(--subtle-foreground))" }}
           >
             {t(zone.tkey)}
           </span>
@@ -683,25 +669,26 @@ export function MockSubscores() {
     <>
       {MOCK_SUBSCORES.map((s) => (
         <div key={s.tkey}>
-          <div className="mb-1.5 flex items-center justify-between text-xs">
-            <span style={{ color: "var(--text-secondary)" }}>{t(s.tkey)}</span>
+          <div className="mb-1.5 flex items-center justify-between text-caption">
+            <span style={{ color: "hsl(var(--muted-foreground))" }}>
+              {t(s.tkey)}
+            </span>
             <span
-              className="tabular-nums font-medium"
-              style={{ color: "var(--text-primary)" }}
+              className="font-medium tabular-nums"
+              style={{ color: "hsl(var(--foreground))" }}
             >
               {s.score}/100
             </span>
           </div>
           <div
             className="h-1.5 w-full overflow-hidden rounded-full"
-            style={{ background: "rgba(255,255,255,0.04)" }}
+            style={{ background: "hsl(var(--line))" }}
           >
             <div
               className="h-1.5 rounded-full"
               style={{
                 width: `${s.score}%`,
-                background: "linear-gradient(90deg, #059669, #10B981)",
-                boxShadow: "0 0 8px rgba(16,185,129,0.4)",
+                background: "hsl(var(--verdict-authentic))",
               }}
             />
           </div>
@@ -734,41 +721,37 @@ export function MockFindings() {
   return (
     <>
       <p
-        className="text-xs font-semibold uppercase tracking-widest"
-        style={{ color: "var(--text-tertiary)" }}
+        className="text-caption font-semibold uppercase"
+        style={{ color: "hsl(var(--subtle-foreground))" }}
       >
         {t("landing.mockObservations")}
       </p>
       {MOCK_FINDINGS.map((f) => (
         <div
           key={f.zoneKey}
-          className="rounded-xl p-4"
+          className="rounded-md p-4"
           style={{
-            borderLeft: "2px solid #10B981",
-            background: "rgba(16,185,129,0.04)",
-            border: "none",
-            borderLeftWidth: 2,
-            borderLeftStyle: "solid",
-            borderLeftColor: "#10B981",
+            background: "hsl(var(--verdict-authentic) / 0.05)",
+            borderLeft: "2px solid hsl(var(--verdict-authentic))",
           }}
         >
           <div className="flex items-center justify-between">
             <span
-              className="text-xs font-semibold"
-              style={{ color: "var(--text-primary)" }}
+              className="text-caption font-semibold"
+              style={{ color: "hsl(var(--foreground))" }}
             >
               {t(f.zoneKey)}
             </span>
             <span
-              className="tabular-nums text-xs font-medium"
-              style={{ color: "#10B981" }}
+              className="text-caption font-medium tabular-nums"
+              style={{ color: "hsl(var(--verdict-authentic))" }}
             >
               {f.score}/100
             </span>
           </div>
           <p
-            className="mt-2 text-xs leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}
+            className="mt-2 text-caption"
+            style={{ color: "hsl(var(--muted-foreground))" }}
           >
             {t(f.obsKey)}
           </p>
@@ -790,12 +773,18 @@ export function SmallCtaI18n() {
     <>
       <Link
         href="/auth?redirect=%2Fcheck%2Fnew"
-        className="group inline-flex h-11 items-center gap-2 rounded-xl px-7 text-sm font-semibold text-white transition-all hover:shadow-lg"
-        style={{ background: "#10B981" }}
+        className="group inline-flex h-11 items-center gap-2 rounded-md px-8 text-ui font-semibold transition-[background-color,box-shadow] hover:shadow-lg"
+        style={{
+          background: "hsl(var(--accent))",
+          color: "hsl(var(--accent-foreground))",
+        }}
       >
         {t("landing.smallCtaTitle")}
       </Link>
-      <p className="mt-3 text-xs" style={{ color: "var(--text-tertiary)" }}>
+      <p
+        className="mt-3 text-caption"
+        style={{ color: "hsl(var(--subtle-foreground))" }}
+      >
         {t("landing.smallCtaNote")}
       </p>
     </>
@@ -806,7 +795,7 @@ export function SecurityNoteI18n() {
   const { t } = useTranslation();
   return (
     <>
-      <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>
+      <span style={{ color: "hsl(var(--foreground))", fontWeight: 600 }}>
         {t("landing.securityNoteHighlight")}
       </span>{" "}
       {t("landing.securityNoteRest")}
@@ -818,8 +807,8 @@ export function SectionH2({ tkey }: { tkey: string }) {
   const { t } = useTranslation();
   return (
     <h2
-      className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-      style={{ color: "var(--text-primary)" }}
+      className="font-display text-h2"
+      style={{ color: "hsl(var(--foreground))" }}
     >
       {t(tkey)}
     </h2>
@@ -829,10 +818,7 @@ export function SectionH2({ tkey }: { tkey: string }) {
 export function SectionSub({ tkey }: { tkey: string }) {
   const { t } = useTranslation();
   return (
-    <p
-      className="mt-4"
-      style={{ color: "var(--text-secondary)" }}
-    >
+    <p className="mt-4 text-body" style={{ color: "hsl(var(--muted-foreground))" }}>
       {t(tkey)}
     </p>
   );

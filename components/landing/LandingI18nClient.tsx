@@ -8,6 +8,10 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
  * Composants client qui rendent les zones i18n-isées de la landing.
  * Le fichier app/page.tsx reste server (pour exporter metadata) ;
  * ces sous-composants client consomment useTranslation pour basculer FR/EN.
+ *
+ * Design system : Instrument Serif (font-display) sur h1/h2 uniquement,
+ * Manrope partout ailleurs. Accent champagne — le vert ne signifie que le
+ * verdict et n'apparaît donc pas dans ce fichier.
  */
 
 export function HeroI18n() {
@@ -15,14 +19,14 @@ export function HeroI18n() {
   return (
     <>
       <h1
-        className="font-heading text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl"
-        style={{ color: "var(--text-primary)" }}
+        className="font-display text-display"
+        style={{ color: "hsl(var(--foreground))" }}
       >
         {t("hero.title")}
       </h1>
       <p
-        className="mt-6 max-w-lg text-base leading-relaxed sm:text-lg"
-        style={{ color: "var(--text-secondary)" }}
+        className="mt-6 max-w-lg text-body sm:text-lead"
+        style={{ color: "hsl(var(--muted-foreground))" }}
       >
         {t("hero.subtitle")}
       </p>
@@ -45,14 +49,14 @@ export function BrandsTitleI18n() {
   return (
     <>
       <h2
-        className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-        style={{ color: "var(--text-primary)" }}
+        className="font-display text-h2"
+        style={{ color: "hsl(var(--foreground))" }}
       >
         {t("landing.brandsTitle")}
       </h2>
       <p
-        className="mx-auto mt-4 max-w-2xl"
-        style={{ color: "var(--text-secondary)" }}
+        className="mx-auto mt-4 max-w-2xl text-body"
+        style={{ color: "hsl(var(--muted-foreground))" }}
       >
         {t("landing.brandsSubtitle")}
       </p>
@@ -65,14 +69,14 @@ export function HowItWorksI18n() {
   return (
     <>
       <h2
-        className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-        style={{ color: "var(--text-primary)" }}
+        className="font-display text-h2"
+        style={{ color: "hsl(var(--foreground))" }}
       >
         {t("landing.howItWorksTitle")}
       </h2>
       <p
-        className="mx-auto mt-4 max-w-2xl"
-        style={{ color: "var(--text-secondary)" }}
+        className="mx-auto mt-4 max-w-2xl text-body"
+        style={{ color: "hsl(var(--muted-foreground))" }}
       >
         {t("landing.howItWorksSubtitle")}
       </p>
@@ -85,14 +89,14 @@ export function PricingTitleI18n() {
   return (
     <>
       <h2
-        className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-        style={{ color: "var(--text-primary)" }}
+        className="font-display text-h2"
+        style={{ color: "hsl(var(--foreground))" }}
       >
         {t("landing.pricingTitle")}
       </h2>
       <p
-        className="mx-auto mt-4 max-w-2xl"
-        style={{ color: "var(--text-secondary)" }}
+        className="mx-auto mt-4 max-w-2xl text-body"
+        style={{ color: "hsl(var(--muted-foreground))" }}
       >
         {t("landing.pricingSubtitle")}
       </p>
@@ -104,8 +108,8 @@ export function FaqTitleI18n() {
   const { t } = useTranslation();
   return (
     <h2
-      className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-      style={{ color: "var(--text-primary)" }}
+      className="font-display text-h2"
+      style={{ color: "hsl(var(--foreground))" }}
     >
       {t("landing.faqTitle")}
     </h2>
@@ -117,31 +121,32 @@ export function FinalCtaI18n() {
   return (
     <>
       <h2
-        className="font-heading text-3xl font-bold tracking-tight sm:text-4xl"
-        style={{ color: "var(--text-primary)" }}
+        className="font-display text-h2"
+        style={{ color: "hsl(var(--foreground))" }}
       >
         {t("landing.ctaFinalTitle")}
       </h2>
       <p
-        className="mx-auto mt-4 max-w-lg"
-        style={{ color: "var(--text-secondary)" }}
+        className="mx-auto mt-4 max-w-lg text-body"
+        style={{ color: "hsl(var(--muted-foreground))" }}
       >
         {t("landing.ctaFinalSubtitle")}
       </p>
       <Link
         href="/auth?redirect=%2Fcheck%2Fnew"
-        className="group mt-10 inline-flex h-12 items-center gap-2 rounded-xl px-8 text-base font-semibold text-white transition-all"
+        className="group mt-8 inline-flex h-12 items-center gap-2 rounded-md px-8 text-body font-semibold transition-[background-color,box-shadow]"
         style={{
-          background: "#10B981",
-          animation: "pulse-glow 3s ease-in-out infinite",
+          background: "hsl(var(--accent))",
+          color: "hsl(var(--accent-foreground))",
+          animation: "pulse-glow var(--dur-ambient) ease-in-out infinite",
         }}
       >
         {t("landing.ctaFinalButton")}
         <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
       </Link>
       <p
-        className="mt-4 text-xs"
-        style={{ color: "var(--text-tertiary)" }}
+        className="mt-4 text-caption"
+        style={{ color: "hsl(var(--subtle-foreground))" }}
       >
         {t("landing.ctaFinalNote")}
       </p>
@@ -192,14 +197,14 @@ export function FooterSeoLinksI18n() {
   return (
     <div className="flex flex-col gap-3">
       <span
-        className="text-xs font-semibold uppercase tracking-wider"
-        style={{ color: "var(--text-tertiary)" }}
+        className="text-caption font-semibold uppercase"
+        style={{ color: "hsl(var(--subtle-foreground))" }}
       >
         {t("footer.guidesTitle")}
       </span>
       <div
-        className="flex flex-wrap gap-x-6 gap-y-2 text-sm"
-        style={{ color: "var(--text-tertiary)" }}
+        className="flex flex-wrap gap-x-6 gap-y-2 text-ui"
+        style={{ color: "hsl(var(--subtle-foreground))" }}
       >
         <Link
           href="/legit-check"

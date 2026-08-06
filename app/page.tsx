@@ -101,13 +101,16 @@ const serviceJsonLd = {
   },
 };
 
-// Arrays statiques FR remplacés par composants client i18n :
-// → StepsSection, StatsSection, TestimonialsSection, PlansSection
-// (cf. components/landing/LandingSectionsClient.tsx)
+// Design system : accent champagne (--accent) sur toute l'interface. Le vert ne
+// signifie que le verdict : --verdict-authentic est réservé aux pixels qui
+// affichent un score ou un verdict (carte score flottante, jauge et badge du
+// rapport-exemple). Le scanner, lui, reste champagne — capturer n'est pas juger.
+// Instrument Serif (font-display) sur h1/h2 uniquement, Manrope partout ailleurs.
+// Surfaces opaques : plus de backdrop-filter ni de bordures white/α.
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
+    <div className="min-h-screen bg-background">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
@@ -118,15 +121,7 @@ export default function LandingPage() {
       />
 
       {/* ── Navigation ── */}
-      <nav
-        className="sticky top-0 z-50"
-        style={{
-          background: "rgba(10, 10, 11, 0.75)",
-          backdropFilter: "blur(24px) saturate(160%)",
-          WebkitBackdropFilter: "blur(24px) saturate(160%)",
-          borderBottom: "1px solid rgba(255,255,255,0.04)",
-        }}
-      >
+      <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Link href="/" className="flex items-center">
             <Image
@@ -138,7 +133,7 @@ export default function LandingPage() {
               priority
             />
           </Link>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-6">
             <nav className="hidden items-center gap-6 md:flex">
               <NavLinks />
             </nav>
@@ -150,47 +145,54 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden pb-20 pt-24 sm:pb-32 sm:pt-36">
-        {/* Ambient emerald glow */}
+      <section className="relative overflow-hidden pb-16 pt-24 sm:pb-24">
+        {/* Halo ambiant unique, très bas en opacité — pas de dégradé coloré */}
         <div
-          className="pointer-events-none absolute -top-20 right-0 h-[700px] w-[700px] rounded-full"
-          style={{ background: "radial-gradient(circle at 70% 30%, rgba(16,185,129,0.08) 0%, transparent 70%)" }}
-        />
-        <div
-          className="pointer-events-none absolute bottom-0 left-0 h-[400px] w-[400px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.04) 0%, transparent 70%)" }}
+          className="pointer-events-none absolute -top-24 right-0 h-[700px] w-[700px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle at 70% 30%, hsl(var(--accent) / 0.05) 0%, transparent 70%)",
+          }}
         />
 
         <div className="relative mx-auto max-w-6xl px-4">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-24">
 
             {/* Left: text */}
             <FadeIn>
               <div>
                 <span
-                  className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-medium uppercase tracking-widest"
+                  className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-caption font-medium uppercase"
                   style={{
-                    border: "1px solid rgba(16,185,129,0.2)",
-                    background: "rgba(16,185,129,0.06)",
-                    color: "#10B981",
+                    border: "1px solid hsl(var(--accent) / 0.28)",
+                    background: "hsl(var(--accent) / 0.08)",
+                    color: "hsl(var(--accent))",
                   }}
                 >
                   <span className="relative flex size-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+                    <span
+                      className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                      style={{ background: "hsl(var(--accent))" }}
+                    />
+                    <span
+                      className="relative inline-flex size-2 rounded-full"
+                      style={{ background: "hsl(var(--accent))" }}
+                    />
                   </span>
                   <HeroPoweredByI18n />
                 </span>
 
                 <HeroI18n />
 
-                <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                   <Link
                     href="/auth?redirect=%2Fcheck%2Fnew"
-                    className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl px-8 text-base font-semibold text-white transition-all"
+                    className="group inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-body font-semibold transition-[background-color,box-shadow]"
                     style={{
-                      background: "#10B981",
-                      animation: "pulse-glow 3s ease-in-out infinite",
+                      background: "hsl(var(--accent))",
+                      color: "hsl(var(--accent-foreground))",
+                      animation:
+                        "pulse-glow var(--dur-ambient) ease-in-out infinite",
                     }}
                   >
                     <LandingLabel tkey="hero.analyzeItem" />
@@ -198,10 +200,10 @@ export default function LandingPage() {
                   </Link>
                   <Link
                     href="#how-it-works"
-                    className="inline-flex h-12 items-center justify-center rounded-xl px-8 text-base font-medium transition-all"
+                    className="inline-flex h-12 items-center justify-center rounded-md px-8 text-body font-medium transition-[border-color,color]"
                     style={{
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      color: "var(--text-secondary)",
+                      border: "1px solid hsl(var(--line-strong))",
+                      color: "hsl(var(--muted-foreground))",
                     }}
                   >
                     <LandingLabel tkey="nav.howItWorks" />
@@ -209,7 +211,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Trust signals */}
-                <div className="mt-8 flex flex-wrap gap-5">
+                <div className="mt-8 flex flex-wrap gap-6">
                   <HeroTrustTags />
                 </div>
               </div>
@@ -220,13 +222,8 @@ export default function LandingPage() {
               <div className="relative mx-auto max-w-sm lg:max-w-none">
                 {/* Scanner frame */}
                 <div
-                  className="relative overflow-hidden rounded-2xl"
-                  style={{
-                    background: "var(--bg-card)",
-                    border: "1px solid rgba(255,255,255,0.06)",
-                    aspectRatio: "4/5",
-                    maxHeight: 460,
-                  }}
+                  className="relative overflow-hidden rounded-lg border border-line bg-surface"
+                  style={{ aspectRatio: "4/5", maxHeight: 460 }}
                 >
                   {/* Viewfinder corners */}
                   <div className="corner-tl" />
@@ -241,9 +238,10 @@ export default function LandingPage() {
                       left: 0,
                       right: 0,
                       height: 2,
-                      background: "linear-gradient(90deg, transparent 0%, #10B981 20%, #10B981 80%, transparent 100%)",
-                      boxShadow: "0 0 16px rgba(16,185,129,0.6), 0 0 32px rgba(16,185,129,0.3)",
-                      animation: "scan-line 3s linear infinite",
+                      background:
+                        "linear-gradient(90deg, transparent 0%, hsl(var(--accent)) 20%, hsl(var(--accent)) 80%, transparent 100%)",
+                      boxShadow: "0 0 16px hsl(var(--accent) / 0.5)",
+                      animation: "scan-line var(--dur-ambient) linear infinite",
                       zIndex: 10,
                     }}
                   />
@@ -251,80 +249,111 @@ export default function LandingPage() {
                   {/* Scanner content — simulated article photo grid */}
                   <div className="absolute inset-0 flex flex-col gap-2 p-6">
                     {/* Header label */}
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="mb-2 flex items-center gap-2">
                       <div
                         className="size-1.5 rounded-full"
-                        style={{ background: "#10B981", animation: "blink 1.5s ease-in-out infinite" }}
+                        style={{
+                          background: "hsl(var(--accent))",
+                          animation:
+                            "blink var(--dur-ambient) ease-in-out infinite",
+                        }}
                       />
                       <span
                         className="text-[10px] font-medium uppercase tracking-widest"
-                        style={{ color: "#10B981" }}
+                        style={{ color: "hsl(var(--accent))" }}
                       >
                         Analyse en cours
                       </span>
                     </div>
 
                     {/* Photo grid simulation — bilingue */}
-                    <div className="grid grid-cols-3 gap-2 flex-1">
+                    <div className="grid flex-1 grid-cols-3 gap-2">
                       <MockPhotoGrid />
                     </div>
                   </div>
 
                   {/* Bottom scan info bar */}
                   <div
-                    className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-5 py-3"
+                    className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-6 py-3"
                     style={{
-                      background: "rgba(10,10,11,0.8)",
-                      backdropFilter: "blur(10px)",
-                      borderTop: "1px solid rgba(255,255,255,0.04)",
+                      background: "hsl(var(--background))",
+                      borderTop: "1px solid hsl(var(--line-subtle))",
                     }}
                   >
-                    <span className="text-[10px]" style={{ color: "var(--text-tertiary)" }}>
+                    <span
+                      className="text-[10px]"
+                      style={{ color: "hsl(var(--subtle-foreground))" }}
+                    >
                       Nike · Air Jordan 1 Retro High
                     </span>
-                    <span className="text-[10px]" style={{ color: "#10B981" }}>
+                    <span
+                      className="text-[10px]"
+                      style={{ color: "hsl(var(--accent))" }}
+                    >
                       Score en calcul...
                     </span>
                   </div>
                 </div>
 
-                {/* Floating score card */}
+                {/* Floating score card — affiche un VERDICT : emerald, pas champagne.
+                    Le scanner autour reste en champagne : capturer n'est pas juger. */}
                 <div
-                  className="absolute -bottom-6 -right-4 rounded-2xl p-4 shadow-2xl"
+                  className="absolute -bottom-6 -right-4 rounded-lg p-4 shadow-2xl"
                   style={{
-                    background: "rgba(20, 20, 22, 0.85)",
-                    backdropFilter: "blur(20px)",
-                    border: "1px solid rgba(16,185,129,0.2)",
-                    animation: "float 4s ease-in-out infinite",
+                    background: "hsl(var(--surface-raised))",
+                    border: "1px solid hsl(var(--verdict-authentic) / 0.28)",
+                    animation: "float var(--dur-ambient) ease-in-out infinite",
                     minWidth: 140,
                   }}
                 >
-                  <p className="text-[9px] font-medium uppercase tracking-widest" style={{ color: "var(--text-tertiary)" }}>
+                  <p
+                    className="text-[10px] font-medium uppercase tracking-widest"
+                    style={{ color: "hsl(var(--subtle-foreground))" }}
+                  >
                     Score final
                   </p>
-                  <p className="mt-1 font-heading text-3xl font-bold" style={{ color: "#10B981" }}>
+                  <p
+                    className="mt-1 text-h2 font-semibold tabular-nums"
+                    style={{ color: "hsl(var(--verdict-authentic))" }}
+                  >
                     89
-                    <span className="text-sm font-normal" style={{ color: "var(--text-tertiary)" }}>/100</span>
+                    <span
+                      className="text-ui font-normal"
+                      style={{ color: "hsl(var(--subtle-foreground))" }}
+                    >
+                      /100
+                    </span>
                   </p>
                   <div
                     className="mt-2 flex items-center gap-1.5 rounded-full px-2 py-0.5"
-                    style={{ background: "rgba(16,185,129,0.1)" }}
+                    style={{ background: "hsl(var(--verdict-authentic) / 0.1)" }}
                   >
-                    <CheckCircle2 className="size-3 text-emerald-500" />
-                    <span className="text-[10px] font-semibold text-emerald-400">Probablement authentique</span>
+                    <CheckCircle2
+                      className="size-3"
+                      style={{ color: "hsl(var(--verdict-authentic))" }}
+                    />
+                    <span
+                      className="text-[10px] font-semibold"
+                      style={{ color: "hsl(var(--verdict-authentic))" }}
+                    >
+                      Probablement authentique
+                    </span>
                   </div>
                 </div>
 
                 {/* Floating scan point indicators */}
                 <div
-                  className="absolute -left-3 top-1/3 size-6 rounded-full flex items-center justify-center"
+                  className="absolute -left-3 top-1/3 flex size-6 items-center justify-center rounded-full"
                   style={{
-                    background: "rgba(16,185,129,0.12)",
-                    border: "1px solid rgba(16,185,129,0.3)",
-                    animation: "blink 2s ease-in-out infinite",
+                    background: "hsl(var(--accent) / 0.12)",
+                    border: "1px solid hsl(var(--accent) / 0.3)",
+                    animation: "blink var(--dur-ambient) ease-in-out infinite",
                   }}
                 >
-                  <div className="size-2 rounded-full bg-emerald-500" />
+                  <div
+                    className="size-2 rounded-full"
+                    style={{ background: "hsl(var(--accent))" }}
+                  />
                 </div>
               </div>
             </FadeIn>
@@ -334,12 +363,12 @@ export default function LandingPage() {
       </section>
 
       {/* ── Vidéo de présentation ── */}
-      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+      <section className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               <LandingLabel tkey="landing.videoLabel" />
             </p>
@@ -355,7 +384,7 @@ export default function LandingPage() {
                 playsInline
                 preload="none"
                 poster="/images/hero-poster.webp"
-                className="w-full max-w-[300px] rounded-2xl border border-white/5 shadow-2xl shadow-emerald-500/10"
+                className="w-full max-w-[300px] rounded-lg border border-line-subtle shadow-2xl"
               >
                 <source src="/videos/hero-video.mp4" type="video/mp4" />
               </video>
@@ -365,23 +394,24 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats band ── */}
-      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "0" }}>
+      <section className="border-t border-line-subtle">
         <FadeIn>
-          <div
-            className="mx-auto max-w-6xl px-4 py-10"
-          >
+          <div className="mx-auto max-w-6xl px-4 py-12">
             <StatsSection />
           </div>
         </FadeIn>
       </section>
 
       {/* ── Comment ça marche ── */}
-      <section id="how-it-works" style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+      <section
+        id="how-it-works"
+        className="border-t border-line-subtle py-16 sm:py-24"
+      >
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               <LandingLabel tkey="landing.labelProcess" />
             </p>
@@ -393,18 +423,21 @@ export default function LandingPage() {
       </section>
 
       {/* ── Encadré sécurité ── */}
-      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "40px 0" }}>
+      <section className="border-t border-line-subtle py-12">
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn>
             <div
-              className="flex flex-col items-center gap-3 rounded-2xl px-6 py-5 text-center sm:flex-row sm:text-left"
+              className="flex flex-col items-center gap-3 rounded-lg px-6 py-6 text-center sm:flex-row sm:text-left"
               style={{
-                border: "1px solid rgba(16,185,129,0.12)",
-                background: "rgba(16,185,129,0.04)",
+                border: "1px solid hsl(var(--accent) / 0.18)",
+                background: "hsl(var(--accent) / 0.05)",
               }}
             >
-              <span className="shrink-0 text-2xl">🔒</span>
-              <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
+              <span className="shrink-0 text-h3">🔒</span>
+              <p
+                className="text-ui"
+                style={{ color: "hsl(var(--muted-foreground))" }}
+              >
                 <SecurityNoteI18n />
               </p>
             </div>
@@ -413,12 +446,12 @@ export default function LandingPage() {
       </section>
 
       {/* ── Exemple de rapport ── */}
-      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+      <section className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               <LandingLabel tkey="landing.labelExample" />
             </p>
@@ -427,45 +460,54 @@ export default function LandingPage() {
           </FadeIn>
 
           <FadeIn delay={150}>
-            <div className="mx-auto mt-14 max-w-3xl">
+            <div className="mx-auto mt-12 max-w-3xl">
               <div
-                className="overflow-hidden rounded-2xl shadow-2xl"
+                className="overflow-hidden rounded-lg border border-line bg-surface shadow-2xl"
                 style={{
-                  background: "var(--bg-card)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                  boxShadow: "0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04)",
+                  boxShadow: "0 40px 80px rgba(0,0,0,0.55)",
                   transform: "perspective(1200px) rotateX(2deg) rotateY(-4deg)",
                 }}
               >
                 {/* Report header */}
                 <div
-                  className="flex flex-col gap-3 px-6 py-5 sm:flex-row sm:items-center sm:justify-between"
-                  style={{ borderBottom: "1px solid var(--border-subtle)" }}
+                  className="flex flex-col gap-3 px-6 py-6 sm:flex-row sm:items-center sm:justify-between"
+                  style={{ borderBottom: "1px solid hsl(var(--line-subtle))" }}
                 >
                   <div>
                     <p
-                      className="text-[10px] font-semibold uppercase tracking-widest"
-                      style={{ color: "var(--text-tertiary)" }}
+                      className="text-caption font-semibold uppercase"
+                      style={{ color: "hsl(var(--subtle-foreground))" }}
                     >
                       Rapport d&apos;analyse · Exemple
                     </p>
                     <p
-                      className="mt-0.5 font-heading text-lg font-semibold"
-                      style={{ color: "var(--text-primary)" }}
+                      className="mt-0.5 text-lead font-semibold"
+                      style={{ color: "hsl(var(--foreground))" }}
                     >
                       Louis Vuitton Neverfull MM
                     </p>
-                    <p className="text-xs" style={{ color: "var(--text-secondary)" }}>Maroquinerie · Sac à main</p>
+                    <p
+                      className="text-caption"
+                      style={{ color: "hsl(var(--muted-foreground))" }}
+                    >
+                      Maroquinerie · Sac à main
+                    </p>
                   </div>
                   <div
                     className="flex items-center gap-2 self-start rounded-full px-4 py-1.5 sm:self-auto"
                     style={{
-                      border: "1px solid rgba(16,185,129,0.25)",
-                      background: "rgba(16,185,129,0.08)",
+                      border: "1px solid hsl(var(--verdict-authentic) / 0.3)",
+                      background: "hsl(var(--verdict-authentic) / 0.1)",
                     }}
                   >
-                    <CheckCircle2 className="size-3.5 text-emerald-400" />
-                    <span className="text-xs font-semibold text-emerald-400">
+                    <CheckCircle2
+                      className="size-3.5"
+                      style={{ color: "hsl(var(--verdict-authentic))" }}
+                    />
+                    <span
+                      className="text-caption font-semibold"
+                      style={{ color: "hsl(var(--verdict-authentic))" }}
+                    >
                       Probablement authentique
                     </span>
                   </div>
@@ -475,35 +517,37 @@ export default function LandingPage() {
                 <div className="grid gap-6 p-6 sm:grid-cols-2 sm:gap-8">
                   {/* Left — Gauge + subscores */}
                   <div className="flex flex-col items-center gap-6">
-                    <div className="relative flex items-center justify-center" style={{ width: 148, height: 148 }}>
+                    <div
+                      className="relative flex items-center justify-center"
+                      style={{ width: 148, height: 148 }}
+                    >
                       <svg width={148} height={148} style={{ transform: "rotate(-90deg)" }}>
                         <circle
                           cx={74} cy={74} r={62}
                           fill="none"
-                          stroke="rgba(255,255,255,0.05)"
+                          stroke="hsl(var(--line))"
                           strokeWidth={12}
                         />
                         <circle
                           cx={74} cy={74} r={62}
                           fill="none"
-                          stroke="#10b981"
+                          stroke="hsl(var(--verdict-authentic))"
                           strokeWidth={12}
                           strokeLinecap="round"
                           strokeDasharray="389.56"
                           strokeDashoffset="62.33"
-                          style={{ filter: "drop-shadow(0 0 14px rgba(16, 185, 129, 0.6))" }}
                         />
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center gap-0.5">
                         <span
-                          className="font-heading text-[40px] font-bold leading-none tabular-nums"
-                          style={{ color: "#10B981" }}
+                          className="text-[40px] font-semibold leading-none tabular-nums"
+                          style={{ color: "hsl(var(--verdict-authentic))" }}
                         >
                           84
                         </span>
                         <span
                           className="text-[10px] uppercase tracking-widest"
-                          style={{ color: "var(--text-tertiary)" }}
+                          style={{ color: "hsl(var(--subtle-foreground))" }}
                         >
                           sur 100
                         </span>
@@ -532,12 +576,12 @@ export default function LandingPage() {
       </section>
 
       {/* ── Témoignages ── */}
-      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+      <section className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               <LandingLabel tkey="landing.labelTestimonials" />
             </p>
@@ -552,48 +596,50 @@ export default function LandingPage() {
       {/* ── Marques et catégories ── */}
       <section
         id="brands"
-        style={{
-          borderTop: "1px solid var(--border-subtle)",
-          background: "rgba(255,255,255,0.012)",
-          padding: "80px 0",
-        }}
+        className="border-t border-line-subtle bg-surface/40 py-16 sm:py-24"
       >
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               <LandingLabel tkey="landing.labelCatalog" />
             </p>
             <SectionH2 tkey="landing.brandsCategoriesTitle" />
             <SectionSub tkey="landing.brandsCategoriesSubtitle" />
             <div
-              className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium"
+              className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-caption font-medium"
               style={{
-                border: "1px solid rgba(16,185,129,0.2)",
-                background: "rgba(16,185,129,0.06)",
-                color: "#10B981",
+                border: "1px solid hsl(var(--accent) / 0.28)",
+                background: "hsl(var(--accent) / 0.08)",
+                color: "hsl(var(--accent))",
               }}
             >
-              <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+              <span
+                className="size-1.5 shrink-0 rounded-full"
+                style={{ background: "hsl(var(--accent))" }}
+              />
               <LandingLabel tkey="landing.brandsCategoriesCount" />
             </div>
           </FadeIn>
 
           <FadeIn delay={150}>
-            <div className="mt-10">
+            <div className="mt-12">
               <BrandSearch />
             </div>
             <div className="mt-8">
               <BrandsTabs />
             </div>
-            <p className="mt-8 text-center text-sm" style={{ color: "var(--text-secondary)" }}>
+            <p
+              className="mt-8 text-center text-ui"
+              style={{ color: "hsl(var(--muted-foreground))" }}
+            >
               Une marque manquante ?{" "}
               <a
                 href="mailto:legitvision.contact@gmail.com"
                 className="transition-colors"
-                style={{ color: "#10B981" }}
+                style={{ color: "hsl(var(--accent))" }}
               >
                 Contactez-nous
               </a>{" "}
@@ -604,12 +650,12 @@ export default function LandingPage() {
       </section>
 
       {/* ── Fonctionnalités ── */}
-      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+      <section className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               <LandingLabel tkey="landing.labelFeatures" />
             </p>
@@ -622,12 +668,15 @@ export default function LandingPage() {
       </section>
 
       {/* ── Pricing ── */}
-      <section id="pricing" style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+      <section
+        id="pricing"
+        className="border-t border-line-subtle py-16 sm:py-24"
+      >
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               <LandingLabel tkey="landing.labelPricing" />
             </p>
@@ -640,18 +689,18 @@ export default function LandingPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section id="faq" style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+      <section id="faq" className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               FAQ
             </p>
             <FaqTitleI18n />
           </FadeIn>
-          <FadeIn delay={150} className="mt-10">
+          <FadeIn delay={150} className="mt-12">
             <FaqAccordion />
           </FadeIn>
         </div>
@@ -660,24 +709,20 @@ export default function LandingPage() {
       {/* ── Qui sommes-nous ── */}
       <section
         id="team"
-        style={{
-          borderTop: "1px solid var(--border-subtle)",
-          background: "rgba(255,255,255,0.012)",
-          padding: "80px 0",
-        }}
+        className="border-t border-line-subtle bg-surface/40 py-16 sm:py-24"
       >
         <div className="mx-auto max-w-4xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-[11px] font-medium uppercase tracking-widest"
-              style={{ color: "#10B981" }}
+              className="mb-3 text-caption font-medium uppercase"
+              style={{ color: "hsl(var(--accent))" }}
             >
               <LandingLabel tkey="footer.about" />
             </p>
             <SectionH2 tkey="landing.aboutTitle" />
             <p
-              className="mx-auto mt-5 max-w-2xl"
-              style={{ color: "var(--text-secondary)" }}
+              className="mx-auto mt-6 max-w-2xl text-body"
+              style={{ color: "hsl(var(--muted-foreground))" }}
             >
               <AboutI18n />
             </p>
@@ -686,20 +731,28 @@ export default function LandingPage() {
       </section>
 
       {/* ── Disclaimer expert ── */}
-      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "56px 0" }}>
+      <section className="border-t border-line-subtle py-12">
         <div className="mx-auto max-w-3xl px-4">
           <FadeIn>
             <div
-              className="rounded-2xl px-6 py-6 text-center"
+              className="rounded-lg px-6 py-6 text-center"
               style={{
-                border: "1px solid rgba(212,168,67,0.2)",
-                background: "rgba(212,168,67,0.04)",
+                border: "1px solid hsl(var(--accent) / 0.18)",
+                background: "hsl(var(--accent) / 0.05)",
               }}
             >
-              <ShieldCheck className="mx-auto mb-3 size-8" style={{ color: "#D4A843" }} />
-              <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              <ShieldCheck
+                className="mx-auto mb-3 size-8"
+                style={{ color: "hsl(var(--accent))" }}
+              />
+              <p
+                className="text-ui"
+                style={{ color: "hsl(var(--muted-foreground))" }}
+              >
                 <ExpertNoteI18n />{" "}
-                <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>
+                <span
+                  style={{ color: "hsl(var(--foreground))", fontWeight: 500 }}
+                >
                   <DisclaimerI18n />
                 </span>
               </p>
@@ -709,29 +762,32 @@ export default function LandingPage() {
       </section>
 
       {/* ── CTA final ── */}
-      <section style={{ borderTop: "1px solid var(--border-subtle)", padding: "80px 0" }}>
+      <section className="border-t border-line-subtle py-16 sm:py-24">
         <FadeIn className="mx-auto max-w-6xl px-4 text-center">
           <div
-            className="relative overflow-hidden rounded-3xl px-8 py-16"
-            style={{
-              background: "radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.15) 0%, rgba(10,10,11,0) 70%), var(--bg-card)",
-              border: "1px solid rgba(16,185,129,0.12)",
-            }}
+            className="relative overflow-hidden rounded-lg bg-surface px-8 py-16"
+            style={{ border: "1px solid hsl(var(--accent) / 0.18)" }}
           >
-            {/* Ambient glow */}
+            {/* Filet lumineux haut */}
             <div
               className="pointer-events-none absolute inset-x-0 top-0 h-px"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(16,185,129,0.5), transparent)" }}
+              style={{
+                background:
+                  "linear-gradient(90deg, transparent, hsl(var(--accent) / 0.45), transparent)",
+              }}
             />
 
-            <BarChart3 className="mx-auto mb-6 size-10 text-emerald-500" />
+            <BarChart3
+              className="mx-auto mb-6 size-10"
+              style={{ color: "hsl(var(--accent))" }}
+            />
             <FinalCtaI18n />
           </div>
         </FadeIn>
       </section>
 
       {/* ── Footer ── */}
-      <footer style={{ borderTop: "1px solid var(--border-subtle)", padding: "40px 0" }}>
+      <footer className="border-t border-line-subtle py-12">
         <div className="mx-auto max-w-6xl px-4">
           {/* Maillage interne SEO : liens vers les hubs d'authentification */}
           <div className="mb-8 flex justify-center sm:justify-start">
@@ -739,7 +795,7 @@ export default function LandingPage() {
           </div>
           <div
             className="flex flex-col items-center gap-6 border-t pt-8 sm:flex-row sm:justify-between"
-            style={{ borderColor: "var(--border-subtle)" }}
+            style={{ borderColor: "hsl(var(--line-subtle))" }}
           >
             <div className="flex items-center gap-3">
               <Image
@@ -749,11 +805,17 @@ export default function LandingPage() {
                 height={24}
                 className="h-6 w-auto"
               />
-              <span className="text-sm" style={{ color: "var(--text-tertiary)" }}>
+              <span
+                className="text-ui"
+                style={{ color: "hsl(var(--subtle-foreground))" }}
+              >
                 © {new Date().getFullYear()}
               </span>
             </div>
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm sm:justify-end" style={{ color: "var(--text-tertiary)" }}>
+            <div
+              className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-ui sm:justify-end"
+              style={{ color: "hsl(var(--subtle-foreground))" }}
+            >
               <Link href="#faq" className="transition-colors hover:text-foreground">FAQ</Link>
               <Link href="#team" className="transition-colors hover:text-foreground">À propos</Link>
               <FooterLinksI18n />
