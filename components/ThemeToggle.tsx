@@ -13,15 +13,15 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={isDark ? "Passer en mode clair" : "Passer en mode sombre"}
       title={isDark ? "Mode clair" : "Mode sombre"}
-      className="relative flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-foreground/80 transition-all duration-300 hover:border-emerald-500/30 hover:bg-white/10 hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+      className="relative flex size-9 items-center justify-center rounded-full border border-line bg-surface text-muted-foreground transition-[color,background-color,border-color] duration-fast hover:border-accent/40 hover:bg-surface-raised hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
     >
       <Sun
-        className={`absolute size-4 transition-all duration-300 ${
+        className={`absolute size-4 transition-[transform,opacity] duration-base ${
           isDark ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"
         }`}
       />
       <Moon
-        className={`absolute size-4 transition-all duration-300 ${
+        className={`absolute size-4 transition-[transform,opacity] duration-base ${
           isDark ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"
         }`}
       />

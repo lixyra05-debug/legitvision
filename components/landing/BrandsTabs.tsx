@@ -131,13 +131,13 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
     return (
       <button
         onClick={handleNav}
-        className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-4 transition-all hover:border-emerald-500/50 cursor-pointer w-full"
+        className="group flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-line bg-surface-raised p-4 transition-[border-color] duration-fast hover:border-line-strong"
       >
-        <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-white">
-          <span className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+        <div className="flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1.5 text-caption font-medium text-foreground">
+          <span className="size-1.5 shrink-0 rounded-full bg-muted-foreground" />
           {brand.name}
         </div>
-        <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
+        <span className="rounded-full bg-surface px-2 py-0.5 text-caption font-medium text-muted-foreground">
           {brand.models}{" "}
           {brand.models > 1
             ? t("brandsTabs.modelsCountPlural")
@@ -150,7 +150,7 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
   return (
     <button
       onClick={handleNav}
-      className="group flex flex-col items-center gap-2 rounded-xl border border-white/[0.08] bg-[#1E1E26] p-4 transition-all hover:scale-105 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 cursor-pointer text-left w-full"
+      className="group flex w-full cursor-pointer flex-col items-center gap-2 rounded-md border border-line bg-surface-raised p-4 text-left transition-[transform,border-color,box-shadow] duration-fast hover:scale-105 hover:border-line-strong hover:shadow-lg"
     >
       <div className="flex h-10 w-16 items-center justify-center overflow-hidden rounded-md bg-white p-1">
         <Image
@@ -167,10 +167,10 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
           }}
         />
       </div>
-      <span className="text-center text-[11px] leading-tight text-muted-foreground/80">
+      <span className="text-center text-caption leading-tight text-muted-foreground">
         {brand.name}
       </span>
-      <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
+      <span className="rounded-full bg-surface px-2 py-0.5 text-caption font-medium text-muted-foreground">
         {brand.models}{" "}
         {brand.models > 1
           ? t("brandsTabs.modelsCountPlural")
@@ -190,7 +190,7 @@ export function BrandsTabs() {
   return (
     <div>
       {/* ── Category banner (image swap) ── */}
-      <div className="relative mb-6 h-[140px] overflow-hidden rounded-2xl sm:h-[200px]">
+      <div className="relative mb-6 h-[140px] overflow-hidden rounded-lg sm:h-[200px]">
         {(Object.keys(CATEGORY_BANNER) as Category[]).map((key) => (
           <Image
             key={key}
@@ -199,7 +199,7 @@ export function BrandsTabs() {
             fill
             priority={key === "sneakers"}
             sizes="(max-width: 640px) 100vw, 1200px"
-            className={`object-cover transition-opacity duration-500 ${
+            className={`object-cover transition-opacity duration-slow ${
               active === key ? "opacity-100" : "opacity-0"
             }`}
           />
@@ -212,10 +212,10 @@ export function BrandsTabs() {
           <button
             key={tab.id}
             onClick={() => setActive(tab.id)}
-            className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all ${
+            className={`flex items-center gap-2 rounded-full px-6 py-2 text-ui font-medium transition-[background-color,border-color,color] duration-fast ${
               active === tab.id
-                ? "bg-emerald-500 text-white shadow-lg shadow-emerald-500/25"
-                : "border border-white/10 bg-white/5 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                ? "bg-accent text-accent-foreground shadow-lg"
+                : "border border-line bg-surface text-muted-foreground hover:border-line-strong hover:text-foreground"
             }`}
           >
             <span aria-hidden="true">{tab.emoji}</span>

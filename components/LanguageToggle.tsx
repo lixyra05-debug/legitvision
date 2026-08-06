@@ -13,7 +13,7 @@ export function LanguageToggle() {
       onClick={toggleLocale}
       aria-label={`Switch to ${next.toUpperCase()}`}
       title={`${locale.toUpperCase()} → ${next.toUpperCase()}`}
-      className="flex size-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-xs font-semibold tracking-wider text-foreground/80 transition-all duration-300 hover:border-emerald-500/30 hover:bg-white/10 hover:text-emerald-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50"
+      className="flex size-9 items-center justify-center rounded-full border border-line bg-surface text-caption font-semibold text-muted-foreground transition-[color,background-color,border-color] duration-fast hover:border-accent/40 hover:bg-surface-raised hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
     >
       {label}
     </button>

@@ -9,9 +9,8 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
  * Le fichier app/page.tsx reste server (pour exporter metadata) ;
  * ces sous-composants client consomment useTranslation pour basculer FR/EN.
  *
- * Design system : Instrument Serif (font-display) sur h1/h2 uniquement,
- * Manrope partout ailleurs. Accent champagne — le vert ne signifie que le
- * verdict et n'apparaît donc pas dans ce fichier.
+ * Design system : Inter pour le corps, Space Grotesk pour les titres.
+ * L'emerald de marque est dosé : il ne porte ici que le CTA final.
  */
 
 export function HeroI18n() {
@@ -19,7 +18,7 @@ export function HeroI18n() {
   return (
     <>
       <h1
-        className="font-display text-display"
+        className="font-heading text-display font-bold"
         style={{ color: "hsl(var(--foreground))" }}
       >
         {t("hero.title")}
@@ -49,7 +48,7 @@ export function BrandsTitleI18n() {
   return (
     <>
       <h2
-        className="font-display text-h2"
+        className="font-heading text-h2 font-bold"
         style={{ color: "hsl(var(--foreground))" }}
       >
         {t("landing.brandsTitle")}
@@ -69,7 +68,7 @@ export function HowItWorksI18n() {
   return (
     <>
       <h2
-        className="font-display text-h2"
+        className="font-heading text-h2 font-bold"
         style={{ color: "hsl(var(--foreground))" }}
       >
         {t("landing.howItWorksTitle")}
@@ -89,7 +88,7 @@ export function PricingTitleI18n() {
   return (
     <>
       <h2
-        className="font-display text-h2"
+        className="font-heading text-h2 font-bold"
         style={{ color: "hsl(var(--foreground))" }}
       >
         {t("landing.pricingTitle")}
@@ -108,7 +107,7 @@ export function FaqTitleI18n() {
   const { t } = useTranslation();
   return (
     <h2
-      className="font-display text-h2"
+      className="font-heading text-h2 font-bold"
       style={{ color: "hsl(var(--foreground))" }}
     >
       {t("landing.faqTitle")}
@@ -121,7 +120,7 @@ export function FinalCtaI18n() {
   return (
     <>
       <h2
-        className="font-display text-h2"
+        className="font-heading text-h2 font-bold"
         style={{ color: "hsl(var(--foreground))" }}
       >
         {t("landing.ctaFinalTitle")}
@@ -145,8 +144,7 @@ export function FinalCtaI18n() {
         <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
       </Link>
       <p
-        className="mt-4 text-caption"
-        style={{ color: "hsl(var(--subtle-foreground))" }}
+        className="mt-4 text-caption text-subtle"
       >
         {t("landing.ctaFinalNote")}
       </p>
@@ -197,14 +195,12 @@ export function FooterSeoLinksI18n() {
   return (
     <div className="flex flex-col gap-3">
       <span
-        className="text-caption font-semibold uppercase"
-        style={{ color: "hsl(var(--subtle-foreground))" }}
+        className="text-caption font-semibold uppercase text-subtle"
       >
         {t("footer.guidesTitle")}
       </span>
       <div
-        className="flex flex-wrap gap-x-6 gap-y-2 text-ui"
-        style={{ color: "hsl(var(--subtle-foreground))" }}
+        className="flex flex-wrap gap-x-6 gap-y-2 text-ui text-subtle"
       >
         <Link
           href="/legit-check"

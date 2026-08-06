@@ -24,9 +24,10 @@
    n'est écrite qu'une fois.
 
    ── Règle du vert ────────────────────────────────────────────────────────
-   L'emerald ne vit plus que dans --verdict-authentic. Il est RÉSERVÉ aux
-   verdicts d'authentification : ReportView, ScoreGauge, composants de verdict.
-   Nulle part ailleurs. L'accent d'interface est le champagne.
+   L'emerald est l'accent de marque, et il est DOSÉ : CTA principaux, liens,
+   états actifs et de focus, verdicts d'authentification. Jamais sur les puces
+   de liste, les bordures décoratives, les icônes secondaires ni les badges
+   non-verdict — le décor prend les neutres (--line-*, --muted-foreground).
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @layer base {
@@ -47,17 +48,26 @@
     --subtle-foreground: 218.6 5.8% 47.1%;
 
     /* ── Bordures — opaques, plus de white/α ─────────────────────────── */
-    --line-subtle: 217.5 13.3% 11.8%; /* #1A1D22 */
-    --line: 218.2 12.6% 17.1%; /* #262A31 */
+    --line-subtle: 217.5 13.3% 11.8%; /* #1A1D22 — calibré sur --background */
+    --line: 218.2 12.6% 17.1%; /* #262A31 — bordure sur surface élevée */
     --line-strong: 217.5 12.1% 25.9%; /* #3A404A */
+    /* Survol d'un item posé sur une surface ÉLEVÉE. --surface est plus SOMBRE
+       que --surface-raised : y survoler assombrissait au lieu d'éclaircir, et
+       l'affordance se lisait « désactivé » au lieu de « ciblé ». */
+    --surface-hover: var(--line);
 
-    /* ── Accent d'interface : champagne ──────────────────────────────── */
-    --accent: 40.4 28.7% 66.5%; /* #C2B291 — 9,5:1 */
-    --accent-hover: 40.9 32.8% 73.7%; /* #D2C4A6 */
-    --accent-muted: 41.7 15% 47.1%; /* #8A7F66 */
+    /* ── Accent d'interface : l'emerald de marque ─────────────────────
+       DOSÉ : CTA principaux, liens, états actifs et de focus. Jamais sur les
+       puces de liste, les bordures décoratives, les icônes secondaires ni les
+       badges non-verdict — ceux-là prennent les neutres (--line-*, --muted-foreground). */
+    --accent: 160.1 84.1% 39.4%; /* #10B981 — 7,8:1 */
+    --accent-hover: 158.1 64.4% 51.6%; /* #34D399 */
+    --accent-muted: 161.4 93.6% 30.4%; /* #059669 */
 
-    /* ── Verdicts — RÉSERVÉS ─────────────────────────────────────────── */
-    --verdict-authentic: 160.1 84.1% 39.4%; /* #10B981 — 7,8:1 */
+    /* ── Verdicts ────────────────────────────────────────────────────── */
+    /* Même vert que l'accent, par décision : dériver plutôt que redéclarer,
+       pour qu'ils puissent se séparer plus tard en éditant une seule ligne. */
+    --verdict-authentic: var(--accent);
     --verdict-fake: 358.1 75.1% 59%; /* #E5484D — 5,1:1 */
     --verdict-inconclusive: 211.3 11.1% 59.4%; /* #8C97A3 — 6,7:1 */
 
@@ -72,7 +82,13 @@
     --secondary-foreground: var(--foreground);
     --muted: var(--surface-raised);
     --accent-foreground: var(--background);
-    --destructive: var(--verdict-fake);
+    /* DÉCOUPLÉ de --verdict-fake volontairement. « Destructif » est un rôle
+       d'interface (déconnexion, suppression, champ invalide) ; « contrefait »
+       est un verdict. Les confondre imposait au rôle la teinte du verdict :
+       #E5484D est calibré à 5,1:1 sur le fond de page, mais tombe à 4,27:1 sur
+       une surface élevée — sous le seuil AA. Ce rouge-ci est éclairci pour
+       rester lisible sur les trois niveaux de fond (5,9:1 sur --surface-raised). */
+    --destructive: 358 80% 70%; /* #F07579 */
     --destructive-foreground: var(--foreground);
     --border: var(--line);
     --input: var(--line-strong);
@@ -98,7 +114,7 @@
   /* ── Mode clair ──────────────────────────────────────────────────────
      DÉRIVÉ, PAS ARBITRÉ. La palette validée ne couvrait que le sombre ;
      ces valeurs sont ma transposition (mêmes teintes, clartés inversées,
-     champagne assombri pour tenir le contraste sur fond pâle). Le thème
+     emerald assombri pour tenir le contraste sur fond pâle). Le thème
      clair reste donc fonctionnel, mais il attend ta validation. */
   .light {
     --background: 220 14% 96.5%;
@@ -113,16 +129,17 @@
     --line: 219 12% 83%;
     --line-strong: 218 12% 70%;
 
-    --accent: 40 15.8% 37.3%; /* ≈ #6E6450 — 5,8:1 sur blanc */
-    --accent-hover: 40 16% 30%;
-    --accent-muted: 40 15% 55%;
+    /* Emerald assombri : #10B981 ne tient que 2,5:1 sur fond clair. */
+    --accent: 160.1 84.1% 30%; /* ≈ #0C8D62 */
+    --accent-hover: 160 84% 24%;
+    --accent-muted: 160 60% 45%;
 
-    --verdict-authentic: 160.1 84.1% 30%;
     --verdict-fake: 358.1 65% 47%;
     --verdict-inconclusive: 211.3 11.1% 42%;
 
     --primary-foreground: 0 0% 100%;
     --accent-foreground: 0 0% 100%;
+    --destructive: 358 62% 42%; /* ≈ #AE292D — 6,7:1 sur blanc */
     --destructive-foreground: 0 0% 100%;
   }
 
@@ -232,7 +249,7 @@
 }
 
 /* ── Coins du viseur ─────────────────────────────────────────────────────
-   Guide de cadrage photo, pas un verdict : passe donc du vert au champagne. */
+   Cadrage en cours : c'est un état actif, donc il porte l'accent. */
 .corner-tl,
 .corner-tr,
 .corner-bl,

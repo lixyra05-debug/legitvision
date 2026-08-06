@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Instrument_Serif, Azeret_Mono } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -11,33 +11,14 @@ import "./globals.css";
 // sur <html> selon localStorage. Évite le flash (FOUC) au chargement.
 const themeInitScript = `(function(){try{var t=localStorage.getItem('legitvision-theme');document.documentElement.classList.add(t==='light'?'light':'dark');}catch(e){document.documentElement.classList.add('dark');}})();`;
 
-// Manrope — variable (200-800) : porte tout le texte et la hiérarchie h3/h4
-// et en dessous. Un seul fichier, toutes les graisses.
-const manrope = Manrope({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-manrope",
-  display: "swap",
+  variable: "--font-inter",
 });
 
-// Instrument Serif — display / h1 / h2 UNIQUEMENT. Graisse unique (400) :
-// jamais associée à font-bold ou font-semibold, le faux-gras serait immonde.
-const instrumentSerif = Instrument_Serif({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-instrument-serif",
-  display: "swap",
-});
-
-// Azeret Mono — données (scores, codes style, numéros de série).
-// `preload: false` : aucun <link rel=preload> n'est émis, seul le @font-face
-// part dans le CSS. Le navigateur ne télécharge le fichier que si un glyphe le
-// réclame — donc uniquement sur les pages rapport, seul endroit où `font-mono`
-// est utilisé (components/check/ReportView.tsx:507). Coût nul ailleurs.
-const azeretMono = Azeret_Mono({
-  subsets: ["latin"],
-  variable: "--font-azeret-mono",
-  display: "swap",
-  preload: false,
+  variable: "--font-space-grotesk",
 });
 
 const SITE_NAME = "LegitVision";
@@ -158,9 +139,8 @@ export default function RootLayout({
       lang="fr"
       className={cn(
         "antialiased",
-        manrope.variable,
-        instrumentSerif.variable,
-        azeretMono.variable,
+        inter.variable,
+        spaceGrotesk.variable,
       )}
       suppressHydrationWarning
     >

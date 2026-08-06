@@ -101,11 +101,10 @@ const serviceJsonLd = {
   },
 };
 
-// Design system : accent champagne (--accent) sur toute l'interface. Le vert ne
-// signifie que le verdict : --verdict-authentic est réservé aux pixels qui
-// affichent un score ou un verdict (carte score flottante, jauge et badge du
-// rapport-exemple). Le scanner, lui, reste champagne — capturer n'est pas juger.
-// Instrument Serif (font-display) sur h1/h2 uniquement, Manrope partout ailleurs.
+// Design system : l'emerald de marque, DOSÉ. Il ne porte que les CTA principaux,
+// les liens, les états actifs (scanner en cours, point live) et les verdicts.
+// Tout le décoratif — labels de section, encadrés, badges, icônes secondaires —
+// passe aux neutres. Inter pour le corps, Space Grotesk pour les titres.
 // Surfaces opaques : plus de backdrop-filter ni de bordures white/α.
 
 export default function LandingPage() {
@@ -146,15 +145,6 @@ export default function LandingPage() {
 
       {/* ── Hero ── */}
       <section className="relative overflow-hidden pb-16 pt-24 sm:pb-24">
-        {/* Halo ambiant unique, très bas en opacité — pas de dégradé coloré */}
-        <div
-          className="pointer-events-none absolute -top-24 right-0 h-[700px] w-[700px] rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle at 70% 30%, hsl(var(--accent) / 0.05) 0%, transparent 70%)",
-          }}
-        />
-
         <div className="relative mx-auto max-w-6xl px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-24">
 
@@ -164,15 +154,15 @@ export default function LandingPage() {
                 <span
                   className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-caption font-medium uppercase"
                   style={{
-                    border: "1px solid hsl(var(--accent) / 0.28)",
-                    background: "hsl(var(--accent) / 0.08)",
-                    color: "hsl(var(--accent))",
+                    border: "1px solid hsl(var(--line))",
+                    background: "hsl(var(--surface))",
+                    color: "hsl(var(--muted-foreground))",
                   }}
                 >
                   <span className="relative flex size-2">
                     <span
                       className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
-                      style={{ background: "hsl(var(--accent))" }}
+                      style={{ background: "hsl(var(--line-strong))" }}
                     />
                     <span
                       className="relative inline-flex size-2 rounded-full"
@@ -240,7 +230,6 @@ export default function LandingPage() {
                       height: 2,
                       background:
                         "linear-gradient(90deg, transparent 0%, hsl(var(--accent)) 20%, hsl(var(--accent)) 80%, transparent 100%)",
-                      boxShadow: "0 0 16px hsl(var(--accent) / 0.5)",
                       animation: "scan-line var(--dur-ambient) linear infinite",
                       zIndex: 10,
                     }}
@@ -281,8 +270,7 @@ export default function LandingPage() {
                     }}
                   >
                     <span
-                      className="text-[10px]"
-                      style={{ color: "hsl(var(--subtle-foreground))" }}
+                      className="text-[10px] text-subtle"
                     >
                       Nike · Air Jordan 1 Retro High
                     </span>
@@ -295,8 +283,7 @@ export default function LandingPage() {
                   </div>
                 </div>
 
-                {/* Floating score card — affiche un VERDICT : emerald, pas champagne.
-                    Le scanner autour reste en champagne : capturer n'est pas juger. */}
+                {/* Carte de score flottante — affiche un VERDICT. */}
                 <div
                   className="absolute -bottom-6 -right-4 rounded-lg p-4 shadow-2xl"
                   style={{
@@ -307,19 +294,17 @@ export default function LandingPage() {
                   }}
                 >
                   <p
-                    className="text-[10px] font-medium uppercase tracking-widest"
-                    style={{ color: "hsl(var(--subtle-foreground))" }}
+                    className="text-[10px] font-medium uppercase tracking-widest text-subtle"
                   >
                     Score final
                   </p>
                   <p
-                    className="mt-1 text-h2 font-semibold tabular-nums"
+                    className="mt-1 font-heading text-h2 font-bold tabular-nums"
                     style={{ color: "hsl(var(--verdict-authentic))" }}
                   >
                     89
                     <span
-                      className="text-ui font-normal"
-                      style={{ color: "hsl(var(--subtle-foreground))" }}
+                      className="text-ui font-normal text-subtle"
                     >
                       /100
                     </span>
@@ -345,14 +330,14 @@ export default function LandingPage() {
                 <div
                   className="absolute -left-3 top-1/3 flex size-6 items-center justify-center rounded-full"
                   style={{
-                    background: "hsl(var(--accent) / 0.12)",
-                    border: "1px solid hsl(var(--accent) / 0.3)",
+                    background: "hsl(var(--surface-raised))",
+                    border: "1px solid hsl(var(--line))",
                     animation: "blink var(--dur-ambient) ease-in-out infinite",
                   }}
                 >
                   <div
                     className="size-2 rounded-full"
-                    style={{ background: "hsl(var(--accent))" }}
+                    style={{ background: "hsl(var(--muted-foreground))" }}
                   />
                 </div>
               </div>
@@ -367,8 +352,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="landing.videoLabel" />
             </p>
@@ -410,8 +394,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="landing.labelProcess" />
             </p>
@@ -429,8 +412,8 @@ export default function LandingPage() {
             <div
               className="flex flex-col items-center gap-3 rounded-lg px-6 py-6 text-center sm:flex-row sm:text-left"
               style={{
-                border: "1px solid hsl(var(--accent) / 0.18)",
-                background: "hsl(var(--accent) / 0.05)",
+                border: "1px solid hsl(var(--line))",
+                background: "hsl(var(--surface))",
               }}
             >
               <span className="shrink-0 text-h3">🔒</span>
@@ -450,8 +433,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="landing.labelExample" />
             </p>
@@ -475,13 +457,12 @@ export default function LandingPage() {
                 >
                   <div>
                     <p
-                      className="text-caption font-semibold uppercase"
-                      style={{ color: "hsl(var(--subtle-foreground))" }}
+                      className="text-caption font-semibold uppercase text-subtle"
                     >
                       Rapport d&apos;analyse · Exemple
                     </p>
                     <p
-                      className="mt-0.5 text-lead font-semibold"
+                      className="mt-0.5 font-heading text-lead font-semibold"
                       style={{ color: "hsl(var(--foreground))" }}
                     >
                       Louis Vuitton Neverfull MM
@@ -540,14 +521,13 @@ export default function LandingPage() {
                       </svg>
                       <div className="absolute inset-0 flex flex-col items-center justify-center gap-0.5">
                         <span
-                          className="text-[40px] font-semibold leading-none tabular-nums"
+                          className="font-heading text-[40px] font-bold leading-none tabular-nums"
                           style={{ color: "hsl(var(--verdict-authentic))" }}
                         >
                           84
                         </span>
                         <span
-                          className="text-[10px] uppercase tracking-widest"
-                          style={{ color: "hsl(var(--subtle-foreground))" }}
+                          className="text-[10px] uppercase tracking-widest text-subtle"
                         >
                           sur 100
                         </span>
@@ -580,8 +560,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="landing.labelTestimonials" />
             </p>
@@ -601,8 +580,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="landing.labelCatalog" />
             </p>
@@ -611,14 +589,14 @@ export default function LandingPage() {
             <div
               className="mt-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-caption font-medium"
               style={{
-                border: "1px solid hsl(var(--accent) / 0.28)",
-                background: "hsl(var(--accent) / 0.08)",
-                color: "hsl(var(--accent))",
+                border: "1px solid hsl(var(--line))",
+                background: "hsl(var(--surface))",
+                color: "hsl(var(--muted-foreground))",
               }}
             >
               <span
                 className="size-1.5 shrink-0 rounded-full"
-                style={{ background: "hsl(var(--accent))" }}
+                style={{ background: "hsl(var(--muted-foreground))" }}
               />
               <LandingLabel tkey="landing.brandsCategoriesCount" />
             </div>
@@ -654,8 +632,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="landing.labelFeatures" />
             </p>
@@ -675,8 +652,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-6xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="landing.labelPricing" />
             </p>
@@ -693,8 +669,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-3xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               FAQ
             </p>
@@ -714,8 +689,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-4xl px-4">
           <FadeIn className="text-center">
             <p
-              className="mb-3 text-caption font-medium uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="footer.about" />
             </p>
@@ -737,13 +711,13 @@ export default function LandingPage() {
             <div
               className="rounded-lg px-6 py-6 text-center"
               style={{
-                border: "1px solid hsl(var(--accent) / 0.18)",
-                background: "hsl(var(--accent) / 0.05)",
+                border: "1px solid hsl(var(--line))",
+                background: "hsl(var(--surface))",
               }}
             >
               <ShieldCheck
                 className="mx-auto mb-3 size-8"
-                style={{ color: "hsl(var(--accent))" }}
+                style={{ color: "hsl(var(--muted-foreground))" }}
               />
               <p
                 className="text-ui"
@@ -766,20 +740,20 @@ export default function LandingPage() {
         <FadeIn className="mx-auto max-w-6xl px-4 text-center">
           <div
             className="relative overflow-hidden rounded-lg bg-surface px-8 py-16"
-            style={{ border: "1px solid hsl(var(--accent) / 0.18)" }}
+            style={{ border: "1px solid hsl(var(--line))" }}
           >
             {/* Filet lumineux haut */}
             <div
               className="pointer-events-none absolute inset-x-0 top-0 h-px"
               style={{
                 background:
-                  "linear-gradient(90deg, transparent, hsl(var(--accent) / 0.45), transparent)",
+                  "linear-gradient(90deg, transparent, hsl(var(--line-strong)), transparent)",
               }}
             />
 
             <BarChart3
               className="mx-auto mb-6 size-10"
-              style={{ color: "hsl(var(--accent))" }}
+              style={{ color: "hsl(var(--muted-foreground))" }}
             />
             <FinalCtaI18n />
           </div>
@@ -806,15 +780,13 @@ export default function LandingPage() {
                 className="h-6 w-auto"
               />
               <span
-                className="text-ui"
-                style={{ color: "hsl(var(--subtle-foreground))" }}
+                className="text-ui text-subtle"
               >
                 © {new Date().getFullYear()}
               </span>
             </div>
             <div
-              className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-ui sm:justify-end"
-              style={{ color: "hsl(var(--subtle-foreground))" }}
+              className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-ui sm:justify-end text-subtle"
             >
               <Link href="#faq" className="transition-colors hover:text-foreground">FAQ</Link>
               <Link href="#team" className="transition-colors hover:text-foreground">À propos</Link>

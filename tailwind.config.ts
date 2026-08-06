@@ -40,9 +40,16 @@ const config: Config = {
         // ── Chrome : fonds, texte, bordures ───────────────────────────────
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",
+        // Texte tertiaire — 4,3:1. `text-subtle` UNIQUEMENT, jamais en fond :
+        // ce ratio ne passe AA qu'à partir de 18px et ne doit donc porter aucune
+        // information nécessaire (horodatages, mentions accessoires).
+        subtle: "hsl(var(--subtle-foreground) / <alpha-value>)",
         surface: {
           DEFAULT: "hsl(var(--surface) / <alpha-value>)",
           raised: "hsl(var(--surface-raised) / <alpha-value>)",
+          // Survol d'un item DANS une surface élevée (popover, dropdown, menu).
+          // `bg-surface` y assombrirait au lieu d'éclaircir.
+          hover: "hsl(var(--surface-hover) / <alpha-value>)",
         },
         line: {
           subtle: "hsl(var(--line-subtle) / <alpha-value>)",
@@ -99,27 +106,8 @@ const config: Config = {
       },
 
       fontFamily: {
-        // Manrope porte toute la hiérarchie h3/h4 et en dessous.
-        sans: ["var(--font-manrope)", "system-ui", "sans-serif"],
-        // Instrument Serif : display / h1 / h2 UNIQUEMENT. Une seule graisse (400) —
-        // ne jamais l'associer à font-bold ou font-semibold, le faux-gras est immonde.
-        display: [
-          "var(--font-instrument-serif)",
-          "Iowan Old Style",
-          "Georgia",
-          "serif",
-        ],
-        // Azeret Mono : données (scores, codes style, numéros de série).
-        mono: [
-          "var(--font-azeret-mono)",
-          "ui-monospace",
-          "SFMono-Regular",
-          "monospace",
-        ],
-        // Alias de transition : les 136 `font-heading` existants tombent sur Manrope,
-        // conformément à la règle « serif réservé au display ». À supprimer une fois
-        // le reskin passé sur les titres (font-display sur h1/h2, rien sur le reste).
-        heading: ["var(--font-manrope)", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        heading: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
       },
 
       /**

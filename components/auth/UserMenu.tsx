@@ -8,6 +8,11 @@ import Link from "next/link";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
+/**
+ * Design system : emerald dosé — il ne porte que le bouton de connexion et
+ * l'avatar, tous deux cliquables. La déconnexion est en --destructive, un rôle
+ * d'interface (action irréversible), découplé du verdict « contrefait ».
+ */
 export function UserMenu() {
   const { t } = useTranslation();
   const [user, setUser] = useState<SupabaseUser | null>(null);
@@ -50,16 +55,14 @@ export function UserMenu() {
   }
 
   if (loading) {
-    return (
-      <div className="h-9 w-24 animate-pulse rounded-lg bg-white/5" />
-    );
+    return <div className="h-9 w-24 animate-pulse rounded-md bg-surface" />;
   }
 
   if (!user) {
     return (
       <Link
         href="/auth"
-        className="inline-flex h-9 items-center rounded-lg bg-emerald-500 px-4 text-sm font-medium text-white transition-colors hover:bg-emerald-400"
+        className="inline-flex h-9 items-center rounded-md bg-accent px-4 text-ui font-medium text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
       >
         {t("userMenu.signIn")}
       </Link>
@@ -81,16 +84,18 @@ export function UserMenu() {
     <div ref={menuRef} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex size-9 items-center justify-center rounded-full bg-emerald-500/20 text-sm font-semibold text-emerald-400 transition-colors hover:bg-emerald-500/30"
+        className="flex size-9 items-center justify-center rounded-full bg-accent/20 text-ui font-semibold text-accent transition-colors duration-fast hover:bg-accent/30"
       >
         {initials}
       </button>
 
       {open && (
-        <div className="absolute right-0 top-12 z-50 w-56 rounded-xl border border-white/10 bg-card p-1 shadow-xl shadow-black/40">
-          <div className="border-b border-white/5 px-3 py-2">
-            <p className="truncate text-sm font-medium">{user.user_metadata?.full_name}</p>
-            <p className="truncate text-xs text-muted-foreground">
+        <div className="absolute right-0 top-12 z-50 w-56 rounded-md border border-line bg-popover p-1 shadow-xl shadow-black/40">
+          <div className="border-b border-line px-3 py-2">
+            <p className="truncate text-ui font-medium">
+              {user.user_metadata?.full_name}
+            </p>
+            <p className="truncate text-caption text-muted-foreground">
               {user.email}
             </p>
           </div>
@@ -99,7 +104,7 @@ export function UserMenu() {
             <Link
               href="/dashboard"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+              className="flex items-center gap-2 rounded-sm px-3 py-2 text-ui text-muted-foreground transition-colors duration-fast hover:bg-surface-hover hover:text-foreground"
             >
               <LayoutDashboard className="size-4" />
               {t("userMenu.dashboard")}
@@ -107,17 +112,17 @@ export function UserMenu() {
             <Link
               href="/dashboard/subscription"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+              className="flex items-center gap-2 rounded-sm px-3 py-2 text-ui text-muted-foreground transition-colors duration-fast hover:bg-surface-hover hover:text-foreground"
             >
               <CreditCard className="size-4" />
               {t("userMenu.manageSubscription")}
             </Link>
           </div>
 
-          <div className="border-t border-white/5 py-1">
+          <div className="border-t border-line py-1">
             <button
               onClick={handleLogout}
-              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/10"
+              className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-ui text-destructive transition-colors duration-fast hover:bg-destructive/10"
             >
               <LogOut className="size-4" />
               {t("userMenu.signOut")}

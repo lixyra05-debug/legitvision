@@ -14,8 +14,14 @@ type ChatMessage = {
   text: string;
 };
 
+/**
+ * Design system : emerald dosé, surfaces opaques. Le panneau utilisait
+ * `.glass-card` (backdrop-filter) — dernier vestige de glassmorphism du produit,
+ * remplacé par une surface élevée pleine. Le vert ne porte ici que ce qui se
+ * clique : le bouton flottant, l'envoi, et la bulle du message utilisateur.
+ */
 const pulseAnimation = {
-  animation: "pulse-glow 2.4s ease-in-out infinite",
+  animation: "pulse-glow var(--dur-ambient) ease-in-out infinite",
 };
 
 export function ChatWidget() {
@@ -91,20 +97,24 @@ export function ChatWidget() {
   return (
     <div ref={panelRef}>
       {open && (
-        <div className="glass-card fixed bottom-24 right-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-2xl shadow-2xl shadow-emerald-500/10">
-          <div className="flex items-center justify-between border-b border-white/5 px-4 py-3">
+        <div className="fixed bottom-24 right-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-lg border border-line bg-popover shadow-2xl shadow-black/60">
+          <div className="flex items-center justify-between border-b border-line px-4 py-3">
             <div className="flex items-center gap-2">
-              <div className="flex size-8 items-center justify-center rounded-full bg-emerald-500/20">
-                <MessageCircle className="size-4 text-emerald-400" />
+              <div className="flex size-8 items-center justify-center rounded-full bg-surface">
+                <MessageCircle className="size-4 text-muted-foreground" />
               </div>
               <div>
-                <p className="text-sm font-semibold leading-tight">{t("chatbot.title")}</p>
-                <p className="text-xs leading-tight text-muted-foreground">En ligne</p>
+                <p className="text-ui font-semibold leading-tight">
+                  {t("chatbot.title")}
+                </p>
+                <p className="text-caption leading-tight text-muted-foreground">
+                  En ligne
+                </p>
               </div>
             </div>
             <button
               onClick={() => setOpen(false)}
-              className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+              className="flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors duration-fast hover:bg-surface-hover hover:text-foreground"
               aria-label="Fermer le chat"
             >
               <X className="size-4" />
@@ -121,10 +131,10 @@ export function ChatWidget() {
                 className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[85%] whitespace-pre-line rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
+                  className={`max-w-[85%] whitespace-pre-line rounded-md px-3.5 py-2 text-body ${
                     msg.role === "user"
-                      ? "bg-emerald-500 text-white"
-                      : "bg-card text-foreground"
+                      ? "bg-accent text-accent-foreground"
+                      : "bg-surface text-foreground"
                   }`}
                 >
                   {msg.text}
@@ -134,7 +144,7 @@ export function ChatWidget() {
             {typing && (
               <div className="flex justify-start">
                 <div
-                  className="flex items-center gap-1 rounded-2xl bg-card px-4 py-3"
+                  className="flex items-center gap-1 rounded-md bg-surface px-4 py-3"
                   aria-label="L'assistant écrit"
                   role="status"
                 >
@@ -157,7 +167,7 @@ export function ChatWidget() {
 
           <form
             onSubmit={submit}
-            className="flex items-center gap-2 border-t border-white/5 px-3 py-3"
+            className="flex items-center gap-2 border-t border-line px-3 py-3"
           >
             <Input
               value={input}
@@ -169,7 +179,7 @@ export function ChatWidget() {
             <button
               type="submit"
               disabled={!input.trim() || typing}
-              className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-emerald-500 text-white transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-40"
+              className="flex size-9 shrink-0 items-center justify-center rounded-md bg-accent text-accent-foreground transition-colors duration-fast hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
               aria-label="Envoyer"
             >
               <Send className="size-4" />
@@ -181,7 +191,7 @@ export function ChatWidget() {
       <button
         onClick={() => setOpen((v) => !v)}
         style={open ? undefined : pulseAnimation}
-        className="fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full bg-emerald-500 text-white transition-transform hover:scale-105 hover:bg-emerald-400 active:scale-95"
+        className="fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full bg-accent text-accent-foreground transition-[transform,background-color] duration-fast hover:scale-105 hover:bg-accent-hover active:scale-95"
         aria-label={open ? "Fermer l'assistant" : "Ouvrir l'assistant"}
       >
         {open ? <X className="size-6" /> : <MessageCircle className="size-6" />}

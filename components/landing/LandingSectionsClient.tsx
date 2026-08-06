@@ -18,19 +18,16 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
 /**
  * 5 sections client de la landing — i18n FR/EN.
  *
- * Design system : accent champagne (--accent) sur toute l'interface. La règle
- * n'est pas « zéro vert » mais « le vert ne signifie que le verdict » : les seuls
- * emerald tolérés ici sont --verdict-authentic dans MockSubscores et MockFindings,
- * qui reproduisent la lecture d'un rapport. Un aperçu de rapport qui mentirait sur
- * ses couleurs serait pire que du vert mal placé. Le gold #D4A843 de la carte
- * Premium, orphelin de tout système, est absorbé par le champagne.
+ * Design system : l'emerald de marque, DOSÉ. Il ne porte que ce qui se clique ou
+ * ce qui signale un état : CTA des forfaits, badges et bordure des plans mis en
+ * avant, verdicts du rapport-exemple. Tout le reste — icônes d'étape, valeurs de
+ * stats, avatars, étoiles, tags de fonctionnalité, puces de liste — passe aux
+ * neutres. Étaler le vert sur le décor annulerait le seul signal qui vaut de
+ * l'argent. Le gold #D4A843 de la carte Premium reste absorbé.
  *
- * Instrument Serif (font-display) est réservée aux h1/h2 de app/page.tsx et
- * LandingI18nClient ; les h3 de ce fichier sont en Manrope, graisse semibold.
- *
- * Bordures opaques (--line-*) au lieu des voiles white/α, et bordures portées par
- * des classes Tailwind et non plus par un `border:` inline — le raccourci inline
- * écrasait les `hover:border-*`, qui n'ont donc jamais fonctionné.
+ * Bordures opaques (--line-*), et bordures portées par des classes Tailwind et non
+ * plus par un `border:` inline — le raccourci inline écrasait les `hover:border-*`,
+ * qui n'ont donc jamais fonctionné.
  */
 
 // ── 1. STEPS — Comment ça marche ────────────────────────────────────────────
@@ -47,28 +44,28 @@ export function StepsSection() {
       {STEP_DEFS.map((step, i) => (
         <FadeIn key={step.step} delay={i * 120}>
           <div
-            className="group relative overflow-hidden rounded-lg border border-line-subtle bg-surface p-8 transition-[transform,border-color] duration-base hover:-translate-y-1 hover:border-accent/25"
+            className="group relative overflow-hidden rounded-lg border border-line-subtle bg-surface p-8 transition-[transform,border-color] duration-base hover:-translate-y-1 hover:border-line"
           >
             <span
-              className="pointer-events-none absolute -right-2 -top-4 select-none text-[72px] font-bold leading-none"
+              className="pointer-events-none absolute -right-2 -top-4 select-none font-heading text-[72px] font-bold leading-none"
               style={{ color: "hsl(var(--line-strong) / 0.5)" }}
             >
               {step.step}
             </span>
             <div
               className="mb-6 flex size-12 items-center justify-center rounded-md"
-              style={{ background: "hsl(var(--accent) / 0.1)" }}
+              style={{ background: "hsl(var(--surface-raised))" }}
             >
-              <step.icon className="size-6" style={{ color: "hsl(var(--accent))" }} />
+              <step.icon className="size-6" style={{ color: "hsl(var(--muted-foreground))" }} />
             </div>
             <div
               className="mb-3 text-caption font-semibold uppercase"
-              style={{ color: "hsl(var(--accent))" }}
+              style={{ color: "hsl(var(--muted-foreground))" }}
             >
               {t("landing.stepLabel")} {step.step}
             </div>
             <h3
-              className="text-h4 font-semibold"
+              className="font-heading text-h4 font-semibold"
               style={{ color: "hsl(var(--foreground))" }}
             >
               {t(step.titleKey)}
@@ -110,8 +107,8 @@ export function StatsSection() {
           }}
         >
           <span
-            className="text-h3 font-semibold"
-            style={{ color: "hsl(var(--accent))" }}
+            className="font-heading text-h3 font-bold"
+            style={{ color: "hsl(var(--foreground))" }}
           >
             {t(stat.valueKey)}
           </span>
@@ -166,13 +163,13 @@ export function TestimonialsSection() {
               <div
                 className="flex size-10 items-center justify-center rounded-md"
                 style={{
-                  background: "hsl(var(--accent) / 0.1)",
-                  border: "1px solid hsl(var(--accent) / 0.22)",
+                  background: "hsl(var(--surface-raised))",
+                  border: "1px solid hsl(var(--line))",
                 }}
               >
                 <span
-                  className="text-ui font-semibold"
-                  style={{ color: "hsl(var(--accent))" }}
+                  className="font-heading text-ui font-bold"
+                  style={{ color: "hsl(var(--muted-foreground))" }}
                 >
                   {tm.initials}
                 </span>
@@ -183,8 +180,8 @@ export function TestimonialsSection() {
                     key={j}
                     className="size-3.5"
                     style={{
-                      fill: "hsl(var(--accent))",
-                      color: "hsl(var(--accent))",
+                      fill: "hsl(var(--foreground))",
+                      color: "hsl(var(--foreground))",
                     }}
                   />
                 ))}
@@ -199,8 +196,8 @@ export function TestimonialsSection() {
             </div>
             <div className="mt-6 flex-1">
               <div
-                className="mb-2 select-none text-h2 leading-none"
-                style={{ color: "hsl(var(--accent) / 0.2)" }}
+                className="mb-2 select-none font-heading text-h2 leading-none"
+                style={{ color: "hsl(var(--line-strong))" }}
               >
                 &ldquo;
               </div>
@@ -222,8 +219,7 @@ export function TestimonialsSection() {
                 {tm.name}
               </p>
               <p
-                className="mt-0.5 text-caption"
-                style={{ color: "hsl(var(--subtle-foreground))" }}
+                className="mt-0.5 text-caption text-subtle"
               >
                 {t(tm.roleKey)} · {t(tm.cityKey)}
               </p>
@@ -276,18 +272,18 @@ export function FeaturesSection() {
           <div
             className={`group relative flex h-full flex-col rounded-lg border p-8 transition-[transform,border-color] duration-base hover:-translate-y-1 ${
               feat.highlight
-                ? "border-accent/25 bg-accent/[0.05]"
-                : "border-line-subtle bg-surface hover:border-accent/25"
+                ? "border-line bg-surface-raised"
+                : "border-line-subtle bg-surface hover:border-line"
             }`}
           >
             <div
               className="mb-6 flex size-14 items-center justify-center rounded-lg"
-              style={{ background: "hsl(var(--accent) / 0.1)" }}
+              style={{ background: "hsl(var(--surface-raised))" }}
             >
-              <feat.icon className="size-7" style={{ color: "hsl(var(--accent))" }} />
+              <feat.icon className="size-7" style={{ color: "hsl(var(--muted-foreground))" }} />
             </div>
             <h3
-              className="text-h4 font-semibold"
+              className="font-heading text-h4 font-semibold"
               style={{ color: "hsl(var(--foreground))" }}
             >
               {t(feat.titleKey)}
@@ -302,8 +298,8 @@ export function FeaturesSection() {
               <span
                 className="rounded-full px-3 py-1 text-caption font-semibold"
                 style={{
-                  background: "hsl(var(--accent) / 0.1)",
-                  color: "hsl(var(--accent))",
+                  background: "hsl(var(--surface-raised))",
+                  color: "hsl(var(--muted-foreground))",
                 }}
               >
                 {t(feat.tagKey)}
@@ -363,8 +359,8 @@ export function PlansSection() {
         const badge = t(`plans.${plan.tier}.badge`);
 
         if (plan.premium) {
-          // Carte Premium : le dégradé or est remplacé par une bordure champagne
-          // pleine — un seul ton, aucun dégradé.
+          // Carte Premium : le dégradé or est remplacé par une bordure pleine
+          // à l'accent — un seul ton, aucun dégradé.
           return (
             <FadeIn key={plan.tier} delay={i * 120}>
               <div
@@ -381,8 +377,8 @@ export function PlansSection() {
                   {badge}
                 </span>
                 <h3
-                  className="text-lead font-semibold"
-                  style={{ color: "hsl(var(--accent))" }}
+                  className="font-heading text-lead font-semibold"
+                  style={{ color: "hsl(var(--foreground))" }}
                 >
                   {name}
                 </h3>
@@ -394,8 +390,8 @@ export function PlansSection() {
                 </p>
                 <div className="mt-6">
                   <span
-                    className="text-h1 font-semibold"
-                    style={{ color: "hsl(var(--accent))" }}
+                    className="font-heading text-h1 font-bold"
+                    style={{ color: "hsl(var(--foreground))" }}
                   >
                     {price}
                   </span>
@@ -408,7 +404,7 @@ export function PlansSection() {
                 </div>
                 <div
                   className="mt-2 text-ui font-medium"
-                  style={{ color: "hsl(var(--accent))" }}
+                  style={{ color: "hsl(var(--muted-foreground))" }}
                 >
                   {credits}
                 </div>
@@ -421,7 +417,7 @@ export function PlansSection() {
                     >
                       <Check
                         className="mt-0.5 size-4 shrink-0"
-                        style={{ color: "hsl(var(--accent))" }}
+                        style={{ color: "hsl(var(--muted-foreground))" }}
                       />
                       {t(`plans.${plan.tier}.${featKey}`)}
                     </li>
@@ -465,7 +461,7 @@ export function PlansSection() {
                 </span>
               )}
               <h3
-                className="text-lead font-semibold"
+                className="font-heading text-lead font-semibold"
                 style={{ color: "hsl(var(--foreground))" }}
               >
                 {name}
@@ -478,7 +474,7 @@ export function PlansSection() {
               </p>
               <div className="mt-6">
                 <span
-                  className="text-h1 font-semibold"
+                  className="font-heading text-h1 font-bold"
                   style={{ color: "hsl(var(--foreground))" }}
                 >
                   {price}
@@ -492,7 +488,7 @@ export function PlansSection() {
               </div>
               <div
                 className="mt-2 text-ui font-medium"
-                style={{ color: "hsl(var(--accent))" }}
+                style={{ color: "hsl(var(--muted-foreground))" }}
               >
                 {credits}
               </div>
@@ -505,7 +501,7 @@ export function PlansSection() {
                   >
                     <Check
                       className="mt-0.5 size-4 shrink-0"
-                      style={{ color: "hsl(var(--accent))" }}
+                      style={{ color: "hsl(var(--muted-foreground))" }}
                     />
                     {t(`plans.${plan.tier}.${featKey}`)}
                   </li>
@@ -586,10 +582,9 @@ export function HeroTrustTags() {
       {HERO_TAGS.map((tkey) => (
         <span
           key={tkey}
-          className="flex items-center gap-1.5 text-caption"
-          style={{ color: "hsl(var(--subtle-foreground))" }}
+          className="flex items-center gap-1.5 text-caption text-subtle"
         >
-          <Check className="size-3" style={{ color: "hsl(var(--accent))" }} />
+          <Check className="size-3" style={{ color: "hsl(var(--muted-foreground))" }} />
           {t(tkey)}
         </span>
       ))}
@@ -624,11 +619,11 @@ export function MockPhotoGrid() {
           style={{
             background:
               i === 1
-                ? "hsl(var(--accent) / 0.1)"
-                : "hsl(var(--surface-raised))",
+                ? "hsl(var(--surface-raised))"
+                : "hsl(var(--surface))",
             border:
               i === 1
-                ? "1px solid hsl(var(--accent) / 0.28)"
+                ? "1px solid hsl(var(--line-strong))"
                 : "1px solid hsl(var(--line-subtle))",
           }}
         >
@@ -640,13 +635,12 @@ export function MockPhotoGrid() {
               className="h-1 rounded-full"
               style={{
                 width: `${zone.progress}%`,
-                background: "hsl(var(--accent))",
+                background: "hsl(var(--muted-foreground))",
               }}
             />
           </div>
           <span
-            className="text-[10px]"
-            style={{ color: "hsl(var(--subtle-foreground))" }}
+            className="text-[10px] text-subtle"
           >
             {t(zone.tkey)}
           </span>
@@ -721,8 +715,7 @@ export function MockFindings() {
   return (
     <>
       <p
-        className="text-caption font-semibold uppercase"
-        style={{ color: "hsl(var(--subtle-foreground))" }}
+        className="text-caption font-semibold uppercase text-subtle"
       >
         {t("landing.mockObservations")}
       </p>
@@ -782,8 +775,7 @@ export function SmallCtaI18n() {
         {t("landing.smallCtaTitle")}
       </Link>
       <p
-        className="mt-3 text-caption"
-        style={{ color: "hsl(var(--subtle-foreground))" }}
+        className="mt-3 text-caption text-subtle"
       >
         {t("landing.smallCtaNote")}
       </p>
@@ -807,7 +799,7 @@ export function SectionH2({ tkey }: { tkey: string }) {
   const { t } = useTranslation();
   return (
     <h2
-      className="font-display text-h2"
+      className="font-heading text-h2 font-bold"
       style={{ color: "hsl(var(--foreground))" }}
     >
       {t(tkey)}
