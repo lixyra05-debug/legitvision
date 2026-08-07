@@ -141,6 +141,45 @@ PAS ENCORE : Admin panel, HITL, notifications email transactionnelles (stub `lib
 Autres correctifs déployés (post-audit) : route `/auth/callback` (OAuth Google), suppression du dossier `pages/` legacy (404 blanches → `app/not-found.tsx`), fix paiement iOS Safari (navigation top-level vers `/checkout`), CTA pricing `/pricing` (404) → `/#pricing`.
 P1 restants connus : catégorie « montres » absente du CategoryPicker, photos HEIC iPhone, double-abonnement à l'upgrade Pro↔Business.
 
+## ⚠️ Chantier data ouvert — le catalogue n'a pas de source de vérité
+**Constaté le 2026-08-06. À traiter comme un chantier à part : ne pas corriger au fil de l'eau.**
+
+Trois endroits décrivent le même catalogue et aucun ne s'accorde. Les COUNT ci-dessous
+ont été relevés directement en base de production (toutes les lignes sont `is_active = true`).
+
+| | marques | modèles |
+|---|---|---|
+| Base Supabase (`brands`, `models`) — **la référence** | **77** | **530** |
+| `components/landing/BrandsTabs.tsx` (tableau en dur) | 51 | 419 |
+| Bande de stats de la landing | 77 ✅ | 530 ✅ |
+
+La bande de stats a été alignée sur la base. `BrandsTabs` ne l'est pas : ses 64 entrées
+sont écrites en dur, réparties sur 3 catégories avec des compteurs `models:` par catégorie
+qui n'ont pas d'équivalent direct en base (une même marque y apparaît dans plusieurs
+catégories avec des comptes différents). Il manque 26 marques, et `public/images/brands`
+ne contient que 55 logos. L'aligner suppose soit de brancher le composant sur la base,
+soit de saisir 26 entrées avec leurs logos.
+
+**Libellés de marque incohérents, avec une conséquence fonctionnelle :**
+
+| Source | Nom |
+|---|---|
+| Base (`brands`, migration 009) | `Jordan` |
+| `BrandsTabs.tsx:27` | `Jordan Brand` |
+| Guides SEO (`lib/seo/data/brands.ts:73`) | `Air Jordan` |
+
+`BrandsTabs` envoie ce nom tel quel dans `/check/new?brand=…`, et `check/new/page.tsx`
+le résout par `.ilike("name", brandParam)` — une égalité, pas un `%like%`. `Jordan Brand`
+ne matche donc pas `Jordan` : **la pré-sélection de marque échoue en silence** depuis la
+tuile Jordan de la landing (4ᵉ tuile sneakers, 7 modèles annoncés).
+À ne pas confondre avec `lib/ai/authentication-prompts.ts:60`, qui gère bien le cas par
+match partiel — mais c'est un autre chemin de code, en aval de la sélection.
+
+**Même famille, autre fichier :** la base stocke la catégorie `bag` (singulier).
+`BrandsTabs.DB_CATEGORY.sacs = "bag"` est juste, mais `BrandSearch.tsx:37` mappe la clé
+`bags` — inexistante. Le fallback s'applique et le dropdown affiche `bag` en brut à la
+place du libellé traduit, pour toutes les marques de maroquinerie.
+
 ## Commandes Utiles
 ```bash
 pnpm dev          # Dev server

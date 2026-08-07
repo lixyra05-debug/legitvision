@@ -93,8 +93,12 @@ const STAT_DEFS: {
   suffix?: string;
   labelKey: string;
 }[] = [
-  { value: 47, labelKey: "landing.stat1Label" },
-  { value: 340, suffix: "+", labelKey: "landing.stat2Label" },
+  // 77 et 530 sont les COUNT réels de `brands` et `models` en production
+  // (toutes lignes is_active = true, relevé du 2026-08-06). Voir la note
+  // « Catalogue — pas de source de vérité » dans CLAUDE.md : BrandsTabs en
+  // annonce encore 51 et 419, en dur.
+  { value: 77, labelKey: "landing.stat1Label" },
+  { value: 530, labelKey: "landing.stat2Label" },
   { value: 8, labelKey: "landing.stat3Label" },
   { value: 30, prefix: "< ", suffix: "s", labelKey: "landing.stat4Label" },
 ];
