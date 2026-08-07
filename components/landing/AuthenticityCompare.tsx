@@ -28,15 +28,27 @@ import { ChevronsLeftRight } from "lucide-react";
 
 const PLACEHOLDER_SRC = "/images/sneakers.webp";
 
-/** Poignée maison : un filet à l'accent, un grip neutre. Aucun flou, aucune couleur en dur. */
+/**
+ * Poignée maison : un filet à l'accent, un grip neutre. Aucun flou, aucune couleur en dur.
+ *
+ * ⚠️ `pointer-events-auto` est OBLIGATOIRE sur les pièces visibles. La librairie pose
+ * `pointer-events: none` sur le handle-root — qui couvre toute la surface du slider —
+ * pour ne pas confisquer les clics sur l'image en dessous, et ne le réactive que sur
+ * les deux morceaux visibles de sa poignée par défaut. Une poignée custom qui l'oublie
+ * est rendue parfaitement et ne répond à rien : c'est exactement ce qui est arrivé ici.
+ * Le conteneur, lui, reste en hérité — c'est ce qui laisse l'image cliquable.
+ *
+ * Le `before:` du grip agrandit la cible tactile de 40 à 48 px sans changer le visuel :
+ * un pseudo-élément transparent est bien pris en compte au hit-test.
+ */
 function CompareHandle() {
   return (
     <div className="flex h-full flex-col items-center">
-      <div className="w-px flex-1 bg-accent" />
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface-raised shadow-lg">
+      <div className="pointer-events-auto w-px flex-1 bg-accent" />
+      <div className="pointer-events-auto relative flex size-10 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface-raised shadow-lg before:absolute before:-inset-1 before:rounded-full before:content-['']">
         <ChevronsLeftRight className="size-4 text-accent" aria-hidden="true" />
       </div>
-      <div className="w-px flex-1 bg-accent" />
+      <div className="pointer-events-auto w-px flex-1 bg-accent" />
     </div>
   );
 }
@@ -103,8 +115,10 @@ export function AuthenticityCompare() {
         Contrefaçon
       </EndLabel>
 
+      {/* pointer-events-none : ce bandeau est en z-20 alors que le handle-root est en
+          z-index 1. Sans ça il recouvrirait les ~33 derniers pixels de la poignée. */}
       <figcaption
-        className="absolute inset-x-0 bottom-0 z-20 flex items-center justify-center gap-2 px-4 py-2 text-caption font-medium"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex items-center justify-center gap-2 px-4 py-2 text-caption font-medium"
         style={{
           color: "hsl(var(--verdict-inconclusive))",
           background: "hsl(var(--background) / 0.9)",
