@@ -38,17 +38,24 @@ const PLACEHOLDER_SRC = "/images/sneakers.webp";
  * est rendue parfaitement et ne répond à rien : c'est exactement ce qui est arrivé ici.
  * Le conteneur, lui, reste en hérité — c'est ce qui laisse l'image cliquable.
  *
- * Le `before:` du grip agrandit la cible tactile de 40 à 48 px sans changer le visuel :
- * un pseudo-élément transparent est bien pris en compte au hit-test.
+ * Les `before:` agrandissent les cibles sans toucher au visuel — un pseudo-élément
+ * transparent compte au hit-test. Le grip passe de 40 à 48 px, et chaque filet de
+ * 1 à 17 px de large sur toute sa hauteur. Le scroll vertical reste franc malgré
+ * cette bande : le root porte `touch-action: pan-y`, donc le navigateur garde le
+ * pan vertical et ne laisse à l'élément que l'horizontal.
  */
+const GRAB_STRIP =
+  "pointer-events-auto relative w-px flex-1 bg-accent " +
+  "before:absolute before:-inset-x-2 before:inset-y-0 before:content-['']";
+
 function CompareHandle() {
   return (
     <div className="flex h-full flex-col items-center">
-      <div className="pointer-events-auto w-px flex-1 bg-accent" />
+      <div className={GRAB_STRIP} />
       <div className="pointer-events-auto relative flex size-10 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface-raised shadow-lg before:absolute before:-inset-1 before:rounded-full before:content-['']">
         <ChevronsLeftRight className="size-4 text-accent" aria-hidden="true" />
       </div>
-      <div className="pointer-events-auto w-px flex-1 bg-accent" />
+      <div className={GRAB_STRIP} />
     </div>
   );
 }
