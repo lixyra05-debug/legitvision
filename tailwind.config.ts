@@ -161,6 +161,10 @@ const config: Config = {
         lg: "var(--radius-md)",
       },
 
+      boxShadow: {
+        card: "var(--shadow-card)",
+      },
+
       // Une seule courbe, partout. DEFAULT la rend implicite pour les ~165
       // transitions qui n'en déclarent aucune.
       transitionTimingFunction: {
