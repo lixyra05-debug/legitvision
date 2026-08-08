@@ -103,6 +103,20 @@
        12px et 10px. À 0.75rem, ces 4 classes rendent exactement pareil qu'avant. */
     --radius: var(--radius-md); /* compat shadcn */
 
+    /* ── Ombres ──────────────────────────────────────────────────────
+       Le design system n'en avait aucune : les ombres passaient par les
+       utilitaires Tailwind (shadow-xl/2xl) ou par du rgba noir en dur.
+       La teinte est un token à part — en clair, une ombre pure noire est
+       trop dure, elle prend une pointe de bleu-gris. */
+    --shadow-color: 0 0% 0%;
+    /* Empilement à 4 couches, repris de la carte 3D d'Aceternity : les deux
+       dernières couches de l'original (alpha 0,04 et 0,01) sont invisibles. */
+    --shadow-card:
+      0 9px 20px hsl(var(--shadow-color) / 0.29),
+      0 37px 37px hsl(var(--shadow-color) / 0.26),
+      0 84px 50px hsl(var(--shadow-color) / 0.15),
+      0 149px 60px hsl(var(--shadow-color) / 0.05);
+
     /* ── Mouvement : une courbe, trois durées ────────────────────────── */
     --ease: cubic-bezier(0.2, 0, 0, 1);
     --dur-fast: 120ms; /* survol, focus, couleur — doit passer inaperçu */
@@ -141,6 +155,9 @@
     --accent-foreground: 0 0% 100%;
     --destructive: 358 62% 42%; /* ≈ #AE292D — 6,7:1 sur blanc */
     --destructive-foreground: 0 0% 100%;
+
+    /* Noir pur sur fond pâle donne une ombre sale ; on la teinte. */
+    --shadow-color: 220 20% 25%;
   }
 
   /* ── Alias de compatibilité ──────────────────────────────────────────
@@ -167,19 +184,6 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* ── Scroll fade-in ── */
-.fade-in-hidden {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity var(--dur-slow) var(--ease),
-    transform var(--dur-slow) var(--ease);
-}
-.fade-in-visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* ── Carte translucide (ChatWidget) ──────────────────────────────────────
@@ -304,8 +308,8 @@ body::after {
    Le produit fait tourner des boucles infinies (pulse-glow, blink, float,
    scan-line) et anime au scroll. Pour qui a demandé moins de mouvement, tout
    s'arrête : les boucles ne jouent qu'une fois, les transitions deviennent
-   instantanées, et .fade-in-hidden devient visible sans attendre l'observer —
-   sinon le contenu resterait invisible si le JS ne s'exécute pas. */
+   instantanées. Les révélations framer-motion neutralisent leurs variantes
+   plutôt que de disparaître : le contenu reste présent et visible. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -314,10 +318,5 @@ body::after {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-
-  .fade-in-hidden {
-    opacity: 1;
-    transform: none;
   }
 }

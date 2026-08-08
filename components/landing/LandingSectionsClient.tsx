@@ -12,7 +12,7 @@ import {
   Star,
   Check,
 } from "lucide-react";
-import { FadeIn } from "@/components/layout/FadeIn";
+import { RevealGroup, RevealItem } from "./Reveal";
 import { Counter } from "./Counter";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
@@ -41,9 +41,9 @@ const STEP_DEFS = [
 export function StepsSection() {
   const { t } = useTranslation();
   return (
-    <div className="mt-16 grid gap-6 sm:grid-cols-3">
-      {STEP_DEFS.map((step, i) => (
-        <FadeIn key={step.step} delay={i * 120}>
+    <RevealGroup className="mt-16 grid gap-6 sm:grid-cols-3">
+      {STEP_DEFS.map((step) => (
+        <RevealItem key={step.step}>
           <div
             className="group relative overflow-hidden rounded-lg border border-line-subtle bg-surface p-8 transition-[transform,border-color] duration-base hover:-translate-y-1 hover:border-line"
           >
@@ -78,9 +78,9 @@ export function StepsSection() {
               {t(step.descKey)}
             </p>
           </div>
-        </FadeIn>
+        </RevealItem>
       ))}
-    </div>
+    </RevealGroup>
   );
 }
 
@@ -167,9 +167,9 @@ const TESTIMONIAL_DEFS = [
 export function TestimonialsSection() {
   const { t } = useTranslation();
   return (
-    <div className="mt-12 grid gap-6 sm:grid-cols-3">
-      {TESTIMONIAL_DEFS.map((tm, i) => (
-        <FadeIn key={tm.name} delay={i * 120}>
+    <RevealGroup className="mt-12 grid gap-6 sm:grid-cols-3">
+      {TESTIMONIAL_DEFS.map((tm) => (
+        <RevealItem key={tm.name}>
           <div className="flex h-full flex-col rounded-lg border border-line-subtle bg-surface p-6 transition-[transform,border-color] duration-base hover:-translate-y-1 hover:border-line">
             <div className="flex items-center justify-between">
               <div
@@ -237,9 +237,9 @@ export function TestimonialsSection() {
               </p>
             </div>
           </div>
-        </FadeIn>
+        </RevealItem>
       ))}
-    </div>
+    </RevealGroup>
   );
 }
 
@@ -278,9 +278,9 @@ const FEATURE_DEFS = [
 export function FeaturesSection() {
   const { t } = useTranslation();
   return (
-    <div className="mt-16 grid gap-6 sm:grid-cols-2">
-      {FEATURE_DEFS.map((feat, i) => (
-        <FadeIn key={feat.titleKey} delay={i * 80}>
+    <RevealGroup className="mt-16 grid gap-6 sm:grid-cols-2">
+      {FEATURE_DEFS.map((feat) => (
+        <RevealItem key={feat.titleKey}>
           <div
             className={`group relative flex h-full flex-col rounded-lg border p-8 transition-[transform,border-color] duration-base hover:-translate-y-1 ${
               feat.highlight
@@ -318,9 +318,9 @@ export function FeaturesSection() {
               </span>
             </div>
           </div>
-        </FadeIn>
+        </RevealItem>
       ))}
-    </div>
+    </RevealGroup>
   );
 }
 
@@ -360,8 +360,8 @@ const PLAN_DEFS: {
 export function PlansSection() {
   const { t } = useTranslation();
   return (
-    <div className="mt-16 grid gap-6 sm:grid-cols-3">
-      {PLAN_DEFS.map((plan, i) => {
+    <RevealGroup className="mt-16 grid gap-6 sm:grid-cols-3">
+      {PLAN_DEFS.map((plan) => {
         const name = t(`plans.${plan.tier}.name`);
         const price = t(`plans.${plan.tier}.price`);
         const period = t(`plans.${plan.tier}.period`);
@@ -374,7 +374,7 @@ export function PlansSection() {
           // Carte Premium : le dégradé or est remplacé par une bordure pleine
           // à l'accent — un seul ton, aucun dégradé.
           return (
-            <FadeIn key={plan.tier} delay={i * 120}>
+            <RevealItem key={plan.tier}>
               <div
                 className="relative flex h-full flex-col rounded-lg bg-surface p-8"
                 style={{ border: "1px solid hsl(var(--accent) / 0.55)" }}
@@ -448,12 +448,12 @@ export function PlansSection() {
                   </Link>
                 </div>
               </div>
-            </FadeIn>
+            </RevealItem>
           );
         }
 
         return (
-          <FadeIn key={plan.tier} delay={i * 120}>
+          <RevealItem key={plan.tier}>
             <div
               className={`relative flex h-full flex-col rounded-lg border p-8 transition-[border-color] duration-base ${
                 plan.popular
@@ -542,10 +542,10 @@ export function PlansSection() {
                 </Link>
               </div>
             </div>
-          </FadeIn>
+          </RevealItem>
         );
       })}
-    </div>
+    </RevealGroup>
   );
 }
 

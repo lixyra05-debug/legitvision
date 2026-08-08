@@ -24,7 +24,7 @@ export function HeroI18n() {
         {t("hero.title")}
       </h1>
       <p
-        className="mt-6 max-w-lg text-body sm:text-lead"
+        className="mx-auto mt-6 max-w-lg text-body sm:text-lead"
         style={{ color: "hsl(var(--muted-foreground))" }}
       >
         {t("hero.subtitle")}

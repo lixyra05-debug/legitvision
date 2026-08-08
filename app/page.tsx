@@ -7,7 +7,7 @@ import {
   ArrowRight,
   CheckCircle2,
 } from "lucide-react";
-import { FadeIn } from "@/components/layout/FadeIn";
+import { Reveal } from "@/components/landing/Reveal";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -16,6 +16,8 @@ import { FAQ_ITEMS } from "@/components/landing/faq-data";
 import { BrandSearch } from "@/components/landing/BrandSearch";
 import { BrandsTabs } from "@/components/landing/BrandsTabs";
 import { AuthenticityCompare } from "@/components/landing/AuthenticityCompare";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { ScrollExpandMedia } from "@/components/landing/ScrollExpandMedia";
 import {
   HeroI18n,
   DisclaimerI18n,
@@ -143,93 +145,85 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* ── Hero ── */}
-      <section className="relative overflow-hidden pb-16 pt-24 sm:pb-24">
-        <div className="relative mx-auto max-w-6xl px-4">
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-24">
+      {/* ── Hero ──
+          Le texte devient l'en-tête de la ContainerScroll (il remonte au scroll),
+          et la carte 3D qui se redresse contient le comparateur. Le mouvement
+          amène, puis rend la main : la poignée ne devient active qu'une fois la
+          carte posée — sa géométrie inclinée fausserait le calcul de position. */}
+      <section className="relative overflow-hidden">
+        <ContainerScroll
+          titleComponent={
+            <div className="px-4">
+              <span
+                className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-caption font-medium uppercase"
+                style={{
+                  border: "1px solid hsl(var(--line))",
+                  background: "hsl(var(--surface))",
+                  color: "hsl(var(--muted-foreground))",
+                }}
+              >
+                <span className="relative flex size-2">
+                  <span
+                    className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                    style={{ background: "hsl(var(--line-strong))" }}
+                  />
+                  <span
+                    className="relative inline-flex size-2 rounded-full"
+                    style={{ background: "hsl(var(--accent))" }}
+                  />
+                </span>
+                <HeroPoweredByI18n />
+              </span>
 
-            {/* Left: text */}
-            <FadeIn>
-              <div>
-                <span
-                  className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-caption font-medium uppercase"
+              <HeroI18n />
+
+              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <Link
+                  href="/auth?redirect=%2Fcheck%2Fnew"
+                  className="group inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-body font-semibold transition-[background-color,box-shadow]"
                   style={{
-                    border: "1px solid hsl(var(--line))",
-                    background: "hsl(var(--surface))",
+                    background: "hsl(var(--accent))",
+                    color: "hsl(var(--accent-foreground))",
+                    animation:
+                      "pulse-glow var(--dur-ambient) ease-in-out infinite",
+                  }}
+                >
+                  <LandingLabel tkey="hero.analyzeItem" />
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link
+                  href="#how-it-works"
+                  className="inline-flex h-12 items-center justify-center rounded-md px-8 text-body font-medium transition-[border-color,color]"
+                  style={{
+                    border: "1px solid hsl(var(--line-strong))",
                     color: "hsl(var(--muted-foreground))",
                   }}
                 >
-                  <span className="relative flex size-2">
-                    <span
-                      className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
-                      style={{ background: "hsl(var(--line-strong))" }}
-                    />
-                    <span
-                      className="relative inline-flex size-2 rounded-full"
-                      style={{ background: "hsl(var(--accent))" }}
-                    />
-                  </span>
-                  <HeroPoweredByI18n />
-                </span>
-
-                <HeroI18n />
-
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                  <Link
-                    href="/auth?redirect=%2Fcheck%2Fnew"
-                    className="group inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-body font-semibold transition-[background-color,box-shadow]"
-                    style={{
-                      background: "hsl(var(--accent))",
-                      color: "hsl(var(--accent-foreground))",
-                      animation:
-                        "pulse-glow var(--dur-ambient) ease-in-out infinite",
-                    }}
-                  >
-                    <LandingLabel tkey="hero.analyzeItem" />
-                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                  <Link
-                    href="#how-it-works"
-                    className="inline-flex h-12 items-center justify-center rounded-md px-8 text-body font-medium transition-[border-color,color]"
-                    style={{
-                      border: "1px solid hsl(var(--line-strong))",
-                      color: "hsl(var(--muted-foreground))",
-                    }}
-                  >
-                    <LandingLabel tkey="nav.howItWorks" />
-                  </Link>
-                </div>
-
-                {/* Trust signals */}
-                <div className="mt-8 flex flex-wrap gap-6">
-                  <HeroTrustTags />
-                </div>
+                  <LandingLabel tkey="nav.howItWorks" />
+                </Link>
               </div>
-            </FadeIn>
 
-            {/* Right: comparateur d'authenticité — la thèse du produit, démontrée.
-                Remplace la simulation de scanner : deux « produits animés » côte à
-                côte se seraient concurrencés, et seul celui-ci prouve quelque chose. */}
-            <FadeIn delay={200}>
-              <div className="relative mx-auto max-w-sm lg:max-w-none">
-                <AuthenticityCompare />
-                <p className="mt-4 text-center text-caption text-muted-foreground lg:text-left">
-                  Faites glisser la poignée. Vous ne verrez pas la différence — l&apos;IA, si.
-                </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-6">
+                <HeroTrustTags />
               </div>
-            </FadeIn>
 
-          </div>
-        </div>
+              <p className="mt-8 text-caption text-muted-foreground">
+                Faites glisser la poignée. Vous ne verrez pas la différence — l&apos;IA, si.
+              </p>
+            </div>
+          }
+        >
+          <AuthenticityCompare className="h-full" />
+        </ContainerScroll>
       </section>
 
       {/* ── Stats band ── */}
       <section className="border-t border-line-subtle">
-        <FadeIn>
+        <Reveal>
           <div className="mx-auto max-w-6xl px-4 py-12">
             <StatsSection />
           </div>
-        </FadeIn>
+        </Reveal>
       </section>
 
       {/* ── Comment ça marche ── */}
@@ -238,14 +232,14 @@ export default function LandingPage() {
         className="border-t border-line-subtle py-16 sm:py-24"
       >
         <div className="mx-auto max-w-6xl px-4">
-          <FadeIn className="text-center">
+          <Reveal className="text-center">
             <p
               className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               <LandingLabel tkey="landing.labelProcess" />
             </p>
             <HowItWorksI18n />
-          </FadeIn>
+          </Reveal>
 
           <StepsSection />
         </div>
@@ -254,7 +248,7 @@ export default function LandingPage() {
       {/* ── Encadré sécurité ── */}
       <section className="border-t border-line-subtle py-12">
         <div className="mx-auto max-w-6xl px-4">
-          <FadeIn>
+          <Reveal>
             <div
               className="flex flex-col items-center gap-3 rounded-lg px-6 py-6 text-center sm:flex-row sm:text-left"
               style={{
@@ -270,14 +264,44 @@ export default function LandingPage() {
                 <SecurityNoteI18n />
               </p>
             </div>
-          </FadeIn>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ── Vidéo de présentation ──
+          Remontée entre le hero et le rapport-exemple, et enveloppée dans
+          ScrollExpandMedia : le média grandit à mesure qu'on descend, sans que le
+          scroll soit détourné. Le cadre est plafonné à max-w-3xl — la source fait
+          600 px de large depuis le ré-encodage, l'étirer en pleine largeur la
+          rendrait floue. */}
+      <section className="border-t border-line-subtle py-16 sm:py-24">
+        <div className="mx-auto max-w-6xl px-4">
+          <Reveal className="text-center">
+            <p className="mb-3 text-caption font-medium uppercase text-muted-foreground">
+              <LandingLabel tkey="landing.videoLabel" />
+            </p>
+            <SectionH2 tkey="landing.videoTitle" />
+            <SectionSub tkey="landing.videoSubtitle" />
+          </Reveal>
+          <ScrollExpandMedia className="mt-12 flex justify-center">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster="/images/hero-poster.webp"
+              className="w-full max-w-3xl rounded-lg border border-line-subtle shadow-card"
+            >
+              <source src="/videos/hero-video.mp4" type="video/mp4" />
+            </video>
+          </ScrollExpandMedia>
         </div>
       </section>
 
       {/* ── Exemple de rapport ── */}
       <section className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
-          <FadeIn className="text-center">
+          <Reveal className="text-center">
             <p
               className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
@@ -285,9 +309,9 @@ export default function LandingPage() {
             </p>
             <SectionH2 tkey="landing.reportsTitle" />
             <SectionSub tkey="landing.reportsSubtitle" />
-          </FadeIn>
+          </Reveal>
 
-          <FadeIn delay={150}>
+          <Reveal delay={150}>
             <div className="mx-auto mt-12 max-w-3xl">
               <div
                 className="overflow-hidden rounded-lg border border-line bg-surface shadow-2xl"
@@ -397,44 +421,16 @@ export default function LandingPage() {
                 <SmallCtaI18n />
               </div>
             </div>
-          </FadeIn>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── Vidéo de présentation ── */}
-      <section className="border-t border-line-subtle py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <FadeIn className="text-center">
-            <p
-              className="mb-3 text-caption font-medium uppercase text-muted-foreground"
-            >
-              <LandingLabel tkey="landing.videoLabel" />
-            </p>
-            <SectionH2 tkey="landing.videoTitle" />
-            <SectionSub tkey="landing.videoSubtitle" />
-          </FadeIn>
-          <FadeIn delay={150}>
-            <div className="mt-12 flex justify-center">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                poster="/images/hero-poster.webp"
-                className="w-full max-w-[300px] rounded-lg border border-line-subtle shadow-2xl"
-              >
-                <source src="/videos/hero-video.mp4" type="video/mp4" />
-              </video>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
 
 
       {/* ── Témoignages ── */}
       <section className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
-          <FadeIn className="text-center">
+          <Reveal className="text-center">
             <p
               className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
@@ -442,7 +438,7 @@ export default function LandingPage() {
             </p>
             <SectionH2 tkey="landing.testimonialsMainTitle" />
             <SectionSub tkey="landing.testimonialsMainSubtitle" />
-          </FadeIn>
+          </Reveal>
 
           <TestimonialsSection />
         </div>
@@ -454,7 +450,7 @@ export default function LandingPage() {
         className="border-t border-line-subtle bg-surface/40 py-16 sm:py-24"
       >
         <div className="mx-auto max-w-6xl px-4">
-          <FadeIn className="text-center">
+          <Reveal className="text-center">
             <p
               className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
@@ -476,9 +472,9 @@ export default function LandingPage() {
               />
               <LandingLabel tkey="landing.brandsCategoriesCount" />
             </div>
-          </FadeIn>
+          </Reveal>
 
-          <FadeIn delay={150}>
+          <Reveal delay={150}>
             <div className="mt-12">
               <BrandSearch />
             </div>
@@ -499,14 +495,14 @@ export default function LandingPage() {
               </a>{" "}
               pour la demander.
             </p>
-          </FadeIn>
+          </Reveal>
         </div>
       </section>
 
       {/* ── Fonctionnalités ── */}
       <section className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-6xl px-4">
-          <FadeIn className="text-center">
+          <Reveal className="text-center">
             <p
               className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
@@ -514,7 +510,7 @@ export default function LandingPage() {
             </p>
             <SectionH2 tkey="landing.featuresMainTitle" />
             <SectionSub tkey="landing.featuresMainSubtitle" />
-          </FadeIn>
+          </Reveal>
 
           <FeaturesSection />
         </div>
@@ -526,7 +522,7 @@ export default function LandingPage() {
         className="border-t border-line-subtle py-16 sm:py-24"
       >
         <div className="mx-auto max-w-6xl px-4">
-          <FadeIn className="text-center">
+          <Reveal className="text-center">
             <p
               className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
@@ -534,7 +530,7 @@ export default function LandingPage() {
             </p>
             <SectionH2 tkey="landing.pricingMainTitle" />
             <SectionSub tkey="landing.pricingMainSubtitle" />
-          </FadeIn>
+          </Reveal>
 
           <PlansSection />
         </div>
@@ -543,17 +539,17 @@ export default function LandingPage() {
       {/* ── FAQ ── */}
       <section id="faq" className="border-t border-line-subtle py-16 sm:py-24">
         <div className="mx-auto max-w-3xl px-4">
-          <FadeIn className="text-center">
+          <Reveal className="text-center">
             <p
               className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
               FAQ
             </p>
             <FaqTitleI18n />
-          </FadeIn>
-          <FadeIn delay={150} className="mt-12">
+          </Reveal>
+          <Reveal delay={150} className="mt-12">
             <FaqAccordion />
-          </FadeIn>
+          </Reveal>
         </div>
       </section>
 
@@ -563,7 +559,7 @@ export default function LandingPage() {
         className="border-t border-line-subtle bg-surface/40 py-16 sm:py-24"
       >
         <div className="mx-auto max-w-4xl px-4">
-          <FadeIn className="text-center">
+          <Reveal className="text-center">
             <p
               className="mb-3 text-caption font-medium uppercase text-muted-foreground"
             >
@@ -576,14 +572,14 @@ export default function LandingPage() {
             >
               <AboutI18n />
             </p>
-          </FadeIn>
+          </Reveal>
         </div>
       </section>
 
       {/* ── Disclaimer expert ── */}
       <section className="border-t border-line-subtle py-12">
         <div className="mx-auto max-w-3xl px-4">
-          <FadeIn>
+          <Reveal>
             <div
               className="rounded-lg px-6 py-6 text-center"
               style={{
@@ -607,13 +603,13 @@ export default function LandingPage() {
                 </span>
               </p>
             </div>
-          </FadeIn>
+          </Reveal>
         </div>
       </section>
 
       {/* ── CTA final ── */}
       <section className="border-t border-line-subtle py-16 sm:py-24">
-        <FadeIn className="mx-auto max-w-6xl px-4 text-center">
+        <Reveal className="mx-auto max-w-6xl px-4 text-center">
           <div
             className="relative overflow-hidden rounded-lg bg-surface px-8 py-16"
             style={{ border: "1px solid hsl(var(--line))" }}
@@ -633,7 +629,7 @@ export default function LandingPage() {
             />
             <FinalCtaI18n />
           </div>
-        </FadeIn>
+        </Reveal>
       </section>
 
       {/* ── Footer ── */}
