@@ -57,41 +57,68 @@ class CanvasBoundary extends Component<
   }
 }
 
+/**
+ * DEUX lignes distinctes, et c'est essentiel : le support WebGPU de l'appareil
+ * et le succès du rendu sont deux choses différentes. Les confondre ferait
+ * afficher « WebGPU non supporté » sur une machine où WebGPU marche très bien
+ * mais où c'est la bibliothèque qui a planté — exactement le diagnostic faux que
+ * cette page est censée éviter.
+ *
+ * La sonde WebGPU n'utilise ni three ni react-three-fiber : elle reste juste
+ * même quand le rendu est cassé.
+ */
 function StatusLine({ support, crashed }: { support: Support; crashed: string | null }) {
-  const label =
-    crashed !== null
-      ? "WebGPU : non supporté"
-      : support.state === "checking"
-        ? "WebGPU : détection…"
-        : support.state === "supported"
-          ? "WebGPU : supporté"
-          : "WebGPU : non supporté";
-
-  const tone =
-    crashed !== null || support.state === "unsupported"
-      ? "--verdict-fake"
+  const gpuLabel =
+    support.state === "checking"
+      ? "WebGPU : détection…"
       : support.state === "supported"
-        ? "--verdict-authentic"
+        ? "WebGPU : supporté"
+        : "WebGPU : non supporté";
+
+  const gpuTone =
+    support.state === "supported"
+      ? "--verdict-authentic"
+      : support.state === "unsupported"
+        ? "--verdict-fake"
         : "--verdict-inconclusive";
 
-  const detail =
+  const gpuDetail =
+    support.state === "supported"
+      ? support.adapter
+      : support.state === "unsupported"
+        ? support.reason
+        : "";
+
+  const renderLabel =
     crashed !== null
-      ? `le rendu a échoué — ${crashed}`
+      ? "Rendu : échec"
       : support.state === "supported"
-        ? support.adapter
-        : support.state === "unsupported"
-          ? support.reason
-          : "";
+        ? "Rendu : en cours"
+        : "Rendu : non tenté";
+
+  const renderTone =
+    crashed !== null ? "--verdict-fake" : "--verdict-inconclusive";
 
   return (
     <div className="fixed left-4 top-4 z-[100] max-w-[calc(100vw-2rem)] rounded-md border border-line bg-surface-raised px-4 py-3 shadow-card">
-      <p className="text-ui font-semibold" style={{ color: `hsl(var(${tone}))` }}>
-        {label}
+      <p className="text-ui font-semibold" style={{ color: `hsl(var(${gpuTone}))` }}>
+        {gpuLabel}
       </p>
-      {detail ? (
-        <p className="mt-1 break-words text-caption text-muted-foreground">{detail}</p>
+      {gpuDetail ? (
+        <p className="mt-1 break-words text-caption text-muted-foreground">{gpuDetail}</p>
       ) : null}
-      <p className="mt-2 text-caption text-subtle">
+
+      <p
+        className="mt-3 text-ui font-semibold"
+        style={{ color: `hsl(var(${renderTone}))` }}
+      >
+        {renderLabel}
+      </p>
+      {crashed ? (
+        <p className="mt-1 break-words text-caption text-muted-foreground">{crashed}</p>
+      ) : null}
+
+      <p className="mt-3 text-caption text-subtle">
         {typeof navigator !== "undefined" ? navigator.userAgent : ""}
       </p>
     </div>
@@ -170,12 +197,16 @@ export function LabClient() {
           <h1 className="font-heading text-h2 font-bold">
             {support.state === "checking"
               ? "Détection du support WebGPU…"
-              : "Repli — pas de rendu WebGPU"}
+              : crashed !== null
+                ? "Le rendu a échoué"
+                : "Repli — pas de rendu WebGPU"}
           </h1>
           <p className="max-w-md text-body text-muted-foreground">
             {support.state === "checking"
               ? "Un instant."
-              : "Cet appareil ne peut pas exécuter le hero WebGPU. Aucun Canvas n'a été monté : pas d'écran noir, pas de crash — c'est exactement ce que verrait un visiteur si ce composant partait en production."}
+              : crashed !== null
+                ? "L'appareil n'est pas en cause : lis la ligne « WebGPU » ci-dessus. C'est la bibliothèque de rendu qui a planté, et le détail de l'erreur est affiché avec."
+                : "Cet appareil ne peut pas exécuter le hero WebGPU. Aucun Canvas n'a été monté : pas d'écran noir, pas de crash — c'est exactement ce que verrait un visiteur si ce composant partait en production."}
           </p>
         </div>
       )}
