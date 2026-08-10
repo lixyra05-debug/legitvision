@@ -1,191 +1,291 @@
 "use client";
 
-import { Canvas, extend, useFrame, useThree } from "@react-three/fiber";
-import { useAspect, useTexture } from "@react-three/drei";
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import * as THREE from "three/webgpu";
 import { bloom } from "three/examples/jsm/tsl/display/BloomNode.js";
-import type { Mesh } from "three";
 import {
   abs,
+  add,
   blendScreen,
   float,
+  mix,
   mod,
   mx_cell_noise_float,
   oneMinus,
+  pass,
   smoothstep,
   texture,
   uniform,
   uv,
   vec2,
   vec3,
-  pass,
-  mix,
-  add,
 } from "three/tsl";
 
 /**
- * Hero WebGPU — composant de LABORATOIRE, monté uniquement sur /lab.
- * Il n'est référencé nulle part depuis le site.
+ * Hero WebGPU — three.js BRUT, sans @react-three/fiber ni @react-three/drei.
+ * Composant de LABORATOIRE, monté uniquement sur /lab.
+ *
+ * ── Pourquoi sans react-three-fiber ───────────────────────────────────────
+ * r3f v9 est la première version à accepter une factory `gl` asynchrone, ce
+ * qu'exige `await renderer.init()` de WebGPURenderer. Mais v9 lit les internals
+ * de React 19 et lève à l'IMPORT sur React 18 :
+ *   TypeError: Cannot read properties of undefined (reading 'S')
+ * Et r3f v8, compatible React 18, ignore silencieusement un `gl` async et
+ * retombe sur un WebGLRenderer — on croirait tester WebGPU en testant WebGL.
+ * three brut n'a aucune de ces contraintes : pas de réconciliateur, pas de
+ * version de React à satisfaire.
  *
  * ── Écarts assumés par rapport au code d'origine ──────────────────────────
- * 1. Le rouge a disparu. L'original peignait la scan-line ET le masque de points
- *    en rouge (`vec3(1,0,0)` et `vec3(10,0,0)`). Dans ce produit le rouge est le
- *    verdict « contrefaçon » : il ne peut pas servir de décor. Les deux passent
- *    à l'emerald de marque. Le second n'était pas dans la liste de corrections
- *    demandée — je l'ai changé quand même, laisser un flux de points rouges
- *    aurait vidé la correction de son sens.
- * 2. Les deux images étaient hébergées sur i.postimg.cc. Téléchargées dans
- *    public/lab/ : aucun hébergeur tiers gratuit dans le chemin critique.
- * 3. Les classes explore-btn / explore-arrow / fade-in / fade-in-subtitle
- *    n'existent pas dans ce projet. Plutôt que de les écrire, la révélation mot
- *    à mot passe par framer-motion (déjà installé) et le bouton par nos tokens.
- * 4. `text-white` et `stroke="white"` deviennent `text-foreground` et
- *    `currentColor`.
+ * 1. Le rouge a disparu deux fois. L'original peignait la scan-line
+ *    (`vec3(1,0,0)`) ET le masque de matière (`vec3(10,0,0)`) en rouge. Ici le
+ *    rouge est le verdict « contrefaçon » : les deux passent à l'emerald.
+ * 2. CORRECTION D'UN BUG de l'original : il écrivait
+ *    `const scanPos = float(uScanProgress.value)`, ce qui capture la VALEUR (0)
+ *    à la construction du graphe. L'uniform était bien mis à jour chaque frame,
+ *    mais le shader ne le relisait jamais — la scan-line restait collée en y=0.
+ *    On branche ici le nœud uniform lui-même, et la ligne balaie vraiment.
+ * 3. Images rapatriées dans public/lab/ : pas d'hébergeur tiers gratuit.
+ * 4. Les classes explore-btn / fade-in / fade-in-subtitle n'existent pas ici :
+ *    la surcouche texte passe par framer-motion et les tokens.
  *
- * ⚠️ Ce composant suppose WebGPU disponible. La détection et le repli sont dans
- * components/lab/LabClient.tsx — il ne doit jamais être monté sans.
+ * ⚠️ Ce composant suppose WebGPU disponible ET ne se monte qu'après les gardes
+ * de components/lab/LabClient.tsx. Il signale ses échecs par `onError`.
  */
 
 // --accent (#10B981) en composantes normalisées : un shader ne lit pas les
 // variables CSS. Toute évolution du token doit être répercutée ici.
 const ACCENT_RGB: [number, number, number] = [0.0627, 0.7255, 0.5059];
 
-const TEXTUREMAP = { src: "/lab/hero-texture.png" };
-const DEPTHMAP = { src: "/lab/hero-depth.webp" };
-
-extend(THREE as never);
-
-const PostProcessing = ({
-  strength = 1,
-  threshold = 1,
-  fullScreenEffect = true,
-}: {
-  strength?: number;
-  threshold?: number;
-  fullScreenEffect?: boolean;
-}) => {
-  const { gl, scene, camera } = useThree();
-  const progressRef = useRef({ value: 0 });
-
-  const render = useMemo(() => {
-    const postProcessing = new THREE.PostProcessing(gl as never);
-    const scenePass = pass(scene, camera);
-    const scenePassColor = scenePass.getTextureNode("output");
-    const bloomPass = bloom(scenePassColor, strength, 0.5, threshold);
-
-    const uScanProgress = uniform(0);
-    progressRef.current = uScanProgress;
-
-    const scanPos = float(uScanProgress.value);
-    const uvY = uv().y;
-    const scanWidth = float(0.05);
-    const scanLine = smoothstep(0, scanWidth, abs(uvY.sub(scanPos)));
-    // emerald, pas rouge : le rouge est réservé au verdict « contrefaçon ».
-    const scanOverlay = vec3(...ACCENT_RGB).mul(oneMinus(scanLine)).mul(0.4);
-
-    const withScanEffect = mix(
-      scenePassColor,
-      add(scenePassColor, scanOverlay),
-      fullScreenEffect ? smoothstep(0.9, 1.0, oneMinus(scanLine)) : 1.0,
-    );
-
-    const final = withScanEffect.add(bloomPass);
-    postProcessing.outputNode = final;
-    return postProcessing;
-  }, [camera, gl, scene, strength, threshold, fullScreenEffect]);
-
-  useFrame(({ clock }) => {
-    progressRef.current.value =
-      Math.sin(clock.getElapsedTime() * 0.5) * 0.5 + 0.5;
-    render.renderAsync();
-  }, 1);
-
-  return null;
-};
+const TEXTUREMAP_SRC = "/lab/hero-texture.png";
+const DEPTHMAP_SRC = "/lab/hero-depth.webp";
 
 const WIDTH = 300;
 const HEIGHT = 300;
+const PLANE_SCALE = 0.4;
 
-const Scene = () => {
-  const [rawMap, depthMap] = useTexture([TEXTUREMAP.src, DEPTHMAP.src]);
-  const meshRef = useRef<Mesh>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (rawMap && depthMap) setVisible(true);
-  }, [rawMap, depthMap]);
-
-  const { material, uniforms } = useMemo(() => {
-    const uPointer = uniform(new THREE.Vector2(0));
-    const uProgress = uniform(0);
-    const strength = 0.01;
-
-    const tDepthMap = texture(depthMap);
-    const tMap = texture(
-      rawMap,
-      uv().add(tDepthMap.r.mul(uPointer).mul(strength)),
-    );
-
-    const aspect = float(WIDTH).div(HEIGHT);
-    const tUv = vec2(uv().x.mul(aspect), uv().y);
-    const tiling = vec2(120.0);
-    const tiledUv = mod(tUv.mul(tiling), 2.0).sub(1.0);
-    const brightness = mx_cell_noise_float(tUv.mul(tiling).div(2));
-    const dist = float(tiledUv.length());
-    const dot = float(smoothstep(0.5, 0.49, dist)).mul(brightness);
-    const depth = tDepthMap;
-    const flow = oneMinus(smoothstep(0, 0.02, abs(depth.sub(uProgress))));
-    // idem : le flux de points passe du rouge à l'emerald, même intensité (×10).
-    const mask = dot
-      .mul(flow)
-      .mul(vec3(ACCENT_RGB[0] * 10, ACCENT_RGB[1] * 10, ACCENT_RGB[2] * 10));
-    const final = blendScreen(tMap, mask);
-
-    const material = new THREE.MeshBasicNodeMaterial({
-      colorNode: final,
-      transparent: true,
-      opacity: 0,
-    });
-
-    return { material, uniforms: { uPointer, uProgress } };
-  }, [rawMap, depthMap]);
-
-  const [w, h] = useAspect(WIDTH, HEIGHT);
-
-  useFrame(({ clock }) => {
-    uniforms.uProgress.value =
-      Math.sin(clock.getElapsedTime() * 0.5) * 0.5 + 0.5;
-    const mat = meshRef.current?.material as { opacity?: number } | undefined;
-    if (mat && "opacity" in mat) {
-      mat.opacity = THREE.MathUtils.lerp(mat.opacity ?? 0, visible ? 1 : 0, 0.07);
-    }
-  });
-
-  useFrame(({ pointer }) => {
-    uniforms.uPointer.value = pointer;
-  });
-
-  const scaleFactor = 0.4;
-  return (
-    <mesh
-      ref={meshRef}
-      scale={[w * scaleFactor, h * scaleFactor, 1]}
-      material={material}
-    >
-      <planeGeometry />
-    </mesh>
-  );
+type SceneCallbacks = {
+  onReady?: () => void;
+  onError?: (message: string) => void;
 };
 
+export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
+  const hostRef = useRef<HTMLDivElement>(null);
+  // Les callbacks passent par une ref : sinon une nouvelle identité à chaque
+  // rendu du parent relancerait tout le montage WebGPU.
+  const cbRef = useRef<SceneCallbacks>({ onReady, onError });
+  cbRef.current = { onReady, onError };
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+    // Liaison non-nullable explicite : TypeScript perd la restriction de type
+    // à travers la closure asynchrone de setup().
+    const mount: HTMLDivElement = host;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let disposed = false;
+    let raf = 0;
+    let renderer: THREE.WebGPURenderer | null = null;
+    let post: THREE.PostProcessing | null = null;
+    let geometry: THREE.PlaneGeometry | null = null;
+    let material: THREE.MeshBasicNodeMaterial | null = null;
+    const loaded: THREE.Texture[] = [];
+    let handleResize: (() => void) | null = null;
+    let handlePointer: ((e: PointerEvent) => void) | null = null;
+    let handleVisibility: (() => void) | null = null;
+
+    async function setup() {
+      const loader = new THREE.TextureLoader();
+      const [rawMap, depthMap] = await Promise.all([
+        loader.loadAsync(TEXTUREMAP_SRC),
+        loader.loadAsync(DEPTHMAP_SRC),
+      ]);
+      if (disposed) {
+        rawMap.dispose();
+        depthMap.dispose();
+        return;
+      }
+      loaded.push(rawMap, depthMap);
+
+      const r = new THREE.WebGPURenderer({ antialias: true, alpha: true });
+      // Le seul appel impossible en r3f v8, et la raison de cette réécriture.
+      await r.init();
+      if (disposed) {
+        r.dispose();
+        return;
+      }
+      renderer = r;
+
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(mount.clientWidth, mount.clientHeight);
+      renderer.domElement.style.display = "block";
+      mount.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      // Caméra orthographique en coordonnées normalisées : le plan couvre
+      // exactement [-1,1]² quel que soit le format du canvas, donc un
+      // redimensionnement ne demande qu'un setSize.
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 10);
+      camera.position.z = 1;
+
+      const uPointer = uniform(new THREE.Vector2(0, 0));
+      const uProgress = uniform(0);
+      const uScan = uniform(0);
+
+      const tDepthMap = texture(depthMap);
+      const tMap = texture(
+        rawMap,
+        uv().add(tDepthMap.r.mul(uPointer).mul(0.01)),
+      );
+
+      const aspect = float(WIDTH).div(HEIGHT);
+      const tUv = vec2(uv().x.mul(aspect), uv().y);
+      const tiling = vec2(120.0);
+      const tiledUv = mod(tUv.mul(tiling), 2.0).sub(1.0);
+      const brightness = mx_cell_noise_float(tUv.mul(tiling).div(2));
+      const dist = float(tiledUv.length());
+      const dot = float(smoothstep(0.5, 0.49, dist)).mul(brightness);
+      const flow = oneMinus(smoothstep(0, 0.02, abs(tDepthMap.sub(uProgress))));
+      // emerald, pas rouge : le rouge est le verdict « contrefaçon ».
+      const mask = dot
+        .mul(flow)
+        .mul(
+          vec3(
+            ACCENT_RGB[0] * 10,
+            ACCENT_RGB[1] * 10,
+            ACCENT_RGB[2] * 10,
+          ),
+        );
+
+      geometry = new THREE.PlaneGeometry(2, 2);
+      material = new THREE.MeshBasicNodeMaterial({
+        colorNode: blendScreen(tMap, mask),
+        transparent: true,
+        opacity: 0,
+      });
+
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.scale.set(PLANE_SCALE, PLANE_SCALE, 1);
+      scene.add(mesh);
+
+      post = new THREE.PostProcessing(renderer);
+      const scenePass = pass(scene, camera);
+      const scenePassColor = scenePass.getTextureNode("output");
+      const bloomPass = bloom(scenePassColor, 1, 0.5, 1);
+
+      // uScan (le NŒUD), pas uScan.value : c'est le correctif du bug d'origine.
+      const scanLine = smoothstep(0, float(0.05), abs(uv().y.sub(uScan)));
+      const scanOverlay = vec3(...ACCENT_RGB).mul(oneMinus(scanLine)).mul(0.4);
+      const withScan = mix(
+        scenePassColor,
+        add(scenePassColor, scanOverlay),
+        smoothstep(0.9, 1.0, oneMinus(scanLine)),
+      );
+      post.outputNode = withScan.add(bloomPass);
+
+      handleResize = () => {
+        if (!renderer) return;
+        renderer.setSize(mount.clientWidth, mount.clientHeight);
+      };
+      window.addEventListener("resize", handleResize);
+
+      // Pointeur suivi par un listener natif — normalisé comme le faisait r3f :
+      // x et y dans [-1, 1], y vers le haut.
+      handlePointer = (e: PointerEvent) => {
+        uPointer.value.set(
+          (e.clientX / window.innerWidth) * 2 - 1,
+          -(e.clientY / window.innerHeight) * 2 + 1,
+        );
+      };
+      window.addEventListener("pointermove", handlePointer, { passive: true });
+
+      const clock = new THREE.Clock();
+      let opacity = 0;
+
+      const drawFrame = () => {
+        const t = clock.getElapsedTime();
+        const wave = Math.sin(t * 0.5) * 0.5 + 0.5;
+        uProgress.value = wave;
+        uScan.value = wave;
+        opacity = THREE.MathUtils.lerp(opacity, 1, 0.07);
+        if (material) material.opacity = opacity;
+        post?.renderAsync();
+      };
+
+      if (reduced) {
+        // Mouvement réduit demandé : une seule frame, à l'état stable.
+        // Aucune boucle n'est lancée, le GPU ne tourne pas.
+        uProgress.value = 0.5;
+        uScan.value = 0.5;
+        material.opacity = 1;
+        post.renderAsync();
+        cbRef.current.onReady?.();
+        return;
+      }
+
+      const loop = () => {
+        drawFrame();
+        raf = requestAnimationFrame(loop);
+      };
+
+      // Onglet caché : on arrête la boucle. Faire tourner un GPU en arrière-plan
+      // ne sert à rien et chauffe le téléphone en silence.
+      handleVisibility = () => {
+        if (document.hidden) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        } else if (raf === 0 && !disposed) {
+          clock.getDelta(); // absorbe le temps écoulé pendant la pause
+          raf = requestAnimationFrame(loop);
+        }
+      };
+      document.addEventListener("visibilitychange", handleVisibility);
+
+      if (!document.hidden) raf = requestAnimationFrame(loop);
+      cbRef.current.onReady?.();
+    }
+
+    setup().catch((err: unknown) => {
+      if (disposed) return;
+      cbRef.current.onError?.(
+        err instanceof Error ? err.message : String(err),
+      );
+    });
+
+    return () => {
+      disposed = true;
+      if (raf) cancelAnimationFrame(raf);
+      if (handleResize) window.removeEventListener("resize", handleResize);
+      if (handlePointer) window.removeEventListener("pointermove", handlePointer);
+      if (handleVisibility)
+        document.removeEventListener("visibilitychange", handleVisibility);
+
+      // Ordre volontaire : les ressources GPU d'abord, le renderer ensuite.
+      // Une fuite three sur un démontage ne se voit pas — elle fait juste
+      // chauffer l'appareil.
+      post?.dispose();
+      material?.dispose();
+      geometry?.dispose();
+      loaded.forEach((t) => t.dispose());
+      const canvas = renderer?.domElement;
+      renderer?.dispose();
+      if (canvas?.parentNode) canvas.parentNode.removeChild(canvas);
+    };
+  }, []);
+
+  return (
+    <div className="relative h-svh">
+      <HeroOverlay />
+      <div ref={hostRef} className="h-svh w-full" />
+    </div>
+  );
+}
+
 /**
- * Surcouche texte. Les classes fade-in / fade-in-subtitle / explore-btn /
- * explore-arrow de l'original n'existent pas ici : la révélation mot à mot passe
- * par framer-motion (déjà au bundle) et le reste par les tokens.
- *
- * Textes : tu as demandé « mes textes » sans les fournir — j'ai repris la formule
- * de l'openGraph de la landing. À remplacer si ce n'est pas la bonne.
+ * Surcouche texte. Textes repris de l'openGraph de la landing — tu avais demandé
+ * « mes textes » sans les fournir.
  */
 function HeroOverlay() {
   const titleWords = ["Scannez", "avant", "d'acheter"];
@@ -193,7 +293,7 @@ function HeroOverlay() {
   const reduced = useReducedMotion() ?? false;
 
   return (
-    <div className="pointer-events-none absolute z-[60] flex h-svh w-full flex-col items-center justify-center px-10 uppercase">
+    <div className="pointer-events-none absolute inset-0 z-[60] flex flex-col items-center justify-center px-10 uppercase">
       <div className="text-h2 font-extrabold md:text-display">
         <div className="flex space-x-2 overflow-hidden text-foreground lg:space-x-6">
           {titleWords.map((word, index) => (
@@ -245,25 +345,6 @@ function HeroOverlay() {
           <path d="M6 12L11 17L16 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
       </motion.div>
-    </div>
-  );
-}
-
-export function HeroFuturistic() {
-  return (
-    <div className="relative h-svh">
-      <HeroOverlay />
-      <Canvas
-        flat
-        gl={async (props) => {
-          const renderer = new THREE.WebGPURenderer(props as never);
-          await renderer.init();
-          return renderer;
-        }}
-      >
-        <PostProcessing fullScreenEffect />
-        <Scene />
-      </Canvas>
     </div>
   );
 }

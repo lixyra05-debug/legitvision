@@ -14,11 +14,14 @@ import { Component, useEffect, useState, type ReactNode } from "react";
  * 2. `requestAdapter()` peut renvoyer null même quand `navigator.gpu` existe
  *    (GPU sur liste noire, machine virtuelle, économie d'énergie). On le teste
  *    réellement au lieu de se fier à la présence de l'API.
- * 3. `renderer.init()` peut encore échouer après tout ça — une frontière
- *    d'erreur attrape la casse et affiche le repli au lieu de démonter la page.
+ * 3. `renderer.init()` peut encore échouer après tout ça. Comme le montage se
+ *    fait dans un effet asynchrone, une frontière d'erreur React ne l'attraperait
+ *    PAS : le composant remonte donc son échec par `onError`. La frontière reste
+ *    en place pour les erreurs de rendu synchrones.
  *
- * Le composant three est en import dynamique `ssr: false` : three au SSR
- * planterait, et ses ~600 Ko n'ont rien à faire dans le bundle partagé.
+ * Le composant est en three.js brut — plus de react-three-fiber, qui levait à
+ * l'import sur React 18. Import dynamique `ssr: false` : three au SSR planterait,
+ * et son bundle n'a rien à faire dans le chunk partagé.
  */
 
 const HeroFuturistic = dynamic(
@@ -67,7 +70,15 @@ class CanvasBoundary extends Component<
  * La sonde WebGPU n'utilise ni three ni react-three-fiber : elle reste juste
  * même quand le rendu est cassé.
  */
-function StatusLine({ support, crashed }: { support: Support; crashed: string | null }) {
+function StatusLine({
+  support,
+  crashed,
+  ready,
+}: {
+  support: Support;
+  crashed: string | null;
+  ready: boolean;
+}) {
   const gpuLabel =
     support.state === "checking"
       ? "WebGPU : détection…"
@@ -92,12 +103,18 @@ function StatusLine({ support, crashed }: { support: Support; crashed: string | 
   const renderLabel =
     crashed !== null
       ? "Rendu : échec"
-      : support.state === "supported"
-        ? "Rendu : en cours"
-        : "Rendu : non tenté";
+      : ready
+        ? "Rendu : OK"
+        : support.state === "supported"
+          ? "Rendu : initialisation…"
+          : "Rendu : non tenté";
 
   const renderTone =
-    crashed !== null ? "--verdict-fake" : "--verdict-inconclusive";
+    crashed !== null
+      ? "--verdict-fake"
+      : ready
+        ? "--verdict-authentic"
+        : "--verdict-inconclusive";
 
   return (
     <div className="fixed left-4 top-4 z-[100] max-w-[calc(100vw-2rem)] rounded-md border border-line bg-surface-raised px-4 py-3 shadow-card">
@@ -128,6 +145,7 @@ function StatusLine({ support, crashed }: { support: Support; crashed: string | 
 export function LabClient() {
   const [support, setSupport] = useState<Support>({ state: "checking" });
   const [crashed, setCrashed] = useState<string | null>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -186,11 +204,11 @@ export function LabClient() {
 
   return (
     <main className="relative min-h-svh bg-background">
-      <StatusLine support={support} crashed={crashed} />
+      <StatusLine support={support} crashed={crashed} ready={ready} />
 
       {canRender ? (
         <CanvasBoundary onError={setCrashed}>
-          <HeroFuturistic />
+          <HeroFuturistic onReady={() => setReady(true)} onError={setCrashed} />
         </CanvasBoundary>
       ) : (
         <div className="flex h-svh flex-col items-center justify-center gap-4 px-6 text-center">
