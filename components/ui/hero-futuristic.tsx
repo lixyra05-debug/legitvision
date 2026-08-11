@@ -6,10 +6,8 @@ import * as THREE from "three/webgpu";
 import { bloom } from "three/examples/jsm/tsl/display/BloomNode.js";
 import {
   abs,
-  add,
   blendScreen,
   float,
-  mix,
   mod,
   mx_cell_noise_float,
   oneMinus,
@@ -65,7 +63,21 @@ const DEPTHMAP_SRC = "/lab/hero-depth.webp";
 
 const WIDTH = 300;
 const HEIGHT = 300;
-const PLANE_SCALE = 0.4;
+// 0.22 : la chaussure tient dans le tiers central et laisse respirer autour.
+const PLANE_SCALE = 0.22;
+
+// Profondeur : mesuré sur la depth map, le sujet s'étale de 0,553 (p5) à 0,949
+// (p95). Balayer [0,1] laissait la bande traverser du vide les deux tiers du
+// cycle. On balaie donc la plage où la matière existe réellement.
+const DEPTH_MIN = 0.55;
+const DEPTH_SPAN = 0.4;
+const FLOW_WINDOW = 0.05;
+
+// Scan-line : boîte englobante du sujet mesurée à v ∈ [0.285, 0.744] (UV three,
+// flipY). On déborde à peine pour que la ligne entre et sorte proprement.
+const SCAN_MIN = 0.26;
+const SCAN_SPAN = 0.51;
+const SCAN_WIDTH = 0.035;
 
 type SceneCallbacks = {
   onReady?: () => void;
@@ -122,7 +134,6 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
       renderer = r;
 
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(mount.clientWidth, mount.clientHeight);
       renderer.domElement.style.display = "block";
       mount.appendChild(renderer.domElement);
 
@@ -155,7 +166,9 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
       // profondeur s'étale de 0,553 (p5) à 0,949 (p95). uProgress balayant [0,1]
       // en sinusoïde, la bande ne croise donc la chaussure que ~32 % du cycle —
       // voir le message qui accompagne ce commit.
-      const flow = oneMinus(smoothstep(0, 0.02, abs(tDepthMap.sub(uProgress))));
+      const flow = oneMinus(
+        smoothstep(0, FLOW_WINDOW, abs(tDepthMap.sub(uProgress))),
+      );
       // emerald, pas rouge : le rouge est le verdict « contrefaçon ».
       const mask = dot
         .mul(flow)
@@ -167,36 +180,51 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
           ),
         );
 
+      // La scan-line vit dans le MATÉRIAU, plus dans le post-processing.
+      // En post-processing, `uv()` est l'écran entier : la ligne balayait le vide
+      // à gauche et à droite de la chaussure — un laser qui passe devant, pas un
+      // scan. Ici `uv()` est l'espace du plan, et la silhouette issue de la depth
+      // map coupe la ligne aux bords du sujet. Elle passe quand même dans le
+      // bloom, puisque le bloom s'applique au rendu de la scène.
+      const subject = smoothstep(0.05, 0.16, tDepthMap.r);
+      const band = oneMinus(
+        smoothstep(0, float(SCAN_WIDTH), abs(uv().y.sub(uScan))),
+      );
+      const scanGlow = vec3(...ACCENT_RGB).mul(band).mul(subject).mul(0.85);
+
       geometry = new THREE.PlaneGeometry(2, 2);
       material = new THREE.MeshBasicNodeMaterial({
-        colorNode: blendScreen(tMap, mask),
+        colorNode: blendScreen(tMap, mask).add(scanGlow),
         transparent: true,
         opacity: 0,
       });
 
       const mesh = new THREE.Mesh(geometry, material);
-      mesh.scale.set(PLANE_SCALE, PLANE_SCALE, 1);
       scene.add(mesh);
 
       post = new THREE.PostProcessing(renderer);
       const scenePass = pass(scene, camera);
       const scenePassColor = scenePass.getTextureNode("output");
-      const bloomPass = bloom(scenePassColor, 1, 0.5, 1);
+      // Bloom seul : la scan-line est passée dans le matériau, où elle peut être
+      // découpée par la silhouette. Elle traverse quand même le bloom.
+      post.outputNode = scenePassColor.add(bloom(scenePassColor, 1, 0.5, 1));
 
-      // uScan (le NŒUD), pas uScan.value : c'est le correctif du bug d'origine.
-      const scanLine = smoothstep(0, float(0.05), abs(uv().y.sub(uScan)));
-      const scanOverlay = vec3(...ACCENT_RGB).mul(oneMinus(scanLine)).mul(0.4);
-      const withScan = mix(
-        scenePassColor,
-        add(scenePassColor, scanOverlay),
-        smoothstep(0.9, 1.0, oneMinus(scanLine)),
-      );
-      post.outputNode = withScan.add(bloomPass);
-
-      handleResize = () => {
+      // La caméra couvre [-1,1]² quel que soit le format : un plan à échelle
+      // uniforme se retrouve donc ÉTIRÉ dès que le canvas n'est pas carré — la
+      // chaussure s'élargissait en paysage. On compense par la plus petite
+      // dimension, ce qui garde le plan carré EN PIXELS.
+      const applySize = () => {
         if (!renderer) return;
-        renderer.setSize(mount.clientWidth, mount.clientHeight);
+        const w = mount.clientWidth;
+        const h = mount.clientHeight;
+        if (w === 0 || h === 0) return;
+        renderer.setSize(w, h);
+        const k = Math.min(w, h);
+        mesh.scale.set((PLANE_SCALE * k) / w, (PLANE_SCALE * k) / h, 1);
       };
+      applySize();
+
+      handleResize = applySize;
       window.addEventListener("resize", handleResize);
 
       // Pointeur suivi par un listener natif — normalisé comme le faisait r3f :
@@ -215,8 +243,8 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
       const drawFrame = () => {
         const t = clock.getElapsedTime();
         const wave = Math.sin(t * 0.5) * 0.5 + 0.5;
-        uProgress.value = wave;
-        uScan.value = wave;
+        uProgress.value = DEPTH_MIN + wave * DEPTH_SPAN;
+        uScan.value = SCAN_MIN + wave * SCAN_SPAN;
         opacity = THREE.MathUtils.lerp(opacity, 1, 0.07);
         if (material) material.opacity = opacity;
         post?.renderAsync();
@@ -225,8 +253,8 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
       if (reduced) {
         // Mouvement réduit demandé : une seule frame, à l'état stable.
         // Aucune boucle n'est lancée, le GPU ne tourne pas.
-        uProgress.value = 0.5;
-        uScan.value = 0.5;
+        uProgress.value = DEPTH_MIN + 0.5 * DEPTH_SPAN;
+        uScan.value = SCAN_MIN + 0.5 * SCAN_SPAN;
         material.opacity = 1;
         post.renderAsync();
         cbRef.current.onReady?.();
@@ -300,58 +328,53 @@ function HeroOverlay() {
   const reduced = useReducedMotion() ?? false;
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-[60] flex flex-col items-center justify-center px-10 uppercase">
-      <div className="text-h2 font-extrabold md:text-display">
-        <div className="flex space-x-2 overflow-hidden text-foreground lg:space-x-6">
-          {titleWords.map((word, index) => (
-            <motion.span
-              key={word}
-              initial={reduced ? undefined : { opacity: 0, y: "0.4em" }}
-              animate={reduced ? undefined : { opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.42,
-                ease: [0.2, 0, 0, 1],
-                delay: reduced ? 0 : 0.2 + index * 0.13,
-              }}
-            >
-              {word}
-            </motion.span>
-          ))}
-        </div>
-      </div>
-
-      <motion.p
-        className="mt-2 text-ui font-bold text-muted-foreground md:text-lead"
-        initial={reduced ? undefined : { opacity: 0 }}
-        animate={reduced ? undefined : { opacity: 1 }}
-        transition={{
-          duration: 0.42,
-          ease: [0.2, 0, 0, 1],
-          delay: reduced ? 0 : 0.2 + titleWords.length * 0.13 + 0.2,
+    <div className="pointer-events-none absolute inset-0 z-[60] flex flex-col items-center px-6 pt-[12vh]">
+      {/* Voile radial, pas un aplat : le texte était posé DEVANT la chaussure et
+          s'y noyait. Le bloc remonte au-dessus du sujet, et ce dégradé assombrit
+          ce qui reste derrière lui sans créer de bord franc. */}
+      <div
+        className="absolute inset-x-0 top-0 h-[52vh]"
+        style={{
+          background:
+            "radial-gradient(58% 68% at 50% 26%, hsl(var(--background) / 0.94) 0%, hsl(var(--background) / 0.72) 42%, transparent 76%)",
         }}
-      >
-        {subtitle}
-      </motion.p>
+      />
 
-      <motion.div
-        className="absolute bottom-10 flex items-center gap-2 rounded-full border border-line-strong bg-surface/80 px-4 py-2 text-caption font-medium text-muted-foreground"
-        initial={reduced ? undefined : { opacity: 0, y: 8 }}
-        animate={reduced ? undefined : { opacity: 1, y: 0 }}
-        transition={{ duration: 0.42, ease: [0.2, 0, 0, 1], delay: reduced ? 0 : 1.4 }}
-      >
-        Faites défiler
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 22 22"
-          fill="none"
-          aria-hidden="true"
-          className="text-accent"
+      <div className="relative flex flex-col items-center">
+        <div className="text-h2 font-extrabold uppercase md:text-display">
+          <div className="flex space-x-2 overflow-hidden text-foreground lg:space-x-6">
+            {titleWords.map((word, index) => (
+              <motion.span
+                key={word}
+                initial={reduced ? undefined : { opacity: 0, y: "0.4em" }}
+                animate={reduced ? undefined : { opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.42,
+                  ease: [0.2, 0, 0, 1],
+                  delay: reduced ? 0 : 0.2 + index * 0.13,
+                }}
+              >
+                {word}
+              </motion.span>
+            ))}
+          </div>
+        </div>
+
+        {/* text-foreground : le sous-titre était en muted-foreground, illisible
+            par-dessus une photo. */}
+        <motion.p
+          className="mt-4 max-w-md text-center text-ui font-medium text-foreground md:text-lead"
+          initial={reduced ? undefined : { opacity: 0 }}
+          animate={reduced ? undefined : { opacity: 1 }}
+          transition={{
+            duration: 0.42,
+            ease: [0.2, 0, 0, 1],
+            delay: reduced ? 0 : 0.2 + titleWords.length * 0.13 + 0.2,
+          }}
         >
-          <path d="M11 5V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          <path d="M6 12L11 17L16 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-      </motion.div>
+          {subtitle}
+        </motion.p>
+      </div>
     </div>
   );
 }
