@@ -45,7 +45,10 @@ import {
  *    à la construction du graphe. L'uniform était bien mis à jour chaque frame,
  *    mais le shader ne le relisait jamais — la scan-line restait collée en y=0.
  *    On branche ici le nœud uniform lui-même, et la ligne balaie vraiment.
- * 3. Images rapatriées dans public/lab/ : pas d'hébergeur tiers gratuit.
+ * 3. Vraies photos produit dans public/lab/, optimisées en WebP 1024 :
+ *    texture 1,17 Mo -> 66 Ko, depth map 659 Ko -> 19 Ko. La depth map est
+ *    encodée en q95 : le flux suit ses iso-lignes de profondeur, un banding de
+ *    compression s'y verrait comme des contours parasites.
  * 4. Les classes explore-btn / fade-in / fade-in-subtitle n'existent pas ici :
  *    la surcouche texte passe par framer-motion et les tokens.
  *
@@ -57,7 +60,7 @@ import {
 // variables CSS. Toute évolution du token doit être répercutée ici.
 const ACCENT_RGB: [number, number, number] = [0.0627, 0.7255, 0.5059];
 
-const TEXTUREMAP_SRC = "/lab/hero-texture.png";
+const TEXTUREMAP_SRC = "/lab/hero-texture.webp";
 const DEPTHMAP_SRC = "/lab/hero-depth.webp";
 
 const WIDTH = 300;
@@ -147,6 +150,11 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
       const brightness = mx_cell_noise_float(tUv.mul(tiling).div(2));
       const dist = float(tiledUv.length());
       const dot = float(smoothstep(0.5, 0.49, dist)).mul(brightness);
+      // Fenêtre de flux à 0.02, valeur d'origine — premier essai demandé.
+      // Mesuré sur cette depth map : le sujet occupe 27,5 % de l'image et sa
+      // profondeur s'étale de 0,553 (p5) à 0,949 (p95). uProgress balayant [0,1]
+      // en sinusoïde, la bande ne croise donc la chaussure que ~32 % du cycle —
+      // voir le message qui accompagne ce commit.
       const flow = oneMinus(smoothstep(0, 0.02, abs(tDepthMap.sub(uProgress))));
       // emerald, pas rouge : le rouge est le verdict « contrefaçon ».
       const mask = dot
@@ -284,12 +292,11 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
 }
 
 /**
- * Surcouche texte. Textes repris de l'openGraph de la landing — tu avais demandé
- * « mes textes » sans les fournir.
+ * Surcouche texte.
  */
 function HeroOverlay() {
-  const titleWords = ["Scannez", "avant", "d'acheter"];
-  const subtitle = "Pré-authentification par IA en 90 secondes.";
+  const titleWords = ["Vrai", "ou", "faux"];
+  const subtitle = "Pré-authentification par IA en 90 secondes";
   const reduced = useReducedMotion() ?? false;
 
   return (
