@@ -6,6 +6,7 @@ import { ScamAlert } from "./ScamAlert";
 import { SeoFAQ } from "./SeoFAQ";
 import { SeoCTA } from "./SeoCTA";
 import { RelatedPagesGrid } from "./RelatedPagesGrid";
+import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 
 export function SeoPageTemplate({ data }: { data: SeoPageData }) {
   return (
@@ -18,7 +19,7 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
           {data.introParagraphs.map((paragraph, i) => (
             <p
               key={i}
-              className="mt-4 text-base leading-relaxed text-muted-foreground first:mt-0 sm:text-lg"
+              className="mt-4 text-lead leading-relaxed text-muted-foreground first:mt-0"
             >
               {paragraph}
             </p>
@@ -27,23 +28,25 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
 
         <section id="signaux" className="mb-16 scroll-mt-20">
           <div className="mb-8">
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
+            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
               Authentification
             </span>
-            <h2 className="mt-4 font-heading text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+            <h2 className="mt-4 font-heading text-h2 font-bold">
               Les {data.signals.length} signaux pour reconnaître {" "}
               {data.brand.productPossessive} vraie {data.brand.name}
             </h2>
-            <p className="mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">
+            <p className="mt-3 max-w-2xl text-body text-muted-foreground">
               Chaque signal est classé par difficulté. Plus la difficulté est élevée, plus il faut un œil entraîné ou une analyse IA pour trancher.
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <RevealGroup className="grid gap-4 sm:grid-cols-2">
             {data.signals.map((signal, i) => (
-              <SignalCard key={i} signal={signal} index={i} />
+              <RevealItem key={i}>
+                <SignalCard signal={signal} index={i} />
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </section>
 
         <SeoCTA
@@ -55,30 +58,32 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
 
         <section className="mb-16">
           <div className="mb-8">
-            <span className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-300">
+            <span className="inline-flex items-center gap-2 rounded-full border border-warning/30 bg-warning/10 px-3 py-1 text-caption font-medium text-warning">
               Alerte arnaques
             </span>
-            <h2 className="mt-4 font-heading text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+            <h2 className="mt-4 font-heading text-h2 font-bold">
               {data.scams.length} arnaques récurrentes sur {data.platform.name}
             </h2>
-            <p className="mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">
+            <p className="mt-3 max-w-2xl text-body text-muted-foreground">
               Ces schémas se retrouvent dans la quasi-totalité des contrefaçons {data.brand.name} signalées sur {data.platform.name}. Si vous en cochez un seul, arrêtez la transaction.
             </p>
           </div>
 
-          <div className="grid gap-4">
+          <RevealGroup className="grid gap-4">
             {data.scams.map((scam, i) => (
-              <ScamAlert key={i} scam={scam} />
+              <RevealItem key={i}>
+                <ScamAlert scam={scam} />
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </section>
 
         <section className="mb-16">
           <div className="mb-8">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-muted-foreground">
+            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
               FAQ
             </span>
-            <h2 className="mt-4 font-heading text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
+            <h2 className="mt-4 font-heading text-h2 font-bold">
               Questions fréquentes
             </h2>
           </div>
@@ -95,10 +100,10 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
         <RelatedPagesGrid pages={data.relatedPages} />
       </main>
 
-      <footer className="border-t border-white/5 py-12">
-        <div className="mx-auto max-w-5xl px-4 text-center text-xs text-muted-foreground">
+      <footer className="border-t border-line-subtle py-12">
+        <div className="mx-auto max-w-5xl px-4 text-center text-caption text-muted-foreground">
           LegitVision — Pré-authentification IA pour sneakers et sacs de luxe.{" "}
-          <span className="text-white/30">•</span>{" "}
+          <span className="text-subtle">•</span>{" "}
           Les analyses fournissent une estimation probabiliste, jamais une garantie.
         </div>
       </footer>

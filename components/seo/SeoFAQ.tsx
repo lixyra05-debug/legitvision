@@ -6,10 +6,10 @@ export function SeoFAQ({ faqs }: { faqs: FAQItem[] }) {
       {faqs.map((faq, i) => (
         <details
           key={i}
-          className="group overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-xl transition-all hover:border-white/10"
+          className="group overflow-hidden rounded-lg border border-line-subtle bg-surface transition-colors duration-fast hover:border-line"
         >
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-6 [&::-webkit-details-marker]:hidden">
-            <h3 className="font-heading text-base font-semibold text-foreground">
+            <h3 className="font-heading text-h4 font-semibold text-foreground">
               {faq.question}
             </h3>
             <svg
@@ -26,8 +26,8 @@ export function SeoFAQ({ faqs }: { faqs: FAQItem[] }) {
               <polyline points="6 9 12 15 18 9" />
             </svg>
           </summary>
-          <div className="border-t border-white/5 px-6 pb-6 pt-4">
-            <p className="text-sm leading-relaxed text-muted-foreground">
+          <div className="border-t border-line-subtle px-6 pb-6 pt-4">
+            <p className="text-ui leading-relaxed text-muted-foreground">
               {faq.answer}
             </p>
           </div>

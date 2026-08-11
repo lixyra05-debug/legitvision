@@ -71,6 +71,15 @@
     --verdict-fake: 358.1 75.1% 59%; /* #E5484D — 5,1:1 */
     --verdict-inconclusive: 211.3 11.1% 59.4%; /* #8C97A3 — 6,7:1 */
 
+    /* ── Avertissement — PAS un verdict ───────────────────────────────
+       Rôle d'interface : « à éviter », « erreur fréquente », « arnaque
+       récurrente ». Il met en garde sur un COMPORTEMENT, il ne qualifie
+       jamais l'authenticité d'un article — c'est --verdict-fake qui le fait.
+       Séparés dès l'origine : les confondre ferait lire « contrefaçon » là
+       où le contenu dit seulement « attention à cette pratique ».
+       Introduit pour la surface SEO, qui portait 35 amber/rose bruts. */
+    --warning: 43.3 96.4% 56.3%; /* #FBBF24 — 11,8:1 sur le fond de page */
+
     /* ── Rôles shadcn — dérivés, jamais redéclarés ───────────────────── */
     --card: var(--surface);
     --card-foreground: var(--foreground);
@@ -150,6 +159,9 @@
 
     --verdict-fake: 358.1 65% 47%;
     --verdict-inconclusive: 211.3 11.1% 42%;
+
+    /* L'amber vif est illisible sur blanc (1,7:1) : on descend à l'ambre brûlé. */
+    --warning: 26 90.5% 37.1%; /* ≈ #B45309 — 4,9:1 sur blanc */
 
     --primary-foreground: 0 0% 100%;
     --accent-foreground: 0 0% 100%;

@@ -57,7 +57,7 @@ const config: Config = {
           strong: "hsl(var(--line-strong) / <alpha-value>)",
         },
 
-        // ── Accent d'interface : champagne ────────────────────────────────
+        // ── Accent d'interface : l'emerald de marque, dosé ────────────────
         accent: {
           DEFAULT: "hsl(var(--accent) / <alpha-value>)",
           foreground: "hsl(var(--accent-foreground) / <alpha-value>)",
@@ -71,6 +71,11 @@ const config: Config = {
           fake: "hsl(var(--verdict-fake) / <alpha-value>)",
           inconclusive: "hsl(var(--verdict-inconclusive) / <alpha-value>)",
         },
+
+        // ── Avertissement — surtout PAS un verdict ────────────────────────
+        // Met en garde sur une pratique (« à éviter », « arnaque récurrente »),
+        // ne qualifie jamais l'authenticité d'un article.
+        warning: "hsl(var(--warning) / <alpha-value>)",
 
         // ── Rôles shadcn, dérivés des tokens ci-dessus dans globals.css ───
         card: {

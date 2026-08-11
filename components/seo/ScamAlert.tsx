@@ -8,9 +8,9 @@ const FREQUENCY_LABELS = {
 
 export function ScamAlert({ scam }: { scam: ScamPattern }) {
   return (
-    <article className="relative overflow-hidden rounded-2xl border border-amber-500/20 bg-amber-500/[0.03] p-6 backdrop-blur-xl">
+    <article className="relative overflow-hidden rounded-lg border border-warning/20 bg-warning/[0.03] p-6">
       <div className="flex items-start gap-4">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-warning/10">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -19,7 +19,7 @@ export function ScamAlert({ scam }: { scam: ScamPattern }) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="h-5 w-5 text-amber-400"
+            className="h-5 w-5 text-warning"
             aria-hidden="true"
           >
             <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
@@ -29,14 +29,14 @@ export function ScamAlert({ scam }: { scam: ScamPattern }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-heading text-base font-semibold text-foreground">
+            <h3 className="font-heading text-h4 font-semibold text-foreground">
               {scam.title}
             </h3>
-            <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-medium text-amber-300">
+            <span className="rounded-full border border-warning/30 bg-warning/10 px-2 py-0.5 text-caption font-medium text-warning">
               {FREQUENCY_LABELS[scam.frequency]}
             </span>
           </div>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2 text-ui leading-relaxed text-muted-foreground">
             {scam.description}
           </p>
         </div>

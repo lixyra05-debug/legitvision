@@ -7,9 +7,9 @@ const DIFFICULTY_LABELS = {
 } as const;
 
 const DIFFICULTY_STYLES = {
-  1: "bg-emerald-500/10 text-emerald-300 border-emerald-500/30",
-  2: "bg-amber-500/10 text-amber-300 border-amber-500/30",
-  3: "bg-rose-500/10 text-rose-300 border-rose-500/30",
+  1: "border-line text-muted-foreground",
+  2: "border-line text-foreground",
+  3: "border-line-strong text-foreground font-semibold",
 } as const;
 
 export function SignalCard({
@@ -20,22 +20,22 @@ export function SignalCard({
   index: number;
 }) {
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-6 backdrop-blur-xl transition-all hover:border-white/10 hover:bg-white/[0.04]">
+    <article className="group relative h-full overflow-hidden rounded-lg border border-line-subtle bg-surface p-6 transition-colors duration-fast hover:border-line hover:bg-surface-hover">
       <div className="flex items-start justify-between gap-4">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 font-heading text-sm font-bold text-emerald-400">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-surface-raised font-heading text-ui font-bold text-muted-foreground">
           {String(index + 1).padStart(2, "0")}
         </div>
         <span
-          className={`rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${DIFFICULTY_STYLES[signal.difficulty]}`}
+          className={`rounded-full border px-2.5 py-0.5 text-caption font-medium ${DIFFICULTY_STYLES[signal.difficulty]}`}
         >
           {DIFFICULTY_LABELS[signal.difficulty]}
         </span>
       </div>
 
-      <h3 className="mt-4 font-heading text-lg font-semibold text-foreground">
+      <h3 className="mt-4 font-heading text-h4 font-semibold text-foreground">
         {signal.title}
       </h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <p className="mt-2 text-ui leading-relaxed text-muted-foreground">
         {signal.description}
       </p>
     </article>
