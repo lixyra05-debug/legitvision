@@ -9,9 +9,10 @@ type SendArgs = {
 
 type SendResult = { ok: boolean; id?: string; error?: string };
 
-// Domaine de TEST Resend : en mode test, les emails ne sont délivrés QU'À
-// l'adresse email du compte Resend. Un vrai domaine vérifié sera branché plus tard.
-const FROM = "LegitVision <onboarding@resend.dev>";
+// Domaine vérifié chez Resend (SPF + DKIM sur legitvision.app), donc envoi vers
+// n'importe quel destinataire — et non plus vers la seule adresse du compte Resend
+// comme le permettait le domaine de test onboarding@resend.dev.
+const FROM = "LegitVision <contact@legitvision.app>";
 
 /**
  * Envoi d'un email transactionnel via Resend.
