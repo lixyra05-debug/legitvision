@@ -14,6 +14,14 @@ type SendResult = { ok: boolean; id?: string; error?: string };
 // comme le permettait le domaine de test onboarding@resend.dev.
 const FROM = "LegitVision <contact@legitvision.app>";
 
+// legitvision.app est vérifié pour l'ENVOI, mais n'a aucun enregistrement MX :
+// il ne reçoit rien. Sans ce Reply-To, la réponse d'un client à sa confirmation
+// de paiement partirait vers contact@legitvision.app et se perdrait.
+// Cette adresse est celle déjà affichée partout sur le site (mentions légales,
+// CGU, confidentialité, chatbot, pied de page des emails).
+// À retirer le jour où legitvision.app recevra vraiment du courrier.
+const DEFAULT_REPLY_TO = "legitvision.contact@gmail.com";
+
 /**
  * Envoi d'un email transactionnel via Resend.
  *
@@ -48,7 +56,9 @@ export async function sendTransactionalEmail(
       to: args.to,
       subject: args.subject,
       html: args.html,
-      replyTo: args.replyTo,
+      // `||` et non `??` : une chaîne vide n'est pas un Reply-To fourni, elle
+      // poserait un en-tête vide. Un appelant qui en fournit un vrai l'emporte.
+      replyTo: args.replyTo || DEFAULT_REPLY_TO,
     });
 
     if (error) {
