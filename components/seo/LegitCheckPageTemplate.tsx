@@ -5,7 +5,6 @@ import { SeoNav } from "./SeoNav";
 import { SignalCard } from "./SignalCard";
 import { SeoFAQ } from "./SeoFAQ";
 import { RelatedPagesGrid } from "./RelatedPagesGrid";
-import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 import { SITE_URL } from "@/lib/site-url";
 import {
   CONTENT_REVISED,
@@ -207,13 +206,11 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
             </p>
           </div>
 
-          <RevealGroup className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {data.signals.map((signal, i) => (
-              <RevealItem key={i}>
-                <SignalCard signal={signal} index={i} />
-              </RevealItem>
+              <SignalCard key={i} signal={signal} index={i} />
             ))}
-          </RevealGroup>
+          </div>
         </section>
 
         <div className="my-12 overflow-hidden rounded-lg border border-accent/20 bg-surface p-6 sm:p-8">
@@ -248,16 +245,15 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
             </p>
           </div>
 
-          <RevealGroup className="grid gap-4">
+          <div className="grid gap-4">
             {data.scams.map((scam, i) => (
-              <RevealItem key={i}>
-                <LegitCheckScamCard
-                  title={scam.title}
-                  description={scam.description}
-                />
-              </RevealItem>
+              <LegitCheckScamCard
+                key={i}
+                title={scam.title}
+                description={scam.description}
+              />
             ))}
-          </RevealGroup>
+          </div>
         </section>
 
         <section className="mb-16">

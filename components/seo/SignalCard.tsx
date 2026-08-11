@@ -20,7 +20,7 @@ export function SignalCard({
   index: number;
 }) {
   return (
-    <article className="group relative h-full overflow-hidden rounded-lg border border-line-subtle bg-surface p-6 transition-colors duration-fast hover:border-line hover:bg-surface-hover">
+    <article className="group relative overflow-hidden rounded-lg border border-line-subtle bg-surface p-6 transition-colors duration-fast hover:border-line hover:bg-surface-hover">
       <div className="flex items-start justify-between gap-4">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-surface-raised font-heading text-ui font-bold text-muted-foreground">
           {String(index + 1).padStart(2, "0")}

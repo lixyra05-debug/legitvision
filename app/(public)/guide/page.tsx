@@ -8,7 +8,6 @@ import {
   getAllBrandSlugsWithSignals,
 } from "@/lib/seo/data/signals";
 import { SeoNav } from "@/components/seo/SeoNav";
-import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 import {
   buildBreadcrumbListSchema,
   buildItemListSchema,
@@ -145,42 +144,41 @@ export default function GuideHubPage() {
                 </div>
               </div>
 
-              <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {categoryBrands.map((brand) => {
                   const signalCount = getSignalsByBrand(brand.slug).length;
                   return (
-                    <RevealItem key={brand.slug}>
-                      <Link
-                        href={`/guide/${brand.slug}`}
-                        className="group relative block h-full overflow-hidden rounded-lg border border-line-subtle bg-surface p-5 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-white">
-                            <Image
-                              src={brand.logo}
-                              alt={brand.name}
-                              fill
-                              className="object-contain p-1.5"
-                              sizes="48px"
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
-                              {brand.name}
-                            </h3>
-                            <p className="text-caption text-muted-foreground">
-                              {signalCount} signaux · {brand.priceRange}
-                            </p>
-                          </div>
+                    <Link
+                      key={brand.slug}
+                      href={`/guide/${brand.slug}`}
+                      className="group relative block overflow-hidden rounded-lg border border-line-subtle bg-surface p-5 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-white">
+                          <Image
+                            src={brand.logo}
+                            alt={brand.name}
+                            fill
+                            className="object-contain p-1.5"
+                            sizes="48px"
+                          />
                         </div>
-                        <p className="mt-3 text-caption text-muted-foreground line-clamp-2">
-                          {brand.tagline}
-                        </p>
-                      </Link>
-                    </RevealItem>
+                        <div className="min-w-0">
+                          <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
+                            {brand.name}
+                          </h3>
+                          <p className="text-caption text-muted-foreground">
+                            {signalCount} signaux · {brand.priceRange}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="mt-3 text-caption text-muted-foreground line-clamp-2">
+                        {brand.tagline}
+                      </p>
+                    </Link>
                   );
                 })}
-              </RevealGroup>
+              </div>
             </section>
           );
         })}

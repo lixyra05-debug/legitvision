@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { platforms } from "@/lib/seo/data/platforms";
 import { SeoNav } from "@/components/seo/SeoNav";
-import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 import {
   buildBreadcrumbListSchema,
   buildItemListSchema,
@@ -88,44 +87,43 @@ export default function AcheterAuthentiqueHubPage() {
           Chaque plateforme a ses arnaques et ses garde-fous. Accédez aux 10 guides de marques pour celle qui vous intéresse.
         </p>
 
-        <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {platforms.map((platform) => (
-            <RevealItem key={platform.slug}>
-              <Link
-                href={`/acheter-authentique/${platform.slug}`}
-                className="group relative block h-full overflow-hidden rounded-lg border border-line-subtle bg-surface p-6 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
-              >
+            <Link
+              key={platform.slug}
+              href={`/acheter-authentique/${platform.slug}`}
+              className="group relative block overflow-hidden rounded-lg border border-line-subtle bg-surface p-6 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
+            >
+              <div
+                className="absolute inset-x-0 top-0 h-1"
+                style={{ backgroundColor: platform.accentColor }}
+              />
+              <div className="flex items-center gap-3">
                 <div
-                  className="absolute inset-x-0 top-0 h-1"
+                  className="flex h-12 w-12 items-center justify-center rounded-md font-heading text-body font-bold text-white shadow-lg"
                   style={{ backgroundColor: platform.accentColor }}
-                />
-                <div className="flex items-center gap-3">
-                  <div
-                    className="flex h-12 w-12 items-center justify-center rounded-md font-heading text-body font-bold text-white shadow-lg"
-                    style={{ backgroundColor: platform.accentColor }}
-                  >
-                    {platform.shortLabel}
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
-                      {platform.name}
-                    </h3>
-                    <p className="text-caption text-muted-foreground">{platform.userBaseFr}</p>
-                  </div>
+                >
+                  {platform.shortLabel}
                 </div>
-                <p className="mt-4 text-ui text-muted-foreground line-clamp-3">
-                  {platform.tagline}
-                </p>
-                <div className="mt-5 flex items-center justify-between text-caption">
-                  <span className="text-muted-foreground">10 guides disponibles</span>
-                  <span className="font-medium text-accent opacity-0 transition-opacity duration-fast group-hover:opacity-100">
-                    Voir les guides →
-                  </span>
+                <div>
+                  <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
+                    {platform.name}
+                  </h3>
+                  <p className="text-caption text-muted-foreground">{platform.userBaseFr}</p>
                 </div>
-              </Link>
-            </RevealItem>
+              </div>
+              <p className="mt-4 text-ui text-muted-foreground line-clamp-3">
+                {platform.tagline}
+              </p>
+              <div className="mt-5 flex items-center justify-between text-caption">
+                <span className="text-muted-foreground">10 guides disponibles</span>
+                <span className="font-medium text-accent opacity-0 transition-opacity duration-fast group-hover:opacity-100">
+                  Voir les guides →
+                </span>
+              </div>
+            </Link>
           ))}
-        </RevealGroup>
+        </div>
       </main>
 
       <footer className="border-t border-line-subtle py-12">

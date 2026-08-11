@@ -6,7 +6,6 @@ import { ScamAlert } from "./ScamAlert";
 import { SeoFAQ } from "./SeoFAQ";
 import { SeoCTA } from "./SeoCTA";
 import { RelatedPagesGrid } from "./RelatedPagesGrid";
-import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 
 export function SeoPageTemplate({ data }: { data: SeoPageData }) {
   return (
@@ -40,13 +39,11 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
             </p>
           </div>
 
-          <RevealGroup className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {data.signals.map((signal, i) => (
-              <RevealItem key={i}>
-                <SignalCard signal={signal} index={i} />
-              </RevealItem>
+              <SignalCard key={i} signal={signal} index={i} />
             ))}
-          </RevealGroup>
+          </div>
         </section>
 
         <SeoCTA
@@ -69,13 +66,11 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
             </p>
           </div>
 
-          <RevealGroup className="grid gap-4">
+          <div className="grid gap-4">
             {data.scams.map((scam, i) => (
-              <RevealItem key={i}>
-                <ScamAlert scam={scam} />
-              </RevealItem>
+              <ScamAlert key={i} scam={scam} />
             ))}
-          </RevealGroup>
+          </div>
         </section>
 
         <section className="mb-16">

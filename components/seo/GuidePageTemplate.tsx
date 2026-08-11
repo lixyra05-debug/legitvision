@@ -4,7 +4,6 @@ import type { GuidePageData } from "@/lib/seo/guide-types";
 import { SeoNav } from "./SeoNav";
 import { SeoFAQ } from "./SeoFAQ";
 import { RelatedPagesGrid } from "./RelatedPagesGrid";
-import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 import { SITE_URL } from "@/lib/site-url";
 import {
   CONTENT_REVISED,
@@ -238,13 +237,11 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
             </p>
           </div>
 
-          <RevealGroup className="grid gap-4">
+          <div className="grid gap-4">
             {data.steps.map((step, i) => (
-              <RevealItem key={i}>
-                <GuideStepCard step={step} index={i} />
-              </RevealItem>
+              <GuideStepCard key={i} step={step} index={i} />
             ))}
-          </RevealGroup>
+          </div>
         </section>
 
         <div className="my-12 overflow-hidden rounded-lg border border-accent/20 bg-surface p-6 sm:p-8">
@@ -279,16 +276,15 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
             </p>
           </div>
 
-          <RevealGroup className="grid gap-4">
+          <div className="grid gap-4">
             {data.commonErrors.map((error, i) => (
-              <RevealItem key={i}>
-                <GuideErrorCard
-                  title={error.title}
-                  description={error.description}
-                />
-              </RevealItem>
+              <GuideErrorCard
+                key={i}
+                title={error.title}
+                description={error.description}
+              />
             ))}
-          </RevealGroup>
+          </div>
         </section>
 
         <section className="mb-16">

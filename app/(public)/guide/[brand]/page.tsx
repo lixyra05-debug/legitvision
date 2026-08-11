@@ -8,7 +8,6 @@ import {
   getAllBrandSlugsWithSignals,
 } from "@/lib/seo/data/signals";
 import { SeoNav } from "@/components/seo/SeoNav";
-import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 import {
   buildBreadcrumbListSchema,
   buildItemListSchema,
@@ -146,31 +145,30 @@ export default function BrandGuideHub({ params }: Props) {
             {brandSignals.length} signaux documentés avec protocole photo, étapes mesurables, erreurs fréquentes et FAQ.
           </p>
 
-          <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {brandSignals.map((signal) => (
-              <RevealItem key={signal.slug}>
-                <Link
-                  href={`/guide/${brand.slug}/${signal.slug}`}
-                  className="group block h-full rounded-lg border border-line-subtle bg-surface p-5 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
-                >
-                  <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
-                    {signal.name}
-                  </h3>
-                  <p className="mt-2 text-caption text-muted-foreground line-clamp-3">
-                    {signal.tagline}
-                  </p>
-                  <div className="mt-4 flex items-center gap-2 text-caption">
-                    <span className="rounded-full border border-line bg-surface-raised px-2 py-0.5 text-muted-foreground">
-                      {signal.steps.length} étapes
-                    </span>
-                    <span className="rounded-full border border-line bg-surface-raised px-2 py-0.5 text-muted-foreground">
-                      {signal.faqs.length} FAQ
-                    </span>
-                  </div>
-                </Link>
-              </RevealItem>
+              <Link
+                key={signal.slug}
+                href={`/guide/${brand.slug}/${signal.slug}`}
+                className="group block rounded-lg border border-line-subtle bg-surface p-5 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
+              >
+                <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
+                  {signal.name}
+                </h3>
+                <p className="mt-2 text-caption text-muted-foreground line-clamp-3">
+                  {signal.tagline}
+                </p>
+                <div className="mt-4 flex items-center gap-2 text-caption">
+                  <span className="rounded-full border border-line bg-surface-raised px-2 py-0.5 text-muted-foreground">
+                    {signal.steps.length} étapes
+                  </span>
+                  <span className="rounded-full border border-line bg-surface-raised px-2 py-0.5 text-muted-foreground">
+                    {signal.faqs.length} FAQ
+                  </span>
+                </div>
+              </Link>
             ))}
-          </RevealGroup>
+          </div>
         </section>
 
         <section className="relative mt-16 overflow-hidden rounded-lg border border-line bg-surface p-8 sm:p-12">
