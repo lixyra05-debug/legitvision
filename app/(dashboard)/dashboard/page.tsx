@@ -8,6 +8,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { PlanBanner } from "@/components/stripe/PlanBanner";
 import { SuccessBanner } from "@/components/stripe/SuccessBanner";
+import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 import {
   DashboardGreeting,
   DashboardNewAnalysisButton,
@@ -79,7 +80,7 @@ export default async function DashboardPage({
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Link href="/" className="flex items-center">
             <Image
@@ -93,8 +94,10 @@ export default async function DashboardPage({
           </Link>
           <div className="flex items-center gap-4">
             {profile && (
-              <div className="flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-1.5 text-sm">
-                <Coins className="size-4 text-emerald-500" />
+              <div className="flex items-center gap-1.5 rounded-md border border-line px-3 py-1.5 text-ui">
+                {/* Icône neutre : le vert était constant, y compris à 0 crédit —
+                    il ne signalait donc pas le solde, il le décorait. */}
+                <Coins className="size-4 text-muted-foreground" />
                 <span className="font-medium">
                   {profile.credits_remaining}
                 </span>
@@ -138,81 +141,83 @@ export default async function DashboardPage({
         {formattedAnalyses.length === 0 ? (
           <DashboardEmptyState />
         ) : (
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {formattedAnalyses.map((analysis) => {
               const isDeletable = DELETABLE_STATUSES.includes(analysis.status);
               const deleteAction = deleteAnalysis.bind(null, analysis.id);
 
               return (
-                <div
-                  key={analysis.id}
-                  className="group relative rounded-2xl border border-white/5 bg-card transition-colors hover:border-emerald-500/20"
-                >
-                  {/* Bouton Supprimer — visible au survol pour les analyses bloquées */}
-                  {isDeletable && (
-                    <form action={deleteAction}>
-                      <button
-                        type="submit"
-                        title="Supprimer cette analyse"
-                        className="absolute right-3 top-3 z-10 flex size-7 items-center justify-center rounded-lg text-muted-foreground opacity-0 transition-opacity hover:bg-red-500/10 hover:text-red-400 group-hover:opacity-100"
-                      >
-                        <Trash2 className="size-4" />
-                      </button>
-                    </form>
-                  )}
-
-                  <Link
-                    href={`/check/${analysis.id}`}
-                    className="block p-5"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="pr-6">
-                        <p className="font-heading text-sm font-semibold">
-                          {analysis.brand_name}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {analysis.model_name}
-                        </p>
-                      </div>
-                      {analysis.overall_score != null ? (
-                        <div
-                          className={`flex size-12 shrink-0 items-center justify-center rounded-xl border ${getScoreBgColor(analysis.overall_score)}`}
+                <RevealItem key={analysis.id}>
+                  {/* h-full : le RevealItem s'intercale entre la grille et la carte
+                      et absorbe l'étirement de align-items:stretch. Sans lui, les
+                      cartes d'une même rangée cessent d'être à la même hauteur. */}
+                  <div className="group relative h-full rounded-lg border border-line-subtle bg-surface transition-colors duration-fast hover:border-line">
+                    {/* Bouton Supprimer — visible au survol pour les analyses bloquées */}
+                    {isDeletable && (
+                      <form action={deleteAction}>
+                        <button
+                          type="submit"
+                          title="Supprimer cette analyse"
+                          className="absolute right-3 top-3 z-10 flex size-7 items-center justify-center rounded-md text-muted-foreground opacity-0 transition-opacity duration-fast hover:bg-destructive/10 hover:text-destructive group-hover:opacity-100"
                         >
-                          <span
-                            className={`font-heading text-lg font-bold ${getScoreColor(analysis.overall_score)}`}
-                          >
-                            {analysis.overall_score}
-                          </span>
-                        </div>
-                      ) : (
-                        <div
-                          className={`flex h-7 shrink-0 items-center rounded-full px-3 text-xs ${
-                            analysis.status === "failed"
-                              ? "bg-red-500/10 text-red-400"
-                              : "bg-white/5 text-muted-foreground"
-                          }`}
-                        >
-                          <StatusLabel status={analysis.status} />
-                        </div>
-                      )}
-                    </div>
-
-                    {analysis.verdict && (
-                      <p
-                        className={`mt-3 text-sm font-medium ${getScoreColor(analysis.overall_score ?? 0)}`}
-                      >
-                        <VerdictLabel verdict={analysis.verdict} />
-                      </p>
+                          <Trash2 className="size-4" />
+                        </button>
+                      </form>
                     )}
 
-                    <p className="mt-3 text-xs text-muted-foreground">
-                      <FormattedDate value={analysis.created_at} />
-                    </p>
-                  </Link>
-                </div>
+                    <Link
+                      href={`/check/${analysis.id}`}
+                      className="block p-5"
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="pr-6">
+                          <p className="font-heading text-ui font-semibold">
+                            {analysis.brand_name}
+                          </p>
+                          <p className="text-ui text-muted-foreground">
+                            {analysis.model_name}
+                          </p>
+                        </div>
+                        {analysis.overall_score != null ? (
+                          <div
+                            className={`flex size-12 shrink-0 items-center justify-center rounded-md border ${getScoreBgColor(analysis.overall_score)}`}
+                          >
+                            <span
+                              className={`font-heading text-lead font-bold ${getScoreColor(analysis.overall_score)}`}
+                            >
+                              {analysis.overall_score}
+                            </span>
+                          </div>
+                        ) : (
+                          <div
+                            className={`flex h-7 shrink-0 items-center rounded-full px-3 text-caption ${
+                              analysis.status === "failed"
+                                ? "bg-destructive/10 text-destructive"
+                                : "bg-surface-raised text-muted-foreground"
+                            }`}
+                          >
+                            <StatusLabel status={analysis.status} />
+                          </div>
+                        )}
+                      </div>
+
+                      {analysis.verdict && (
+                        <p
+                          className={`mt-3 text-ui font-medium ${getScoreColor(analysis.overall_score ?? 0)}`}
+                        >
+                          <VerdictLabel verdict={analysis.verdict} />
+                        </p>
+                      )}
+
+                      <p className="mt-3 text-caption text-muted-foreground">
+                        <FormattedDate value={analysis.created_at} />
+                      </p>
+                    </Link>
+                  </div>
+                </RevealItem>
               );
             })}
-          </div>
+          </RevealGroup>
         )}
       </main>
     </div>

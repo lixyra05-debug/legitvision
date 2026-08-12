@@ -23,21 +23,21 @@ export function SuccessBanner({
   if (!visible) return null;
 
   return (
-    <div className="mb-6 flex items-start justify-between gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3">
+    <div className="mb-6 flex items-start justify-between gap-3 rounded-md border border-accent/30 bg-accent/10 px-4 py-3">
       <div className="flex items-center gap-3">
-        <CheckCircle2 className="size-5 shrink-0 text-emerald-500" />
+        <CheckCircle2 className="size-5 shrink-0 text-accent" />
         <div>
-          <p className="text-sm font-semibold text-emerald-400">
+          <p className="text-ui font-semibold text-accent">
             {t(variant === "planChange" ? "successBanner.planChangeTitle" : "successBanner.title")}
           </p>
-          <p className="mt-0.5 text-xs text-muted-foreground">
+          <p className="mt-0.5 text-caption text-muted-foreground">
             {t(variant === "planChange" ? "successBanner.planChangeDesc" : "successBanner.desc")}
           </p>
         </div>
       </div>
       <button
         onClick={() => setVisible(false)}
-        className="shrink-0 text-muted-foreground transition-colors hover:text-foreground"
+        className="shrink-0 text-muted-foreground transition-colors duration-fast hover:text-foreground"
       >
         <X className="size-4" />
       </button>

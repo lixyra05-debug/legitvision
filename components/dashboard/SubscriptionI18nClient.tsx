@@ -14,10 +14,10 @@ export function SubscriptionPageHeader() {
   const { t } = useTranslation();
   return (
     <>
-      <h1 className="font-heading text-3xl font-bold tracking-tight">
+      <h1 className="font-heading text-h2 font-bold">
         {t("subscription.pageTitle")}
       </h1>
-      <p className="mt-2 text-sm text-muted-foreground">
+      <p className="mt-2 text-ui text-muted-foreground">
         {t("subscription.pageSubtitle")}
       </p>
     </>
@@ -27,28 +27,24 @@ export function SubscriptionPageHeader() {
 export function SubscriptionNoActive({ credits }: { credits: number }) {
   const { t } = useTranslation();
   return (
-    <div className="relative mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-10 backdrop-blur-xl">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
-      />
+    <div className="relative mt-10 overflow-hidden rounded-lg border border-line bg-surface p-10">
       <div className="relative flex flex-col items-center text-center">
-        <div className="flex size-16 items-center justify-center rounded-2xl border border-emerald-500/20 bg-emerald-500/10">
-          <Sparkles className="size-8 text-emerald-400" />
+        <div className="flex size-16 items-center justify-center rounded-lg border border-line bg-surface-raised">
+          <Sparkles className="size-8 text-muted-foreground" />
         </div>
-        <h2 className="mt-6 font-heading text-xl font-bold tracking-tight">
+        <h2 className="mt-6 font-heading text-h3 font-bold">
           {t("subscription.noActiveTitle")}
         </h2>
-        <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+        <p className="mt-2 max-w-sm text-ui text-muted-foreground">
           {t("subscription.noActiveDesc")}
         </p>
-        <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-muted-foreground">
+        <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1.5 text-caption text-muted-foreground">
           <span>{t("subscription.creditsAvailable")}</span>
           <span className="font-semibold text-foreground">{credits}</span>
         </div>
         <Link
           href="/#pricing"
-          className="mt-6 inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
+          className="mt-6 inline-flex h-11 items-center gap-2 rounded-md bg-accent px-6 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
         >
           {t("subscription.seeOffers")}
           <ArrowRight className="size-4" />
@@ -87,35 +83,31 @@ export function SubscriptionActive({
       })
     : null;
   return (
-    <div className="relative mt-10 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-xl">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-24 right-0 size-48 rounded-full bg-emerald-500/10 blur-3xl"
-      />
+    <div className="relative mt-10 overflow-hidden rounded-lg border border-line bg-surface p-6">
       <div className="relative">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-wider text-muted-foreground">
+            <p className="text-caption uppercase tracking-wider text-muted-foreground">
               {t("subscription.currentPlan")}
             </p>
-            <p className="mt-1 font-heading text-xl font-semibold">
+            <p className="mt-1 font-heading text-h4 font-semibold">
               {planLabel}
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-ui text-muted-foreground">
               {credits}{" "}
               {isMultiple
                 ? t("subscription.creditsRemainingPlural")
                 : t("subscription.creditsRemaining")}
             </p>
           </div>
-          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
-            <ShieldCheck className="size-6 text-emerald-400" />
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-md border border-line bg-surface-raised">
+            <ShieldCheck className="size-6 text-muted-foreground" />
           </div>
         </div>
 
         {cancelAtPeriodEnd && formattedPeriodEnd && (
-          <div className="mt-6 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
-            <p className="text-sm text-amber-400">
+          <div className="mt-6 rounded-md border border-warning/20 bg-warning/5 p-4">
+            <p className="text-ui text-warning">
               {t("subscription.cancelScheduled")}{" "}
               <span className="font-semibold">{formattedPeriodEnd}</span>.{" "}
               {t("subscription.cancelScheduledEnd")}
@@ -124,8 +116,8 @@ export function SubscriptionActive({
         )}
 
         {!cancelAtPeriodEnd && (
-          <div className="mt-6 border-t border-white/5 pt-6">
-            <p className="text-sm text-muted-foreground">
+          <div className="mt-6 border-t border-line-subtle pt-6">
+            <p className="text-ui text-muted-foreground">
               {t("subscription.cancelInfo")}
             </p>
             <div className="mt-4">
@@ -141,11 +133,11 @@ export function SubscriptionActive({
 export function SubscriptionContactNote() {
   const { t } = useTranslation();
   return (
-    <p className="mt-6 text-xs text-muted-foreground">
+    <p className="mt-6 text-caption text-muted-foreground">
       {t("subscription.needHelp")}{" "}
       <a
         href="mailto:legitvision.contact@gmail.com"
-        className="text-emerald-400 hover:text-emerald-300"
+        className="text-accent transition-colors duration-fast hover:text-accent-hover"
       >
         legitvision.contact@gmail.com
       </a>

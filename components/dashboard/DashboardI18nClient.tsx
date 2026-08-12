@@ -26,10 +26,10 @@ export function DashboardGreeting({
   const isMultiple = count > 1;
   return (
     <>
-      <h1 className="font-heading text-2xl font-bold sm:text-3xl">
+      <h1 className="font-heading text-h2 font-bold">
         {t("dashboard.greeting")}, {firstName} 👋
       </h1>
-      <p className="mt-1 text-sm text-muted-foreground">
+      <p className="mt-1 text-ui text-muted-foreground">
         {count === 0
           ? t("dashboard.readyFirstCheck")
           : `${count} ${
@@ -51,7 +51,7 @@ export function DashboardNewAnalysisButton() {
   return (
     <Link
       href="/check/new"
-      className="inline-flex h-11 items-center gap-2 rounded-xl bg-emerald-500 px-6 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25"
+      className="inline-flex h-11 items-center gap-2 rounded-md bg-accent px-6 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
     >
       <Plus className="size-4" />
       {t("dashboard.newAnalysis")}
@@ -62,17 +62,17 @@ export function DashboardNewAnalysisButton() {
 export function DashboardEmptyState() {
   const { t } = useTranslation();
   return (
-    <div className="mt-12 flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/10 py-20 text-center">
-      <div className="mb-4 flex size-16 items-center justify-center rounded-2xl bg-emerald-500/10">
-        <Plus className="size-8 text-emerald-500" />
+    <div className="mt-12 flex flex-col items-center justify-center rounded-lg border border-dashed border-line py-20 text-center">
+      <div className="mb-4 flex size-16 items-center justify-center rounded-lg bg-surface-raised">
+        <Plus className="size-8 text-muted-foreground" />
       </div>
-      <p className="text-lg font-medium">{t("dashboard.noAnalyses")}</p>
-      <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+      <p className="text-lead font-medium">{t("dashboard.noAnalyses")}</p>
+      <p className="mt-2 max-w-sm text-ui text-muted-foreground">
         {t("dashboard.noAnalysesDesc")}
       </p>
       <Link
         href="/check/new"
-        className="mt-6 inline-flex h-10 items-center gap-2 rounded-lg bg-emerald-500 px-5 text-sm font-semibold text-white transition-colors hover:bg-emerald-400"
+        className="mt-6 inline-flex h-10 items-center gap-2 rounded-md bg-accent px-5 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
       >
         <Plus className="size-4" />
         {t("dashboard.startAnalysis")}

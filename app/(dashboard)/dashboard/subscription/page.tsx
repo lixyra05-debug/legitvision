@@ -57,11 +57,11 @@ export default async function SubscriptionPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="sticky top-0 z-40 border-b border-white/5 bg-background/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-40 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-4xl items-center justify-between gap-3 px-4">
           <Link
             href="/dashboard"
-            className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+            className="flex items-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
           >
             <ArrowLeft className="size-4" />
             Dashboard

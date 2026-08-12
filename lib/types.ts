@@ -132,18 +132,34 @@ export const CATEGORY_META: Record<
   },
 };
 
+/**
+ * Couleur du score d'une analyse — le SEUL vert légitime du dashboard.
+ *
+ * Passage de 4 teintes brutes (emerald/yellow/orange/red) à 3 paliers de tokens.
+ * Le socle n'expose pas quatre couleurs de verdict : il en expose trois, et le
+ * quatrième palier n'existait que parce qu'on piochait dans la palette Tailwind.
+ *
+ * Pourquoi PAS --verdict-inconclusive pour la tranche intermédiaire : le gris
+ * sert déjà, dans cette même grille de cartes, à l'état « pas encore de score »
+ * (analyse en attente). Un 78/100 en gris s'y lirait « données manquantes ».
+ * C'est --warning qui porte le doute : il met en garde sans qualifier.
+ *
+ * Divergence assumée et temporaire : components/check/ScoreGauge.tsx porte une
+ * table de seuils dupliquée, encore à 4 paliers (90/70/50). Les deux surfaces
+ * seront réalignées à la passe ReportView — un score de 75 est ambre ici et
+ * jaune là-bas d'ici là.
+ */
 export function getScoreColor(score: number): string {
-  if (score >= 90) return "text-emerald-500";
-  if (score >= 70) return "text-yellow-500";
-  if (score >= 50) return "text-orange-500";
-  return "text-red-500";
+  if (score >= 90) return "text-verdict-authentic";
+  if (score >= 50) return "text-warning";
+  return "text-verdict-fake";
 }
 
 export function getScoreBgColor(score: number): string {
-  if (score >= 90) return "bg-emerald-500/10 border-emerald-500/20";
-  if (score >= 70) return "bg-yellow-500/10 border-yellow-500/20";
-  if (score >= 50) return "bg-orange-500/10 border-orange-500/20";
-  return "bg-red-500/10 border-red-500/20";
+  if (score >= 90)
+    return "bg-verdict-authentic/10 border-verdict-authentic/20";
+  if (score >= 50) return "bg-warning/10 border-warning/20";
+  return "bg-verdict-fake/10 border-verdict-fake/20";
 }
 
 export function getVerdictLabel(verdict: Verdict, locale: Locale = "fr"): string {
