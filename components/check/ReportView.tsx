@@ -413,9 +413,9 @@ export function ReportView({ data }: { data: ReportData }) {
                 </div>
               )}
 
+              {/* bg-surface-raised et non bg-surface : le parent est bg-card,
+                  et --card dérive de --surface — l'encart se confondrait avec lui. */}
               {data.analystSummary && (
-                {/* bg-surface-raised et non bg-surface : le parent est bg-card,
-                    et --card dérive de --surface — l'encart se confondrait avec lui. */}
                 <div className="mt-4 rounded-md border border-line-subtle bg-surface-raised p-4">
                   <p className="text-ui leading-relaxed text-muted-foreground">
                     <span className="font-semibold text-foreground">
