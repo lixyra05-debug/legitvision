@@ -84,7 +84,7 @@ export function UserMenu() {
     <div ref={menuRef} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex size-9 items-center justify-center rounded-full bg-accent/20 text-ui font-semibold text-accent transition-colors duration-fast hover:bg-accent/30"
+        className="flex size-9 items-center justify-center rounded-full bg-surface-raised text-ui font-semibold text-foreground transition-colors duration-fast hover:bg-surface-hover"
       >
         {initials}
       </button>

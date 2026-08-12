@@ -549,7 +549,7 @@ export function ReportView({ data }: { data: ReportData }) {
           </Link>
           <Link
             href="/check/new"
-            className="flex flex-1 items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-lg hover:shadow-accent/20"
+            className="flex flex-1 items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
           >
             <Plus className="size-4" />
             {t("results.newAnalysis")}
