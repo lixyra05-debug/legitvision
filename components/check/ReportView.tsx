@@ -17,9 +17,11 @@ import {
 } from "lucide-react";
 import { ScoreGauge } from "./ScoreGauge";
 import { FindingCard, type Finding } from "./FindingCard";
+import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
+import { getScoreColor, getScoreSolidBg } from "@/lib/types";
 import type { Verdict, Confidence } from "@/lib/types";
 
 const VERDICT_TO_KEY: Record<Verdict, "authentic" | "suspect" | "fake"> = {
@@ -57,18 +59,18 @@ const VERDICT_VISUAL: Record<
 > = {
   likely_authentic: {
     Icon: ShieldCheck,
-    color: "text-emerald-400",
-    bg: "border-emerald-500/30 bg-emerald-500/10",
+    color: "text-verdict-authentic",
+    bg: "border-verdict-authentic/30 bg-verdict-authentic/10",
   },
   inconclusive: {
     Icon: ShieldAlert,
-    color: "text-yellow-400",
-    bg: "border-yellow-500/30 bg-yellow-500/10",
+    color: "text-warning",
+    bg: "border-warning/30 bg-warning/10",
   },
   likely_fake: {
     Icon: ShieldX,
-    color: "text-red-400",
-    bg: "border-red-500/30 bg-red-500/10",
+    color: "text-verdict-fake",
+    bg: "border-verdict-fake/30 bg-verdict-fake/10",
   },
 };
 
@@ -77,16 +79,16 @@ const CONFIDENCE_VISUAL: Record<
   { color: string; bg: string }
 > = {
   high: {
-    color: "text-emerald-400",
-    bg: "border-emerald-500/20 bg-emerald-500/8",
+    color: "text-muted-foreground",
+    bg: "border-line bg-surface-raised",
   },
   medium: {
-    color: "text-yellow-400",
-    bg: "border-yellow-500/20 bg-yellow-500/8",
+    color: "text-warning",
+    bg: "border-warning/20 bg-warning/[0.08]",
   },
   low: {
-    color: "text-orange-400",
-    bg: "border-orange-500/20 bg-orange-500/8",
+    color: "text-warning",
+    bg: "border-warning/30 bg-warning/[0.12]",
   },
 };
 
@@ -118,30 +120,20 @@ function SubScoreBar({ label, score }: { label: string; score: number }) {
     return () => clearTimeout(t);
   }, [score]);
 
-  const textColor =
-    score >= 75
-      ? "text-emerald-400"
-      : score >= 45
-        ? "text-yellow-400"
-        : "text-red-400";
-  const barColor =
-    score >= 75
-      ? "bg-emerald-500"
-      : score >= 45
-        ? "bg-yellow-500"
-        : "bg-red-500";
+  const textColor = getScoreColor(score);
+  const barColor = getScoreSolidBg(score);
 
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-sm capitalize text-muted-foreground">
+        <span className="text-ui capitalize text-muted-foreground">
           {label.replace(/_/g, " ")}
         </span>
-        <span className={`text-sm font-semibold tabular-nums ${textColor}`}>
+        <span className={`text-ui font-semibold tabular-nums ${textColor}`}>
           {score}
         </span>
       </div>
-      <div className="h-1.5 overflow-hidden rounded-full bg-white/6">
+      <div className="h-1.5 overflow-hidden rounded-full bg-surface-raised">
         <div
           className={`h-full rounded-full ${barColor}`}
           style={{
@@ -165,13 +157,13 @@ function SectionTitle({
 }) {
   return (
     <div className="flex items-center gap-2.5">
-      <div className="flex size-8 items-center justify-center rounded-lg bg-white/5">
+      <div className="flex size-8 items-center justify-center rounded-lg bg-surface-raised">
         <Icon className="size-4 text-muted-foreground" />
       </div>
-      <h2 className="font-heading text-base font-semibold">
+      <h2 className="font-heading text-body font-semibold">
         {title}
         {count !== undefined && (
-          <span className="ml-2 text-sm font-normal text-muted-foreground">
+          <span className="ml-2 text-ui font-normal text-muted-foreground">
             ({count})
           </span>
         )}
@@ -237,7 +229,7 @@ export function ReportView({ data }: { data: ReportData }) {
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
-      <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
+      <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4">
           <Link href="/dashboard" className="flex items-center">
             <Image
@@ -254,7 +246,7 @@ export function ReportView({ data }: { data: ReportData }) {
             <ThemeToggle />
             <Link
               href="/dashboard"
-              className="flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              className="flex items-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
             >
               <ArrowLeft className="size-4" />
               <span className="hidden sm:inline">Dashboard</span>
@@ -271,26 +263,26 @@ export function ReportView({ data }: { data: ReportData }) {
               className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 ${verdictCfg.bg}`}
             >
               <verdictCfg.Icon className={`size-4 ${verdictCfg.color}`} />
-              <span className={`text-sm font-semibold ${verdictCfg.color}`}>
+              <span className={`text-ui font-semibold ${verdictCfg.color}`}>
                 {verdictLabel}
               </span>
             </div>
           )}
           {isFailed && !verdictCfg && (
-            <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-1.5">
-              <ShieldX className="size-4 text-red-400" />
-              <span className="text-sm font-semibold text-red-400">
+            <div className="inline-flex items-center gap-2 rounded-full border border-verdict-fake/30 bg-verdict-fake/10 px-4 py-1.5">
+              <ShieldX className="size-4 text-verdict-fake" />
+              <span className="text-ui font-semibold text-verdict-fake">
                 {t("results.analysisFailedShort")}
               </span>
             </div>
           )}
 
           <div>
-            <h1 className="font-heading text-2xl font-bold sm:text-3xl">
+            <h1 className="font-heading text-h2 font-bold">
               {data.brandName}{" "}
               <span className="text-muted-foreground">{data.modelName}</span>
             </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-ui text-muted-foreground">
               Analyse #{data.id.slice(0, 8).toUpperCase()} ·{" "}
               {formatDate(data.createdAt)}
             </p>
@@ -299,13 +291,13 @@ export function ReportView({ data }: { data: ReportData }) {
 
         {/* ── PENDING STATE ── */}
         {isPending && (
-          <div className="flex flex-col items-center gap-6 rounded-2xl border border-white/5 bg-card py-16">
-            <Loader2 className="size-12 animate-spin text-emerald-500" />
+          <div className="flex flex-col items-center gap-6 rounded-lg border border-line-subtle bg-card py-16">
+            <Loader2 className="size-12 animate-spin text-muted-foreground" />
             <div className="text-center">
-              <p className="font-heading text-lg font-semibold">
+              <p className="font-heading text-lead font-semibold">
                 {t("check.analyzing")}
               </p>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-ui text-muted-foreground">
                 {t("results.expertReviewDesc")}
               </p>
             </div>
@@ -314,12 +306,12 @@ export function ReportView({ data }: { data: ReportData }) {
 
         {/* ── FAILED STATE ── */}
         {isFailed && (
-          <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-8 text-center">
-            <ShieldX className="mx-auto size-10 text-red-500" />
-            <p className="mt-3 font-heading text-lg font-semibold">
+          <div className="rounded-lg border border-verdict-fake/20 bg-verdict-fake/5 p-8 text-center">
+            <ShieldX className="mx-auto size-10 text-verdict-fake" />
+            <p className="mt-3 font-heading text-lead font-semibold">
               {t("results.analysisFailedTitle")}
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-ui text-muted-foreground">
               {t("results.analysisFailedDesc")}
             </p>
           </div>
@@ -327,13 +319,13 @@ export function ReportView({ data }: { data: ReportData }) {
 
         {/* ── EXPERT REVIEW NOTICE ── */}
         {data.status === "expert_review" && data.confidence !== "low" && (
-          <div className="flex items-start gap-3 rounded-xl border border-yellow-500/20 bg-yellow-500/8 p-4">
-            <AlertCircle className="mt-0.5 size-5 shrink-0 text-yellow-500" />
+          <div className="flex items-start gap-3 rounded-md border border-warning/20 bg-warning/[0.08] p-4">
+            <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" />
             <div>
-              <p className="text-sm font-semibold text-yellow-400">
+              <p className="text-ui font-semibold text-warning">
                 {t("results.expertReviewTitle")}
               </p>
-              <p className="mt-0.5 text-sm text-muted-foreground">
+              <p className="mt-0.5 text-ui text-muted-foreground">
                 {t("results.expertReviewDesc")}
               </p>
             </div>
@@ -342,29 +334,29 @@ export function ReportView({ data }: { data: ReportData }) {
 
         {/* ── INSUFFICIENT — photos insuffisantes (P1-3) ── */}
         {isComplete && isInsufficient && (
-          <div className="rounded-2xl border border-orange-500/30 bg-orange-500/8 p-6 text-center sm:p-8">
-            <ShieldAlert className="mx-auto size-10 text-orange-400" />
-            <p className="mt-3 font-heading text-lg font-semibold text-orange-300">
+          <div className="rounded-lg border border-verdict-inconclusive/30 bg-verdict-inconclusive/[0.08] p-6 text-center sm:p-8">
+            <ShieldAlert className="mx-auto size-10 text-verdict-inconclusive" />
+            <p className="mt-3 font-heading text-lead font-semibold text-verdict-inconclusive">
               {t("results.insufficientTitle")}
             </p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-ui text-muted-foreground">
               {t("results.insufficientDesc")}
             </p>
-            <p className="mt-2 text-xs text-muted-foreground/80">
+            <p className="mt-2 text-caption text-muted-foreground/80">
               {t("results.insufficientNoCredit")}
             </p>
             {missingEvidence.length > 0 && (
-              <div className="mt-5 rounded-xl border border-orange-500/20 bg-orange-500/5 p-4 text-left">
-                <p className="mb-2 text-sm font-semibold text-orange-300">
+              <div className="mt-5 rounded-md border border-verdict-inconclusive/20 bg-verdict-inconclusive/5 p-4 text-left">
+                <p className="mb-2 text-ui font-semibold text-verdict-inconclusive">
                   {t("results.missingEvidenceTitle")}
                 </p>
                 <ul className="space-y-2">
                   {missingEvidence.map((item, i) => (
                     <li
                       key={i}
-                      className="flex items-start gap-2 text-sm text-muted-foreground"
+                      className="flex items-start gap-2 text-ui text-muted-foreground"
                     >
-                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-orange-500" />
+                      <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-verdict-inconclusive" />
                       {item}
                     </li>
                   ))}
@@ -373,7 +365,7 @@ export function ReportView({ data }: { data: ReportData }) {
             )}
             <Link
               href="/check/new"
-              className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-emerald-400"
+              className="mt-6 inline-flex items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover"
             >
               <Plus className="size-4" />
               {t("results.insufficientCta")}
@@ -383,13 +375,13 @@ export function ReportView({ data }: { data: ReportData }) {
 
         {/* ── LOW CONFIDENCE WARNING (P1-3) ── */}
         {isComplete && !isInsufficient && data.confidence === "low" && (
-          <div className="flex items-start gap-3 rounded-xl border border-orange-500/20 bg-orange-500/8 p-4">
-            <AlertCircle className="mt-0.5 size-5 shrink-0 text-orange-400" />
+          <div className="flex items-start gap-3 rounded-md border border-warning/20 bg-warning/[0.08] p-4">
+            <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" />
             <div>
-              <p className="text-sm font-semibold text-orange-300">
+              <p className="text-ui font-semibold text-warning">
                 {t("results.lowConfidenceWarnTitle")}
               </p>
-              <p className="mt-0.5 text-sm text-muted-foreground">
+              <p className="mt-0.5 text-ui text-muted-foreground">
                 {t("results.lowConfidenceWarnDesc")}
               </p>
             </div>
@@ -400,30 +392,32 @@ export function ReportView({ data }: { data: ReportData }) {
         {isComplete && !isInsufficient && data.overallScore !== null && (
           <>
             {/* Score + Confidence */}
-            <div className="rounded-2xl border border-white/5 bg-card p-6">
+            <div className="rounded-lg border border-line-subtle bg-card p-6">
               <ScoreGauge score={data.overallScore} size={220} />
 
               {confidenceCfg && (
                 <div
-                  className={`mt-6 rounded-xl border p-4 ${confidenceCfg.bg}`}
+                  className={`mt-6 rounded-md border p-4 ${confidenceCfg.bg}`}
                 >
                   <div className="flex items-center gap-2">
                     <Eye className={`size-4 ${confidenceCfg.color}`} />
                     <span
-                      className={`text-sm font-semibold ${confidenceCfg.color}`}
+                      className={`text-ui font-semibold ${confidenceCfg.color}`}
                     >
                       {confidenceLabel}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-ui text-muted-foreground">
                     {confidenceDesc}
                   </p>
                 </div>
               )}
 
               {data.analystSummary && (
-                <div className="mt-4 rounded-xl border border-white/5 bg-white/3 p-4">
-                  <p className="text-sm leading-relaxed text-muted-foreground">
+                {/* bg-surface-raised et non bg-surface : le parent est bg-card,
+                    et --card dérive de --surface — l'encart se confondrait avec lui. */}
+                <div className="mt-4 rounded-md border border-line-subtle bg-surface-raised p-4">
+                  <p className="text-ui leading-relaxed text-muted-foreground">
                     <span className="font-semibold text-foreground">
                       {t("results.summary")} :{" "}
                     </span>
@@ -435,17 +429,19 @@ export function ReportView({ data }: { data: ReportData }) {
 
             {/* Sub-scores */}
             {subScoreEntries.length > 0 && (
-              <div className="space-y-4 rounded-2xl border border-white/5 bg-card p-6">
+              <div className="space-y-4 rounded-lg border border-line-subtle bg-card p-6">
                 <SectionTitle
                   icon={Eye}
                   title={t("results.subScoresTitle")}
                   count={subScoreEntries.length}
                 />
-                <div className="mt-2 grid gap-4 sm:grid-cols-2">
+                <RevealGroup className="mt-2 grid gap-4 sm:grid-cols-2">
                   {subScoreEntries.map(([zone, score]) => (
-                    <SubScoreBar key={zone} label={zone} score={score} />
+                    <RevealItem key={zone} className="h-full">
+                      <SubScoreBar label={zone} score={score} />
+                    </RevealItem>
                   ))}
-                </div>
+                </RevealGroup>
               </div>
             )}
 
@@ -457,11 +453,13 @@ export function ReportView({ data }: { data: ReportData }) {
                   title={t("results.findingsTitle")}
                   count={findings.length}
                 />
-                <div className="space-y-3">
+                <RevealGroup className="space-y-3">
                   {findings.map((f, i) => (
-                    <FindingCard key={i} {...f} />
+                    <RevealItem key={i}>
+                      <FindingCard {...f} />
+                    </RevealItem>
                   ))}
-                </div>
+                </RevealGroup>
               </div>
             )}
 
@@ -473,14 +471,14 @@ export function ReportView({ data }: { data: ReportData }) {
                   title={t("results.missingEvidenceTitle")}
                   count={missingEvidence.length}
                 />
-                <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-4">
+                <div className="rounded-md border border-verdict-inconclusive/20 bg-verdict-inconclusive/5 p-4">
                   <ul className="space-y-2">
                     {missingEvidence.map((item, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                        className="flex items-start gap-2 text-ui text-muted-foreground"
                       >
-                        <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-orange-500" />
+                        <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-verdict-inconclusive" />
                         {item}
                       </li>
                     ))}
@@ -493,18 +491,18 @@ export function ReportView({ data }: { data: ReportData }) {
             {ocrEntries.length > 0 && (
               <div className="space-y-4">
                 <SectionTitle icon={ScanText} title={t("results.ocrTitle")} />
-                <div className="divide-y divide-white/5 rounded-xl border border-white/5 bg-card">
+                <div className="divide-y divide-line-subtle rounded-md border border-line-subtle bg-card">
                   {ocrEntries.map(([key, value]) => (
                     <div
                       key={key}
                       className="flex items-start justify-between gap-4 px-4 py-3"
                     >
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-ui text-muted-foreground">
                         {OCR_LABEL_KEY[key]
                           ? t(OCR_LABEL_KEY[key])
                           : key.replace(/_/g, " ")}
                       </span>
-                      <span className="text-right font-mono text-sm text-foreground">
+                      <span className="text-right font-mono text-ui text-foreground">
                         {value}
                       </span>
                     </div>
@@ -521,21 +519,20 @@ export function ReportView({ data }: { data: ReportData }) {
                   title={t("results.recommendationsTitle")}
                   count={recommendations.length}
                 />
-                <div className="space-y-2">
+                <RevealGroup className="space-y-2">
                   {recommendations.map((rec, i) => (
-                    <div
-                      key={i}
-                      className="flex items-start gap-3 rounded-xl border border-white/5 bg-card px-4 py-3"
-                    >
-                      <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-xs font-bold text-emerald-500">
-                        {i + 1}
-                      </span>
-                      <p className="text-sm leading-relaxed text-muted-foreground">
-                        {rec}
-                      </p>
-                    </div>
+                    <RevealItem key={i}>
+                      <div className="flex items-start gap-3 rounded-md border border-line-subtle bg-card px-4 py-3">
+                        <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-raised text-caption font-bold text-muted-foreground">
+                          {i + 1}
+                        </span>
+                        <p className="text-ui leading-relaxed text-muted-foreground">
+                          {rec}
+                        </p>
+                      </div>
+                    </RevealItem>
                   ))}
-                </div>
+                </RevealGroup>
               </div>
             )}
           </>
@@ -545,14 +542,14 @@ export function ReportView({ data }: { data: ReportData }) {
         <div className="flex flex-col gap-3 pt-2 sm:flex-row">
           <Link
             href="/dashboard"
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 px-5 py-3 text-sm font-medium transition-colors hover:border-white/20 hover:bg-white/5"
+            className="flex flex-1 items-center justify-center gap-2 rounded-md border border-line px-5 py-3 text-ui font-medium transition-colors duration-fast hover:border-line-strong hover:bg-surface-raised"
           >
             <ArrowLeft className="size-4" />
             {t("nav.dashboard")}
           </Link>
           <Link
             href="/check/new"
-            className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/20"
+            className="flex flex-1 items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-lg hover:shadow-accent/20"
           >
             <Plus className="size-4" />
             {t("results.newAnalysis")}

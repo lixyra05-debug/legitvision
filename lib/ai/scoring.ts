@@ -1,4 +1,5 @@
 import type { AuthenticationPoint, Confidence, Verdict } from "@/lib/types";
+import { SCORE_AUTHENTIC_MIN, SCORE_INCONCLUSIVE_MIN } from "@/lib/types";
 
 interface ScoringInput {
   subScores: Record<string, number>;
@@ -98,8 +99,11 @@ function getConfidence(evidenceRatio: number): Confidence {
   return "low";
 }
 
+// Seuils inchangés (75 / 45) — ils sont désormais NOMMÉS et importés depuis
+// lib/types.ts, que l'affichage lit aussi. Couleur et verdict ne peuvent plus
+// diverger : c'est la même paire de constantes des deux côtés.
 function getVerdict(score: number): Verdict {
-  if (score >= 75) return "likely_authentic";
-  if (score >= 45) return "inconclusive";
+  if (score >= SCORE_AUTHENTIC_MIN) return "likely_authentic";
+  if (score >= SCORE_INCONCLUSIVE_MIN) return "inconclusive";
   return "likely_fake";
 }

@@ -133,33 +133,88 @@ export const CATEGORY_META: Record<
 };
 
 /**
- * Couleur du score d'une analyse — le SEUL vert légitime du dashboard.
+ * ─────────────────────────────────────────────────────────────────────────
+ * SEUILS DU SCORE GLOBAL — SOURCE UNIQUE
+ * ─────────────────────────────────────────────────────────────────────────
  *
- * Passage de 4 teintes brutes (emerald/yellow/orange/red) à 3 paliers de tokens.
- * Le socle n'expose pas quatre couleurs de verdict : il en expose trois, et le
- * quatrième palier n'existait que parce qu'on piochait dans la palette Tailwind.
+ * Ces deux bornes décident du verdict rendu au client. `getVerdict()` dans
+ * lib/ai/scoring.ts les importe : la logique métier et l'affichage lisent
+ * littéralement les mêmes constantes, une divergence est donc impossible.
  *
- * Pourquoi PAS --verdict-inconclusive pour la tranche intermédiaire : le gris
- * sert déjà, dans cette même grille de cartes, à l'état « pas encore de score »
- * (analyse en attente). Un 78/100 en gris s'y lirait « données manquantes ».
- * C'est --warning qui porte le doute : il met en garde sans qualifier.
+ * Il y avait auparavant QUATRE tables concurrentes sur le même nombre :
+ *   - lib/ai/scoring.ts      75 / 45   (le verdict enregistré en base)
+ *   - lib/types.ts           90 / 50   (badge du dashboard)
+ *   - ScoreGauge.tsx         90/70/50  (jauge du rapport)
+ *   - ReportView SubScoreBar 75 / 45   (sous-scores)
  *
- * Divergence assumée et temporaire : components/check/ScoreGauge.tsx porte une
- * table de seuils dupliquée, encore à 4 paliers (90/70/50). Les deux surfaces
- * seront réalignées à la passe ReportView — un score de 75 est ambre ici et
- * jaune là-bas d'ici là.
+ * Conséquence vécue : un article à 80 portait un badge vert « Probablement
+ * authentique » au-dessus d'une jauge jaune, et sur le dashboard ces mots
+ * étaient imprimés en ambre. Toute la bande 75-89 — celle des articles
+ * justement jugés authentiques — se colorait comme un doute.
+ *
+ * L'arbitrage retenu est 75/45, les seuils du verdict : c'est lui qui porte
+ * le sens, la couleur ne fait que le rendre visible.
  */
+export const SCORE_AUTHENTIC_MIN = 75;
+export const SCORE_INCONCLUSIVE_MIN = 45;
+
+/** Les trois paliers de couleur du score global. */
+export type ScoreTier = "authentic" | "inconclusive" | "fake";
+
+export function getScoreTier(score: number): ScoreTier {
+  if (score >= SCORE_AUTHENTIC_MIN) return "authentic";
+  if (score >= SCORE_INCONCLUSIVE_MIN) return "inconclusive";
+  return "fake";
+}
+
+/**
+ * Palier intermédiaire = --warning et NON --verdict-inconclusive.
+ * Le gris sert déjà, dans la grille du dashboard, à l'état « pas encore de
+ * score » : un 60/100 en gris s'y lirait « données manquantes ». --warning
+ * met en garde sans qualifier l'authenticité.
+ */
+const TIER_TEXT: Record<ScoreTier, string> = {
+  authentic: "text-verdict-authentic",
+  inconclusive: "text-warning",
+  fake: "text-verdict-fake",
+};
+
+const TIER_BG: Record<ScoreTier, string> = {
+  authentic: "bg-verdict-authentic/10 border-verdict-authentic/20",
+  inconclusive: "bg-warning/10 border-warning/20",
+  fake: "bg-verdict-fake/10 border-verdict-fake/20",
+};
+
+/** Variable CSS de la teinte d'un palier — pour le SVG, qui ne prend pas de classe. */
+const TIER_HSL: Record<ScoreTier, string> = {
+  authentic: "var(--verdict-authentic)",
+  inconclusive: "var(--warning)",
+  fake: "var(--verdict-fake)",
+};
+
 export function getScoreColor(score: number): string {
-  if (score >= 90) return "text-verdict-authentic";
-  if (score >= 50) return "text-warning";
-  return "text-verdict-fake";
+  return TIER_TEXT[getScoreTier(score)];
 }
 
 export function getScoreBgColor(score: number): string {
-  if (score >= 90)
-    return "bg-verdict-authentic/10 border-verdict-authentic/20";
-  if (score >= 50) return "bg-warning/10 border-warning/20";
-  return "bg-verdict-fake/10 border-verdict-fake/20";
+  return TIER_BG[getScoreTier(score)];
+}
+
+/** Aplat plein — remplissage d'une barre de progression, pas une teinte de fond. */
+const TIER_SOLID: Record<ScoreTier, string> = {
+  authentic: "bg-verdict-authentic",
+  inconclusive: "bg-warning",
+  fake: "bg-verdict-fake",
+};
+
+export function getScoreSolidBg(score: number): string {
+  return TIER_SOLID[getScoreTier(score)];
+}
+
+/** `hsl(var(--…))` prêt à poser en `stroke`, `fill` ou `boxShadow`. */
+export function getScoreHsl(score: number, alpha?: number): string {
+  const v = TIER_HSL[getScoreTier(score)];
+  return alpha == null ? `hsl(${v})` : `hsl(${v} / ${alpha})`;
 }
 
 export function getVerdictLabel(verdict: Verdict, locale: Locale = "fr"): string {
