@@ -213,23 +213,23 @@ export function PhotoUploader({
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="font-heading text-xl font-bold sm:text-2xl">
+          <h2 className="font-heading text-h4 font-bold sm:text-h3">
             {t("check.photos")}
           </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="mt-2 text-ui text-muted-foreground">
             {t("check.photosHelpDesc")}
           </p>
         </div>
-        <div className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-sm">
+        <div className="flex items-center gap-2 rounded-md border border-line px-3 py-1.5 text-ui">
           <span
             className={
-              allRequiredDone ? "text-emerald-500" : "text-muted-foreground"
+              allRequiredDone ? "text-accent" : "text-muted-foreground"
             }
           >
             {uploadedRequired}/{requiredCount}
           </span>
           <span className="text-muted-foreground">requises</span>
-          {allRequiredDone && <Check className="size-4 text-emerald-500" />}
+          {allRequiredDone && <Check className="size-4 text-accent" />}
         </div>
       </div>
 
@@ -245,18 +245,18 @@ export function PhotoUploader({
                 type="button"
                 disabled={isConverting}
                 onClick={() => inputRefs.current[slot.name]?.click()}
-                className={`relative aspect-square overflow-hidden rounded-xl border-2 border-dashed transition-colors disabled:cursor-wait ${
+                className={`relative aspect-square overflow-hidden rounded-md border-2 border-dashed transition-colors duration-fast disabled:cursor-wait ${
                   photo
-                    ? "border-emerald-500/30"
+                    ? "border-accent/30"
                     : error
-                      ? "border-red-500/30"
-                      : "border-white/10 hover:border-white/20"
+                      ? "border-destructive/30"
+                      : "border-line hover:border-line-strong"
                 }`}
               >
                 {isConverting ? (
                   <div className="flex size-full flex-col items-center justify-center gap-2 p-3">
-                    <Loader2 className="size-7 animate-spin text-emerald-500" />
-                    <span className="text-center text-xs text-muted-foreground">
+                    <Loader2 className="size-7 animate-spin text-muted-foreground" />
+                    <span className="text-center text-caption text-muted-foreground">
                       {t("check.photoConverting")}
                     </span>
                   </div>
@@ -274,18 +274,18 @@ export function PhotoUploader({
                         e.stopPropagation();
                         handleRemove(slot.name);
                       }}
-                      className="absolute right-2 top-2 flex size-7 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-red-500"
+                      className="absolute right-2 top-2 flex size-7 items-center justify-center rounded-full bg-black/60 text-white transition-colors duration-fast hover:bg-destructive"
                     >
                       <X className="size-4" />
                     </button>
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1 text-center text-xs text-white">
+                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 px-2 py-1 text-center text-caption text-white">
                       {photo.width}×{photo.height}
                     </div>
                   </>
                 ) : (
                   <div className="flex size-full flex-col items-center justify-center gap-2 p-3">
                     <Camera className="size-8 text-muted-foreground" />
-                    <span className="text-center text-xs text-muted-foreground">
+                    <span className="text-center text-caption text-muted-foreground">
                       {translatePhotoLabel(slot.label, locale)}
                     </span>
                   </div>
@@ -293,16 +293,16 @@ export function PhotoUploader({
               </button>
 
               <div className="flex items-center gap-1">
-                <span className="truncate text-xs font-medium">
+                <span className="truncate text-caption font-medium">
                   {translatePhotoLabel(slot.label, locale)}
                 </span>
                 {slot.required && (
-                  <span className="shrink-0 text-xs text-emerald-500">*</span>
+                  <span className="shrink-0 text-caption text-muted-foreground">*</span>
                 )}
               </div>
 
               {error && (
-                <div className="flex items-start gap-1 text-xs text-red-400">
+                <div className="flex items-start gap-1 text-caption text-destructive">
                   <AlertCircle className="mt-0.5 size-3 shrink-0" />
                   {error}
                 </div>

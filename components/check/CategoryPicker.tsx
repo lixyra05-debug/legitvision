@@ -44,10 +44,10 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
   const { t } = useTranslation();
   return (
     <div>
-      <h2 className="font-heading text-xl font-bold sm:text-2xl">
+      <h2 className="font-heading text-h4 font-bold sm:text-h3">
         {t("check.categoryTitle")}
       </h2>
-      <p className="mt-2 text-sm text-muted-foreground">
+      <p className="mt-2 text-ui text-muted-foreground">
         {t("check.categorySubtitle")}
       </p>
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -55,13 +55,13 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
           <button
             key={cat.value}
             onClick={() => onSelect(cat.value)}
-            className={`group flex flex-col overflow-hidden rounded-xl border text-center transition-all hover:-translate-y-0.5 hover:shadow-lg ${
+            className={`group flex flex-col overflow-hidden rounded-md border text-center transition-[color,background-color,border-color,transform] duration-fast hover:-translate-y-0.5 hover:shadow-card ${
               selected === cat.value
-                ? "border-emerald-500 bg-emerald-500/10 shadow-lg shadow-emerald-500/10"
-                : "border-white/5 bg-card hover:border-emerald-500/30"
+                ? "border-accent bg-accent/10 shadow-card"
+                : "border-line-subtle bg-card hover:border-line-strong"
             }`}
           >
-            <div className="relative aspect-video w-full overflow-hidden rounded-t-xl bg-white/5">
+            <div className="relative aspect-video w-full overflow-hidden rounded-t-md bg-surface-raised">
               <Image
                 src={cat.image}
                 alt={t(cat.labelKey)}
@@ -72,24 +72,24 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
             </div>
             <div className="flex flex-col items-center p-6">
               <div
-                className={`mb-4 flex size-14 items-center justify-center rounded-xl transition-colors ${
+                className={`mb-4 flex size-14 items-center justify-center rounded-md transition-colors duration-fast ${
                   selected === cat.value
-                    ? "bg-emerald-500/20"
-                    : "bg-white/5 group-hover:bg-white/10"
+                    ? "bg-accent/20"
+                    : "bg-surface-raised group-hover:bg-surface-hover"
                 }`}
               >
                 <cat.icon
                   className={`size-7 ${
                     selected === cat.value
-                      ? "text-emerald-500"
+                      ? "text-accent"
                       : "text-muted-foreground"
                   }`}
                 />
               </div>
-              <span className="font-heading text-sm font-semibold">
+              <span className="font-heading text-ui font-semibold">
                 {t(cat.labelKey)}
               </span>
-              <span className="mt-1 text-xs text-muted-foreground">
+              <span className="mt-1 text-caption text-muted-foreground">
                 {t(cat.descKey)}
               </span>
             </div>

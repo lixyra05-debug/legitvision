@@ -390,7 +390,7 @@ export default function NewCheckPage() {
 
   // Nav réutilisée par les 3 états (loading, paywall, flow normal)
   const navbar = (
-    <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
+    <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link href="/dashboard" className="flex items-center">
           <Image
@@ -417,7 +417,7 @@ export default function NewCheckPage() {
       <div className="min-h-screen bg-background">
         {navbar}
         <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
-          <Loader2 className="size-8 animate-spin text-emerald-500" />
+          <Loader2 className="size-8 animate-spin text-muted-foreground" />
         </main>
       </div>
     );
@@ -432,59 +432,55 @@ export default function NewCheckPage() {
           {checkoutError && (
             <div
               role="alert"
-              className="mb-4 w-full max-w-md rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300"
+              className="mb-4 w-full max-w-md rounded-md border border-destructive/30 bg-destructive/10 p-4 text-ui text-destructive"
             >
               <p className="font-semibold">Paiement Stripe indisponible</p>
-              <p className="mt-1 text-xs text-red-300/80">{checkoutError}</p>
-              <p className="mt-2 text-xs text-red-300/60">
+              <p className="mt-1 text-caption text-destructive/80">{checkoutError}</p>
+              <p className="mt-2 text-caption text-destructive/60">
                 {t("check.retryLater")}
               </p>
             </div>
           )}
-          <div className="relative w-full max-w-md overflow-hidden rounded-2xl border border-emerald-500/20 bg-card/95 p-8 shadow-2xl shadow-emerald-500/10 backdrop-blur-xl">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
-            />
+          <div className="relative w-full max-w-md overflow-hidden rounded-md border border-line bg-card p-8 shadow-card">
             <div className="relative text-center">
-              <div className="mx-auto flex size-12 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
-                <Sparkles className="size-6 text-emerald-400" />
+              <div className="mx-auto flex size-12 items-center justify-center rounded-md border border-line bg-surface-raised">
+                <Sparkles className="size-6 text-muted-foreground" />
               </div>
-              <h1 className="mt-4 font-heading text-2xl font-bold">
+              <h1 className="mt-4 font-heading text-h3 font-bold">
                 {t("check.noCredits")}
               </h1>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="mt-2 text-ui text-muted-foreground">
                 {t("check.buyCredits")}
               </p>
             </div>
             <div className="relative mt-6 space-y-3">
               <button
                 onClick={() => { window.location.href = "/checkout?plan=single"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-black shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] hover:bg-emerald-400 active:scale-100"
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-md bg-accent px-5 text-ui font-semibold text-accent-foreground shadow-card transition-[color,background-color,border-color,transform] duration-fast hover:scale-[1.02] hover:bg-accent-hover active:scale-100"
               >
                 <span>{t("pricing.single")}</span>
-                <span className="font-heading text-base">3,99 €</span>
+                <span className="font-heading text-body">3,99 €</span>
               </button>
               <button
                 onClick={() => { window.location.href = "/checkout?plan=pro"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
               >
                 <span>{t("pricing.proDesc")}</span>
-                <span className="font-heading text-base">19,99 €{t("check.perMonth")}</span>
+                <span className="font-heading text-body">19,99 €{t("check.perMonth")}</span>
               </button>
               <button
                 onClick={() => { window.location.href = "/checkout?plan=business"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
               >
                 <span>{t("pricing.premiumDesc")}</span>
-                <span className="font-heading text-base">29,99 €{t("check.perMonth")}</span>
+                <span className="font-heading text-body">29,99 €{t("check.perMonth")}</span>
               </button>
             </div>
-            <div className="relative mt-5 flex items-center justify-between text-[11px] text-muted-foreground/70">
+            <div className="relative mt-5 flex items-center justify-between text-caption text-subtle">
               <span>{t("check.paymentSecure")}</span>
               <Link
                 href="/dashboard"
-                className="text-muted-foreground/70 transition-colors hover:text-foreground"
+                className="text-subtle transition-colors duration-fast hover:text-foreground"
               >
                 Retour
               </Link>
@@ -505,10 +501,10 @@ export default function NewCheckPage() {
         {checkoutError && (
           <div
             role="alert"
-            className="mb-6 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-300"
+            className="mb-6 rounded-md border border-destructive/30 bg-destructive/10 p-4 text-ui text-destructive"
           >
             <p className="font-semibold">Paiement Stripe indisponible</p>
-            <p className="mt-1 text-xs text-red-300/80">{checkoutError}</p>
+            <p className="mt-1 text-caption text-destructive/80">{checkoutError}</p>
           </div>
         )}
 
@@ -517,12 +513,12 @@ export default function NewCheckPage() {
           {[1, 2, 3, 4].map((s) => (
             <div key={s} className="flex items-center gap-2">
               <div
-                className={`flex size-9 items-center justify-center rounded-full text-sm font-semibold transition-colors ${
+                className={`flex size-9 items-center justify-center rounded-full text-ui font-semibold transition-colors duration-fast ${
                   s === step
-                    ? "bg-emerald-500 text-white"
+                    ? "bg-accent text-accent-foreground"
                     : s < step
-                      ? "bg-emerald-500/20 text-emerald-500"
-                      : "bg-white/5 text-muted-foreground"
+                      ? "bg-accent/10 text-accent"
+                      : "bg-surface-raised text-muted-foreground"
                 }`}
               >
                 {s}
@@ -550,18 +546,18 @@ export default function NewCheckPage() {
           <div>
             {!selectedBrand ? (
               <>
-                <h2 className="font-heading text-xl font-bold sm:text-2xl">
+                <h2 className="font-heading text-h3 font-bold">
                   {t("check.brand")}
                 </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
+                <p className="mt-2 text-ui text-muted-foreground">
                   {t("check.brandSubtitle")}
                 </p>
                 {loadingBrands ? (
                   <div className="mt-12 flex justify-center">
-                    <Loader2 className="size-8 animate-spin text-emerald-500" />
+                    <Loader2 className="size-8 animate-spin text-muted-foreground" />
                   </div>
                 ) : brands.length === 0 ? (
-                  <p className="mt-8 text-center text-sm text-muted-foreground">
+                  <p className="mt-8 text-center text-ui text-muted-foreground">
                     {t("check.brandEmpty")}
                   </p>
                 ) : (
@@ -570,9 +566,9 @@ export default function NewCheckPage() {
                       <button
                         key={brand.id}
                         onClick={() => setSelectedBrand(brand)}
-                        className="flex flex-col items-center gap-3 rounded-2xl border border-white/5 bg-card p-6 text-center transition-colors hover:border-emerald-500/30 hover:bg-emerald-500/5"
+                        className="flex flex-col items-center gap-3 rounded-md border border-line-subtle bg-card p-6 text-center transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
                       >
-                        <span className="font-heading text-lg font-semibold">
+                        <span className="font-heading text-lead font-semibold">
                           {brand.name}
                         </span>
                       </button>
@@ -584,27 +580,27 @@ export default function NewCheckPage() {
               <>
                 <button
                   onClick={() => setSelectedBrand(null)}
-                  className="mb-6 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+                  className="mb-6 flex items-center gap-1 text-ui text-muted-foreground hover:text-foreground"
                 >
                   <ArrowLeft className="size-4" />
                   {t("check.backToBrands")}
                 </button>
-                <h2 className="font-heading text-xl font-bold sm:text-2xl">
+                <h2 className="font-heading text-h3 font-bold">
                   {t("check.modelTitlePrefix")}{" "}
-                  <span className="text-emerald-500">
+                  <span className="text-foreground">
                     {selectedBrand.name}
                   </span>{" "}
                   ?
                 </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
+                <p className="mt-2 text-ui text-muted-foreground">
                   {t("check.modelSubtitle")}
                 </p>
                 {loadingModels ? (
                   <div className="mt-12 flex justify-center">
-                    <Loader2 className="size-8 animate-spin text-emerald-500" />
+                    <Loader2 className="size-8 animate-spin text-muted-foreground" />
                   </div>
                 ) : models.length === 0 ? (
-                  <p className="mt-8 text-center text-sm text-muted-foreground">
+                  <p className="mt-8 text-center text-ui text-muted-foreground">
                     {t("check.modelEmpty")}
                   </p>
                 ) : (
@@ -616,12 +612,12 @@ export default function NewCheckPage() {
                           setSelectedModel(model);
                           setStep(3);
                         }}
-                        className="flex flex-col items-center gap-2 rounded-2xl border border-white/5 bg-card p-6 text-center transition-colors hover:border-emerald-500/30 hover:bg-emerald-500/5"
+                        className="flex flex-col items-center gap-2 rounded-md border border-line-subtle bg-card p-6 text-center transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
                       >
                         <span className="font-heading font-semibold">
                           {model.name}
                         </span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-caption text-muted-foreground">
                           {model.min_photos}–{model.max_photos} photos
                         </span>
                       </button>
@@ -633,19 +629,19 @@ export default function NewCheckPage() {
               <div>
                 <button
                   onClick={() => setSelectedModel(null)}
-                  className="mb-6 flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+                  className="mb-6 flex items-center gap-1 text-ui text-muted-foreground hover:text-foreground"
                 >
                   <ArrowLeft className="size-4" />
                   {t("check.backToModels")}
                 </button>
-                <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6">
-                  <p className="text-sm text-muted-foreground">
+                <div className="rounded-md border border-line bg-surface-raised p-6">
+                  <p className="text-ui text-muted-foreground">
                     {t("check.selection")}
                   </p>
-                  <p className="mt-1 font-heading text-lg font-bold">
+                  <p className="mt-1 font-heading text-lead font-bold">
                     {selectedBrand.name} — {selectedModel.name}
                   </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-ui text-muted-foreground">
                     {selectedModel.min_photos}–{selectedModel.max_photos}{" "}
                     photos requises
                   </p>
@@ -658,19 +654,19 @@ export default function NewCheckPage() {
         {/* Step 3: Variante & Collaboration */}
         {step === 3 && selectedModel && (
           <div>
-            <h2 className="font-heading text-xl font-bold sm:text-2xl">
+            <h2 className="font-heading text-h3 font-bold">
               {t("check.variantTitle")}
             </h2>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-ui text-muted-foreground">
               {t("check.variantSubtitle")}
             </p>
 
             {/* Variantes */}
             {selectedModel.variants && selectedModel.variants.length > 0 ? (
               <div className="mt-6">
-                <p className="mb-3 text-sm font-medium text-foreground">
+                <p className="mb-3 text-ui font-medium text-foreground">
                   Variante du{" "}
-                  <span className="text-emerald-400">
+                  <span className="text-foreground">
                     {selectedBrand?.name} {selectedModel.name}
                   </span>
                 </p>
@@ -679,10 +675,10 @@ export default function NewCheckPage() {
                     <button
                       key={v}
                       onClick={() => setSelectedVariant(selectedVariant === v ? null : v)}
-                      className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                      className={`rounded-full border px-4 py-1.5 text-ui font-medium transition-colors duration-fast ${
                         selectedVariant === v
-                          ? "border-emerald-500 bg-emerald-500/20 text-emerald-400"
-                          : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                          ? "border-accent bg-accent/10 text-accent"
+                          : "border-line bg-surface-raised text-muted-foreground hover:border-line-strong hover:text-foreground"
                       }`}
                     >
                       {v}
@@ -690,10 +686,10 @@ export default function NewCheckPage() {
                   ))}
                   <button
                     onClick={() => setSelectedVariant("Standard")}
-                    className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                    className={`rounded-full border px-4 py-1.5 text-ui font-medium transition-colors duration-fast ${
                       selectedVariant === "Standard"
-                        ? "border-emerald-500 bg-emerald-500/20 text-emerald-400"
-                        : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                        ? "border-accent bg-accent/10 text-accent"
+                        : "border-line bg-surface-raised text-muted-foreground hover:border-line-strong hover:text-foreground"
                     }`}
                   >
                     Autre / Standard
@@ -701,7 +697,7 @@ export default function NewCheckPage() {
                 </div>
               </div>
             ) : (
-              <div className="mt-6 rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 text-sm text-muted-foreground">
+              <div className="mt-6 rounded-md border border-line-subtle bg-surface px-4 py-3 text-ui text-muted-foreground">
                 {t("check.noVariants")}
               </div>
             )}
@@ -709,7 +705,7 @@ export default function NewCheckPage() {
             {/* Collaborations */}
             {selectedModel.collaborations && selectedModel.collaborations.length > 0 && (
               <div className="mt-6">
-                <p className="mb-3 text-sm font-medium text-foreground">
+                <p className="mb-3 text-ui font-medium text-foreground">
                   Collaboration (optionnel)
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -718,15 +714,15 @@ export default function NewCheckPage() {
                       key={c.name}
                       onClick={() => setSelectedCollab(selectedCollab === c.name ? null : c.name)}
                       title={c.detail || undefined}
-                      className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                      className={`rounded-full border px-4 py-1.5 text-ui font-medium transition-colors duration-fast ${
                         selectedCollab === c.name
-                          ? "border-amber-500 bg-amber-500/20 text-amber-400"
-                          : "border-amber-500/20 bg-amber-500/5 text-amber-400/70 hover:border-amber-500/40 hover:text-amber-400"
+                          ? "border-accent bg-accent/10 text-accent"
+                          : "border-line bg-surface-raised text-muted-foreground hover:border-line-strong hover:text-foreground"
                       }`}
                     >
                       ✦ {c.name}
                       {c.detail ? (
-                        <span className="ml-1.5 text-[10px] opacity-70">
+                        <span className="ml-1.5 text-caption opacity-70">
                           {c.detail}
                         </span>
                       ) : null}
@@ -734,10 +730,10 @@ export default function NewCheckPage() {
                   ))}
                   <button
                     onClick={() => setSelectedCollab(null)}
-                    className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-all ${
+                    className={`rounded-full border px-4 py-1.5 text-ui font-medium transition-colors duration-fast ${
                       selectedCollab === null
-                        ? "border-white/20 bg-white/10 text-foreground"
-                        : "border-white/10 bg-white/5 text-muted-foreground hover:border-white/20 hover:text-foreground"
+                        ? "border-line-strong bg-surface-hover text-foreground"
+                        : "border-line bg-surface-raised text-muted-foreground hover:border-line-strong hover:text-foreground"
                     }`}
                   >
                     Pas de collab / Standard
@@ -748,9 +744,9 @@ export default function NewCheckPage() {
 
             {/* Récap sélection */}
             {(selectedVariant || selectedCollab) && (
-              <div className="mt-6 rounded-xl border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-sm">
+              <div className="mt-6 rounded-md border border-line bg-surface-raised px-4 py-3 text-ui">
                 <span className="text-muted-foreground">Analyse ciblée sur : </span>
-                <span className="font-semibold text-emerald-400">
+                <span className="font-semibold text-foreground">
                   {[selectedBrand?.name, selectedModel?.name, selectedVariant !== "Standard" ? selectedVariant : null, selectedCollab].filter(Boolean).join(" — ")}
                 </span>
               </div>
@@ -761,8 +757,8 @@ export default function NewCheckPage() {
         {/* Step 4: Photos */}
         {step === 4 && (
           <div>
-            <div className="mb-6 rounded-xl border border-white/5 bg-card p-4">
-              <p className="text-sm text-muted-foreground">
+            <div className="mb-6 rounded-md border border-line-subtle bg-card p-4">
+              <p className="text-ui text-muted-foreground">
                 {[selectedBrand?.name, selectedModel?.name, selectedVariant !== "Standard" ? selectedVariant : null, selectedCollab].filter(Boolean).join(" — ")}
               </p>
             </div>
@@ -773,7 +769,7 @@ export default function NewCheckPage() {
             />
 
             {submitError && (
-              <div className="mt-6 rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+              <div className="mt-6 rounded-md border border-destructive/20 bg-destructive/10 px-4 py-3 text-ui text-destructive">
                 {submitError}
               </div>
             )}
@@ -784,7 +780,7 @@ export default function NewCheckPage() {
         <div className="mt-10 flex items-center justify-between">
           <button
             onClick={step === 1 ? () => router.push("/dashboard") : handleBack}
-            className="flex items-center gap-2 rounded-lg border border-white/10 px-5 py-2.5 text-sm font-medium transition-colors hover:border-white/20 hover:bg-white/5"
+            className="flex items-center gap-2 rounded-md border border-line px-5 py-2.5 text-ui font-medium transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
           >
             <ArrowLeft className="size-4" />
             {step === 1 ? "Dashboard" : "Retour"}
@@ -794,7 +790,7 @@ export default function NewCheckPage() {
             <button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="flex items-center gap-2 rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-black transition-all hover:bg-emerald-400 disabled:opacity-40 disabled:hover:bg-emerald-500"
+              className="flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover disabled:opacity-40 disabled:hover:bg-accent"
             >
               {t("check.continueToPhotos")}
               <ArrowRight className="size-4" />
@@ -804,7 +800,7 @@ export default function NewCheckPage() {
             <button
               onClick={handleSubmit}
               disabled={!allRequiredUploaded || submitting}
-              className="flex items-center gap-2 rounded-lg bg-emerald-500 px-6 py-2.5 text-sm font-semibold text-black transition-all hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/25 disabled:opacity-40 disabled:hover:bg-emerald-500 disabled:hover:shadow-none"
+              className="flex items-center gap-2 rounded-md bg-accent px-6 py-2.5 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card disabled:opacity-40 disabled:hover:bg-accent disabled:hover:shadow-none"
             >
               {submitting ? (
                 <>
@@ -825,38 +821,33 @@ export default function NewCheckPage() {
           role="dialog"
           aria-modal="true"
           aria-labelledby="paywall-title"
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-md"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4"
           onClick={() => setShowPaywall(false)}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-md overflow-hidden rounded-2xl border border-emerald-500/20 bg-card/95 p-8 shadow-2xl shadow-emerald-500/10 backdrop-blur-xl"
+            className="relative w-full max-w-md overflow-hidden rounded-md border border-line bg-card p-8 shadow-card"
           >
-            {/* Glow accent */}
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -top-24 left-1/2 size-64 -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
-            />
 
             <button
               onClick={() => setShowPaywall(false)}
               aria-label="Fermer"
-              className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full border border-white/10 bg-white/5 text-muted-foreground transition-colors hover:border-white/20 hover:bg-white/10 hover:text-foreground"
+              className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full border border-line bg-surface-raised text-muted-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover hover:text-foreground"
             >
               <X className="size-4" />
             </button>
 
             <div className="relative text-center">
-              <div className="mx-auto flex size-12 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10">
-                <Sparkles className="size-6 text-emerald-400" />
+              <div className="mx-auto flex size-12 items-center justify-center rounded-md border border-line bg-surface-raised">
+                <Sparkles className="size-6 text-muted-foreground" />
               </div>
               <h3
                 id="paywall-title"
-                className="mt-4 font-heading text-2xl font-bold"
+                className="mt-4 font-heading text-h3 font-bold"
               >
                 Aucun crédit d&apos;analyse
               </h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="mt-2 text-ui text-muted-foreground">
                 Choisissez une formule pour lancer votre analyse en 60 secondes.
               </p>
             </div>
@@ -864,28 +855,28 @@ export default function NewCheckPage() {
             <div className="relative mt-6 space-y-3">
               <button
                 onClick={() => { window.location.href = "/checkout?plan=single"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl bg-emerald-500 px-5 text-sm font-semibold text-black shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.02] hover:bg-emerald-400 active:scale-100"
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-md bg-accent px-5 text-ui font-semibold text-accent-foreground shadow-card transition-[color,background-color,border-color,transform] duration-fast hover:scale-[1.02] hover:bg-accent-hover active:scale-100"
               >
                 <span>{t("pricing.single")}</span>
-                <span className="font-heading text-base">3,99 €</span>
+                <span className="font-heading text-body">3,99 €</span>
               </button>
               <button
                 onClick={() => { window.location.href = "/checkout?plan=pro"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
               >
                 <span>{t("pricing.proDesc")}</span>
-                <span className="font-heading text-base">19,99 €{t("check.perMonth")}</span>
+                <span className="font-heading text-body">19,99 €{t("check.perMonth")}</span>
               </button>
               <button
                 onClick={() => { window.location.href = "/checkout?plan=business"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-5 text-sm font-semibold text-foreground transition-all hover:border-emerald-500/40 hover:bg-emerald-500/5"
+                className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
               >
                 <span>{t("pricing.premiumDesc")}</span>
-                <span className="font-heading text-base">29,99 €{t("check.perMonth")}</span>
+                <span className="font-heading text-body">29,99 €{t("check.perMonth")}</span>
               </button>
             </div>
 
-            <p className="relative mt-5 text-center text-[11px] text-muted-foreground/70">
+            <p className="relative mt-5 text-center text-caption text-subtle">
               {t("check.paymentSecure")}
             </p>
           </div>
