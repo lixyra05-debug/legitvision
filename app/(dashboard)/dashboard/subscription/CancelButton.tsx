@@ -40,12 +40,10 @@ export function CancelButton() {
   return (
     <div className="flex flex-wrap items-center gap-3">
       <p className="text-ui text-foreground">Confirmer la résiliation ?</p>
-      {/* text-background et non text-destructive-foreground : en sombre ce dernier
-          vaut --foreground (blanc) sur un rouge clair #F07579, soit 2,9:1 — sous AA. */}
       <button
         onClick={handleConfirm}
         disabled={state === "submitting"}
-        className="inline-flex h-9 items-center rounded-md bg-destructive px-4 text-ui font-medium text-background transition-colors duration-fast hover:bg-destructive/90 disabled:opacity-60"
+        className="inline-flex h-9 items-center rounded-md bg-destructive px-4 text-ui font-medium text-destructive-foreground transition-colors duration-fast hover:bg-destructive/90 disabled:opacity-60"
       >
         {state === "submitting" ? "Résiliation…" : "Oui, résilier"}
       </button>

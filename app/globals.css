@@ -98,7 +98,15 @@
        une surface élevée — sous le seuil AA. Ce rouge-ci est éclairci pour
        rester lisible sur les trois niveaux de fond (5,9:1 sur --surface-raised). */
     --destructive: 358 80% 70%; /* #F07579 */
-    --destructive-foreground: var(--foreground);
+    /* --background et NON --foreground. Le token ci-dessus a été éclairci pour
+       rester lisible en TEXTE sur les trois niveaux de fond ; il est donc clair,
+       et du blanc posé dessus ne donnait que 2,8:1 — sous AA. Un fond clair
+       appelle un texte sombre : #0A0A0B sur #F07579 donne 7,1:1.
+       Le clair garde du blanc : son --destructive est un rouge sombre (6,7:1).
+       Aucun consommateur ne lisait ce token au moment du correctif — il est
+       corrigé pour que l'idiome `bg-destructive text-destructive-foreground`
+       soit sûr le jour où quelqu'un l'écrira. */
+    --destructive-foreground: var(--background);
     --border: var(--line);
     --input: var(--line-strong);
     --ring: var(--accent);
