@@ -436,7 +436,13 @@ export function PlansSection() {
                   ))}
                 </ul>
                 <div className="mt-8">
-                  <Link
+                  {/* <a> natif et NON <Link> : ce CTA mene a /checkout, un Server Component
+                      qui termine par redirect(sessionUrl) vers Stripe (cross-origin). Une
+                      soft-nav RSC y fait un fetch() qui suit la redirection, se fait refuser
+                      par l'absence de CORS chez Stripe, et retombe en navigation navigateur
+                      sur /checkout -- qui recree une seconde Checkout Session. Navigation
+                      top-level obligatoire, comme les 6 boutons paywall et PlanBanner. */}
+                  <a
                     href={plan.href}
                     className="inline-flex h-11 w-full items-center justify-center rounded-md text-ui font-semibold transition-[background-color,box-shadow] hover:shadow-lg"
                     style={{
@@ -445,7 +451,7 @@ export function PlansSection() {
                     }}
                   >
                     {cta}
-                  </Link>
+                  </a>
                 </div>
               </div>
             </RevealItem>
@@ -520,7 +526,13 @@ export function PlansSection() {
                 ))}
               </ul>
               <div className="mt-8">
-                <Link
+                {/* <a> natif et NON <Link> : ce CTA mene a /checkout, un Server Component
+                    qui termine par redirect(sessionUrl) vers Stripe (cross-origin). Une
+                    soft-nav RSC y fait un fetch() qui suit la redirection, se fait refuser
+                    par l'absence de CORS chez Stripe, et retombe en navigation navigateur
+                    sur /checkout -- qui recree une seconde Checkout Session. Navigation
+                    top-level obligatoire, comme les 6 boutons paywall et PlanBanner. */}
+                <a
                   href={plan.href}
                   className="inline-flex h-11 w-full items-center justify-center rounded-md text-ui font-semibold transition-[background-color,border-color,box-shadow] hover:shadow-lg"
                   style={
@@ -539,7 +551,7 @@ export function PlansSection() {
                   }
                 >
                   {cta}
-                </Link>
+                </a>
               </div>
             </div>
           </RevealItem>
