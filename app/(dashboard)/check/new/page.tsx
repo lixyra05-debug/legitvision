@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -42,10 +42,42 @@ export default function NewCheckPage() {
   // Step 2
   const [brands, setBrands] = useState<Brand[]>([]);
   const [models, setModels] = useState<Model[]>([]);
-  const [selectedBrand, setSelectedBrand] = useState<Brand | null>(null);
-  const [selectedModel, setSelectedModel] = useState<Model | null>(null);
+  // État BRUT : ce que l'utilisateur — ou la pré-sélection ?brand= — a choisi.
+  // Personne ne le purge : c'est la DÉRIVATION ci-dessous qui garantit la
+  // cohérence, à chaque rendu. Purger depuis un effet supposait que l'effet
+  // tourne au bon moment ; c'est précisément cette hypothèse qui était fausse.
+  const [brandChoice, setBrandChoice] = useState<Brand | null>(null);
+  const [modelChoice, setModelChoice] = useState<Model | null>(null);
   const [loadingBrands, setLoadingBrands] = useState(false);
   const [loadingModels, setLoadingModels] = useState(false);
+
+  // La seule version cohérente de la sélection, recalculée à chaque rendu.
+  // Une marque n'existe que si elle appartient à la catégorie courante ; un
+  // modèle, que s'il appartient à la marque retenue. L'état incohérent devient
+  // irreprésentable : aucun site d'appel n'a plus à penser à purger quoi que ce
+  // soit, et l'ordre d'exécution des effets n'entre plus en jeu.
+  const selectedBrand =
+    brandChoice && brandChoice.category === category ? brandChoice : null;
+  const selectedModel =
+    selectedBrand && modelChoice?.brand_id === selectedBrand.id
+      ? modelChoice
+      : null;
+
+  // Drapeau MONOTONE (false -> true, jamais reconsommé) : tout geste explicite
+  // de l'utilisateur ferme définitivement la porte à la pré-sélection, qui
+  // pourrait atterrir après lui et écraser son choix. Un jeton à usage unique
+  // aurait le défaut inverse — rester armé quand personne ne le consomme, et
+  // manger une action légitime plus tard.
+  const userTouched = useRef(false);
+
+  function chooseBrand(brand: Brand | null) {
+    userTouched.current = true;
+    setBrandChoice(brand);
+  }
+  function chooseModel(model: Model | null) {
+    userTouched.current = true;
+    setModelChoice(model);
+  }
 
   // Step 3 — Variant & Collab
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
@@ -112,6 +144,11 @@ export default function NewCheckPage() {
     const modelParam = params.get("model");
     if (!brandParam) return;
 
+    // Garde d'annulation, sur le motif de l'effet crédits ci-dessus : l'effet A
+    // écrit après deux allers-retours réseau, il doit pouvoir être désarmé.
+    // Neutralise aussi le double-invoke de Strict Mode en dev.
+    let cancelled = false;
+
     async function preselect() {
       // Fetch brand by name (case-insensitive), filtered by category if provided.
       // Category filter is required when multiple DB entries share the same brand name
@@ -127,9 +164,11 @@ export default function NewCheckPage() {
 
       const brandData = brandRows?.[0];
       if (!brandData) return;
+      // L'utilisateur est arrivé le premier : il gagne, on n'écrit rien.
+      if (cancelled || userTouched.current) return;
 
       setCategory(brandData.category as Category);
-      setSelectedBrand(brandData as Brand);
+      setBrandChoice(brandData as Brand);
 
       if (modelParam) {
         // Fetch model by name within this brand
@@ -142,8 +181,9 @@ export default function NewCheckPage() {
           .limit(1);
 
         const modelData = modelRows?.[0];
+        if (cancelled || userTouched.current) return;
         if (modelData) {
-          setSelectedModel(modelData as Model);
+          setModelChoice(modelData as Model);
           setStep(3); // Brand + model set → jump to variant/collab step
         } else {
           setStep(2); // Brand set, model not found → stay on picker
@@ -154,17 +194,19 @@ export default function NewCheckPage() {
     }
 
     preselect();
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // run once on mount only
 
   // Fetch brands when category changes
   useEffect(() => {
     if (!category) return;
+    // Chargement seul : la purge de la sélection aval a disparu d'ici. Elle
+    // écrasait la marque que preselect venait de poser au même commit.
     setLoadingBrands(true);
     setBrands([]);
-    setSelectedBrand(null);
-    setSelectedModel(null);
-    setModels([]);
 
     supabase
       .from("brands")
@@ -183,7 +225,6 @@ export default function NewCheckPage() {
     if (!selectedBrand) return;
     setLoadingModels(true);
     setModels([]);
-    setSelectedModel(null);
 
     supabase
       .from("models")
@@ -216,7 +257,10 @@ export default function NewCheckPage() {
     switch (step) {
       case 1: return category !== null;
       case 2: return selectedBrand !== null && selectedModel !== null;
-      case 3: return true; // variant/collab always skippable
+      // variante/collab restent facultatives, mais l'étape n'a de sens que si
+      // marque ET modèle tiennent : sinon « Analyser » s'active pour un submit
+      // qui retombera sur le return muet de handleSubmit.
+      case 3: return selectedBrand !== null && selectedModel !== null;
       case 4: return allRequiredUploaded;
       default: return false;
     }
@@ -228,8 +272,8 @@ export default function NewCheckPage() {
   const handleBack = () => {
     if (step > 1) {
       if (step === 2) {
-        setSelectedBrand(null);
-        setSelectedModel(null);
+        chooseBrand(null);
+        chooseModel(null);
       }
       if (step === 3) {
         setSelectedVariant(null);
@@ -535,6 +579,7 @@ export default function NewCheckPage() {
           <CategoryPicker
             selected={category}
             onSelect={(cat) => {
+              userTouched.current = true;
               setCategory(cat);
               setStep(2);
             }}
@@ -565,7 +610,7 @@ export default function NewCheckPage() {
                     {brands.map((brand) => (
                       <button
                         key={brand.id}
-                        onClick={() => setSelectedBrand(brand)}
+                        onClick={() => chooseBrand(brand)}
                         className="flex flex-col items-center gap-3 rounded-md border border-line-subtle bg-card p-6 text-center transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
                       >
                         <span className="font-heading text-lead font-semibold">
@@ -579,7 +624,7 @@ export default function NewCheckPage() {
             ) : !selectedModel ? (
               <>
                 <button
-                  onClick={() => setSelectedBrand(null)}
+                  onClick={() => chooseBrand(null)}
                   className="mb-6 flex items-center gap-1 text-ui text-muted-foreground hover:text-foreground"
                 >
                   <ArrowLeft className="size-4" />
@@ -609,7 +654,7 @@ export default function NewCheckPage() {
                       <button
                         key={model.id}
                         onClick={() => {
-                          setSelectedModel(model);
+                          chooseModel(model);
                           setStep(3);
                         }}
                         className="flex flex-col items-center gap-2 rounded-md border border-line-subtle bg-card p-6 text-center transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
@@ -628,7 +673,7 @@ export default function NewCheckPage() {
             ) : (
               <div>
                 <button
-                  onClick={() => setSelectedModel(null)}
+                  onClick={() => chooseModel(null)}
                   className="mb-6 flex items-center gap-1 text-ui text-muted-foreground hover:text-foreground"
                 >
                   <ArrowLeft className="size-4" />
@@ -652,7 +697,7 @@ export default function NewCheckPage() {
         )}
 
         {/* Step 3: Variante & Collaboration */}
-        {step === 3 && selectedModel && (
+        {step === 3 && selectedBrand && selectedModel && (
           <div>
             <h2 className="font-heading text-h3 font-bold">
               {t("check.variantTitle")}
