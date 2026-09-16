@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import sharp from "sharp";
+import sharp, { type Metadata } from "sharp";
 import { getAuthenticationPrompt } from "./authentication-prompts";
 import { calculateWeightedScore } from "./scoring";
 import type { AuthenticationPoint, Confidence, Verdict } from "@/lib/types";
@@ -98,7 +98,10 @@ export async function validateImageBuffer(
     };
   }
 
-  let meta: sharp.Metadata;
+  // `Metadata` importe nommement plutot que via le namespace `sharp.` : a partir
+  // de sharp 0.35 les types sont republies en dual ESM/CJS et l'entree ESM
+  // (celle que resout moduleResolution "bundler") n'expose plus de namespace.
+  let meta: Metadata;
   try {
     meta = await sharp(buffer).metadata();
   } catch {
