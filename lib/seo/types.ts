@@ -21,7 +21,17 @@ export type FAQItem = {
 
 export type Brand = {
   slug: string;
+  /** Nom affiché (H1, title, description). C'est lui qui porte le SEO. */
   name: string;
+  /**
+   * Nom de la ligne `brands` en base, lorsqu'il diffère du nom affiché.
+   * Le CTA /check/new?brand= est résolu par .ilike("name", …), une égalité :
+   * « Air Jordan » ne matche pas la ligne « Jordan ». Renommer la base n'est
+   * PAS une option — les modèles s'y appellent déjà « Air Jordan 4 », et
+   * authentication-prompts.ts:99 produirait « Air Jordan Air Jordan 4 » dans
+   * le prompt Vision et en H1 du rapport.
+   */
+  checkBrand?: string;
   category: BrandCategory;
   logo: string;
   tagline: string;

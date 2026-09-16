@@ -42,7 +42,9 @@ export function buildGuidePageData(
   // og:image / twitter:image per-page sont gérés par opengraph-image.tsx (file
   // convention), dont l'URL contient un hash de build non connu ici.
   const ogImage = "/opengraph-image";
-  const checkUrl = `/check/new?brand=${encodeURIComponent(brand.name)}&source=seo&ref=${trackingRef}`;
+  // checkBrand ?? name : le CTA doit porter le nom de la LIGNE EN BASE, pas le
+  // nom affiché — la résolution est une égalité (.ilike sans %).
+  const checkUrl = `/check/new?brand=${encodeURIComponent(brand.checkBrand ?? brand.name)}&source=seo&ref=${trackingRef}`;
 
   return {
     brand,

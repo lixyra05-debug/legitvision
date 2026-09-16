@@ -71,6 +71,7 @@ export const brands: Brand[] = [
   {
     slug: "air-jordan",
     name: "Air Jordan",
+    checkBrand: "Jordan",
     category: "sneakers",
     logo: "/images/brands/jordan.jpg",
     tagline: "Le Saint-Graal des sneakerheads — et des contrefacteurs",

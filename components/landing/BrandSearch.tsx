@@ -32,10 +32,15 @@ interface SearchResult {
   brandName?: string; // for models: used as ?brand= query param
 }
 
+// Clés AU SINGULIER : ce Record est indexé par `brands.category`, dont les
+// valeurs sont "sneakers" | "bag" | "watch" | "clothing" (lib/types.ts:5, et la
+// contrainte CHECK de la migration 001). Les clés plurielles précédentes
+// n'étaient jamais atteintes : le fallback affichait « bag » et « watch » en
+// brut à la place du libellé traduit.
 const CATEGORY_LABEL_KEYS: Record<string, string> = {
   sneakers: "brandsTabs.sneakers",
-  bags: "brandsTabs.bags",
-  watches: "brandsTabs.bags", // fallback (no watches tab key)
+  bag: "brandsTabs.bags",
+  watch: "brandsTabs.watches",
   clothing: "brandsTabs.clothing",
 };
 

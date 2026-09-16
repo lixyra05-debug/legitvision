@@ -184,7 +184,7 @@ export default function BrandGuideHub({ params }: Props) {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href={`/check/new?brand=${encodeURIComponent(brand.name)}&source=seo&ref=guide-hub-${brand.slug}`}
+                href={`/check/new?brand=${encodeURIComponent(brand.checkBrand ?? brand.name)}&source=seo&ref=guide-hub-${brand.slug}`}
                 className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
               >
                 Lancer ma pré-authentification

@@ -24,7 +24,11 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Nike", models: 20, logo: "/images/brands/nike.jpg" },
     { name: "adidas", models: 16, logo: "/images/brands/adidas.png" },
     { name: "New Balance", models: 9, logo: "/images/brands/new-balance.png" },
-    { name: "Jordan Brand", models: 7, logo: "/images/brands/jordan-brand.png" },
+    // « Jordan » et non « Jordan Brand » : ce champ n'est pas seulement le
+    // libellé affiché, il part tel quel dans /check/new?brand= et y est résolu
+    // par .ilike("name", …) — une égalité, pas un LIKE partiel. La base stocke
+    // « Jordan » (migration 001).
+    { name: "Jordan", models: 7, logo: "/images/brands/jordan-brand.png" },
     { name: "BAPE", models: 3, logo: "/images/brands/bape.webp" },
     { name: "Converse", models: 4, logo: "/images/brands/converse.png" },
     { name: "Vans", models: 6, logo: "/images/brands/vans.png" },
