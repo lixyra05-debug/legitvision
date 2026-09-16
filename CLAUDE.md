@@ -180,6 +180,22 @@ match partiel — mais c'est un autre chemin de code, en aval de la sélection.
 `bags` — inexistante. Le fallback s'applique et le dropdown affiche `bag` en brut à la
 place du libellé traduit, pour toutes les marques de maroquinerie.
 
+**À AJOUTER AU CATALOGUE — `Off-White` et `BAPE` en `clothing` (avec leurs modèles).**
+Relevé le 2026-09-16 par requête sur la base de production (et non sur les migrations,
+qui ne font pas autorité) : ces deux marques n'existent qu'en `sneakers`. Les tuiles de
+l'onglet « Vêtements » de `BrandsTabs` les proposaient quand même, avec
+`category=clothing` : la résolution ne trouvait aucune ligne et l'utilisateur atterrissait
+sur un sélecteur vide. **Les deux tuiles ont été retirées** — une tuile qui ne mène nulle
+part est pire que pas de tuile — et sont à remettre dès que la base portera les lignes
+`clothing` ET au moins un modèle chacune.
+
+Priorité sur Off-White : c'est d'abord une marque de **vêtements**, et l'une des plus
+contrefaites du marché. La cataloguer uniquement en sneakers ampute une demande réelle.
+Rappel du comportement aval, vérifié : une marque présente mais sans modèle actif n'est
+PAS un cul-de-sac — `check/new` affiche « Aucun modèle disponible pour cette marque. »,
+le bouton « Retour » reste offert et « Suivant » est désactivé (`canProceed()` case 2
+exige marque ET modèle). Le cul-de-sac ne concernait que la marque totalement absente.
+
 ## Commandes Utiles
 ```bash
 pnpm dev          # Dev server

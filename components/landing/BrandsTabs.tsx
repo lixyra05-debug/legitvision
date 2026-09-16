@@ -49,13 +49,17 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "ON Running", models: 5, logo: "/images/brands/on-running.png" },
   ],
   vetements: [
+    // Off-White et BAPE sont ABSENTES de cet onglet volontairement : la base ne
+    // les porte qu'en `sneakers`, donc la tuile menait a /check/new?…&category=
+    // clothing, ou la resolution echoue en silence et l'utilisateur atterrit sur
+    // un selecteur vide. Une tuile qui ne mene nulle part est pire que pas de
+    // tuile. A remettre des que le catalogue aura les lignes clothing ET leurs
+    // modeles — voir CLAUDE.md, chantier catalogue.
     { name: "Supreme", models: 11, logo: "/images/brands/supreme.png" },
-    { name: "Off-White", models: 8, logo: "/images/brands/off-white.png" },
     { name: "Palace", models: 5, logo: "/images/brands/palace.png" },
     { name: "Stone Island", models: 6, logo: "/images/brands/stone-island.png" },
     { name: "CP Company", models: 6, logo: "/images/brands/cp-company.png" },
     { name: "Stüssy", models: 6, logo: "/images/brands/stussy.png" },
-    { name: "BAPE", models: 6, logo: "/images/brands/bape.webp" },
     { name: "Comme des Garçons", models: 5, logo: "/images/brands/comme-des-garcons.png" },
     { name: "The North Face", models: 6 },
     { name: "Carhartt WIP", models: 7, logo: "/images/brands/carhartt-wip.png" },
