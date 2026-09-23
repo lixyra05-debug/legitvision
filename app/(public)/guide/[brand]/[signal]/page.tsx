@@ -14,9 +14,10 @@ export function generateStaticParams() {
   return getAllGuideParams();
 }
 
-type Props = { params: { brand: string; signal: string } };
+type Props = { params: Promise<{ brand: string; signal: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const data = buildGuidePageData(params.brand, params.signal);
   if (!data) return {};
 
@@ -39,7 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function GuideSignalPage({ params }: Props) {
+export default async function GuideSignalPage(props: Props) {
+  const params = await props.params;
   const data = buildGuidePageData(params.brand, params.signal);
   if (!data) notFound();
 

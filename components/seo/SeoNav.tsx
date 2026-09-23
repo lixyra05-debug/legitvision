@@ -14,6 +14,7 @@ export function SeoNav() {
               height={64}
               className="h-12 w-auto sm:h-16"
               priority
+              fetchPriority="high"
             />
           </Link>
           {/* Maillage interne : liens horizontaux vers les 3 hubs SEO */}

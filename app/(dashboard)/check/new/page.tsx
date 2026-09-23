@@ -444,6 +444,7 @@ export default function NewCheckPage() {
             height={64}
             className="h-16 w-auto"
             priority
+            fetchPriority="high"
           />
         </Link>
         <div className="flex items-center gap-3">

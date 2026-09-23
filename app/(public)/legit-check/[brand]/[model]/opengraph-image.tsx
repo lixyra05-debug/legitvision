@@ -19,9 +19,10 @@ export function generateStaticParams() {
   return getAllModelParams();
 }
 
-type Props = { params: { brand: string; model: string } };
+type Props = { params: Promise<{ brand: string; model: string }> };
 
-export default function Image({ params }: Props) {
+export default async function Image(props: Props) {
+  const params = await props.params;
   const brand = getBrandBySlug(params.brand);
   const model = getModelBySlugs(params.brand, params.model);
   const title =

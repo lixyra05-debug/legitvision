@@ -32,12 +32,13 @@ export const metadata = {
   title: "Dashboard",
 };
 
-export default async function DashboardPage({
-  searchParams,
-}: {
-  searchParams: { session_id?: string; plan_changed?: string };
-}) {
-  const supabase = createClient();
+export default async function DashboardPage(
+  props: {
+    searchParams: Promise<{ session_id?: string; plan_changed?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -90,6 +91,7 @@ export default async function DashboardPage({
               height={64}
               className="h-16 w-auto"
               priority
+              fetchPriority="high"
             />
           </Link>
           <div className="flex items-center gap-4">

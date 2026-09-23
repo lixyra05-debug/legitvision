@@ -20,7 +20,7 @@ export const metadata = {
 // Date formatting deferred to client (FormattedDate / SubscriptionActive).
 
 export default async function SubscriptionPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

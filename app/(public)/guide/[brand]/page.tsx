@@ -21,9 +21,10 @@ export function generateStaticParams() {
   return getAllBrandSlugsWithSignals().map((brand) => ({ brand }));
 }
 
-type Props = { params: { brand: string } };
+type Props = { params: Promise<{ brand: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const brand = getBrandBySlug(params.brand);
   if (!brand) return {};
   const brandSignals = getSignalsByBrand(brand.slug);
@@ -44,7 +45,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function BrandGuideHub({ params }: Props) {
+export default async function BrandGuideHub(props: Props) {
+  const params = await props.params;
   const brand = getBrandBySlug(params.brand);
   if (!brand) notFound();
 

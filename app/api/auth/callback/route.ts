@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${origin}/auth?error=callback_error&reason=no_code`);
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase.auth.exchangeCodeForSession(code);
 

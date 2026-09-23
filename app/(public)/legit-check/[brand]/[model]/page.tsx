@@ -12,9 +12,10 @@ export function generateStaticParams() {
   return getAllModelParams();
 }
 
-type Props = { params: { brand: string; model: string } };
+type Props = { params: Promise<{ brand: string; model: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const data = buildLegitCheckPageData(params.brand, params.model);
   if (!data) return {};
 
@@ -37,7 +38,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function LegitCheckModelPage({ params }: Props) {
+export default async function LegitCheckModelPage(props: Props) {
+  const params = await props.params;
   const data = buildLegitCheckPageData(params.brand, params.model);
   if (!data) notFound();
 

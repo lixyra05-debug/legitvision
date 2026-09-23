@@ -28,7 +28,7 @@ const PROCESSABLE_STATUSES = ["pending", "uploading"];
 
 export async function POST(request: NextRequest) {
   // 1. Verify auth via user client (reads cookies — does NOT bypass RLS)
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

@@ -13,20 +13,22 @@ interface AIRawResponse {
 }
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
   return {
     title: `Rapport d'analyse`,
     description: `Résultats de l'analyse #${params.id.slice(0, 8).toUpperCase()}`,
   };
 }
 
-export default async function CheckReportPage({ params }: PageProps) {
+export default async function CheckReportPage(props: PageProps) {
+  const params = await props.params;
   const { id } = params;
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user },
