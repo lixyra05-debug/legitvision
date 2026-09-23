@@ -15,9 +15,10 @@ export function generateStaticParams() {
   return getAllPlatformBrandParams();
 }
 
-type Props = { params: { plateforme: string; marque: string } };
+type Props = { params: Promise<{ plateforme: string; marque: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const data = buildPlatformBrandPageData(params.plateforme, params.marque);
   if (!data) return {};
 
@@ -39,7 +40,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function PlatformBrandPage({ params }: Props) {
+export default async function PlatformBrandPage(props: Props) {
+  const params = await props.params;
   const data = buildPlatformBrandPageData(params.plateforme, params.marque);
   if (!data) notFound();
 

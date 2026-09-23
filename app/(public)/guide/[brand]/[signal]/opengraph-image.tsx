@@ -18,9 +18,10 @@ export function generateStaticParams() {
   return getAllGuideParams();
 }
 
-type Props = { params: { brand: string; signal: string } };
+type Props = { params: Promise<{ brand: string; signal: string }> };
 
-export default function Image({ params }: Props) {
+export default async function Image(props: Props) {
+  const params = await props.params;
   const brand = getBrandBySlug(params.brand);
   const signal = getSignalBySlugs(params.brand, params.signal);
   const title =

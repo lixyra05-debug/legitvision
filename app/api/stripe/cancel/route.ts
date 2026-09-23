@@ -4,7 +4,7 @@ import { stripe } from "@/lib/stripe/server";
 import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 
 export async function POST() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser();
   if (authError || !user) {
     return NextResponse.json({ error: "Non authentifié" }, { status: 401 });

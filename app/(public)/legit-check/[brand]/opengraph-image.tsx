@@ -17,9 +17,10 @@ export function generateStaticParams() {
   return getBrandSlugsWithModels().map((brand) => ({ brand }));
 }
 
-type Props = { params: { brand: string } };
+type Props = { params: Promise<{ brand: string }> };
 
-export default function Image({ params }: Props) {
+export default async function Image(props: Props) {
+  const params = await props.params;
   const brand = getBrandBySlug(params.brand);
   return renderOgImage({
     eyebrow: "Legit Check",

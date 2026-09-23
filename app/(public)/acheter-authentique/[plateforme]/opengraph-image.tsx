@@ -16,9 +16,10 @@ export function generateStaticParams() {
   return platforms.map((p) => ({ plateforme: p.slug }));
 }
 
-type Props = { params: { plateforme: string } };
+type Props = { params: Promise<{ plateforme: string }> };
 
-export default function Image({ params }: Props) {
+export default async function Image(props: Props) {
+  const params = await props.params;
   const platform = getPlatformBySlug(params.plateforme);
   return renderOgImage({
     eyebrow: "Acheter authentique",

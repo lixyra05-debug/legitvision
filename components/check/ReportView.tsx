@@ -239,6 +239,7 @@ export function ReportView({ data }: { data: ReportData }) {
               height={32}
               className="h-8 w-auto"
               priority
+              fetchPriority="high"
             />
           </Link>
           <div className="flex items-center gap-3">

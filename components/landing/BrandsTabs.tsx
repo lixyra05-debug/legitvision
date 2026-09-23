@@ -206,6 +206,7 @@ export function BrandsTabs() {
             alt={t(CATEGORY_ALT_KEY[key])}
             fill
             priority={key === "sneakers"}
+            fetchPriority={key === "sneakers" ? "high" : undefined}
             sizes="(max-width: 640px) 100vw, 1200px"
             className={`object-cover transition-opacity duration-slow ${
               active === key ? "opacity-100" : "opacity-0"

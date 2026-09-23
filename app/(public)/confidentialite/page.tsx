@@ -22,6 +22,7 @@ export default function ConfidentialitePage() {
               height={64}
               className="h-16 w-auto"
               priority
+              fetchPriority="high"
             />
           </Link>
         </div>

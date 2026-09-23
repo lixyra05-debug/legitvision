@@ -18,9 +18,10 @@ export function generateStaticParams() {
   return getAllPlatformBrandParams();
 }
 
-type Props = { params: { plateforme: string; marque: string } };
+type Props = { params: Promise<{ plateforme: string; marque: string }> };
 
-export default function Image({ params }: Props) {
+export default async function Image(props: Props) {
+  const params = await props.params;
   const brand = getBrandBySlug(params.marque);
   const platform = getPlatformBySlug(params.plateforme);
   const title =

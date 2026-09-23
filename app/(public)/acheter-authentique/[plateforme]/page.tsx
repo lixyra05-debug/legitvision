@@ -19,9 +19,10 @@ export function generateStaticParams() {
   return platforms.map((p) => ({ plateforme: p.slug }));
 }
 
-type Props = { params: { plateforme: string } };
+type Props = { params: Promise<{ plateforme: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const platform = getPlatformBySlug(params.plateforme);
   if (!platform) return {};
 
@@ -41,7 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function PlatformHubPage({ params }: Props) {
+export default async function PlatformHubPage(props: Props) {
+  const params = await props.params;
   const platform = getPlatformBySlug(params.plateforme);
   if (!platform) notFound();
 

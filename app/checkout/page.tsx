@@ -18,15 +18,16 @@ const GENERIC_PAYMENT_ERROR =
 // C : les 3 plans valides. "single" = paiement unique ; "pro"/"business" = abonnement.
 const planParamSchema = z.enum(["single", "pro", "business"]);
 
-export default async function CheckoutPage({
-  searchParams,
-}: {
-  searchParams: { plan?: string };
-}) {
+export default async function CheckoutPage(
+  props: {
+    searchParams: Promise<{ plan?: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const rawPlan = searchParams.plan;
 
   // ── 1. Auth ──────────────────────────────────────────────────────────────
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

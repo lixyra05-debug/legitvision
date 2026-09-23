@@ -10,7 +10,7 @@ const DELETABLE_STATUSES = ["failed", "uploading", "pending"] as const;
 
 export async function deleteAnalysis(analysisId: string) {
   // 1. Vérifier auth
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();

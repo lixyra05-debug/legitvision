@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 /**
@@ -6,10 +8,18 @@ import { ImageResponse } from "next/og";
  *
  * Contraintes satori (moteur de next/og) respectées :
  *  - tout <div> ayant PLUSIEURS enfants doit avoir `display: "flex"` ;
- *  - aucune police personnalisée n'est chargée → la police par défaut de
- *    next/og est utilisée (couvre le latin et les accents FR / le symbole €) ;
- *  - aucun accès disque/réseau → rend la génération build-safe en runtime Node.
+ *  - police figée : Noto Sans latin regular (couvre les accents FR et le
+ *    symbole €), lue sur disque une seule fois au chargement du module ;
+ *  - aucun accès réseau → génération build-safe en runtime Node.
  */
+
+// next@14.2.35 embarquait @vercel/og 0.6.3, dont la police par défaut était
+// Noto Sans ; next@16.3.6 embarque @vercel/og 0.11.1, dont le défaut est Geist.
+// Sans ce chargement explicite, toutes les cartes OG changent d'aspect. Fichier
+// repris à l'identique de next@14.2.35 (dist/compiled/@vercel/og), licence SIL OFL 1.1.
+const notoSans = await readFile(
+  join(process.cwd(), "lib/seo/fonts/noto-sans-v27-latin-regular.ttf"),
+);
 
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_CONTENT_TYPE = "image/png";
@@ -96,6 +106,9 @@ export function renderOgImage({
         </div>
       </div>
     ),
-    { ...OG_SIZE },
+    {
+      ...OG_SIZE,
+      fonts: [{ name: "Noto Sans", data: notoSans, style: "normal", weight: 400 }],
+    },
   );
 }
