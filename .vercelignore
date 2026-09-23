@@ -1,0 +1,40 @@
+# Ce qui ne part PAS en production.
+#
+# Tous les motifs de chemin sont ANCRÉS par une barre initiale. Sans elle, la
+# syntaxe .gitignore fait correspondre le motif à N'IMPORTE QUELLE profondeur :
+# « lab/ » exclurait aussi public/lab/, qui est suivi par git et sert les
+# textures du hero (components/ui/hero-futuristic.tsx:61-62 charge
+# /lab/hero-texture.webp et /lab/hero-depth.webp, route /lab).
+
+# --- Secrets : explicite, jamais implicite ---
+# Volontairement NON ancrés : on veut les attraper à toute profondeur.
+.env.local
+.env*.local
+
+# --- Outillage, hors application ---
+/lab/
+/remotion/
+/skills/
+/.agents/
+/.claude/
+/.mcp.json
+/skills-lock.json
+
+# --- Notes et brouillons ---
+/legitvision-spec.md
+/GEO-ANALYSIS.md
+/fichier.txt
+
+# --- Assets hero/3D : non suivis par git, pas encore en ligne ---
+# Listés un par un : un joker « macro-*.webp » risquerait d'attraper des
+# fichiers suivis de public/images/ (60 y sont versionnés).
+/public/models/
+/public/hero/
+/public/images/hero.webp
+/public/images/hero-depth.webp
+/public/images/macro-eyelets.webp
+/public/images/macro-eyelets-600.webp
+/public/images/macro-sole.webp
+/public/images/macro-sole-600.webp
+/public/images/macro-stitch.webp
+/public/images/macro-stitch-600.webp
