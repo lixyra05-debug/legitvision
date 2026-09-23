@@ -8,7 +8,7 @@ Fondateurs : Hector + associé
 Localisation : Paris, France
 
 ## Stack Technique
-- **Framework** : Next.js 14 (App Router, TypeScript, Server Components)
+- **Framework** : Next.js 16 (App Router, TypeScript, Server Components) + React 19
 - **Styling** : Tailwind CSS + shadcn/ui
 - **Backend** : Supabase (Auth, PostgreSQL, Storage, Edge Functions, Realtime)
 - **Paiement** : Stripe (Checkout, Webhooks, système de crédits)
@@ -51,8 +51,7 @@ Localisation : Paris, France
 ├── lib/
 │   ├── supabase/
 │   │   ├── client.ts       # Client Supabase (browser)
-│   │   ├── server.ts       # Client Supabase (server)
-│   │   └── middleware.ts    # Auth middleware
+│   │   └── server.ts       # Client Supabase (server)
 │   ├── stripe/
 │   │   ├── client.ts       # Stripe client
 │   │   └── config.ts       # Produits et prix
@@ -66,6 +65,7 @@ Localisation : Paris, France
 │   └── migrations/         # Migrations SQL
 ├── public/
 │   └── guides/             # Images guides photo
+├── proxy.ts                # Auth (ex-middleware.ts, runtime Node depuis Next 16)
 ├── CLAUDE.md               # Ce fichier
 └── .env.local              # Variables d'environnement
 ```
