@@ -9,7 +9,6 @@ import {
   Zap,
   FileText,
   ShieldCheck,
-  Star,
   Check,
 } from "lucide-react";
 import { RevealGroup, RevealItem } from "./Reveal";
@@ -90,17 +89,29 @@ export function StepsSection() {
 const STAT_DEFS: {
   value: number;
   prefix?: string;
+  /** Préfixe à traduire (« jusqu'à » / « up to ») : prime sur `prefix`. */
+  prefixKey?: string;
   suffix?: string;
   labelKey: string;
 }[] = [
-  // 77 et 530 sont les COUNT réels de `brands` et `models` en production
-  // (toutes lignes is_active = true, relevé du 2026-08-06). Voir la note
-  // « Catalogue — pas de source de vérité » dans CLAUDE.md : BrandsTabs en
-  // annonce encore 51 et 419, en dur.
-  { value: 77, labelKey: "landing.stat1Label" },
-  { value: 530, labelKey: "landing.stat2Label" },
-  { value: 8, labelKey: "landing.stat3Label" },
-  { value: 30, prefix: "< ", suffix: "s", labelKey: "landing.stat4Label" },
+  // Chiffres ANALYSABLES, relevés en production le 2026-09-25 :
+  // - 56 marques = noms distincts ayant au moins un modèle actif, hors montres
+  //   (non sélectionnables). La table `brands` compte 77 LIGNES : une marque y
+  //   figure une fois par catégorie, et Essentials n'a aucun modèle actif.
+  // - 520 modèles = modèles actifs d'une marque active, hors les 10 modèles
+  //   de montres.
+  // - Jusqu'à 10 zones : nombre de zones distinctes des points
+  //   d'authentification d'un modèle (de 0 à 10 ; 10 pour 175 modèles de sacs).
+  // Voir la note « Catalogue — pas de source de vérité » dans CLAUDE.md.
+  // 47 s : durée MÉDIANE mesurée en production le 2026-09-24 (created_at →
+  // updated_at des analyses terminées : du clic « Lancer » au rapport, envoi
+  // des photos compris). 3 analyses depuis le passage à claude-opus-4-8
+  // (22/06) : 45,4 / 46,8 / 63,9 s. Le « < 30 s » affiché avant datait de
+  // l'ancien modèle. À re-mesurer quand le volume le permettra.
+  { value: 56, labelKey: "landing.stat1Label" },
+  { value: 520, labelKey: "landing.stat2Label" },
+  { value: 10, prefixKey: "landing.stat3Prefix", labelKey: "landing.stat3Label" },
+  { value: 47, suffix: "\u00a0s", labelKey: "landing.stat4Label" },
 ];
 
 export function StatsSection() {
@@ -120,7 +131,7 @@ export function StatsSection() {
         >
           <Counter
             value={stat.value}
-            prefix={stat.prefix}
+            prefix={stat.prefixKey ? t(stat.prefixKey) : stat.prefix}
             suffix={stat.suffix}
             className="font-heading text-h3 font-bold"
           />
@@ -133,113 +144,6 @@ export function StatsSection() {
         </div>
       ))}
     </div>
-  );
-}
-
-// ── 3. TESTIMONIALS ─────────────────────────────────────────────────────────
-const TESTIMONIAL_DEFS = [
-  {
-    initials: "S.M.",
-    name: "Sarah M.",
-    stars: 5,
-    quoteKey: "landing.testimonial1Quote",
-    roleKey: "landing.testimonial1Role",
-    cityKey: "landing.testimonial1City",
-  },
-  {
-    initials: "K.B.",
-    name: "Kevin B.",
-    stars: 5,
-    quoteKey: "landing.testimonial2Quote",
-    roleKey: "landing.testimonial2Role",
-    cityKey: "landing.testimonial2City",
-  },
-  {
-    initials: "L.D.",
-    name: "Laura D.",
-    stars: 4,
-    quoteKey: "landing.testimonial3Quote",
-    roleKey: "landing.testimonial3Role",
-    cityKey: "landing.testimonial3City",
-  },
-];
-
-export function TestimonialsSection() {
-  const { t } = useTranslation();
-  return (
-    <RevealGroup className="mt-12 grid gap-6 sm:grid-cols-3">
-      {TESTIMONIAL_DEFS.map((tm) => (
-        <RevealItem key={tm.name}>
-          <div className="flex h-full flex-col rounded-lg border border-line-subtle bg-surface p-6 transition-[transform,border-color] duration-base hover:-translate-y-1 hover:border-line">
-            <div className="flex items-center justify-between">
-              <div
-                className="flex size-10 items-center justify-center rounded-md"
-                style={{
-                  background: "hsl(var(--surface-raised))",
-                  border: "1px solid hsl(var(--line))",
-                }}
-              >
-                <span
-                  className="font-heading text-ui font-bold"
-                  style={{ color: "hsl(var(--muted-foreground))" }}
-                >
-                  {tm.initials}
-                </span>
-              </div>
-              <div className="flex gap-0.5">
-                {Array.from({ length: tm.stars }).map((_, j) => (
-                  <Star
-                    key={j}
-                    className="size-3.5"
-                    style={{
-                      fill: "hsl(var(--foreground))",
-                      color: "hsl(var(--foreground))",
-                    }}
-                  />
-                ))}
-                {Array.from({ length: 5 - tm.stars }).map((_, j) => (
-                  <Star
-                    key={`e${j}`}
-                    className="size-3.5"
-                    style={{ color: "hsl(var(--line-strong))" }}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="mt-6 flex-1">
-              <div
-                className="mb-2 select-none font-heading text-h2 leading-none"
-                style={{ color: "hsl(var(--line-strong))" }}
-              >
-                &ldquo;
-              </div>
-              <p
-                className="text-ui"
-                style={{ color: "hsl(var(--muted-foreground))" }}
-              >
-                {t(tm.quoteKey)}
-              </p>
-            </div>
-            <div
-              className="mt-6 pt-6"
-              style={{ borderTop: "1px solid hsl(var(--line-subtle))" }}
-            >
-              <p
-                className="text-ui font-semibold"
-                style={{ color: "hsl(var(--foreground))" }}
-              >
-                {tm.name}
-              </p>
-              <p
-                className="mt-0.5 text-caption text-subtle"
-              >
-                {t(tm.roleKey)} · {t(tm.cityKey)}
-              </p>
-            </div>
-          </div>
-        </RevealItem>
-      ))}
-    </RevealGroup>
   );
 }
 
@@ -343,7 +247,8 @@ const PLAN_DEFS: {
   },
   {
     tier: "pro",
-    popular: true,
+    // Plus de badge « Le plus populaire » : aucun abonné à ce jour (relevé du 2026-09-24).
+    popular: false,
     premium: false,
     href: "/checkout?plan=pro",
     features: ["feature1", "feature2", "feature3", "feature4"],
@@ -353,7 +258,7 @@ const PLAN_DEFS: {
     popular: false,
     premium: true,
     href: "/checkout?plan=business",
-    features: ["feature1", "feature2", "feature3", "feature4", "feature5"],
+    features: ["feature1", "feature2", "feature3", "feature4"],
   },
 ];
 

@@ -59,7 +59,7 @@ export const pradaModels: ModelData[] = [
       {
         question: "Pourquoi le Re-Edition 2005 a-t-il explosé en popularité ?",
         answer:
-          "Le revival Y2K (mode 2000s) lancé par Dua Lipa, Bella Hadid, HoYeon Jung en 2021-2022 a remis au goût du jour les mini pochettes nylon. Le Re-Edition 2005 capture parfaitement cette esthétique, combinée au positionnement éco (Re-Nylon recyclé). Viral garanti.",
+          "Le revival Y2K (mode 2000s) lancé par Dua Lipa, Bella Hadid, HoYeon Jung en 2021-2022 a remis au goût du jour les mini pochettes nylon. Le Re-Edition 2005 capture parfaitement cette esthétique, combinée au positionnement éco (Re-Nylon recyclé). Un succès viral.",
       },
       {
         question: "Quelle différence entre Re-Edition 2000 et Re-Edition 2005 ?",

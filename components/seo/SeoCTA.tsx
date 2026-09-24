@@ -6,11 +6,12 @@ type Props = {
   variant: Variant;
   brandName: string;
   platformName: string;
-  trackingRef: string;
+  /** /check/new avec la marque pré-sélectionnée (lib/seo/check-url.ts). */
+  checkUrl: string;
 };
 
-export function SeoCTA({ variant, brandName, platformName, trackingRef }: Props) {
-  const href = `/auth?source=seo&ref=${trackingRef}&variant=${variant}`;
+export function SeoCTA({ variant, brandName, platformName, checkUrl }: Props) {
+  const href = `${checkUrl}&variant=${variant}`;
 
   if (variant === "inline") {
     return (
@@ -21,7 +22,7 @@ export function SeoCTA({ variant, brandName, platformName, trackingRef }: Props)
               Un doute sur votre {brandName} ?
             </h3>
             <p className="mt-2 text-ui text-muted-foreground">
-              Uploadez 8 à 12 photos, obtenez un diagnostic IA détaillé en 90 secondes.
+              Envoyez 6 à 11 photos selon la catégorie, obtenez un diagnostic IA détaillé en 47 secondes (durée médiane).
             </p>
           </div>
           <Link
@@ -46,7 +47,7 @@ export function SeoCTA({ variant, brandName, platformName, trackingRef }: Props)
             Ne pariez plus sur votre prochain achat {brandName} sur {platformName}
           </h2>
           <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-            3,99 € pour éviter 150 € à 15 000 € de perte. Résultat en 90 secondes avec verdict,
+            3,99 € pour éviter 150 € à 15 000 € de perte. Résultat en 47 secondes (médiane) avec verdict,
             score de confiance et recommandations détaillées.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

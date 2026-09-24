@@ -12,6 +12,7 @@ import {
   buildItemListSchema,
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
+import { buildCheckUrl } from "@/lib/seo/check-url";
 
 export const revalidate = 86400;
 
@@ -87,12 +88,12 @@ export default function LegitCheckHubPage() {
             Legit Check : authentifier marque par marque, modèle par modèle.
           </h1>
           <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
-            Guides 2026 pour pré-authentifier {totalModels} modèles des marques les plus contrefaites : sneakers hype, sacs de luxe iconiques, streetwear japonais et italien. Signaux techniques propres à chaque modèle, arnaques spécifiques, prix marché actuel, et pré-authentification IA en 90 secondes à 3,99 €.
+            Guides 2026 pour pré-authentifier {totalModels} modèles des marques les plus contrefaites : sneakers hype, sacs de luxe iconiques, streetwear japonais et italien. Signaux techniques propres à chaque modèle, arnaques spécifiques, prix marché actuel, et pré-authentification IA en 47 secondes (durée médiane) à 3,99 €.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/auth?source=seo&ref=hub-legit-check"
+              href={buildCheckUrl({ ref: "hub-legit-check" })}
               className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
             >
               Pré-authentifier — 3,99 €

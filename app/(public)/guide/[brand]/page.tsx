@@ -77,7 +77,7 @@ export default async function BrandGuideHub(props: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <SeoNav />
+      <SeoNav checkUrl={`/check/new?brand=${encodeURIComponent(brand.checkBrand ?? brand.name)}&source=seo&ref=guide-hub-${brand.slug}`} />
 
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -182,7 +182,7 @@ export default async function BrandGuideHub(props: Props) {
               Pré-authentifier votre {brand.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              Photo + IA + 90 secondes = score de confiance détaillé sur l&apos;ensemble des signaux. Estimation probabiliste, jamais une garantie.
+              Photo + IA + 47 secondes (médiane) = score de confiance détaillé sur l&apos;ensemble des signaux. Estimation probabiliste, jamais une certitude.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

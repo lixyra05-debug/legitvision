@@ -5,7 +5,7 @@ export type FaqItem = { q: string; a: string };
 const FAQ_ITEMS_FR: FaqItem[] = [
   {
     q: "Comment fonctionne l'analyse par IA ?",
-    a: "Notre IA Vision analyse chaque photo selon 8 zones d'authentification spécifiques au modèle (coutures, logo, matériaux, étiquettes...). Elle compare ces éléments avec des milliers de points de référence pour calculer un score de confiance.",
+    a: "Selon le modèle, notre IA Vision examine jusqu'à 10 zones d'authentification (coutures, logo, matériaux, étiquettes…). Pour calculer le score de confiance, elle s'appuie sur les repères de la marque et, quand notre base en contient, sur les points d'authentification propres au modèle (3 924 au total).",
   },
   {
     q: "Est-ce que LegitVision certifie l'authenticité ?",
@@ -17,11 +17,11 @@ const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: "Mes photos sont-elles stockées ?",
-    a: "Vos photos sont hébergées de manière sécurisée en Europe (Supabase, région EU). Elles sont utilisées uniquement pour l'analyse et sont supprimées automatiquement après 30 jours. Nous ne partageons jamais vos images avec des tiers.",
+    a: "Vos photos sont hébergées de manière sécurisée en Europe (Supabase, Irlande) et servent uniquement à votre analyse. Pour la produire, elles sont transmises chiffrées à notre sous-traitant d'IA, Anthropic, qui les supprime sous 30 jours, sauf exceptions prévues par ses conditions, et ne s'en sert pas pour entraîner ses modèles. Nous conservons vos photos avec votre analyse ; vous pouvez en demander l'effacement à tout moment.",
   },
   {
     q: "Quelles marques sont supportées ?",
-    a: "Nous couvrons plus de 340 modèles dans 3 catégories : sneakers, sacs et vêtements. Nike, Jordan, adidas, New Balance, Louis Vuitton et bien d'autres marques sont disponibles. Nous ajoutons régulièrement de nouveaux modèles. Contactez-nous pour demander une marque spécifique.",
+    a: "Vous pouvez analyser 520 modèles de 56 marques, en sneakers, sacs et vêtements : Nike, Jordan, adidas, New Balance, Louis Vuitton et bien d'autres. Nous ajoutons régulièrement de nouveaux modèles. Contactez-nous pour demander une marque spécifique.",
   },
   {
     q: "Combien coûte une analyse ?",
@@ -29,7 +29,7 @@ const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: "Combien de temps prend une analyse ?",
-    a: "L'analyse est réalisée en temps réel et prend généralement moins de 30 secondes après l'upload des photos.",
+    a: "Il faut en médiane 47 secondes entre le lancement de l'analyse et le rapport, envoi des photos compris.",
   },
   {
     q: "Comment prendre de bonnes photos pour l'analyse ?",
@@ -40,7 +40,7 @@ const FAQ_ITEMS_FR: FaqItem[] = [
 const FAQ_ITEMS_EN: FaqItem[] = [
   {
     q: "How does the AI analysis work?",
-    a: "Our Vision AI analyzes each photo across 8 authentication zones specific to the model (stitching, logo, materials, labels...). It compares these elements with thousands of reference points to compute a confidence score.",
+    a: "Depending on the model, our Vision AI examines up to 10 authentication zones (stitching, logo, materials, labels…). To compute the confidence score, it relies on the brand's markers and, when our database has them, on the model's own authentication points (3,924 in total).",
   },
   {
     q: "Does LegitVision certify authenticity?",
@@ -52,11 +52,11 @@ const FAQ_ITEMS_EN: FaqItem[] = [
   },
   {
     q: "Are my photos stored?",
-    a: "Your photos are securely hosted in Europe (Supabase, EU region). They are used only for the analysis and are automatically deleted after 30 days. We never share your images with third parties.",
+    a: "Your photos are securely hosted in Europe (Supabase, Ireland) and used only for your analysis. To produce it, they are sent encrypted to our AI subprocessor, Anthropic, which deletes them within 30 days, except as provided in its terms, and does not use them to train its models. We keep your photos with your analysis; you can ask us to erase them at any time.",
   },
   {
     q: "Which brands are supported?",
-    a: "We cover over 340 models across 3 categories: sneakers, bags and clothing. Nike, Jordan, adidas, New Balance, Louis Vuitton and many more brands are available. We regularly add new models. Contact us to request a specific brand.",
+    a: "You can check 520 models from 56 brands, in sneakers, bags and clothing: Nike, Jordan, adidas, New Balance, Louis Vuitton and many more. We regularly add new models. Contact us to request a specific brand.",
   },
   {
     q: "How much does an analysis cost?",
@@ -64,7 +64,7 @@ const FAQ_ITEMS_EN: FaqItem[] = [
   },
   {
     q: "How long does an analysis take?",
-    a: "The analysis runs in real time and usually takes under 30 seconds after the photos are uploaded.",
+    a: "From launching the analysis to the report takes a median of 47 seconds, photo upload included.",
   },
   {
     q: "How do I take good photos for the analysis?",

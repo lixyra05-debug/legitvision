@@ -37,7 +37,7 @@ function LegitCheckDisclaimer() {
           <line x1="12" y1="8" x2="12.01" y2="8" />
         </svg>
         <p className="text-caption leading-relaxed text-muted-foreground">
-          <strong className="text-foreground">Pré-authentification visuelle, pas garantie.</strong>{" "}
+          <strong className="text-foreground">Pré-authentification visuelle, pas une certitude.</strong>{" "}
           Ce guide vous aide à détecter les signaux visuels d&apos;une contrefaçon, mais ne remplace pas une authentification humaine professionnelle. L&apos;analyse IA fournit une estimation probabiliste avec un score de confiance — jamais un certificat d&apos;authenticité. Pour les achats à haute valeur, croisez toujours plusieurs sources (authentificateur humain, receipt d&apos;origine, plateforme avec programme d&apos;authentification).
         </p>
       </div>
@@ -90,7 +90,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <SeoNav />
+      <SeoNav checkUrl={data.checkUrl} />
 
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -172,7 +172,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
           <div className="mt-8 flex flex-wrap gap-6 text-caption text-muted-foreground">
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
-              Résultat en 90 secondes
+              Résultat en 47 s (médiane)
             </div>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
@@ -220,7 +220,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
                 Un doute sur votre {data.brand.name} {data.model.name} ?
               </h3>
               <p className="mt-2 text-ui text-muted-foreground">
-                Uploadez 8 à 12 photos, obtenez une pré-authentification IA avec score de confiance en 90 secondes.
+                Envoyez 6 à 11 photos selon la catégorie, obtenez une pré-authentification IA avec score de confiance en 47 secondes (durée médiane).
               </p>
             </div>
             <Link
@@ -277,7 +277,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
               Ne pariez plus sur votre prochain {data.brand.name} {data.model.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              3,99 € pour éviter {data.model.priceRange} de perte. Score de confiance, estimation de probabilité et recommandations détaillées en 90 secondes.
+              3,99 € pour éviter {data.model.priceRange} de perte. Score de confiance, estimation de probabilité et recommandations détaillées en 47 secondes (durée médiane).
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -305,7 +305,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
         <div className="mx-auto max-w-5xl px-4 text-center text-caption text-muted-foreground">
           LegitVision — Pré-authentification IA pour sneakers, sacs et streetwear de luxe.{" "}
           <span className="text-subtle">•</span>{" "}
-          Les analyses fournissent une estimation probabiliste, jamais une garantie d&apos;authenticité.
+          Les analyses fournissent une estimation probabiliste, jamais une certitude d&apos;authenticité.
         </div>
       </footer>
     </div>

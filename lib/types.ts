@@ -250,7 +250,7 @@ export function getStatusLabel(status: AnalysisStatus, locale: Locale = "fr"): s
       case "completed":
         return "Completed";
       case "expert_review":
-        return "Expert review";
+        return "Uncertain result";
       case "failed":
         return "Failed";
     }
@@ -265,7 +265,8 @@ export function getStatusLabel(status: AnalysisStatus, locale: Locale = "fr"): s
     case "completed":
       return "Terminée";
     case "expert_review":
-      return "Revue expert";
+      // Pas de revue humaine : le résultat est définitif, mais incertain.
+      return "Résultat incertain";
     case "failed":
       return "Échec";
   }

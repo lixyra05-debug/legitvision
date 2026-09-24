@@ -25,7 +25,7 @@ export function buildGuidePageData(
   const canonical = `${SITE_URL}${slugPath}`;
 
   const title = `${signal.name} — ${brand.name}`;
-  const description = `${signal.tagline}. Guide détaillé : ${signal.steps.length} étapes, ${signal.commonErrors.length} erreurs fréquentes, FAQ et pré-authentification IA ${brand.name} en 90 secondes à 3,99 €.`;
+  const description = `${signal.tagline}. Guide détaillé : ${signal.steps.length} étapes, ${signal.commonErrors.length} erreurs fréquentes, FAQ et pré-authentification IA ${brand.name} en 47 secondes (durée médiane) à 3,99 €.`;
   const h1 = `Comment vérifier ${signal.name} sur un ${brand.name} authentique`;
   const subtitle = signal.tagline;
 

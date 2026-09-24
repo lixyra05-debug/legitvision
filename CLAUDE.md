@@ -123,7 +123,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 2. User clique "Nouvelle analyse" → /check/new
 3. Step 1 : Choix catégorie (sneakers/sac/montre/vêtement)
 4. Step 2 : Choix marque + modèle (search autocomplete)
-5. Step 3 : Upload guidé (8-12 photos selon protocole, avec preview + validation qualité)
+5. Step 3 : Upload guidé (6-11 photos selon le protocole de la marque — sneakers 8-11, sacs 10-11, vêtements 6-8, relevé du 2026-09-25 — avec preview + validation qualité)
 6. User confirme → débit 1 crédit → POST /api/analyze
 7. API route : fetch photos Supabase → build payload → call Claude Vision → parse JSON → calcul score → save en DB → update status
 8. User voit le rapport → /check/[id] avec score, sous-scores, findings, recommandations
@@ -149,9 +149,15 @@ ont été relevés directement en base de production (toutes les lignes sont `is
 
 | | marques | modèles |
 |---|---|---|
-| Base Supabase (`brands`, `models`) — **la référence** | **77** | **530** |
+| Base Supabase (`brands`, `models`) — **la référence** (lignes) | **77** | **530** |
 | `components/landing/BrandsTabs.tsx` (tableau en dur) | 51 | 419 |
-| Bande de stats de la landing | 77 ✅ | 530 ✅ |
+| Bande de stats de la landing (analysables) | 56 ✅ | 520 ✅ |
+
+**77 et 530 sont des LIGNES, pas ce qu'un client peut analyser** (relevé du 2026-09-25) :
+`brands` compte une ligne par marque ET par catégorie — 77 lignes, 65 noms distincts, dont
+8 marques de montres (non sélectionnables) et Essentials, qui n'a aucun modèle actif. Le site
+affiche donc **56 marques et 520 modèles analysables** (530 − 10 modèles de montres), jamais
+77 : « rien n'est affiché s'il n'est pas prouvé vrai ».
 
 La bande de stats a été alignée sur la base. `BrandsTabs` ne l'est pas : ses 64 entrées
 sont écrites en dur, réparties sur 3 catégories avec des compteurs `models:` par catégorie

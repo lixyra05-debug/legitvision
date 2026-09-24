@@ -324,7 +324,7 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
  */
 function HeroOverlay() {
   const titleWords = ["Vrai", "ou", "faux"];
-  const subtitle = "Pré-authentification par IA en 90 secondes";
+  const subtitle = "Pré-authentification par IA en 47 secondes (durée médiane)";
   const reduced = useReducedMotion() ?? false;
 
   return (

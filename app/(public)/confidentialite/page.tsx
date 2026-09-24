@@ -4,7 +4,7 @@ import Image from "next/image";
 export const metadata = {
   title: "Politique de confidentialité",
   description:
-    "Politique de confidentialité de LegitVision : comment nous collectons, traitons et protégeons vos données personnelles et vos photos d'analyse. Conforme RGPD, hébergement UE.",
+    "Politique de confidentialité de LegitVision : comment nous collectons, traitons et protégeons vos données personnelles et vos photos d'analyse. Hébergement UE.",
   alternates: { canonical: "/confidentialite" },
 };
 
@@ -134,7 +134,7 @@ export default function ConfidentialitePage() {
             <div className="space-y-3 text-muted-foreground">
               <div className="flex gap-3 items-start">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-xs font-bold text-emerald-400">→</span>
-                <p><strong className="text-foreground">Photos soumises :</strong> supprimées du stockage dans un délai de 30 jours suivant l&apos;analyse, sauf conservation explicitement demandée par l&apos;utilisateur dans son rapport.</p>
+                <p><strong className="text-foreground">Photos soumises :</strong> conservées avec l&apos;analyse correspondante. Vous pouvez en demander l&apos;effacement à tout moment (voir la rubrique 7, « Vos droits »).</p>
               </div>
               <div className="flex gap-3 items-start">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-xs font-bold text-emerald-400">→</span>
@@ -173,7 +173,7 @@ export default function ConfidentialitePage() {
                   name: "Anthropic",
                   role: "Analyse des images par IA (Claude Vision)",
                   location: "États-Unis",
-                  note: "Les photos sont transmises de manière sécurisée (HTTPS/TLS). Anthropic ne stocke pas les images au-delà du traitement immédiat de la requête.",
+                  note: "Les photos sont transmises de manière sécurisée (HTTPS/TLS). Anthropic supprime les données reçues par son API dans les 30 jours et ne les utilise pas pour entraîner ses modèles, sauf exceptions prévues par ses conditions commerciales (par exemple, conservation jusqu’à 2 ans d’un contenu signalé pour non-respect de sa politique d’usage).",
                   highlight: false,
                 },
                 {
@@ -187,7 +187,7 @@ export default function ConfidentialitePage() {
                   name: "Vercel",
                   role: "Hébergement de l&apos;application web",
                   location: "États-Unis (CDN mondial)",
-                  note: "L&apos;application est servie via un CDN mondial pour garantir les performances.",
+                  note: "L&apos;application est servie via un CDN mondial, pour de meilleures performances.",
                   highlight: false,
                 },
               ].map((st) => (

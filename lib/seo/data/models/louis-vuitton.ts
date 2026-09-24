@@ -181,7 +181,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "Keepall 50 Damier « neuf » à 800 €",
         description:
-          "Le Keepall 50 Damier retail à 2 400 € et son prix marché ne descend pas sous 1 600 € en bon état. Une annonce à 800 € est une contrefaçon garantie, souvent avec photos LV.com volées.",
+          "Le Keepall 50 Damier retail à 2 400 € et son prix marché ne descend pas sous 1 600 € en bon état. Une annonce à 800 € est très probablement une contrefaçon, souvent avec photos LV.com volées.",
       },
       {
         title: "Collab Virgil « Monogram Multicolor » à 3 000 €",

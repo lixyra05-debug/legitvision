@@ -28,7 +28,7 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
     features: [
       "Rapport détaillé avec score",
       "Sneakers uniquement",
-      "Résultat en 30 secondes",
+      "Résultat en 47 s (médiane)",
     ],
     popular: false,
     cta: "Commencer gratuitement",
@@ -43,7 +43,7 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
     features: [
       "Toutes les catégories",
       "Rapport détaillé avec score",
-      "Revue expert si doute",
+      "Recommandations en cas de doute",
       "Historique complet",
     ],
     popular: true,
@@ -59,9 +59,8 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
     features: [
       "50 analyses par mois",
       "Toutes les catégories",
-      "Revue expert prioritaire",
-      "API access",
-      "Support dédié",
+      "Recommandations en cas de doute",
+      "Support prioritaire",
     ],
     popular: false,
     cta: "Passer au Business",

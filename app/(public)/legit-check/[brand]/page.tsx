@@ -13,6 +13,7 @@ import {
   buildItemListSchema,
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
+import { buildCheckUrl } from "@/lib/seo/check-url";
 
 export const revalidate = 86400;
 export const dynamicParams = false;
@@ -77,7 +78,7 @@ export default async function BrandLegitCheckHub(props: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <SeoNav />
+      <SeoNav checkUrl={buildCheckUrl({ brand, category: brand.category, ref: `legit-check-hub-${brand.slug}` })} />
 
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -185,11 +186,11 @@ export default async function BrandLegitCheckHub(props: Props) {
               Pré-authentifier votre {brand.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              Photo + IA + 90 secondes = score de confiance détaillé. Évitez {brand.priceRange} de perte pour 3,99 €.
+              Photo + IA + 47 secondes (médiane) = score de confiance détaillé. Évitez {brand.priceRange} de perte pour 3,99 €.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href={`/auth?source=seo&ref=legit-check-hub-${brand.slug}`}
+                href={buildCheckUrl({ brand, category: brand.category, ref: `legit-check-hub-${brand.slug}` })}
                 className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
               >
                 Lancer ma pré-authentification

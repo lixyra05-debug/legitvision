@@ -69,7 +69,7 @@ export const depopIntersections: Intersection[] = [
       {
         question: "Comment vérifier une 2002R Protection Pack sur photo Depop ?",
         answer:
-          "Trois zones à demander en photo HD : 1) Étiquette intérieure avec mention Salehe Bembury (collabs Protection Pack) + pays de fabrication cohérent ; 2) Box label avec code produit M2002RXY correspondant au colorway exact ; 3) Midsole latérale avec couches ENCAP/ABZORB visiblement distinctes (pas imprimées en 2D). Passez le tout par LegitVision pour un diagnostic IA en 60 secondes.",
+          "Trois zones à demander en photo HD : 1) Étiquette intérieure avec mention Salehe Bembury (collabs Protection Pack) + pays de fabrication cohérent ; 2) Box label avec code produit M2002RXY correspondant au colorway exact ; 3) Midsole latérale avec couches ENCAP/ABZORB visiblement distinctes (pas imprimées en 2D). Passez le tout par LegitVision pour un diagnostic IA en 47 secondes (durée médiane).",
       },
     ],
   },
@@ -85,7 +85,7 @@ export const depopIntersections: Intersection[] = [
           "C'est possible mais extrêmement rare. Le public Depop (Gen Z, 15-25 ans) n'est généralement pas propriétaire de vrais sacs Louis Vuitton neufs, donc les ventes authentiques concernent souvent des héritages ou des revendeurs luxe qui utilisent Depop en second canal. Signaux rassurants : vendeur avec historique varié luxe (pas uniquement LV), prix raisonnable (pas cassé), documentation fournie spontanément, code date / puce RFID photographiée nettement.",
       },
       {
-        question: "Pochette Métis à 400 € sur Depop : arnaque garantie ?",
+        question: "Pochette Métis à 400 € sur Depop : forcément une arnaque ?",
         answer:
           "À 99 % oui. La Pochette Métis Monogram retail à 2 750 € (2025) avec un marché secondaire à 2 000-2 500 € en état correct. Une annonce à 400 € est une contrefaçon certaine. Les contrefaçons de Pochette Métis sont particulièrement ciblées sur Depop car le prix marché à 2 000+ € attire les acheteurs qui croient faire une affaire. Ne payez jamais moins de 1 500 € une Pochette Métis prétendue authentique sans expertise préalable.",
       },

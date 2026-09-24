@@ -93,4 +93,6 @@ export type SeoPageData = {
   faqs: FAQItem[];
   relatedPages: RelatedPage[];
   trackingRef: string;
+  /** /check/new avec la marque pré-sélectionnée (lib/seo/check-url.ts). */
+  checkUrl: string;
 };

@@ -23,6 +23,21 @@ const AUTH_ERROR_KEYS: Record<string, string> = {
 
 type Mode = "login" | "register";
 
+/**
+ * Lien de page SEO arrivé sans `redirect` (/auth?source=seo&ref=…, format des
+ * anciens boutons) : on garde source, ref et la marque éventuelle, et on
+ * renvoie vers l'analyse plutôt que vers le tableau de bord.
+ */
+function seoDestination(params: URLSearchParams | null): string | null {
+  if (!params?.get("source") && !params?.get("ref")) return null;
+  const kept = new URLSearchParams();
+  for (const key of ["brand", "category", "source", "ref"]) {
+    const value = params.get(key);
+    if (value) kept.set(key, value);
+  }
+  return `/check/new?${kept.toString()}`;
+}
+
 export function AuthForm() {
   const { t } = useTranslation();
   const [mode, setMode] = useState<Mode>("login");
@@ -35,7 +50,8 @@ export function AuthForm() {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirect = searchParams?.get("redirect") ?? "/dashboard";
+  const redirect =
+    searchParams?.get("redirect") ?? seoDestination(searchParams) ?? "/dashboard";
   const urlError = searchParams?.get("error");
 
   const supabase = createClient();

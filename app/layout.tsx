@@ -25,7 +25,7 @@ const SITE_NAME = "LegitVision";
 const DEFAULT_TITLE =
   "LegitVision — Authentification d'articles de luxe par IA";
 const DEFAULT_DESCRIPTION =
-  "Vérifiez l'authenticité de vos sneakers, sacs et vêtements de luxe en moins de 30 secondes. Score de confiance par IA Vision, analyse de 8 zones d'authentification. 3,99 €/scan.";
+  "Vérifiez l'authenticité de vos sneakers, sacs et vêtements de luxe en 47 secondes (durée médiane). Score de confiance par IA Vision, jusqu'à 10 zones d'authentification analysées. 3,99 €/scan.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

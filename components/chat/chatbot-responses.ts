@@ -95,16 +95,16 @@ export const CHATBOT_RULES: ChatbotRule[] = [
         "1. Choisissez la catégorie (sneakers, sac, vêtement)\n" +
         "2. Sélectionnez la marque et le modèle\n" +
         "3. Prenez des photos en suivant notre guide\n" +
-        "4. Notre IA analyse 8 zones d'authentification\n" +
-        "5. Recevez votre rapport en moins de 30 secondes\n\n" +
+        "4. Notre IA analyse jusqu'à 10 zones d'authentification, selon le modèle\n" +
+        "5. Recevez votre rapport : 47 secondes en médiane\n\n" +
         "Le rapport inclut un score global sur 100, des sous-scores par zone, la détection OCR des codes et des recommandations personnalisées.",
       en:
         "It's very simple:\n\n" +
         "1. Pick the category (sneakers, bag, clothing)\n" +
         "2. Select the brand and model\n" +
         "3. Take photos following our guide\n" +
-        "4. Our AI analyzes 8 authentication zones\n" +
-        "5. Get your report in under 30 seconds\n\n" +
+        "4. Our AI analyzes up to 10 authentication zones, depending on the model\n" +
+        "5. Get your report: 47 seconds median\n\n" +
         "The report includes a global score out of 100, per-zone sub-scores, OCR detection of codes and personalized recommendations.",
     },
   },
@@ -123,16 +123,16 @@ export const CHATBOT_RULES: ChatbotRule[] = [
     ],
     response: {
       fr:
-        "Nous supportons plus de 47 marques et 340+ modèles dans 3 catégories :\n\n" +
+        "Vous pouvez analyser 520 modèles de 56 marques, dans trois catégories :\n\n" +
         "👟 Sneakers : Nike, Jordan, adidas, New Balance, Yeezy, Balenciaga, Dior, Gucci, Prada, Asics, ON Running…\n" +
         "👜 Sacs : Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada, Longchamp, Michael Kors…\n" +
-        "👕 Vêtements : Supreme, Off-White, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
+        "👕 Vêtements : Supreme, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
         "Utilisez la barre de recherche sur notre page d'accueil pour trouver votre article.",
       en:
-        "We support over 47 brands and 340+ models across 3 categories:\n\n" +
+        "You can check 520 models from 56 brands, in three categories:\n\n" +
         "👟 Sneakers: Nike, Jordan, adidas, New Balance, Yeezy, Balenciaga, Dior, Gucci, Prada, Asics, ON Running…\n" +
         "👜 Bags: Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada, Longchamp, Michael Kors…\n" +
-        "👕 Clothing: Supreme, Off-White, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
+        "👕 Clothing: Supreme, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
         "Use the search bar on our homepage to find your item.",
     },
   },
@@ -151,10 +151,10 @@ export const CHATBOT_RULES: ChatbotRule[] = [
     ],
     response: {
       fr:
-        "Notre IA analyse chaque photo selon 8 zones d'authentification spécifiques à chaque marque et modèle. Par exemple, pour une Air Jordan 1, nous vérifions le Swoosh, les coutures, l'étiquette de langue, la semelle, etc.\n\n" +
+        "Selon le modèle, notre IA examine jusqu'à 10 zones d'authentification. Par exemple, pour une Air Jordan 1, nous vérifions le Swoosh, les coutures, l'étiquette de langue, la semelle, etc.\n\n" +
         "Important : LegitVision est un outil de pré-authentification visuelle. Nous fournissons un score de confiance, pas un certificat officiel. Pour les articles de grande valeur, nous recommandons de croiser nos résultats avec un expert.",
       en:
-        "Our AI analyzes each photo across 8 authentication zones specific to each brand and model. For example, on an Air Jordan 1, we check the Swoosh, stitching, tongue label, outsole, etc.\n\n" +
+        "Depending on the model, our AI examines up to 10 authentication zones. For example, on an Air Jordan 1, we check the Swoosh, stitching, tongue label, outsole, etc.\n\n" +
         "Important: LegitVision is a visual pre-authentication tool. We provide a confidence score, not an official certificate. For high-value items, we recommend cross-checking our results with an expert.",
     },
   },

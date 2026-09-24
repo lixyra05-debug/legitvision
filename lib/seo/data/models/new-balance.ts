@@ -248,7 +248,7 @@ export const newBalanceModels: ModelData[] = [
       {
         title: "9060 Sea Salt « neuve » à 90 €",
         description:
-          "La 9060 Sea Salt a un prix marché 250-300 € en taille courante. Une annonce à 90 € est une contrefaçon Putian garantie.",
+          "La 9060 Sea Salt a un prix marché 250-300 € en taille courante. Une annonce à 90 € est très probablement une contrefaçon Putian.",
       },
       {
         title: "Collab Joe Freshgoods « deadstock »",

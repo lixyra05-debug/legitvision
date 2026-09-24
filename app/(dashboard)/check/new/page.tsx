@@ -894,7 +894,7 @@ export default function NewCheckPage() {
                 Aucun crédit d&apos;analyse
               </h3>
               <p className="mt-2 text-ui text-muted-foreground">
-                Choisissez une formule pour lancer votre analyse en 60 secondes.
+                Choisissez une formule pour lancer votre analyse.
               </p>
             </div>
 
