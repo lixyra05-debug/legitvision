@@ -1,18 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import { safeRedirectPath } from "@/lib/safe-redirect";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
 
-  // Validation stricte du paramètre `next` pour prévenir les open redirects.
-  // Bloque : URLs absolues (://), protocol-relative (//), chemins non-relatifs.
-  const nextRaw = searchParams.get("next") ?? "/dashboard";
-  const isSafeNext =
-    nextRaw.startsWith("/") &&
-    !nextRaw.startsWith("//") &&
-    !nextRaw.includes("://");
-  const next = isSafeNext ? nextRaw : "/dashboard";
+  // `next` vient de l'URL : validé en résolvant le chemin comme le navigateur
+  // (« /\hote » et « /<tab>/hote » passaient le simple test de préfixe).
+  const next = safeRedirectPath(searchParams.get("next"));
 
   if (!code) {
     return NextResponse.redirect(`${origin}/auth?error=callback_error&reason=no_code`);
