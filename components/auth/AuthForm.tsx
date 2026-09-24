@@ -9,6 +9,7 @@ import { Loader2, Mail } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
+import { safeRedirectPath } from "@/lib/safe-redirect";
 
 const AUTH_ERROR_KEYS: Record<string, string> = {
   "Invalid login credentials": "auth.errorInvalidCreds",
@@ -76,7 +77,8 @@ export function AuthForm() {
           setError(translateError(error.message));
           return;
         }
-        router.push(redirect);
+        // `redirect` vient de l'URL : jamais suivi sans validation (redirection ouverte).
+        router.push(safeRedirectPath(redirect));
         router.refresh();
       } else {
         const { error } = await supabase.auth.signUp({
@@ -84,7 +86,7 @@ export function AuthForm() {
           password,
           options: {
             data: { full_name: fullName },
-            emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(redirect)}`,
+            emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(safeRedirectPath(redirect))}`,
           },
         });
         if (error) {
@@ -103,7 +105,7 @@ export function AuthForm() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(redirect)}`,
+        redirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(safeRedirectPath(redirect))}`,
       },
     });
     if (error) {
