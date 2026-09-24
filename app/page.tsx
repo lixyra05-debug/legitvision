@@ -53,12 +53,12 @@ export const metadata: Metadata = {
   title:
     "Authentification sneakers, sacs & luxe par IA — 47 secondes, 3,99 €",
   description:
-    "Scannez vos articles de luxe avant d'acheter. IA Vision, 8 zones d'authentification analysées, score de confiance en 47 secondes (durée médiane). Sneakers, sacs, vêtements. À partir de 3,99 €.",
+    "Scannez vos articles de luxe avant d'acheter. IA Vision, jusqu'à 10 zones d'authentification analysées, score de confiance en 47 secondes (durée médiane). Sneakers, sacs, vêtements. À partir de 3,99 €.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "LegitVision — Scannez avant d'acheter.",
     description:
-      "1 paire sur 4 est une contrefaçon. Vérifiez l'authenticité de vos articles de luxe par IA en 47 secondes (médiane), pour 3,99 €.",
+      "Vérifiez l'authenticité de vos articles de luxe par IA en 47 secondes (médiane), pour 3,99 €.",
     url: SITE_URL,
     type: "website",
     // images fournies par app/opengraph-image.tsx (file convention).
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "LegitVision — Scannez avant d'acheter.",
     description:
-      "Authentification d'articles de luxe par IA. 3,99 € / scan, 47 s en médiane, 8 zones analysées.",
+      "Authentification d'articles de luxe par IA. 3,99 € / scan, 47 s en médiane, jusqu'à 10 zones analysées.",
     // twitter:image retombe automatiquement sur openGraph.images (next/og).
   },
 };
@@ -92,7 +92,7 @@ const serviceJsonLd = {
   provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: { "@type": "Country", name: "France" },
   description:
-    "Vérification d'authenticité par IA Vision pour sneakers, sacs et vêtements de luxe. Analyse de 8 zones d'authentification en 47 secondes (durée médiane).",
+    "Vérification d'authenticité par IA Vision pour sneakers, sacs et vêtements de luxe. Analyse jusqu'à 10 zones d'authentification en 47 secondes (durée médiane).",
   offers: {
     "@type": "Offer",
     price: "3.99",

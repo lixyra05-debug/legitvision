@@ -65,7 +65,7 @@ export const translations = {
       tagEu: "Hébergé EU",
     },
     landing: {
-      brandsTitle: "530 modèles de luxe référencés",
+      brandsTitle: "520 modèles de luxe analysables",
       brandsSubtitle:
         "Sélectionnez votre catégorie et votre marque pour vérifier votre article.",
       howItWorksTitle: "Comment ça marche",
@@ -75,16 +75,15 @@ export const translations = {
         "Suivez notre guide photo interactif pour capturer les détails essentiels de votre article.",
       step2Title: "L'IA analyse",
       step2Desc:
-        "Notre modèle de vision compare chaque détail avec des milliers de points d'authentification.",
+        "Notre modèle de vision examine chaque détail de vos photos. Notre base compte 3 924 points d'authentification, répartis sur les modèles couverts.",
       step3Title: "Rapport détaillé",
       step3Desc:
         "Recevez un score de confiance, des observations zone par zone et une recommandation claire.",
-      featuresTitle: "Une analyse au niveau d'un expert",
       featuresSubtitle: "Fonctionnalités",
       feature1Title: "Analyse IA avancée",
       feature1Desc:
-        "Notre modèle de vision artificielle analyse chaque photo selon 8 zones d'authentification spécifiques : coutures, matériaux, logos, étiquettes, hardware, alignement, typographie et finitions.",
-      feature1Tag: "8 zones analysées",
+        "Selon le modèle, notre modèle de vision artificielle examine jusqu'à 10 zones d'authentification : coutures, matériaux, logos, étiquettes, quincaillerie, alignement, typographie, finitions…",
+      feature1Tag: "Jusqu'à 10 zones",
       feature2Title: "Résultat en 47 secondes",
       feature2Desc:
         "Pas besoin d'attendre des heures : entre le lancement de l'analyse et le rapport complet, il faut en médiane 47 secondes, envoi des photos compris.",
@@ -93,9 +92,9 @@ export const translations = {
       feature3Desc:
         "Score global sur 100, sous-scores par zone, détection OCR des codes et numéros de série, comparaison avec les standards du fabricant, et recommandations personnalisées.",
       feature3Tag: "Score sur 100 + OCR",
-      feature4Title: "Données protégées RGPD",
+      feature4Title: "Vos photos et vos données",
       feature4Desc:
-        "Vos photos sont hébergées en Europe sur des serveurs sécurisés. Elles sont automatiquement supprimées après 30 jours. Nous ne partageons jamais vos données avec des tiers.",
+        "Vos photos sont hébergées en Europe (Irlande) et servent uniquement à votre analyse. Pour la produire, elles sont transmises chiffrées à notre sous-traitant d'IA, Anthropic, qui les supprime sous 30 jours, sauf exceptions prévues par ses conditions, et ne s'en sert pas pour entraîner ses modèles. Nous conservons vos photos avec votre analyse ; vous pouvez en demander l'effacement à tout moment.",
       feature4Tag: "Hébergé en EU 🇪🇺",
       pricingTitle: "Choisissez votre formule",
       pricingSubtitle: "Des tarifs clairs, adaptés à chaque usage.",
@@ -111,7 +110,7 @@ export const translations = {
       brandsCategoriesTitle: "Marques et catégories",
       brandsCategoriesSubtitle:
         "Des protocoles d'authentification spécifiques à chaque marque",
-      brandsCategoriesCount: "530 modèles et 77 marques référencés",
+      brandsCategoriesCount: "56 marques et 520 modèles analysables",
       reportsTitle: "Découvrez nos rapports",
       reportsSubtitle:
         "Un rapport clair et détaillé pour chaque article analysé",
@@ -125,11 +124,12 @@ export const translations = {
       copyright: "© 2026 LegitVision. Tous droits réservés.",
       dataPrivacyTitle: "Vos données sont protégées",
       dataPrivacySubtitle:
-        "Vos photos sont analysées de manière sécurisée et ne sont jamais partagées.",
+        "Vos photos servent uniquement à votre analyse, réalisée avec notre sous-traitant d'IA, Anthropic.",
       dataPrivacyDesc:
-        "Données hébergées en Europe, supprimées après 30 jours, conformément au RGPD.",
-      stat1Label: "Marques couvertes",
-      stat2Label: "Modèles référencés",
+        "Données hébergées en Europe (Irlande). Vous pouvez en demander l'effacement à tout moment.",
+      stat1Label: "Marques analysables",
+      stat2Label: "Modèles analysables",
+      stat3Prefix: "jusqu'à ",
       stat3Label: "Zones d'authentification",
       stat4Label: "Temps d'analyse médian",
       stepLabel: "Étape",
@@ -139,13 +139,13 @@ export const translations = {
       labelFeatures: "Fonctionnalités",
       labelPricing: "Tarifs",
       securityNoteHighlight:
-        "Vos photos sont analysées de manière sécurisée et ne sont jamais partagées.",
+        "Vos photos servent uniquement à votre analyse, réalisée avec notre sous-traitant d'IA, Anthropic.",
       securityNoteRest:
-        "Données hébergées en Europe, supprimées après 30 jours, conformément au RGPD.",
+        "Données hébergées en Europe (Irlande). Vous pouvez en demander l'effacement à tout moment.",
       pricingMainTitle: "Simples, sans surprise",
       pricingMainSubtitle: "Des tarifs clairs, adaptés à chaque usage",
-      featuresMainTitle: "L'outil d'authentification ultime",
-      featuresMainSubtitle: "Tout ce dont vous avez besoin en un seul endroit",
+      featuresMainTitle: "Ce que contient chaque analyse",
+      featuresMainSubtitle: "Score, observations zone par zone, lecture des étiquettes et recommandations.",
       mockOutOf: "sur 100",
       mockObservations: "Observations détaillées",
       mockZone1: "Semelle",
@@ -534,7 +534,7 @@ export const translations = {
       tagEu: "EU hosted",
     },
     landing: {
-      brandsTitle: "530 luxury models referenced",
+      brandsTitle: "520 luxury models supported",
       brandsSubtitle: "Select your category and brand to verify your item.",
       howItWorksTitle: "How it works",
       howItWorksSubtitle: "Three simple steps to verify your item.",
@@ -543,16 +543,15 @@ export const translations = {
         "Follow our interactive photo guide to capture the essential details of your item.",
       step2Title: "AI analyzes",
       step2Desc:
-        "Our vision model compares every detail with thousands of authentication points.",
+        "Our vision model examines every detail of your photos. Our database holds 3,924 authentication points across the models we cover.",
       step3Title: "Detailed report",
       step3Desc:
         "Get a confidence score, zone-by-zone observations and a clear recommendation.",
-      featuresTitle: "Expert-grade analysis",
       featuresSubtitle: "Features",
       feature1Title: "Advanced AI analysis",
       feature1Desc:
-        "Our computer vision model analyzes each photo across 8 specific authentication zones: stitching, materials, logos, labels, hardware, alignment, typography and finishes.",
-      feature1Tag: "8 zones analyzed",
+        "Depending on the model, our computer vision model examines up to 10 authentication zones: stitching, materials, logos, labels, hardware, alignment, typography, finishes…",
+      feature1Tag: "Up to 10 zones",
       feature2Title: "Results in 47 seconds",
       feature2Desc:
         "No need to wait hours: from launching the analysis to the full report takes a median of 47 seconds, photo upload included.",
@@ -561,9 +560,9 @@ export const translations = {
       feature3Desc:
         "Global score out of 100, sub-scores by zone, OCR detection of codes and serial numbers, comparison with manufacturer standards, and personalized recommendations.",
       feature3Tag: "Score out of 100 + OCR",
-      feature4Title: "GDPR-protected data",
+      feature4Title: "Your photos and data",
       feature4Desc:
-        "Your photos are hosted in Europe on secure servers. They are automatically deleted after 30 days. We never share your data with third parties.",
+        "Your photos are hosted in Europe (Ireland) and used only for your analysis. To produce it, they are sent encrypted to our AI subprocessor, Anthropic, which deletes them within 30 days, except as provided in its terms, and does not use them to train its models. We keep your photos with your analysis; you can ask us to erase them at any time.",
       feature4Tag: "Hosted in EU 🇪🇺",
       pricingTitle: "Choose your plan",
       pricingSubtitle: "Clear pricing, tailored to every use case.",
@@ -579,7 +578,7 @@ export const translations = {
       brandsCategoriesTitle: "Brands and categories",
       brandsCategoriesSubtitle:
         "Brand-specific authentication protocols",
-      brandsCategoriesCount: "530 models and 77 brands referenced",
+      brandsCategoriesCount: "56 brands and 520 models supported",
       reportsTitle: "See our reports",
       reportsSubtitle: "A clear and detailed report for each analyzed item",
       reportObservations: "Detailed observations",
@@ -592,11 +591,12 @@ export const translations = {
       copyright: "© 2026 LegitVision. All rights reserved.",
       dataPrivacyTitle: "Your data is protected",
       dataPrivacySubtitle:
-        "Your photos are analyzed securely and never shared.",
+        "Your photos are used only for your analysis, performed with our AI subprocessor, Anthropic.",
       dataPrivacyDesc:
-        "Data hosted in Europe, deleted after 30 days, GDPR-compliant.",
-      stat1Label: "Brands covered",
-      stat2Label: "Models referenced",
+        "Data hosted in Europe (Ireland). You can ask us to erase it at any time.",
+      stat1Label: "Brands supported",
+      stat2Label: "Models supported",
+      stat3Prefix: "up to ",
       stat3Label: "Authentication zones",
       stat4Label: "Median analysis time",
       stepLabel: "Step",
@@ -606,13 +606,13 @@ export const translations = {
       labelFeatures: "Features",
       labelPricing: "Pricing",
       securityNoteHighlight:
-        "Your photos are analyzed securely and never shared.",
+        "Your photos are used only for your analysis, performed with our AI subprocessor, Anthropic.",
       securityNoteRest:
-        "Data hosted in Europe, deleted after 30 days, GDPR-compliant.",
+        "Data hosted in Europe (Ireland). You can ask us to erase it at any time.",
       pricingMainTitle: "Simple, no surprise",
       pricingMainSubtitle: "Clear pricing, tailored to every use case",
-      featuresMainTitle: "The ultimate authentication tool",
-      featuresMainSubtitle: "Everything you need in one place",
+      featuresMainTitle: "What every analysis includes",
+      featuresMainSubtitle: "Score, zone-by-zone observations, label reading and recommendations.",
       mockOutOf: "out of 100",
       mockObservations: "Detailed observations",
       mockZone1: "Outsole",

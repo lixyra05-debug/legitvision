@@ -36,7 +36,7 @@ function GuideDisclaimer() {
           <line x1="12" y1="8" x2="12.01" y2="8" />
         </svg>
         <p className="text-caption leading-relaxed text-muted-foreground">
-          <strong className="text-foreground">Pré-authentification visuelle, pas garantie.</strong>{" "}
+          <strong className="text-foreground">Pré-authentification visuelle, pas une certitude.</strong>{" "}
           Ce guide vous aide à détecter les signaux visuels d&apos;une
           contrefaçon, mais ne remplace pas une authentification humaine
           professionnelle. L&apos;analyse IA fournit une estimation
@@ -251,7 +251,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
                 Un doute sur votre {data.brand.name} ?
               </h3>
               <p className="mt-2 text-ui text-muted-foreground">
-                Uploadez 8 à 12 photos, obtenez une estimation IA avec score de confiance en 47 secondes (durée médiane).
+                Envoyez 6 à 11 photos selon la catégorie, obtenez une estimation IA avec score de confiance en 47 secondes (durée médiane).
               </p>
             </div>
             <Link
@@ -324,7 +324,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
               Croisez visuel + IA pour trancher un doute sur {data.brand.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              Ce signal visuel fait partie des indicateurs évalués par l&apos;IA. 3,99 € pour obtenir un score de confiance agrégé sur 8-12 signaux en 47 secondes (durée médiane).
+              Ce signal visuel fait partie des indicateurs évalués par l&apos;IA. 3,99 € pour obtenir un score de confiance qui agrège jusqu&apos;à 10 points d&apos;authentification, en 47 secondes (durée médiane).
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -352,7 +352,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
         <div className="mx-auto max-w-5xl px-4 text-center text-caption text-muted-foreground">
           LegitVision — Pré-authentification IA pour sneakers, sacs et streetwear de luxe.{" "}
           <span className="text-subtle">•</span>{" "}
-          Les analyses fournissent une estimation probabiliste, jamais une garantie d&apos;authenticité.
+          Les analyses fournissent une estimation probabiliste, jamais une certitude d&apos;authenticité.
         </div>
       </footer>
     </div>

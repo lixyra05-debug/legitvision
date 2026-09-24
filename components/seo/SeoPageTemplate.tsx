@@ -99,7 +99,7 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
         <div className="mx-auto max-w-5xl px-4 text-center text-caption text-muted-foreground">
           LegitVision — Pré-authentification IA pour sneakers et sacs de luxe.{" "}
           <span className="text-subtle">•</span>{" "}
-          Les analyses fournissent une estimation probabiliste, jamais une garantie.
+          Les analyses fournissent une estimation probabiliste, jamais une certitude.
         </div>
       </footer>
     </div>

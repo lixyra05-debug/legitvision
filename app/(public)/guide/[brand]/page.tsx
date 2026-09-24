@@ -182,7 +182,7 @@ export default async function BrandGuideHub(props: Props) {
               Pré-authentifier votre {brand.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              Photo + IA + 47 secondes (médiane) = score de confiance détaillé sur l&apos;ensemble des signaux. Estimation probabiliste, jamais une garantie.
+              Photo + IA + 47 secondes (médiane) = score de confiance détaillé sur l&apos;ensemble des signaux. Estimation probabiliste, jamais une certitude.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

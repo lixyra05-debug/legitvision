@@ -57,7 +57,7 @@ export const platforms: Platform[] = [
       {
         question: "Peut-on demander un contrôle LegitVision avant d'acheter sur Vinted ?",
         answer:
-          "Oui. Demandez au vendeur 8 à 12 photos détaillées selon notre protocole (étiquette intérieure, box label, semelle, coutures) puis uploadez-les sur LegitVision. Vous obtenez un score d'authenticité en 47 secondes (durée médiane) pour 3,99 €, avant de valider votre achat.",
+          "Oui. Demandez au vendeur 6 à 11 photos détaillées selon notre protocole (étiquette intérieure, box label, semelle, coutures) puis uploadez-les sur LegitVision. Vous obtenez un score d'authenticité en 47 secondes (durée médiane) pour 3,99 €, avant de valider votre achat.",
       },
     ],
   },

@@ -22,7 +22,7 @@ export function SeoCTA({ variant, brandName, platformName, checkUrl }: Props) {
               Un doute sur votre {brandName} ?
             </h3>
             <p className="mt-2 text-ui text-muted-foreground">
-              Uploadez 8 à 12 photos, obtenez un diagnostic IA détaillé en 47 secondes (durée médiane).
+              Envoyez 6 à 11 photos selon la catégorie, obtenez un diagnostic IA détaillé en 47 secondes (durée médiane).
             </p>
           </div>
           <Link

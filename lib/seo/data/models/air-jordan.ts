@@ -119,7 +119,7 @@ export const airJordanModels: ModelData[] = [
       {
         title: "Off-White x AJ5 « Sail » à 500 €",
         description:
-          "La Off-White x AJ5 Sail a un prix marché 1 200-2 500 €. Une annonce à 500 € est une contrefaçon garantie, souvent avec photos StockX volées.",
+          "La Off-White x AJ5 Sail a un prix marché 1 200-2 500 €. Une annonce à 500 € est très probablement une contrefaçon, souvent avec photos StockX volées.",
       },
     ],
     faqs: [
@@ -186,7 +186,7 @@ export const airJordanModels: ModelData[] = [
       {
         title: "Travis Scott x AJ6 British Khaki à 400 €",
         description:
-          "La collab Travis Scott x AJ6 British Khaki a un prix marché 1 000-1 800 €. Une annonce à 400 € est une contrefaçon garantie. La collab authentique vient avec packaging Cactus Jack.",
+          "La collab Travis Scott x AJ6 British Khaki a un prix marché 1 000-1 800 €. Une annonce à 400 € est très probablement une contrefaçon. La collab authentique vient avec packaging Cactus Jack.",
       },
     ],
     faqs: [
@@ -387,7 +387,7 @@ export const airJordanModels: ModelData[] = [
       {
         title: "AJ1 Fragment x Travis Scott à 800 €",
         description:
-          "La AJ1 Fragment x Travis Scott a un prix marché 2 000-4 000 €. Une annonce à 800 € est une contrefaçon garantie. Même les UA premium ne s'approchent pas de ce niveau de détail pour moins de 300 € de coût de production.",
+          "La AJ1 Fragment x Travis Scott a un prix marché 2 000-4 000 €. Une annonce à 800 € est très probablement une contrefaçon. Même les UA premium ne s'approchent pas de ce niveau de détail pour moins de 300 € de coût de production.",
       },
     ],
     faqs: [

@@ -47,7 +47,7 @@ export const hermesModels: ModelData[] = [
       {
         title: "Birkin 30 Togo Noir « neuve » à 4 500 €",
         description:
-          "Le Birkin 30 Togo Noir a un prix marché 16 000-22 000 € sur le secondaire. Une annonce à 4 500 € est une contrefaçon super-fake garantie, souvent avec photos volées à Sotheby's.",
+          "Le Birkin 30 Togo Noir a un prix marché 16 000-22 000 € sur le secondaire. Une annonce à 4 500 € est très probablement une contrefaçon super-fake, souvent avec photos volées à Sotheby's.",
       },
       {
         title: "« Birkin Himalaya crocodile » à 20 000 €",

@@ -89,21 +89,28 @@ export function StepsSection() {
 const STAT_DEFS: {
   value: number;
   prefix?: string;
+  /** Préfixe à traduire (« jusqu'à » / « up to ») : prime sur `prefix`. */
+  prefixKey?: string;
   suffix?: string;
   labelKey: string;
 }[] = [
-  // 77 et 530 sont les COUNT réels de `brands` et `models` en production
-  // (toutes lignes is_active = true, relevé du 2026-08-06). Voir la note
-  // « Catalogue — pas de source de vérité » dans CLAUDE.md : BrandsTabs en
-  // annonce encore 51 et 419, en dur.
+  // Chiffres ANALYSABLES, relevés en production le 2026-09-25 :
+  // - 56 marques = noms distincts ayant au moins un modèle actif, hors montres
+  //   (non sélectionnables). La table `brands` compte 77 LIGNES : une marque y
+  //   figure une fois par catégorie, et Essentials n'a aucun modèle actif.
+  // - 520 modèles = modèles actifs d'une marque active, hors les 10 modèles
+  //   de montres.
+  // - Jusqu'à 10 zones : nombre de zones distinctes des points
+  //   d'authentification d'un modèle (de 0 à 10 ; 10 pour 175 modèles de sacs).
+  // Voir la note « Catalogue — pas de source de vérité » dans CLAUDE.md.
   // 47 s : durée MÉDIANE mesurée en production le 2026-09-24 (created_at →
   // updated_at des analyses terminées : du clic « Lancer » au rapport, envoi
   // des photos compris). 3 analyses depuis le passage à claude-opus-4-8
   // (22/06) : 45,4 / 46,8 / 63,9 s. Le « < 30 s » affiché avant datait de
   // l'ancien modèle. À re-mesurer quand le volume le permettra.
-  { value: 77, labelKey: "landing.stat1Label" },
-  { value: 530, labelKey: "landing.stat2Label" },
-  { value: 8, labelKey: "landing.stat3Label" },
+  { value: 56, labelKey: "landing.stat1Label" },
+  { value: 520, labelKey: "landing.stat2Label" },
+  { value: 10, prefixKey: "landing.stat3Prefix", labelKey: "landing.stat3Label" },
   { value: 47, suffix: "\u00a0s", labelKey: "landing.stat4Label" },
 ];
 
@@ -124,7 +131,7 @@ export function StatsSection() {
         >
           <Counter
             value={stat.value}
-            prefix={stat.prefix}
+            prefix={stat.prefixKey ? t(stat.prefixKey) : stat.prefix}
             suffix={stat.suffix}
             className="font-heading text-h3 font-bold"
           />

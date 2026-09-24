@@ -85,7 +85,7 @@ export const depopIntersections: Intersection[] = [
           "C'est possible mais extrêmement rare. Le public Depop (Gen Z, 15-25 ans) n'est généralement pas propriétaire de vrais sacs Louis Vuitton neufs, donc les ventes authentiques concernent souvent des héritages ou des revendeurs luxe qui utilisent Depop en second canal. Signaux rassurants : vendeur avec historique varié luxe (pas uniquement LV), prix raisonnable (pas cassé), documentation fournie spontanément, code date / puce RFID photographiée nettement.",
       },
       {
-        question: "Pochette Métis à 400 € sur Depop : arnaque garantie ?",
+        question: "Pochette Métis à 400 € sur Depop : forcément une arnaque ?",
         answer:
           "À 99 % oui. La Pochette Métis Monogram retail à 2 750 € (2025) avec un marché secondaire à 2 000-2 500 € en état correct. Une annonce à 400 € est une contrefaçon certaine. Les contrefaçons de Pochette Métis sont particulièrement ciblées sur Depop car le prix marché à 2 000+ € attire les acheteurs qui croient faire une affaire. Ne payez jamais moins de 1 500 € une Pochette Métis prétendue authentique sans expertise préalable.",
       },
