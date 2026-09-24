@@ -69,7 +69,7 @@ export const depopIntersections: Intersection[] = [
       {
         question: "Comment vérifier une 2002R Protection Pack sur photo Depop ?",
         answer:
-          "Trois zones à demander en photo HD : 1) Étiquette intérieure avec mention Salehe Bembury (collabs Protection Pack) + pays de fabrication cohérent ; 2) Box label avec code produit M2002RXY correspondant au colorway exact ; 3) Midsole latérale avec couches ENCAP/ABZORB visiblement distinctes (pas imprimées en 2D). Passez le tout par LegitVision pour un diagnostic IA en 60 secondes.",
+          "Trois zones à demander en photo HD : 1) Étiquette intérieure avec mention Salehe Bembury (collabs Protection Pack) + pays de fabrication cohérent ; 2) Box label avec code produit M2002RXY correspondant au colorway exact ; 3) Midsole latérale avec couches ENCAP/ABZORB visiblement distinctes (pas imprimées en 2D). Passez le tout par LegitVision pour un diagnostic IA en 47 secondes (durée médiane).",
       },
     ],
   },

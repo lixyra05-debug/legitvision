@@ -21,7 +21,7 @@ const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: "Quelles marques sont supportées ?",
-    a: "Nous couvrons plus de 340 modèles dans 3 catégories : sneakers, sacs et vêtements. Nike, Jordan, adidas, New Balance, Louis Vuitton et bien d'autres marques sont disponibles. Nous ajoutons régulièrement de nouveaux modèles. Contactez-nous pour demander une marque spécifique.",
+    a: "Notre catalogue référence 530 modèles et 77 marques. Sneakers, sacs et vêtements sont disponibles : Nike, Jordan, adidas, New Balance, Louis Vuitton et bien d'autres. Nous ajoutons régulièrement de nouveaux modèles. Contactez-nous pour demander une marque spécifique.",
   },
   {
     q: "Combien coûte une analyse ?",
@@ -29,7 +29,7 @@ const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: "Combien de temps prend une analyse ?",
-    a: "L'analyse est réalisée en temps réel et prend généralement moins de 30 secondes après l'upload des photos.",
+    a: "Il faut en médiane 47 secondes entre le lancement de l'analyse et le rapport, envoi des photos compris.",
   },
   {
     q: "Comment prendre de bonnes photos pour l'analyse ?",
@@ -56,7 +56,7 @@ const FAQ_ITEMS_EN: FaqItem[] = [
   },
   {
     q: "Which brands are supported?",
-    a: "We cover over 340 models across 3 categories: sneakers, bags and clothing. Nike, Jordan, adidas, New Balance, Louis Vuitton and many more brands are available. We regularly add new models. Contact us to request a specific brand.",
+    a: "Our catalog references 530 models and 77 brands. Sneakers, bags and clothing are available: Nike, Jordan, adidas, New Balance, Louis Vuitton and many more. We regularly add new models. Contact us to request a specific brand.",
   },
   {
     q: "How much does an analysis cost?",
@@ -64,7 +64,7 @@ const FAQ_ITEMS_EN: FaqItem[] = [
   },
   {
     q: "How long does an analysis take?",
-    a: "The analysis runs in real time and usually takes under 30 seconds after the photos are uploaded.",
+    a: "From launching the analysis to the report takes a median of 47 seconds, photo upload included.",
   },
   {
     q: "How do I take good photos for the analysis?",

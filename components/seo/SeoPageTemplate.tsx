@@ -10,7 +10,7 @@ import { RelatedPagesGrid } from "./RelatedPagesGrid";
 export function SeoPageTemplate({ data }: { data: SeoPageData }) {
   return (
     <div className="min-h-screen bg-background">
-      <SeoNav />
+      <SeoNav checkUrl={data.checkUrl} />
       <SeoHero data={data} />
 
       <main className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -50,7 +50,7 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
           variant="inline"
           brandName={data.brand.name}
           platformName={data.platform.name}
-          trackingRef={data.trackingRef}
+          checkUrl={data.checkUrl}
         />
 
         <section className="mb-16">
@@ -89,7 +89,7 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
           variant="final"
           brandName={data.brand.name}
           platformName={data.platform.name}
-          trackingRef={data.trackingRef}
+          checkUrl={data.checkUrl}
         />
 
         <RelatedPagesGrid pages={data.relatedPages} />

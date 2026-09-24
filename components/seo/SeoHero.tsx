@@ -89,7 +89,7 @@ export function SeoHero({ data }: { data: SeoPageData }) {
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link
-            href={`/auth?source=seo&ref=${data.trackingRef}&intent=analyze`}
+            href={`${data.checkUrl}&intent=analyze`}
             className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
           >
             Analyser ma photo — 3,99 €
@@ -105,7 +105,7 @@ export function SeoHero({ data }: { data: SeoPageData }) {
         <div className="mt-8 flex flex-wrap gap-6 text-caption text-muted-foreground">
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
-            Résultat en 90 secondes
+            Résultat en 47 s (médiane)
           </div>
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />

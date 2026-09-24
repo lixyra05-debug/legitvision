@@ -299,7 +299,7 @@ export function ReportView({ data }: { data: ReportData }) {
                 {t("check.analyzing")}
               </p>
               <p className="mt-1 text-ui text-muted-foreground">
-                {t("results.expertReviewDesc")}
+                {t("results.analyzingDesc")}
               </p>
             </div>
           </div>
@@ -318,16 +318,16 @@ export function ReportView({ data }: { data: ReportData }) {
           </div>
         )}
 
-        {/* ── EXPERT REVIEW NOTICE ── */}
+        {/* ── RÉSULTAT INCERTAIN (statut « expert_review » : aucune revue humaine n'existe) ── */}
         {data.status === "expert_review" && data.confidence !== "low" && (
           <div className="flex items-start gap-3 rounded-md border border-warning/20 bg-warning/[0.08] p-4">
             <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" />
             <div>
               <p className="text-ui font-semibold text-warning">
-                {t("results.expertReviewTitle")}
+                {t("results.uncertainResultTitle")}
               </p>
               <p className="mt-0.5 text-ui text-muted-foreground">
-                {t("results.expertReviewDesc")}
+                {t("results.uncertainResultDesc")}
               </p>
             </div>
           </div>

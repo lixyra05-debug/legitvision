@@ -121,7 +121,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <SeoNav />
+      <SeoNav checkUrl={data.checkUrl} />
 
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -207,7 +207,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
             </div>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
-              Score de confiance en 90 secondes
+              Score de confiance en 47 s (médiane)
             </div>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
@@ -251,7 +251,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
                 Un doute sur votre {data.brand.name} ?
               </h3>
               <p className="mt-2 text-ui text-muted-foreground">
-                Uploadez 8 à 12 photos, obtenez une estimation IA avec score de confiance en 90 secondes.
+                Uploadez 8 à 12 photos, obtenez une estimation IA avec score de confiance en 47 secondes (durée médiane).
               </p>
             </div>
             <Link
@@ -324,7 +324,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
               Croisez visuel + IA pour trancher un doute sur {data.brand.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              Ce signal visuel fait partie des indicateurs évalués par l&apos;IA. 3,99 € pour obtenir un score de confiance agrégé sur 8-12 signaux en 90 secondes.
+              Ce signal visuel fait partie des indicateurs évalués par l&apos;IA. 3,99 € pour obtenir un score de confiance agrégé sur 8-12 signaux en 47 secondes (durée médiane).
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

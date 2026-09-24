@@ -90,7 +90,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <SeoNav />
+      <SeoNav checkUrl={data.checkUrl} />
 
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -172,7 +172,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
           <div className="mt-8 flex flex-wrap gap-6 text-caption text-muted-foreground">
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
-              Résultat en 90 secondes
+              Résultat en 47 s (médiane)
             </div>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
@@ -220,7 +220,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
                 Un doute sur votre {data.brand.name} {data.model.name} ?
               </h3>
               <p className="mt-2 text-ui text-muted-foreground">
-                Uploadez 8 à 12 photos, obtenez une pré-authentification IA avec score de confiance en 90 secondes.
+                Uploadez 8 à 12 photos, obtenez une pré-authentification IA avec score de confiance en 47 secondes (durée médiane).
               </p>
             </div>
             <Link
@@ -277,7 +277,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
               Ne pariez plus sur votre prochain {data.brand.name} {data.model.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              3,99 € pour éviter {data.model.priceRange} de perte. Score de confiance, estimation de probabilité et recommandations détaillées en 90 secondes.
+              3,99 € pour éviter {data.model.priceRange} de perte. Score de confiance, estimation de probabilité et recommandations détaillées en 47 secondes (durée médiane).
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

@@ -1,7 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import { buildCheckUrl } from "@/lib/seo/check-url";
 
-export function SeoNav() {
+/**
+ * `checkUrl` : lien d'analyse de la page (marque pré-sélectionnée) quand elle
+ * en a un. Sinon, /check/new sans marque — jamais /auth, qui renvoyait vers
+ * /dashboard après connexion.
+ */
+export function SeoNav({ checkUrl = buildCheckUrl({ ref: "seo-nav" }) }: { checkUrl?: string }) {
   return (
     <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:py-0">
@@ -43,7 +49,7 @@ export function SeoNav() {
           </div>
         </div>
         <Link
-          href="/auth"
+          href={`${checkUrl}&variant=nav`}
           className="inline-flex min-h-[44px] w-full items-center justify-center rounded-md bg-accent px-5 text-ui font-semibold text-accent-foreground shadow-card transition-[color,background-color,border-color,transform] duration-fast hover:scale-[1.02] hover:bg-accent-hover active:scale-100 sm:w-auto"
         >
           Analyser une photo — 3,99 €

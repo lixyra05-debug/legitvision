@@ -96,7 +96,7 @@ export const CHATBOT_RULES: ChatbotRule[] = [
         "2. Sélectionnez la marque et le modèle\n" +
         "3. Prenez des photos en suivant notre guide\n" +
         "4. Notre IA analyse 8 zones d'authentification\n" +
-        "5. Recevez votre rapport en moins de 30 secondes\n\n" +
+        "5. Recevez votre rapport : 47 secondes en médiane\n\n" +
         "Le rapport inclut un score global sur 100, des sous-scores par zone, la détection OCR des codes et des recommandations personnalisées.",
       en:
         "It's very simple:\n\n" +
@@ -104,7 +104,7 @@ export const CHATBOT_RULES: ChatbotRule[] = [
         "2. Select the brand and model\n" +
         "3. Take photos following our guide\n" +
         "4. Our AI analyzes 8 authentication zones\n" +
-        "5. Get your report in under 30 seconds\n\n" +
+        "5. Get your report: 47 seconds median\n\n" +
         "The report includes a global score out of 100, per-zone sub-scores, OCR detection of codes and personalized recommendations.",
     },
   },
@@ -123,16 +123,16 @@ export const CHATBOT_RULES: ChatbotRule[] = [
     ],
     response: {
       fr:
-        "Nous supportons plus de 47 marques et 340+ modèles dans 3 catégories :\n\n" +
+        "Notre catalogue référence 530 modèles et 77 marques. Catégories disponibles :\n\n" +
         "👟 Sneakers : Nike, Jordan, adidas, New Balance, Yeezy, Balenciaga, Dior, Gucci, Prada, Asics, ON Running…\n" +
         "👜 Sacs : Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada, Longchamp, Michael Kors…\n" +
-        "👕 Vêtements : Supreme, Off-White, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
+        "👕 Vêtements : Supreme, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
         "Utilisez la barre de recherche sur notre page d'accueil pour trouver votre article.",
       en:
-        "We support over 47 brands and 340+ models across 3 categories:\n\n" +
+        "Our catalog references 530 models and 77 brands. Available categories:\n\n" +
         "👟 Sneakers: Nike, Jordan, adidas, New Balance, Yeezy, Balenciaga, Dior, Gucci, Prada, Asics, ON Running…\n" +
         "👜 Bags: Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada, Longchamp, Michael Kors…\n" +
-        "👕 Clothing: Supreme, Off-White, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
+        "👕 Clothing: Supreme, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
         "Use the search bar on our homepage to find your item.",
     },
   },

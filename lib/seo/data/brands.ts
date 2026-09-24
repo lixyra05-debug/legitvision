@@ -199,7 +199,7 @@ export const brands: Brand[] = [
       {
         question: "adidas propose-t-il un service d'authentification officiel ?",
         answer:
-          "Non, adidas n'a aucun programme officiel d'authentification pour les paires d'occasion. Les seules solutions fiables sont les authentificateurs tiers : StockX (systematic check), GOAT, CheckCheck, ou les services IA comme LegitVision (3,99 € avec résultat en 60 secondes).",
+          "Non, adidas n'a aucun programme officiel d'authentification pour les paires d'occasion. Les seules solutions fiables sont les authentificateurs tiers : StockX (systematic check), GOAT, CheckCheck, ou les services IA comme LegitVision (3,99 €, résultat en 47 secondes en médiane).",
       },
     ],
   },

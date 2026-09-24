@@ -192,7 +192,7 @@ export default function GuideHubPage() {
               Pas le temps de lire les guides ?
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              L&apos;IA LegitVision analyse 8-12 signaux simultanément et retourne un score de confiance en 90 secondes. 3,99 € pour éviter une perte de plusieurs centaines d&apos;euros.
+              L&apos;IA LegitVision analyse 8-12 signaux simultanément et retourne un score de confiance en 47 secondes (durée médiane). 3,99 € pour éviter une perte de plusieurs centaines d&apos;euros.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

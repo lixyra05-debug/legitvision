@@ -8,6 +8,7 @@ import { getPlatformBySlug, platforms } from "./data/platforms";
 import { getBrandBySlug, brands } from "./data/brands";
 import { getIntersection, intersections } from "./data/intersections";
 import { SITE_URL } from "@/lib/site-url";
+import { buildCheckUrl } from "./check-url";
 
 const BASE_PATH = "/acheter-authentique";
 
@@ -39,7 +40,7 @@ export function buildPlatformBrandPageData(
   const introParagraphs: string[] = [
     `${platform.description} ${brand.name} y compte aujourd'hui parmi les marques les plus recherchées — et donc les plus contrefaites.`,
     intersection.angle,
-    `Ce guide décrit les ${brand.signals.length} signaux techniques qui distinguent ${brand.productPossessive} ${brand.name} authentique d'une contrefaçon, les arnaques récurrentes sur ${platform.name}, et comment obtenir en 90 secondes une analyse IA à 3,99 € qui vous évite d'acheter un faux.`,
+    `Ce guide décrit les ${brand.signals.length} signaux techniques qui distinguent ${brand.productPossessive} ${brand.name} authentique d'une contrefaçon, les arnaques récurrentes sur ${platform.name}, et comment obtenir en 47 secondes (durée médiane) une analyse IA à 3,99 € qui vous évite d'acheter un faux.`,
   ];
 
   const faqs: FAQItem[] = [
@@ -51,6 +52,7 @@ export function buildPlatformBrandPageData(
   const relatedPages = buildRelatedPages(platform.slug, brand.slug);
 
   const trackingRef = `${platform.slug}-${brand.slug}`;
+  const checkUrl = buildCheckUrl({ brand, category: brand.category, ref: trackingRef });
   // schema.image (HowTo JSON-LD) → image OG racine : URL STABLE sans hash de build.
   // og:image / twitter:image per-page sont gérés par opengraph-image.tsx (file
   // convention), dont l'URL contient un hash de build non connu ici.
@@ -73,6 +75,7 @@ export function buildPlatformBrandPageData(
     faqs,
     relatedPages,
     trackingRef,
+    checkUrl,
   };
 }
 
