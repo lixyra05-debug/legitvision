@@ -10,12 +10,12 @@ export const hermesModels: ModelData[] = [
     retailYear: "1984 (production continue)",
     tagline: "Le sac d'investissement ultime du luxe",
     intro:
-      "Le Hermès Birkin 30, créé en 1984 pour l'actrice Jane Birkin, est le sac d'investissement le plus coté du monde du luxe. Retail boutique Hermès 2026 : 12 500-16 500 € pour les cuirs courants (Togo, Epsom, Clemence), mais les waiting lists boutique sont de 2-5 ans et obtenir un Birkin « en boutique » nécessite un historique d'achats Hermès. Sur le marché secondaire (Sotheby's, Christie's, The RealReal), les prix Birkin 30 vont de 12 000 € (cuirs courants) à 150 000 € (Himalaya Niloticus crocodile blanc diamond), avec la moyenne 20 000-35 000 € pour les couleurs populaires (Noir, Etoupe, Rouge Tomate, Gold). La Birkin est LE produit le plus contrefait du luxe avec la Rolex : les super-fakes coûtent 2 000-5 000 € à produire et se revendent 8 000-15 000 €. Les cinq signaux ci-dessous sont les plus résistants aux super-fakes : saddle stitching main (2 aiguilles), stamp année blind/square/circle, hardware plaqué or 24k, clochette + clés + cadenas cohérents, et sangle + sangle de retenue.",
+      "Le Hermès Birkin 30 a été créé en 1984 pour l'actrice Jane Birkin. Retail boutique Hermès 2026 : 12 500-16 500 € pour les cuirs courants (Togo, Epsom, Clemence), mais obtenir un Birkin « en boutique » nécessite un historique d'achats Hermès. Sur le marché secondaire (Sotheby's, Christie's, The RealReal), les prix Birkin 30 vont de 12 000 € (cuirs courants) à 150 000 € (Himalaya Niloticus crocodile blanc diamond), avec la moyenne 20 000-35 000 € pour les couleurs populaires (Noir, Etoupe, Rouge Tomate, Gold). Les super-fakes de Birkin coûtent 2 000-5 000 € à produire et se revendent 8 000-15 000 €. Les signaux ci-dessous sont les plus résistants aux super-fakes : saddle stitching main (2 aiguilles), stamp année blind/square/circle, hardware plaqué or 24k, clochette + clés + cadenas cohérents, et sangle + sangle de retenue.",
     signals: [
       {
         title: "Saddle stitching main — 2 aiguilles alternées",
         description:
-          "Le saddle stitching Hermès est cousu main avec 2 aiguilles alternées par un artisan unique (signé « Artisan » dans le processus). Les points alternent parfaitement dessus/dessous le cuir. Machine à coudre impossible. Les contrefaçons ont toujours un stitching machine (une seule face uniforme, pas de points alternés).",
+          "Le saddle stitching Hermès est cousu main avec 2 aiguilles alternées par un artisan unique (signé « Artisan » dans le processus). Les points alternent parfaitement dessus/dessous le cuir. Machine à coudre impossible. Un stitching machine (une seule face uniforme, pas de points alternés) trahit une contrefaçon.",
         difficulty: 3,
       },
       {
@@ -64,7 +64,7 @@ export const hermesModels: ModelData[] = [
       {
         question: "Un Birkin peut-il être authentifié sans la clochette et les clés ?",
         answer:
-          "Oui, les 5 signaux principaux (saddle stitching, blind stamp, hardware, sangles, cuir) suffisent pour identifier 95 % des fakes. L'absence de clochette/clés réduit le prix marché de 10-15 % mais n'empêche pas l'authentification. LegitVision analyse vos photos HD même sans clochette.",
+          "Oui, les signaux principaux (saddle stitching, blind stamp, hardware, sangles, cuir) restent vérifiables. L'absence de clochette/clés n'empêche pas l'authentification. LegitVision analyse vos photos HD même sans clochette.",
       },
     ],
   },
@@ -77,7 +77,7 @@ export const hermesModels: ModelData[] = [
     retailYear: "1984 (production continue)",
     tagline: "La grande sœur du 30, plus voyage, plus statutaire",
     intro:
-      "Le Hermès Birkin 35 est la version plus grande (35 cm de large) du Birkin 30, positionnée comme sac voyage/workday plutôt que sac quotidien. Retail 2026 : 14 500-19 000 € pour cuirs courants. Prix marché secondaire : 18 000-45 000 € selon cuir/couleur. La Birkin 35 a perdu en popularité vs la 30 à partir de 2015 (tendance plus petits sacs), mais reste très demandée pour les voyages et les styles « big bag ». Les contrefaçons Birkin 35 sont aussi fréquentes que Birkin 30, avec les mêmes techniques super-fake. Les 5 signaux d'authentification sont identiques à ceux du Birkin 30 (saddle stitching main, blind stamp, hardware, clochette, sangles) mais avec des dimensions proportionnellement plus grandes. Quelques spécificités 35 ci-dessous.",
+      "Le Hermès Birkin 35 est la version plus grande (35 cm de large) du Birkin 30, positionnée comme sac voyage/workday plutôt que sac quotidien. Retail 2026 : 14 500-19 000 € pour cuirs courants. Prix marché secondaire : 18 000-45 000 € selon cuir/couleur. La Birkin 35 convient aux voyages et aux styles « big bag ». Les contrefaçons Birkin 35 utilisent les mêmes techniques super-fake que celles du Birkin 30. Les signaux d'authentification sont identiques à ceux du Birkin 30 (saddle stitching main, blind stamp, hardware, clochette, sangles) mais avec des dimensions proportionnellement plus grandes. Quelques spécificités 35 ci-dessous.",
     signals: [
       {
         title: "Dimensions exactes — 35 × 25 × 18 cm",
@@ -119,19 +119,19 @@ export const hermesModels: ModelData[] = [
       {
         title: "« Birkin 35 Kelly 35 combo » package",
         description:
-          "Certains vendeurs proposent Birkin 35 + Kelly 35 en package « prix cassé ». Ces deux sacs combinés ont un prix marché 35 000-60 000 €. Un package à 15 000 € est une double-contrefaçon.",
+          "Certains vendeurs proposent Birkin 35 + Kelly 35 en package « prix cassé ». Ces deux sacs combinés ont un prix marché 35 000-60 000 €. Un package à 15 000 € est un signal d'alerte.",
       },
     ],
     faqs: [
       {
         question: "Le Birkin 35 est-il encore produit ou discontinué ?",
         answer:
-          "Le Birkin 35 reste en production continue Hermès mais en volume réduit par rapport au 30 (demande plus faible). Les boutiques proposent principalement 25, 30, 35. Le 40 et 50 sont des tailles spéciales (travel) en production limitée.",
+          "Le Birkin 35 reste en production continue Hermès. Les boutiques proposent principalement 25, 30, 35. Le 40 et 50 sont des tailles spéciales (travel) en production limitée.",
       },
       {
         question: "Pourquoi le Birkin 35 a-t-il un prix marché plus élevé que Birkin 30 parfois ?",
         answer:
-          "Les Birkin 35 dans des cuirs rares (Lizard, Crocodile Porosus) peuvent dépasser les Birkin 30 équivalents. Sur les cuirs courants (Togo, Epsom), le Birkin 30 est plus cher car plus demandé. L'écart varie selon rareté du cuir/couleur spécifique.",
+          "Les Birkin 35 dans des cuirs rares (Lizard, Crocodile Porosus) peuvent dépasser les Birkin 30 équivalents. Sur les cuirs courants (Togo, Epsom), le Birkin 30 est plus cher. L'écart varie selon rareté du cuir/couleur spécifique.",
       },
     ],
   },
@@ -144,7 +144,7 @@ export const hermesModels: ModelData[] = [
     retailYear: "1956 (nommée en 1977)",
     tagline: "Le sac princier de Grace Kelly, top-handle ou épaule",
     intro:
-      "Le Hermès Kelly 25, nommé d'après Grace Kelly (qui cacha sa grossesse derrière un Kelly en 1956), est l'autre sac d'investissement Hermès après le Birkin. Retail 2026 : 11 500-14 500 € pour cuirs courants. Prix marché secondaire : 15 000-30 000 € selon cuir/couleur. La Kelly 25 est plus petite que le Birkin 30 (25 cm vs 30 cm) et a 2 versions : Sellier (rigide, structurée, stitching extérieur visible) ou Retourné (souple, stitching intérieur). Elle se porte top-handle ou en bandoulière avec la strap amovible. Les contrefaçons Kelly sont aussi sophistiquées que Birkin, avec les mêmes super-fakes. Les 5 signaux ci-dessous adaptés à Kelly : saddle stitching main, blind stamp + stamp artisan, hardware, turnlock CC (Kelly) vs turnlock H (Birkin), et sangle.",
+      "Le Hermès Kelly 25, nommé d'après Grace Kelly (qui cacha sa grossesse derrière un Kelly en 1956), est l'autre sac d'investissement Hermès après le Birkin. Retail 2026 : 11 500-14 500 € pour cuirs courants. Prix marché secondaire : 15 000-30 000 € selon cuir/couleur. La Kelly 25 est plus petite que le Birkin 30 (25 cm vs 30 cm) et a 2 versions : Sellier (rigide, structurée, stitching extérieur visible) ou Retourné (souple, stitching intérieur). Elle se porte top-handle ou en bandoulière avec la strap amovible. Les contrefaçons Kelly sont aussi sophistiquées que Birkin, avec les mêmes super-fakes. Les signaux ci-dessous adaptés à Kelly : saddle stitching main, blind stamp + stamp artisan, hardware, turnlock CC (Kelly) vs turnlock H (Birkin), et sangle.",
     signals: [
       {
         title: "Saddle stitching main — Sellier ou Retourné",
@@ -186,14 +186,14 @@ export const hermesModels: ModelData[] = [
       {
         title: "« Kelly Mini II Picotin combo »",
         description:
-          "Certains vendeurs proposent Kelly + Picotin en package. Combiner 2 sacs Hermès à prix cassé est quasi-toujours double-fake. Vérifiez chaque sac séparément.",
+          "Certains vendeurs proposent Kelly + Picotin en package. Combiner 2 sacs Hermès à prix cassé est un signal d'alerte. Vérifiez chaque sac séparément.",
       },
     ],
     faqs: [
       {
         question: "Quelle différence entre Kelly Sellier et Kelly Retourné ?",
         answer:
-          "Sellier : rigide, structurée, stitching visible extérieur, coutures apparentes, plus formelle. Retourné : souple, stitching intérieur caché, plus casual. Sellier est 10-15 % plus chère à produire (main-d'œuvre supplémentaire). Les contrefaçons privilégient Retourné (moins coûteuse à répliquer).",
+          "Sellier : rigide, structurée, stitching visible extérieur, coutures apparentes, plus formelle. Retourné : souple, stitching intérieur caché, plus casual. Les contrefaçons privilégient Retourné (moins coûteuse à répliquer).",
       },
       {
         question: "La Kelly peut-elle se porter en crossbody ?",
@@ -211,7 +211,7 @@ export const hermesModels: ModelData[] = [
     retailYear: "1956 (nommée en 1977)",
     tagline: "La Kelly quotidienne, taille idéale 2020s",
     intro:
-      "Le Hermès Kelly 28 est la taille intermédiaire entre Kelly 25 et Kelly 32, considérée aujourd'hui comme le « daily driver » parfait — assez grande pour y loger un téléphone XL et un wallet medium, assez compacte pour crossbody. Retail 2026 : 12 000-15 500 € cuirs courants. Prix marché secondaire : 16 000-32 000 €. La Kelly 28 est la taille la plus demandée en 2024-2026 chez les nouvelles acheteuses de Kelly, devant la 25 (trop petite pour usage quotidien). Les contrefaçons Kelly 28 ont explosé en 2024 avec les super-fakes spécifiquement adaptés à cette taille. Les 5 signaux sont identiques à Kelly 25 (saddle stitching, blind stamp, hardware, sangle, poignée) mais avec proportions 28 exactes.",
+      "Le Hermès Kelly 28 est la taille intermédiaire entre Kelly 25 et Kelly 32, considérée aujourd'hui comme le « daily driver » parfait — assez grande pour y loger un téléphone XL et un wallet medium, assez compacte pour crossbody. Retail 2026 : 12 000-15 500 € cuirs courants. Prix marché secondaire : 16 000-32 000 €. Les contrefaçons Kelly 28 ont explosé en 2024 avec les super-fakes spécifiquement adaptés à cette taille. Les signaux sont identiques à Kelly 25 (saddle stitching, blind stamp, hardware, sangle, poignée) mais avec proportions 28 exactes.",
     signals: [
       {
         title: "Dimensions 28 exactes — 28 × 22 × 10 cm",
@@ -258,14 +258,14 @@ export const hermesModels: ModelData[] = [
     ],
     faqs: [
       {
-        question: "Pourquoi la Kelly 28 est-elle plus demandée que la Kelly 25 ?",
+        question: "Kelly 28 ou Kelly 25 : laquelle choisir ?",
         answer:
-          "La 28 offre un meilleur ratio taille/fonctionnalité pour les smartphones modernes (iPhone Pro Max rentre facilement). La 25 oblige à laisser le téléphone à l'extérieur. Cette ergonomie moderne a déplacé la demande de 25 vers 28 depuis 2020.",
+          "La 28 offre un meilleur ratio taille/fonctionnalité pour les smartphones modernes (iPhone Pro Max rentre facilement). La 25 oblige à laisser le téléphone à l'extérieur.",
       },
       {
         question: "Peut-on commander une Kelly 28 avec cuir exotique sur-mesure ?",
         answer:
-          "Oui, Hermès propose des Spécial Order (SO) avec choix cuir, couleur, hardware. Délai 1-3 ans. Prix : 3-5x retail standard. Les SO ont un stamp horseshoe sur la bride intérieure. Les contrefaçons imitent parfois les SO mais avec stamp horseshoe imprimé incorrect.",
+          "Oui, Hermès propose des Spécial Order (SO) avec choix cuir, couleur, hardware. Délai 1-3 ans. Les SO ont un stamp horseshoe sur la bride intérieure. Les contrefaçons imitent parfois les SO mais avec stamp horseshoe imprimé incorrect.",
       },
     ],
   },
@@ -278,7 +278,7 @@ export const hermesModels: ModelData[] = [
     retailYear: "1959 (production continue)",
     tagline: "Le mini crossbody au H métal iconique",
     intro:
-      "Le Hermès Constance 18, créé en 1959 par Catherine Chaillet (qui l'a nommée d'après sa 5e enfant Constance), est le mini-sac crossbody iconique Hermès. Sa signature : le H métal doré/palladium frontal comme fermoir. Retail 2026 : 8 800-11 500 € cuirs courants. Prix marché secondaire : 10 000-18 000 € selon cuir. La Constance 18 a explosé en popularité 2018-2024 grâce à Instagram et au « quiet luxury » trend. Comme Birkin/Kelly, waiting lists 1-3 ans en boutique. Les contrefaçons Constance sont massives car la silhouette est simple (rectangle + sangle + H frontal), ce qui facilite la production UA. Cependant, le H métal complexe, le saddle stitching, le stamp année et la sangle réglable restent difficiles à contrefaire correctement.",
+      "Le Hermès Constance 18, créé en 1959 par Catherine Chaillet (qui l'a nommée d'après sa 5e enfant Constance), est le mini-sac crossbody iconique Hermès. Sa signature : le H métal doré/palladium frontal comme fermoir. Retail 2026 : 8 800-11 500 € cuirs courants. Prix marché secondaire : 10 000-18 000 € selon cuir. La Constance 18 a explosé en popularité 2018-2024 grâce à Instagram et au « quiet luxury » trend. Les contrefaçons Constance sont massives car la silhouette est simple (rectangle + sangle + H frontal), ce qui facilite la production UA. Cependant, le H métal complexe, le saddle stitching, le stamp année et la sangle réglable restent difficiles à contrefaire correctement.",
     signals: [
       {
         title: "H métal frontal — gravure + mécanisme pivot",
@@ -315,7 +315,7 @@ export const hermesModels: ModelData[] = [
       {
         title: "Constance 18 Epsom Noir « neuve » à 3 000 €",
         description:
-          "La Constance 18 Epsom Noir Gold hardware a un prix marché 10 000-14 000 €. Une annonce à 3 000 € est une contrefaçon certaine.",
+          "La Constance 18 Epsom Noir Gold hardware a un prix marché 10 000-14 000 €. Une annonce à 3 000 € est suspecte.",
       },
       {
         title: "Constance mini 14 « rare » à prix accessible",
@@ -345,7 +345,7 @@ export const hermesModels: ModelData[] = [
     retailYear: "1978 (III lancée en 2000)",
     tagline: "Le crossbody perforé H, entrée dans l'univers Hermès",
     intro:
-      "Le Hermès Evelyne III PM, lancé en 1978 (créé par Evelyne Bertrand pour le département équitation) et relancé en version III en 2000, est le « porte d'entrée » abordable dans l'univers Hermès — retail 2026 : 3 800-5 200 € selon cuir. Pas de waiting list boutique, disponibilité régulière. Sa signature : le H perforé frontal (trous qui forment un H) et la sangle crossbody fixe. Prix marché secondaire : 3 500-6 000 €. L'Evelyne est la « first Hermès » de beaucoup de collectionneuses. Les contrefaçons Evelyne existent mais moins massives que Birkin/Kelly (marge plus faible sur un sac à 4 000 €). Les 5 signaux adaptés à Evelyne : H perforé précision, saddle stitching, stamp, sangle fixe, et doublure Clemence/Togo.",
+      "Le Hermès Evelyne III PM, lancé en 1978 (créé par Evelyne Bertrand pour le département équitation) et relancé en version III en 2000, est le « porte d'entrée » abordable dans l'univers Hermès — retail 2026 : 3 800-5 200 € selon cuir. Pas de waiting list boutique, disponibilité régulière. Sa signature : le H perforé frontal (trous qui forment un H) et la sangle crossbody fixe. Prix marché secondaire : 3 500-6 000 €. L'Evelyne est la « first Hermès » de beaucoup de collectionneuses. Les contrefaçons Evelyne existent. Les signaux adaptés à Evelyne : H perforé précision, saddle stitching, stamp, sangle fixe, et doublure Clemence/Togo.",
     signals: [
       {
         title: "H perforé — forme parfaite et perforations nettes",

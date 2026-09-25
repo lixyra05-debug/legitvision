@@ -10,7 +10,7 @@ export const stoneIslandModels: ModelData[] = [
     retailYear: "1982-présent",
     tagline: "Le hoodie italien à patch compass iconique",
     intro:
-      "Le Stone Island Patch Hoodie, produit depuis la fondation de la marque en 1982 par Massimo Osti, est le hoodie à patch « compass » (boussole) détachable sur la manche gauche — signature absolue de la marque italienne. Retail 220-350 € selon coton et saison, avec prix marché secondaire 180-400 € selon coloris et millésime. Les coloris classiques (navy, black, grey, green) sont les plus accessibles (180-280 €), tandis que les éditions limitées (ghost pieces, prototype research, shadow project) atteignent 400-800 €. Stone Island est une des marques les plus contrefaites en Europe (particulièrement UK pour culture football casual/terrace). Les signaux d'authentification ciblent : patch compass (broderie précise, boutons spécifiques), tag intérieur (étiquette tissée avec code produit), bouton compass (marquage gravé au laser), coton Italian-made (densité et toucher), et hang tag (cartonné premium avec numéro série).",
+      "Le Stone Island Patch Hoodie, produit depuis la fondation de la marque en 1982 par Massimo Osti, est le hoodie à patch « compass » (boussole) détachable sur la manche gauche — signature absolue de la marque italienne. Retail 220-350 € selon coton et saison, avec prix marché secondaire 180-400 € selon coloris et millésime. Les coloris classiques (navy, black, grey, green) sont les plus accessibles (180-280 €), tandis que les éditions limitées (ghost pieces, prototype research, shadow project) atteignent 400-800 €. Les signaux d'authentification ciblent : patch compass (broderie précise, boutons spécifiques), tag intérieur (étiquette tissée avec code produit), bouton compass (marquage gravé au laser), coton Italian-made (densité et toucher), et hang tag (cartonné premium avec numéro série).",
     signals: [
       {
         title: "Patch compass — broderie haute précision",
@@ -77,7 +77,7 @@ export const stoneIslandModels: ModelData[] = [
     retailYear: "1982-présent",
     tagline: "La veste technique italienne au patch compass",
     intro:
-      "La Stone Island Jacket — terme générique regroupant les vestes iconiques David-TC, Raso Gommato, Nylon Metal, Tela Stella — est le vêtement technique signature de la marque italienne depuis 1982. Retail 450-900 € selon matériau, avec prix marché secondaire 350-1 200 € selon modèle et millésime. Les vestes classiques David-TC (navy, black, khaki) sont les plus accessibles (350-600 €), tandis que les Raso Gommato (coton enduit), Nylon Metal Shiny et les Heat Reactive Ice Jackets (changement de couleur selon température) atteignent 800-1 500 €. La contrefaçon Stone Island Jacket est particulièrement rentable pour les fakers (marge de 500-800 € par pièce), donc très présente sur Vinted UK, Grailed et sites russes. Les cinq signaux ci-dessous ciblent : patch compass premium, zippers YKK italiens, tag intérieur triangulaire, fabric tech (membrane respirante spécifique), et hang tag avec care instructions détaillées.",
+      "La Stone Island Jacket — terme générique regroupant les vestes iconiques David-TC, Raso Gommato, Nylon Metal, Tela Stella — est le vêtement technique signature de la marque italienne depuis 1982. Retail 450-900 € selon matériau, avec prix marché secondaire 350-1 200 € selon modèle et millésime. Les vestes classiques David-TC (navy, black, khaki) sont les plus accessibles (350-600 €), tandis que les Raso Gommato (coton enduit), Nylon Metal Shiny et les Heat Reactive Ice Jackets (changement de couleur selon température) atteignent 800-1 500 €. La contrefaçon Stone Island Jacket est particulièrement rentable pour les fakers (marge de 500-800 € par pièce), donc très présente sur Vinted UK, Grailed et sites russes. Les signaux ci-dessous ciblent : patch compass premium, zippers YKK italiens, tag intérieur triangulaire, fabric tech (membrane respirante spécifique), et hang tag avec care instructions détaillées.",
     signals: [
       {
         title: "Patch compass — boutons + double liserés",
@@ -124,9 +124,9 @@ export const stoneIslandModels: ModelData[] = [
     ],
     faqs: [
       {
-        question: "Quelles sont les Stone Island Jackets les plus recherchées ?",
+        question: "Quelles Stone Island Jackets valent le plus cher ?",
         answer:
-          "Par ordre de rareté et valeur : (1) Ice Jackets Heat Reactive 1988-1995 (1 500-5 000 €, ultra-rare vintage), (2) Shadow Project prototype research (800-2 500 €), (3) Raso Gommato garment dyed (700-1 200 €), (4) Nylon Metal Shiny (500-900 €), (5) David-TC classique (350-700 €). Les collabs (Supreme x Stone Island 2014-2023) atteignent 1 500-4 000 €.",
+          "Par ordre de valeur : (1) Ice Jackets Heat Reactive 1988-1995 (1 500-5 000 €, ultra-rare vintage), (2) Shadow Project prototype research (800-2 500 €), (3) Raso Gommato garment dyed (700-1 200 €), (4) Nylon Metal Shiny (500-900 €), (5) David-TC classique (350-700 €). Les collabs (Supreme x Stone Island 2014-2023) atteignent 1 500-4 000 €.",
       },
       {
         question: "Les Stone Island Jackets Shadow Project sont-elles plus rares ?",

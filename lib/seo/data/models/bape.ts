@@ -10,7 +10,7 @@ export const bapeModels: ModelData[] = [
     retailYear: "2005-présent",
     tagline: "Le hoodie japonais au visage de requin iconique",
     intro:
-      "Le BAPE Shark Hoodie, lancé par A Bathing Ape en 2005 sous la direction de Nigo, est le hoodie zippé intégral avec impression « visage de requin » sur la capuche (dents, yeux, nez en ABC camo). Retail 320-400 $ (environ 300-380 €), avec prix marché secondaire 250-600 € selon coloris et année. Les coloris classiques (green, purple, black, pink camo) sont les plus accessibles (250-400 €), tandis que les coloris spéciaux (1st camo, limited drops, collabs Adidas/Undefeated) atteignent 500-1 200 €. La contrefaçon Shark Hoodie est massive et sophistiquée : les « super fakes » (UA quality, Putian) sont très proches de l'authentique et trompent même certains revendeurs. Les cinq signaux ci-dessous ciblent les points les plus difficiles à contrefaire : impression visage requin (alignement dents/yeux), zipper YKK full length, tag intérieur BAPE Made in Japan, broderie WGM arrière, et qualité coton 450 gsm lourd.",
+      "Le BAPE Shark Hoodie, lancé par A Bathing Ape en 2005 sous la direction de Nigo, est le hoodie zippé intégral avec impression « visage de requin » sur la capuche (dents, yeux, nez en ABC camo). Retail 320-400 $ (environ 300-380 €), avec prix marché secondaire 250-600 € selon coloris et année. Les coloris classiques (green, purple, black, pink camo) sont les plus accessibles (250-400 €), tandis que les coloris spéciaux (1st camo, limited drops, collabs Adidas/Undefeated) atteignent 500-1 200 €. La contrefaçon Shark Hoodie est massive et sophistiquée : les « super fakes » (UA quality, Putian) sont très proches de l'authentique et trompent même certains revendeurs. Les signaux ci-dessous ciblent les points les plus difficiles à contrefaire : impression visage requin (alignement dents/yeux), zipper YKK full length, tag intérieur BAPE Made in Japan, broderie WGM arrière, et qualité coton 450 gsm lourd.",
     signals: [
       {
         title: "Impression visage requin — alignement parfait",
@@ -77,7 +77,7 @@ export const bapeModels: ModelData[] = [
     retailYear: "2000-présent",
     tagline: "Le hoodie camouflage lettres BAPE iconique",
     intro:
-      "Le BAPE ABC Camo Hoodie, produit depuis 2000 par A Bathing Ape sous la direction de Nigo, est le hoodie pull-over avec camouflage « ABC » (composé des lettres A-B-A-T-H-I-N-G-A-P-E formant le motif camo). Retail 250-320 $ (environ 240-300 €), avec prix marché secondaire 200-450 € selon coloris et millésime. Les coloris classiques (green, purple, blue, pink ABC camo) sont les plus accessibles (200-300 €), tandis que les coloris rares (1st camo 2000-2005, collabs Pharrell Williams, limited drops) atteignent 400-800 €. L'ABC Camo Hoodie est une des pièces BAPE les plus populaires et contrefaites avec le Shark Hoodie. Les signaux d'authentification ciblent : motif ABC camo (lettres lisibles à zoom), tag BAPE Made in Japan, broderie « Ape Head » frontale, qualité coton japonais, et drawstring aglets (embouts cordon capuche).",
+      "Le BAPE ABC Camo Hoodie, produit depuis 2000 par A Bathing Ape sous la direction de Nigo, est le hoodie pull-over avec camouflage « ABC » (composé des lettres A-B-A-T-H-I-N-G-A-P-E formant le motif camo). Retail 250-320 $ (environ 240-300 €), avec prix marché secondaire 200-450 € selon coloris et millésime. Les coloris classiques (green, purple, blue, pink ABC camo) sont les plus accessibles (200-300 €), tandis que les coloris rares (1st camo 2000-2005, collabs Pharrell Williams, limited drops) atteignent 400-800 €. Les signaux d'authentification ciblent : motif ABC camo (lettres lisibles à zoom), tag BAPE Made in Japan, broderie « Ape Head » frontale, qualité coton japonais, et drawstring aglets (embouts cordon capuche).",
     signals: [
       {
         title: "Motif ABC camo — lettres lisibles au zoom",
@@ -119,7 +119,7 @@ export const bapeModels: ModelData[] = [
       {
         title: "« Lot BAPE pas cher » — packs contrefaçon",
         description:
-          "Certains vendeurs proposent des « lots 3 hoodies BAPE » à 200-300 € total, soit 70-100 € par pièce. Impossible pour du BAPE authentique (prix min revente = 200 €). Ces lots sont systématiquement des contrefaçons en gros.",
+          "Certains vendeurs proposent des « lots 3 hoodies BAPE » à 200-300 € total, soit 70-100 € par pièce. Impossible pour du BAPE authentique (prix min revente = 200 €). Ces lots sont un signal d'alerte.",
       },
     ],
     faqs: [

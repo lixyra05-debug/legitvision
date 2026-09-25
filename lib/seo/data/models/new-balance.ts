@@ -10,7 +10,7 @@ export const newBalanceModels: ModelData[] = [
     retailYear: "1989 (rééditée en 2020)",
     tagline: "La basket 90s ressuscitée par Aimé Leon Dore",
     intro:
-      "La New Balance 550, créée en 1989 comme chaussure de basket pro puis retirée du catalogue, a été ressuscitée par Aimé Leon Dore (ALD) en 2020 dans le coloris « White/Green » qui est devenu viral — et a propulsé New Balance dans le top 3 des marques sneakers les plus désirées. Retail 130 € pour les coloris NB standard (White/Green, White/Navy, White/Grey, Sea Salt), avec les collabs ALD qui s'échangent entre 300 € et 800 €. Son succès a attiré massivement les contrefacteurs : Putian produit aujourd'hui des dizaines de milliers de pairs de 550 par mois, revendues principalement sur Vinted, Depop et Shein. Les super-fakes reproduisent correctement la silhouette basket retro et les matériaux cuir-mesh, mais échouent systématiquement sur quatre points invariables : le N latéral en cuir (pas en synthétique), la languette épaisse avec logo brodé, le talon fermeté spécifique et le format des tags UK/EU. Les cinq signaux ci-dessous construisent une check-list rapide pour les acheteurs.",
+      "La New Balance 550, créée en 1989 comme chaussure de basket pro puis retirée du catalogue, a été ressuscitée par Aimé Leon Dore (ALD) en 2020 dans le coloris « White/Green » qui est devenu viral. Retail 130 € pour les coloris NB standard (White/Green, White/Navy, White/Grey, Sea Salt), avec les collabs ALD qui s'échangent entre 300 € et 800 €. Son succès a attiré massivement les contrefacteurs : Putian produit aujourd'hui des pairs de 550, revendues principalement sur Vinted, Depop et Shein. Les super-fakes reproduisent correctement la silhouette basket retro et les matériaux cuir-mesh, mais échouent systématiquement sur quatre points invariables : le N latéral en cuir (pas en synthétique), la languette épaisse avec logo brodé, le talon fermeté spécifique et le format des tags UK/EU. Les signaux ci-dessous construisent une check-list rapide pour les acheteurs.",
     signals: [
       {
         title: "N latéral — cuir pleine fleur, épaisseur 2 mm",
@@ -47,12 +47,12 @@ export const newBalanceModels: ModelData[] = [
       {
         title: "550 White/Green « neuve » à 75 €",
         description:
-          "La 550 retail à 130 € et son prix marché ne descend jamais sous 100 € en taille courante. Une annonce à 75 € boîte incluse est quasi-certainement une contrefaçon Putian.",
+          "La 550 retail à 130 € et son prix marché ne descend jamais sous 100 € en taille courante. Une annonce à 75 € boîte incluse est suspecte.",
       },
       {
         title: "Collab ALD x NB 550 à prix retail",
         description:
-          "Les collabs ALD ont un prix marché stable 400-800 €. Un vendeur Instagram proposant une ALD à 150 € vend à 100 % une contrefaçon. Les collabs authentiques sont vendues exclusivement via ALD (NYC shop + site).",
+          "Les collabs ALD ont un prix marché stable 400-800 €. Un vendeur Instagram proposant une ALD à 150 € est suspect. Les collabs authentiques sont vendues exclusivement via ALD (NYC shop + site).",
       },
     ],
     faqs: [
@@ -77,7 +77,7 @@ export const newBalanceModels: ModelData[] = [
     retailYear: "2019",
     tagline: "La Made in USA dad-shoe de référence",
     intro:
-      "La New Balance 990v5, cinquième itération du modèle 990 lancé en 1982, incarne la promesse « Made in USA » de New Balance : produite dans les usines de Lawrence (Massachusetts) et Skowhegan (Maine) avec au moins 70 % de composants US. Retail 199 € pour les coloris standard (Grey, Navy, Black, Tan), avec les collaborations Aimé Leon Dore, Teddy Santis, JJJJound et Beams qui atteignent 400-700 €. Le « Made in USA » est précisément ce qui protège la 990v5 des contrefaçons massives — reproduire l'assemblage et la qualité matériaux américaine à un coût compétitif reste complexe. Cependant, les contrefaçons existent, notamment sur les collabs (JJJJound, Teddy Santis) où la marge justifie l'effort. Les cinq signaux ci-dessous vérifient l'authenticité : qualité suède premium, ENCAP midsole, broderie « Made in USA », code article M990XX5 et certification Made in USA sur le tag.",
+      "La New Balance 990v5, cinquième itération du modèle 990 lancé en 1982, incarne la promesse « Made in USA » de New Balance : produite dans les usines de Lawrence (Massachusetts) et Skowhegan (Maine) avec au moins 70 % de composants US. Retail 199 € pour les coloris standard (Grey, Navy, Black, Tan), avec les collaborations Aimé Leon Dore, Teddy Santis, JJJJound et Beams qui atteignent 400-700 €. Le « Made in USA » est précisément ce qui protège la 990v5 des contrefaçons massives — reproduire l'assemblage et la qualité matériaux américaine à un coût compétitif reste complexe. Cependant, les contrefaçons existent, notamment sur les collabs (JJJJound, Teddy Santis) où la marge justifie l'effort. Les signaux ci-dessous vérifient l'authenticité : qualité suède premium, ENCAP midsole, broderie « Made in USA », code article M990XX5 et certification Made in USA sur le tag.",
     signals: [
       {
         title: "Suède premium — épaisseur et grain",
@@ -144,7 +144,7 @@ export const newBalanceModels: ModelData[] = [
     retailYear: "2002 (rééditée en 2020)",
     tagline: "La running Y2K chunky au succès Protection Pack",
     intro:
-      "La New Balance 2002R, running-shoe lancée en 2002 puis rééditée en 2020, a explosé en popularité grâce aux collaborations « Protection Pack » (coloris terreux avec overlays suède, drop 2022) et aux collabs Salehe Bembury (« Water Be The Guide », 2022). Retail 160 € pour les coloris standard, avec les Protection Pack qui s'échangent entre 300 € et 550 € et les Salehe Bembury qui dépassent 700 €. La 2002R se distingue de la 990v5 par sa production Made in Asia (plus accessible), sa silhouette plus chunky et sa technologie N-ergy en plus du ENCAP. Les contrefaçons visent principalement les collabs à forte marge. Les cinq signaux ci-dessous distinguent une 2002R authentique : N-ergy visible en transparence, suède des overlays, stitching 3D autour du N, code article MR2002R et packaging (hangtag, dustbag pour collabs).",
+      "La New Balance 2002R, running-shoe lancée en 2002 puis rééditée en 2020, a explosé en popularité grâce aux collaborations « Protection Pack » (coloris terreux avec overlays suède, drop 2022) et aux collabs Salehe Bembury (« Water Be The Guide », 2022). Retail 160 € pour les coloris standard, avec les Protection Pack qui s'échangent entre 300 € et 550 € et les Salehe Bembury qui dépassent 700 €. La 2002R se distingue de la 990v5 par sa production Made in Asia (plus accessible), sa silhouette plus chunky et sa technologie N-ergy en plus du ENCAP. Les contrefaçons visent principalement les collabs à forte marge. Les signaux ci-dessous distinguent une 2002R authentique : N-ergy visible en transparence, suède des overlays, stitching 3D autour du N, code article MR2002R et packaging (hangtag, dustbag pour collabs).",
     signals: [
       {
         title: "N-ergy visible — transparent sur flanc",
@@ -198,7 +198,7 @@ export const newBalanceModels: ModelData[] = [
       {
         question: "La Protection Pack est-elle un drop unique ou récurrent ?",
         answer:
-          "La Protection Pack est un drop récurrent avec de nouveaux coloris chaque saison. Les drops sont limités et se vendent en minutes sur newbalance.com. Les restocks sont rares, ce qui explique la prime de 150-200 % sur le marché secondaire.",
+          "La Protection Pack est un drop récurrent avec de nouveaux coloris chaque saison. Les drops sont limités et se vendent en minutes sur newbalance.com. Les restocks sont rares, ce qui explique la prime sur le marché secondaire.",
       },
     ],
   },
@@ -211,7 +211,7 @@ export const newBalanceModels: ModelData[] = [
     retailYear: "2022",
     tagline: "La dad-shoe Y2K créée pour la Gen Z",
     intro:
-      "La New Balance 9060, lancée en 2022 comme interprétation moderne de l'ADN 99X (990, 993, 2002), a été conçue pour la Gen Z avec une silhouette délibérément oversized, des overlays mesh-suède exagérés, une semelle 4,5 cm au talon et des coloris pastel (Sea Salt, Cream, Mushroom) alternant avec des couleurs néon (Sky Blue, Pink Quartz). Retail 180 € avec prix marché 220-300 € sur les coloris rupturés. Les collabs Joe Freshgoods, Bodega et Stray Rats poussent les prix à 400-700 €. La 9060 est la cible #1 des contrefacteurs 2024-2026 car sa popularité virale TikTok (#9060 a dépassé 120 M de vues) crée une demande massive. Les UA batches Pandabuy maîtrisent la silhouette mais échouent sur quatre points : densité de la Abzorb, texture mesh 3D exagérée, forme du N wavy et le co-branding collab. Les cinq signaux ci-dessous construisent le check-list anti-fake.",
+      "La New Balance 9060, lancée en 2022 comme interprétation moderne de l'ADN 99X (990, 993, 2002), a été conçue pour la Gen Z avec une silhouette délibérément oversized, des overlays mesh-suède exagérés, une semelle 4,5 cm au talon et des coloris pastel (Sea Salt, Cream, Mushroom) alternant avec des couleurs néon (Sky Blue, Pink Quartz). Retail 180 € avec prix marché 220-300 € sur les coloris rupturés. Les collabs Joe Freshgoods, Bodega et Stray Rats poussent les prix à 400-700 €. La 9060 est une cible des contrefacteurs 2024-2026 car sa popularité virale TikTok crée une demande massive. Les UA batches Pandabuy maîtrisent la silhouette mais échouent sur quatre points : densité de la Abzorb, texture mesh 3D exagérée, forme du N wavy et le co-branding collab. Les signaux ci-dessous construisent le check-list anti-fake.",
     signals: [
       {
         title: "Abzorb midsole — compression et rebond",
@@ -253,7 +253,7 @@ export const newBalanceModels: ModelData[] = [
       {
         title: "Collab Joe Freshgoods « deadstock »",
         description:
-          "Les collabs Joe Freshgoods s'échangent à 500-900 €. Un vendeur proposant ces collabs à 200-300 € vend à 95 % une contrefaçon. Vérifiez le receipt original.",
+          "Les collabs Joe Freshgoods s'échangent à 500-900 €. Un vendeur proposant ces collabs à 200-300 € est suspect. Vérifiez le receipt original.",
       },
     ],
     faqs: [
@@ -278,7 +278,7 @@ export const newBalanceModels: ModelData[] = [
     retailYear: "2006 (rééditée en 2022)",
     tagline: "La running Y2K rééditée au pattern réflectif",
     intro:
-      "La New Balance 1906R, running-shoe lancée en 2006 puis rééditée en 2022, surfe sur la vague Y2K avec une silhouette inspirée de la 1906 d'origine mais modernisée pour 2024-2026. Ses coloris métalliques (Silver Metallic, Grey Matter), ses overlays réfléchissants 3M et sa semelle N-ergy+ABZORB lui donnent un style retrofuturiste très recherché par la Gen Z. Retail 150 €, prix marché 180-250 €. Les collabs Patta, Stone Island et Action Bronson atteignent 400-700 €. Les contrefaçons ciblent surtout les coloris métalliques, où les reflets 3M sont complexes à reproduire correctement. Les cinq signaux ci-dessous vérifient l'authenticité : qualité du 3M, pattern mesh technique, N gris métallisé, codes M1906R et packaging.",
+      "La New Balance 1906R, running-shoe lancée en 2006 puis rééditée en 2022, surfe sur la vague Y2K avec une silhouette inspirée de la 1906 d'origine mais modernisée pour 2024-2026. Ses coloris métalliques (Silver Metallic, Grey Matter), ses overlays réfléchissants 3M et sa semelle N-ergy+ABZORB lui donnent un style retrofuturiste très recherché par la Gen Z. Retail 150 €, prix marché 180-250 €. Les collabs Patta, Stone Island et Action Bronson atteignent 400-700 €. Les contrefaçons ciblent surtout les coloris métalliques, où les reflets 3M sont complexes à reproduire correctement. Les signaux ci-dessous vérifient l'authenticité : qualité du 3M, pattern mesh technique, N gris métallisé, codes M1906R et packaging.",
     signals: [
       {
         title: "3M réflectif — intensité flash",
@@ -315,7 +315,7 @@ export const newBalanceModels: ModelData[] = [
       {
         title: "1906R Silver « neuve » à 80 €",
         description:
-          "La 1906R Silver retail à 150 € et son prix marché est stable à 180-250 €. Une annonce à 80 € est une contrefaçon quasi-certaine.",
+          "La 1906R Silver retail à 150 € et son prix marché est stable à 180-250 €. Une annonce à 80 € est suspecte.",
       },
       {
         title: "Collab Stone Island x 1906R à prix ami",

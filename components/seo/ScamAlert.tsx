@@ -1,11 +1,5 @@
 import type { ScamPattern } from "@/lib/seo/types";
 
-const FREQUENCY_LABELS = {
-  "very-common": "Très fréquent",
-  common: "Fréquent",
-  occasional: "Occasionnel",
-} as const;
-
 export function ScamAlert({ scam }: { scam: ScamPattern }) {
   return (
     <article className="relative overflow-hidden rounded-lg border border-warning/20 bg-warning/[0.03] p-6">
@@ -32,9 +26,6 @@ export function ScamAlert({ scam }: { scam: ScamPattern }) {
             <h3 className="font-heading text-h4 font-semibold text-foreground">
               {scam.title}
             </h3>
-            <span className="rounded-full border border-warning/30 bg-warning/10 px-2 py-0.5 text-caption font-medium text-warning">
-              {FREQUENCY_LABELS[scam.frequency]}
-            </span>
           </div>
           <p className="mt-2 text-ui leading-relaxed text-muted-foreground">
             {scam.description}

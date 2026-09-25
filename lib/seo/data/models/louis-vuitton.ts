@@ -8,9 +8,9 @@ export const louisVuittonModels: ModelData[] = [
     category: "bags",
     priceRange: "1 400-1 800 €",
     retailYear: "2007 (production continue)",
-    tagline: "Le tote iconique, le plus vendu de LV",
+    tagline: "Le tote iconique de LV",
     intro:
-      "Le Louis Vuitton Neverfull MM, lancé en 2007, est le tote bag le plus vendu de l'histoire de Louis Vuitton — plus de 12 millions d'unités écoulées en 17 ans. Disponible en Monogram Canvas, Damier Ebene, Damier Azur et coloris saisonniers (Escale, By The Pool, Jungle), son prix retail 2026 est de 1 600 € pour la version standard, avec les éditions limitées collaborations (Yayoi Kusama, Takashi Murakami) atteignant 2 500-4 000 € en resell. Cette popularité massive en fait la cible numéro 1 des contrefacteurs : les super-fakes chinois (China 1:1) coûtent 150-300 € à produire et se revendent jusqu'à 800-1 000 € sur les marketplaces. Les contrefaçons 2025-2026 maîtrisent le pattern Monogram Canvas, la forme trapézoïdale et les poignées en cuir Vachetta, mais échouent sur quatre points invariables : l'alignement du Monogram sur les couture, la qualité du Vachetta naturel non teinté, le date code format DU/SD/SP et le zipper pochette intérieure amovible. Les cinq signaux ci-dessous permettent d'identifier 95 % des fakes.",
+      "Le Louis Vuitton Neverfull MM a été lancé en 2007. Disponible en Monogram Canvas, Damier Ebene, Damier Azur et coloris saisonniers (Escale, By The Pool, Jungle), son prix retail 2026 est de 1 600 € pour la version standard, avec les éditions limitées collaborations (Yayoi Kusama, Takashi Murakami) atteignant 2 500-4 000 € en resell. Les super-fakes chinois (China 1:1) coûtent 150-300 € à produire et se revendent jusqu'à 800-1 000 € sur les marketplaces. Les contrefaçons 2025-2026 maîtrisent le pattern Monogram Canvas, la forme trapézoïdale et les poignées en cuir Vachetta, mais échouent sur quatre points invariables : l'alignement du Monogram sur les couture, la qualité du Vachetta naturel non teinté, le date code format DU/SD/SP et le zipper pochette intérieure amovible.",
     signals: [
       {
         title: "Alignement Monogram — symétrie sur couture centrale",
@@ -52,7 +52,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "Faux date code « DU1185 »",
         description:
-          "Les contrefacteurs utilisent souvent le même date code sur des milliers de fakes (ex. DU1185). Reverse-search le code sur Google : si tu vois des dizaines de résultats Vinted/eBay avec ce code exact, c'est une contrefaçon.",
+          "Les contrefacteurs utilisent souvent le même date code (ex. DU1185). Reverse-search le code sur Google : si tu vois des dizaines de résultats Vinted/eBay avec ce code exact, c'est un signal de contrefaçon.",
       },
     ],
     faqs: [
@@ -77,7 +77,7 @@ export const louisVuittonModels: ModelData[] = [
     retailYear: "1930 (production continue)",
     tagline: "Le bowling bag iconique porté par Audrey Hepburn",
     intro:
-      "Le Louis Vuitton Speedy 30, créé en 1930 comme bowling bag portable et popularisé par Audrey Hepburn dans les années 1960, est l'un des sacs les plus intemporels de LV. Retail 2026 : 1 400-1 700 € selon canvas (Monogram, Damier Ebene, Damier Azur). Sa forme iconique, son cadenas Serrure 2 avec clé gravée, ses poignées Vachetta et son double zipper Lampo en font un sac à la fois fonctionnel et statutaire. Les contrefaçons Speedy sont massives sur Vinted, Leboncoin, Vestiaire Collective. Les super-fakes maîtrisent la forme et le canvas mais échouent sur la qualité du Vachetta, le numéro de série du cadenas, le zipper pull « LV » spécifique et les sangles de renfort intérieures. Les cinq signaux ci-dessous sont spécifiques à la Speedy et complémentaires aux signaux Neverfull.",
+      "Le Louis Vuitton Speedy 30, créé en 1930 comme bowling bag portable et popularisé par Audrey Hepburn dans les années 1960, est l'un des sacs les plus intemporels de LV. Retail 2026 : 1 400-1 700 € selon canvas (Monogram, Damier Ebene, Damier Azur). Sa forme iconique, son cadenas Serrure 2 avec clé gravée, ses poignées Vachetta et son double zipper Lampo en font un sac à la fois fonctionnel et statutaire. Les contrefaçons Speedy sont massives sur Vinted, Leboncoin, Vestiaire Collective. Les super-fakes maîtrisent la forme et le canvas mais échouent sur la qualité du Vachetta, le numéro de série du cadenas, le zipper pull « LV » spécifique et les sangles de renfort intérieures. Les signaux ci-dessous sont spécifiques à la Speedy et complémentaires aux signaux Neverfull.",
     signals: [
       {
         title: "Cadenas Serrure 2 — numéro + cuivre brossé",
@@ -126,7 +126,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         question: "Quelle différence entre Speedy 25, 30, 35 et 40 ?",
         answer:
-          "Les chiffres indiquent la largeur en cm. Speedy 25 (25 cm) est le plus petit, 30 cm le plus vendu, 35 et 40 cm sont plus grands (tailles voyage). Chaque taille a son code article et son prix retail différent. Les contrefaçons mélangent parfois tailles (Speedy 35 vendu comme 30).",
+          "Les chiffres indiquent la largeur en cm. Speedy 25 (25 cm) est le plus petit, 35 et 40 cm sont plus grands (tailles voyage). Chaque taille a son code article et son prix retail différent. Les contrefaçons mélangent parfois tailles (Speedy 35 vendu comme 30).",
       },
       {
         question: "Le Vachetta de la Speedy doit-il foncer avec le temps ?",
@@ -144,7 +144,7 @@ export const louisVuittonModels: ModelData[] = [
     retailYear: "1930 (production continue)",
     tagline: "Le weekender iconique popularisé par Kanye et Virgil",
     intro:
-      "Le Louis Vuitton Keepall 50, né dans les années 1930 comme sac de voyage et relancé par Virgil Abloh avec les collabs Monogram Empreinte et collaborations hip-hop (Kanye West 2009, Virgil SS19), est l'un des sacs voyage les plus iconiques du luxe. Retail 2026 : 2 100-2 800 € selon version (Monogram Canvas, Damier Graphite, Bandouliere). Le Keepall Bandouliere ajoute une sangle détachable + pads Vachetta. Les collabs limited editions (Supreme, Nigo, Virgil Multicolor) s'échangent 4 000-15 000 €. La cible principale des contrefaçons est le Keepall Monogram Canvas standard et Damier Graphite (Men's), reproduits en UA à 300-500 €. Les cinq signaux spécifiques au Keepall : cadenas rectangulaire avec n°, stitching au niveau des sangles Vachetta, sangle épaule avec piping, fond rectangulaire avec pieds métal et date code dans poche zippée.",
+      "Le Louis Vuitton Keepall 50, né dans les années 1930 comme sac de voyage et relancé par Virgil Abloh avec les collabs Monogram Empreinte et collaborations hip-hop (Kanye West 2009, Virgil SS19), est l'un des sacs voyage les plus iconiques du luxe. Retail 2026 : 2 100-2 800 € selon version (Monogram Canvas, Damier Graphite, Bandouliere). Le Keepall Bandouliere ajoute une sangle détachable + pads Vachetta. Les collabs limited editions (Supreme, Nigo, Virgil Multicolor) s'échangent 4 000-15 000 €. Le Keepall Monogram Canvas standard et le Damier Graphite (Men's) sont reproduits en UA à 300-500 €. Les signaux spécifiques au Keepall : cadenas rectangulaire avec n°, stitching au niveau des sangles Vachetta, sangle épaule avec piping, fond rectangulaire avec pieds métal et date code dans poche zippée.",
     signals: [
       {
         title: "Cadenas rectangulaire — gravure complète",
@@ -211,7 +211,7 @@ export const louisVuittonModels: ModelData[] = [
     retailYear: "1934 (BB lancée en 2011)",
     tagline: "Le mini-sac structuré au cadenas iconique",
     intro:
-      "Le Louis Vuitton Alma BB, version miniature du sac Alma créé en 1934, a été lancée en 2011 et s'est imposée comme l'un des mini-sacs les plus désirés de LV. Sa forme bombée-structurée rappelle l'Alma Original (porté par Coco Chanel en 1930), avec une taille crossbody parfaite (23,5 × 17 × 11,5 cm). Retail 2026 : 1 500-1 800 € selon cuir (Monogram Vernis, Epi, Monogram Canvas). Les coloris Vernis (Rose Ballerine, Amarante, Jaune Citron) sont les plus contrefaits car ils attirent les jeunes acheteuses Gen Z. Les super-fakes Alma BB reproduisent la forme mais échouent sur la brillance exacte du Vernis (trop plastique sur fakes), les 4 pieds métal gravés LV, la structure interne rigide et le numéro série sur le cadenas rond.",
+      "Le Louis Vuitton Alma BB, version miniature du sac Alma créé en 1934, a été lancée en 2011. Sa forme bombée-structurée rappelle l'Alma Original (porté par Coco Chanel en 1930), avec une taille crossbody parfaite (23,5 × 17 × 11,5 cm). Retail 2026 : 1 500-1 800 € selon cuir (Monogram Vernis, Epi, Monogram Canvas). Les super-fakes Alma BB reproduisent la forme mais échouent sur la brillance exacte du Vernis (trop plastique sur fakes), les 4 pieds métal gravés LV, la structure interne rigide et le numéro série sur le cadenas rond.",
     signals: [
       {
         title: "Vernis — brillance et texture",
@@ -253,14 +253,14 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "Alma BB « défaut Vernis — prix bas »",
         description:
-          "Certains vendeurs justifient un prix cassé par un « défaut Vernis ». Les vrais défauts Vernis (micro-craquelures) ne justifient pas une décote de plus de 30 %. Sous 70 % du prix marché, c'est une contrefaçon.",
+          "Certains vendeurs justifient un prix cassé par un « défaut Vernis ». Les vrais défauts Vernis (micro-craquelures) ne justifient pas une décote de plus de 30 %. Sous 70 % du prix marché, l'annonce est suspecte.",
       },
     ],
     faqs: [
       {
         question: "Quelle différence entre Alma BB, PM, MM et GM ?",
         answer:
-          "Les tailles Alma sont BB (mini, 23,5 cm), PM (petit, 32 cm), MM (moyen, 35 cm), GM (grand, 39 cm). La BB est la plus populaire pour le crossbody. Chaque taille a son retail et son date code format.",
+          "Les tailles Alma sont BB (mini, 23,5 cm), PM (petit, 32 cm), MM (moyen, 35 cm), GM (grand, 39 cm). Chaque taille a son retail et son date code format.",
       },
       {
         question: "Le Vernis Alma BB se fissure-t-il avec le temps ?",
@@ -276,9 +276,9 @@ export const louisVuittonModels: ModelData[] = [
     category: "bags",
     priceRange: "2 000-2 500 €",
     retailYear: "2017 (production continue)",
-    tagline: "Le crossbody Monogram Empreinte le plus demandé",
+    tagline: "Le crossbody Monogram Empreinte",
     intro:
-      "La Louis Vuitton Pochette Metis, lancée en 2017 en Monogram Canvas puis en Monogram Empreinte (cuir embossé), est devenue en moins de 5 ans l'un des crossbody les plus désirés et revendus de LV — avec des ruptures permanentes en boutique et un marché secondaire très liquide (Vestiaire, Rebag, Fashionphile). Retail 2026 : 2 100-2 400 € selon version (Canvas, Empreinte). La version Monogram Empreinte (cuir souple embossé) est la plus recherchée, avec une vraie pénurie en boutique qui alimente le marché gris. Les super-fakes Pochette Metis sont devenus extrêmement convaincants en 2025 : reproduction correcte de l'embossage Empreinte, fermoir S-lock fonctionnel et strap détachable. Les cinq signaux ci-dessous : embossage Empreinte, fermoir S-lock, strap, format exact et date code.",
+      "La Louis Vuitton Pochette Metis, lancée en 2017 en Monogram Canvas puis en Monogram Empreinte (cuir embossé), connaît des ruptures permanentes en boutique et un marché secondaire très liquide (Vestiaire, Rebag, Fashionphile). Retail 2026 : 2 100-2 400 € selon version (Canvas, Empreinte). La version Monogram Empreinte (cuir souple embossé) fait l'objet d'une vraie pénurie en boutique qui alimente le marché gris. Les super-fakes Pochette Metis sont devenus extrêmement convaincants en 2025 : reproduction correcte de l'embossage Empreinte, fermoir S-lock fonctionnel et strap détachable. Les signaux ci-dessous : embossage Empreinte, fermoir S-lock, strap, format exact et date code.",
     signals: [
       {
         title: "Embossage Empreinte — profondeur et netteté",
@@ -320,14 +320,14 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "« Pré-commande boutique » à prix retail + 200 €",
         description:
-          "Des vendeurs Vinted proposent des Pochette Metis en « pré-commande boutique » à prix retail + 200 € en disant avoir un contact LV. C'est presque toujours une arnaque : soit fake, soit vendeur qui disparaît après paiement.",
+          "Des vendeurs Vinted proposent des Pochette Metis en « pré-commande boutique » à prix retail + 200 € en disant avoir un contact LV. C'est un signal d'alerte : soit fake, soit vendeur qui disparaît après paiement.",
       },
     ],
     faqs: [
       {
         question: "Pourquoi la Pochette Metis est-elle en rupture permanente ?",
         answer:
-          "LV limite volontairement la production Pochette Metis Empreinte pour maintenir la désirabilité (stratégie de scarcity). Les listes d'attente boutique peuvent atteindre 6-12 mois. Ce déséquilibre offre-demande alimente le marché secondaire et attire les contrefacteurs.",
+          "LV limite volontairement la production Pochette Metis Empreinte pour maintenir la désirabilité (stratégie de scarcity). Ce déséquilibre offre-demande alimente le marché secondaire et attire les contrefacteurs.",
       },
       {
         question: "Quelle différence entre Pochette Metis et Pochette Felicie ?",
@@ -345,7 +345,7 @@ export const louisVuittonModels: ModelData[] = [
     retailYear: "2013 (production continue)",
     tagline: "Le sac couture au LV métal latéral pivotant",
     intro:
-      "Le Louis Vuitton Capucines BB, créé en 2013 et nommé d'après la rue Capucines (adresse historique LV à Paris), est positionné comme le sac « haute couture » de LV, plus proche d'une Birkin que d'un Monogram Canvas. Retail 2026 : 5 700-7 200 € selon cuir (Taurillon, Galet, Python, Croco en édition limitée 25 000 €+). Son cuir Taurillon (bovin tanné minéral), son monogramme LV métal pivotant sur le flanc et sa forme rigide avec poignée + sangle détachable en font un sac de statut premium. Les contrefaçons Capucines sont moins massives (prix de production UA élevé, ~500 €+) mais elles existent et visent les acheteurs d'occasion sur Vestiaire Collective, The RealReal, Rebag. Les cinq signaux spécifiques Capucines : cuir Taurillon (grain orangé pebble), LV métal pivotant, stitching tone-on-tone, doublure agneau, et hallmark argent platinium.",
+      "Le Louis Vuitton Capucines BB, créé en 2013 et nommé d'après la rue Capucines (adresse historique LV à Paris), est positionné comme le sac « haute couture » de LV, plus proche d'une Birkin que d'un Monogram Canvas. Retail 2026 : 5 700-7 200 € selon cuir (Taurillon, Galet, Python, Croco en édition limitée 25 000 €+). Son cuir Taurillon (bovin tanné minéral), son monogramme LV métal pivotant sur le flanc et sa forme rigide avec poignée + sangle détachable en font un sac de statut premium. Les contrefaçons Capucines (prix de production UA élevé, ~500 €+) existent et visent les acheteurs d'occasion sur Vestiaire Collective, The RealReal, Rebag. Les signaux spécifiques Capucines : cuir Taurillon (grain orangé pebble), LV métal pivotant, stitching tone-on-tone, doublure agneau, et hallmark argent platinium.",
     signals: [
       {
         title: "Cuir Taurillon — grain pebble orangé",
@@ -394,12 +394,12 @@ export const louisVuittonModels: ModelData[] = [
       {
         question: "Pourquoi la Capucines est-elle si chère par rapport à la Neverfull ?",
         answer:
-          "La Capucines utilise du cuir Taurillon premium (pas de canvas), une structure rigide, une doublure agneau et des finitions haute couture (stitching tone-on-tone, LV métal pivotant). Son coût de production est 4-5x supérieur à celui de la Neverfull.",
+          "La Capucines utilise du cuir Taurillon premium (pas de canvas), une structure rigide, une doublure agneau et des finitions haute couture (stitching tone-on-tone, LV métal pivotant).",
       },
       {
         question: "La Capucines a-t-elle un numéro de série ou date code ?",
         answer:
-          "Oui, les Capucines pre-2021 ont un date code format DU/SD/FL. Post-2021, elles utilisent un RFID chip intégré. Le hallmark intérieur argent platinium sert de signature complémentaire. LegitVision détecte les incohérences hallmark/date code/format.",
+          "Oui, les Capucines pre-2021 ont un date code format DU/SD/FL. Post-2021, elles utilisent un RFID chip intégré. Le hallmark intérieur argent platinium sert de signature complémentaire. LegitVision analyse la cohérence hallmark/date code/format.",
       },
     ],
   },

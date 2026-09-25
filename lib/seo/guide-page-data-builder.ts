@@ -11,6 +11,7 @@ import { intersections } from "./data/intersections";
 import { platforms } from "./data/platforms";
 import { SITE_URL } from "@/lib/site-url";
 import { facts } from "@/lib/site-facts";
+import { SEO_COUNTS } from "./seo-facts";
 
 const FACTS = facts();
 
@@ -108,7 +109,7 @@ function buildRelatedPages(currentSignal: GuideSignal): RelatedPage[] {
     {
       label: "Tous les guides signal × marque",
       href: BASE_PATH,
-      sublabel: "66 guides d'authentification par signal et marque",
+      sublabel: `${SEO_COUNTS.signalGuides} guides d'authentification par signal et marque`,
     },
     {
       label: `Tous les guides ${brandName}`,

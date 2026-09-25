@@ -41,9 +41,9 @@ export function buildPlatformBrandPageData(
   ];
 
   const introParagraphs: string[] = [
-    `${platform.description} ${brand.name} y compte aujourd'hui parmi les marques les plus recherchées — et donc les plus contrefaites.`,
+    platform.description,
     intersection.angle,
-    `Ce guide décrit les ${brand.signals.length} signaux techniques qui distinguent ${brand.productPossessive} ${brand.name} authentique d'une contrefaçon, les arnaques récurrentes sur ${platform.name}, et comment obtenir en ${FACTS.median} secondes (durée médiane) une analyse IA à ${FACTS.priceSingle} qui vous évite d'acheter un faux.`,
+    `Ce guide décrit les ${brand.signals.length} signaux techniques qui distinguent ${brand.productPossessive} ${brand.name} authentique d'une contrefaçon, les arnaques récurrentes sur ${platform.name}, et comment obtenir en ${FACTS.median} secondes (durée médiane) une analyse IA à ${FACTS.priceSingle} avant d'acheter.`,
   ];
 
   const faqs: FAQItem[] = [

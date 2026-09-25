@@ -10,7 +10,7 @@ export const airJordanModels: ModelData[] = [
     retailYear: "1988 (rééditée en continu)",
     tagline: "La première Jordan avec Air visible et Elephant Print",
     intro:
-      "La Air Jordan 3, dessinée par Tinker Hatfield en 1988, a révolutionné la ligne Jordan en introduisant trois signatures iconiques : l'Air visible au talon, l'Elephant Print sur les overlays orteils-talon, et le logo Jumpman (remplaçant le Wings logo). C'est également la première Jordan portée par Michael Jordan lors du célèbre « Free Throw Line Dunk » du Slam Dunk Contest 1988. Les coloris OG (White Cement, Black Cement, Fire Red, True Blue) se négocient entre 250 € et 800 € selon rareté, avec les rééditions limitées (A Ma Maniere) qui dépassent 600 €. Les contrefaçons ciblent massivement la AJ3 car les détails iconiques (Elephant Print, Air visible) sont complexes à reproduire correctement. Les UA batches Putian 2025 maîtrisent la silhouette générale mais échouent sur la géométrie exacte de l'Elephant Print, la qualité du cuir des overlays, la clarté de la bulle Air visible et l'alignement du Jumpman languette. Les cinq signaux ci-dessous distinguent une AJ3 authentique.",
+      "La Air Jordan 3, dessinée par Tinker Hatfield en 1988, a révolutionné la ligne Jordan en introduisant trois signatures iconiques : l'Air visible au talon, l'Elephant Print sur les overlays orteils-talon, et le logo Jumpman (remplaçant le Wings logo). C'est également la première Jordan portée par Michael Jordan lors du célèbre « Free Throw Line Dunk » du Slam Dunk Contest 1988. Les coloris OG (White Cement, Black Cement, Fire Red, True Blue) se négocient entre 250 € et 800 € selon rareté, avec les rééditions limitées (A Ma Maniere) qui dépassent 600 €. Les contrefaçons ciblent massivement la AJ3 car les détails iconiques (Elephant Print, Air visible) sont complexes à reproduire correctement. Les UA batches Putian 2025 maîtrisent la silhouette générale mais échouent sur la géométrie exacte de l'Elephant Print, la qualité du cuir des overlays, la clarté de la bulle Air visible et l'alignement du Jumpman languette. Les signaux ci-dessous distinguent une AJ3 authentique.",
     signals: [
       {
         title: "Elephant Print — motifs organiques et précision",
@@ -47,7 +47,7 @@ export const airJordanModels: ModelData[] = [
       {
         title: "White Cement Retro « neuve » à 180 €",
         description:
-          "La AJ3 White Cement Retro retail à 220-250 € et son prix marché ne descend pas sous 200 € en taille courante. Une annonce à 180 € neuve avec boîte est quasi-certainement une contrefaçon UA.",
+          "La AJ3 White Cement Retro retail à 220-250 € et son prix marché ne descend pas sous 200 € en taille courante. Une annonce à 180 € neuve avec boîte est suspecte.",
       },
       {
         title: "AJ3 Nike Air « OG 1988 » à 500 €",
@@ -77,7 +77,7 @@ export const airJordanModels: ModelData[] = [
     retailYear: "1990 (rééditée en continu)",
     tagline: "La Jordan au reflective tongue et aux dents de requin",
     intro:
-      "La Air Jordan 5, sortie en 1990 et inspirée des avions de chasse Mustang P-51 (dents de requin sur la midsole, silhouette aérodynamique), est reconnaissable à sa languette réfléchissante 3M, sa semelle translucide (première Jordan avec semelle glace) et ses « teeth » sur le midsole. Les coloris OG (Fire Red, Grape, Metallic, Black Metallic, Stealth) s'échangent entre 250 € et 600 €, avec les rééditions limitées (Off-White x AJ5, A Ma Maniere) atteignant 1 000-2 000 €. La AJ5 est ciblée par les contrefaçons car sa silhouette complexe (teeth, 3M, semelle glace) permet aux super-fakes d'approcher l'apparence générale. Cependant, les détails techniques résistent : la géométrie exacte des teeth, la qualité du 3M languette, la clarté de la semelle glace et le Jumpman broderie précis. Les cinq signaux ci-dessous permettent une identification rapide.",
+      "La Air Jordan 5, sortie en 1990 et inspirée des avions de chasse Mustang P-51 (dents de requin sur la midsole, silhouette aérodynamique), est reconnaissable à sa languette réfléchissante 3M, sa semelle translucide (première Jordan avec semelle glace) et ses « teeth » sur le midsole. Les coloris OG (Fire Red, Grape, Metallic, Black Metallic, Stealth) s'échangent entre 250 € et 600 €, avec les rééditions limitées (Off-White x AJ5, A Ma Maniere) atteignant 1 000-2 000 €. La AJ5 est ciblée par les contrefaçons car sa silhouette complexe (teeth, 3M, semelle glace) permet aux super-fakes d'approcher l'apparence générale. Cependant, les détails techniques résistent : la géométrie exacte des teeth, la qualité du 3M languette, la clarté de la semelle glace et le Jumpman broderie précis. Les signaux ci-dessous permettent une identification rapide.",
     signals: [
       {
         title: "Teeth midsole — géométrie et alignement",
@@ -144,7 +144,7 @@ export const airJordanModels: ModelData[] = [
     retailYear: "1991 (rééditée en continu)",
     tagline: "La Jordan du premier titre NBA de Michael Jordan",
     intro:
-      "La Air Jordan 6, lancée en 1991 et portée par Michael Jordan lors de son premier titre NBA, est reconnaissable à son spoiler arrière (la languette de traction au talon), ses deux boutons de lacets circulaires sur la languette, et son profil aérodynamique inspiré de la Porsche 911. Les coloris OG (Infrared, Carmine, Maroon, Black, DMP) s'échangent entre 250 € et 700 €, avec les collaborations Travis Scott et Union atteignant 800-1 500 €. La AJ6 est une cible fréquente de contrefaçon car ses signatures (spoiler, boutons de lacets) sont immédiatement reconnaissables — ce qui la rend vendable en fake à prix moyen. Cependant, la qualité du nubuck, la courbure exacte du spoiler, la fonctionnalité des boutons de lacets et la netteté du Jumpman sur le heel tab résistent aux super-fakes. Les cinq signaux ci-dessous construisent la check-list AJ6.",
+      "La Air Jordan 6, lancée en 1991 et portée par Michael Jordan lors de son premier titre NBA, est reconnaissable à son spoiler arrière (la languette de traction au talon), ses deux boutons de lacets circulaires sur la languette, et son profil aérodynamique inspiré de la Porsche 911. Les coloris OG (Infrared, Carmine, Maroon, Black, DMP) s'échangent entre 250 € et 700 €, avec les collaborations Travis Scott et Union atteignant 800-1 500 €. La AJ6 est une cible fréquente de contrefaçon car ses signatures (spoiler, boutons de lacets) sont immédiatement reconnaissables — ce qui la rend vendable en fake à prix moyen. Cependant, la qualité du nubuck, la courbure exacte du spoiler, la fonctionnalité des boutons de lacets et la netteté du Jumpman sur le heel tab résistent aux super-fakes. Les signaux ci-dessous construisent la check-list AJ6.",
     signals: [
       {
         title: "Spoiler arrière — courbure et rigidité",
@@ -211,7 +211,7 @@ export const airJordanModels: ModelData[] = [
     retailYear: "1996 (rééditée en continu)",
     tagline: "La Jordan du « Flu Game » avec rising sun japonais",
     intro:
-      "La Air Jordan 12, sortie en 1996 et portée par Michael Jordan lors du mythique « Flu Game » des NBA Finals 1997 (performance malade à 38 points), est reconnaissable à son upper en cuir lux avec motif « rising sun » japonais, sa semelle Zoom Air et sa broderie « TWO 3 » sur le talon. Les coloris OG (Flu Game, Taxi, Playoffs, Cherry, Playoffs Reverse) s'échangent entre 250 € et 500 €. La AJ12 est moins contrefaite que la AJ1, 3 ou 4 à cause de sa silhouette plus complexe (pattern rising sun + Zoom Air + cuir lourd), mais les UA batches existent. Les cinq signaux ci-dessous distinguent l'authentique : cuir qualité, rising sun pattern exact, Zoom Air technologie, broderie « TWO 3 » et Style Code.",
+      "La Air Jordan 12, sortie en 1996 et portée par Michael Jordan lors du mythique « Flu Game » des NBA Finals 1997 (performance malade à 38 points), est reconnaissable à son upper en cuir lux avec motif « rising sun » japonais, sa semelle Zoom Air et sa broderie « TWO 3 » sur le talon. Les coloris OG (Flu Game, Taxi, Playoffs, Cherry, Playoffs Reverse) s'échangent entre 250 € et 500 €. Sa silhouette complexe (pattern rising sun + Zoom Air + cuir lourd) complique la contrefaçon, mais les UA batches existent. Les signaux ci-dessous distinguent l'authentique : cuir qualité, rising sun pattern exact, Zoom Air technologie, broderie « TWO 3 » et Style Code.",
     signals: [
       {
         title: "Cuir lux — épaisseur et lourdeur",
@@ -278,7 +278,7 @@ export const airJordanModels: ModelData[] = [
     retailYear: "1997 (rééditée en continu)",
     tagline: "La Jordan au holographic pendant inspirée des panthères",
     intro:
-      "La Air Jordan 13, créée en 1997 pour la dernière saison de Michael Jordan aux Bulls (avant son premier retour), est inspirée des mouvements de la panthère noire, incarnée par la « holographic cat eye » (pendentif latéral holographique) et la semelle en « paw print » (empreinte de patte). Les coloris OG (He Got Game, Bred, Flint, Chutney) s'échangent entre 220 € et 400 €, avec les DMP Pack (Defining Moments Pack) atteignant 600-1 000 €. La AJ13 est moins contrefaite que les AJ1/3/4/11 mais les UA batches existent, exploitant la signature holographic pendant qui n'est pas parfaite sur les fakes. Les cinq signaux ci-dessous : hologramme pendant, cuir-suède combo, semelle paw print, soft-rubber midsole et Style Code.",
+      "La Air Jordan 13, créée en 1997 pour la dernière saison de Michael Jordan aux Bulls (avant son premier retour), est inspirée des mouvements de la panthère noire, incarnée par la « holographic cat eye » (pendentif latéral holographique) et la semelle en « paw print » (empreinte de patte). Les coloris OG (He Got Game, Bred, Flint, Chutney) s'échangent entre 220 € et 400 €, avec les DMP Pack (Defining Moments Pack) atteignant 600-1 000 €. Des UA batches AJ13 existent ; la signature holographic pendant n'est pas parfaite sur les fakes. Les signaux ci-dessous : hologramme pendant, cuir-suède combo, semelle paw print, soft-rubber midsole et Style Code.",
     signals: [
       {
         title: "Hologramme pendant — reflets multicolores",
@@ -343,9 +343,9 @@ export const airJordanModels: ModelData[] = [
     category: "sneakers",
     priceRange: "700-3 500 €",
     retailYear: "2017 (collabs récurrentes)",
-    tagline: "La collab Cactus Jack la plus recherchée du resell",
+    tagline: "La collab Cactus Jack",
     intro:
-      "Les collaborations Travis Scott x Air Jordan, lancées en 2017 avec la AJ4 Olive et poursuivies sur AJ1 (Mocha, Fragment, Reverse Mocha, British Khaki), AJ6 (British Khaki, Medium Olive, Washed Denim), AJ4 (Purple, Cactus Jack Khaki), représentent l'une des séries de collabs les plus recherchées du resell : prix marché 800 € à 3 500 € selon rareté et taille. La AJ1 Mocha a atteint 1 500-2 500 € en taille PC, la AJ1 Fragment 2 000-4 000 €. Cette prime extrême attire les contrefacteurs professionnels qui ont massivement investi dans les super-fakes Travis Scott — certains UA batches coûtent 300-400 € à produire pour tromper des acheteurs inexpérimentés. Les cinq signaux ci-dessous regroupent les points les plus résistants aux super-fakes : logo Cactus Jack inversé, qualité du nubuck/suède, boîte brown Cactus Jack, hangtag signé Travis, et Style Code.",
+      "Les collaborations Travis Scott x Air Jordan, lancées en 2017 avec la AJ4 Olive et poursuivies sur AJ1 (Mocha, Fragment, Reverse Mocha, British Khaki), AJ6 (British Khaki, Medium Olive, Washed Denim), AJ4 (Purple, Cactus Jack Khaki), ont un prix marché de 800 € à 3 500 € selon rareté et taille. La AJ1 Mocha a atteint 1 500-2 500 € en taille PC, la AJ1 Fragment 2 000-4 000 €. Cette prime extrême attire les contrefacteurs professionnels qui ont massivement investi dans les super-fakes Travis Scott — certains UA batches coûtent 300-400 € à produire pour tromper des acheteurs inexpérimentés. Les signaux ci-dessous regroupent les points les plus résistants aux super-fakes : logo Cactus Jack inversé, qualité du nubuck/suède, boîte brown Cactus Jack, hangtag signé Travis, et Style Code.",
     signals: [
       {
         title: "Logo Cactus Jack inversé — précision typographique",
@@ -394,7 +394,7 @@ export const airJordanModels: ModelData[] = [
       {
         question: "Toutes les collabs Travis Scott sont-elles aussi rares ?",
         answer:
-          "Non. La AJ1 Mocha et AJ1 Fragment sont les plus rares (2 000 € et +). Les AJ6 British Khaki et AJ4 Cactus Jack se négocient 800-1 200 €. Les rééditions et coloris moins recherchés (AJ4 Purple) tournent autour de 500-700 €. Le prix reflète la rareté de production.",
+          "Non. La AJ1 Mocha et AJ1 Fragment se négocient à partir de 2 000 €. Les AJ6 British Khaki et AJ4 Cactus Jack se négocient 800-1 200 €. Les rééditions et coloris moins recherchés (AJ4 Purple) tournent autour de 500-700 €. Le prix reflète la rareté de production.",
       },
       {
         question: "Comment authentifier la receipt SNKRS pour une Travis Scott ?",

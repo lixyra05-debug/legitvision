@@ -8,9 +8,9 @@ export const supremeModels: ModelData[] = [
     category: "clothing",
     priceRange: "250-1 500 €",
     retailYear: "1996 (drops récurrents)",
-    tagline: "Le hoodie streetwear le plus contrefait au monde",
+    tagline: "Le hoodie streetwear lancé en 1996 par James Jebbia",
     intro:
-      "Le Supreme Box Logo Hoodie, lancé pour la première fois en 1996 par James Jebbia (fondateur Supreme) et drop récurrent depuis, est le hoodie streetwear le plus recherché et le plus contrefait au monde. Retail 168 $ (environ 160 €) au drop, avec prix marché secondaire 250-1 500 € selon coloris et année. Les box logos « White on White », « Black on Black », « Red on Red » sont les plus accessibles (200-400 €), tandis que les collaborations (Louis Vuitton 2017, Nike, Takashi Murakami, Rammellzee) atteignent 2 000-5 000 €. La contrefaçon Box Logo est une industrie à part entière : Putian produit des dizaines de milliers de fakes par semaine, revendus sur Vinted, Depop, Grailed, StockX (où 20 % des Box Logos sont rejetés à l'authentification). Les cinq signaux ci-dessous ciblent les points invariables : police du box logo (Futura Heavy Oblique italique), couture bouton de col, tag intérieur Made in Canada, qualité du coton 500 gsm et étiquette taille stitché.",
+      "Le Supreme Box Logo Hoodie, lancé pour la première fois en 1996 par James Jebbia (fondateur Supreme), est un drop récurrent depuis. Retail 168 $ (environ 160 €) au drop, avec prix marché secondaire 250-1 500 € selon coloris et année. Les box logos « White on White », « Black on Black », « Red on Red » sont les plus accessibles (200-400 €), tandis que les collaborations (Louis Vuitton 2017, Nike, Takashi Murakami, Rammellzee) atteignent 2 000-5 000 €. La contrefaçon Box Logo est une industrie à part entière : Putian produit des fakes, revendus sur Vinted, Depop, Grailed, StockX. Les signaux ci-dessous ciblent les points invariables : police du box logo (Futura Heavy Oblique italique), couture bouton de col, tag intérieur Made in Canada, qualité du coton 500 gsm et étiquette taille stitché.",
     signals: [
       {
         title: "Police Box Logo — Futura Heavy Oblique italique",
@@ -77,7 +77,7 @@ export const supremeModels: ModelData[] = [
     retailYear: "1994 (drops anniversaires)",
     tagline: "Le t-shirt box logo des anniversaires Supreme",
     intro:
-      "Le Supreme Box Logo Tee, drop uniquement lors des anniversaires Supreme (chaque printemps) pour célébrer la fondation de la marque en 1994, est un t-shirt collectionneur à tirage limité. Retail 38-58 $ au drop (environ 45-60 €), mais prix marché secondaire 150-800 € selon coloris et année. Les Box Logo Tees sont encore plus rares que les Hoodies (drop annuel unique vs plusieurs drops hoodie par an). Comme le Hoodie, les contrefaçons sont massives. Les cinq signaux sont globalement similaires au Box Logo Hoodie mais adaptés au t-shirt : police Box Logo, couture col ribbed, tag Made in USA/Canada, qualité coton 180-200 gsm, et étiquette taille stitchée.",
+      "Le Supreme Box Logo Tee, drop uniquement lors des anniversaires Supreme (chaque printemps) pour célébrer la fondation de la marque en 1994, est un t-shirt collectionneur à tirage limité. Retail 38-58 $ au drop (environ 45-60 €), mais prix marché secondaire 150-800 € selon coloris et année. Les Box Logo Tees sont encore plus rares que les Hoodies (drop annuel unique vs plusieurs drops hoodie par an). Comme le Hoodie, les contrefaçons sont massives. Les signaux sont globalement similaires au Box Logo Hoodie mais adaptés au t-shirt : police Box Logo, couture col ribbed, tag Made in USA/Canada, qualité coton 180-200 gsm, et étiquette taille stitchée.",
     signals: [
       {
         title: "Police Box Logo — identique Hoodie",
@@ -131,7 +131,7 @@ export const supremeModels: ModelData[] = [
       {
         question: "Comment identifier un Box Logo Tee vintage authentique ?",
         answer:
-          "Outre les 5 signaux standards, les vintage ont des détails spécifiques : tags « Fruit of the Loom » (pre-2004) ou « Anvil » (2005-2012). Les contrefaçons vintage imitent ces tags mais avec une police légèrement incorrecte. Comparez avec photos de référence StockX ou Grailed.",
+          "Outre les signaux standards, les vintage ont des détails spécifiques : tags « Fruit of the Loom » (pre-2004) ou « Anvil » (2005-2012). Les contrefaçons vintage imitent ces tags mais avec une police légèrement incorrecte. Comparez avec photos de référence StockX ou Grailed.",
       },
     ],
   },

@@ -13,24 +13,34 @@
 
 type Lang = "fr" | "en";
 
-/** Catalogue ANALYSABLE — relevé en production le 2026-09-25. */
+/**
+ * Catalogue ANALYSABLE — relevé en production le 2026-09-25 (lecture publique).
+ *
+ * Un modèle est analysable s'il est actif, d'une marque active hors montres
+ * (non sélectionnables), et s'il porte au moins un point d'authentification :
+ * c'est exactement ce que propose la sélection (lib/analyzable.ts). Les 45
+ * modèles actifs sans point en sont exclus. À re-mesurer quand des points
+ * sont ajoutés en base : ces modèles reviennent alors dans la sélection.
+ */
 export const CATALOG = {
   /**
-   * Noms de marque distincts ayant au moins un modèle actif, hors montres
-   * (non sélectionnables). La table `brands` compte 77 LIGNES : une marque y
-   * figure une fois par catégorie, et Essentials n'a aucun modèle actif.
+   * Noms de marque distincts ayant au moins un modèle analysable. La table
+   * `brands` compte 77 LIGNES : une marque y figure une fois par catégorie.
+   * 13 lignes hors montres n'ont aucun modèle analysable (Essentials, et
+   * 12 lignes sneakers ou vêtements de marques de luxe dont les modèles sont
+   * tous sans point) : ces marques restent comptées par leur ligne sacs.
    */
   brands: 56,
-  /** Modèles actifs d'une marque active, hors les 10 modèles de montres. */
-  models: 520,
-  /** Points d'authentification en base sur ces modèles (0 à 10 par modèle). */
+  /** Modèles analysables : 530 actifs, moins 10 montres et 45 sans point. */
+  models: 475,
+  /** Points d'authentification sur ces modèles (4 à 10 par modèle). */
   authPoints: 3924,
   /** Zones d'authentification d'un modèle, au plus (10 pour 175 modèles de sacs). */
   maxZones: 10,
   /** Points d'authentification d'un modèle, au plus (médiane : 8). */
   maxPointsPerModel: 10,
-  /** Photos demandées selon la catégorie : sneakers 8-11, sacs 10-11, vêtements 6-8. */
-  photosMin: 6,
+  /** Photos demandées selon la catégorie : sneakers 8-11, sacs 10-11, vêtements 7-8. */
+  photosMin: 7,
   photosMax: 11,
 } as const;
 

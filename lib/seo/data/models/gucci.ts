@@ -10,7 +10,7 @@ export const gucciModels: ModelData[] = [
     retailYear: "2016 (production continue)",
     tagline: "Le chevron matelassé au double G antique",
     intro:
-      "Le Gucci GG Marmont Small, lancé en 2016 sous Alessandro Michele, est le sac best-seller de Gucci depuis 8 ans. Retail 2026 : 1 950-2 200 € selon cuir (matelassé chevron ou Supreme Canvas). Sa signature : le double G antique en métal doré vieilli sur le rabat, le quilting chevron et la chaîne épaule. Prix marché secondaire : 1 200-1 800 € selon état. Le Marmont Small est la cible principale des contrefaçons Gucci (plus de 500 k pairs UA produites par an selon estimations industrie) car le quilting chevron et le double G métal sont simples à reproduire au premier coup d'œil. Cependant, plusieurs détails résistent : la finition antique du métal (dorure vieillie spécifique), le grain du cuir matelassé, le stitching chevron tension et le numéro série interne. Les cinq signaux ci-dessous construisent le check-list Marmont.",
+      "Le Gucci GG Marmont Small a été lancé en 2016 sous Alessandro Michele. Retail 2026 : 1 950-2 200 € selon cuir (matelassé chevron ou Supreme Canvas). Sa signature : le double G antique en métal doré vieilli sur le rabat, le quilting chevron et la chaîne épaule. Prix marché secondaire : 1 200-1 800 € selon état. Le quilting chevron et le double G métal du Marmont Small sont simples à reproduire au premier coup d'œil. Cependant, plusieurs détails résistent : la finition antique du métal (dorure vieillie spécifique), le grain du cuir matelassé, le stitching chevron tension et le numéro série interne. Les signaux ci-dessous construisent le check-list Marmont.",
     signals: [
       {
         title: "Double G antique — dorure vieillie spécifique",
@@ -59,7 +59,7 @@ export const gucciModels: ModelData[] = [
       {
         question: "Quelle différence entre GG Marmont Small et Medium ?",
         answer:
-          "Small : 26 × 15 × 7 cm, retail 2 000 €. Medium : 31 × 19 × 7 cm, retail 2 350 €. Small est plus populaire (crossbody). Medium est plus workday. Les contrefaçons mélangent parfois les deux tailles.",
+          "Small : 26 × 15 × 7 cm, retail 2 000 €. Medium : 31 × 19 × 7 cm, retail 2 350 €. Small se porte plutôt en crossbody. Medium est plus workday. Les contrefaçons mélangent parfois les deux tailles.",
       },
       {
         question: "Le cuir matelassé Marmont peut-il se déformer ?",
@@ -77,7 +77,7 @@ export const gucciModels: ModelData[] = [
     retailYear: "2015 (production continue)",
     tagline: "Le sac aux têtes de tigre, inspiré de Dionysos",
     intro:
-      "Le Gucci Dionysus, lancé en 2015 sous Alessandro Michele et nommé d'après le dieu grec Dionysos, a introduit la signature moderne Gucci : tête de tigre dorée en fermoir (référence à Dionysos qui traversait les rivières sur un tigre). Retail 2026 : 2 200-2 700 € selon cuir (Supreme Canvas GG, Suède, embossé). Prix marché secondaire : 1 500-2 300 €. La signature tête de tigre complexe (relief 3D, détails de la gueule) la rend légèrement plus difficile à contrefaire que le Marmont. Cependant, les UA Dionysus existent et visent les acheteuses Vinted. Les cinq signaux : têtes de tigre (2 faces du fermoir), Supreme Canvas pattern, stitching, sangle chaîne avec mousquetons, et numéro série.",
+      "Le Gucci Dionysus, lancé en 2015 sous Alessandro Michele et nommé d'après le dieu grec Dionysos, a introduit la signature moderne Gucci : tête de tigre dorée en fermoir (référence à Dionysos qui traversait les rivières sur un tigre). Retail 2026 : 2 200-2 700 € selon cuir (Supreme Canvas GG, Suède, embossé). Prix marché secondaire : 1 500-2 300 €. La signature tête de tigre complexe (relief 3D, détails de la gueule) la rend légèrement plus difficile à contrefaire que le Marmont. Cependant, les UA Dionysus existent et visent les acheteuses Vinted. Les signaux : têtes de tigre (2 faces du fermoir), Supreme Canvas pattern, stitching, sangle chaîne avec mousquetons, et numéro série.",
     signals: [
       {
         title: "Têtes de tigre — relief 3D des 2 côtés",
@@ -119,7 +119,7 @@ export const gucciModels: ModelData[] = [
       {
         title: "« Dionysus Mystic Cat » limited edition",
         description:
-          "Les éditions limitées Gucci (Mystic Cat, Blooms, Cities) ont des prix spécifiques et preuves de production. Un vendeur Vinted proposant une édition limitée « rare » à prix moyen vend quasi-certainement une contrefaçon.",
+          "Les éditions limitées Gucci (Mystic Cat, Blooms, Cities) ont des prix spécifiques et preuves de production. Un vendeur Vinted proposant une édition limitée « rare » à prix moyen est suspect.",
       },
     ],
     faqs: [
@@ -144,7 +144,7 @@ export const gucciModels: ModelData[] = [
     retailYear: "1961 (réédition 2020)",
     tagline: "Le hobo porté par Jackie Kennedy, réédité Michele",
     intro:
-      "Le Gucci Jackie 1961, hobo bag créé en 1961 et popularisé par Jackie Kennedy Onassis, a été réédité en 2020 par Alessandro Michele (Jackie 1961) puis réinterprété en 2023 par Sabato De Sarno (Jackie 1961 Small avec piston clasp). Retail 2026 : 2 500-2 900 € selon cuir. Prix marché secondaire : 1 800-2 600 €. Le piston clasp (fermoir piston horizontal, signature Jackie) est l'élément le plus complexe à contrefaire correctement car son mécanisme précis et la gravure « Gucci » latérale sont difficiles à reproduire. Les cinq signaux ci-dessous : piston clasp mécanisme, cuir et stitching, sangle épaule amovible, patch cuir interne Jackie, et numéro série.",
+      "Le Gucci Jackie 1961, hobo bag créé en 1961 et popularisé par Jackie Kennedy Onassis, a été réédité en 2020 par Alessandro Michele (Jackie 1961) puis réinterprété en 2023 par Sabato De Sarno (Jackie 1961 Small avec piston clasp). Retail 2026 : 2 500-2 900 € selon cuir. Prix marché secondaire : 1 800-2 600 €. Le piston clasp (fermoir piston horizontal, signature Jackie) est l'élément le plus complexe à contrefaire correctement car son mécanisme précis et la gravure « Gucci » latérale sont difficiles à reproduire. Les signaux ci-dessous : piston clasp mécanisme, cuir et stitching, sangle épaule amovible, patch cuir interne Jackie, et numéro série.",
     signals: [
       {
         title: "Piston clasp — gravure latérale et mécanisme",
@@ -211,7 +211,7 @@ export const gucciModels: ModelData[] = [
     retailYear: "1955 (réédition 2020)",
     tagline: "Le sac au mors équestre iconique de Gucci",
     intro:
-      "Le Gucci Horsebit 1955, réédition 2020 du sac original de 1955, intègre la signature équestre de la maison : le mors Horsebit en métal doré (2 anneaux + barre transversale) sur le rabat. Retail 2026 : 2 400-2 800 € selon cuir (Supreme Canvas, cuir lisse). Prix marché secondaire : 1 700-2 400 €. Le Horsebit 1955 a gagné en popularité en 2023-2024 grâce aux campaigns Sabato De Sarno. Les contrefaçons reproduisent le mors mais échouent sur la précision du mécanisme et la finition antique. Les cinq signaux : Horsebit mécanisme et finition, cuir/canvas, sangle chain, stitching 1955, et numéro série.",
+      "Le Gucci Horsebit 1955, réédition 2020 du sac original de 1955, intègre la signature équestre de la maison : le mors Horsebit en métal doré (2 anneaux + barre transversale) sur le rabat. Retail 2026 : 2 400-2 800 € selon cuir (Supreme Canvas, cuir lisse). Prix marché secondaire : 1 700-2 400 €. Le Horsebit 1955 a gagné en popularité en 2023-2024 grâce aux campaigns Sabato De Sarno. Les contrefaçons reproduisent le mors mais échouent sur la précision du mécanisme et la finition antique. Les signaux : Horsebit mécanisme et finition, cuir/canvas, sangle chain, stitching 1955, et numéro série.",
     signals: [
       {
         title: "Horsebit — mécanisme et finition antique",

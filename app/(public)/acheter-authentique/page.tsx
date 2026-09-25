@@ -9,6 +9,7 @@ import {
 import { SITE_URL } from "@/lib/site-url";
 import { buildCheckUrl } from "@/lib/seo/check-url";
 import { facts } from "@/lib/site-facts";
+import { GUIDES_PER_PLATFORM, SEO_COUNTS, platformGuideCount } from "@/lib/seo/seo-facts";
 
 const FACTS = facts();
 
@@ -17,12 +18,12 @@ export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Acheter authentique : guides d'authentification par plateforme",
   description:
-    "60 guides 2026 pour acheter sans contrefaçon sur Vinted, Vestiaire Collective, Leboncoin, eBay, Depop et Facebook Marketplace. Nike, Jordan, Louis Vuitton, Chanel, Hermès et plus.",
+    `${SEO_COUNTS.platformGuides} guides 2026 pour acheter sans contrefaçon sur Vinted, Vestiaire Collective, Leboncoin, eBay, Depop et Facebook Marketplace. Nike, Jordan, Louis Vuitton, Chanel, Hermès et plus.`,
   alternates: { canonical: "/acheter-authentique" },
   openGraph: {
     title: "Acheter authentique — Guides LegitVision",
     description:
-      "Sélection de 60 guides d'authentification pour les 6 plateformes seconde main les plus populaires.",
+      `Sélection de ${SEO_COUNTS.platformGuides} guides d'authentification pour ${SEO_COUNTS.platforms} plateformes de seconde main.`,
     url: `${SITE_URL}/acheter-authentique`,
     type: "website",
   },
@@ -57,13 +58,13 @@ export default function AcheterAuthentiqueHubPage() {
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-16 sm:py-20">
           <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
-            60 guides d&apos;authentification
+            {SEO_COUNTS.platformGuides} guides d&apos;authentification
           </span>
           <h1 className="mt-4 font-heading text-display font-bold">
             Acheter authentique, sans se faire piéger.
           </h1>
           <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
-            Guides 2026 pour reconnaître les vraies sneakers et les vrais sacs de luxe sur les 6 plateformes seconde main les plus utilisées en France. Signaux techniques, arnaques récurrentes, prix marché, et analyse IA en {FACTS.median} secondes (durée médiane) à {FACTS.priceSingle}.
+            Guides 2026 pour reconnaître les vraies sneakers et les vrais sacs de luxe sur {SEO_COUNTS.platforms} plateformes de seconde main. Signaux techniques, arnaques récurrentes, prix marché, et analyse IA en {FACTS.median} secondes (durée médiane) à {FACTS.priceSingle}.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -88,7 +89,7 @@ export default function AcheterAuthentiqueHubPage() {
           Choisissez votre plateforme
         </h2>
         <p className="mt-2 text-ui text-muted-foreground">
-          Chaque plateforme a ses arnaques et ses garde-fous. Accédez aux 10 guides de marques pour celle qui vous intéresse.
+          Chaque plateforme a ses arnaques et ses garde-fous. Accédez aux {GUIDES_PER_PLATFORM} guides de marques pour celle qui vous intéresse.
         </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -113,14 +114,13 @@ export default function AcheterAuthentiqueHubPage() {
                   <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
                     {platform.name}
                   </h3>
-                  <p className="text-caption text-muted-foreground">{platform.userBaseFr}</p>
                 </div>
               </div>
               <p className="mt-4 text-ui text-muted-foreground line-clamp-3">
                 {platform.tagline}
               </p>
               <div className="mt-5 flex items-center justify-between text-caption">
-                <span className="text-muted-foreground">10 guides disponibles</span>
+                <span className="text-muted-foreground">{platformGuideCount(platform.slug)} guides disponibles</span>
                 <span className="font-medium text-accent opacity-0 transition-opacity duration-fast group-hover:opacity-100">
                   Voir les guides →
                 </span>

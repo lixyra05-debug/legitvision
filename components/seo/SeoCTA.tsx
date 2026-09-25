@@ -50,7 +50,7 @@ export function SeoCTA({ variant, brandName, platformName, checkUrl }: Props) {
             Ne pariez plus sur votre prochain achat {brandName} sur {platformName}
           </h2>
           <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-            {FACTS.priceSingle} pour éviter 150 € à 15 000 € de perte. Résultat en {FACTS.median} secondes (médiane) avec verdict,
+            Résultat en {FACTS.median} secondes (médiane) avec verdict,
             score de confiance et recommandations détaillées.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

@@ -10,7 +10,7 @@ export const diorModels: ModelData[] = [
     retailYear: "1995 (production continue)",
     tagline: "Le sac offert par Bernadette Chirac à Lady Di",
     intro:
-      "Le Lady Dior Medium, offert par Bernadette Chirac à Lady Diana en 1995 et renommé en son honneur après le succès immédiat, est le sac le plus iconique de Dior. Retail 2026 : 5 800-7 200 € selon cuir (Cannage Lambskin, Ultramatte, Suede). Prix marché secondaire : 4 500-6 500 €. Sa signature : le cannage quilting (motif losanges cousus caractéristique), les charms D-I-O-R suspendus à la poignée et la forme structurée rectangulaire. Les contrefaçons Lady Dior sont sophistiquées (les super-fakes coûtent 300-800 €) car le cannage et les charms sont immédiatement reconnaissables. Cependant, la qualité du Lambskin, la précision du cannage 3D, la gravure des charms D-I-O-R et le code série résistent aux UA batches. Les cinq signaux ci-dessous.",
+      "Le Lady Dior Medium, offert par Bernadette Chirac à Lady Diana en 1995 et renommé en son honneur après le succès immédiat, est le sac le plus iconique de Dior. Retail 2026 : 5 800-7 200 € selon cuir (Cannage Lambskin, Ultramatte, Suede). Prix marché secondaire : 4 500-6 500 €. Sa signature : le cannage quilting (motif losanges cousus caractéristique), les charms D-I-O-R suspendus à la poignée et la forme structurée rectangulaire. Les contrefaçons Lady Dior sont sophistiquées (les super-fakes coûtent 300-800 €) car le cannage et les charms sont immédiatement reconnaissables. Cependant, la qualité du Lambskin, la précision du cannage 3D, la gravure des charms D-I-O-R et le code série résistent aux UA batches. Les signaux ci-dessous.",
     signals: [
       {
         title: "Cannage 3D — relief uniforme et alignement",
@@ -64,7 +64,7 @@ export const diorModels: ModelData[] = [
       {
         question: "Le Lady Dior existe-t-il en tailles différentes ?",
         answer:
-          "Oui, Mini (17 cm), Small (20 cm), Medium (24 cm), Large (32 cm). Medium est la plus populaire. Chaque taille a son retail et ses codes. Les contrefaçons mélangent parfois Medium et Small pour confondre acheteuses.",
+          "Oui, Mini (17 cm), Small (20 cm), Medium (24 cm), Large (32 cm). Chaque taille a son retail et ses codes. Les contrefaçons mélangent parfois Medium et Small pour confondre acheteuses.",
       },
     ],
   },
@@ -77,7 +77,7 @@ export const diorModels: ModelData[] = [
     retailYear: "1999 (réédition 2018)",
     tagline: "Le sac selle John Galliano ressuscité par Chiuri",
     intro:
-      "Le Dior Saddle Bag, créé par John Galliano en 1999 puis ressuscité par Maria Grazia Chiuri en 2018, a initié le revival Y2K et est devenu l'un des sacs les plus portés sur Instagram 2019-2022. Retail 2026 : 3 800-5 200 € selon cuir (Oblique Canvas, Cannage, Embossed). Prix marché secondaire : 2 500-4 500 €. Sa forme en selle de cheval (inspirée des pieces équestres), ses harnachements dorés CD et la tirette « DIOR » sur sangle en font un sac immédiatement reconnaissable. Les contrefaçons Saddle sont massives (fake Oblique Canvas facile à reproduire) mais les détails hardware et cuir résistent. Les cinq signaux : Oblique Canvas pattern, sangle CD hardware, forme selle exacte, stitching edges, et numéro série.",
+      "Le Dior Saddle Bag, créé par John Galliano en 1999 puis ressuscité par Maria Grazia Chiuri en 2018, a initié le revival Y2K. Retail 2026 : 3 800-5 200 € selon cuir (Oblique Canvas, Cannage, Embossed). Prix marché secondaire : 2 500-4 500 €. Sa forme en selle de cheval (inspirée des pieces équestres), ses harnachements dorés CD et la tirette « DIOR » sur sangle en font un sac immédiatement reconnaissable. Les contrefaçons Saddle sont massives (fake Oblique Canvas facile à reproduire) mais les détails hardware et cuir résistent. Les signaux : Oblique Canvas pattern, sangle CD hardware, forme selle exacte, stitching edges, et numéro série.",
     signals: [
       {
         title: "Oblique Canvas — pattern répété précis",
@@ -144,7 +144,7 @@ export const diorModels: ModelData[] = [
     retailYear: "2018 (production continue)",
     tagline: "Le tote broderie embroidered, hit Instagram 2019-2022",
     intro:
-      "Le Dior Book Tote, lancé en 2018 par Maria Grazia Chiuri, est le tote iconique moderne de Dior, entièrement embroidered (broderies denses sur canvas). Retail 2026 : 3 100-3 700 € selon motif (Oblique, Toile de Jouy, Sauvage, Customisable). Prix marché secondaire : 2 200-3 200 €. Ses broderies machine haute densité (à ne pas confondre avec impression) et son format tote structuré le rendent unique dans le catalogue Dior. Les contrefaçons Book Tote sont fréquentes mais relativement faciles à identifier car la densité broderie authentique est presque impossible à reproduire correctement. Les cinq signaux : densité broderie, structure tote, hardware CD sangle, doublure, et numéro série.",
+      "Le Dior Book Tote, lancé en 2018 par Maria Grazia Chiuri, est le tote iconique moderne de Dior, entièrement embroidered (broderies denses sur canvas). Retail 2026 : 3 100-3 700 € selon motif (Oblique, Toile de Jouy, Sauvage, Customisable). Prix marché secondaire : 2 200-3 200 €. Ses broderies machine haute densité (à ne pas confondre avec impression) et son format tote structuré le rendent unique dans le catalogue Dior. Les contrefaçons Book Tote sont fréquentes mais relativement faciles à identifier car la densité broderie authentique est presque impossible à reproduire correctement. Les signaux : densité broderie, structure tote, hardware CD sangle, doublure, et numéro série.",
     signals: [
       {
         title: "Densité broderie — 3D profond uniforme",
@@ -186,7 +186,7 @@ export const diorModels: ModelData[] = [
       {
         title: "« Book Tote personnalisé » avec prénom",
         description:
-          "Dior propose un service de personnalisation (prénom brodé) en boutique uniquement. Les vendeurs Vinted proposant « Book Tote avec votre prénom » à prix retail sont presque toujours des fakes (broderie ajoutée sur canvas basique).",
+          "Dior propose un service de personnalisation (prénom brodé) en boutique uniquement. Méfiez-vous des vendeurs Vinted proposant « Book Tote avec votre prénom » à prix retail (broderie ajoutée sur canvas basique).",
       },
     ],
     faqs: [
@@ -211,7 +211,7 @@ export const diorModels: ModelData[] = [
     retailYear: "2020 (production continue)",
     tagline: "Le crossbody au CD rond hommage au Bobby de Dior",
     intro:
-      "Le Dior Bobby, lancé en 2020 par Maria Grazia Chiuri et nommé d'après le chien de Christian Dior (Bobby, un caniche), est un crossbody structuré au fermoir CD rond doré. Retail 2026 : 3 400-4 200 € selon cuir. Prix marché secondaire : 2 500-3 800 €. Sa signature : CD rond embossé sur rabat + CD rond métal fermoir + sangle ajustable. Les contrefaçons Bobby ciblent les acheteuses 25-40 ans via Vinted et Vestiaire. Les cinq signaux : CD embossé rabat, CD métal fermoir mécanisme, sangle réglable boucles, structure rigide, et numéro série.",
+      "Le Dior Bobby, lancé en 2020 par Maria Grazia Chiuri et nommé d'après le chien de Christian Dior (Bobby, un caniche), est un crossbody structuré au fermoir CD rond doré. Retail 2026 : 3 400-4 200 € selon cuir. Prix marché secondaire : 2 500-3 800 €. Sa signature : CD rond embossé sur rabat + CD rond métal fermoir + sangle ajustable. Les contrefaçons Bobby ciblent les acheteuses via Vinted et Vestiaire. Les signaux : CD embossé rabat, CD métal fermoir mécanisme, sangle réglable boucles, structure rigide, et numéro série.",
     signals: [
       {
         title: "CD embossé rabat — profondeur relief",
@@ -265,7 +265,7 @@ export const diorModels: ModelData[] = [
       {
         question: "Le Bobby est-il un sac d'investissement ?",
         answer:
-          "Moins que le Lady Dior. Le Bobby est un modèle récent (2020) qui se déprécie légèrement (-20-30 % en 2 ans) sur le marché secondaire. Le Lady Dior et Saddle gardent mieux leur valeur. Choix de style vs investissement.",
+          "Moins que le Lady Dior. Le Bobby est un modèle récent (2020) qui se déprécie légèrement sur le marché secondaire. Le Lady Dior et Saddle gardent mieux leur valeur. Choix de style vs investissement.",
       },
     ],
   },

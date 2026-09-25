@@ -24,6 +24,6 @@ export default async function Image(props: Props) {
   return renderOgImage({
     eyebrow: "Acheter authentique",
     title: platform ? `Sur ${platform.name}` : "Acheter authentique",
-    subtitle: "Les marques les plus contrefaites",
+    subtitle: "Guides d'authentification par marque",
   });
 }

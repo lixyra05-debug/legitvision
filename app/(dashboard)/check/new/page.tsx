@@ -21,6 +21,7 @@ import { CategoryPicker } from "@/components/check/CategoryPicker";
 import { PhotoUploader } from "@/components/check/PhotoUploader";
 import type { Category, Brand, Model, PhotoSlot } from "@/lib/types";
 import { facts } from "@/lib/site-facts";
+import { NO_AUTH_POINTS } from "@/lib/analyzable";
 
 const FACTS = facts();
 
@@ -160,9 +161,19 @@ export default function NewCheckPage() {
       // Vuitton, Hermès, Dior, Gucci, Prada, Chanel…) ont plusieurs lignes en base.
       // Sans category, maybeSingle() lèverait une erreur "multiple rows" et casserait
       // la pré-sélection. On prend la première ligne (la category est ajustable ensuite).
+      // Seules les lignes ayant au moins un modèle analysable comptent
+      // (lib/analyzable.ts) : sans category (hubs guide, recherche), la première
+      // ligne venue pouvait être une ligne sans modèle, comme Gucci en sneakers.
+      const brandQuery = supabase
+        .from("brands")
+        .select("*, models!inner()")
+        .ilike("name", brandParam!)
+        .eq("is_active", true)
+        .eq("models.is_active", true)
+        .neq("models.authentication_points", NO_AUTH_POINTS);
       const { data: brandRows } = await (categoryParam
-        ? supabase.from("brands").select("*").ilike("name", brandParam!).eq("is_active", true).eq("category", categoryParam)
-        : supabase.from("brands").select("*").ilike("name", brandParam!).eq("is_active", true)
+        ? brandQuery.eq("category", categoryParam)
+        : brandQuery
       ).limit(1);
 
       const brandData = brandRows?.[0];
@@ -181,6 +192,7 @@ export default function NewCheckPage() {
           .eq("brand_id", brandData.id)
           .ilike("name", modelParam!)
           .eq("is_active", true)
+          .neq("authentication_points", NO_AUTH_POINTS)
           .limit(1);
 
         const modelData = modelRows?.[0];
@@ -211,11 +223,14 @@ export default function NewCheckPage() {
     setLoadingBrands(true);
     setBrands([]);
 
+    // Marques ayant au moins un modèle analysable : voir lib/analyzable.ts
     supabase
       .from("brands")
-      .select("*")
+      .select("*, models!inner()")
       .eq("category", category)
       .eq("is_active", true)
+      .eq("models.is_active", true)
+      .neq("models.authentication_points", NO_AUTH_POINTS)
       .order("name")
       .then(({ data }) => {
         setBrands((data as Brand[]) ?? []);
@@ -234,6 +249,8 @@ export default function NewCheckPage() {
       .select("*")
       .eq("brand_id", selectedBrand.id)
       .eq("is_active", true)
+      // Modèles sans point d'authentification exclus : voir lib/analyzable.ts
+      .neq("authentication_points", NO_AUTH_POINTS)
       .order("name")
       .then(({ data }) => {
         setModels((data as Model[]) ?? []);

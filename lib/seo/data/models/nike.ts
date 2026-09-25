@@ -8,9 +8,9 @@ export const nikeModels: ModelData[] = [
     category: "sneakers",
     priceRange: "180-2 500 €",
     retailYear: "1985 (rééditée)",
-    tagline: "La sneaker la plus contrefaite au monde",
+    tagline: "La sneaker sortie en 1985 pour Michael Jordan",
     intro:
-      "La Nike Air Jordan 1, sortie en 1985 pour Michael Jordan, est la sneaker la plus iconique — et la plus contrefaite — de l'histoire du streetwear. Avec plus de 50 millions de paires vendues depuis sa création et une réédition annuelle (Retro High, Retro Low, Mid), la AJ1 concentre à elle seule environ 25 % du volume mondial de contrefaçons sneakers. Les coloris OG (Chicago, Bred, Royal, Shadow) sont les plus copiés, avec des super-fakes produits en Chine du Sud (Putian) qui reproduisent désormais correctement le Wings logo, le Swoosh, et le cuir pleine fleur. Le prix retail Retro High à 180-200 € et les prix marché sur les rééditions limitées (Chicago Lost & Found à 600 €, Travis Scott à 1 500 €, Off-White à 2 500-5 000 €) créent une marge de contrefaçon exceptionnelle. Pour distinguer une vraie AJ1 d'une contrefaçon en 2026, il faut examiner 5 détails techniques précis qui résistent encore aux super-fakes : la géométrie du Wings, la jointure cupsole-upper, la qualité du cuir, le Style Code et la box label.",
+      "La Nike Air Jordan 1, sortie en 1985 pour Michael Jordan, est la sneaker la plus iconique de l'histoire du streetwear. La AJ1 connaît une réédition annuelle (Retro High, Retro Low, Mid). Les coloris OG (Chicago, Bred, Royal, Shadow) sont copiés, avec des super-fakes produits en Chine du Sud (Putian) qui reproduisent désormais correctement le Wings logo, le Swoosh, et le cuir pleine fleur. Le prix retail Retro High à 180-200 € et les prix marché sur les rééditions limitées (Chicago Lost & Found à 600 €, Travis Scott à 1 500 €, Off-White à 2 500-5 000 €) créent une marge de contrefaçon exceptionnelle. Pour distinguer une vraie AJ1 d'une contrefaçon en 2026, il faut examiner 5 détails techniques précis qui résistent encore aux super-fakes : la géométrie du Wings, la jointure cupsole-upper, la qualité du cuir, le Style Code et la box label.",
     signals: [
       {
         title: "Wings logo : proportions et perforations",
@@ -21,7 +21,7 @@ export const nikeModels: ModelData[] = [
       {
         title: "Style Code 9 caractères — format et vérification",
         description:
-          "Le Style Code AJ1 est au format XXXXXX-XXX (ex. 555088-101 pour la Chicago). Vérifiez-le sur StockX ou Nike.com : il doit exister, correspondre au modèle exact et au colorway présenté. Un Style Code existant mais attribué à un autre coloris est une contrefaçon quasi-certaine.",
+          "Le Style Code AJ1 est au format XXXXXX-XXX (ex. 555088-101 pour la Chicago). Vérifiez-le sur StockX ou Nike.com : il doit exister, correspondre au modèle exact et au colorway présenté. Un Style Code existant mais attribué à un autre coloris est un signal de contrefaçon.",
         difficulty: 1,
       },
       {
@@ -47,19 +47,19 @@ export const nikeModels: ModelData[] = [
       {
         title: "Photos de la Chicago Lost & Found à 300 €",
         description:
-          "La Jordan 1 Chicago Lost & Found (2022) a un prix marché stable à 600-900 €. Toute annonce sous 500 € est à 95 % une contrefaçon, souvent avec photos volées à StockX. Faites une reverse image search Google avant tout paiement.",
+          "La Jordan 1 Chicago Lost & Found (2022) a un prix marché stable à 600-900 €. Toute annonce sous 500 € est suspecte, souvent avec photos volées à StockX. Faites une reverse image search Google avant tout paiement.",
       },
       {
         title: "Travis Scott AJ1 Low Mocha neuve à 400 €",
         description:
-          "Le prix marché secondaire de la Travis Scott AJ1 Low Mocha est de 1 100-1 600 € en état neuf. Une annonce sous 700 € est statistiquement une contrefaçon à 99 %. Les super-fakes reproduisent désormais le Swoosh inversé et le Cactus Jack tag, mais pas la densité du cuir reverse.",
+          "Le prix marché secondaire de la Travis Scott AJ1 Low Mocha est de 1 100-1 600 € en état neuf. Une annonce sous 700 € est suspecte. Les super-fakes reproduisent désormais le Swoosh inversé et le Cactus Jack tag, mais pas la densité du cuir reverse.",
       },
     ],
     faqs: [
       {
         question: "Comment vérifier une Air Jordan 1 sans les box ?",
         answer:
-          "La box n'est qu'un signal parmi d'autres. Sans box, concentrez-vous sur les 5 signaux physiques : Wings logo (perforations et alignement), Style Code imprimé sur l'étiquette intérieure, jointure cupsole, qualité du cuir (odeur + marque à la pression), et cohérence des coutures (7-9 points par pouce). Une AJ1 authentique sans box reste authentifiable à 95 % via ces critères.",
+          "La box n'est qu'un signal parmi d'autres. Sans box, concentrez-vous sur les signaux physiques : Wings logo (perforations et alignement), Style Code imprimé sur l'étiquette intérieure, jointure cupsole, qualité du cuir (odeur + marque à la pression), et cohérence des coutures (7-9 points par pouce). Une AJ1 authentique sans box reste authentifiable via ces critères.",
       },
       {
         question: "Quelle différence entre AJ1 Retro High et Retro Low ?",
@@ -75,9 +75,9 @@ export const nikeModels: ModelData[] = [
     category: "sneakers",
     priceRange: "200-2 000 €",
     retailYear: "1989 (rééditée)",
-    tagline: "Le deuxième modèle Jordan le plus contrefait",
+    tagline: "Le modèle Jordan designé par Tinker Hatfield en 1989",
     intro:
-      "La Nike Air Jordan 4, designée par Tinker Hatfield en 1989, est la deuxième paire Jordan la plus contrefaite au monde après la Jordan 1. Ses rééditions (Bred, White Cement, Fire Red, Oreo, Military Blue) se revendent entre 250 et 600 € sur le marché secondaire, tandis que les collaborations limitées (Travis Scott Cactus Jack 2018, Off-White 2020, Eminem Carhartt 2015) atteignent 1 500-8 000 €. Ces prix élevés alimentent une industrie de contrefaçon massive — environ 30 000 paires de fausses Travis Scott AJ4 Cactus Jack identifiées en circulation en 2025 selon StockX. La AJ4 est structurellement plus complexe que la AJ1 avec ses 4 wings latéraux, ses 6 œillets, son mudguard perforé et son talon en nubuck : cette complexité trahit les super-fakes qui reproduisent rarement l'alignement exact de tous ces éléments. La vérification technique d'une AJ4 exige l'examen de 5 points précis : Style Code, Nike Air jock tag talon, wings latéraux, mudguard et coutures du nubuck.",
+      "La Nike Air Jordan 4 a été designée par Tinker Hatfield en 1989. Ses rééditions (Bred, White Cement, Fire Red, Oreo, Military Blue) se revendent entre 250 et 600 € sur le marché secondaire, tandis que les collaborations limitées (Travis Scott Cactus Jack 2018, Off-White 2020, Eminem Carhartt 2015) atteignent 1 500-8 000 €. Ces prix élevés alimentent une industrie de contrefaçon massive. La AJ4 est structurellement plus complexe que la AJ1 avec ses 4 wings latéraux, ses 6 œillets, son mudguard perforé et son talon en nubuck : cette complexité trahit les super-fakes qui reproduisent rarement l'alignement exact de tous ces éléments. La vérification technique d'une AJ4 exige l'examen de 5 points précis : Style Code, Nike Air jock tag talon, wings latéraux, mudguard et coutures du nubuck.",
     signals: [
       {
         title: "Jock tag talon « Nike Air » — police et alignement",
@@ -114,7 +114,7 @@ export const nikeModels: ModelData[] = [
       {
         title: "Travis Scott AJ4 Cactus Jack à 600 € sur Vinted",
         description:
-          "Le prix marché de la Travis Scott AJ4 Cactus Jack (2018) oscille entre 1 400 et 2 200 €. Toute annonce sous 900 € est à 98 % une contrefaçon. Les super-fakes reproduisent le hang tag Cactus Jack mais pas la qualité du nubuck gris ni l'alignement exact des wings.",
+          "Le prix marché de la Travis Scott AJ4 Cactus Jack (2018) oscille entre 1 400 et 2 200 €. Toute annonce sous 900 € est suspecte. Les super-fakes reproduisent le hang tag Cactus Jack mais pas la qualité du nubuck gris ni l'alignement exact des wings.",
       },
       {
         title: "AJ4 Bred Retro 2019 neuve à 220 €",
@@ -126,7 +126,7 @@ export const nikeModels: ModelData[] = [
       {
         question: "Pourquoi la Jordan 4 est-elle plus complexe à authentifier que la Jordan 1 ?",
         answer:
-          "La AJ4 a plus d'éléments à vérifier : 4 wings (vs 2 pour AJ1), 6 œillets spécifiques, mudguard perforé, Nike Air jock tag talon (ou Jumpman post-2016), et nubuck au talon. Cette complexité structurelle multiplie les points d'erreur pour les contrefacteurs, mais exige aussi une vérification plus exhaustive. Les super-fakes AJ4 ratent souvent 1-2 de ces 5 points.",
+          "La AJ4 a plus d'éléments à vérifier : 4 wings (vs 2 pour AJ1), 6 œillets spécifiques, mudguard perforé, Nike Air jock tag talon (ou Jumpman post-2016), et nubuck au talon. Cette complexité structurelle multiplie les points d'erreur pour les contrefacteurs, mais exige aussi une vérification plus exhaustive.",
       },
       {
         question: "Les AJ4 Retro post-2016 ont-elles le même jock tag ?",
@@ -142,9 +142,9 @@ export const nikeModels: ModelData[] = [
     category: "sneakers",
     priceRange: "200-1 200 €",
     retailYear: "1995 (rééditée)",
-    tagline: "Le cuir verni emblématique, le défi n°1 des super-fakes",
+    tagline: "Le cuir verni emblématique, un défi pour les super-fakes",
     intro:
-      "La Nike Air Jordan 11, designée par Tinker Hatfield et sortie en 1995, est considérée par beaucoup comme la plus belle Air Jordan jamais produite. Son cuir verni (patent leather) enveloppant l'upper en mesh est une signature technique difficile à reproduire — ce qui en fait paradoxalement une cible privilégiée des super-fakes haut de gamme. Les rééditions annuelles « Holiday » (Bred 1995/2019, Concord 1995/2018, Space Jam 1995/2016, Playoff, Legend Blue) se vendent entre 280 et 700 € à retail, avec un marché secondaire entre 400 et 1 200 € selon génération et état. Environ 40 000 paires de fausses AJ11 sont en circulation sur le marché européen selon les estimations, principalement des Bred et Concord. Les super-fakes reproduisent désormais correctement la languette Jumpman et le cuir verni, mais ratent systématiquement 2 détails techniques : le gonflement précis de la cupsole air bubble arrière et la qualité du mesh ballistique. Vérifier une AJ11 authentique exige donc une attention particulière sur 5 signaux.",
+      "La Nike Air Jordan 11, designée par Tinker Hatfield et sortie en 1995, est considérée par beaucoup comme la plus belle Air Jordan jamais produite. Son cuir verni (patent leather) enveloppant l'upper en mesh est une signature technique difficile à reproduire — ce qui en fait paradoxalement une cible des super-fakes haut de gamme. Les rééditions annuelles « Holiday » (Bred 1995/2019, Concord 1995/2018, Space Jam 1995/2016, Playoff, Legend Blue) se vendent entre 280 et 700 € à retail, avec un marché secondaire entre 400 et 1 200 € selon génération et état. Les super-fakes reproduisent désormais correctement la languette Jumpman et le cuir verni, mais ratent systématiquement 2 détails techniques : le gonflement précis de la cupsole air bubble arrière et la qualité du mesh ballistique. Vérifier une AJ11 authentique exige donc une attention particulière sur les signaux ci-dessous.",
     signals: [
       {
         title: "Cuir verni : brillance et pliage",
@@ -181,7 +181,7 @@ export const nikeModels: ModelData[] = [
       {
         title: "AJ11 Concord 2018 à 300 € sur Vinted",
         description:
-          "La AJ11 Concord 2018 (retail 220 €, marché 500-750 €) à 300 € est statistiquement une contrefaçon. Les super-fakes Concord reproduisent bien le patent leather mais ratent la cupsole et le mesh. Demandez toujours photos de profil pour vérifier l'air bubble.",
+          "La AJ11 Concord 2018 (retail 220 €, marché 500-750 €) à 300 € est suspecte. Les super-fakes Concord reproduisent bien le patent leather mais ratent la cupsole et le mesh. Demandez toujours photos de profil pour vérifier l'air bubble.",
       },
       {
         title: "AJ11 Space Jam customisée en « Space Jam 2 »",
@@ -193,7 +193,7 @@ export const nikeModels: ModelData[] = [
       {
         question: "Comment distinguer une AJ11 OG 1995 d'une réédition ?",
         answer:
-          "Les AJ11 OG 1995 ont le « 45 » brodé sur le talon (numéro de Jordan en baseball), tandis que les rééditions 2000+ ont le « 23 ». La date de fabrication sur l'étiquette intérieure et le Style Code permettent de confirmer la génération. Les OG 1995 sont extrêmement rares en état DS et peuvent atteindre 3 000-5 000 € — mais 99,9 % des annonces revendiquant une OG 1995 à bas prix sont des contrefaçons ou des rééditions mal identifiées.",
+          "Les AJ11 OG 1995 ont le « 45 » brodé sur le talon (numéro de Jordan en baseball), tandis que les rééditions 2000+ ont le « 23 ». La date de fabrication sur l'étiquette intérieure et le Style Code permettent de confirmer la génération. Les OG 1995 sont extrêmement rares en état DS et peuvent atteindre 3 000-5 000 € — mais une annonce revendiquant une OG 1995 à bas prix doit faire suspecter une contrefaçon ou une réédition mal identifiée.",
       },
       {
         question: "Le cuir verni AJ11 jaunit-il avec le temps ?",
@@ -209,9 +209,9 @@ export const nikeModels: ModelData[] = [
     category: "sneakers",
     priceRange: "90-400 €",
     retailYear: "1982 (production continue)",
-    tagline: "La sneaker la plus vendue au monde — et la plus copiée",
+    tagline: "La sneaker designée par Bruce Kilgore en 1982",
     intro:
-      "La Nike Air Force 1 Low, designée par Bruce Kilgore en 1982, est la sneaker la plus vendue dans l'histoire avec plus de 250 millions de paires produites. Son design minimaliste (cuir blanc pleine fleur, Swoosh, Air sole) en fait la paire la plus portée au monde — et aussi la plus contrefaite. En volume brut, la AF1 blanche représente environ 35 % des contrefaçons sneakers mondiales selon les douanes européennes. Son prix retail bas (109-130 €) comparé à un coût de production clandestine de 8-15 € offre la marge la plus rentable pour les contrefacteurs industriels chinois. Les coloris OG (Triple White, Triple Black, Shadow) sont les plus copiés, suivis des collaborations (Travis Scott Cactus Jack, Off-White, Louis Vuitton). Paradoxalement, la simplicité du design rend les super-fakes techniquement crédibles sur photo — il faut examiner 5 détails précis pour les distinguer d'une paire authentique : le Swoosh, la forme du Air sole, la cupsole, l'étiquette intérieure et le Style Code.",
+      "La Nike Air Force 1 Low a été designée par Bruce Kilgore en 1982. Son prix retail bas (109-130 €) comparé à un coût de production clandestine de 8-15 € offre une marge rentable pour les contrefacteurs industriels chinois. Paradoxalement, la simplicité du design rend les super-fakes techniquement crédibles sur photo — il faut examiner 5 détails précis pour les distinguer d'une paire authentique : le Swoosh, la forme du Air sole, la cupsole, l'étiquette intérieure et le Style Code.",
     signals: [
       {
         title: "Swoosh : forme asymétrique et pointe fine",
@@ -234,7 +234,7 @@ export const nikeModels: ModelData[] = [
       {
         title: "Étiquette intérieure : alignement et police",
         description:
-          "L'étiquette intérieure AF1 porte Nike size chart + Style Code + pays de fabrication. La police doit être nette, les espacements réguliers. Les contrefaçons présentent souvent une police trop grasse, un espacement trop serré, ou un alignement décalé de 2-3 mm. Les AF1 authentiques sont majoritairement « Made in China » ou « Made in Vietnam ».",
+          "L'étiquette intérieure AF1 porte Nike size chart + Style Code + pays de fabrication. La police doit être nette, les espacements réguliers. Les contrefaçons présentent souvent une police trop grasse, un espacement trop serré, ou un alignement décalé de 2-3 mm.",
         difficulty: 1,
       },
       {
@@ -248,19 +248,19 @@ export const nikeModels: ModelData[] = [
       {
         title: "AF1 Triple White « neuves » à 45 € sur Vinted",
         description:
-          "Les AF1 Triple White retail à 109-130 € et se revendent 80-100 € en état DS. Toute annonce sous 50 € est statistiquement à 98 % une contrefaçon. Les super-fakes AF1 Triple White circulent massivement à 20-40 € en provenance directe d'usines Putian.",
+          "Les AF1 Triple White retail à 109-130 € et se revendent 80-100 € en état DS. Toute annonce sous 50 € est suspecte. Les super-fakes AF1 Triple White circulent massivement à 20-40 € en provenance directe d'usines Putian.",
       },
       {
         title: "Travis Scott AF1 Sail à 400 € sur Facebook Marketplace",
         description:
-          "La Travis Scott AF1 Sail a un prix marché de 1 800-2 800 €. Une annonce à 400 € est à 99 % une contrefaçon. Les super-fakes reproduisent le Swoosh inversé et le Cactus Jack tag mais ratent toujours la cupsole beige spécifique et les coutures Sail.",
+          "La Travis Scott AF1 Sail a un prix marché de 1 800-2 800 €. Une annonce à 400 € est suspecte. Les super-fakes reproduisent le Swoosh inversé et le Cactus Jack tag mais ratent toujours la cupsole beige spécifique et les coutures Sail.",
       },
     ],
     faqs: [
       {
         question: "Pourquoi autant de fausses AF1 blanches sur Vinted ?",
         answer:
-          "3 raisons principales : (1) c'est la sneaker la plus portée au monde donc volume de recherche massif sur Vinted, (2) le retail bas (109-130 €) crée une marge exceptionnelle sur les super-fakes à 20-40 € de production, (3) le design minimaliste (cuir blanc + Swoosh) est simple à reproduire visuellement sur photo. Environ 35 % des AF1 blanches mises en vente sur Vinted à moins de 60 € sont des contrefaçons selon les estimations.",
+          "3 raisons principales : (1) volume de recherche massif sur Vinted, (2) le retail bas (109-130 €) crée une marge exceptionnelle sur les super-fakes à 20-40 € de production, (3) le design minimaliste (cuir blanc + Swoosh) est simple à reproduire visuellement sur photo.",
       },
       {
         question: "Les AF1 Mid et High ont-elles les mêmes critères d'auth ?",
@@ -278,7 +278,7 @@ export const nikeModels: ModelData[] = [
     retailYear: "1985 (comeback 2020)",
     tagline: "La revanche culturelle depuis 2020",
     intro:
-      "La Nike Dunk Low, initialement sortie en 1985 comme chaussure de basket NCAA, a connu un comeback spectaculaire depuis 2020 grâce à la collaboration Travis Scott et aux rééditions Retro régulières. Son prix retail (110 €) et ses collaborations hyped ont créé un marché secondaire gigantesque : la Panda se revend 220-280 €, la Travis Scott à 2 000 €, l'Off-White « The 50 » entre 800 et 3 000 €. Cette explosion des prix a fait de la Dunk Low la deuxième sneaker la plus contrefaite au monde en 2024-2026, après la AJ1. Les contrefacteurs ciblent principalement les coloris hyped : Panda (blanche/noire), Chicago, Kentucky, Syracuse, et toutes les collaborations. Vérifier une Dunk Low authentique exige d'examiner 5 détails structurels spécifiques à ce modèle — pas la AF1, pas la AJ1 : la construction à 2 couleurs contrastées, l'overlay latéral, la Swoosh position, la languette et la cupsole herringbone.",
+      "La Nike Dunk Low, initialement sortie en 1985 comme chaussure de basket NCAA, a connu un comeback spectaculaire depuis 2020 grâce à la collaboration Travis Scott et aux rééditions Retro régulières. Son prix retail (110 €) et ses collaborations hyped ont créé un marché secondaire gigantesque : la Panda se revend 220-280 €, la Travis Scott à 2 000 €, l'Off-White « The 50 » entre 800 et 3 000 €. Les contrefacteurs ciblent principalement les coloris hyped : Panda (blanche/noire), Chicago, Kentucky, Syracuse, et toutes les collaborations. Vérifier une Dunk Low authentique exige d'examiner 5 détails structurels spécifiques à ce modèle — pas la AF1, pas la AJ1 : la construction à 2 couleurs contrastées, l'overlay latéral, la Swoosh position, la languette et la cupsole herringbone.",
     signals: [
       {
         title: "Overlay latéral : forme et couture exacte",
@@ -315,12 +315,12 @@ export const nikeModels: ModelData[] = [
       {
         title: "Dunk Low Panda « neuve » à 120 € sur Vinted",
         description:
-          "La Dunk Low Panda retail à 115 € se revend 220-280 € en état DS. Une annonce sous 180 € pour une Panda neuve est à 90 % une contrefaçon. Les super-fakes Panda circulent massivement — vérifiez cupsole herringbone et coutures overlay latéral.",
+          "La Dunk Low Panda retail à 115 € se revend 220-280 € en état DS. Une annonce sous 180 € pour une Panda neuve est suspecte. Les super-fakes Panda circulent massivement — vérifiez cupsole herringbone et coutures overlay latéral.",
       },
       {
         title: "Travis Scott Dunk Low à 500 € sur Facebook Marketplace",
         description:
-          "La Travis Scott Dunk Low (2022) a un prix marché de 1 800-2 400 €. Une annonce à 500 € est une contrefaçon quasi-certaine. Les super-fakes reproduisent le reverse Swoosh et l'overlay tweed mais ratent la cupsole exact du coloris Travis Scott.",
+          "La Travis Scott Dunk Low (2022) a un prix marché de 1 800-2 400 €. Une annonce à 500 € est suspecte. Les super-fakes reproduisent le reverse Swoosh et l'overlay tweed mais ratent la cupsole exact du coloris Travis Scott.",
       },
     ],
     faqs: [
@@ -332,7 +332,7 @@ export const nikeModels: ModelData[] = [
       {
         question: "Les Dunk Low PS (Preschool) sont-elles aussi contrefaites ?",
         answer:
-          "Moins en volume mais en pourcentage similaire. La Dunk Low PS (version enfant) est souvent achetée par des collectionneurs pour leurs enfants, ce qui en fait une cible secondaire. Les mêmes critères d'auth s'appliquent : overlay, cupsole herringbone, Swoosh, languette, Style Code (avec suffixe PS différent du GS ou adulte).",
+          "Oui. La Dunk Low PS (version enfant) est souvent achetée par des collectionneurs pour leurs enfants. Les mêmes critères d'auth s'appliquent : overlay, cupsole herringbone, Swoosh, languette, Style Code (avec suffixe PS différent du GS ou adulte).",
       },
     ],
   },
@@ -345,7 +345,7 @@ export const nikeModels: ModelData[] = [
     retailYear: "2002 (ligne Skateboarding)",
     tagline: "La ligne collab culte, la plus complexe à authentifier",
     intro:
-      "La Nike Dunk SB (Skateboarding) est la ligne sneaker la plus collab-intense de l'histoire Nike, avec plus de 800 colorways différents produits depuis 2002. De la Paris « Bernard Buffet » (2003, retail 150 €, marché 10 000-25 000 €) à la Chunky Dunky (2020), chaque drop SB est une événement marketing. Cette intensité collab rend la ligne SB particulièrement difficile à authentifier : il n'y a pas 5 mais plus de 800 « bonnes » versions à vérifier, chacune avec ses caractéristiques propres. La complexité favorise les contrefacteurs professionnels qui produisent des super-fakes ciblés sur les drops les plus hyped : Travis Scott SB (2020, 1 800-3 000 €), Strangelove (2020, 1 200-2 000 €), Holy Grail (ex. Freddy Krueger, Heineken) à 20 000-100 000 €. La vérification d'une Dunk SB exige de maîtriser les signatures communes de la ligne SB (Puffy Tongue, cupsole épaisse, Zoom Air) ET les détails spécifiques du colorway revendiqué. 5 signaux clés permettent une première filtration sur toute Dunk SB.",
+      "La Nike Dunk SB (Skateboarding) est une ligne sneaker collab-intense, avec plus de 800 colorways différents produits depuis 2002. De la Paris « Bernard Buffet » (2003, retail 150 €, marché 10 000-25 000 €) à la Chunky Dunky (2020), chaque drop SB est une événement marketing. Cette intensité collab rend la ligne SB particulièrement difficile à authentifier : il n'y a pas 5 mais plus de 800 « bonnes » versions à vérifier, chacune avec ses caractéristiques propres. La complexité favorise les contrefacteurs professionnels qui produisent des super-fakes ciblés sur les drops hyped : Travis Scott SB (2020, 1 800-3 000 €), Strangelove (2020, 1 200-2 000 €), Holy Grail (ex. Freddy Krueger, Heineken) à 20 000-100 000 €. La vérification d'une Dunk SB exige de maîtriser les signatures communes de la ligne SB (Puffy Tongue, cupsole épaisse, Zoom Air) ET les détails spécifiques du colorway revendiqué. 5 signaux clés permettent une première filtration sur toute Dunk SB.",
     signals: [
       {
         title: "Puffy Tongue : épaisseur et hauteur signature",
@@ -382,12 +382,12 @@ export const nikeModels: ModelData[] = [
       {
         title: "Travis Scott SB « neuve » à 500 € sur Vinted",
         description:
-          "La Travis Scott SB retail à 135 € se revend 1 800-2 600 € en DS. Toute annonce sous 1 000 € est une contrefaçon certaine. Les super-fakes reproduisent bien le Swoosh removable mais ratent la cupsole SB spécifique et les hang tags Cactus Jack.",
+          "La Travis Scott SB retail à 135 € se revend 1 800-2 600 € en DS. Toute annonce sous 1 000 € est suspecte. Les super-fakes reproduisent bien le Swoosh removable mais ratent la cupsole SB spécifique et les hang tags Cactus Jack.",
       },
       {
         title: "Paris SB 2003 « DS dans la box » à 3 000 €",
         description:
-          "Les Paris SB originales (2003) ont un prix marché de 15 000-30 000 € en DS. Toute annonce à moins de 8 000 € est statistiquement 99 % une contrefaçon. Les Paris SB sont l'un des Holy Grails les plus imités — exigez toujours authentification par expert dédié (StockX, Sole Swap).",
+          "Les Paris SB originales (2003) ont un prix marché de 15 000-30 000 € en DS. Toute annonce à moins de 8 000 € est suspecte. Les Paris SB sont l'un des Holy Grails — exigez toujours authentification par expert dédié (StockX, Sole Swap).",
       },
     ],
     faqs: [
@@ -412,7 +412,7 @@ export const nikeModels: ModelData[] = [
     retailYear: "1987 (rééditée)",
     tagline: "La première Air visible de l'histoire sneaker",
     intro:
-      "La Nike Air Max 1, designée par Tinker Hatfield en 1987, a révolutionné le sneaker game en introduisant la première unité Air visible de l'histoire. Inspirée du Centre Pompidou à Paris (dont Hatfield a emprunté l'idée de la transparence structurelle), la AM1 a défini l'ADN de toute la ligne Air Max qui a suivi. Son retail actuel (130-160 €) et son marché secondaire sur les OG (Red 1987, Patta, Kiss of Death) entre 300 et 2 000 € en font une cible de contrefaçon historique. Moins contrefaite que la AJ1 ou la AF1 en volume pur, la AM1 présente néanmoins un taux de super-fakes de qualité élevée, particulièrement sur les collaborations Patta, atmos, et Cactus Jack. La signature technique de la AM1 réside dans l'air bubble talon, le mesh ballistique et le mudguard en cuir suède. Vérifier une AM1 exige d'examiner 5 détails spécifiques à ce modèle, différents de ceux d'une AF1 ou d'une AJ1.",
+      "La Nike Air Max 1, designée par Tinker Hatfield en 1987, a révolutionné le sneaker game en introduisant la première unité Air visible de l'histoire. Inspirée du Centre Pompidou à Paris (dont Hatfield a emprunté l'idée de la transparence structurelle), la AM1 a défini l'ADN de toute la ligne Air Max qui a suivi. Son retail actuel (130-160 €) et son marché secondaire sur les OG (Red 1987, Patta, Kiss of Death) entre 300 et 2 000 € en font une cible de contrefaçon historique. La AM1 fait l'objet de super-fakes de qualité, particulièrement sur les collaborations Patta, atmos, et Cactus Jack. La signature technique de la AM1 réside dans l'air bubble talon, le mesh ballistique et le mudguard en cuir suède. Vérifier une AM1 exige d'examiner 5 détails spécifiques à ce modèle, différents de ceux d'une AF1 ou d'une AJ1.",
     signals: [
       {
         title: "Air bubble talon — forme et transparence",
@@ -461,7 +461,7 @@ export const nikeModels: ModelData[] = [
       {
         question: "Pourquoi les AM1 OG 1987 sont-elles si rares ?",
         answer:
-          "Les AM1 OG 1987 (premier drop, Red ou Blue) ont été produites en quantités limitées comparé aux standards modernes. Leur disponibilité actuelle en état DS est quasi-nulle — la plupart ont été portées, jaunies ou détruites. Les rééditions 1992, 2002, 2013, 2017, 2022 sont beaucoup plus communes. Une AM1 revendiquée « OG 1987 DS » à moins de 2 500-3 500 € est statistiquement une contrefaçon ou une mauvaise identification.",
+          "Les AM1 OG 1987 (premier drop, Red ou Blue) ont été produites en quantités limitées comparé aux standards modernes. Leur disponibilité actuelle en état DS est quasi-nulle. Les rééditions 1992, 2002, 2013, 2017, 2022 sont beaucoup plus communes. Une AM1 revendiquée « OG 1987 DS » à moins de 2 500-3 500 € doit faire suspecter une contrefaçon ou une mauvaise identification.",
       },
       {
         question: "Différence entre AM1 et AM1 Big Bubble ?",
@@ -477,9 +477,9 @@ export const nikeModels: ModelData[] = [
     category: "sneakers",
     priceRange: "130-600 €",
     retailYear: "1990 (rééditée)",
-    tagline: "L'Air Max la plus populaire en Europe",
+    tagline: "L'Air Max designée par Tinker Hatfield en 1990",
     intro:
-      "La Nike Air Max 90, designée par Tinker Hatfield en 1990, est la paire Air Max la plus vendue en Europe depuis 30 ans, particulièrement popularisée par la scène football/casual britannique et française dans les années 2000. Son retail à 130-160 € et son marché secondaire entre 200 et 800 € sur les rééditions rares (Infrared 1990/2020, Duck Camo, Undefeated) en font une cible de contrefaçon massive, spécifiquement ciblée sur les marchés européens. Volume de contrefaçons AM90 détectées en douane en 2025 : environ 80 000 paires pour la zone UE selon les rapports OLAF. La AM90 présente 5 signatures techniques distinctes des autres Air Max : la bulle d'air plus grande que la AM1, le mudguard tri-couche typique, la cupsole plus structurée, la languette plus épaisse, et l'overlay polyuréthane caractéristique. Ces 5 détails sont les points de vérification clés en 2026.",
+      "La Nike Air Max 90, designée par Tinker Hatfield en 1990, a été particulièrement popularisée par la scène football/casual britannique et française dans les années 2000. Son retail à 130-160 € et son marché secondaire entre 200 et 800 € sur les rééditions rares (Infrared 1990/2020, Duck Camo, Undefeated) en font une cible de contrefaçon massive, spécifiquement ciblée sur les marchés européens. La AM90 présente 5 signatures techniques distinctes des autres Air Max : la bulle d'air plus grande que la AM1, le mudguard tri-couche typique, la cupsole plus structurée, la languette plus épaisse, et l'overlay polyuréthane caractéristique. Ces 5 détails sont les points de vérification clés en 2026.",
     signals: [
       {
         title: "Bulle d'air talon : plus grande que AM1",
@@ -516,7 +516,7 @@ export const nikeModels: ModelData[] = [
       {
         title: "AM90 Infrared « DS 1990 » à 400 €",
         description:
-          "Les AM90 Infrared OG 1990 DS sont quasi-introuvables à moins de 3 000-5 000 €. Une annonce à 400 € « DS 1990 » est à 99 % une contrefaçon. La réédition Infrared 2020 retail à 160 € et se revend 250-400 € DS — vérifiez la date de fabrication exacte.",
+          "Les AM90 Infrared OG 1990 DS sont quasi-introuvables à moins de 3 000-5 000 €. Une annonce à 400 € « DS 1990 » est suspecte. La réédition Infrared 2020 retail à 160 € et se revend 250-400 € DS — vérifiez la date de fabrication exacte.",
       },
       {
         title: "Undefeated x AM90 à 200 € sur Vinted",
@@ -546,7 +546,7 @@ export const nikeModels: ModelData[] = [
     retailYear: "1995 (rééditée)",
     tagline: "Le design anatomique culte des années 90",
     intro:
-      "La Nike Air Max 95, designée par Sergio Lozano en 1995, a introduit une rupture radicale dans le design sneaker : inspirée par l'anatomie humaine (les couches latérales représentent les muscles, la base les vertèbres, le mesh le tissu conjonctif), la AM95 est la première Air Max avec unités Air visibles au talon ET à l'avant-pied. Son retail actuel (170-200 €) et son marché secondaire sur les coloris OG (Neon, Solar Red) entre 300 et 700 € en font une paire culte du Japon et du Royaume-Uni. Au Japon en particulier, la AM95 Neon est un phénomène culturel depuis 1995 (vols et braquages documentés à l'époque), maintenant une demande soutenue et un volume de contrefaçons japonais-spécifiques élevé. La complexité de construction AM95 (gradient de couches latérales, 2 unités Air, mesh multi-densité) en fait l'une des Air Max les plus difficiles à contrefaire correctement — les super-fakes ratent systématiquement 1-2 des 5 détails techniques clés.",
+      "La Nike Air Max 95, designée par Sergio Lozano en 1995, a introduit une rupture radicale dans le design sneaker : inspirée par l'anatomie humaine (les couches latérales représentent les muscles, la base les vertèbres, le mesh le tissu conjonctif), la AM95 est la première Air Max avec unités Air visibles au talon ET à l'avant-pied. Son retail actuel (170-200 €) et son marché secondaire sur les coloris OG (Neon, Solar Red) entre 300 et 700 € en font une paire culte du Japon et du Royaume-Uni. Au Japon en particulier, la AM95 Neon est un phénomène culturel depuis 1995 (vols et braquages documentés à l'époque), maintenant une demande soutenue et un volume de contrefaçons japonais-spécifiques élevé. La complexité de construction AM95 (gradient de couches latérales, 2 unités Air, mesh multi-densité) en fait l'une des Air Max les plus difficiles à contrefaire correctement.",
     signals: [
       {
         title: "Gradient de couches latérales — 4 couches distinctes",
@@ -595,7 +595,7 @@ export const nikeModels: ModelData[] = [
       {
         question: "Pourquoi la Air Max 95 est-elle si culte au Japon ?",
         answer:
-          "La AM95 Neon est sortie au Japon en septembre 1995 avec une stratégie marketing agressive (exclusivité temporaire). Son prix élevé (20 000 yens, équivalent 200 € à l'époque) et son design radical ont créé un phénomène culturel : des braquages de jeunes ont été documentés à Shibuya en 1995-1996 uniquement pour voler des AM95. Depuis, la AM95 reste la paire la plus symbolique du streetwear japonais 90s, maintenant une demande soutenue (40 % des ventes AM95 européennes viennent toujours du marché collector Japan).",
+          "La AM95 Neon est sortie au Japon en septembre 1995 avec une stratégie marketing agressive (exclusivité temporaire). Son prix élevé (20 000 yens, équivalent 200 € à l'époque) et son design radical ont créé un phénomène culturel : des braquages de jeunes ont été documentés à Shibuya en 1995-1996 uniquement pour voler des AM95. Depuis, la AM95 reste la paire la plus symbolique du streetwear japonais 90s, maintenant une demande soutenue.",
       },
       {
         question: "Les AM95 sans Neon sont-elles également hyped ?",
@@ -613,7 +613,7 @@ export const nikeModels: ModelData[] = [
     retailYear: "1997 (rééditée)",
     tagline: "La silhouette full-length Air bubble",
     intro:
-      "La Nike Air Max 97, designée par Christian Tresser en 1997, a été la première sneaker Nike avec une unité Air visible sur toute la longueur de la cupsole (full-length Air). Inspirée des trains à grande vitesse japonais (Shinkansen), sa silhouette futuriste tout en courbes a redéfini l'esthétique sneaker de la fin des années 90. Son retail actuel (170-190 €) et son marché secondaire sur les OG et collaborations (Silver Bullet, Gold Bullet, Skepta, Sean Wotherspoon) entre 250 et 2 500 € en font une cible de contrefaçon importante, particulièrement sur le marché UK/France. Les super-fakes AM97 ont atteint en 2024-2025 un niveau de sophistication élevé, notamment sur les Silver Bullet qui représentent 25 % du volume contrefait AM97 en Europe. Vérifier une AM97 exige d'examiner 5 détails techniques propres à ce modèle : la full-length Air, les lignes latérales réfléchissantes, la construction mesh-cuir, les lacets dissimulés et la cupsole profilée.",
+      "La Nike Air Max 97, designée par Christian Tresser en 1997, a été la première sneaker Nike avec une unité Air visible sur toute la longueur de la cupsole (full-length Air). Inspirée des trains à grande vitesse japonais (Shinkansen), sa silhouette futuriste tout en courbes a redéfini l'esthétique sneaker de la fin des années 90. Son retail actuel (170-190 €) et son marché secondaire sur les OG et collaborations (Silver Bullet, Gold Bullet, Skepta, Sean Wotherspoon) entre 250 et 2 500 € en font une cible de contrefaçon importante, particulièrement sur le marché UK/France. Les super-fakes AM97 ont atteint en 2024-2025 un niveau de sophistication élevé, notamment sur les Silver Bullet. Vérifier une AM97 exige d'examiner 5 détails techniques propres à ce modèle : la full-length Air, les lignes latérales réfléchissantes, la construction mesh-cuir, les lacets dissimulés et la cupsole profilée.",
     signals: [
       {
         title: "Full-length Air bubble visible",
@@ -650,12 +650,12 @@ export const nikeModels: ModelData[] = [
       {
         title: "Silver Bullet « 1997 OG DS » à 400 €",
         description:
-          "Les Silver Bullet OG 1997 DS sont quasi-introuvables à moins de 4 000-8 000 € (si elles existent vraiment en DS). Toute annonce « OG 1997 » à moins de 3 000 € est à 99 % une contrefaçon ou une mauvaise identification. Les rééditions 2017, 2018, 2022 se revendent 250-450 € DS — c'est la cible des super-fakes modernes.",
+          "Les Silver Bullet OG 1997 DS sont quasi-introuvables à moins de 4 000-8 000 € (si elles existent vraiment en DS). Toute annonce « OG 1997 » à moins de 3 000 € doit faire suspecter une contrefaçon ou une mauvaise identification. Les rééditions 2017, 2018, 2022 se revendent 250-450 € DS — c'est la cible des super-fakes modernes.",
       },
       {
         title: "Sean Wotherspoon AM97 à 600 € sur Vinted",
         description:
-          "La Sean Wotherspoon AM1/97 Hybrid (2018) a un prix marché de 1 400-2 200 €. Une annonce à 600 € est statistiquement une contrefaçon. Vérifiez la construction hybride AM1+97, le velours multicolore, et la box spéciale Sean Wotherspoon.",
+          "La Sean Wotherspoon AM1/97 Hybrid (2018) a un prix marché de 1 400-2 200 €. Une annonce à 600 € est suspecte. Vérifiez la construction hybride AM1+97, le velours multicolore, et la box spéciale Sean Wotherspoon.",
       },
     ],
     faqs: [
@@ -680,7 +680,7 @@ export const nikeModels: ModelData[] = [
     retailYear: "1998 (rééditée)",
     tagline: "La « requin » culte de la culture banlieue française",
     intro:
-      "La Nike Air Max Plus, designée par Sean McDowell en 1998 et surnommée « TN » (Tuned Air) en Europe et « requin » en France, est l'une des sneakers les plus culturellement marquées de l'histoire. En France particulièrement, la TN est devenue dès les années 2000 un symbole du streetwear banlieue, popularisée par le rap français (Booba, NTM, PNL) et adoptée massivement dans les cités. Son design radical — silhouette agressive avec couches « dents de requin », unité Tuned Air à double chambre, upper mesh ondulé — en fait une paire instantanément reconnaissable. Retail actuel 180-210 €, marché secondaire sur les coloris OG (Hyper Blue, Voltage Yellow, Triple Black) entre 220 et 500 €. Les contrefaçons TN sont pandémiques en France : environ 45 % des TN à moins de 100 € vendues sur Vinted sont des contrefaçons en 2025. Les signaux d'auth TN exigent une connaissance spécifique : dents de requin, Tuned Air, Swoosh latéral, étiquette jockey tag « Tuned 1 » et box orange Nike.",
+      "La Nike Air Max Plus, designée par Sean McDowell en 1998 et surnommée « TN » (Tuned Air) en Europe et « requin » en France, est l'une des sneakers les plus culturellement marquées de l'histoire. En France particulièrement, la TN est devenue dès les années 2000 un symbole du streetwear banlieue, popularisée par le rap français (Booba, NTM, PNL) et adoptée massivement dans les cités. Son design radical — silhouette agressive avec couches « dents de requin », unité Tuned Air à double chambre, upper mesh ondulé — en fait une paire instantanément reconnaissable. Retail actuel 180-210 €, marché secondaire sur les coloris OG (Hyper Blue, Voltage Yellow, Triple Black) entre 220 et 500 €. Les contrefaçons TN sont pandémiques en France. Les signaux d'auth TN exigent une connaissance spécifique : dents de requin, Tuned Air, Swoosh latéral, étiquette jockey tag « Tuned 1 » et box orange Nike.",
     signals: [
       {
         title: "Dents de requin : 4 couches latérales distinctes",
@@ -717,7 +717,7 @@ export const nikeModels: ModelData[] = [
       {
         title: "TN Triple Black « neuves » à 60 € sur Vinted",
         description:
-          "Les TN Triple Black retail à 180-210 € et se revendent 160-220 € DS. Une annonce à 60 € est à 99 % une contrefaçon. Les super-fakes TN circulent massivement en France à 20-40 € import direct Chine — ils reproduisent les dents de requin mais ratent le Tuned Air double chambre.",
+          "Les TN Triple Black retail à 180-210 € et se revendent 160-220 € DS. Une annonce à 60 € est suspecte. Les super-fakes TN circulent massivement en France à 20-40 € import direct Chine — ils reproduisent les dents de requin mais ratent le Tuned Air double chambre.",
       },
       {
         title: "TN « customisées » en colorway inexistant",
@@ -734,7 +734,7 @@ export const nikeModels: ModelData[] = [
       {
         question: "Comment reconnaître une TN OG 1998 vs une réédition ?",
         answer:
-          "Les TN OG 1998 Hyper Blue ont des particularités : Style Code 604133-091 original, étiquette intérieure avec date 1998, cuir TPU dents de requin légèrement différent (plus épais) que les rééditions. Les OG 1998 DS sont quasi-introuvables (moins de 100 paires identifiées mondialement en DS) et valent 2 000-4 000 €. Toute annonce TN « OG 1998 DS » à moins de 1 500 € est suspecte — les rééditions 2018, 2020, 2022 se revendent 220-400 € DS et sont la cible principale des super-fakes.",
+          "Les TN OG 1998 Hyper Blue ont des particularités : Style Code 604133-091 original, étiquette intérieure avec date 1998, cuir TPU dents de requin légèrement différent (plus épais) que les rééditions. Les OG 1998 DS sont quasi-introuvables et valent 2 000-4 000 €. Toute annonce TN « OG 1998 DS » à moins de 1 500 € est suspecte — les rééditions 2018, 2020, 2022 se revendent 220-400 € DS et sont ciblées par les super-fakes.",
       },
     ],
   },
@@ -747,7 +747,7 @@ export const nikeModels: ModelData[] = [
     retailYear: "1977 (rééditée)",
     tagline: "La silhouette basketball vintage revenue dans la hype",
     intro:
-      "La Nike Blazer Mid '77, sortie originellement en 1972 (et marquée « '77 » en référence à sa production complète cette année-là) comme chaussure de basketball, a connu un revival majeur depuis 2017 grâce à la collaboration Off-White « The Ten » (2017). Virgil Abloh a propulsé la Blazer Mid dans le luxe streetwear, transformant une sneaker vintage abordable (retail 100 €) en paire hyped (Off-White Blazer Mid 2017 se revend aujourd'hui 700-2 500 € selon colorway). Depuis, la Blazer Mid '77 est devenue la 3e sneaker Nike la plus collab-intense avec des drops sacai, Supreme, Pigeon, Peace Minus One (G-Dragon). Son retail actuel (110 €) et son marché secondaire sur les Off-White (500-2 500 €), sacai (800-1 500 €), et Supreme (400-900 €) alimentent une contrefaçon ciblée sur les collaborations haut de gamme. 5 signaux techniques permettent la vérification d'une Blazer Mid authentique, différents de ceux d'une Dunk ou d'une AF1.",
+      "La Nike Blazer Mid '77, sortie originellement en 1972 (et marquée « '77 » en référence à sa production complète cette année-là) comme chaussure de basketball, a connu un revival majeur depuis 2017 grâce à la collaboration Off-White « The Ten » (2017). Virgil Abloh a propulsé la Blazer Mid dans le luxe streetwear, transformant une sneaker vintage abordable (retail 100 €) en paire hyped (Off-White Blazer Mid 2017 se revend aujourd'hui 700-2 500 € selon colorway). Depuis, la Blazer Mid '77 est devenue une sneaker Nike collab-intense avec des drops sacai, Supreme, Pigeon, Peace Minus One (G-Dragon). Son retail actuel (110 €) et son marché secondaire sur les Off-White (500-2 500 €), sacai (800-1 500 €), et Supreme (400-900 €) alimentent une contrefaçon ciblée sur les collaborations haut de gamme. 5 signaux techniques permettent la vérification d'une Blazer Mid authentique, différents de ceux d'une Dunk ou d'une AF1.",
     signals: [
       {
         title: "Swoosh oblique : angle et épaisseur",
@@ -784,7 +784,7 @@ export const nikeModels: ModelData[] = [
       {
         title: "Off-White Blazer Mid « The Ten » à 300 €",
         description:
-          "Les Off-White Blazer Mid « The Ten » (2017) ont un prix marché de 800-2 500 € selon colorway (All Hallows Eve, Serena, etc.). Une annonce à 300 € est statistiquement à 99 % une contrefaçon. Les super-fakes reproduisent les guillemets « SHOELACES » mais ratent la cupsole vulcanisée exacte.",
+          "Les Off-White Blazer Mid « The Ten » (2017) ont un prix marché de 800-2 500 € selon colorway (All Hallows Eve, Serena, etc.). Une annonce à 300 € est suspecte. Les super-fakes reproduisent les guillemets « SHOELACES » mais ratent la cupsole vulcanisée exacte.",
       },
       {
         title: "sacai Blazer Low à 200 € sur Grailed",
@@ -801,7 +801,7 @@ export const nikeModels: ModelData[] = [
       {
         question: "Pourquoi les Off-White Blazer sont-elles si hyped ?",
         answer:
-          "La Off-White Blazer Mid « The Ten » (2017) est la collaboration sneaker la plus emblématique du 21e siècle selon les experts. Virgil Abloh a entièrement déconstruit la Blazer Nike en exposant les coutures, rajoutant des textes en Helvetica (« AIR », « SHOELACES »), un zip tie rouge signature, et une palette de 10 coloris conceptuels. Cette sortie a inventé le genre « sneaker deconstructed » qui a dominé 2017-2022. Depuis le décès de Virgil fin 2021, les Off-White Blazer ont pris une valeur posthume patrimoniale — les prix continuent de monter lentement.",
+          "La Off-White Blazer Mid « The Ten » (2017) est une collaboration sneaker emblématique. Virgil Abloh a entièrement déconstruit la Blazer Nike en exposant les coutures, rajoutant des textes en Helvetica (« AIR », « SHOELACES »), un zip tie rouge signature, et une palette de 10 coloris conceptuels. Cette sortie a inventé le genre « sneaker deconstructed » qui a dominé 2017-2022. Depuis le décès de Virgil fin 2021, les Off-White Blazer ont pris une valeur posthume patrimoniale — les prix continuent de monter lentement.",
       },
     ],
   },
@@ -851,19 +851,19 @@ export const nikeModels: ModelData[] = [
       {
         title: "Off-White Vapormax « Black » à 400 € sur Vinted",
         description:
-          "La Off-White Vapormax Black (2018) a un prix marché de 1 000-1 800 € en DS. Une annonce à 400 € est à 98 % une contrefaçon. Les super-fakes reproduisent le zip tie rouge et les plots d'air mais ratent l'alignement exact du Swoosh-bande latérale.",
+          "La Off-White Vapormax Black (2018) a un prix marché de 1 000-1 800 € en DS. Une annonce à 400 € est suspecte. Les super-fakes reproduisent le zip tie rouge et les plots d'air mais ratent l'alignement exact du Swoosh-bande latérale.",
       },
       {
         title: "Vapormax « Triple Black » neuves à 80 € sur Vinted",
         description:
-          "Les Vapormax Triple Black retail à 190-210 € et se revendent 130-180 € DS. Une annonce à 80 € est à 95 % une contrefaçon. Les super-fakes Triple Black présentent typiquement des plots d'air mous ou mal gonflés.",
+          "Les Vapormax Triple Black retail à 190-210 € et se revendent 130-180 € DS. Une annonce à 80 € est suspecte. Les super-fakes Triple Black présentent typiquement des plots d'air mous ou mal gonflés.",
       },
     ],
     faqs: [
       {
         question: "Les plots d'air Vapormax peuvent-ils se déconnecter avec l'usage ?",
         answer:
-          "Oui, c'est un défaut de fabrication connu sur les premières générations Vapormax (2017-2018) : un ou plusieurs plots peuvent se détacher de la bande supérieure après 300-500 km d'usage, créant un « wobble ». Nike a amélioré la construction depuis 2019. Sur les contrefaçons, cette déconnexion arrive beaucoup plus tôt (parfois après quelques heures) car les plots sont mal collés. Un Vapormax avec plots déjà déconnectés en DS est presque certainement une contrefaçon.",
+          "Oui, c'est un défaut de fabrication connu sur les premières générations Vapormax (2017-2018) : un ou plusieurs plots peuvent se détacher de la bande supérieure après 300-500 km d'usage, créant un « wobble ». Nike a amélioré la construction depuis 2019. Sur les contrefaçons, cette déconnexion arrive beaucoup plus tôt (parfois après quelques heures) car les plots sont mal collés. Un Vapormax avec plots déjà déconnectés en DS est un signal de contrefaçon.",
       },
       {
         question: "Vapormax Flyknit vs Vapormax Plus vs Vapormax 2020 : différences ?",

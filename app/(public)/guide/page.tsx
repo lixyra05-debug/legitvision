@@ -14,6 +14,7 @@ import {
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
 import { facts } from "@/lib/site-facts";
+import { SEO_COUNTS, STEPS_PER_SIGNAL_GUIDE } from "@/lib/seo/seo-facts";
 
 const FACTS = facts();
 
@@ -21,14 +22,14 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title:
-    "Guides d'authentification signal × marque : 66 protocoles détaillés",
+    `Guides d'authentification signal × marque : ${SEO_COUNTS.signalGuides} protocoles détaillés`,
   description:
-    `66 guides 2026 pour authentifier signal par signal : box logo Supreme, date code Louis Vuitton, hologramme Chanel, étiquette langue Nike, badge compass Stone Island, camo BAPE. Pré-authentification IA à ${FACTS.priceSingle}.`,
+    `${SEO_COUNTS.signalGuides} guides 2026 pour authentifier signal par signal : box logo Supreme, date code Louis Vuitton, hologramme Chanel, étiquette langue Nike, badge compass Stone Island, camo BAPE. Pré-authentification IA à ${FACTS.priceSingle}.`,
   alternates: { canonical: "/guide" },
   openGraph: {
-    title: "Guides signal × marque — 66 protocoles d'authentification",
+    title: `Guides signal × marque — ${SEO_COUNTS.signalGuides} protocoles d'authentification`,
     description:
-      "Chaque signal iconique des 14 marques les plus contrefaites : sneakers, sacs de luxe, streetwear.",
+      `Chaque signal iconique des ${SEO_COUNTS.signalGuideBrands} marques couvertes : sneakers, sacs de luxe, streetwear.`,
     url: `${SITE_URL}/guide`,
     type: "website",
   },
@@ -100,7 +101,7 @@ export default function GuideHubPage() {
             Comment reconnaître chaque signal, marque par marque.
           </h1>
           <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
-            {totalSignals} guides 2026 pour pré-authentifier signal par signal : box logo, date code, hologramme, étiquette, badge, broderie, impression. Chaque protocole détaille 4-6 étapes mesurables, les erreurs fréquentes, les techniques des faussaires, et intègre une pré-authentification IA à {FACTS.priceSingle}.
+            {totalSignals} guides 2026 pour pré-authentifier signal par signal : box logo, date code, hologramme, étiquette, badge, broderie, impression. Chaque protocole détaille {STEPS_PER_SIGNAL_GUIDE} étapes mesurables, les erreurs fréquentes, les techniques des faussaires, et intègre une pré-authentification IA à {FACTS.priceSingle}.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

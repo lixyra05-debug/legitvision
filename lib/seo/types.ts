@@ -11,7 +11,6 @@ export type AuthSignal = {
 export type ScamPattern = {
   title: string;
   description: string;
-  frequency: "very-common" | "common" | "occasional";
 };
 
 export type FAQItem = {
@@ -49,7 +48,6 @@ export type Platform = {
   name: string;
   tagline: string;
   description: string;
-  userBaseFr: string;
   authProgram: string | null;
   scams: ScamPattern[];
   faqs: FAQItem[];
