@@ -8,22 +8,22 @@ export const hermesSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Décoder la lettre d'année et le code artisan Hermès",
     intro:
-      "Chaque sac Hermès (Birkin, Kelly, Constance, Evelyne) porte un code artisan et un code millésime embossés discrètement sur le cuir intérieur. Ce système, unique à Hermès, permet de tracer chaque sac à son atelier de production et à l'artisan qui l'a assemblé. Le code millésime est une lettre dans une forme géométrique (carré, cercle, aucune forme selon période) qui correspond à une année précise : carré A = 1997, carré B = 1998 jusqu'à Z = 2022, puis cycle avec cercle (W circle = 2011, T circle = 2014, D square = 2019, Z = 2022, U = 2023, B = 2024 selon grille Hermès). Le code artisan, généralement 2-3 lettres/chiffres, est propre à chaque atelier (Pantin, Pierre-Bénite, Bogny, Seloncourt etc.) et à chaque artisan. Les collectionneurs confirmés connaissent les correspondances et peuvent vérifier en quelques secondes si une année est cohérente avec le design du sac (une lettre B carrée = 1998 sur un Birkin au hardware palladium apparu en 2005 est une contrefaçon immédiate). L'embossage authentique est réalisé à chaud avec un outil en bronze, laissant une empreinte nette, profonde (0,4-0,6 mm), avec une légère empreinte brune autour du caractère (caramélisation du cuir tanné végétal). Les fakes reproduisent la lettre mais butent sur la forme géométrique (carré imparfait, cercle ovalisé), sur la profondeur d'embossage (trop superficiel ou trop profond), ou sur la cohérence millésime ↔ design du sac.",
+      "Chaque sac Hermès (Birkin, Kelly, Constance, Evelyne) porte un code artisan et un code millésime embossés discrètement sur le cuir intérieur. Ce système, unique à Hermès, permet de tracer chaque sac à son atelier de production et à l'artisan qui l'a assemblé. Le code millésime est une lettre, seule ou dans une forme selon la période, qui correspond à une année précise : lettre seule de 1945 à 1970 (A = 1945), dans un cercle de 1971 à 1996 (A = 1971), dans un carré de 1997 à 2014 (A = 1997, R = 2014), puis de nouveau seule depuis 2015, sans suivre l'ordre alphabétique (T = 2015, X = 2016, A = 2017, C = 2018, D = 2019, Y = 2020, Z = 2021). Le code artisan, généralement 2-3 lettres/chiffres, est propre à chaque atelier (Pantin, Pierre-Bénite, Bogny, Seloncourt etc.) et à chaque artisan. Les collectionneurs confirmés connaissent les correspondances et peuvent vérifier en quelques secondes si une année est cohérente avec le design du sac (une lettre B carrée = 1998 sur un Birkin au hardware palladium apparu en 2005 est une contrefaçon immédiate). L'embossage authentique est réalisé à chaud avec un outil en bronze, laissant une empreinte nette, profonde (0,4-0,6 mm), avec une légère empreinte brune autour du caractère (caramélisation du cuir tanné végétal). Les fakes reproduisent la lettre mais butent sur la forme géométrique (carré imparfait, cercle ovalisé), sur la profondeur d'embossage (trop superficiel ou trop profond), ou sur la cohérence millésime ↔ design du sac.",
     steps: [
       {
         title: "Localiser le code dans le sac",
         description:
-          "Emplacements typiques : Birkin = patte cuir intérieure sous la fermeture, Kelly = intérieur près de la patte, Constance = dos du rabat intérieur. Cherchez 2-3 caractères embossés + une lettre dans une forme géométrique.",
+          "Emplacements typiques : Birkin = patte cuir intérieure sous la fermeture, Kelly = intérieur près de la patte, Constance = dos du rabat intérieur. Cherchez 2-3 caractères embossés + une lettre, seule ou dans une forme géométrique selon l'année.",
       },
       {
         title: "Noter précisément lettre + forme géométrique",
         description:
-          "Utilisez une loupe x5 et lumière rasante. Notez : lettre (A-Z), forme (carré, cercle, aucune). Exemple : « D carré » = 2019. Attention aux confusions O/0 (0 n'est pas utilisé pour millésime, uniquement lettres).",
+          "Utilisez une loupe x5 et lumière rasante. Notez : lettre (A-Z), forme (carré, cercle, aucune). Exemple : « D » seul = 2019, « A » dans un carré = 1997. Attention aux confusions O/0 (0 n'est pas utilisé pour millésime, uniquement lettres).",
       },
       {
-        title: "Décoder le millésime via grille officielle",
+        title: "Décoder le millésime via les grilles publiques",
         description:
-          "Grille Hermès publique (disponible sur PurseForum, Authentic4U) : carré A (1997) à Z (2022), cercle W (2011) à T (2014), puis nouveau cycle depuis 2023. Vérifiez correspondance.",
+          "Grilles publiques (PurseForum, Authentic4U) : lettre seule de 1945 à 1970, cercle de 1971 à 1996 (A à Z), carré de 1997 à 2014 (A à R), lettre seule depuis 2015 (T = 2015 … Z = 2021 ; les lettres de 2022 à 2024 ne sont pas confirmées publiquement). Vérifiez la correspondance.",
       },
       {
         title: "Cross-check avec design du sac",
@@ -43,9 +43,9 @@ export const hermesSignals: GuideSignal[] = [
           "Le carré Hermès est strictement carré (côtés égaux). Un rectangle (côtés inégaux) n'existe PAS dans la grille Hermès — c'est un fake avec outillage imprécis. Mesurez les côtés à la loupe pour confirmer.",
       },
       {
-        title: "Accepter une lettre sans forme sur post-2022 pur",
+        title: "Prendre une lettre sans forme pour un défaut",
         description:
-          "Depuis 2023, Hermès utilise un nouveau système sans forme géométrique (simplement une lettre dans un cartouche simplifié). Un sac « 2024 » avec lettre dans un carré traditionnel est suspect (ne suit pas la nouvelle nomenclature) — à vérifier avec Hermès direct.",
+          "Depuis 2015, la lettre millésime n'a plus de forme : un sac de 2018 porte un C seul, sans carré ni cercle, et c'est normal. C'est la cohérence entre la lettre, sa forme et le design du sac qui compte.",
       },
       {
         title: "Ignorer la position exacte du code",
@@ -57,9 +57,9 @@ export const hermesSignals: GuideSignal[] = [
       "Les faussaires haut de gamme (« Super Fake » industry de Shenzhen) embossent des codes avec des outils quasi-identiques, respectant la forme et la profondeur. Le défaut : la couleur du cuir autour du code. Hermès utilise un cuir tanné végétal qui caramélise légèrement à la chaleur (halo brun-doré de 0,2-0,3 mm autour de chaque caractère). Les cuirs fakes (tannage chimique chinois) ne caramélisent pas — pas de halo. À la loupe x10, le code fake est « propre » (pas de halo) alors que l'authentique présente cet halo caramélisé. Autre tactique : embossage avec outil CNC moderne qui produit des caractères ultra-nets mais trop parfaits. Le code Hermès authentique est réalisé à la main par l'artisan avec un outil chauffé — présente une légère irrégularité humaine (variation de 0,1-0,2 mm dans la profondeur). Trop de perfection est suspect.",
     faqs: [
       {
-        question: "Pourquoi les codes Hermès changent-ils de système ?",
+        question: "Comment les codes millésime Hermès ont-ils évolué ?",
         answer:
-          "Hermès a modifié sa nomenclature pour simplifier la traçabilité et passer à un système digital. De 1945 à 1970 : pas de code. 1971-1996 : lettre dans cercle. 1997-2014 : lettre dans carré. 2015-2022 : lettre dans carré (cycle A-Z rénové). Depuis 2023 : nouveau système avec cartouche simplifié lié à une base de données digitale. Chaque transition est documentée. Un sac ancien doit suivre le système de son époque — un système anachronique = fake.",
+          "Quatre périodes sont documentées : lettre seule de 1945 à 1970, lettre dans un cercle de 1971 à 1996, lettre dans un carré de 1997 à 2014, puis de nouveau lettre seule depuis 2015, sans suivre l'ordre alphabétique. Un code doit correspondre à la période du design du sac : un système anachronique est un signal d'alerte.",
       },
       {
         question: "Un sac sans code artisan peut-il être authentique ?",
@@ -274,9 +274,9 @@ export const hermesSignals: GuideSignal[] = [
     name: "Code date Hermès",
     brandSlug: "hermes",
     category: "bags",
-    tagline: "Interpréter les codes date Hermès carré, cercle et post-2022",
+    tagline: "Interpréter les codes date Hermès : lettre seule, cercle ou carré",
     intro:
-      "Le système de datation Hermès a évolué en 4 périodes distinctes depuis 1945, chacune avec sa nomenclature spécifique. Période 1 (1945-1970) : aucun code systématique, datation par contexte (design, signature artisan). Période 2 (1971-1996) : une lettre A-Z dans un CERCLE, cycle de 26 ans (A cercle = 1971, Z cercle = 1996). Période 3 (1997-2014) : une lettre A-Z dans un CARRÉ, cycle de 18 ans incomplet (A carré = 1997, R carré = 2014). Période 4 (2015-2022) : lettre A-Z dans un CARRÉ reprise d'un nouveau cycle (A carré 2015 = attention, distinct du A carré 1997 par contexte design). Période 5 (depuis 2023) : nouveau système avec cartouche simplifié sans forme géométrique, lié à une base de données numérique Hermès. Ces transitions sont documentées sur PurseForum, Hermès Addict, Bababebi. La confusion typique : un A carré peut être 1997 OU 2015 — discriminer nécessite de croiser avec le design du sac (un Birkin Swift = après 2006, donc A carré sur Swift = 2015, pas 1997). Les contrefacteurs commettent deux erreurs majeures : 1) utiliser une lettre avec forme incohérente au design (A cercle = 1971, sur un Birkin 30 apparu en 1984 = fake), 2) reproduire approximativement la forme (carré pas parfaitement carré, cercle ovalisé).",
+      "Le système de datation Hermès a connu 4 périodes depuis 1945, chacune avec sa nomenclature. Période 1 (1945-1970) : une lettre seule, sans forme (A = 1945). Période 2 (1971-1996) : une lettre A-Z dans un CERCLE (A cercle = 1971, Z cercle = 1996). Période 3 (1997-2014) : une lettre A-R dans un CARRÉ (A carré = 1997, R carré = 2014). Période 4 (depuis 2015) : de nouveau une lettre seule, sans forme, qui ne suit plus l'ordre alphabétique (T = 2015, X = 2016, A = 2017, C = 2018, D = 2019, Y = 2020, Z = 2021 ; les lettres de 2022 à 2024 ne sont pas confirmées publiquement). Ces correspondances sont documentées sur PurseForum, Hermès Addict, Bababebi. La confusion typique : une lettre sans forme peut dater de la période 1 ou de la période 4 (un A seul = 1945 ou 2017) — discriminer nécessite de croiser avec le design du sac (un Birkin, lancé en 1984, avec un A seul date de 2017). Les contrefacteurs commettent deux erreurs majeures : 1) utiliser une lettre ou une forme incohérente avec le design (A cercle = 1971, sur un Birkin 30 apparu en 1984 = fake), 2) reproduire approximativement la forme (carré pas parfaitement carré, cercle ovalisé).",
     steps: [
       {
         title: "Localiser le code date",
@@ -286,12 +286,12 @@ export const hermesSignals: GuideSignal[] = [
       {
         title: "Noter lettre + forme géométrique",
         description:
-          "Exemple : « D carré ». Attention : la forme doit être parfaitement géométrique. Un « carré » imparfait (côtés de longueurs différentes) = fake avec outillage imprécis.",
+          "Exemple : « D » seul, ou « A » dans un carré. Attention : quand il y a une forme, elle doit être parfaitement géométrique. Un « carré » imparfait (côtés de longueurs différentes) = fake avec outillage imprécis.",
       },
       {
         title: "Décoder via grille publique",
         description:
-          "Grille disponible sur PurseForum et Bababebi. Exemple de correspondances : M carré = 2009 ou 2022 (selon cycle), T cercle = 2014, B cercle = 1998, K carré = 2020. Cross-check avec design.",
+          "Grilles disponibles sur PurseForum et Bababebi. Exemples de correspondances : A cercle = 1971, Z cercle = 1996, A carré = 1997, R carré = 2014, T seul = 2015, C seul = 2018. Cross-check avec design.",
       },
       {
         title: "Vérifier cohérence code ↔ design",
@@ -306,14 +306,14 @@ export const hermesSignals: GuideSignal[] = [
     ],
     commonErrors: [
       {
-        title: "Confondre A carré 1997 et A carré 2015",
+        title: "Confondre A seul 1945 et A seul 2017",
         description:
-          "Les deux existent (cycles rénovés). Discriminer par design : Epsom commercial = après 2003, donc A carré sur Epsom = 2015, pas 1997. Birkin Touch = après 2016, donc A carré sur Birkin Touch = impossible (2015 < 2016) = fake.",
+          "Une lettre sans forme existe dans deux périodes : un A seul date de 1945 ou de 2017. Discriminer par design : un Birkin (lancé en 1984) avec un A seul date de 2017. Birkin Touch = après 2016, donc un code d'avant 2016 (par exemple A carré = 1997) sur un Birkin Touch = impossible = fake.",
       },
       {
-        title: "Ignorer le nouveau système post-2023",
+        title: "Juger fausse une lettre sans forme sur un sac récent",
         description:
-          "Depuis 2023, Hermès utilise un cartouche simplifié SANS forme géométrique. Un sac « neuf 2024 » avec une lettre dans carré traditionnel est suspect — ne suit pas la nouvelle nomenclature. Confirmer avec boutique Hermès.",
+          "Depuis 2015, la lettre millésime n'a plus de forme : un Birkin de 2018 porte un C seul, sans carré ni cercle. Exiger un carré ou un cercle sur un sac récent fait soupçonner des sacs authentiques.",
       },
       {
         title: "Accepter une forme imparfaite comme tolérance",
@@ -322,12 +322,12 @@ export const hermesSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires consultent les grilles publiques de correspondance lettre ↔ année et choisissent un code cohérent avec le modèle qu'ils contrefaçonnent. Le défaut : ils utilisent des outils d'embossage imprécis. La forme géométrique (carré ou cercle) est presque toujours imparfaite à la loupe x10. Un carré Hermès authentique a des angles parfaitement à 90° et des côtés strictement égaux (±0,05 mm). Un carré fake présente des angles légèrement arrondis (outil non chauffé assez) ou des côtés inégaux (outil mal aligné). Autre tactique 2024 : reproduire le nouveau système post-2023 (cartouche simplifié). Mais les faussaires ne connaissent pas la base de données Hermès liée à ces nouveaux codes — un scan en boutique Hermès révélera immédiatement le fake. Pour les pré-2023, le test visuel de forme géométrique reste le plus rapide.",
+      "Les faussaires consultent les grilles publiques de correspondance lettre ↔ année et choisissent un code cohérent avec le modèle qu'ils contrefaçonnent. Le défaut : ils utilisent des outils d'embossage imprécis. La forme géométrique (carré ou cercle) est presque toujours imparfaite à la loupe x10. Un carré Hermès authentique a des angles parfaitement à 90° et des côtés strictement égaux (±0,05 mm). Un carré fake présente des angles légèrement arrondis (outil non chauffé assez) ou des côtés inégaux (outil mal aligné). Ce test de forme ne vaut que pour les codes de 1971 à 2014 : avant 1971 et depuis 2015, la lettre n'a pas de forme.",
     faqs: [
       {
         question: "Un code sans forme géométrique est-il toujours fake ?",
         answer:
-          "Pas nécessairement. Les Hermès pré-1971 n'avaient pas de forme géométrique. Les Hermès post-2023 utilisent un cartouche simplifié (pas de forme carré/cercle). Entre 1971 et 2022, la forme est obligatoire. Un sac Birkin « 2024 » sans forme = cohérent nouveau système. Un sac Birkin « 2018 » sans forme = fake. Datez d'abord le sac par design avant de juger l'absence/présence de forme.",
+          "Non. Les codes de 1945 à 1970 et ceux depuis 2015 n'ont pas de forme ; seule la période 1971-2014 utilise un cercle ou un carré. Un Birkin de 2018 porte un C seul : c'est normal. Datez d'abord le sac par design avant de juger l'absence ou la présence de forme.",
       },
       {
         question: "Hermès remplace-t-il un code effacé par usure ?",

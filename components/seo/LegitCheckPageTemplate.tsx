@@ -93,7 +93,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <SeoNav checkUrl={data.checkUrl} />
+      <SeoNav checkUrl={data.checkUrl ?? undefined} />
 
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -158,12 +158,14 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={data.checkUrl}
-              className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
-            >
-              Pré-authentifier ma photo — {FACTS.priceSingle}
-            </Link>
+            {data.checkUrl && (
+              <Link
+                href={data.checkUrl}
+                className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
+              >
+                Pré-authentifier ma photo — {FACTS.priceSingle}
+              </Link>
+            )}
             <a
               href="#signaux"
               className="inline-flex items-center justify-center rounded-full border border-line bg-surface-raised px-6 py-3 text-ui font-semibold text-foreground transition-colors duration-fast hover:bg-surface-hover"
@@ -216,6 +218,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
           </div>
         </section>
 
+        {data.checkUrl && (
         <div className="my-12 overflow-hidden rounded-lg border border-accent/20 bg-surface p-6 sm:p-8">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex-1">
@@ -234,6 +237,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
             </Link>
           </div>
         </div>
+        )}
 
         <section className="mb-16">
           <div className="mb-8">
@@ -244,7 +248,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
               {data.scams.length} arnaques récurrentes sur {data.brand.name} {data.model.name}
             </h2>
             <p className="mt-3 max-w-2xl text-body text-muted-foreground">
-              Ces schémas se retrouvent dans la quasi-totalité des contrefaçons signalées sur {data.brand.name} {data.model.name}. Si vous en cochez un seul, ralentissez avant d&apos;acheter.
+              Si vous reconnaissez un seul de ces schémas sur une annonce {data.brand.name} {data.model.name}, ralentissez avant d&apos;acheter.
             </p>
           </div>
 
@@ -271,6 +275,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
           <SeoFAQ faqs={data.faqs} />
         </section>
 
+        {data.checkUrl && (
         <section className="relative mt-16 overflow-hidden rounded-lg border border-line bg-surface p-8 sm:p-12">
           <div className="relative">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
@@ -280,7 +285,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
               Ne pariez plus sur votre prochain {data.brand.name} {data.model.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              {FACTS.priceSingle} pour éviter {data.model.priceRange} de perte. Score de confiance, estimation de probabilité et recommandations détaillées en {FACTS.median} secondes (durée médiane).
+              Score de confiance, estimation de probabilité et recommandations détaillées en {FACTS.median} secondes (durée médiane).
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -298,6 +303,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
             </div>
           </div>
         </section>
+        )}
 
         <RelatedPagesGrid pages={data.relatedPages} />
 

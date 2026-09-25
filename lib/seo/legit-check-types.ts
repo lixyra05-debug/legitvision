@@ -48,5 +48,6 @@ export type LegitCheckPageData = {
   faqs: ModelFAQ[];
   relatedPages: RelatedPage[];
   trackingRef: string;
-  checkUrl: string;
+  /** Lien d'analyse ; null quand la page porte sur une catégorie non analysable (check-url.ts). */
+  checkUrl: string | null;
 };

@@ -157,13 +157,9 @@ export default function NewCheckPage() {
       // Fetch brand by name (case-insensitive), filtered by category if provided.
       // Category filter is required when multiple DB entries share the same brand name
       // (multi-category brands like Balenciaga, Dior, Gucci, etc.).
-      // .limit(1) au lieu de .maybeSingle() : les marques multi-catégories (Louis
-      // Vuitton, Hermès, Dior, Gucci, Prada, Chanel…) ont plusieurs lignes en base.
-      // Sans category, maybeSingle() lèverait une erreur "multiple rows" et casserait
-      // la pré-sélection. On prend la première ligne (la category est ajustable ensuite).
       // Seules les lignes ayant au moins un modèle analysable comptent
-      // (lib/analyzable.ts) : sans category (hubs guide, recherche), la première
-      // ligne venue pouvait être une ligne sans modèle, comme Gucci en sneakers.
+      // (lib/analyzable.ts) : sans category, une ligne sans modèle, comme Gucci
+      // en sneakers, ne doit jamais être retenue.
       const brandQuery = supabase
         .from("brands")
         .select("*, models!inner()")
@@ -174,37 +170,37 @@ export default function NewCheckPage() {
       const { data: brandRows } = await (categoryParam
         ? brandQuery.eq("category", categoryParam)
         : brandQuery
-      ).limit(1);
+      ).order("created_at");
 
-      const brandData = brandRows?.[0];
+      // Sans category, une marque peut avoir plusieurs lignes (Dior : sacs,
+      // sneakers, vêtements) : la ligne qui porte le modèle demandé l'emporte,
+      // sinon la plus ancienne, celle des sacs pour les maisons de luxe.
+      const candidates = (brandRows ?? []) as Brand[];
+      let brandData = candidates[0];
       if (!brandData) return;
-      // L'utilisateur est arrivé le premier : il gagne, on n'écrit rien.
-      if (cancelled || userTouched.current) return;
-
-      setCategory(brandData.category as Category);
-      setBrandChoice(brandData as Brand);
-
+      let modelData: Model | undefined;
       if (modelParam) {
-        // Fetch model by name within this brand
         const { data: modelRows } = await supabase
           .from("models")
           .select("*")
-          .eq("brand_id", brandData.id)
+          .in("brand_id", candidates.map((b) => b.id))
           .ilike("name", modelParam!)
           .eq("is_active", true)
           .neq("authentication_points", NO_AUTH_POINTS)
           .limit(1);
+        modelData = modelRows?.[0] as Model | undefined;
+        if (modelData) brandData = candidates.find((b) => b.id === modelData?.brand_id) ?? brandData;
+      }
+      // L'utilisateur est arrivé le premier : il gagne, on n'écrit rien.
+      if (cancelled || userTouched.current) return;
 
-        const modelData = modelRows?.[0];
-        if (cancelled || userTouched.current) return;
-        if (modelData) {
-          setModelChoice(modelData as Model);
-          setStep(3); // Brand + model set → jump to variant/collab step
-        } else {
-          setStep(2); // Brand set, model not found → stay on picker
-        }
+      setCategory(brandData.category as Category);
+      setBrandChoice(brandData);
+      if (modelData) {
+        setModelChoice(modelData);
+        setStep(3); // Brand + model set → jump to variant/collab step
       } else {
-        setStep(2); // Brand set, no model param → stay on picker
+        setStep(2); // Brand set, model absent or not found → stay on picker
       }
     }
 
@@ -269,6 +265,15 @@ export default function NewCheckPage() {
         })
       )
     : [];
+
+  // Photos demandées, lues dans le protocole de la ligne de marque : c'est ce
+  // que l'étape 4 exige (emplacements obligatoires) et permet (tous les
+  // emplacements). Les champs min_photos / max_photos des modèles ne sont pas
+  // tenus à jour et ne doivent pas être affichés.
+  const protocolSlots = selectedBrand?.photo_protocol ?? [];
+  const photosRequired = protocolSlots.filter((s) => s.required).length;
+  const photosTotal = protocolSlots.length;
+  const photosRange = photosRequired < photosTotal ? `${photosRequired}–${photosTotal}` : `${photosTotal}`;
 
   const requiredSlots = protocol.filter((s) => s.required);
   const allRequiredUploaded = requiredSlots.every((s) => photos[s.name]);
@@ -684,7 +689,7 @@ export default function NewCheckPage() {
                           {model.name}
                         </span>
                         <span className="text-caption text-muted-foreground">
-                          {model.min_photos}–{model.max_photos} photos
+                          {photosRange} {t("check.photosCount")}
                         </span>
                       </button>
                     ))}
@@ -708,8 +713,8 @@ export default function NewCheckPage() {
                     {selectedBrand.name} — {selectedModel.name}
                   </p>
                   <p className="mt-1 text-ui text-muted-foreground">
-                    {selectedModel.min_photos}–{selectedModel.max_photos}{" "}
-                    photos requises
+                    {photosRequired} {t("check.photosRequired")}
+                    {photosRequired < photosTotal && `, ${t("check.photosUpTo")} ${photosTotal}`}
                   </p>
                 </div>
               </div>

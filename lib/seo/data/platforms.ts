@@ -3,6 +3,7 @@ import { facts } from "@/lib/site-facts";
 
 const FACTS = facts();
 
+// Vérification Vinted : « Prix : 100 € minimum », « 10 € par article » — centre d'aide Vinted France, https://www.vinted.fr/help/1147 (consulté le 2026-09-25).
 export const platforms: Platform[] = [
   {
     slug: "vinted",
@@ -10,7 +11,7 @@ export const platforms: Platform[] = [
     tagline: "La seconde main entre particuliers, sans commission vendeur",
     description:
       "Vinted s'est imposé depuis 2008 dans la seconde main entre particuliers en France. Son modèle — vente entre particuliers sans commission vendeur, paiement sécurisé via la Vinted Wallet — a démocratisé l'achat d'occasion. Mais le revers : une modération des annonces très légère, aucune authentification systématique des articles de luxe en-dessous de 100 €, et un volume massif qui attire les revendeurs de contrefaçons.",
-    authProgram: "Service d'authentification optionnel pour articles > 100 € (payant, 10 €)",
+    authProgram: "Service d'authentification optionnel pour les articles à partir de 100 € (payant, 10 €)",
     accentColor: "#09B1BA",
     shortLabel: "V",
     externalUrl: "https://www.vinted.fr",
@@ -40,7 +41,7 @@ export const platforms: Platform[] = [
       {
         question: "Est-ce que Vinted vérifie l'authenticité des articles de luxe ?",
         answer:
-          "Non, pas par défaut. Vinted propose depuis 2022 un service d'authentification payant (10 €) pour les articles vendus à plus de 100 €, mais il reste optionnel et choisi par l'acheteur au moment du paiement.",
+          "Non, pas par défaut. Vinted propose un service d'authentification payant (10 €) pour les articles vendus à partir de 100 €, mais il reste optionnel et choisi par l'acheteur au moment du paiement.",
       },
       {
         question: "Comment signaler une contrefaçon détectée sur Vinted ?",
@@ -83,7 +84,7 @@ export const platforms: Platform[] = [
       {
         title: "Direct Shipping sans contrôle",
         description:
-          "Depuis 2022, Vestiaire propose l'option « Expédition Directe » qui laisse le vendeur envoyer directement à l'acheteur, sans passage par leur centre d'authentification. Cette option est signalée par un badge — vérifiez toujours si votre article passe par le contrôle ou non avant de valider l'achat.",
+          "Vestiaire propose l'option « Expédition Directe » qui laisse le vendeur envoyer directement à l'acheteur, sans passage par leur centre d'authentification. Cette option est signalée par un badge — vérifiez toujours si votre article passe par le contrôle ou non avant de valider l'achat.",
       },
       {
         title: "Prix Vestiaire gonflé : arnaque à la plus-value",

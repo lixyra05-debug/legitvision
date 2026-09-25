@@ -124,7 +124,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
 
   return (
     <div className="min-h-screen bg-background">
-      <SeoNav checkUrl={data.checkUrl} />
+      <SeoNav checkUrl={data.checkUrl ?? undefined} />
 
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -189,12 +189,14 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link
-              href={data.checkUrl}
-              className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
-            >
-              Pré-authentifier ma photo — {FACTS.priceSingle}
-            </Link>
+            {data.checkUrl && (
+              <Link
+                href={data.checkUrl}
+                className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
+              >
+                Pré-authentifier ma photo — {FACTS.priceSingle}
+              </Link>
+            )}
             <a
               href="#etapes"
               className="inline-flex items-center justify-center rounded-full border border-line bg-surface-raised px-6 py-3 text-ui font-semibold text-foreground transition-colors duration-fast hover:bg-surface-hover"
@@ -247,6 +249,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
           </div>
         </section>
 
+        {data.checkUrl && (
         <div className="my-12 overflow-hidden rounded-lg border border-accent/20 bg-surface p-6 sm:p-8">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex-1">
@@ -265,6 +268,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
             </Link>
           </div>
         </div>
+        )}
 
         <section className="mb-16">
           <div className="mb-8">
@@ -275,7 +279,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
               {data.commonErrors.length} erreurs fréquentes
             </h2>
             <p className="mt-3 max-w-2xl text-body text-muted-foreground">
-              Ces raccourcis d&apos;analyse sont les plus souvent observés chez les acheteurs pressés. Les éviter améliore fortement la précision de votre pré-authentification visuelle.
+              Des raccourcis d&apos;analyse qui trompent les acheteurs pressés : évitez-les lors de votre vérification visuelle.
             </p>
           </div>
 
@@ -318,6 +322,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
           <SeoFAQ faqs={data.faqs} />
         </section>
 
+        {data.checkUrl && (
         <section className="relative mt-16 overflow-hidden rounded-lg border border-line bg-surface p-8 sm:p-12">
           <div className="relative">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
@@ -345,6 +350,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
             </div>
           </div>
         </section>
+        )}
 
         <RelatedPagesGrid pages={data.relatedPages} />
 

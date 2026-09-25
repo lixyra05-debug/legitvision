@@ -6,5 +6,11 @@
     "app/api/analyze/route.ts": {
       "maxDuration": 60
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/purge-photos",
+      "schedule": "0 3 * * *"
+    }
+  ]
 }

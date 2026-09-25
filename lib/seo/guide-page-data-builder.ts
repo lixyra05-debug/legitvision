@@ -12,6 +12,7 @@ import { platforms } from "./data/platforms";
 import { SITE_URL } from "@/lib/site-url";
 import { facts } from "@/lib/site-facts";
 import { SEO_COUNTS } from "./seo-facts";
+import { pageHasAnalysis } from "./check-url";
 
 const FACTS = facts();
 
@@ -48,7 +49,9 @@ export function buildGuidePageData(
   const ogImage = "/opengraph-image";
   // checkBrand ?? name : le CTA doit porter le nom de la LIGNE EN BASE, pas le
   // nom affiché — la résolution est une égalité (.ilike sans %).
-  const checkUrl = `/check/new?brand=${encodeURIComponent(brand.checkBrand ?? brand.name)}&source=seo&ref=${trackingRef}`;
+  const checkUrl = pageHasAnalysis(brand, signal.category)
+    ? `/check/new?brand=${encodeURIComponent(brand.checkBrand ?? brand.name)}&source=seo&ref=${trackingRef}`
+    : null;
 
   return {
     brand,

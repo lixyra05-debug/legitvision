@@ -10,7 +10,7 @@ export const chanelModels: ModelData[] = [
     retailYear: "1983 (production continue)",
     tagline: "Le sac réintroduit par Karl Lagerfeld en 1983",
     intro:
-      "Le Chanel Classic Flap Medium, réintroduit par Karl Lagerfeld en 1983 (sur la base du 2.55 de 1955), est le sac d'investissement par excellence du luxe — son retail est passé de 1 150 $ en 1990 à 10 800 € en 2024, et l'ajustement 2025-2026 le porte à 11 500-12 500 € selon cuir. Caviar (cuir grainé) et Lambskin (agneau lisse) sont les deux finitions principales. Hardware : Gold (or champagne brossé) ou Silver (argent brillant). Le Classic Flap Medium (25,5 cm) a un prix marché d'occasion stable à 7 500-10 000 € selon état. Les super-fakes de Classic Flap (« China 1:1 mirror ») coûtent 500-1 500 € à produire et se revendent 3 000-6 000 €, piégeant même des authentificateurs expérimentés. Les signaux ci-dessous restent parmi les plus résistants aux super-fakes : cuir grain exact (Caviar) ou souplesse Lambskin, quilting 9 losanges/11 losanges, CC clasp interlocking précision, serial sticker (ou micro-chip RFID post-2021) et stitching alignement.",
+      "Le Chanel Classic Flap Medium, réintroduit par Karl Lagerfeld en 1983 (sur la base du 2.55 de 1955), est le sac d'investissement par excellence du luxe — son retail est passé de 1 150 $ en 1990 à 10 800 € en 2024, et l'ajustement 2025-2026 le porte à 11 500-12 500 € selon cuir. Caviar (cuir grainé) et Lambskin (agneau lisse) sont les deux finitions principales. Hardware : doré, argenté ou ruthénium selon la version ; sa couleur seule ne dit rien de l'authenticité. Le Classic Flap Medium (25,5 cm) a un prix marché d'occasion de 10 000-12 500 € selon état. Les super-fakes de Classic Flap (« China 1:1 mirror ») coûtent 500-1 500 € à produire et se revendent 3 000-6 000 €, piégeant même des authentificateurs expérimentés. Les signaux ci-dessous restent parmi les plus résistants aux super-fakes : cuir grain exact (Caviar) ou souplesse Lambskin, quilting 9 losanges/11 losanges, CC clasp interlocking précision, serial sticker (ou micro-chip RFID post-2021) et stitching alignement.",
     signals: [
       {
         title: "Caviar grain — texture pebble uniforme",
@@ -27,7 +27,7 @@ export const chanelModels: ModelData[] = [
       {
         title: "CC clasp — interlocking précision et gravure",
         description:
-          "Le fermoir CC interlocking (CC entrelacés) a un design précis : le C de droite passe AU-DESSUS du C de gauche en haut, et EN-DESSOUS en bas. Les contrefaçons inversent souvent ce croisement. Le métal est en or champagne brossé (Gold) ou argent brillant (Silver), avec la gravure « CHANEL » sur l'envers du fermoir.",
+          "Le fermoir CC interlocking (CC entrelacés) a un design précis : le C de droite passe AU-DESSUS du C de gauche en haut, et EN-DESSOUS en bas. Les contrefaçons inversent souvent ce croisement. Le métal est doré, argenté ou ruthénium selon la version : sa couleur seule ne dit rien de l'authenticité. La gravure « CHANEL » figure sur l'envers du fermoir.",
         difficulty: 1,
       },
       {
@@ -77,7 +77,7 @@ export const chanelModels: ModelData[] = [
     retailYear: "2011 (production continue)",
     tagline: "Le sac rock dessiné par Karl pour Coco « garçon »",
     intro:
-      "Le Chanel Boy Bag, créé par Karl Lagerfeld en 2011 et nommé en hommage à Boy Capel (amour de Coco Chanel), a introduit une esthétique plus rock et structurée dans le catalogue Chanel — en rupture avec la douceur du Classic Flap. Sa chaîne plus épaisse, son fermoir CC box rectangulaire et ses lignes masculines en font un favori des icônes hip-hop et fashion (Rihanna, Bella Hadid). Retail 2026 : Boy Medium 6 800 €, Boy Large 8 500 €. Prix marché d'occasion : 4 500-6 500 € selon cuir (Caviar, Lambskin, Calfskin grainé). Les contrefaçons Boy Bag exploitent la mode actuelle : l'UA qualité « mirror » reproduit correctement la forme et le quilting, mais échoue sur la précision du fermoir CC box, la tension du chevron stitching et la chaîne. Les signaux spécifiques Boy Bag ci-dessous complètent les vérifications Classic Flap.",
+      "Le Chanel Boy Bag, créé par Karl Lagerfeld en 2011 et nommé en hommage à Boy Capel (amour de Coco Chanel), a introduit une esthétique plus rock et structurée dans le catalogue Chanel — en rupture avec la douceur du Classic Flap. Sa chaîne plus épaisse, son fermoir CC box rectangulaire et ses lignes masculines en font un favori des icônes hip-hop et fashion (Rihanna, Bella Hadid). Retail 2026 : Boy Medium 6 800 €, Boy Large 8 500 €. Prix marché d'occasion : 6 500-9 500 € selon cuir (Caviar, Lambskin, Calfskin grainé). Les contrefaçons Boy Bag exploitent la mode actuelle : l'UA qualité « mirror » reproduit correctement la forme et le quilting, mais échoue sur la précision du fermoir CC box, la tension du chevron stitching et la chaîne. Les signaux spécifiques Boy Bag ci-dessous complètent les vérifications Classic Flap.",
     signals: [
       {
         title: "Fermoir CC box — gravure et mécanisme",
@@ -114,7 +114,7 @@ export const chanelModels: ModelData[] = [
       {
         title: "Boy Medium Caviar « neuf » à 2 500 €",
         description:
-          "Le Boy Medium Caviar retail 6 800 € et son prix marché est stable à 4 500-5 500 € en bon état. Une annonce à 2 500 € est une contrefaçon mirror.",
+          "Le Boy Medium Caviar retail 6 800 €, et le prix marché du Boy Bag va de 6 500 à 9 500 €. Une annonce à 2 500 € est suspecte.",
       },
       {
         title: "Boy « collector édition 2015 » rare",
@@ -131,7 +131,7 @@ export const chanelModels: ModelData[] = [
       {
         question: "Le Boy Bag est-il un bon investissement comme le Classic ?",
         answer:
-          "Moins, car Chanel applique des augmentations de prix plus modérées sur le Boy. Le Boy Bag se déprécie légèrement sur le marché secondaire (sauf éditions limitées). Préférer le Classic pour l'investissement.",
+          "Comme pour le Classic Flap, son prix d'occasion reste proche du neuf : 6 500-9 500 € sur le marché, pour un prix boutique de 6 800 € (Boy Medium) à 8 500 € (Boy Large).",
       },
     ],
   },
@@ -240,7 +240,7 @@ export const chanelModels: ModelData[] = [
       {
         title: "Base rectangulaire + 4 pieds métal",
         description:
-          "Le GST a une base rectangulaire rigide avec 4 pieds métal dorés gravés CC. Les contrefaçons ont souvent 2 pieds (économie) ou des pieds sans gravure.",
+          "Le GST a une base rectangulaire rigide avec 4 pieds métal gravés CC, dorés ou argentés selon la version : leur couleur seule ne dit rien de l'authenticité. Les contrefaçons ont souvent 2 pieds (économie) ou des pieds sans gravure.",
         difficulty: 1,
       },
     ],
@@ -278,12 +278,12 @@ export const chanelModels: ModelData[] = [
     retailYear: "2005 (réédition du 2.55 de 1955)",
     tagline: "La réédition fidèle du sac originel de Coco",
     intro:
-      "Le Chanel 2.55 Reissue, réédité en 2005 pour le 50e anniversaire du 2.55 original (février 1955), est la version « historique » du Classic Flap : au lieu du CC interlocking clasp, il utilise le Mademoiselle Lock (fermoir rectangulaire doré en hommage au célibat de Coco). La chaîne est en métal brossé ton sur ton (non mixée avec cuir comme Classic Flap). Retail 2026 : 9 500-11 200 € selon taille (224, 225, 226, 227). Ce sac est particulièrement apprécié des collectionneuses pour son authenticité historique. Des contrefaçons 2.55 existent. Les signaux spécifiques 2.55 : Mademoiselle Lock (pas CC), chaîne métal tressée (pas avec cuir), quilting 2.55 spécifique, stitching 2.55 et numéro série 2.55.",
+      "Le Chanel 2.55 Reissue, réédité en 2005 pour le 50e anniversaire du 2.55 original (février 1955), est la version « historique » du Classic Flap : au lieu du CC interlocking clasp, il utilise le Mademoiselle Lock, un fermoir rectangulaire nommé en hommage au célibat de Coco, en métal doré vieilli, argenté ou ruthénium selon la version. La chaîne est en métal brossé ton sur ton (non mixée avec cuir comme Classic Flap). Retail 2026 : 9 500-11 200 € selon taille (224, 225, 226, 227). Ce sac est particulièrement apprécié des collectionneuses pour son authenticité historique. Des contrefaçons 2.55 existent. Les signaux spécifiques 2.55 : Mademoiselle Lock (pas CC), chaîne métal tressée (pas avec cuir), quilting 2.55 spécifique, stitching 2.55 et numéro série 2.55.",
     signals: [
       {
-        title: "Mademoiselle Lock — rectangulaire gravé",
+        title: "Mademoiselle Lock — fermoir rectangulaire",
         description:
-          "Le fermoir est un rectangle doré (or champagne brossé) gravé « Mademoiselle » ou avec motif géométrique. Pas de CC interlocking comme Classic Flap. Les contrefaçons utilisent souvent un CC par erreur ou un Mademoiselle Lock mal gravé.",
+          "Le fermoir est un rectangle tournant, en métal doré vieilli, argenté ou ruthénium selon la version : sa couleur seule ne dit rien de l'authenticité. Pas de CC interlocking comme Classic Flap. Les contrefaçons utilisent souvent un CC par erreur, ou un fermoir aux gravures peu profondes ou floues.",
         difficulty: 1,
       },
       {
@@ -328,11 +328,6 @@ export const chanelModels: ModelData[] = [
         question: "Quelle différence entre Classic Flap et 2.55 Reissue ?",
         answer:
           "Classic Flap : CC interlocking + chaîne entrelacée avec cuir (intro 1983 par Karl). 2.55 Reissue : Mademoiselle Lock + chaîne métal tressée (réédition 2005 du 2.55 original 1955 de Coco). Les deux sont des classiques Chanel mais avec des fermoirs et chaînes différents.",
-      },
-      {
-        question: "Pourquoi le 2.55 Reissue est-il plus cher que le Classic Flap ?",
-        answer:
-          "Le 2.55 est positionné comme « historique » (hommage Coco) et utilise un cuir vieilli « distressed » plus complexe à produire. Sa production est plus limitée que le Classic Flap.",
       },
     ],
   },

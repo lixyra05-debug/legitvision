@@ -13,7 +13,7 @@ import {
   buildItemListSchema,
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
-import { buildCheckUrl } from "@/lib/seo/check-url";
+import { analyzableCategory, buildCheckUrl } from "@/lib/seo/check-url";
 import { facts } from "@/lib/site-facts";
 import { formatRange } from "@/lib/seo/seo-facts";
 
@@ -82,7 +82,7 @@ export default async function BrandLegitCheckHub(props: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <SeoNav checkUrl={buildCheckUrl({ brand, category: brand.category, ref: `legit-check-hub-${brand.slug}` })} />
+      <SeoNav checkUrl={buildCheckUrl({ brand, category: analyzableCategory(brand), ref: `legit-check-hub-${brand.slug}` })} />
 
       <section className="relative overflow-hidden border-b border-line-subtle">
         <div className="relative mx-auto max-w-5xl px-4 py-12 sm:py-16">
@@ -194,7 +194,7 @@ export default async function BrandLegitCheckHub(props: Props) {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
-                href={buildCheckUrl({ brand, category: brand.category, ref: `legit-check-hub-${brand.slug}` })}
+                href={buildCheckUrl({ brand, category: analyzableCategory(brand), ref: `legit-check-hub-${brand.slug}` })}
                 className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
               >
                 Lancer ma pré-authentification

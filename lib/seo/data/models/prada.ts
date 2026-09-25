@@ -265,7 +265,7 @@ export const pradaModels: ModelData[] = [
       {
         question: "Le Moon Bag est-il en production en 2026 ?",
         answer:
-          "Oui, Moon Bag est en production continue depuis 2022 avec drops saisonniers de coloris. Vérifiez le numéro série sur patch cuir pour confirmer une production 2024-2026.",
+          "Oui, le Moon Bag est en production continue, avec des drops saisonniers de coloris. Vérifiez le numéro série sur patch cuir pour confirmer une production 2024-2026.",
       },
     ],
   },

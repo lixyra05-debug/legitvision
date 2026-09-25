@@ -55,7 +55,7 @@ export const offWhiteSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les contrefacteurs reproduisent le visuel du zip tie (couleur rouge, forme, mention « OFF-WHITE »), mais butent systématiquement sur la gravure en relief : ils impriment la typographie en surface par sérigraphie ou transfert thermique, sans creux perceptible. Les fakes haut de gamme sortis depuis 2023 utilisent des moules injection plus sophistiqués et reproduisent la gravure creuse — mais le code série reste incohérent ou identique sur toutes les pièces d'un même lot de contrefaçon (détectable en comparant deux fakes). Une autre tactique : joindre un vrai zip tie récupéré sur une pièce déstockée à un faux vêtement. Dans ce cas, le point de fixation est refait à la main, souvent au fil blanc standard.",
+      "Les contrefacteurs reproduisent le visuel du zip tie (couleur rouge, forme, mention « OFF-WHITE »), mais butent systématiquement sur la gravure en relief : ils impriment la typographie en surface par sérigraphie ou transfert thermique, sans creux perceptible. Les fakes haut de gamme récents utilisent des moules injection plus sophistiqués et reproduisent la gravure creuse — mais le code série reste incohérent ou identique sur toutes les pièces d'un même lot de contrefaçon (détectable en comparant deux fakes). Une autre tactique : joindre un vrai zip tie récupéré sur une pièce déstockée à un faux vêtement. Dans ce cas, le point de fixation est refait à la main, souvent au fil blanc standard.",
     faqs: [
       {
         question:

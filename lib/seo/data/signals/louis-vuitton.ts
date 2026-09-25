@@ -54,7 +54,7 @@ export const louisVuittonSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires achètent des générateurs de date codes LV (disponibles sur Taobao, ~50 €) qui produisent des codes cohérents par atelier + semaine + année. Ces codes passent les vérifications automatiques de format, mais le défaut reste l'embossage : les fakes utilisent une presse thermique trop chaude qui brûle légèrement le cuir autour de chaque caractère, laissant une auréole brunâtre visible à la loupe x10. Le date code authentique est embossé à froid, sans altération de couleur du cuir périphérique. Autre tactique : les fakes post-2022 tentent de reproduire les deux systèmes (date code + puce RFID factice) pour tromper les vérifications manuelles — la puce RFID factice ne répond à aucun scan NFC, révélant instantanément la contrefaçon.",
+      "Les faussaires achètent des générateurs de date codes LV (disponibles sur Taobao, ~50 €) qui produisent des codes cohérents par atelier + semaine + année. Ces codes passent les vérifications automatiques de format, mais le défaut reste l'embossage : les fakes utilisent une presse thermique trop chaude qui brûle légèrement le cuir autour de chaque caractère, laissant une auréole brunâtre visible à la loupe x10. Le date code authentique est embossé à froid, sans altération de couleur du cuir périphérique. Autre tactique : des fakes récents tentent de reproduire les deux systèmes (date code + puce RFID factice) pour tromper les vérifications manuelles.",
     faqs: [
       {
         question: "Tous les LV avant 2021 ont-ils un date code ?",
@@ -389,7 +389,7 @@ export const louisVuittonSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires depuis 2022 intègrent des puces NFC génériques (NTAG213 de NXP, 0,30-0,80 € l'unité, achetables par millier sur Alibaba) dans leurs fakes post-2021. Ces puces répondent au scan avec un ID arbitraire qui ne correspond à rien dans les bases LV. Le défaut : les puces authentiques LV utilisent un silicon custom (probablement HID Global ou Legic Advant) avec des commandes cryptographiques NDEF enrichies. Un dump NFC complet via TagInfo Advanced révèle cette différence de structure. Pour le consommateur averti, le test simple « la puce répond ? » est déjà une première filtre (les fakes bas de gamme n'ont souvent AUCUNE puce, 0 réponse NFC). Pour les fakes haut de gamme, attendre le service d'authentification LV intégré à l'app officielle.",
+      "Les faussaires intègrent des puces NFC génériques (NTAG213 de NXP, 0,30-0,80 € l'unité, achetables par millier sur Alibaba) dans leurs fakes post-2021. Ces puces répondent au scan avec un ID arbitraire qui ne correspond à rien dans les bases LV. Le défaut : les puces authentiques LV utilisent un silicon custom (probablement HID Global ou Legic Advant) avec des commandes cryptographiques NDEF enrichies. Un dump NFC complet via TagInfo Advanced révèle cette différence de structure. Pour le consommateur averti, le test simple « la puce répond ? » est déjà une première filtre (les fakes bas de gamme n'ont souvent AUCUNE puce, 0 réponse NFC). Pour les fakes haut de gamme, attendre le service d'authentification LV intégré à l'app officielle.",
     faqs: [
       {
         question: "Pourquoi mon sac post-2021 ne répond-il à aucun scan NFC ?",

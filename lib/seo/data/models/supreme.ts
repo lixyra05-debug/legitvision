@@ -59,7 +59,7 @@ export const supremeModels: ModelData[] = [
       {
         question: "Comment différencier un Box Logo 2018 d'un 2024 ?",
         answer:
-          "Le tag intérieur a évolué : « Made in Canada » a été en vigueur de 1994 à 2022. Depuis 2022, certains Box Logos sont « Made in Portugal » ou USA. Le washlabel a aussi changé de format. Un Box Logo 2024 « Made in Canada » est suspect (vérifiez drop date).",
+          "Le tag intérieur et le washlabel ont changé de format selon les périodes : comparez-les à ceux d'un Box Logo authentique de la même saison (vérifiez la date du drop).",
       },
       {
         question: "Les Box Logos collabs (LV, Murakami) sont-ils aussi contrefaits ?",

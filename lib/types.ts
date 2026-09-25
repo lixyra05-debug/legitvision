@@ -53,6 +53,7 @@ export interface Model {
   variants: string[];
   collaborations: Collaboration[];
   specific_auth_points: string[] | null;
+  /** Non tenus à jour : le nombre de photos affiché vient de brand.photo_protocol. */
   min_photos: number;
   max_photos: number;
   is_active: boolean;

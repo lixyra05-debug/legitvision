@@ -44,7 +44,7 @@ export const depopIntersections: Intersection[] = [
     platformSlug: "depop",
     brandSlug: "adidas",
     angle:
-      "adidas sur Depop présente des risques sur les Yeezy (fin de production 2024 → super-fakes massifs) et les Samba/Gazelle hyped (viralité TikTok depuis 2023). La culture streetwear Gen Z de Depop amplifie le phénomène : les « dupe culture » et « rep culture » sont explicitement revendiquées par certaines communautés de la plateforme, créant une confusion permanente entre répliques assumées et faux déguisés. Pour des adidas > 200 €, Depop est à considérer avec la même prudence que Leboncoin : vérification tiers systématique avant paiement, refus absolu des paiements hors Depop, et éviter les vendeurs à stock « inspired » mélangé avec des articles « authentic ».",
+      "adidas sur Depop présente des risques sur les Yeezy (fin de production 2024 → super-fakes massifs) et les Samba/Gazelle hyped (viralité TikTok). La culture streetwear Gen Z de Depop amplifie le phénomène : les « dupe culture » et « rep culture » sont explicitement revendiquées par certaines communautés de la plateforme, créant une confusion permanente entre répliques assumées et faux déguisés. Pour des adidas > 200 €, Depop est à considérer avec la même prudence que Leboncoin : vérification tiers systématique avant paiement, refus absolu des paiements hors Depop, et éviter les vendeurs à stock « inspired » mélangé avec des articles « authentic ».",
     faqs: [
       {
         question: "Depop accepte-t-il les contrefaçons déclarées ?",
@@ -62,7 +62,7 @@ export const depopIntersections: Intersection[] = [
     platformSlug: "depop",
     brandSlug: "new-balance",
     angle:
-      "New Balance sur Depop a explosé depuis 2022 grâce à la hype Aimé Leon Dore qui a aligné parfaitement avec la culture Gen Z de la plateforme. Les 990v5 Grey Day, 2002R Protection Pack et collabs Joe Freshgoods circulent massivement sur Depop, attirant une vague de contrefaçons « Made in USA » produites en Chine. La jeunesse et l'inexpérience de la base acheteurs amplifie les risques.",
+      "New Balance sur Depop a explosé grâce à la hype Aimé Leon Dore qui a aligné parfaitement avec la culture Gen Z de la plateforme. Les 990v5 Grey Day, 2002R Protection Pack et collabs Joe Freshgoods circulent massivement sur Depop, attirant une vague de contrefaçons « Made in USA » produites en Chine. La jeunesse et l'inexpérience de la base acheteurs amplifie les risques.",
     faqs: [
       {
         question: "Aimé Leon Dore x New Balance sur Depop : arnaque systémique ?",

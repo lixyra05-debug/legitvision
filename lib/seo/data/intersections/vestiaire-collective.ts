@@ -13,7 +13,7 @@ export const vestiaireIntersections: Intersection[] = [
       {
         question: "Toutes les Nike Vestiaire passent-elles par l'authentification ?",
         answer:
-          "Non. Depuis 2022, Vestiaire propose le mode « Direct Shipping » qui permet au vendeur d'expédier directement à l'acheteur sans passage par le centre d'authentification. Ce mode est signalé par un badge spécifique sur la fiche produit. Pour une paire Nike > 300 €, privilégiez systématiquement les articles marqués « Authentifié par Vestiaire Collective » plutôt que Direct Shipping.",
+          "Non. Vestiaire propose le mode « Direct Shipping » qui permet au vendeur d'expédier directement à l'acheteur sans passage par le centre d'authentification. Ce mode est signalé par un badge spécifique sur la fiche produit. Pour une paire Nike > 300 €, privilégiez systématiquement les articles marqués « Authentifié par Vestiaire Collective » plutôt que Direct Shipping.",
       },
       {
         question: "Les prix Nike sont-ils plus élevés sur Vestiaire qu'ailleurs ?",
@@ -62,7 +62,7 @@ export const vestiaireIntersections: Intersection[] = [
     platformSlug: "vestiaire-collective",
     brandSlug: "new-balance",
     angle:
-      "New Balance sur Vestiaire Collective est un segment en forte croissance depuis 2023 grâce à la hype Aimé Leon Dore et Joe Freshgoods. Les 990v5, 990v6, 2002R et collabs New Balance sont désormais régulièrement listées sur la plateforme à des prix de 350-700 €. L'authentification Vestiaire est fiable sur les modèles classiques mais peut avoir des difficultés sur les collaborations très limitées récentes dont les codes de production sont moins documentés. Le segment Direct Shipping est particulièrement risqué sur New Balance car les super-fakes « Made in USA » ont explosé en 2024-2025, ciblant précisément les acheteurs qui découvrent la marque via les collabs.",
+      "New Balance sur Vestiaire Collective est un segment en forte croissance grâce à la hype Aimé Leon Dore et Joe Freshgoods. Les 990v5, 990v6, 2002R et collabs New Balance sont désormais régulièrement listées sur la plateforme à des prix de 350-700 €. L'authentification Vestiaire est fiable sur les modèles classiques mais peut avoir des difficultés sur les collaborations très limitées récentes dont les codes de production sont moins documentés. Le segment Direct Shipping est particulièrement risqué sur New Balance car les super-fakes « Made in USA » ont explosé en 2024-2025, ciblant précisément les acheteurs qui découvrent la marque via les collabs.",
     faqs: [
       {
         question: "Une New Balance 990v5 à 400 € sur Vestiaire est-elle correcte ?",

@@ -62,7 +62,7 @@ export function SeoPageTemplate({ data }: { data: SeoPageData }) {
               {data.scams.length} arnaques récurrentes sur {data.platform.name}
             </h2>
             <p className="mt-3 max-w-2xl text-body text-muted-foreground">
-              Ces schémas se retrouvent dans la quasi-totalité des contrefaçons {data.brand.name} signalées sur {data.platform.name}. Si vous en cochez un seul, arrêtez la transaction.
+              Si vous reconnaissez un seul de ces schémas sur une annonce {data.brand.name}, arrêtez la transaction.
             </p>
           </div>
 

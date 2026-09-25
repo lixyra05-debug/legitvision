@@ -54,7 +54,7 @@ export const airJordanSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires haut de gamme (Batch 5.0, LJR) utilisent des moules de pressage quasi-identiques mais avec un défaut systématique : la plume numéro 3 de l'aile gauche (comptée depuis le ballon) est légèrement plus courte de 0,3-0,5 mm que sur l'authentique. Ce défaut est invariant sur toute la production fake depuis 2022, car les moules ont été copiés les uns sur les autres et ce biais s'est accumulé. Pour les fakes bas de gamme, le Wings Logo est simplement imprimé (sérigraphie) au lieu d'être embossé : passer l'ongle révèle instantanément l'absence de relief.",
+      "Les faussaires haut de gamme (Batch 5.0, LJR) utilisent des moules de pressage quasi-identiques mais avec un défaut systématique : la plume numéro 3 de l'aile gauche (comptée depuis le ballon) est légèrement plus courte de 0,3-0,5 mm que sur l'authentique. Ce défaut est invariant sur toute la production fake, car les moules ont été copiés les uns sur les autres et ce biais s'est accumulé. Pour les fakes bas de gamme, le Wings Logo est simplement imprimé (sérigraphie) au lieu d'être embossé : passer l'ongle révèle instantanément l'absence de relief.",
     faqs: [
       {
         question: "Le Wings Logo peut-il s'effacer avec l'usure ?",
