@@ -120,13 +120,16 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 9. Les chiffres affichés — marques et modèles analysables, durée d'analyse, prix, quotas des formules, zones, points — viennent de `lib/site-facts.ts`, la source unique. Ne jamais les écrire à la main dans un texte : les lire depuis ce fichier (`facts()` pour les textes, `PRICES` / `CATALOG` pour les valeurs brutes). Une valeur ne change qu'après une nouvelle mesure, datée dans ce fichier.
 10. Les comptes des guides SEO (guides modèle, signal, plateforme × marque, plateformes, marques, étapes, signaux par guide) sont CALCULÉS depuis `lib/seo/data` par `lib/seo/seo-facts.ts`. Jamais écrits à la main, même dans un titre ou une image OG.
 11. Aucune statistique sans source dans le contenu (SEO compris) : proportion ou probabilité de contrefaçons, efficacité d'un signal, taux, volumes, chiffres d'affaires, évolutions de prix en %, classements « les plus contrefaits / populaires ». « Selon les estimations » ou « selon les douanes » ne sont pas des sources. Le 2026-09-25, toutes celles du contenu SEO ont été retirées ; n'en remettre une qu'avec sa source citée et vérifiée. Restent permis : mesures d'objet, prix, règles publiées par une plateforme ou une marque, seuils de conseil.
+12. Les photos d'analyse sont supprimées `PHOTO_RETENTION_DAYS` jours (30) après leur envoi par la purge quotidienne (`lib/purge-photos.ts`, route `/api/cron/purge-photos` appelée par Vercel Cron, `CRON_SECRET` requis). La politique de confidentialité le promet : ne jamais afficher de photo dans un rapport ni en garder de copie ailleurs ; quand la revue expert existera, la faire avant l'échéance.
+13. Le nombre de photos affiché vient du protocole de la ligne de marque (`brands.photo_protocol` : emplacements obligatoires, puis au total), jamais de `models.min_photos` / `max_photos`, qui ne sont pas tenus à jour.
+14. Contenu d'authentification : une couleur, une date, une gravure ou un résultat de scan présentés comme obligatoires font soupçonner des articles authentiques. N'en écrire qu'avec une source vérifiée (corrigés le 2026-09-25 : fermoir du 2.55 et du Classic Flap, pieds du GST, codes millésime Hermès, puce LV).
 
 ## Flux Principal (Happy Path)
 1. User se connecte → /dashboard
 2. User clique "Nouvelle analyse" → /check/new
 3. Step 1 : Choix catégorie (sneakers/sac/montre/vêtement)
 4. Step 2 : Choix marque + modèle (search autocomplete)
-5. Step 3 : Upload guidé (7-11 photos selon le protocole de la marque — sneakers 8-11, sacs 10-11, vêtements 7-8, relevé du 2026-09-25 sur les marques ayant un modèle analysable — avec preview + validation qualité)
+5. Step 3 : Upload guidé (6-11 photos selon le protocole de la ligne de marque — sneakers 8-11, sacs 10-11, vêtements 6-8, relevé du 2026-09-25 sur les lignes ayant un modèle analysable — avec preview + validation qualité)
 6. User confirme → débit 1 crédit → POST /api/analyze
 7. API route : fetch photos Supabase → build payload → call Claude Vision → parse JSON → calcul score → save en DB → update status
 8. User voit le rapport → /check/[id] avec score, sous-scores, findings, recommandations
@@ -144,93 +147,45 @@ PAS ENCORE : Admin panel, HITL, notifications email transactionnelles (stub `lib
 Autres correctifs déployés (post-audit) : route `/auth/callback` (OAuth Google), suppression du dossier `pages/` legacy (404 blanches → `app/not-found.tsx`), fix paiement iOS Safari (navigation top-level vers `/checkout`), CTA pricing `/pricing` (404) → `/#pricing`.
 P1 restants connus : catégorie « montres » absente du CategoryPicker, photos HEIC iPhone, double-abonnement à l'upgrade Pro↔Business.
 
-## ⚠️ Chantier data ouvert — le catalogue n'a pas de source de vérité
-**Constaté le 2026-08-06. À traiter comme un chantier à part : ne pas corriger au fil de l'eau.**
+## Catalogue — état au 2026-09-25, après le SQL de rattachement
 
-Trois endroits décrivent le même catalogue et aucun ne s'accorde. Les COUNT ci-dessous
-ont été relevés directement en base de production (toutes les lignes sont `is_active = true`).
+La base Supabase (`brands`, `models`) est la référence. Relevé du 2026-09-25 en lecture publique, après
+`supabase/scripts/2026-09-25-rattachement-modeles.sql` (exécuté par Hector) :
 
-| | marques | modèles |
+| | lignes | analysables |
 |---|---|---|
-| Base Supabase (`brands`, `models`) — **la référence** (lignes) | **77** | **530** |
-| `components/landing/BrandsTabs.tsx` (tableau en dur, 50 tuiles) | 50 | 357 |
-| Bande de stats de la landing (analysables, lue dans `lib/site-facts.ts`) | 56 ✅ | 475 ✅ |
+| `brands` | 80 lignes : une par marque ET par catégorie, dont 8 de montres | 56 noms de marque, 70 lignes |
+| `models` | 494 actifs, dont 10 montres et 10 sans point | 474 |
 
-**77 et 530 sont des LIGNES, pas ce qu'un client peut analyser** (relevé du 2026-09-25) :
-`brands` compte une ligne par marque ET par catégorie — 77 lignes, 65 noms distincts, dont
-8 marques de montres (non sélectionnables) et Essentials, qui n'a aucun modèle actif. Le site
-affiche donc **56 marques et 475 modèles analysables** (530 − 10 modèles de montres − 45
-modèles sans point d'authentification), jamais 77 : « rien n'est affiché s'il n'est pas
-prouvé vrai ».
+Le site n'affiche que l'analysable (règle de `lib/analyzable.ts` : modèle actif, marque active hors
+montres, au moins un point d'authentification), lu dans `lib/site-facts.ts` : 56 marques et 474 modèles,
+jamais 80 ni 494. « Rien n'est affiché s'il n'est pas prouvé vrai. »
 
-La bande de stats a été alignée sur la base. `BrandsTabs` ne l'est pas : ses 50 tuiles
-sont écrites en dur, réparties sur 3 catégories avec des compteurs `models:` écrits à la
-main. Relevé du 2026-09-25 : 17 compteurs sur 50 sont faux, tous INFÉRIEURS aux modèles
-analysables en base (Gucci sacs : 11 affichés, 24 en base). Il manque des marques, et
-`public/images/brands` ne contient que 55 logos. L'aligner suppose soit de brancher le
-composant sur la base, soit de saisir les entrées manquantes avec leurs logos.
+**Résolu le 2026-09-25 :**
+- 43 modèles porteurs de points de sneaker ou de vêtement, rangés sous `bag`, rattachés à la ligne de
+  leur catégorie ; 35 jumeaux sans point désactivés. Le jumeau de Dior B30, référencé par une analyse,
+  reste actif (slug `b30-sans-point`) et invisible dans la sélection.
+- Protocoles photo des 12 lignes créées le 2026-04-14 : emplacements obligatoires posés (sneakers 7/8,
+  vêtements 5/6). Avant, une analyse pouvait partir sans les photos prévues.
+- Lignes `clothing` créées pour Nike, adidas et Prada (protocole vêtements) : 9 modèles y sont rangés.
+- « Prada Re-Nylon Bag Pack » désactivé : points de vêtement sur un sac.
+- Tuiles de la landing (`BrandsTabs`) : comptes lus en base par ligne (`lib/catalog-counts.ts`, ISR 1 h) ;
+  une tuile n'apparaît que si sa ligne a un modèle analysable. Aucun compteur écrit à la main.
+- Pré-sélection `/check/new` : la recherche (`BrandSearch`) transmet la catégorie de la ligne. Sans
+  catégorie, la ligne qui porte le modèle demandé l'emporte, sinon la plus ancienne (les sacs pour les
+  maisons de luxe). La sélection survit à la connexion (proxy → `/auth?redirect=`).
+- Libellés : `BrandsTabs` et les guides SEO envoient `Jordan`, le nom en base (`checkBrand`) ;
+  `BrandSearch` traduit `bag` (clés au singulier).
+- Off-White et BAPE, présentes en base uniquement en `sneakers` : les pages SEO générales de la marque
+  envoient vers ses sneakers (`checkCategory`) ; les pages consacrées à un vêtement n'ont pas de bouton.
 
-**Modèles sans point d'authentification — exclus du compte ET de la sélection**
-(décision d'Hector, 2026-09-25). Règle et filtres dans `lib/analyzable.ts`, appliqués à
-`check/new` (listes et pré-sélection), à la recherche de la landing (`BrandSearch`) et en
-garde serveur dans `/api/analyze`. Rien n'est désactivé en base : un modèle revient de
-lui-même dès qu'il reçoit des points. Au 2026-09-25, 45 modèles actifs portent
-`authentication_points = []`. 12 lignes de marque n'ont plus AUCUN modèle analysable :
-Balenciaga, Dior, Gucci et Louis Vuitton en `sneakers` ET en `clothing` ; Bottega Veneta,
-Chanel, Hermès et Prada en `sneakers`. Leurs 12 tuiles `BrandsTabs` ont été retirées (même
-règle qu'Off-White et BAPE ci-dessous), à remettre quand ces modèles auront leurs points.
-
-**Défaut de données lié, NON corrigé (écriture en base, à décider par Hector) :** 53 des
-475 modèles analysables portent des points de sneaker ou de vêtement (zones `sole_pattern`,
-`tongue_label`, `neck_label`, `wash_label`) mais sont rangés sous une autre catégorie : 46
-sous une ligne `bag` (Dior B22/B23/B27/B30, Gucci Ace/Rhyton/Run/Screener, LV Trainer/Skate/
-Archlight, t-shirts et hoodies Balenciaga, Dior, Gucci, LV, Prada…) et 7 vêtements Nike et
-adidas sous une ligne `sneakers`. L'utilisateur les photographie donc avec le protocole de
-la mauvaise catégorie. 19 des 45 modèles sans point ont un homonyme exact, avec points,
-sous la ligne `bag` de la même marque (B23, Ace, LV Trainer, Orbit…, créés les 13 et 14
-avril 2026) : les points ont été posés sur la mauvaise copie. D'autres ont un jumeau au nom
-proche (« Gucci Hoodie » sous `bag`, « Hoodie » sous `clothing`). Correction
-proposée : rattacher chaque modèle mal rangé à la ligne de sa vraie catégorie (et retirer le
-jumeau vide), ce qui ramènerait aussi une partie des 12 lignes vides.
-
-**Libellés de marque incohérents, avec une conséquence fonctionnelle :**
-
-| Source | Nom |
-|---|---|
-| Base (`brands`, migration 009) | `Jordan` |
-| `BrandsTabs.tsx:27` | `Jordan Brand` |
-| Guides SEO (`lib/seo/data/brands.ts:73`) | `Air Jordan` |
-
-`BrandsTabs` envoie ce nom tel quel dans `/check/new?brand=…`, et `check/new/page.tsx`
-le résout par `.ilike("name", brandParam)` — une égalité, pas un `%like%`. `Jordan Brand`
-ne matche donc pas `Jordan` : **la pré-sélection de marque échoue en silence** depuis la
-tuile Jordan de la landing (4ᵉ tuile sneakers, 7 modèles annoncés).
-À ne pas confondre avec `lib/ai/authentication-prompts.ts:60`, qui gère bien le cas par
-match partiel — mais c'est un autre chemin de code, en aval de la sélection.
-
-**Même famille, autre fichier :** la base stocke la catégorie `bag` (singulier).
-`BrandsTabs.DB_CATEGORY.sacs = "bag"` est juste, mais `BrandSearch.tsx:37` mappe la clé
-`bags` — inexistante. Le fallback s'applique et le dropdown affiche `bag` en brut à la
-place du libellé traduit, pour toutes les marques de maroquinerie.
-
-**À AJOUTER AU CATALOGUE — `Off-White` et `BAPE` en `clothing` (avec leurs modèles).**
-Relevé le 2026-09-16 par requête sur la base de production (et non sur les migrations,
-qui ne font pas autorité) : ces deux marques n'existent qu'en `sneakers`. Les tuiles de
-l'onglet « Vêtements » de `BrandsTabs` les proposaient quand même, avec
-`category=clothing` : la résolution ne trouvait aucune ligne et l'utilisateur atterrissait
-sur un sélecteur vide. **Les deux tuiles ont été retirées** — une tuile qui ne mène nulle
-part est pire que pas de tuile — et sont à remettre dès que la base portera les lignes
-`clothing` ET au moins un modèle chacune. Reste ouvert (relevé du 2026-09-25) : les 6 pages
-SEO `/legit-check/off-white…` et `/legit-check/bape…` (hubs + 4 pages modèle de vêtements)
-envoient encore `category=clothing` ; la pré-sélection ne trouve rien et l'utilisateur
-repart de l'étape 1.
-
-Priorité sur Off-White : c'est d'abord une marque de **vêtements**, et l'une des plus
-contrefaites du marché. La cataloguer uniquement en sneakers ampute une demande réelle.
-Rappel du comportement aval, vérifié : une marque présente mais sans modèle actif n'est
-PAS un cul-de-sac — `check/new` affiche « Aucun modèle disponible pour cette marque. »,
-le bouton « Retour » reste offert et « Suivant » est désactivé (`canProceed()` case 2
-exige marque ET modèle). Le cul-de-sac ne concernait que la marque totalement absente.
+**Reste ouvert :**
+- 10 modèles actifs sans point d'authentification, exclus de la sélection jusqu'à ce qu'ils en reçoivent.
+  Lignes sans modèle analysable : Essentials (`clothing`), Balenciaga (`sneakers`).
+- Off-White et BAPE en `clothing` : lignes à créer avec leurs modèles (Off-White est d'abord une marque de
+  vêtements, très contrefaite), puis remettre tuiles et boutons.
+- `models.min_photos` / `max_photos` ne correspondent pas aux protocoles : ne pas les afficher (règle 13).
+- `public/images/brands` n'a pas de logo pour toutes les marques (repli texte dans `BrandsTabs`).
 
 ## Commandes Utiles
 ```bash
