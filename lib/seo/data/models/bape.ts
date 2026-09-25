@@ -59,7 +59,7 @@ export const bapeModels: ModelData[] = [
       {
         question: "Comment distinguer un Shark Hoodie BAPE original d'un Bape USA ?",
         answer:
-          "Depuis 2023, BAPE a ouvert des stores US avec production locale (prix plus bas, 280-320 €). Tag intérieur « Made in USA » au lieu de « Made in Japan ». Les collectionneurs préfèrent les Made in Japan (valeur revente supérieure). Les contrefaçons imitent souvent Made in Japan (plus recherché).",
+          "BAPE a ouvert des stores US avec production locale (prix plus bas, 280-320 €). Tag intérieur « Made in USA » au lieu de « Made in Japan ». Les collectionneurs préfèrent les Made in Japan (valeur revente supérieure). Les contrefaçons imitent souvent Made in Japan (plus recherché).",
       },
       {
         question: "Les Shark Hoodies collabs (Adidas, Undefeated) sont-ils aussi contrefaits ?",

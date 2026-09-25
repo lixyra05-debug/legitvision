@@ -137,20 +137,12 @@ export function BrandSearch() {
           ),
       ].slice(0, 8);
 
-  async function handleResultClick(result: SearchResult) {
+  function handleResultClick(result: SearchResult) {
     setOpen(false);
 
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      window.location.href = "/auth?redirect=/check/new";
-      return;
-    }
-
-    // Build URL with pre-selection params
+    // Même chemin que les pages SEO : /check/new avec la sélection. Non
+    // connecté, le proxy renvoie vers /auth?redirect=<ce lien> et la connexion
+    // ramène ici, marque, modèle et catégorie compris.
     const params = new URLSearchParams();
     if (result.type === "brand") {
       params.set("brand", result.name);

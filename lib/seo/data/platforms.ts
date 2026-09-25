@@ -84,7 +84,7 @@ export const platforms: Platform[] = [
       {
         title: "Direct Shipping sans contrôle",
         description:
-          "Depuis 2022, Vestiaire propose l'option « Expédition Directe » qui laisse le vendeur envoyer directement à l'acheteur, sans passage par leur centre d'authentification. Cette option est signalée par un badge — vérifiez toujours si votre article passe par le contrôle ou non avant de valider l'achat.",
+          "Vestiaire propose l'option « Expédition Directe » qui laisse le vendeur envoyer directement à l'acheteur, sans passage par leur centre d'authentification. Cette option est signalée par un badge — vérifiez toujours si votre article passe par le contrôle ou non avant de valider l'achat.",
       },
       {
         title: "Prix Vestiaire gonflé : arnaque à la plus-value",

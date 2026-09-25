@@ -45,7 +45,7 @@ export const vintedIntersections: Intersection[] = [
     platformSlug: "vinted",
     brandSlug: "adidas",
     angle:
-      "adidas sur Vinted a connu une explosion de contrefaçons depuis 2023, particulièrement sur les Samba OG et Gazelle Indoor suite à leur viralité TikTok. Les super-fakes Samba circulent à 50-80 € quand les authentiques se revendent 130-180 €, et sont techniquement convaincantes sur les trois bandes et la gum sole — seule l'étiquette intérieure et la cohérence du pays de production permettent la détection. Côté Yeezy, la fin du partenariat Kanye/adidas en 2022 a gelé l'offre officielle.",
+      "adidas sur Vinted a connu une explosion de contrefaçons, particulièrement sur les Samba OG et Gazelle Indoor suite à leur viralité TikTok. Les super-fakes Samba circulent à 50-80 € quand les authentiques se revendent 130-180 €, et sont techniquement convaincantes sur les trois bandes et la gum sole — seule l'étiquette intérieure et la cohérence du pays de production permettent la détection. Côté Yeezy, la fin du partenariat Kanye/adidas en 2022 a gelé l'offre officielle.",
     faqs: [
       {
         question: "Les Samba OG à 80 € sur Vinted sont-elles des fakes ?",
@@ -63,7 +63,7 @@ export const vintedIntersections: Intersection[] = [
     platformSlug: "vinted",
     brandSlug: "new-balance",
     angle:
-      "L'explosion culturelle des New Balance 990v5 et 2002R depuis la collaboration Aimé Leon Dore a transformé Vinted en terrain miné pour cette marque. Les 990v5 Grey Day, initialement vendues 210 € chez New Balance, atteignent 350-500 € sur Vinted en seconde main et sont contrefaites. Les contrefaçons exploitent la méconnaissance des signaux New Balance chez les acheteurs récents (apparition sur la hype depuis 2022 seulement), notamment sur le marquage « Made in USA » qui est juridiquement sanctionné en cas de fraude mais encore largement fakés.",
+      "L'explosion culturelle des New Balance 990v5 et 2002R depuis la collaboration Aimé Leon Dore a transformé Vinted en terrain miné pour cette marque. Les 990v5 Grey Day, initialement vendues 210 € chez New Balance, atteignent 350-500 € sur Vinted en seconde main et sont contrefaites. Les contrefaçons exploitent la méconnaissance des signaux New Balance chez les acheteurs récents (apparition récente sur la hype), notamment sur le marquage « Made in USA » qui est juridiquement sanctionné en cas de fraude mais encore largement fakés.",
     faqs: [
       {
         question: "Les New Balance 2002R sur Vinted sont-elles fiables ?",
@@ -171,7 +171,7 @@ export const vintedIntersections: Intersection[] = [
     platformSlug: "vinted",
     brandSlug: "dior",
     angle:
-      "Dior sur Vinted est devenu depuis 2022 un segment risqué du luxe féminin, avec une concentration massive de Saddle Bag et Book Tote contrefaites. Les Saddle Bag à moins de 2 500 € sont suspectes, tout comme les Book Tote à moins de 1 800 €. Les super-fakes Dior de 2024-2026 reproduisent correctement l'Oblique canvas et les charms D.I.O.R., exigeant une vérification du blind stamp alphanumérique intérieur, de la qualité des coutures sur le tag cuir, et du poids réel des charms en métal (35-45 g authentiques, 15-25 g contrefaçon). Vinted protège partiellement via son service d'authentification payant mais qui reste optionnel et peu utilisé.",
+      "Dior sur Vinted est un segment risqué du luxe féminin, avec une concentration massive de Saddle Bag et Book Tote contrefaites. Les Saddle Bag à moins de 2 500 € sont suspectes, tout comme les Book Tote à moins de 1 800 €. Les super-fakes Dior de 2024-2026 reproduisent correctement l'Oblique canvas et les charms D.I.O.R., exigeant une vérification du blind stamp alphanumérique intérieur, de la qualité des coutures sur le tag cuir, et du poids réel des charms en métal (35-45 g authentiques, 15-25 g contrefaçon). Vinted protège partiellement via son service d'authentification payant mais qui reste optionnel et peu utilisé.",
     faqs: [
       {
         question: "Une Saddle Bag à 1 500 € sur Vinted peut-elle être authentique ?",

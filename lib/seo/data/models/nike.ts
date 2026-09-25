@@ -449,7 +449,7 @@ export const nikeModels: ModelData[] = [
       {
         title: "Patta AM1 « neuve » à 300 € sur Grailed",
         description:
-          "La Patta AM1 Noise Aqua (2021) a un prix marché de 800-1 400 €. Une annonce à 300 € est suspecte — vérifiez hang tags Patta, box spéciale, et date de fabrication cohérente. Les super-fakes Patta circulent depuis 2022.",
+          "La Patta AM1 Noise Aqua (2021) a un prix marché de 800-1 400 €. Une annonce à 300 € est suspecte — vérifiez hang tags Patta, box spéciale, et date de fabrication cohérente. Des super-fakes Patta circulent.",
       },
       {
         title: "AM1 « 86 Pack » Centre Pompidou à 200 €",

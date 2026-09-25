@@ -170,7 +170,7 @@ export const leboncoinIntersections: Intersection[] = [
     platformSlug: "leboncoin",
     brandSlug: "dior",
     angle:
-      "Dior sur Leboncoin est devenu depuis 2022 un segment extrêmement risqué, particulièrement sur les Saddle Bag et Book Tote. Les annonces Saddle à moins de 2 500 € et Book Tote à moins de 1 500 € sont suspectes. Les authentiques Dior qui apparaissent sont généralement des pièces vintage John Galliano (années 2000-2010) revendues par des collectionneurs à prix adapté, ou des sorties récentes revendues à perte par des acheteuses déçues. Le signal d'une annonce authentique : documentation complète fournie spontanément (carte d'authenticité, reçu), prix raisonnable mais pas cassé, vendeur qui accepte paiement sécurisé et refuse la pression du « main propre immédiat ».",
+      "Dior sur Leboncoin est un segment extrêmement risqué, particulièrement sur les Saddle Bag et Book Tote. Les annonces Saddle à moins de 2 500 € et Book Tote à moins de 1 500 € sont suspectes. Les authentiques Dior qui apparaissent sont généralement des pièces vintage John Galliano (années 2000-2010) revendues par des collectionneurs à prix adapté, ou des sorties récentes revendues à perte par des acheteuses déçues. Le signal d'une annonce authentique : documentation complète fournie spontanément (carte d'authenticité, reçu), prix raisonnable mais pas cassé, vendeur qui accepte paiement sécurisé et refuse la pression du « main propre immédiat ».",
     faqs: [
       {
         question: "Saddle Bag à 1 800 € sur Leboncoin : authentique ou fake ?",

@@ -141,7 +141,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/adidas.png",
     tagline: "Le géant allemand entre heritage et lifestyle",
     description:
-      "adidas a été fondée à Herzogenaurach en 1949. Ses lignes Originals (Samba, Gazelle, Stan Smith, Campus) ont connu une renaissance massive depuis 2023, avec une explosion de la demande et, mécaniquement, des contrefaçons. La rupture avec Kanye West en 2022 a également relancé le marché secondaire Yeezy, attirant une nouvelle vague de super-fakes. Les signaux d'authentification adidas diffèrent substantiellement de Nike, notamment sur les trois bandes, la structure du talon et le marquage des languettes.",
+      "adidas a été fondée à Herzogenaurach en 1949. Ses lignes Originals (Samba, Gazelle, Stan Smith, Campus) ont connu une renaissance massive, avec une explosion de la demande et, mécaniquement, des contrefaçons. La rupture avec Kanye West en 2022 a également relancé le marché secondaire Yeezy, attirant une nouvelle vague de super-fakes. Les signaux d'authentification adidas diffèrent substantiellement de Nike, notamment sur les trois bandes, la structure du talon et le marquage des languettes.",
     priceRange: "90-400 € selon modèle",
     productType: "paire de sneakers adidas",
     productPossessive: "une paire de",
@@ -192,7 +192,7 @@ export const brands: Brand[] = [
       {
         question: "Les Samba et Gazelle sont-elles massivement contrefaites ?",
         answer:
-          "Oui, depuis 2023-2024. Les super-fakes les plus récentes reproduisent parfaitement le gum sole, le cuir pull-up et les 3 bandes, avec des écarts détectables uniquement sur la typographie de l'étiquette intérieure et le marquage gravé.",
+          "Oui. Les super-fakes les plus récentes reproduisent parfaitement le gum sole, le cuir pull-up et les 3 bandes, avec des écarts détectables uniquement sur la typographie de l'étiquette intérieure et le marquage gravé.",
       },
       {
         question: "adidas propose-t-il un service d'authentification officiel ?",
@@ -208,7 +208,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/new-balance.png",
     tagline: "Le retour en grâce du Made in USA/UK",
     description:
-      "New Balance, fondée à Boston en 1906, était historiquement cantonnée au segment running et lifestyle discret jusqu'à son explosion culturelle en 2022-2024 via les collaborations Aimé Leon Dore, Joe Freshgoods et Salehe Bembury. Les modèles 990v5, 990v6, 550 et 2002R sont aujourd'hui recherchés sur le marché secondaire. Cette demande explosive a attiré une vague massive de contrefaçons depuis 2023, concentrée sur les modèles Made in USA (990v5 Grey, 993) et Made in UK (991, 1500) dont les signaux d'authentification sont spécifiques et mal connus du grand public.",
+      "New Balance, fondée à Boston en 1906, était historiquement cantonnée au segment running et lifestyle discret jusqu'à son explosion culturelle en 2022-2024 via les collaborations Aimé Leon Dore, Joe Freshgoods et Salehe Bembury. Les modèles 990v5, 990v6, 550 et 2002R sont aujourd'hui recherchés sur le marché secondaire. Cette demande explosive a attiré une vague massive de contrefaçons, concentrée sur les modèles Made in USA (990v5 Grey, 993) et Made in UK (991, 1500) dont les signaux d'authentification sont spécifiques et mal connus du grand public.",
     priceRange: "130-600 € selon modèle",
     productType: "paire de New Balance",
     productPossessive: "une paire de",
@@ -337,7 +337,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/chanel.png",
     tagline: "L'exclusivité française au cœur du super-fake",
     description:
-      "Chanel, maison parisienne fondée par Gabrielle Chanel en 1910, reste l'une des deux icônes absolues du luxe mondial avec Hermès. Ses sacs Classic Flap, 2.55, Boy et 19 constituent un marché d'investissement à part entière. Cette rareté orchestrée (quotas d'achat, listes d'attente) a alimenté un marché secondaire. Les super-fakes Chanel produits depuis 2023 atteignent un réalisme tel que même les experts visuels se trompent sur des photos — seul l'examen physique du cuir, du matelassage et de la puce permet la distinction finale.",
+      "Chanel, maison parisienne fondée par Gabrielle Chanel en 1910, reste l'une des deux icônes absolues du luxe mondial avec Hermès. Ses sacs Classic Flap, 2.55, Boy et 19 constituent un marché d'investissement à part entière. Cette rareté orchestrée (quotas d'achat, listes d'attente) a alimenté un marché secondaire. Les super-fakes Chanel les plus récents atteignent un réalisme tel que même les experts visuels se trompent sur des photos — seul l'examen physique du cuir, du matelassage et de la puce permet la distinction finale.",
     priceRange: "3 500-30 000 € selon modèle",
     productType: "sac Chanel",
     productPossessive: "un sac",

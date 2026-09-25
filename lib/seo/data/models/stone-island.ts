@@ -39,7 +39,7 @@ export const stoneIslandModels: ModelData[] = [
       {
         title: "Hang tag — cartonné premium avec numéro série",
         description:
-          "Le hang tag est en carton premium épais (1 mm) avec numéro série unique à 10 chiffres, hologramme Stone Island, et QR code de vérification (depuis 2022). Les contrefaçons ont souvent un hang tag en carton fin, sans hologramme ou avec QR code menant à un site fake.",
+          "Le hang tag est en carton premium épais (1 mm) avec numéro série unique à 10 chiffres, hologramme Stone Island, et QR code de vérification. Les contrefaçons ont souvent un hang tag en carton fin, sans hologramme ou avec QR code menant à un site fake.",
         difficulty: 1,
       },
     ],
@@ -106,7 +106,7 @@ export const stoneIslandModels: ModelData[] = [
       {
         title: "Hang tag — care instructions détaillées + QR",
         description:
-          "Le hang tag inclut des care instructions détaillées spécifiques au matériau (ex: Raso Gommato = pas de machine, nettoyage à sec uniquement), un numéro série à 10 chiffres, et un QR code de vérification (depuis 2022). Les contrefaçons ont souvent des care instructions génériques ou absentes.",
+          "Le hang tag inclut des care instructions détaillées spécifiques au matériau (ex: Raso Gommato = pas de machine, nettoyage à sec uniquement), un numéro série à 10 chiffres, et un QR code de vérification. Les contrefaçons ont souvent des care instructions génériques ou absentes.",
         difficulty: 1,
       },
     ],

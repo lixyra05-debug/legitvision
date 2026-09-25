@@ -236,7 +236,9 @@ export default function ConfidentialitePage() {
               <ul className="space-y-1 text-muted-foreground text-xs">
                 <li><span className="text-foreground/60">Nom :</span> sb-* (Supabase Auth)</li>
                 <li><span className="text-foreground/60">Finalité :</span> Maintien de la session utilisateur</li>
-                <li><span className="text-foreground/60">Durée :</span> Session (supprimé à la déconnexion)</li>
+                {/* 400 jours : durée par défaut des cookies de @supabase/ssr (DEFAULT_COOKIE_OPTIONS.maxAge,
+                    version 0.12.0, relevée le 2026-09-25). À revérifier à chaque mise à jour de la bibliothèque. */}
+                <li><span className="text-foreground/60">Durée :</span> 400 jours au plus, prolongée quand vous utilisez le site connecté ; supprimé à la déconnexion</li>
                 <li><span className="text-foreground/60">Type :</span> Strictement nécessaire — pas de consentement requis</li>
               </ul>
             </div>

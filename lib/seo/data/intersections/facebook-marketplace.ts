@@ -62,7 +62,7 @@ export const facebookMarketplaceIntersections: Intersection[] = [
     platformSlug: "facebook-marketplace",
     brandSlug: "new-balance",
     angle:
-      "New Balance sur Facebook Marketplace représente un segment en forte croissance depuis 2023 suite à la hype Aimé Leon Dore, accompagnée mécaniquement d'une explosion des contrefaçons « Made in USA » produites en Chine. La particularité Facebook : l'absence totale de filtre permet aux contrefacteurs de publier avec une liberté totale, et les acheteurs débutants sur New Balance (arrivés via la hype récente) ne connaissent pas les signaux d'authentification propres à la marque.",
+      "New Balance sur Facebook Marketplace représente un segment en forte croissance suite à la hype Aimé Leon Dore, accompagnée mécaniquement d'une explosion des contrefaçons « Made in USA » produites en Chine. La particularité Facebook : l'absence totale de filtre permet aux contrefacteurs de publier avec une liberté totale, et les acheteurs débutants sur New Balance (arrivés via la hype récente) ne connaissent pas les signaux d'authentification propres à la marque.",
     faqs: [
       {
         question: "Made in USA sur Facebook : comment vérifier à distance ?",
@@ -170,7 +170,7 @@ export const facebookMarketplaceIntersections: Intersection[] = [
     platformSlug: "facebook-marketplace",
     brandSlug: "dior",
     angle:
-      "Dior sur Facebook Marketplace est un territoire particulièrement miné. La combinaison de l'absence totale d'authentification, des prix « alléchants » (Saddle à 1 200-2 000 €) face à un marché authentique à 3 000-4 500 €, et de l'explosion de la demande post-hype Maria Grazia Chiuri crée un piège parfait pour les acheteurs débutants. Les super-fakes Dior produits depuis 2023 reproduisent correctement l'Oblique canvas sur photo mais échouent sur le blind stamp alphanumérique intérieur, la broderie du Book Tote (vs impression), et le poids des charms D.I.O.R. Pour Dior authentique, Facebook Marketplace doit être absolument évité en faveur de Vestiaire Collective ou eBay authentifié.",
+      "Dior sur Facebook Marketplace est un territoire particulièrement miné. La combinaison de l'absence totale d'authentification, des prix « alléchants » (Saddle à 1 200-2 000 €) face à un marché authentique à 3 000-4 500 €, et de l'explosion de la demande post-hype Maria Grazia Chiuri crée un piège parfait pour les acheteurs débutants. Les super-fakes Dior récents reproduisent correctement l'Oblique canvas sur photo mais échouent sur le blind stamp alphanumérique intérieur, la broderie du Book Tote (vs impression), et le poids des charms D.I.O.R. Pour Dior authentique, Facebook Marketplace doit être absolument évité en faveur de Vestiaire Collective ou eBay authentifié.",
     faqs: [
       {
         question: "Saddle Bag à 1 500 € Facebook : considérer ou refuser ?",

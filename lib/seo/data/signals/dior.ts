@@ -64,7 +64,7 @@ export const diorSignals: GuideSignal[] = [
       {
         question: "Dior utilise-t-il un autre système de traçabilité ?",
         answer:
-          "Oui, depuis 2023 : puce NFC intégrée sur certains modèles premium (Lady Dior, Book Tote). Scannable via l'app Dior (service en développement). Les codes embossés continuent d'exister en parallèle. Un sac Dior post-2023 modèle premium sans puce NFC est suspect. Vérifiez avec boutique Dior.",
+          "Oui : puce NFC intégrée sur certains modèles premium (Lady Dior, Book Tote). Scannable via l'app Dior (service en développement). Les codes embossés continuent d'exister en parallèle. En cas de doute, vérifiez avec une boutique Dior.",
       },
     ],
   },
