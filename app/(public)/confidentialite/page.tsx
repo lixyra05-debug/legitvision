@@ -1,5 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const metadata = {
   title: "Politique de confidentialité",
@@ -32,7 +35,7 @@ export default function ConfidentialitePage() {
         <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
           Politique de confidentialité
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Dernière mise à jour : mars 2026</p>
+        <p className="mt-2 text-sm text-muted-foreground">Dernière mise à jour : septembre 2026</p>
 
         <div className="mt-4 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4">
           <p className="text-emerald-400 text-sm font-medium">
@@ -92,7 +95,7 @@ export default function ConfidentialitePage() {
               <div className="rounded-xl border border-white/5 bg-card p-4">
                 <p className="text-foreground font-medium mb-2">Données techniques</p>
                 <ul className="list-disc list-inside space-y-1 text-muted-foreground ml-2">
-                  <li>Adresse IP (logs serveur, conservation 30 jours)</li>
+                  <li>Adresse IP (logs serveur)</li>
                   <li>Type de navigateur et système d&apos;exploitation</li>
                   <li>Date et heure des connexions</li>
                 </ul>
@@ -134,19 +137,15 @@ export default function ConfidentialitePage() {
             <div className="space-y-3 text-muted-foreground">
               <div className="flex gap-3 items-start">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-xs font-bold text-emerald-400">→</span>
-                <p><strong className="text-foreground">Photos soumises :</strong> conservées avec l&apos;analyse correspondante. Vous pouvez en demander l&apos;effacement à tout moment (voir la rubrique 7, « Vos droits »).</p>
+                <p><strong className="text-foreground">Photos soumises :</strong> supprimées de notre espace de stockage {FACTS.photoRetentionDays} jours après leur envoi, que l&apos;analyse ait abouti ou non. Elles ne servent qu&apos;à produire l&apos;analyse : le rapport conservé dans votre compte (verdict, score de confiance, observations et recommandations) ne contient aucune photo. Vous pouvez en demander l&apos;effacement plus tôt (voir la rubrique 7, « Vos droits »).</p>
               </div>
               <div className="flex gap-3 items-start">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-xs font-bold text-emerald-400">→</span>
-                <p><strong className="text-foreground">Données de compte et rapports :</strong> conservés pendant toute la durée du compte actif, puis supprimés dans un délai de 30 jours après résiliation.</p>
+                <p><strong className="text-foreground">Données de compte et rapports :</strong> conservés tant que votre compte existe, et supprimés sur demande par e-mail à legitvision.contact@gmail.com (voir la rubrique 7, « Vos droits »).</p>
               </div>
               <div className="flex gap-3 items-start">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-xs font-bold text-emerald-400">→</span>
                 <p><strong className="text-foreground">Données de facturation :</strong> conservées 10 ans conformément aux obligations comptables et fiscales.</p>
-              </div>
-              <div className="flex gap-3 items-start">
-                <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 text-xs font-bold text-emerald-400">→</span>
-                <p><strong className="text-foreground">Logs serveur :</strong> conservés 30 jours puis supprimés automatiquement.</p>
               </div>
             </div>
           </section>

@@ -10,7 +10,7 @@ export const chanelModels: ModelData[] = [
     retailYear: "1983 (production continue)",
     tagline: "Le sac réintroduit par Karl Lagerfeld en 1983",
     intro:
-      "Le Chanel Classic Flap Medium, réintroduit par Karl Lagerfeld en 1983 (sur la base du 2.55 de 1955), est le sac d'investissement par excellence du luxe — son retail est passé de 1 150 $ en 1990 à 10 800 € en 2024, et l'ajustement 2025-2026 le porte à 11 500-12 500 € selon cuir. Caviar (cuir grainé) et Lambskin (agneau lisse) sont les deux finitions principales. Hardware : Gold (or champagne brossé) ou Silver (argent brillant). Le Classic Flap Medium (25,5 cm) a un prix marché d'occasion stable à 7 500-10 000 € selon état. Les super-fakes de Classic Flap (« China 1:1 mirror ») coûtent 500-1 500 € à produire et se revendent 3 000-6 000 €, piégeant même des authentificateurs expérimentés. Les signaux ci-dessous restent parmi les plus résistants aux super-fakes : cuir grain exact (Caviar) ou souplesse Lambskin, quilting 9 losanges/11 losanges, CC clasp interlocking précision, serial sticker (ou micro-chip RFID post-2021) et stitching alignement.",
+      "Le Chanel Classic Flap Medium, réintroduit par Karl Lagerfeld en 1983 (sur la base du 2.55 de 1955), est le sac d'investissement par excellence du luxe — son retail est passé de 1 150 $ en 1990 à 10 800 € en 2024, et l'ajustement 2025-2026 le porte à 11 500-12 500 € selon cuir. Caviar (cuir grainé) et Lambskin (agneau lisse) sont les deux finitions principales. Hardware : Gold (or champagne brossé) ou Silver (argent brillant). Le Classic Flap Medium (25,5 cm) a un prix marché d'occasion de 10 000-12 500 € selon état. Les super-fakes de Classic Flap (« China 1:1 mirror ») coûtent 500-1 500 € à produire et se revendent 3 000-6 000 €, piégeant même des authentificateurs expérimentés. Les signaux ci-dessous restent parmi les plus résistants aux super-fakes : cuir grain exact (Caviar) ou souplesse Lambskin, quilting 9 losanges/11 losanges, CC clasp interlocking précision, serial sticker (ou micro-chip RFID post-2021) et stitching alignement.",
     signals: [
       {
         title: "Caviar grain — texture pebble uniforme",
@@ -278,12 +278,12 @@ export const chanelModels: ModelData[] = [
     retailYear: "2005 (réédition du 2.55 de 1955)",
     tagline: "La réédition fidèle du sac originel de Coco",
     intro:
-      "Le Chanel 2.55 Reissue, réédité en 2005 pour le 50e anniversaire du 2.55 original (février 1955), est la version « historique » du Classic Flap : au lieu du CC interlocking clasp, il utilise le Mademoiselle Lock (fermoir rectangulaire doré en hommage au célibat de Coco). La chaîne est en métal brossé ton sur ton (non mixée avec cuir comme Classic Flap). Retail 2026 : 9 500-11 200 € selon taille (224, 225, 226, 227). Ce sac est particulièrement apprécié des collectionneuses pour son authenticité historique. Des contrefaçons 2.55 existent. Les signaux spécifiques 2.55 : Mademoiselle Lock (pas CC), chaîne métal tressée (pas avec cuir), quilting 2.55 spécifique, stitching 2.55 et numéro série 2.55.",
+      "Le Chanel 2.55 Reissue, réédité en 2005 pour le 50e anniversaire du 2.55 original (février 1955), est la version « historique » du Classic Flap : au lieu du CC interlocking clasp, il utilise le Mademoiselle Lock, un fermoir rectangulaire nommé en hommage au célibat de Coco, en métal doré vieilli, argenté ou ruthénium selon la version. La chaîne est en métal brossé ton sur ton (non mixée avec cuir comme Classic Flap). Retail 2026 : 9 500-11 200 € selon taille (224, 225, 226, 227). Ce sac est particulièrement apprécié des collectionneuses pour son authenticité historique. Des contrefaçons 2.55 existent. Les signaux spécifiques 2.55 : Mademoiselle Lock (pas CC), chaîne métal tressée (pas avec cuir), quilting 2.55 spécifique, stitching 2.55 et numéro série 2.55.",
     signals: [
       {
-        title: "Mademoiselle Lock — rectangulaire gravé",
+        title: "Mademoiselle Lock — fermoir rectangulaire",
         description:
-          "Le fermoir est un rectangle doré (or champagne brossé) gravé « Mademoiselle » ou avec motif géométrique. Pas de CC interlocking comme Classic Flap. Les contrefaçons utilisent souvent un CC par erreur ou un Mademoiselle Lock mal gravé.",
+          "Le fermoir est un rectangle tournant, en métal doré vieilli, argenté ou ruthénium selon la version : sa couleur seule ne dit rien de l'authenticité. Pas de CC interlocking comme Classic Flap. Les contrefaçons utilisent souvent un CC par erreur, ou un fermoir aux gravures peu profondes ou floues.",
         difficulty: 1,
       },
       {

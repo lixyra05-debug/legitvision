@@ -266,6 +266,15 @@ export default function NewCheckPage() {
       )
     : [];
 
+  // Photos demandées, lues dans le protocole de la ligne de marque : c'est ce
+  // que l'étape 4 exige (emplacements obligatoires) et permet (tous les
+  // emplacements). Les champs min_photos / max_photos des modèles ne sont pas
+  // tenus à jour et ne doivent pas être affichés.
+  const protocolSlots = selectedBrand?.photo_protocol ?? [];
+  const photosRequired = protocolSlots.filter((s) => s.required).length;
+  const photosTotal = protocolSlots.length;
+  const photosRange = photosRequired < photosTotal ? `${photosRequired}–${photosTotal}` : `${photosTotal}`;
+
   const requiredSlots = protocol.filter((s) => s.required);
   const allRequiredUploaded = requiredSlots.every((s) => photos[s.name]);
 
@@ -680,7 +689,7 @@ export default function NewCheckPage() {
                           {model.name}
                         </span>
                         <span className="text-caption text-muted-foreground">
-                          {model.min_photos}–{model.max_photos} photos
+                          {photosRange} {t("check.photosCount")}
                         </span>
                       </button>
                     ))}
@@ -704,8 +713,8 @@ export default function NewCheckPage() {
                     {selectedBrand.name} — {selectedModel.name}
                   </p>
                   <p className="mt-1 text-ui text-muted-foreground">
-                    {selectedModel.min_photos}–{selectedModel.max_photos}{" "}
-                    photos requises
+                    {photosRequired} {t("check.photosRequired")}
+                    {photosRequired < photosTotal && `, ${t("check.photosUpTo")} ${photosTotal}`}
                   </p>
                 </div>
               </div>

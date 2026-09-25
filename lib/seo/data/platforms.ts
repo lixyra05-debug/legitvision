@@ -41,7 +41,7 @@ export const platforms: Platform[] = [
       {
         question: "Est-ce que Vinted vérifie l'authenticité des articles de luxe ?",
         answer:
-          "Non, pas par défaut. Vinted propose depuis 2022 un service d'authentification payant (10 €) pour les articles vendus à partir de 100 €, mais il reste optionnel et choisi par l'acheteur au moment du paiement.",
+          "Non, pas par défaut. Vinted propose un service d'authentification payant (10 €) pour les articles vendus à partir de 100 €, mais il reste optionnel et choisi par l'acheteur au moment du paiement.",
       },
       {
         question: "Comment signaler une contrefaçon détectée sur Vinted ?",

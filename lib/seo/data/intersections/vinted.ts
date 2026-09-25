@@ -86,7 +86,7 @@ export const vintedIntersections: Intersection[] = [
       {
         question: "Vinted authentifie-t-il automatiquement les Louis Vuitton ?",
         answer:
-          "Non, jamais automatiquement. Depuis 2022, Vinted propose un service d'authentification optionnel pour les articles à partir de 100 €, pour 10 € supplémentaires, choisi par l'acheteur au moment du paiement.",
+          "Non, jamais automatiquement. Vinted propose un service d'authentification optionnel pour les articles à partir de 100 €, pour 10 € supplémentaires, choisi par l'acheteur au moment du paiement.",
       },
       {
         question: "Un Neverfull à 500 € sur Vinted est-il crédible ?",

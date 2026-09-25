@@ -10,7 +10,7 @@
 --             une exception annule TOUT et rien n'est écrit.
 --   ÉTAPE 3 — aperçu APRÈS (lecture seule)
 --
--- Ce que fait l'étape 2 (partie A, recommandée) :
+-- Ce que fait l'étape 2 (A, B et C, décision d'Hector du 2026-09-25) :
 --   A0. 36 jumeaux sans point : slug suffixé « -sans-point ». Sans cela, le
 --       rattachement violerait la contrainte UNIQUE (brand_id, slug) — 20 jumeaux
 --       portent le même slug que le modèle qui arrive. Aucun code ne lit ces slugs.
@@ -24,11 +24,13 @@
 --       photo obligatoire, donc /check/new laissait lancer une analyse sans les
 --       photos prévues. Deviennent obligatoires, comme sur les lignes de
 --       référence : toutes sauf box_label (sneakers) et tags_packaging (vêtements).
--- Parties optionnelles, commentées DANS le bloc (retirer les « -- » pour inclure) :
---   B. Créer les lignes vêtements Nike, adidas et Prada et y rattacher 9 modèles
---      (4 Nike, 3 adidas, 2 Prada), sans quoi ils restent sous sneakers / sacs.
---   C. Désactiver « Prada Re-Nylon Bag Pack » : un sac à dos porteur de points de
---      VÊTEMENT (col, étiquette de lavage) ; le déplacer ne le corrigerait pas.
+--   B. Crée les lignes vêtements Nike, adidas et Prada (protocole photo des
+--      vêtements, celui de Gucci corrigé en A3) et y rattache 9 modèles (4 Nike,
+--      3 adidas, 2 Prada) : un vêtement analysé avec le protocole sneakers
+--      donne une analyse faussée.
+--   C. Désactive « Prada Re-Nylon Bag Pack » : un sac à dos porteur de points de
+--      VÊTEMENT (col, étiquette de lavage). On ne propose pas un modèle dont les
+--      points sont faux ; le déplacer ne le corrigerait pas.
 -- ============================================================================
 
 
@@ -213,39 +215,42 @@ begin
   get diagnostics n = row_count;
   if n <> 12 then raise exception 'A3 : % protocoles corrigés au lieu de 12 — rien n''est écrit', n; end if;
 
-  -- ── B (optionnel) : lignes vêtements Nike, adidas, Prada ─────────────────
-  -- select photo_protocol into protocole from public.brands where id = '6960eced-7a80-40e4-90e8-cc734bd1e005'; -- Gucci / clothing, corrigé en A3
-  -- insert into public.brands (name, slug, category, logo_url, photo_protocol, is_active)
-  --   select name, 'nike-clothing', 'clothing', logo_url, protocole, true from public.brands where id = '29f9697b-58f3-4176-a9e5-0c25ef9967cc'
-  --   returning id into nike;
-  -- insert into public.brands (name, slug, category, logo_url, photo_protocol, is_active)
-  --   select name, 'adidas-clothing', 'clothing', logo_url, protocole, true from public.brands where id = 'ce8fab65-7490-49e6-83b4-4bea42f42dbd'
-  --   returning id into adidas;
-  -- insert into public.brands (name, slug, category, logo_url, photo_protocol, is_active)
-  --   select name, 'prada-clothing', 'clothing', logo_url, protocole, true from public.brands where id = '523c8c01-e2be-4a05-bf41-eab08ee6b7f8'
-  --   returning id into prada;
-  -- update public.models m set brand_id = v.vers
-  -- from (values
-  --   ('a81fa359-f733-4477-aba5-de1331f3f3d0'::uuid, '29f9697b-58f3-4176-a9e5-0c25ef9967cc'::uuid, nike), -- Nike « Tech Fleece Hoodie »
-  --   ('36bf299d-d39b-4d84-b01c-69c5efba84cd'::uuid, '29f9697b-58f3-4176-a9e5-0c25ef9967cc'::uuid, nike), -- Nike « Tech Fleece Jogger »
-  --   ('e43ffcce-a1b2-4341-9ae5-5ca911bef059'::uuid, '29f9697b-58f3-4176-a9e5-0c25ef9967cc'::uuid, nike), -- Nike « Windrunner Jacket »
-  --   ('c5abacf0-fbe7-461c-b46b-5819e39a47df'::uuid, '29f9697b-58f3-4176-a9e5-0c25ef9967cc'::uuid, nike), -- Nike « NSW Club Fleece »
-  --   ('1a9c8307-b7f0-44d2-a3ba-3550e6d9b668'::uuid, 'ce8fab65-7490-49e6-83b4-4bea42f42dbd'::uuid, adidas), -- adidas « Trefoil Track Jacket »
-  --   ('7377f678-acbc-4dc4-9be2-780ecebe0ec5'::uuid, 'ce8fab65-7490-49e6-83b4-4bea42f42dbd'::uuid, adidas), -- adidas « Firebird Track Jacket »
-  --   ('8447cae2-3515-4fbb-b6f9-c3e40fc0c930'::uuid, 'ce8fab65-7490-49e6-83b4-4bea42f42dbd'::uuid, adidas), -- adidas « Adicolor Crewneck »
-  --   ('430a4e47-42a5-4143-b87c-d019e8dea7d5'::uuid, '523c8c01-e2be-4a05-bf41-eab08ee6b7f8'::uuid, prada), -- Prada « Prada Logo T-Shirt »
-  --   ('670f31cc-b4dd-4a87-8973-0022094edd8f'::uuid, '523c8c01-e2be-4a05-bf41-eab08ee6b7f8'::uuid, prada)  -- Prada « Prada Nylon Jacket »
-  -- ) as v(id, de, vers)
-  -- where m.id = v.id and m.brand_id = v.de and m.is_active;
-  -- get diagnostics n = row_count;
-  -- if n <> 9 then raise exception 'B : % modèles rattachés au lieu de 9 — rien n''est écrit', n; end if;
+  -- ── B : lignes vêtements Nike, adidas, Prada ────────────────────────────
+  select photo_protocol into protocole from public.brands where id = '6960eced-7a80-40e4-90e8-cc734bd1e005'; -- Gucci / clothing, corrigé en A3
+  insert into public.brands (name, slug, category, logo_url, photo_protocol, is_active)
+    select name, 'nike-clothing', 'clothing', logo_url, protocole, true from public.brands where id = '29f9697b-58f3-4176-a9e5-0c25ef9967cc'
+    returning id into nike;
+  insert into public.brands (name, slug, category, logo_url, photo_protocol, is_active)
+    select name, 'adidas-clothing', 'clothing', logo_url, protocole, true from public.brands where id = 'ce8fab65-7490-49e6-83b4-4bea42f42dbd'
+    returning id into adidas;
+  insert into public.brands (name, slug, category, logo_url, photo_protocol, is_active)
+    select name, 'prada-clothing', 'clothing', logo_url, protocole, true from public.brands where id = '523c8c01-e2be-4a05-bf41-eab08ee6b7f8'
+    returning id into prada;
+  if nike is null or adidas is null or prada is null then
+    raise exception 'B : ligne vêtements non créée — rien n''est écrit';
+  end if;
+  update public.models m set brand_id = v.vers
+  from (values
+    ('a81fa359-f733-4477-aba5-de1331f3f3d0'::uuid, '29f9697b-58f3-4176-a9e5-0c25ef9967cc'::uuid, nike), -- Nike « Tech Fleece Hoodie »
+    ('36bf299d-d39b-4d84-b01c-69c5efba84cd'::uuid, '29f9697b-58f3-4176-a9e5-0c25ef9967cc'::uuid, nike), -- Nike « Tech Fleece Jogger »
+    ('e43ffcce-a1b2-4341-9ae5-5ca911bef059'::uuid, '29f9697b-58f3-4176-a9e5-0c25ef9967cc'::uuid, nike), -- Nike « Windrunner Jacket »
+    ('c5abacf0-fbe7-461c-b46b-5819e39a47df'::uuid, '29f9697b-58f3-4176-a9e5-0c25ef9967cc'::uuid, nike), -- Nike « NSW Club Fleece »
+    ('1a9c8307-b7f0-44d2-a3ba-3550e6d9b668'::uuid, 'ce8fab65-7490-49e6-83b4-4bea42f42dbd'::uuid, adidas), -- adidas « Trefoil Track Jacket »
+    ('7377f678-acbc-4dc4-9be2-780ecebe0ec5'::uuid, 'ce8fab65-7490-49e6-83b4-4bea42f42dbd'::uuid, adidas), -- adidas « Firebird Track Jacket »
+    ('8447cae2-3515-4fbb-b6f9-c3e40fc0c930'::uuid, 'ce8fab65-7490-49e6-83b4-4bea42f42dbd'::uuid, adidas), -- adidas « Adicolor Crewneck »
+    ('430a4e47-42a5-4143-b87c-d019e8dea7d5'::uuid, '523c8c01-e2be-4a05-bf41-eab08ee6b7f8'::uuid, prada), -- Prada « Prada Logo T-Shirt »
+    ('670f31cc-b4dd-4a87-8973-0022094edd8f'::uuid, '523c8c01-e2be-4a05-bf41-eab08ee6b7f8'::uuid, prada)  -- Prada « Prada Nylon Jacket »
+  ) as v(id, de, vers)
+  where m.id = v.id and m.brand_id = v.de and m.is_active;
+  get diagnostics n = row_count;
+  if n <> 9 then raise exception 'B : % modèles rattachés au lieu de 9 — rien n''est écrit', n; end if;
 
-  -- ── C (optionnel) : sac à dos porteur de points de vêtement ──────────────
-  -- update public.models m set is_active = false
-  -- where m.id = 'a68606c3-bfef-4c43-9489-8bacac036b79' and m.is_active   -- Prada « Prada Re-Nylon Bag Pack » (bag)
-  --   and not exists (select 1 from public.analyses a where a.model_id = m.id);
-  -- get diagnostics n = row_count;
-  -- if n <> 1 then raise exception 'C : % modèle désactivé au lieu de 1 — rien n''est écrit', n; end if;
+  -- ── C : sac à dos porteur de points de vêtement ─────────────────────────
+  update public.models m set is_active = false
+  where m.id = 'a68606c3-bfef-4c43-9489-8bacac036b79' and m.is_active   -- Prada « Prada Re-Nylon Bag Pack » (bag)
+    and not exists (select 1 from public.analyses a where a.model_id = m.id);
+  get diagnostics n = row_count;
+  if n <> 1 then raise exception 'C : % modèle désactivé au lieu de 1 — rien n''est écrit', n; end if;
 end $$;
 commit;
 
