@@ -3,6 +3,7 @@ import { facts } from "@/lib/site-facts";
 
 const FACTS = facts();
 
+// Vérification Vinted : « Prix : 100 € minimum », « 10 € par article » — centre d'aide Vinted France, https://www.vinted.fr/help/1147 (consulté le 2026-09-25).
 export const vintedIntersections: Intersection[] = [
   {
     platformSlug: "vinted",
@@ -80,12 +81,12 @@ export const vintedIntersections: Intersection[] = [
     platformSlug: "vinted",
     brandSlug: "louis-vuitton",
     angle:
-      "Louis Vuitton sur Vinted représente un segment risqué de la plateforme. Vinted a déployé un service d'authentification payant (10 €) sur les articles > 100 €, mais il reste optionnel et souvent négligé par les acheteurs. La présence ou l'absence de code date (pré-2021) ou de puce RFID (post-2021) est le signal le plus discriminant dans cette configuration.",
+      "Louis Vuitton sur Vinted représente un segment risqué de la plateforme. Vinted a déployé un service d'authentification payant (10 €) pour les articles à partir de 100 €, mais il reste optionnel et souvent négligé par les acheteurs. La présence ou l'absence de code date (pré-2021) ou de puce RFID (post-2021) est le signal le plus discriminant dans cette configuration.",
     faqs: [
       {
         question: "Vinted authentifie-t-il automatiquement les Louis Vuitton ?",
         answer:
-          "Non, jamais automatiquement. Depuis 2022, Vinted propose un service d'authentification optionnel sur les articles > 100 € pour 10 € supplémentaires, choisi par l'acheteur au moment du paiement.",
+          "Non, jamais automatiquement. Depuis 2022, Vinted propose un service d'authentification optionnel pour les articles à partir de 100 €, pour 10 € supplémentaires, choisi par l'acheteur au moment du paiement.",
       },
       {
         question: "Un Neverfull à 500 € sur Vinted est-il crédible ?",
@@ -126,7 +127,7 @@ export const vintedIntersections: Intersection[] = [
       {
         question: "Comment vérifier une Gucci Marmont avant achat Vinted ?",
         answer:
-          `Demandez au minimum 6 photos spécifiques : vue globale, heat-stamp intérieur cuir, numéro de série avec bullet point (format XXXXXX • XXXX), quincaillerie Double G avec marquage intérieur, matelassage chevron sur les angles, et doublure intérieure. Uploadez l'ensemble sur LegitVision pour un diagnostic IA à ${FACTS.priceSingle} avant de valider l'achat.`,
+          `Demandez au vendeur les ${FACTS.bagPhotosMin} à ${FACTS.bagPhotosMax} photos que l'analyse demande pour un sac, notamment : vue globale, heat-stamp intérieur cuir, numéro de série avec bullet point (format XXXXXX • XXXX), quincaillerie Double G avec marquage intérieur, matelassage chevron sur les angles, et doublure intérieure. Uploadez l'ensemble sur LegitVision pour un diagnostic IA à ${FACTS.priceSingle} avant de valider l'achat.`,
       },
     ],
   },
@@ -144,7 +145,7 @@ export const vintedIntersections: Intersection[] = [
       {
         question: "Vinted peut-il authentifier un Hermès à 10 000 € ?",
         answer:
-          "Le service d'authentification Vinted pour articles > 500 € fait intervenir des experts partenaires. Pour un sac à 10 000+ €, faites toujours une double authentification avec un expert Hermès dédié, même après validation Vinted. Le risque financier justifie ce double contrôle.",
+          "Le service de vérification de Vinted (articles à partir de 100 €) fait intervenir l'équipe d'experts de Vinted. Pour un sac à 10 000+ €, faites toujours une double authentification avec un expert Hermès dédié, même après validation Vinted. Le risque financier justifie ce double contrôle.",
       },
     ],
   },

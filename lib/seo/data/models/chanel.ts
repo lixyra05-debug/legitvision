@@ -329,11 +329,6 @@ export const chanelModels: ModelData[] = [
         answer:
           "Classic Flap : CC interlocking + chaîne entrelacée avec cuir (intro 1983 par Karl). 2.55 Reissue : Mademoiselle Lock + chaîne métal tressée (réédition 2005 du 2.55 original 1955 de Coco). Les deux sont des classiques Chanel mais avec des fermoirs et chaînes différents.",
       },
-      {
-        question: "Pourquoi le 2.55 Reissue est-il plus cher que le Classic Flap ?",
-        answer:
-          "Le 2.55 est positionné comme « historique » (hommage Coco) et utilise un cuir vieilli « distressed » plus complexe à produire. Sa production est plus limitée que le Classic Flap.",
-      },
     ],
   },
 ];

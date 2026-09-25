@@ -32,6 +32,13 @@ export type Brand = {
    */
   checkBrand?: string;
   category: BrandCategory;
+  /**
+   * Catégorie dans laquelle l'analyse couvre la marque, quand ce n'est pas sa
+   * catégorie SEO. Off-White et BAPE n'existent en base qu'en sneakers : leurs
+   * pages générales pointent vers ces sneakers, et leurs pages consacrées aux
+   * vêtements n'ont pas de bouton d'analyse (lib/seo/check-url.ts).
+   */
+  checkCategory?: BrandCategory;
   logo: string;
   tagline: string;
   description: string;

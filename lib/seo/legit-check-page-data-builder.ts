@@ -10,7 +10,7 @@ import {
   models as allModels,
 } from "./data/models";
 import { SITE_URL } from "@/lib/site-url";
-import { buildCheckUrl } from "./check-url";
+import { buildCheckUrl, pageHasAnalysis } from "./check-url";
 import { facts } from "@/lib/site-facts";
 
 const FACTS = facts();
@@ -46,7 +46,9 @@ export function buildLegitCheckPageData(
   // og:image / twitter:image per-page sont gérés par opengraph-image.tsx (file
   // convention), dont l'URL contient un hash de build non connu ici.
   const ogImage = "/opengraph-image";
-  const checkUrl = buildCheckUrl({ brand, category: model.category, ref: trackingRef });
+  const checkUrl = pageHasAnalysis(brand, model.category)
+    ? buildCheckUrl({ brand, category: model.category, ref: trackingRef })
+    : null;
 
   return {
     brand,

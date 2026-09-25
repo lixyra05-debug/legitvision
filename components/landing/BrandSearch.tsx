@@ -31,6 +31,9 @@ interface SearchResult {
   name: string;
   subtitle: string;
   brandName?: string; // for models: used as ?brand= query param
+  // Catégorie de la ligne de marque : une marque peut avoir une ligne par
+  // catégorie (Dior sacs, sneakers, vêtements) et /check/new départage par elle.
+  category: string;
 }
 
 // Clés AU SINGULIER : ce Record est indexé par `brands.category`, dont les
@@ -117,6 +120,7 @@ export function BrandSearch() {
               subtitle: CATEGORY_LABEL_KEYS[b.category]
                 ? t(CATEGORY_LABEL_KEYS[b.category])
                 : b.category,
+              category: b.category,
             })
           ),
         ...models
@@ -128,6 +132,7 @@ export function BrandSearch() {
               name: m.name,
               subtitle: m.brand_name,
               brandName: m.brand_name,
+              category: m.category,
             })
           ),
       ].slice(0, 8);
@@ -153,6 +158,7 @@ export function BrandSearch() {
       if (result.brandName) params.set("brand", result.brandName);
       params.set("model", result.name);
     }
+    if (result.category) params.set("category", result.category);
 
     window.location.href = `/check/new?${params.toString()}`;
   }

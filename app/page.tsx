@@ -15,6 +15,7 @@ import { FaqAccordion } from "@/components/landing/FaqAccordion";
 import { FAQ_ITEMS } from "@/components/landing/faq-data";
 import { BrandSearch } from "@/components/landing/BrandSearch";
 import { BrandsTabs } from "@/components/landing/BrandsTabs";
+import { getAnalyzableCountsByBrandRow } from "@/lib/catalog-counts";
 import { AuthenticityCompare } from "@/components/landing/AuthenticityCompare";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { ScrollExpandMedia } from "@/components/landing/ScrollExpandMedia";
@@ -111,7 +112,9 @@ const serviceJsonLd = {
 // passe aux neutres. Inter pour le corps, Space Grotesk pour les titres.
 // Surfaces opaques : plus de backdrop-filter ni de bordures white/α.
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  // Compteurs des tuiles de marque, lus dans la base (mis en cache une heure).
+  const catalogueCounts = await getAnalyzableCountsByBrandRow();
   return (
     <div className="min-h-screen bg-background">
       <script
@@ -465,7 +468,7 @@ export default function LandingPage() {
               <BrandSearch />
             </div>
             <div className="mt-8">
-              <BrandsTabs />
+              <BrandsTabs counts={catalogueCounts} />
             </div>
             <p
               className="mt-8 text-center text-ui"

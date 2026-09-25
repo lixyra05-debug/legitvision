@@ -208,7 +208,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/new-balance.png",
     tagline: "Le retour en grâce du Made in USA/UK",
     description:
-      "New Balance, fondée à Boston en 1906, était historiquement cantonnée au segment running et lifestyle discret jusqu'à son explosion culturelle en 2022-2024 via les collaborations Aimé Leon Dore, Joe Freshgoods et Salehe Bembury. Les modèles 990v5, 990v6, 550 et 2002R sont aujourd'hui des sneakers recherchées sur le marché premium, avec des prix secondaires dépassant régulièrement les 500 €. Cette demande explosive a attiré une vague massive de contrefaçons depuis 2023, concentrée sur les modèles Made in USA (990v5 Grey, 993) et Made in UK (991, 1500) dont les signaux d'authentification sont spécifiques et mal connus du grand public.",
+      "New Balance, fondée à Boston en 1906, était historiquement cantonnée au segment running et lifestyle discret jusqu'à son explosion culturelle en 2022-2024 via les collaborations Aimé Leon Dore, Joe Freshgoods et Salehe Bembury. Les modèles 990v5, 990v6, 550 et 2002R sont aujourd'hui recherchés sur le marché secondaire. Cette demande explosive a attiré une vague massive de contrefaçons depuis 2023, concentrée sur les modèles Made in USA (990v5 Grey, 993) et Made in UK (991, 1500) dont les signaux d'authentification sont spécifiques et mal connus du grand public.",
     priceRange: "130-600 € selon modèle",
     productType: "paire de New Balance",
     productPossessive: "une paire de",
@@ -264,7 +264,7 @@ export const brands: Brand[] = [
       {
         question: "Quels modèles New Balance les contrefacteurs visent-ils ?",
         answer:
-          "Les 550 (retail 130-150 €, marché 150-250 €) offrent une marge de contrefaçon plus faible. Les contrefacteurs concentrent leurs efforts sur les modèles à forte plus-value : 990v5/v6, 2002R, et les collabs Aimé Leon Dore ou Joe Freshgoods qui dépassent souvent 400-500 € au marché.",
+          "Les 550 (retail 130 €, marché 110-300 €) offrent une marge de contrefaçon plus faible. Les contrefacteurs concentrent leurs efforts sur les modèles à forte plus-value : 990v5/v6, 2002R, et les collabs Aimé Leon Dore ou Joe Freshgoods qui dépassent souvent 400-500 € au marché.",
       },
     ],
   },
@@ -715,6 +715,7 @@ export const brands: Brand[] = [
     slug: "off-white",
     name: "Off-White",
     category: "clothing",
+    checkCategory: "sneakers",
     logo: "/images/brands/off-white.png",
     tagline: "L'héritage Virgil Abloh, le terrain des contrefacteurs",
     description:
@@ -817,6 +818,7 @@ export const brands: Brand[] = [
     slug: "bape",
     name: "BAPE",
     category: "clothing",
+    checkCategory: "sneakers",
     logo: "/images/brands/bape.webp",
     tagline: "A Bathing Ape — 30 ans d'ADN streetwear hypercopié",
     description:

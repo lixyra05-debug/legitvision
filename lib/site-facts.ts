@@ -1,6 +1,6 @@
 /**
  * SOURCE UNIQUE des chiffres affichés par le site : catalogue, durée
- * d'analyse, prix et quotas des formules.
+ * d'analyse, prix et quotas des formules, conservation des photos.
  *
  * Aucun de ces chiffres n'est écrit à la main ailleurs. Traductions, pages
  * SEO, assistant, métadonnées, JSON-LD, CGU, e-mails et webhook les lisent
@@ -45,6 +45,17 @@ export const CATALOG = {
 } as const;
 
 /**
+ * Photos demandées par catégorie = nombre d'emplacements du protocole de la
+ * ligne de marque, sur les lignes ayant au moins un modèle analysable (même
+ * relevé que CATALOG). Les textes qui parlent d'une catégorie lisent ces valeurs.
+ */
+export const PHOTOS_BY_CATEGORY = {
+  sneakers: { min: 8, max: 11 },
+  bag: { min: 10, max: 11 },
+  clothing: { min: 7, max: 8 },
+} as const;
+
+/**
  * Durée MÉDIANE d'une analyse, du clic « Lancer » au rapport, envoi des photos
  * compris (created_at → updated_at des analyses terminées). Relevé le
  * 2026-09-24 : 3 analyses depuis le passage à claude-opus-4-8 (45,4 / 46,8 /
@@ -64,6 +75,13 @@ export const MONTHLY_ANALYSES = {
   pro: 10,
   business: 50,
 } as const;
+
+/**
+ * Conservation des photos d'analyse, en jours après leur envoi (décision
+ * d'Hector, 2026-09-25). La purge quotidienne (lib/purge-photos.ts) applique
+ * cette valeur ; la politique de confidentialité l'affiche.
+ */
+export const PHOTO_RETENTION_DAYS = 30;
 
 // ── Mise en forme ────────────────────────────────────────────────────────────
 // Sans Intl : le rendu doit être identique au serveur et dans le navigateur.
@@ -88,6 +106,8 @@ export function facts(lang: Lang = "fr") {
     maxZones: String(CATALOG.maxZones),
     maxPointsPerModel: String(CATALOG.maxPointsPerModel),
     photosMin: String(CATALOG.photosMin),
+    bagPhotosMin: String(PHOTOS_BY_CATEGORY.bag.min),
+    bagPhotosMax: String(PHOTOS_BY_CATEGORY.bag.max),
     photosMax: String(CATALOG.photosMax),
     median: String(ANALYSIS_MEDIAN_SECONDS),
     priceSingle: formatPrice(PRICES.single, lang),
@@ -95,5 +115,6 @@ export function facts(lang: Lang = "fr") {
     priceBusiness: formatPrice(PRICES.business, lang),
     proAnalyses: String(MONTHLY_ANALYSES.pro),
     businessAnalyses: String(MONTHLY_ANALYSES.business),
+    photoRetentionDays: String(PHOTO_RETENTION_DAYS),
   };
 }

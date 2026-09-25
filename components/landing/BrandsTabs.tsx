@@ -3,10 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
+import { brandRowKey } from "@/lib/catalog-counts";
 
 type BrandEntry = {
   name: string;
-  models: number;
   logo?: string;
 };
 
@@ -19,32 +19,39 @@ const DB_CATEGORY: Record<Category, string> = {
   sacs: "bag",
 };
 
+// Une tuile ne s'affiche que si sa ligne (marque × catégorie) a au moins un
+// modèle analysable, compté dans la base au rendu (lib/catalog-counts.ts) : le
+// compteur n'est jamais écrit à la main, et une tuile qui mènerait à un
+// sélecteur vide disparaît d'elle-même — puis revient quand la ligne a de
+// nouveau des modèles analysables.
 const BRANDS: Record<Category, BrandEntry[]> = {
   sneakers: [
-    { name: "Nike", models: 20, logo: "/images/brands/nike.jpg" },
-    { name: "adidas", models: 16, logo: "/images/brands/adidas.png" },
-    { name: "New Balance", models: 9, logo: "/images/brands/new-balance.png" },
+    { name: "Nike", logo: "/images/brands/nike.jpg" },
+    { name: "adidas", logo: "/images/brands/adidas.png" },
+    { name: "New Balance", logo: "/images/brands/new-balance.png" },
     // « Jordan » et non « Jordan Brand » : ce champ n'est pas seulement le
     // libellé affiché, il part tel quel dans /check/new?brand= et y est résolu
     // par .ilike("name", …) — une égalité, pas un LIKE partiel. La base stocke
     // « Jordan » (migration 001).
-    { name: "Jordan", models: 7, logo: "/images/brands/jordan-brand.png" },
-    { name: "BAPE", models: 3, logo: "/images/brands/bape.webp" },
-    { name: "Converse", models: 4, logo: "/images/brands/converse.png" },
-    { name: "Vans", models: 6, logo: "/images/brands/vans.png" },
-    { name: "Puma", models: 5, logo: "/images/brands/puma.png" },
-    { name: "Reebok", models: 5, logo: "/images/brands/reebok.png" },
-    { name: "Salomon", models: 4, logo: "/images/brands/salomon.png" },
-    // Balenciaga, Louis Vuitton, Dior, Gucci, Prada, Chanel, Hermès et Bottega
-    // Veneta sont ABSENTES de cet onglet volontairement : en sneakers, aucun de
-    // leurs modèles n'a de point d'authentification, et ces modèles ne sont plus
-    // proposés (lib/analyzable.ts). La tuile mènerait à un sélecteur vide. À
-    // remettre quand ces modèles auront leurs points — voir CLAUDE.md,
-    // chantier catalogue.
-    { name: "Maison Margiela", models: 3, logo: "/images/brands/maison-margiela.png" },
-    { name: "New Era", models: 2, logo: "/images/brands/new-era.png" },
-    { name: "Asics", models: 5, logo: "/images/brands/asics.png" },
-    { name: "ON Running", models: 5, logo: "/images/brands/on-running.png" },
+    { name: "Jordan", logo: "/images/brands/jordan-brand.png" },
+    { name: "BAPE", logo: "/images/brands/bape.webp" },
+    { name: "Converse", logo: "/images/brands/converse.png" },
+    { name: "Vans", logo: "/images/brands/vans.png" },
+    { name: "Puma", logo: "/images/brands/puma.png" },
+    { name: "Reebok", logo: "/images/brands/reebok.png" },
+    { name: "Salomon", logo: "/images/brands/salomon.png" },
+    { name: "Balenciaga", logo: "/images/brands/balenciaga.png" },
+    { name: "Louis Vuitton", logo: "/images/brands/louis-vuitton.png" },
+    { name: "Dior", logo: "/images/brands/dior.png" },
+    { name: "Gucci", logo: "/images/brands/gucci.png" },
+    { name: "Prada", logo: "/images/brands/prada.png" },
+    { name: "Chanel", logo: "/images/brands/chanel.png" },
+    { name: "Hermès", logo: "/images/brands/hermes.png" },
+    { name: "Bottega Veneta", logo: "/images/brands/bottega-veneta.png" },
+    { name: "Maison Margiela", logo: "/images/brands/maison-margiela.png" },
+    { name: "New Era", logo: "/images/brands/new-era.png" },
+    { name: "Asics", logo: "/images/brands/asics.png" },
+    { name: "ON Running", logo: "/images/brands/on-running.png" },
   ],
   vetements: [
     // Off-White et BAPE sont ABSENTES de cet onglet volontairement : la base ne
@@ -53,46 +60,48 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     // un selecteur vide. Une tuile qui ne mene nulle part est pire que pas de
     // tuile. A remettre des que le catalogue aura les lignes clothing ET leurs
     // modeles — voir CLAUDE.md, chantier catalogue.
-    { name: "Supreme", models: 11, logo: "/images/brands/supreme.png" },
-    { name: "Palace", models: 5, logo: "/images/brands/palace.png" },
-    { name: "Stone Island", models: 6, logo: "/images/brands/stone-island.png" },
-    { name: "CP Company", models: 6, logo: "/images/brands/cp-company.png" },
-    { name: "Stüssy", models: 6, logo: "/images/brands/stussy.png" },
-    { name: "Comme des Garçons", models: 5, logo: "/images/brands/comme-des-garcons.png" },
-    { name: "The North Face", models: 6 },
-    { name: "Carhartt WIP", models: 7, logo: "/images/brands/carhartt-wip.png" },
-    { name: "Anti Social Social Club", models: 3, logo: "/images/brands/anti-social-social-club.png" },
-    { name: "Fear of God", models: 5, logo: "/images/brands/fear-of-god.png" },
-    // Balenciaga, Louis Vuitton, Gucci et Dior : même raison qu'en sneakers,
-    // aucun de leurs modèles de vêtements n'a de point d'authentification.
-    { name: "Moncler", models: 4, logo: "/images/brands/moncler.png" },
-    { name: "Canada Goose", models: 4, logo: "/images/brands/canada-goose.png" },
-    { name: "Trapstar", models: 4, logo: "/images/brands/trapstar.png" },
-    { name: "Represent", models: 3, logo: "/images/brands/represent.png" },
-    { name: "Kith", models: 4, logo: "/images/brands/kith.png" },
-    { name: "Chrome Hearts", models: 7, logo: "/images/brands/chrome-hearts.png" },
+    { name: "Supreme", logo: "/images/brands/supreme.png" },
+    { name: "Palace", logo: "/images/brands/palace.png" },
+    { name: "Stone Island", logo: "/images/brands/stone-island.png" },
+    { name: "CP Company", logo: "/images/brands/cp-company.png" },
+    { name: "Stüssy", logo: "/images/brands/stussy.png" },
+    { name: "Comme des Garçons", logo: "/images/brands/comme-des-garcons.png" },
+    { name: "The North Face" },
+    { name: "Carhartt WIP", logo: "/images/brands/carhartt-wip.png" },
+    { name: "Anti Social Social Club", logo: "/images/brands/anti-social-social-club.png" },
+    { name: "Fear of God", logo: "/images/brands/fear-of-god.png" },
+    { name: "Balenciaga", logo: "/images/brands/balenciaga.png" },
+    { name: "Louis Vuitton", logo: "/images/brands/louis-vuitton.png" },
+    { name: "Gucci", logo: "/images/brands/gucci.png" },
+    { name: "Dior", logo: "/images/brands/dior.png" },
+    { name: "Moncler", logo: "/images/brands/moncler.png" },
+    { name: "Canada Goose", logo: "/images/brands/canada-goose.png" },
+    { name: "Trapstar", logo: "/images/brands/trapstar.png" },
+    { name: "Represent", logo: "/images/brands/represent.png" },
+    { name: "Kith", logo: "/images/brands/kith.png" },
+    { name: "Chrome Hearts", logo: "/images/brands/chrome-hearts.png" },
   ],
   sacs: [
-    { name: "Louis Vuitton", models: 20, logo: "/images/brands/louis-vuitton.png" },
-    { name: "Chanel", models: 11, logo: "/images/brands/chanel.png" },
-    { name: "Hermès", models: 10, logo: "/images/brands/hermes.png" },
-    { name: "Gucci", models: 11, logo: "/images/brands/gucci.png" },
-    { name: "Prada", models: 11, logo: "/images/brands/prada.png" },
-    { name: "Dior", models: 10, logo: "/images/brands/dior.png" },
-    { name: "Balenciaga", models: 12, logo: "/images/brands/balenciaga.png" },
-    { name: "Bottega Veneta", models: 9, logo: "/images/brands/bottega-veneta.png" },
-    { name: "Saint Laurent", models: 10, logo: "/images/brands/saint-laurent.png" },
-    { name: "Celine", models: 9, logo: "/images/brands/celine.png" },
-    { name: "Fendi", models: 9, logo: "/images/brands/fendi.png" },
-    { name: "Valentino", models: 5, logo: "/images/brands/valentino.png" },
-    { name: "Givenchy", models: 5, logo: "/images/brands/givenchy.png" },
-    { name: "Goyard", models: 7, logo: "/images/brands/goyard.png" },
-    { name: "Jacquemus", models: 9, logo: "/images/brands/jacquemus.png" },
-    { name: "Miu Miu", models: 7, logo: "/images/brands/miu-miu.png" },
-    { name: "Longchamp", models: 6, logo: "/images/brands/longchamp.jpeg" },
-    { name: "Guess", models: 5, logo: "/images/brands/guess.png" },
-    { name: "Michael Kors", models: 6 },
-    { name: "Vanessa Bruno", models: 5, logo: "/images/brands/vanessa-bruno.png" },
+    { name: "Louis Vuitton", logo: "/images/brands/louis-vuitton.png" },
+    { name: "Chanel", logo: "/images/brands/chanel.png" },
+    { name: "Hermès", logo: "/images/brands/hermes.png" },
+    { name: "Gucci", logo: "/images/brands/gucci.png" },
+    { name: "Prada", logo: "/images/brands/prada.png" },
+    { name: "Dior", logo: "/images/brands/dior.png" },
+    { name: "Balenciaga", logo: "/images/brands/balenciaga.png" },
+    { name: "Bottega Veneta", logo: "/images/brands/bottega-veneta.png" },
+    { name: "Saint Laurent", logo: "/images/brands/saint-laurent.png" },
+    { name: "Celine", logo: "/images/brands/celine.png" },
+    { name: "Fendi", logo: "/images/brands/fendi.png" },
+    { name: "Valentino", logo: "/images/brands/valentino.png" },
+    { name: "Givenchy", logo: "/images/brands/givenchy.png" },
+    { name: "Goyard", logo: "/images/brands/goyard.png" },
+    { name: "Jacquemus", logo: "/images/brands/jacquemus.png" },
+    { name: "Miu Miu", logo: "/images/brands/miu-miu.png" },
+    { name: "Longchamp", logo: "/images/brands/longchamp.jpeg" },
+    { name: "Guess", logo: "/images/brands/guess.png" },
+    { name: "Michael Kors" },
+    { name: "Vanessa Bruno", logo: "/images/brands/vanessa-bruno.png" },
   ],
 };
 
@@ -118,7 +127,7 @@ const TABS: { id: Category; labelKey: string; emoji: string }[] = [
 
 // ── BrandLogo with error fallback ─────────────────────────────────────────────
 
-function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category }) {
+function BrandLogoImage({ brand, count, active }: { brand: BrandEntry; count: number; active: Category }) {
   const { t } = useTranslation();
   const [imgError, setImgError] = useState(false);
 
@@ -142,8 +151,8 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
           {brand.name}
         </div>
         <span className="rounded-full bg-surface px-2 py-0.5 text-caption font-medium text-muted-foreground">
-          {brand.models}{" "}
-          {brand.models > 1
+          {count}{" "}
+          {count > 1
             ? t("brandsTabs.modelsCountPlural")
             : t("brandsTabs.modelsCount")}
         </span>
@@ -175,8 +184,8 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
         {brand.name}
       </span>
       <span className="rounded-full bg-surface px-2 py-0.5 text-caption font-medium text-muted-foreground">
-        {brand.models}{" "}
-        {brand.models > 1
+        {count}{" "}
+        {count > 1
           ? t("brandsTabs.modelsCountPlural")
           : t("brandsTabs.modelsCount")}
       </span>
@@ -186,10 +195,12 @@ function BrandLogoImage({ brand, active }: { brand: BrandEntry; active: Category
 
 // ── Main component ────────────────────────────────────────────────────────────
 
-export function BrandsTabs() {
+export function BrandsTabs({ counts }: { counts: Record<string, number> }) {
   const { t } = useTranslation();
   const [active, setActive] = useState<Category>("sneakers");
-  const brands = BRANDS[active];
+  const brands = BRANDS[active]
+    .map((brand) => ({ brand, count: counts[brandRowKey(brand.name, DB_CATEGORY[active])] ?? 0 }))
+    .filter(({ count }) => count > 0);
 
   return (
     <div>
@@ -231,10 +242,11 @@ export function BrandsTabs() {
 
       {/* ── Brand grid ── */}
       <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {brands.map((brand) => (
+        {brands.map(({ brand, count }) => (
           <BrandLogoImage
             key={`${active}-${brand.name}`}
             brand={brand}
+            count={count}
             active={active}
           />
         ))}

@@ -64,7 +64,7 @@ export const adidasModels: ModelData[] = [
       {
         question: "Existe-t-il encore des Yeezy 350 V2 neuves en vente officielle en 2026 ?",
         answer:
-          "Oui, adidas a écoulé le stock Yeezy via des drops CONFIRMED en 2023-2024. Les pairs restantes circulent en resell sur StockX, GOAT, Flight Club. adidas ne reproduit plus de nouveaux coloris depuis la rupture avec Kanye West fin 2022, ce qui rend les OG 2016-2022 plus rares et plus ciblés par les contrefacteurs.",
+          "Oui, adidas a écoulé le stock Yeezy via des drops CONFIRMED en 2023-2024. Les paires restantes circulent en resell sur StockX, GOAT, Flight Club. adidas ne reproduit plus de nouveaux coloris depuis la rupture avec Kanye West fin 2022, ce qui rend les OG 2016-2022 plus rares et plus ciblés par les contrefacteurs.",
       },
     ],
   },
@@ -114,7 +114,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "Wave Runner « neuve jamais portée » à 200 €",
         description:
-          "La Wave Runner OG 2017 a un prix marché stable à 600-900 € neuve. Toute annonce sous 400 € neuve avec boîte est une contrefaçon, souvent avec photos StockX volées ou pairs portées re-teintées.",
+          "La Wave Runner OG 2017 a un prix marché stable à 600-900 € neuve. Toute annonce sous 400 € neuve avec boîte est une contrefaçon, souvent avec photos StockX volées ou paires portées re-teintées.",
       },
       {
         title: "« Taille rare EU 45 en stock » sur Instagram",
@@ -516,7 +516,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "Stan Smith « lot de 3 paires » à 150 €",
         description:
-          "Les annonces vendant plusieurs pairs de Stan Smith à prix cassé (lots) sont suspectes. adidas ne vend jamais en lot à prix cassé, et un particulier avec 3 pairs neuves identiques doit éveiller la méfiance.",
+          "Les annonces vendant plusieurs paires de Stan Smith à prix cassé (lots) sont suspectes. adidas ne vend jamais en lot à prix cassé, et un particulier avec 3 paires neuves identiques doit éveiller la méfiance.",
       },
       {
         title: "Faux « Adidas CONFIRMED receipt »",
