@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
 import { SITE_URL } from "@/lib/site-url";
 import "./globals.css";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 // Inline script exécuté SYNCHRONE avant React : applique la classe "dark"/"light"
 // sur <html> selon localStorage. Évite le flash (FOUC) au chargement.
@@ -25,7 +28,7 @@ const SITE_NAME = "LegitVision";
 const DEFAULT_TITLE =
   "LegitVision — Authentification d'articles de luxe par IA";
 const DEFAULT_DESCRIPTION =
-  "Vérifiez l'authenticité de vos sneakers, sacs et vêtements de luxe en 47 secondes (durée médiane). Score de confiance par IA Vision, jusqu'à 10 zones d'authentification analysées. 3,99 €/scan.";
+  `Vérifiez l'authenticité de vos sneakers, sacs et vêtements de luxe en ${FACTS.median} secondes (durée médiane). Score de confiance par IA Vision, jusqu'à ${FACTS.maxZones} zones d'authentification analysées. ${FACTS.priceSingle}/scan.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

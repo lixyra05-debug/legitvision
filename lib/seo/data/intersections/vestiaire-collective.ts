@@ -1,4 +1,7 @@
 import type { Intersection } from "../../types";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const vestiaireIntersections: Intersection[] = [
   {
@@ -33,7 +36,7 @@ export const vestiaireIntersections: Intersection[] = [
       {
         question: "Que faire si Vestiaire a authentifié mais j'ai un doute ?",
         answer:
-          "Vous disposez de 14 jours après réception pour retourner un article Vestiaire sans justification. Si vous avez un doute post-authentification, faites immédiatement une seconde expertise (CheckCheck, LegitVision à 3,99 €). Si le second rapport contredit celui de Vestiaire, activez le retour dans les 14 jours avec le rapport tiers à l'appui. Vestiaire rembourse intégralement ces cas de litige.",
+          `Vous disposez de 14 jours après réception pour retourner un article Vestiaire sans justification. Si vous avez un doute post-authentification, faites immédiatement un second avis (CheckCheck, LegitVision à ${FACTS.priceSingle}). Si le second rapport contredit celui de Vestiaire, activez le retour dans les 14 jours avec le rapport tiers à l'appui. Vestiaire rembourse intégralement ces cas de litige.`,
       },
     ],
   },
@@ -118,7 +121,7 @@ export const vestiaireIntersections: Intersection[] = [
       {
         question: "Les Gucci Marmont Vestiaire valent-elles leur prix ?",
         answer:
-          "En général oui. Une GG Marmont authentifiée Vestiaire coûte 1 500-2 200 € selon taille et colorway, contre 900-1 500 € sur Vinted avec un risque de contrefaçon de 25-40 %. L'écart de 500-700 € représente l'assurance authentification. Pour un sac destiné à un usage long terme, la prime est justifiée. Pour une revente rapide, comparez avec le prix d'une authentification LegitVision (3,99 €) + achat Vinted.",
+          `En général oui. Une GG Marmont authentifiée Vestiaire coûte 1 500-2 200 € selon taille et colorway, contre 900-1 500 € sur Vinted avec un risque de contrefaçon de 25-40 %. L'écart de 500-700 € représente l'assurance authentification. Pour un sac destiné à un usage long terme, la prime est justifiée. Pour une revente rapide, comparez avec le prix d'une analyse LegitVision (${FACTS.priceSingle}) + achat Vinted.`,
       },
       {
         question: "Un Dionysus vintage Tom Ford est-il authentifiable sur Vestiaire ?",

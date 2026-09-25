@@ -1,4 +1,7 @@
 import type { Platform } from "../types";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const platforms: Platform[] = [
   {
@@ -57,7 +60,7 @@ export const platforms: Platform[] = [
       {
         question: "Peut-on demander un contrôle LegitVision avant d'acheter sur Vinted ?",
         answer:
-          "Oui. Demandez au vendeur 6 à 11 photos détaillées selon notre protocole (étiquette intérieure, box label, semelle, coutures) puis uploadez-les sur LegitVision. Vous obtenez un score d'authenticité en 47 secondes (durée médiane) pour 3,99 €, avant de valider votre achat.",
+          `Oui. Demandez au vendeur ${FACTS.photosMin} à ${FACTS.photosMax} photos détaillées selon notre protocole (étiquette intérieure, box label, semelle, coutures) puis uploadez-les sur LegitVision. Vous obtenez un score d'authenticité en ${FACTS.median} secondes (durée médiane) pour ${FACTS.priceSingle}, avant de valider votre achat.`,
       },
     ],
   },
@@ -177,7 +180,7 @@ export const platforms: Platform[] = [
       {
         question: "Comment vérifier un sac avant la rencontre physique ?",
         answer:
-          "Demandez au vendeur des photos ultra-détaillées (étiquette intérieure, code date, coutures, quincaillerie, intérieur complet) 24h avant le rendez-vous. Uploadez-les sur LegitVision pour obtenir un pré-diagnostic en 47 secondes (durée médiane). Si le score est rouge, annulez le rendez-vous.",
+          `Demandez au vendeur des photos ultra-détaillées (étiquette intérieure, code date, coutures, quincaillerie, intérieur complet) 24h avant le rendez-vous. Uploadez-les sur LegitVision pour obtenir un pré-diagnostic en ${FACTS.median} secondes (durée médiane). Si le score est rouge, annulez le rendez-vous.`,
       },
     ],
   },

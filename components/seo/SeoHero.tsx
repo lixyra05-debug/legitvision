@@ -6,6 +6,9 @@ import {
   CONTENT_REVISED,
   formatContentDate,
 } from "@/lib/seo/content-dates";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export function SeoHero({ data }: { data: SeoPageData }) {
   return (
@@ -69,7 +72,7 @@ export function SeoHero({ data }: { data: SeoPageData }) {
               {data.signals.length} signaux d&apos;authentification
             </span>
             <span className="rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
-              Analyse IA 3,99 €
+              Analyse IA {FACTS.priceSingle}
             </span>
             <time
               dateTime={CONTENT_REVISED.acheterAuthentique}
@@ -92,7 +95,7 @@ export function SeoHero({ data }: { data: SeoPageData }) {
             href={`${data.checkUrl}&intent=analyze`}
             className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
           >
-            Analyser ma photo — 3,99 €
+            Analyser ma photo — {FACTS.priceSingle}
           </Link>
           <a
             href="#signaux"
@@ -105,7 +108,7 @@ export function SeoHero({ data }: { data: SeoPageData }) {
         <div className="mt-8 flex flex-wrap gap-6 text-caption text-muted-foreground">
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
-            Résultat en 47 s (médiane)
+            Résultat en {FACTS.median} s (médiane)
           </div>
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />

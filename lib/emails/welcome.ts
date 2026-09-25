@@ -1,4 +1,7 @@
 import { renderEmailShell, EMAIL_TOKENS, escapeHtml } from "./base-template";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 type WelcomeArgs = {
   name: string;
@@ -22,7 +25,7 @@ export function renderWelcomeEmail({
 </h1>
 <p style="margin:0 0 16px 0;color:${MUTED};font-size:15px;line-height:1.7;">
   Merci d'avoir rejoint LegitVision. Notre IA analyse vos articles de luxe
-  (sneakers, sacs, vêtements) en 47 secondes (durée médiane) pour vous aider à
+  (sneakers, sacs, vêtements) en ${FACTS.median} secondes (durée médiane) pour vous aider à
   éviter les contrefaçons avant d'acheter.
 </p>
 <p style="margin:0 0 32px 0;color:${MUTED};font-size:15px;line-height:1.7;">

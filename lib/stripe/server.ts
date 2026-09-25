@@ -27,7 +27,7 @@ export const stripe = new Proxy({} as Stripe, {
   },
 });
 
-/** Résout le Stripe Price ID à partir du plan (single = paiement unique 3,99€) */
+/** Résout le Stripe Price ID à partir du plan (single = paiement unique ; montants affichés : lib/site-facts.ts) */
 export function getPriceId(planId: "single" | "pro" | "business"): string {
   const id =
     planId === "single"

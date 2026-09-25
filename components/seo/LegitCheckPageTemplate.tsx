@@ -10,6 +10,9 @@ import {
   CONTENT_REVISED,
   formatContentDate,
 } from "@/lib/seo/content-dates";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 const CATEGORY_LABELS = {
   sneakers: "Sneakers",
@@ -159,7 +162,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
               href={data.checkUrl}
               className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
             >
-              Pré-authentifier ma photo — 3,99 €
+              Pré-authentifier ma photo — {FACTS.priceSingle}
             </Link>
             <a
               href="#signaux"
@@ -172,7 +175,7 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
           <div className="mt-8 flex flex-wrap gap-6 text-caption text-muted-foreground">
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
-              Résultat en 47 s (médiane)
+              Résultat en {FACTS.median} s (médiane)
             </div>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
@@ -220,14 +223,14 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
                 Un doute sur votre {data.brand.name} {data.model.name} ?
               </h3>
               <p className="mt-2 text-ui text-muted-foreground">
-                Envoyez 6 à 11 photos selon la catégorie, obtenez une pré-authentification IA avec score de confiance en 47 secondes (durée médiane).
+                Envoyez {FACTS.photosMin} à {FACTS.photosMax} photos selon la catégorie, obtenez une pré-authentification IA avec score de confiance en {FACTS.median} secondes (durée médiane).
               </p>
             </div>
             <Link
               href={data.checkUrl}
               className="inline-flex shrink-0 items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
             >
-              Analyser — 3,99 €
+              Analyser — {FACTS.priceSingle}
             </Link>
           </div>
         </div>
@@ -271,13 +274,13 @@ export function LegitCheckPageTemplate({ data }: { data: LegitCheckPageData }) {
         <section className="relative mt-16 overflow-hidden rounded-lg border border-line bg-surface p-8 sm:p-12">
           <div className="relative">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
-              Pré-authentification 3,99 €
+              Pré-authentification {FACTS.priceSingle}
             </span>
             <h2 className="mt-4 font-heading text-h2 font-bold">
               Ne pariez plus sur votre prochain {data.brand.name} {data.model.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              3,99 € pour éviter {data.model.priceRange} de perte. Score de confiance, estimation de probabilité et recommandations détaillées en 47 secondes (durée médiane).
+              {FACTS.priceSingle} pour éviter {data.model.priceRange} de perte. Score de confiance, estimation de probabilité et recommandations détaillées en {FACTS.median} secondes (durée médiane).
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

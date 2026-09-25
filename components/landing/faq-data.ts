@@ -1,11 +1,15 @@
 import type { Locale } from "@/lib/i18n/translations";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
+const FACTS_EN = facts("en");
 
 export type FaqItem = { q: string; a: string };
 
 const FAQ_ITEMS_FR: FaqItem[] = [
   {
     q: "Comment fonctionne l'analyse par IA ?",
-    a: "Selon le modèle, notre IA Vision examine jusqu'à 10 zones d'authentification (coutures, logo, matériaux, étiquettes…). Pour calculer le score de confiance, elle s'appuie sur les repères de la marque et, quand notre base en contient, sur les points d'authentification propres au modèle (3 924 au total).",
+    a: `Selon le modèle, notre IA Vision examine jusqu'à ${FACTS.maxZones} zones d'authentification (coutures, logo, matériaux, étiquettes…). Pour calculer le score de confiance, elle s'appuie sur les repères de la marque et, quand notre base en contient, sur les points d'authentification propres au modèle (${FACTS.authPoints} au total).`,
   },
   {
     q: "Est-ce que LegitVision certifie l'authenticité ?",
@@ -21,15 +25,15 @@ const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: "Quelles marques sont supportées ?",
-    a: "Vous pouvez analyser 520 modèles de 56 marques, en sneakers, sacs et vêtements : Nike, Jordan, adidas, New Balance, Louis Vuitton et bien d'autres. Nous ajoutons régulièrement de nouveaux modèles. Contactez-nous pour demander une marque spécifique.",
+    a: `Vous pouvez analyser ${FACTS.models} modèles de ${FACTS.brands} marques, en sneakers, sacs et vêtements : Nike, Jordan, adidas, New Balance, Louis Vuitton et bien d'autres. Nous ajoutons régulièrement de nouveaux modèles. Contactez-nous pour demander une marque spécifique.`,
   },
   {
     q: "Combien coûte une analyse ?",
-    a: "L'utilisation unique coûte 3,99€. Le forfait Mensuel est à 19,99€/mois pour 10 analyses. Le Premium est à 29,99€/mois pour 50 analyses. Aucune analyse gratuite n'est incluse.",
+    a: `L'utilisation unique coûte ${FACTS.priceSingle}. Le forfait Mensuel est à ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses. Le Premium est à ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses. Aucune analyse gratuite n'est incluse.`,
   },
   {
     q: "Combien de temps prend une analyse ?",
-    a: "Il faut en médiane 47 secondes entre le lancement de l'analyse et le rapport, envoi des photos compris.",
+    a: `Il faut en médiane ${FACTS.median} secondes entre le lancement de l'analyse et le rapport, envoi des photos compris.`,
   },
   {
     q: "Comment prendre de bonnes photos pour l'analyse ?",
@@ -40,7 +44,7 @@ const FAQ_ITEMS_FR: FaqItem[] = [
 const FAQ_ITEMS_EN: FaqItem[] = [
   {
     q: "How does the AI analysis work?",
-    a: "Depending on the model, our Vision AI examines up to 10 authentication zones (stitching, logo, materials, labels…). To compute the confidence score, it relies on the brand's markers and, when our database has them, on the model's own authentication points (3,924 in total).",
+    a: `Depending on the model, our Vision AI examines up to ${FACTS_EN.maxZones} authentication zones (stitching, logo, materials, labels…). To compute the confidence score, it relies on the brand's markers and, when our database has them, on the model's own authentication points (${FACTS_EN.authPoints} in total).`,
   },
   {
     q: "Does LegitVision certify authenticity?",
@@ -56,15 +60,15 @@ const FAQ_ITEMS_EN: FaqItem[] = [
   },
   {
     q: "Which brands are supported?",
-    a: "You can check 520 models from 56 brands, in sneakers, bags and clothing: Nike, Jordan, adidas, New Balance, Louis Vuitton and many more. We regularly add new models. Contact us to request a specific brand.",
+    a: `You can check ${FACTS_EN.models} models from ${FACTS_EN.brands} brands, in sneakers, bags and clothing: Nike, Jordan, adidas, New Balance, Louis Vuitton and many more. We regularly add new models. Contact us to request a specific brand.`,
   },
   {
     q: "How much does an analysis cost?",
-    a: "Single use costs €3.99. The Monthly plan is €19.99/month for 10 analyses. Premium is €29.99/month for 50 analyses. No free analysis is included.",
+    a: `Single use costs ${FACTS_EN.priceSingle}. The Monthly plan is ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses. Premium is ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses. No free analysis is included.`,
   },
   {
     q: "How long does an analysis take?",
-    a: "From launching the analysis to the report takes a median of 47 seconds, photo upload included.",
+    a: `From launching the analysis to the report takes a median of ${FACTS_EN.median} seconds, photo upload included.`,
   },
   {
     q: "How do I take good photos for the analysis?",

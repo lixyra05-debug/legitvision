@@ -9,6 +9,9 @@ import { getBrandBySlug, brands } from "./data/brands";
 import { getIntersection, intersections } from "./data/intersections";
 import { SITE_URL } from "@/lib/site-url";
 import { buildCheckUrl } from "./check-url";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 const BASE_PATH = "/acheter-authentique";
 
@@ -26,7 +29,7 @@ export function buildPlatformBrandPageData(
   const canonical = `${SITE_URL}${slugPath}`;
 
   const title = `${brand.name} sur ${platform.name} : comment éviter les contrefaçons en 2026`;
-  const description = `Guide complet pour acheter ${brand.productPossessive} ${brand.name} authentique sur ${platform.name}. Signaux d'authentification, arnaques courantes, prix marché, FAQ et analyse IA à 3,99 €.`;
+  const description = `Guide complet pour acheter ${brand.productPossessive} ${brand.name} authentique sur ${platform.name}. Signaux d'authentification, arnaques courantes, prix marché, FAQ et analyse IA à ${FACTS.priceSingle}.`;
   const h1 = `Comment reconnaître ${brand.productPossessive} vraie ${brand.name} sur ${platform.name}`;
   const subtitle = `${brand.tagline} — ${platform.tagline.toLowerCase()}. Le guide 2026 pour acheter sans se faire piéger.`;
 
@@ -40,7 +43,7 @@ export function buildPlatformBrandPageData(
   const introParagraphs: string[] = [
     `${platform.description} ${brand.name} y compte aujourd'hui parmi les marques les plus recherchées — et donc les plus contrefaites.`,
     intersection.angle,
-    `Ce guide décrit les ${brand.signals.length} signaux techniques qui distinguent ${brand.productPossessive} ${brand.name} authentique d'une contrefaçon, les arnaques récurrentes sur ${platform.name}, et comment obtenir en 47 secondes (durée médiane) une analyse IA à 3,99 € qui vous évite d'acheter un faux.`,
+    `Ce guide décrit les ${brand.signals.length} signaux techniques qui distinguent ${brand.productPossessive} ${brand.name} authentique d'une contrefaçon, les arnaques récurrentes sur ${platform.name}, et comment obtenir en ${FACTS.median} secondes (durée médiane) une analyse IA à ${FACTS.priceSingle} qui vous évite d'acheter un faux.`,
   ];
 
   const faqs: FAQItem[] = [

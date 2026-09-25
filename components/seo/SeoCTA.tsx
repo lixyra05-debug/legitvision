@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 type Variant = "hero" | "inline" | "final";
 
@@ -22,14 +25,14 @@ export function SeoCTA({ variant, brandName, platformName, checkUrl }: Props) {
               Un doute sur votre {brandName} ?
             </h3>
             <p className="mt-2 text-ui text-muted-foreground">
-              Envoyez 6 à 11 photos selon la catégorie, obtenez un diagnostic IA détaillé en 47 secondes (durée médiane).
+              Envoyez {FACTS.photosMin} à {FACTS.photosMax} photos selon la catégorie, obtenez un diagnostic IA détaillé en {FACTS.median} secondes (durée médiane).
             </p>
           </div>
           <Link
             href={href}
             className="inline-flex shrink-0 items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
           >
-            Analyser — 3,99 €
+            Analyser — {FACTS.priceSingle}
           </Link>
         </div>
       </div>
@@ -41,13 +44,13 @@ export function SeoCTA({ variant, brandName, platformName, checkUrl }: Props) {
       <section className="relative mt-16 overflow-hidden rounded-lg border border-line bg-surface p-8 sm:p-12">
         <div className="relative">
           <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
-            Analyse 3,99 €
+            Analyse {FACTS.priceSingle}
           </span>
           <h2 className="mt-4 font-heading text-h2 font-bold">
             Ne pariez plus sur votre prochain achat {brandName} sur {platformName}
           </h2>
           <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-            3,99 € pour éviter 150 € à 15 000 € de perte. Résultat en 47 secondes (médiane) avec verdict,
+            {FACTS.priceSingle} pour éviter 150 € à 15 000 € de perte. Résultat en {FACTS.median} secondes (médiane) avec verdict,
             score de confiance et recommandations détaillées.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

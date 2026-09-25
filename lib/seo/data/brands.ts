@@ -1,4 +1,7 @@
 import type { Brand } from "../types";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const brands: Brand[] = [
   {
@@ -64,7 +67,7 @@ export const brands: Brand[] = [
       {
         question: "Que vaut l'application Nike SNKRS pour authentifier ?",
         answer:
-          "L'app Nike SNKRS ne fournit pas de service d'authentification post-achat — elle est dédiée aux drops officiels Nike. Pour l'authentification, il faut passer par un service spécialisé type LegitVision (analyse IA 3,99 €) ou par des authentificateurs humains (GOAT, CheckCheck, Entrupy, 10-40 €).",
+          `L'app Nike SNKRS ne fournit pas de service d'authentification post-achat — elle est dédiée aux drops officiels Nike. Pour l'authentification, il faut passer par un service spécialisé type LegitVision (analyse IA ${FACTS.priceSingle}) ou par des authentificateurs humains (GOAT, CheckCheck, Entrupy, 10-40 €).`,
       },
     ],
   },
@@ -132,7 +135,7 @@ export const brands: Brand[] = [
       {
         question: "Que vaut le service Nike Jordan Authentication ?",
         answer:
-          "Nike ne propose aucun service d'authentification post-achat pour les Jordan. Les seules solutions fiables sont : GOAT (services « Clean » inclus à l'achat), StockX (authentification systématique), CheckCheck (payant 15-40 €) ou LegitVision (3,99 € par IA). Aucune autorité officielle Jordan Brand n'émet de certificat pour les paires d'occasion.",
+          `Nike ne propose aucun service d'authentification post-achat pour les Jordan. Les seules solutions fiables sont : GOAT (services « Clean » inclus à l'achat), StockX (authentification systématique), CheckCheck (payant 15-40 €) ou LegitVision (${FACTS.priceSingle} par IA). Aucune autorité officielle Jordan Brand n'émet de certificat pour les paires d'occasion.`,
       },
     ],
   },
@@ -199,7 +202,7 @@ export const brands: Brand[] = [
       {
         question: "adidas propose-t-il un service d'authentification officiel ?",
         answer:
-          "Non, adidas n'a aucun programme officiel d'authentification pour les paires d'occasion. Les seules solutions fiables sont les authentificateurs tiers : StockX (systematic check), GOAT, CheckCheck, ou les services IA comme LegitVision (3,99 €, résultat en 47 secondes en médiane).",
+          `Non, adidas n'a aucun programme officiel d'authentification pour les paires d'occasion. Les seules solutions fiables sont les authentificateurs tiers : StockX (systematic check), GOAT, CheckCheck, ou les services IA comme LegitVision (${FACTS.priceSingle}, résultat en ${FACTS.median} secondes en médiane).`,
       },
     ],
   },
@@ -261,7 +264,7 @@ export const brands: Brand[] = [
       {
         question: "Comment vérifier l'authenticité sans expérience New Balance ?",
         answer:
-          "Si vous achetez vos premières New Balance en seconde main, concentrez-vous sur trois signaux rapides : box label cohérente avec l'étiquette intérieure, pays de fabrication cohérent entre les deux, et sensation de qualité du N latéral au toucher (cuir/suède authentique vs synthétique low-cost). En cas de doute, une analyse IA LegitVision à 3,99 € règle la question.",
+          `Si vous achetez vos premières New Balance en seconde main, concentrez-vous sur trois signaux rapides : box label cohérente avec l'étiquette intérieure, pays de fabrication cohérent entre les deux, et sensation de qualité du N latéral au toucher (cuir/suède authentique vs synthétique low-cost). En cas de doute, une analyse IA LegitVision à ${FACTS.priceSingle} règle la question.`,
       },
       {
         question: "Les New Balance 550 sont-elles moins contrefaites que les 990 ?",
@@ -452,7 +455,7 @@ export const brands: Brand[] = [
       {
         question: "Gucci offre-t-il un service d'authentification en boutique ?",
         answer:
-          "Officiellement non, mais certaines boutiques Gucci acceptent de vérifier visuellement l'authenticité d'un sac si le client est poli et insistant. Aucun certificat écrit n'est délivré. Pour une authentification reconnue, passez par Entrupy (200-500 € selon article), Real Authentication (30-50 €), ou un service IA comme LegitVision (3,99 €).",
+          `Officiellement non, mais certaines boutiques Gucci acceptent de vérifier visuellement l'authenticité d'un sac si le client est poli et insistant. Aucun certificat écrit n'est délivré. Pour une authentification reconnue, passez par Entrupy (200-500 € selon article), Real Authentication (30-50 €), ou un service IA comme LegitVision (${FACTS.priceSingle}).`,
       },
       {
         question: "Pourquoi les Marmont Gucci sont-elles autant contrefaites ?",
@@ -586,7 +589,7 @@ export const brands: Brand[] = [
       {
         question: "Comment vérifier le numéro de série Prada ?",
         answer:
-          "Le numéro série Prada (13 chiffres + 1 lettre) peut être vérifié uniquement en boutique Prada sur présentation du sac. Prada ne fournit aucun outil de vérification en ligne. Aucun certificat écrit n'est délivré — la confirmation est purement visuelle/orale. Pour une authentification formelle, passez par Entrupy, Real Authentication ou LegitVision (IA 3,99 €).",
+          `Le numéro série Prada (13 chiffres + 1 lettre) peut être vérifié uniquement en boutique Prada sur présentation du sac. Prada ne fournit aucun outil de vérification en ligne. Aucun certificat écrit n'est délivré — la confirmation est purement visuelle/orale. Pour une authentification formelle, passez par Entrupy, Real Authentication ou LegitVision (IA ${FACTS.priceSingle}).`,
       },
       {
         question: "Pourquoi la Re-Edition 2000 explose-t-elle en seconde main ?",

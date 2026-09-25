@@ -1,4 +1,7 @@
 import type { Intersection } from "../../types";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const vintedIntersections: Intersection[] = [
   {
@@ -123,7 +126,7 @@ export const vintedIntersections: Intersection[] = [
       {
         question: "Comment vérifier une Gucci Marmont avant achat Vinted ?",
         answer:
-          "Demandez au minimum 6 photos spécifiques : vue globale, heat-stamp intérieur cuir, numéro de série avec bullet point (format XXXXXX • XXXX), quincaillerie Double G avec marquage intérieur, matelassage chevron sur les angles, et doublure intérieure. Uploadez l'ensemble sur LegitVision pour un diagnostic IA à 3,99 € avant de valider l'achat. C'est le moyen le plus fiable et rapide d'éviter les super-fakes.",
+          `Demandez au minimum 6 photos spécifiques : vue globale, heat-stamp intérieur cuir, numéro de série avec bullet point (format XXXXXX • XXXX), quincaillerie Double G avec marquage intérieur, matelassage chevron sur les angles, et doublure intérieure. Uploadez l'ensemble sur LegitVision pour un diagnostic IA à ${FACTS.priceSingle} avant de valider l'achat. C'est le moyen le plus fiable et rapide d'éviter les super-fakes.`,
       },
     ],
   },

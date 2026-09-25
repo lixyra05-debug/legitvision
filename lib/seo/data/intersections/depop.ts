@@ -1,4 +1,7 @@
 import type { Intersection } from "../../types";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const depopIntersections: Intersection[] = [
   {
@@ -28,7 +31,7 @@ export const depopIntersections: Intersection[] = [
       {
         question: "Les Travis Scott Jordan sur Depop : éviter ou possible ?",
         answer:
-          "À éviter sauf vérification exhaustive préalable. Le prix marché Travis Scott Jordan 1 Low Mocha est 1 100-1 600 €, Jordan 1 High Mocha 1 500-2 800 €. Toute annonce Depop sous 700 € est une contrefaçon à 99 %. Pour des paires listées à 1 000-1 400 €, le risque de contrefaçon atteint encore 40-50 %. Même pour une annonce au prix marché, exigez authentification tiers (LegitVision 3,99 € ou CheckCheck 15-40 €) avant tout paiement.",
+          `À éviter sauf vérification exhaustive préalable. Le prix marché Travis Scott Jordan 1 Low Mocha est 1 100-1 600 €, Jordan 1 High Mocha 1 500-2 800 €. Toute annonce Depop sous 700 € est une contrefaçon à 99 %. Pour des paires listées à 1 000-1 400 €, le risque de contrefaçon atteint encore 40-50 %. Même pour une annonce au prix marché, exigez authentification tiers (LegitVision ${FACTS.priceSingle} ou CheckCheck 15-40 €) avant tout paiement.`,
       },
       {
         question: "« Faithful replica » Depop : légal ou pas ?",
@@ -69,7 +72,7 @@ export const depopIntersections: Intersection[] = [
       {
         question: "Comment vérifier une 2002R Protection Pack sur photo Depop ?",
         answer:
-          "Trois zones à demander en photo HD : 1) Étiquette intérieure avec mention Salehe Bembury (collabs Protection Pack) + pays de fabrication cohérent ; 2) Box label avec code produit M2002RXY correspondant au colorway exact ; 3) Midsole latérale avec couches ENCAP/ABZORB visiblement distinctes (pas imprimées en 2D). Passez le tout par LegitVision pour un diagnostic IA en 47 secondes (durée médiane).",
+          `Trois zones à demander en photo HD : 1) Étiquette intérieure avec mention Salehe Bembury (collabs Protection Pack) + pays de fabrication cohérent ; 2) Box label avec code produit M2002RXY correspondant au colorway exact ; 3) Midsole latérale avec couches ENCAP/ABZORB visiblement distinctes (pas imprimées en 2D). Passez le tout par LegitVision pour un diagnostic IA en ${FACTS.median} secondes (durée médiane).`,
       },
     ],
   },
