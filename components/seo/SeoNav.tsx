@@ -1,6 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { buildCheckUrl } from "@/lib/seo/check-url";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 /**
  * `checkUrl` : lien d'analyse de la page (marque pré-sélectionnée) quand elle
@@ -52,7 +55,7 @@ export function SeoNav({ checkUrl = buildCheckUrl({ ref: "seo-nav" }) }: { check
           href={`${checkUrl}&variant=nav`}
           className="inline-flex min-h-[44px] w-full items-center justify-center rounded-md bg-accent px-5 text-ui font-semibold text-accent-foreground shadow-card transition-[color,background-color,border-color,transform] duration-fast hover:scale-[1.02] hover:bg-accent-hover active:scale-100 sm:w-auto"
         >
-          Analyser une photo — 3,99 €
+          Analyser une photo — {FACTS.priceSingle}
         </Link>
       </div>
     </nav>

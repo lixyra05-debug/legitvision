@@ -19,6 +19,9 @@ import {
   vec2,
   vec3,
 } from "three/tsl";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 /**
  * Hero WebGPU — three.js BRUT, sans @react-three/fiber ni @react-three/drei.
@@ -324,7 +327,7 @@ export function HeroFuturistic({ onReady, onError }: SceneCallbacks) {
  */
 function HeroOverlay() {
   const titleWords = ["Vrai", "ou", "faux"];
-  const subtitle = "Pré-authentification par IA en 47 secondes (durée médiane)";
+  const subtitle = `Pré-authentification par IA en ${FACTS.median} secondes (durée médiane)`;
   const reduced = useReducedMotion() ?? false;
 
   return (

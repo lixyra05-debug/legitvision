@@ -8,6 +8,9 @@ import {
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
 import { buildCheckUrl } from "@/lib/seo/check-url";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const revalidate = 86400;
 
@@ -60,7 +63,7 @@ export default function AcheterAuthentiqueHubPage() {
             Acheter authentique, sans se faire piéger.
           </h1>
           <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
-            Guides 2026 pour reconnaître les vraies sneakers et les vrais sacs de luxe sur les 6 plateformes seconde main les plus utilisées en France. Signaux techniques, arnaques récurrentes, prix marché, et analyse IA en 47 secondes (durée médiane) à 3,99 €.
+            Guides 2026 pour reconnaître les vraies sneakers et les vrais sacs de luxe sur les 6 plateformes seconde main les plus utilisées en France. Signaux techniques, arnaques récurrentes, prix marché, et analyse IA en {FACTS.median} secondes (durée médiane) à {FACTS.priceSingle}.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -68,7 +71,7 @@ export default function AcheterAuthentiqueHubPage() {
               href={buildCheckUrl({ ref: "hub-acheter-authentique" })}
               className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
             >
-              Analyser une photo — 3,99 €
+              Analyser une photo — {FACTS.priceSingle}
             </Link>
             <Link
               href="/#pricing"

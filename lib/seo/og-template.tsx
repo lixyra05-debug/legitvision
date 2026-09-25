@@ -1,6 +1,9 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 /**
  * Style commun à toutes les images Open Graph générées dynamiquement
@@ -102,7 +105,7 @@ export function renderOgImage({
 
         {/* Bandeau bas */}
         <div style={{ fontSize: 26, color: SUBTLE }}>
-          Pré-authentification par IA · 3,99 € / analyse
+          {`Pré-authentification par IA · ${FACTS.priceSingle} / analyse`}
         </div>
       </div>
     ),

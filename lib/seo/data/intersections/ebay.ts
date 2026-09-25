@@ -1,4 +1,7 @@
 import type { Intersection } from "../../types";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const ebayIntersections: Intersection[] = [
   {
@@ -51,7 +54,7 @@ export const ebayIntersections: Intersection[] = [
       {
         question: "Samba sur eBay : mieux que Vinted ?",
         answer:
-          "Oui, significativement. Samba OG > 100 $ passent par Authenticity Guarantee (donc 99,5 % de fiabilité). Les prix eBay sont comparables ou 5-10 % plus élevés que Vinted mais avec une sécurité incomparable. Pour des Samba hyped (colorways limités, collabs Wales Bonner), l'écart de prix se justifie pleinement. Pour des colorways courants (noir, blanc, vert), Vinted peut rester compétitif avec une vérification LegitVision préalable à 3,99 €.",
+          `Oui, significativement. Samba OG > 100 $ passent par Authenticity Guarantee (donc 99,5 % de fiabilité). Les prix eBay sont comparables ou 5-10 % plus élevés que Vinted mais avec une sécurité incomparable. Pour des Samba hyped (colorways limités, collabs Wales Bonner), l'écart de prix se justifie pleinement. Pour des colorways courants (noir, blanc, vert), Vinted peut rester compétitif avec une vérification LegitVision préalable à ${FACTS.priceSingle}.`,
       },
     ],
   },
@@ -159,7 +162,7 @@ export const ebayIntersections: Intersection[] = [
       {
         question: "Prada vintage eBay : méfiance ou opportunité ?",
         answer:
-          "Les deux selon contexte. Les Prada vintage années 90-2000 peuvent être d'authentiques pièces de collection (prix 500-1 500 € selon modèle) qu'on ne trouve plus chez Prada. Vérifiez : vendeur avec historique vintage cohérent, photos personnelles (pas de photos génériques), triangle logo d'époque correctement formaté, étiquette intérieure « MILANO FATTO IN ITALIA » vintage. Une expertise LegitVision à 3,99 € règle la question avant paiement.",
+          `Les deux selon contexte. Les Prada vintage années 90-2000 peuvent être d'authentiques pièces de collection (prix 500-1 500 € selon modèle) qu'on ne trouve plus chez Prada. Vérifiez : vendeur avec historique vintage cohérent, photos personnelles (pas de photos génériques), triangle logo d'époque correctement formaté, étiquette intérieure « MILANO FATTO IN ITALIA » vintage. Une analyse LegitVision à ${FACTS.priceSingle} règle la question avant paiement.`,
       },
     ],
   },

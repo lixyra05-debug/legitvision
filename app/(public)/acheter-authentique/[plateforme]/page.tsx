@@ -11,6 +11,9 @@ import {
   buildItemListSchema,
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const revalidate = 86400;
 export const dynamicParams = false;
@@ -27,7 +30,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   if (!platform) return {};
 
   const title = `Acheter authentique sur ${platform.name} : les 10 guides par marque`;
-  const description = `Guides 2026 pour éviter les contrefaçons Nike, Jordan, Louis Vuitton, Chanel, Hermès et 5 autres marques sur ${platform.name}. Signaux d'authentification, arnaques, analyse IA à 3,99 €.`;
+  const description = `Guides 2026 pour éviter les contrefaçons Nike, Jordan, Louis Vuitton, Chanel, Hermès et 5 autres marques sur ${platform.name}. Signaux d'authentification, arnaques, analyse IA à ${FACTS.priceSingle}.`;
 
   return {
     title,

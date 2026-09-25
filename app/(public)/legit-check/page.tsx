@@ -13,6 +13,9 @@ import {
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
 import { buildCheckUrl } from "@/lib/seo/check-url";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const revalidate = 86400;
 
@@ -20,7 +23,7 @@ export const metadata: Metadata = {
   title:
     "Legit Check : 72 guides d'authentification par marque et modèle",
   description:
-    "Guides 2026 pour authentifier 72 modèles de sneakers (Nike, Jordan, Adidas, Yeezy, New Balance), sacs de luxe (Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada) et streetwear (Supreme, Off-White, Stone Island, BAPE). Signaux techniques, arnaques, pré-authentification IA 3,99 €.",
+    `Guides 2026 pour authentifier 72 modèles de sneakers (Nike, Jordan, Adidas, Yeezy, New Balance), sacs de luxe (Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada) et streetwear (Supreme, Off-White, Stone Island, BAPE). Signaux techniques, arnaques, pré-authentification IA ${FACTS.priceSingle}.`,
   alternates: { canonical: "/legit-check" },
   openGraph: {
     title: "Legit Check — 72 guides LegitVision",
@@ -88,7 +91,7 @@ export default function LegitCheckHubPage() {
             Legit Check : authentifier marque par marque, modèle par modèle.
           </h1>
           <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
-            Guides 2026 pour pré-authentifier {totalModels} modèles des marques les plus contrefaites : sneakers hype, sacs de luxe iconiques, streetwear japonais et italien. Signaux techniques propres à chaque modèle, arnaques spécifiques, prix marché actuel, et pré-authentification IA en 47 secondes (durée médiane) à 3,99 €.
+            Guides 2026 pour pré-authentifier {totalModels} modèles des marques les plus contrefaites : sneakers hype, sacs de luxe iconiques, streetwear japonais et italien. Signaux techniques propres à chaque modèle, arnaques spécifiques, prix marché actuel, et pré-authentification IA en {FACTS.median} secondes (durée médiane) à {FACTS.priceSingle}.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -96,7 +99,7 @@ export default function LegitCheckHubPage() {
               href={buildCheckUrl({ ref: "hub-legit-check" })}
               className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
             >
-              Pré-authentifier — 3,99 €
+              Pré-authentifier — {FACTS.priceSingle}
             </Link>
             <Link
               href="/#pricing"

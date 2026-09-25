@@ -1,4 +1,7 @@
 import type { Intersection } from "../../types";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const leboncoinIntersections: Intersection[] = [
   {
@@ -10,7 +13,7 @@ export const leboncoinIntersections: Intersection[] = [
       {
         question: "Leboncoin est-il sûr pour acheter des Nike ?",
         answer:
-          "Non, Leboncoin est statistiquement la plateforme la plus risquée pour acheter des Nike en seconde main : aucune authentification, aucun paiement sécurisé imposé, zéro médiation en cas de litige. Le risque de contrefaçon est 2-3x supérieur à Vinted. Pour limiter le risque, exigez 8-12 photos détaillées avant la rencontre, payez uniquement via le paiement sécurisé Leboncoin (pas de liquide), et passez l'annonce par LegitVision à 3,99 € avant de vous déplacer.",
+          `Non, Leboncoin est statistiquement la plateforme la plus risquée pour acheter des Nike en seconde main : aucune authentification, aucun paiement sécurisé imposé, zéro médiation en cas de litige. Le risque de contrefaçon est 2-3x supérieur à Vinted. Pour limiter le risque, exigez 8-12 photos détaillées avant la rencontre, payez uniquement via le paiement sécurisé Leboncoin (pas de liquide), et passez l'annonce par LegitVision à ${FACTS.priceSingle} avant de vous déplacer.`,
       },
       {
         question: "Paiement sécurisé ou main propre pour Nike Leboncoin ?",
@@ -105,7 +108,7 @@ export const leboncoinIntersections: Intersection[] = [
       {
         question: "Peut-on vraiment trouver un Chanel authentique sur Leboncoin ?",
         answer:
-          "Oui, rarement mais oui. Les cas authentiques sont des ventes de particuliers âgés qui revendent leur collection, des héritages, ou des successions. Signaux rassurants : compte Leboncoin ≥ 5 ans, annonces variées (pas que Chanel), photos personnelles (pas que StockX), prix raisonnable mais pas cassé, disposition à fournir preuves d'achat + certificat. Passez l'annonce par LegitVision à 3,99 € avant tout déplacement ou paiement.",
+          `Oui, rarement mais oui. Les cas authentiques sont des ventes de particuliers âgés qui revendent leur collection, des héritages, ou des successions. Signaux rassurants : compte Leboncoin ≥ 5 ans, annonces variées (pas que Chanel), photos personnelles (pas que StockX), prix raisonnable mais pas cassé, disposition à fournir preuves d'achat + certificat. Passez l'annonce par LegitVision à ${FACTS.priceSingle} avant tout déplacement ou paiement.`,
       },
     ],
   },

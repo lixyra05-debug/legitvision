@@ -6,11 +6,14 @@ import type { PlanId } from "@/lib/stripe/config";
 import { renderPaymentConfirmationEmail } from "@/lib/emails/payment-confirmation";
 import { sendTransactionalEmail } from "@/lib/emails/send";
 import { SITE_URL } from "@/lib/site-url";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 const PLAN_EMAIL_LABELS: Record<string, string> = {
   "one-time": "Utilisation unique",
-  pro: "Pro — 19,99 €/mois (10 analyses)",
-  business: "Business — 29,99 €/mois (50 analyses)",
+  pro: `Pro — ${FACTS.pricePro}/mois (${FACTS.proAnalyses} analyses)`,
+  business: `Business — ${FACTS.priceBusiness}/mois (${FACTS.businessAnalyses} analyses)`,
 };
 
 async function sendPaymentEmail(args: {
@@ -136,7 +139,7 @@ export async function POST(request: NextRequest) {
           await sendPaymentEmail({
             userId,
             planKey: "one-time",
-            amountLabel: "3,99 €",
+            amountLabel: FACTS.priceSingle,
             creditsAfter: newBalance,
           });
           break;
@@ -176,9 +179,9 @@ export async function POST(request: NextRequest) {
 
         const amountLabel =
           planId === "pro"
-            ? "19,99 €/mois"
+            ? `${FACTS.pricePro}/mois`
             : planId === "business"
-              ? "29,99 €/mois"
+              ? `${FACTS.priceBusiness}/mois`
               : "";
 
         const { data: updatedProfile } = await admin

@@ -1,10 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const metadata = {
   title: "Conditions Générales d'Utilisation",
   description:
-    "Conditions Générales d'Utilisation de LegitVision : règles d'usage du service d'authentification IA, responsabilités, tarifs (à partir de 3,99 €/scan) et limites d'utilisation.",
+    `Conditions Générales d'Utilisation de LegitVision : règles d'usage du service d'authentification IA, responsabilités, tarifs (à partir de ${FACTS.priceSingle}/scan) et limites d'utilisation.`,
   alternates: { canonical: "/cgu" },
 };
 
@@ -105,13 +108,13 @@ export default function CguPage() {
               </div>
               <div className="grid grid-cols-3 gap-px bg-white/5">
                 <div className="bg-card px-4 py-3 text-muted-foreground">Pro</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">10 / mois</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">19,99 € / mois</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">{FACTS.proAnalyses} / mois</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">{FACTS.pricePro} / mois</div>
               </div>
               <div className="grid grid-cols-3 gap-px bg-white/5">
                 <div className="bg-card px-4 py-3 text-muted-foreground">Business</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">50 / mois</div>
-                <div className="bg-card px-4 py-3 text-muted-foreground">29,99 € / mois</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">{FACTS.businessAnalyses} / mois</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">{FACTS.priceBusiness} / mois</div>
               </div>
             </div>
             <div className="mt-4 space-y-2 text-muted-foreground">

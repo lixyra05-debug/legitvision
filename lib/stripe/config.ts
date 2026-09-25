@@ -2,6 +2,9 @@
  * Configuration des plans LegitVision — safe côté client et serveur.
  * Aucune variable d'environnement serveur ici.
  */
+import { facts, MONTHLY_ANALYSES } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export type PlanId = "free" | "pro" | "business";
 
@@ -28,7 +31,7 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
     features: [
       "Rapport détaillé avec score",
       "Sneakers uniquement",
-      "Résultat en 47 s (médiane)",
+      `Résultat en ${FACTS.median} s (médiane)`,
     ],
     popular: false,
     cta: "Commencer gratuitement",
@@ -36,9 +39,9 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
   pro: {
     id: "pro",
     name: "Pro",
-    priceFormatted: "19,99€",
+    priceFormatted: FACTS.pricePro,
     periodLabel: "/mois",
-    creditsPerMonth: 10,
+    creditsPerMonth: MONTHLY_ANALYSES.pro,
     description: "Pour les acheteurs réguliers",
     features: [
       "Toutes les catégories",
@@ -52,15 +55,15 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
   business: {
     id: "business",
     name: "Business",
-    priceFormatted: "29,99€",
+    priceFormatted: FACTS.priceBusiness,
     periodLabel: "/mois",
-    creditsPerMonth: 50,
+    creditsPerMonth: MONTHLY_ANALYSES.business,
     description: "Pour les revendeurs et pros",
     features: [
-      "50 analyses par mois",
+      `${FACTS.businessAnalyses} analyses par mois`,
       "Toutes les catégories",
       "Recommandations en cas de doute",
-      "Support prioritaire",
+      "Support par e-mail",
     ],
     popular: false,
     cta: "Passer au Business",
@@ -72,6 +75,6 @@ export const PAID_PLANS: PlanId[] = ["pro", "business"];
 /** Crédits accordés à chaque facturation mensuelle (free = bonus à l'inscription, mais désactivé depuis mig 016) */
 export const PLAN_CREDITS: Record<PlanId, number> = {
   free: 0,
-  pro: 10,
-  business: 50,
+  pro: MONTHLY_ANALYSES.pro,
+  business: MONTHLY_ANALYSES.business,
 };

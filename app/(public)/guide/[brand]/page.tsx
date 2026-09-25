@@ -13,6 +13,9 @@ import {
   buildItemListSchema,
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const revalidate = 86400;
 export const dynamicParams = false;
@@ -30,7 +33,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const brandSignals = getSignalsByBrand(brand.slug);
 
   const title = `Guides ${brand.name} : ${brandSignals.length} signaux pour authentifier en 2026`;
-  const description = `Guides 2026 pour pré-authentifier ${brand.name} signal par signal — ${brandSignals.length} protocoles détaillés avec étapes mesurables, erreurs fréquentes et techniques des faussaires. Pré-authentification IA à 3,99 €.`;
+  const description = `Guides 2026 pour pré-authentifier ${brand.name} signal par signal — ${brandSignals.length} protocoles détaillés avec étapes mesurables, erreurs fréquentes et techniques des faussaires. Pré-authentification IA à ${FACTS.priceSingle}.`;
 
   return {
     title,
@@ -176,13 +179,13 @@ export default async function BrandGuideHub(props: Props) {
         <section className="relative mt-16 overflow-hidden rounded-lg border border-line bg-surface p-8 sm:p-12">
           <div className="relative">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
-              Pré-authentification 3,99 €
+              Pré-authentification {FACTS.priceSingle}
             </span>
             <h2 className="mt-4 font-heading text-h2 font-bold">
               Pré-authentifier votre {brand.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              Photo + IA + 47 secondes (médiane) = score de confiance détaillé sur l&apos;ensemble des signaux. Estimation probabiliste, jamais une certitude.
+              Photo + IA + {FACTS.median} secondes (médiane) = score de confiance détaillé sur l&apos;ensemble des signaux. Estimation probabiliste, jamais une certitude.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

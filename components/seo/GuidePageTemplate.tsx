@@ -9,6 +9,9 @@ import {
   CONTENT_REVISED,
   formatContentDate,
 } from "@/lib/seo/content-dates";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 const CATEGORY_LABELS = {
   sneakers: "Sneakers",
@@ -190,7 +193,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
               href={data.checkUrl}
               className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
             >
-              Pré-authentifier ma photo — 3,99 €
+              Pré-authentifier ma photo — {FACTS.priceSingle}
             </Link>
             <a
               href="#etapes"
@@ -207,7 +210,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
             </div>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
-              Score de confiance en 47 s (médiane)
+              Score de confiance en {FACTS.median} s (médiane)
             </div>
             <div className="flex items-center gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-line-strong" />
@@ -251,14 +254,14 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
                 Un doute sur votre {data.brand.name} ?
               </h3>
               <p className="mt-2 text-ui text-muted-foreground">
-                Envoyez 6 à 11 photos selon la catégorie, obtenez une estimation IA avec score de confiance en 47 secondes (durée médiane).
+                Envoyez {FACTS.photosMin} à {FACTS.photosMax} photos selon la catégorie, obtenez une estimation IA avec score de confiance en {FACTS.median} secondes (durée médiane).
               </p>
             </div>
             <Link
               href={data.checkUrl}
               className="inline-flex shrink-0 items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
             >
-              Analyser — 3,99 €
+              Analyser — {FACTS.priceSingle}
             </Link>
           </div>
         </div>
@@ -318,13 +321,13 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
         <section className="relative mt-16 overflow-hidden rounded-lg border border-line bg-surface p-8 sm:p-12">
           <div className="relative">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
-              Pré-authentification 3,99 €
+              Pré-authentification {FACTS.priceSingle}
             </span>
             <h2 className="mt-4 font-heading text-h2 font-bold">
               Croisez visuel + IA pour trancher un doute sur {data.brand.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              Ce signal visuel fait partie des indicateurs évalués par l&apos;IA. 3,99 € pour obtenir un score de confiance qui agrège jusqu&apos;à 10 points d&apos;authentification, en 47 secondes (durée médiane).
+              Ce signal visuel fait partie des indicateurs évalués par l&apos;IA. {FACTS.priceSingle} pour obtenir un score de confiance qui agrège jusqu&apos;à {FACTS.maxPointsPerModel} points d&apos;authentification, en {FACTS.median} secondes (durée médiane).
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

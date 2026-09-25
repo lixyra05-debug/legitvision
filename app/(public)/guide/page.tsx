@@ -13,6 +13,9 @@ import {
   buildItemListSchema,
 } from "@/lib/seo/hub-schema";
 import { SITE_URL } from "@/lib/site-url";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 export const revalidate = 86400;
 
@@ -20,7 +23,7 @@ export const metadata: Metadata = {
   title:
     "Guides d'authentification signal × marque : 66 protocoles détaillés",
   description:
-    "66 guides 2026 pour authentifier signal par signal : box logo Supreme, date code Louis Vuitton, hologramme Chanel, étiquette langue Nike, badge compass Stone Island, camo BAPE. Pré-authentification IA à 3,99 €.",
+    `66 guides 2026 pour authentifier signal par signal : box logo Supreme, date code Louis Vuitton, hologramme Chanel, étiquette langue Nike, badge compass Stone Island, camo BAPE. Pré-authentification IA à ${FACTS.priceSingle}.`,
   alternates: { canonical: "/guide" },
   openGraph: {
     title: "Guides signal × marque — 66 protocoles d'authentification",
@@ -97,7 +100,7 @@ export default function GuideHubPage() {
             Comment reconnaître chaque signal, marque par marque.
           </h1>
           <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
-            {totalSignals} guides 2026 pour pré-authentifier signal par signal : box logo, date code, hologramme, étiquette, badge, broderie, impression. Chaque protocole détaille 4-6 étapes mesurables, les erreurs fréquentes, les techniques des faussaires, et intègre une pré-authentification IA à 3,99 €.
+            {totalSignals} guides 2026 pour pré-authentifier signal par signal : box logo, date code, hologramme, étiquette, badge, broderie, impression. Chaque protocole détaille 4-6 étapes mesurables, les erreurs fréquentes, les techniques des faussaires, et intègre une pré-authentification IA à {FACTS.priceSingle}.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -105,7 +108,7 @@ export default function GuideHubPage() {
               href="/check/new?source=seo&ref=hub-guide"
               className="inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
             >
-              Pré-authentifier — 3,99 €
+              Pré-authentifier — {FACTS.priceSingle}
             </Link>
             <Link
               href="/#pricing"
@@ -186,13 +189,13 @@ export default function GuideHubPage() {
         <section className="relative mt-16 overflow-hidden rounded-lg border border-line bg-surface p-8 sm:p-12">
           <div className="relative">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
-              Pré-authentification 3,99 €
+              Pré-authentification {FACTS.priceSingle}
             </span>
             <h2 className="mt-4 font-heading text-h2 font-bold">
               Pas le temps de lire les guides ?
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              L&apos;IA LegitVision vérifie jusqu&apos;à 10 points d&apos;authentification par modèle et retourne un score de confiance en 47 secondes (durée médiane). 3,99 € pour éviter une perte de plusieurs centaines d&apos;euros.
+              L&apos;IA LegitVision vérifie jusqu&apos;à {FACTS.maxPointsPerModel} points d&apos;authentification par modèle et retourne un score de confiance en {FACTS.median} secondes (durée médiane). {FACTS.priceSingle} pour éviter une perte de plusieurs centaines d&apos;euros.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

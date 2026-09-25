@@ -117,6 +117,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 6. Stripe webhooks doivent être vérifiés avec la signature
 7. Le scoring utilise une moyenne pondérée (voir lib/ai/scoring.ts)
 8. Toujours gérer le cas où l'API Vision retourne une erreur ou un JSON invalide
+9. Les chiffres affichés — marques et modèles analysables, durée d'analyse, prix, quotas des formules, zones, points — viennent de `lib/site-facts.ts`, la source unique. Ne jamais les écrire à la main dans un texte : les lire depuis ce fichier (`facts()` pour les textes, `PRICES` / `CATALOG` pour les valeurs brutes). Une valeur ne change qu'après une nouvelle mesure, datée dans ce fichier.
 
 ## Flux Principal (Happy Path)
 1. User se connecte → /dashboard
@@ -151,7 +152,7 @@ ont été relevés directement en base de production (toutes les lignes sont `is
 |---|---|---|
 | Base Supabase (`brands`, `models`) — **la référence** (lignes) | **77** | **530** |
 | `components/landing/BrandsTabs.tsx` (tableau en dur) | 51 | 419 |
-| Bande de stats de la landing (analysables) | 56 ✅ | 520 ✅ |
+| Bande de stats de la landing (analysables, lue dans `lib/site-facts.ts`) | 56 ✅ | 520 ✅ |
 
 **77 et 530 sont des LIGNES, pas ce qu'un client peut analyser** (relevé du 2026-09-25) :
 `brands` compte une ligne par marque ET par catégorie — 77 lignes, 65 noms distincts, dont

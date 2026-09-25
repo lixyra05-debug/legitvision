@@ -1,4 +1,8 @@
 import type { Locale } from "@/lib/i18n/translations";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
+const FACTS_EN = facts("en");
 
 export type ChatbotRule = {
   keywords: string[];
@@ -35,15 +39,15 @@ export const CHATBOT_RULES: ChatbotRule[] = [
     response: {
       fr:
         "Nous proposons 3 formules adaptées à vos besoins :\n\n" +
-        "• Utilisation unique — 3,99€ par analyse\n" +
-        "• Mensuel — 19,99€/mois pour 10 analyses\n" +
-        "• Premium — 29,99€/mois pour 50 analyses\n\n" +
+        `• Utilisation unique — ${FACTS.priceSingle} par analyse\n` +
+        `• Mensuel — ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses\n` +
+        `• Premium — ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses\n\n` +
         "Chaque analyse inclut un rapport détaillé avec score sur 100, sous-scores par zone et recommandations. Vous pouvez commencer avec une analyse unique pour tester.",
       en:
         "We offer 3 plans to fit your needs:\n\n" +
-        "• Single use — €3.99 per analysis\n" +
-        "• Monthly — €19.99/month for 10 analyses\n" +
-        "• Premium — €29.99/month for 50 analyses\n\n" +
+        `• Single use — ${FACTS_EN.priceSingle} per analysis\n` +
+        `• Monthly — ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses\n` +
+        `• Premium — ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses\n\n` +
         "Every analysis includes a detailed report with a score out of 100, per-zone sub-scores and recommendations. You can start with a single analysis to test.",
     },
   },
@@ -95,16 +99,16 @@ export const CHATBOT_RULES: ChatbotRule[] = [
         "1. Choisissez la catégorie (sneakers, sac, vêtement)\n" +
         "2. Sélectionnez la marque et le modèle\n" +
         "3. Prenez des photos en suivant notre guide\n" +
-        "4. Notre IA analyse jusqu'à 10 zones d'authentification, selon le modèle\n" +
-        "5. Recevez votre rapport : 47 secondes en médiane\n\n" +
+        `4. Notre IA analyse jusqu'à ${FACTS.maxZones} zones d'authentification, selon le modèle\n` +
+        `5. Recevez votre rapport : ${FACTS.median} secondes en médiane\n\n` +
         "Le rapport inclut un score global sur 100, des sous-scores par zone, la détection OCR des codes et des recommandations personnalisées.",
       en:
         "It's very simple:\n\n" +
         "1. Pick the category (sneakers, bag, clothing)\n" +
         "2. Select the brand and model\n" +
         "3. Take photos following our guide\n" +
-        "4. Our AI analyzes up to 10 authentication zones, depending on the model\n" +
-        "5. Get your report: 47 seconds median\n\n" +
+        `4. Our AI analyzes up to ${FACTS_EN.maxZones} authentication zones, depending on the model\n` +
+        `5. Get your report: ${FACTS_EN.median} seconds median\n\n` +
         "The report includes a global score out of 100, per-zone sub-scores, OCR detection of codes and personalized recommendations.",
     },
   },
@@ -123,13 +127,13 @@ export const CHATBOT_RULES: ChatbotRule[] = [
     ],
     response: {
       fr:
-        "Vous pouvez analyser 520 modèles de 56 marques, dans trois catégories :\n\n" +
+        `Vous pouvez analyser ${FACTS.models} modèles de ${FACTS.brands} marques, dans trois catégories :\n\n` +
         "👟 Sneakers : Nike, Jordan, adidas, New Balance, Yeezy, Balenciaga, Dior, Gucci, Prada, Asics, ON Running…\n" +
         "👜 Sacs : Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada, Longchamp, Michael Kors…\n" +
         "👕 Vêtements : Supreme, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
         "Utilisez la barre de recherche sur notre page d'accueil pour trouver votre article.",
       en:
-        "You can check 520 models from 56 brands, in three categories:\n\n" +
+        `You can check ${FACTS_EN.models} models from ${FACTS_EN.brands} brands, in three categories:\n\n` +
         "👟 Sneakers: Nike, Jordan, adidas, New Balance, Yeezy, Balenciaga, Dior, Gucci, Prada, Asics, ON Running…\n" +
         "👜 Bags: Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada, Longchamp, Michael Kors…\n" +
         "👕 Clothing: Supreme, Stone Island, Moncler, Chrome Hearts, Palm Angels…\n\n" +
@@ -151,10 +155,10 @@ export const CHATBOT_RULES: ChatbotRule[] = [
     ],
     response: {
       fr:
-        "Selon le modèle, notre IA examine jusqu'à 10 zones d'authentification. Par exemple, pour une Air Jordan 1, nous vérifions le Swoosh, les coutures, l'étiquette de langue, la semelle, etc.\n\n" +
+        `Selon le modèle, notre IA examine jusqu'à ${FACTS.maxZones} zones d'authentification. Par exemple, pour une Air Jordan 1, nous vérifions le Swoosh, les coutures, l'étiquette de langue, la semelle, etc.\n\n` +
         "Important : LegitVision est un outil de pré-authentification visuelle. Nous fournissons un score de confiance, pas un certificat officiel. Pour les articles de grande valeur, nous recommandons de croiser nos résultats avec un expert.",
       en:
-        "Depending on the model, our AI examines up to 10 authentication zones. For example, on an Air Jordan 1, we check the Swoosh, stitching, tongue label, outsole, etc.\n\n" +
+        `Depending on the model, our AI examines up to ${FACTS_EN.maxZones} authentication zones. For example, on an Air Jordan 1, we check the Swoosh, stitching, tongue label, outsole, etc.\n\n` +
         "Important: LegitVision is a visual pre-authentication tool. We provide a confidence score, not an official certificate. For high-value items, we recommend cross-checking our results with an expert.",
     },
   },

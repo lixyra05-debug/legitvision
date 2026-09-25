@@ -20,6 +20,9 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { CategoryPicker } from "@/components/check/CategoryPicker";
 import { PhotoUploader } from "@/components/check/PhotoUploader";
 import type { Category, Brand, Model, PhotoSlot } from "@/lib/types";
+import { facts } from "@/lib/site-facts";
+
+const FACTS = facts();
 
 interface PhotoFile {
   file: File;
@@ -504,21 +507,21 @@ export default function NewCheckPage() {
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-md bg-accent px-5 text-ui font-semibold text-accent-foreground shadow-card transition-[color,background-color,border-color,transform] duration-fast hover:scale-[1.02] hover:bg-accent-hover active:scale-100"
               >
                 <span>{t("pricing.single")}</span>
-                <span className="font-heading text-body">3,99 €</span>
+                <span className="font-heading text-body">{FACTS.priceSingle}</span>
               </button>
               <button
                 onClick={() => { window.location.href = "/checkout?plan=pro"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
               >
                 <span>{t("pricing.proDesc")}</span>
-                <span className="font-heading text-body">19,99 €{t("check.perMonth")}</span>
+                <span className="font-heading text-body">{FACTS.pricePro}{t("check.perMonth")}</span>
               </button>
               <button
                 onClick={() => { window.location.href = "/checkout?plan=business"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
               >
                 <span>{t("pricing.premiumDesc")}</span>
-                <span className="font-heading text-body">29,99 €{t("check.perMonth")}</span>
+                <span className="font-heading text-body">{FACTS.priceBusiness}{t("check.perMonth")}</span>
               </button>
             </div>
             <div className="relative mt-5 flex items-center justify-between text-caption text-subtle">
@@ -904,21 +907,21 @@ export default function NewCheckPage() {
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-md bg-accent px-5 text-ui font-semibold text-accent-foreground shadow-card transition-[color,background-color,border-color,transform] duration-fast hover:scale-[1.02] hover:bg-accent-hover active:scale-100"
               >
                 <span>{t("pricing.single")}</span>
-                <span className="font-heading text-body">3,99 €</span>
+                <span className="font-heading text-body">{FACTS.priceSingle}</span>
               </button>
               <button
                 onClick={() => { window.location.href = "/checkout?plan=pro"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
               >
                 <span>{t("pricing.proDesc")}</span>
-                <span className="font-heading text-body">19,99 €{t("check.perMonth")}</span>
+                <span className="font-heading text-body">{FACTS.pricePro}{t("check.perMonth")}</span>
               </button>
               <button
                 onClick={() => { window.location.href = "/checkout?plan=business"; }}
                 className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
               >
                 <span>{t("pricing.premiumDesc")}</span>
-                <span className="font-heading text-body">29,99 €{t("check.perMonth")}</span>
+                <span className="font-heading text-body">{FACTS.priceBusiness}{t("check.perMonth")}</span>
               </button>
             </div>
 
