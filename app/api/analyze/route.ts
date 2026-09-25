@@ -10,6 +10,7 @@ import {
 } from "@/lib/ai/analyze";
 import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 import type { Brand, Model, PhotoSlot } from "@/lib/types";
+import { hasAuthenticationPoints } from "@/lib/analyzable";
 import { z } from "zod";
 
 export const maxDuration = 60; // Vercel function timeout
@@ -145,6 +146,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { error: "Marque ou modèle introuvable" },
       { status: 404 }
+    );
+  }
+
+  // 6b. Un modèle sans point d'authentification n'est plus proposé à la
+  //     sélection (lib/analyzable.ts). Ce garde couvre une page ouverte avant
+  //     la mise en ligne ou une requête forgée. Avant tout claim : aucun
+  //     changement de statut, aucun crédit débité.
+  if (!hasAuthenticationPoints(model)) {
+    return NextResponse.json(
+      { error: "Ce modèle n'est pas encore pris en charge par l'analyse. Choisissez-en un autre." },
+      { status: 422 }
     );
   }
 

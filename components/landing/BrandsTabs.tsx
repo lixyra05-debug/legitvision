@@ -35,14 +35,12 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Puma", models: 5, logo: "/images/brands/puma.png" },
     { name: "Reebok", models: 5, logo: "/images/brands/reebok.png" },
     { name: "Salomon", models: 4, logo: "/images/brands/salomon.png" },
-    { name: "Balenciaga", models: 4, logo: "/images/brands/balenciaga.png" },
-    { name: "Louis Vuitton", models: 4, logo: "/images/brands/louis-vuitton.png" },
-    { name: "Dior", models: 4, logo: "/images/brands/dior.png" },
-    { name: "Gucci", models: 4, logo: "/images/brands/gucci.png" },
-    { name: "Prada", models: 3, logo: "/images/brands/prada.png" },
-    { name: "Chanel", models: 2, logo: "/images/brands/chanel.png" },
-    { name: "Hermès", models: 2, logo: "/images/brands/hermes.png" },
-    { name: "Bottega Veneta", models: 2, logo: "/images/brands/bottega-veneta.png" },
+    // Balenciaga, Louis Vuitton, Dior, Gucci, Prada, Chanel, Hermès et Bottega
+    // Veneta sont ABSENTES de cet onglet volontairement : en sneakers, aucun de
+    // leurs modèles n'a de point d'authentification, et ces modèles ne sont plus
+    // proposés (lib/analyzable.ts). La tuile mènerait à un sélecteur vide. À
+    // remettre quand ces modèles auront leurs points — voir CLAUDE.md,
+    // chantier catalogue.
     { name: "Maison Margiela", models: 3, logo: "/images/brands/maison-margiela.png" },
     { name: "New Era", models: 2, logo: "/images/brands/new-era.png" },
     { name: "Asics", models: 5, logo: "/images/brands/asics.png" },
@@ -65,10 +63,8 @@ const BRANDS: Record<Category, BrandEntry[]> = {
     { name: "Carhartt WIP", models: 7, logo: "/images/brands/carhartt-wip.png" },
     { name: "Anti Social Social Club", models: 3, logo: "/images/brands/anti-social-social-club.png" },
     { name: "Fear of God", models: 5, logo: "/images/brands/fear-of-god.png" },
-    { name: "Balenciaga", models: 7, logo: "/images/brands/balenciaga.png" },
-    { name: "Louis Vuitton", models: 5, logo: "/images/brands/louis-vuitton.png" },
-    { name: "Gucci", models: 6, logo: "/images/brands/gucci.png" },
-    { name: "Dior", models: 5, logo: "/images/brands/dior.png" },
+    // Balenciaga, Louis Vuitton, Gucci et Dior : même raison qu'en sneakers,
+    // aucun de leurs modèles de vêtements n'a de point d'authentification.
     { name: "Moncler", models: 4, logo: "/images/brands/moncler.png" },
     { name: "Canada Goose", models: 4, logo: "/images/brands/canada-goose.png" },
     { name: "Trapstar", models: 4, logo: "/images/brands/trapstar.png" },

@@ -24,13 +24,32 @@ export function generateStaticParams() {
 
 type Props = { params: Promise<{ plateforme: string }> };
 
+// Marques des guides de la plateforme, dans l'ordre des données : c'est cette
+// liste que la page affiche, et c'est elle qu'on compte dans les textes.
+function getPlatformBrands(platformSlug: string) {
+  return intersections
+    .filter((i) => i.platformSlug === platformSlug)
+    .map((i) => brands.find((b) => b.slug === i.brandSlug))
+    .filter((b): b is NonNullable<typeof b> => Boolean(b));
+}
+
+// Marques citées en tête de la description ; les autres sont comptées.
+const FEATURED_BRAND_SLUGS = ["nike", "air-jordan", "louis-vuitton", "chanel", "hermes"];
+
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
   const platform = getPlatformBySlug(params.plateforme);
   if (!platform) return {};
 
-  const title = `Acheter authentique sur ${platform.name} : les 10 guides par marque`;
-  const description = `Guides 2026 pour éviter les contrefaçons Nike, Jordan, Louis Vuitton, Chanel, Hermès et 5 autres marques sur ${platform.name}. Signaux d'authentification, arnaques, analyse IA à ${FACTS.priceSingle}.`;
+  const platformBrands = getPlatformBrands(platform.slug);
+  const featured = platformBrands.filter((b) => FEATURED_BRAND_SLUGS.includes(b.slug));
+  const others = platformBrands.length - featured.length;
+  const brandList =
+    featured.map((b) => b.checkBrand ?? b.name).join(", ") +
+    (others > 0 ? ` et ${others} autre${others > 1 ? "s" : ""} marque${others > 1 ? "s" : ""}` : "");
+
+  const title = `Acheter authentique sur ${platform.name} : les ${platformBrands.length} guides par marque`;
+  const description = `Guides 2026 pour éviter les contrefaçons ${brandList} sur ${platform.name}. Signaux d'authentification, arnaques, analyse IA à ${FACTS.priceSingle}.`;
 
   return {
     title,
@@ -50,10 +69,7 @@ export default async function PlatformHubPage(props: Props) {
   const platform = getPlatformBySlug(params.plateforme);
   if (!platform) notFound();
 
-  const platformBrands = intersections
-    .filter((i) => i.platformSlug === platform.slug)
-    .map((i) => brands.find((b) => b.slug === i.brandSlug))
-    .filter((b): b is NonNullable<typeof b> => Boolean(b));
+  const platformBrands = getPlatformBrands(platform.slug);
 
   const hubSchemas = [
     buildBreadcrumbListSchema([
@@ -125,12 +141,11 @@ export default async function PlatformHubPage(props: Props) {
               <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-2.5 py-0.5 text-caption font-medium text-muted-foreground">
                 Guide 2026
               </span>
-              <p className="mt-1 text-caption text-muted-foreground">{platform.userBaseFr}</p>
             </div>
           </div>
 
           <h1 className="mt-6 font-heading text-h1 font-bold">
-            Acheter authentique sur {platform.name} : les 10 marques les plus contrefaites
+            Acheter authentique sur {platform.name} : les {platformBrands.length} guides par marque
           </h1>
           <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
             {platform.tagline}. Choisissez la marque qui vous intéresse — chaque guide détaille les signaux techniques, les arnaques récurrentes sur {platform.name}, et les prix marché 2026.
@@ -158,7 +173,7 @@ export default async function PlatformHubPage(props: Props) {
 
         <section>
           <h2 className="font-heading text-h2 font-bold">
-            Les 10 guides par marque
+            Les {platformBrands.length} guides par marque
           </h2>
           <p className="mt-2 text-ui text-muted-foreground">
             Chaque guide combine les signaux d&apos;authentification propres à la marque et les arnaques spécifiques à {platform.name}.

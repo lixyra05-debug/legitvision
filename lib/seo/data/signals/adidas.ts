@@ -8,7 +8,7 @@ export const adidasSignals: GuideSignal[] = [
     category: "sneakers",
     tagline: "Vérifier la mousse BOOST Adidas : billes, densité, couleur",
     intro:
-      "La mousse BOOST d'Adidas — développée avec BASF depuis 2013 — n'est pas une mousse EVA standard mais un agrégat de billes de polyuréthane thermoplastique expansé (TPU expansé) soudées à la vapeur. Cette technologie brevetée donne un aspect granuleux unique : chaque semelle Ultraboost, Yeezy 350 ou NMD authentique révèle des milliers de petites billes translucides à blanc crème, de 0,8-1,2 mm de diamètre, soudées sans colle visible. Les contrefaçons ratent systématiquement trois points : la taille des billes (souvent uniformes à 1,5 mm au lieu d'une distribution 0,8-1,2 mm avec légère variabilité), la couleur (les fakes utilisent du polystyrène blanc pur qui jaunit en UV alors que le vrai BOOST reste blanc crème stable), et le « bounce » (compressez à la main : BOOST authentique = rebond immédiat énergique ; fake = mousse molle type EVA). Un test décisif sur Yeezy 350 : trempez la semelle dans l'eau — le vrai BOOST ne boit pas l'eau (billes hydrophobes soudées) ; un fake en polystyrène absorbe légèrement. Cette vérification permet d'éliminer 90 % des fakes Yeezy sur Vinted en moins d'une minute.",
+      "La mousse BOOST d'Adidas — développée avec BASF depuis 2013 — n'est pas une mousse EVA standard mais un agrégat de billes de polyuréthane thermoplastique expansé (TPU expansé) soudées à la vapeur. Cette technologie brevetée donne un aspect granuleux unique : chaque semelle Ultraboost, Yeezy 350 ou NMD authentique révèle des milliers de petites billes translucides à blanc crème, de 0,8-1,2 mm de diamètre, soudées sans colle visible. Les contrefaçons ratent systématiquement trois points : la taille des billes (souvent uniformes à 1,5 mm au lieu d'une distribution 0,8-1,2 mm avec légère variabilité), la couleur (les fakes utilisent du polystyrène blanc pur qui jaunit en UV alors que le vrai BOOST reste blanc crème stable), et le « bounce » (compressez à la main : BOOST authentique = rebond immédiat énergique ; fake = mousse molle type EVA). Un test décisif sur Yeezy 350 : trempez la semelle dans l'eau — le vrai BOOST ne boit pas l'eau (billes hydrophobes soudées) ; un fake en polystyrène absorbe légèrement.",
     steps: [
       {
         title: "Photographier la tranche de la semelle en macro",
@@ -251,7 +251,7 @@ export const adidasSignals: GuideSignal[] = [
       {
         title: "Ignorer le serial sous prétexte que la paire est vintage",
         description:
-          "Les paires pre-2010 n'avaient pas de serial systématique — absence n'est pas signe de fake. Mais pour les paires post-2015, absence de serial sous l'étiquette principale = fake quasi-certain.",
+          "Les paires pre-2010 n'avaient pas de serial systématique — absence n'est pas signe de fake. Mais pour les paires post-2015, absence de serial sous l'étiquette principale = signal de contrefaçon.",
       },
     ],
     counterfeiterTactics:

@@ -7,10 +7,9 @@ export const platforms: Platform[] = [
   {
     slug: "vinted",
     name: "Vinted",
-    tagline: "Le leader C2C de la seconde main en Europe",
+    tagline: "La seconde main entre particuliers, sans commission vendeur",
     description:
-      "Vinted s'est imposé depuis 2008 comme la plateforme C2C de référence pour la seconde main en France, avec plus de 23 millions d'utilisateurs dans l'Hexagone. Son modèle — vente entre particuliers sans commission vendeur, paiement sécurisé via la Vinted Wallet — a démocratisé l'achat d'occasion. Mais le revers : une modération des annonces très légère, aucune authentification systématique des articles de luxe en-dessous de 100 €, et un volume massif qui attire les revendeurs de contrefaçons.",
-    userBaseFr: "23 millions d'utilisateurs en France",
+      "Vinted s'est imposé depuis 2008 dans la seconde main entre particuliers en France. Son modèle — vente entre particuliers sans commission vendeur, paiement sécurisé via la Vinted Wallet — a démocratisé l'achat d'occasion. Mais le revers : une modération des annonces très légère, aucune authentification systématique des articles de luxe en-dessous de 100 €, et un volume massif qui attire les revendeurs de contrefaçons.",
     authProgram: "Service d'authentification optionnel pour articles > 100 € (payant, 10 €)",
     accentColor: "#09B1BA",
     shortLabel: "V",
@@ -19,33 +18,29 @@ export const platforms: Platform[] = [
       {
         title: "Photos volées à un autre vendeur",
         description:
-          "L'arnaque la plus répandue sur Vinted : le vendeur utilise des photos authentiques trouvées sur StockX, eBay ou Vestiaire Collective, mais vous envoie une contrefaçon. Faites systématiquement une recherche inversée sur Google Images avant d'acheter. Si les photos apparaissent ailleurs, fuyez.",
-        frequency: "very-common",
+          "Le vendeur utilise des photos authentiques trouvées sur StockX, eBay ou Vestiaire Collective, mais vous envoie une contrefaçon. Faites systématiquement une recherche inversée sur Google Images avant d'acheter. Si les photos apparaissent ailleurs, fuyez.",
       },
       {
         title: "Profil vendeur récent avec 0 évaluation",
         description:
           "Vinted permet de créer un compte en 30 secondes sans vérification d'identité. Un compte de moins de 3 mois, sans photo de profil, sans aucune évaluation et qui vend d'emblée des articles haut de gamme Jordan ou Louis Vuitton est un signal d'alerte majeur. Privilégiez les vendeurs avec ≥ 20 évaluations positives sur au moins 6 mois.",
-        frequency: "very-common",
       },
       {
         title: "Prix cassé irréaliste",
         description:
-          "Une paire de Jordan 1 Chicago authentique ne se vend pas 90 € sur Vinted. Si le prix affiché est inférieur de plus de 40 % au marché StockX, c'est une contrefaçon dans plus de 95 % des cas. Les revendeurs de faux ciblent précisément les acheteurs qui pensent faire l'affaire du siècle.",
-        frequency: "very-common",
+          "Une paire de Jordan 1 Chicago authentique ne se vend pas 90 € sur Vinted. Un prix affiché inférieur de plus de 40 % au marché StockX est un signal d'alerte. Les revendeurs de faux ciblent précisément les acheteurs qui pensent faire l'affaire du siècle.",
       },
       {
         title: "Refus de photos supplémentaires",
         description:
-          "Un vendeur sérieux accepte toujours d'envoyer des photos complémentaires en message privé (étiquette intérieure, semelle, couture précise). Un refus, une excuse (« batterie à plat », « je ne sais pas faire ») ou des photos floues volontaires trahissent presque toujours un article non-authentique.",
-        frequency: "common",
+          "Un vendeur sérieux accepte toujours d'envoyer des photos complémentaires en message privé (étiquette intérieure, semelle, couture précise). Un refus, une excuse (« batterie à plat », « je ne sais pas faire ») ou des photos floues volontaires sont des signaux d'alerte.",
       },
     ],
     faqs: [
       {
         question: "Est-ce que Vinted vérifie l'authenticité des articles de luxe ?",
         answer:
-          "Non, pas par défaut. Vinted propose depuis 2022 un service d'authentification payant (10 €) pour les articles vendus à plus de 100 €, mais il reste optionnel et choisi par l'acheteur au moment du paiement. La grande majorité des transactions se font sans aucune vérification.",
+          "Non, pas par défaut. Vinted propose depuis 2022 un service d'authentification payant (10 €) pour les articles vendus à plus de 100 €, mais il reste optionnel et choisi par l'acheteur au moment du paiement.",
       },
       {
         question: "Comment signaler une contrefaçon détectée sur Vinted ?",
@@ -69,8 +64,7 @@ export const platforms: Platform[] = [
     name: "Vestiaire Collective",
     tagline: "La marketplace premium du luxe de seconde main",
     description:
-      "Vestiaire Collective, fondée à Paris en 2009, est la référence européenne de la mode de luxe de seconde main, avec plus de 23 millions de membres dans 80 pays. La plateforme positionne la qualité et l'authentification comme son cœur de différenciation : chaque article au-dessus de 100 € passe par un contrôle d'authentification par ses équipes internes avant l'envoi à l'acheteur. Mais ce filet de sécurité n'est pas infaillible, et les tarifs y sont plus élevés que sur les marketplaces généralistes.",
-    userBaseFr: "23 millions de membres mondiaux dont 3,5 M en France",
+      "Vestiaire Collective, fondée à Paris en 2009, est une plateforme européenne de mode de luxe de seconde main. La plateforme positionne la qualité et l'authentification comme son cœur de différenciation : chaque article au-dessus de 100 € passe par un contrôle d'authentification par ses équipes internes avant l'envoi à l'acheteur. Mais ce filet de sécurité n'est pas infaillible, et les tarifs y sont plus élevés que sur les marketplaces généralistes.",
     authProgram: "Authentification systématique par experts internes pour les articles > 100 €",
     accentColor: "#000000",
     shortLabel: "VC",
@@ -80,32 +74,28 @@ export const platforms: Platform[] = [
         title: "Articles en dessous du seuil d'authentification",
         description:
           "Les articles vendus sous les 100 € ne passent pas systématiquement par le contrôle d'authentification. Les petites pièces (foulards, ceintures, portefeuilles, lunettes) sont vendues sans vérification. C'est le segment où les vendeurs de contrefaçons concentrent leurs annonces pour éviter le filtrage.",
-        frequency: "common",
       },
       {
         title: "Erreurs d'authentification sur les modèles très récents",
         description:
           "Les équipes d'authentification Vestiaire sont excellentes sur les modèles classiques, mais peuvent laisser passer des contrefaçons de dernière génération (super-fakes) sur des sorties récentes (< 6 mois). Les Dior Saddle récentes et les sacs Chanel 22 sont des exemples où des faux haut de gamme sont passés.",
-        frequency: "occasional",
       },
       {
         title: "Direct Shipping sans contrôle",
         description:
           "Depuis 2022, Vestiaire propose l'option « Expédition Directe » qui laisse le vendeur envoyer directement à l'acheteur, sans passage par leur centre d'authentification. Cette option est signalée par un badge — vérifiez toujours si votre article passe par le contrôle ou non avant de valider l'achat.",
-        frequency: "common",
       },
       {
         title: "Prix Vestiaire gonflé : arnaque à la plus-value",
         description:
-          "Certains revendeurs achètent sur Vinted ou Leboncoin à bas prix, passent par Vestiaire pour le badge d'authentification, et revendent avec 30-50 % de marge. Ce n'est pas une contrefaçon mais une arnaque au prix : vérifiez systématiquement le prix de marché avant d'acheter.",
-        frequency: "common",
+          "Certains revendeurs achètent sur Vinted ou Leboncoin à bas prix, passent par Vestiaire pour le badge d'authentification, et revendent avec une marge. Ce n'est pas une contrefaçon mais une arnaque au prix : vérifiez systématiquement le prix de marché avant d'acheter.",
       },
     ],
     faqs: [
       {
         question: "L'authentification Vestiaire Collective est-elle fiable à 100 % ?",
         answer:
-          "Très fiable (99 % selon la plateforme) mais pas infaillible. Les cas de contestation existent, notamment sur les modèles super-fakes récents ou sur les articles vendus en Expédition Directe (sans passage par leur centre). Pour les pièces > 2 000 €, un double contrôle LegitVision reste recommandé.",
+          "Très fiable mais pas infaillible. Les cas de contestation existent, notamment sur les modèles super-fakes récents ou sur les articles vendus en Expédition Directe (sans passage par leur centre). Pour les pièces > 2 000 €, un double contrôle LegitVision reste recommandé.",
       },
       {
         question: "Puis-je retourner un article acheté sur Vestiaire Collective ?",
@@ -120,7 +110,7 @@ export const platforms: Platform[] = [
       {
         question: "Pourquoi certains prix explosent sur Vestiaire Collective ?",
         answer:
-          "Vestiaire est la plateforme de luxe la plus premium du marché : sa clientèle accepte de payer 20-40 % de plus qu'ailleurs pour la garantie d'authentification. C'est cohérent pour une Hermès Birkin à 15 000 €, moins pour un sac Gucci courant. Comparez toujours les prix Vestiaire / Vinted / eBay avant d'acheter.",
+          "Vestiaire est une plateforme de luxe premium : sa clientèle accepte de payer pour la garantie d'authentification. C'est cohérent pour une Hermès Birkin à 15 000 €, moins pour un sac Gucci courant. Comparez toujours les prix Vestiaire / Vinted / eBay avant d'acheter.",
       },
     ],
   },
@@ -129,8 +119,7 @@ export const platforms: Platform[] = [
     name: "Leboncoin",
     tagline: "Le géant français des petites annonces généralistes",
     description:
-      "Leboncoin, fondé en 2006, est le plus grand site de petites annonces en France avec 29 millions d'utilisateurs actifs mensuels. Sa force : la proximité géographique et la transaction en main propre. Mais côté mode et luxe, Leboncoin reste une plateforme généraliste sans aucun mécanisme d'authentification, ce qui en fait simultanément un terrain privilégié pour les bonnes affaires (déstockages familiaux, successions) et un eldorado pour les revendeurs de contrefaçons.",
-    userBaseFr: "29 millions d'utilisateurs uniques mensuels",
+      "Leboncoin, fondé en 2006, est un site français de petites annonces. Sa force : la proximité géographique et la transaction en main propre. Mais côté mode et luxe, Leboncoin reste une plateforme généraliste sans aucun mécanisme d'authentification, ce qui en fait simultanément un terrain privilégié pour les bonnes affaires (déstockages familiaux, successions) et un eldorado pour les revendeurs de contrefaçons.",
     authProgram: null,
     accentColor: "#EC5A13",
     shortLabel: "LBC",
@@ -140,25 +129,21 @@ export const platforms: Platform[] = [
         title: "Aucune authentification — zéro filet de sécurité",
         description:
           "Leboncoin n'a aucun service d'authentification, même pour les articles haut de gamme. L'intégralité du risque est portée par l'acheteur. Contrairement à Vinted ou Vestiaire, aucun examen n'est effectué ni sur les photos ni sur l'article. Vous êtes seul responsable de votre vérification.",
-        frequency: "very-common",
       },
       {
         title: "Arnaque au paiement hors-plateforme",
         description:
           "Un vendeur qui vous propose de finaliser la transaction via PayPal Friends & Family, virement SEPA ou cryptomonnaies cherche à contourner la protection Leboncoin. Ces paiements sont irrécupérables en cas de contrefaçon. Utilisez uniquement le paiement sécurisé Leboncoin intégré à l'annonce.",
-        frequency: "common",
       },
       {
         title: "Remise en main propre sans photos préalables",
         description:
           "Un vendeur qui refuse d'envoyer des photos supplémentaires avant la rencontre, arguant « vous verrez sur place », cherche à vous mettre sous pression. À la remise, difficile de refuser face au vendeur, surtout si la transaction est en liquide. Exigez toutes les photos de vérification avant le déplacement.",
-        frequency: "common",
       },
       {
         title: "Annonce sans historique vendeur visible",
         description:
           "Leboncoin affiche l'ancienneté du vendeur et son nombre d'annonces. Un compte créé la semaine dernière qui publie d'emblée un sac Chanel à prix cassé est une alerte rouge. Préférez les vendeurs avec ≥ 1 an d'ancienneté et un historique d'annonces cohérent (mobilier, auto, articles divers).",
-        frequency: "common",
       },
     ],
     faqs: [
@@ -189,8 +174,7 @@ export const platforms: Platform[] = [
     name: "eBay",
     tagline: "La marketplace globale avec Authenticity Guarantee",
     description:
-      "eBay, pionnier des marketplaces online depuis 1995, reste l'un des principaux canaux de vente de produits luxe et sneakers en seconde main, avec plus de 132 millions d'acheteurs actifs dans le monde. Son programme Authenticity Guarantee, lancé en 2020, authentifie certaines catégories (sneakers > 100 $, montres, sacs de luxe sélectionnés) via des experts tiers avant livraison à l'acheteur. Mais la couverture reste partielle et l'écosystème global expose à des vendeurs internationaux moins scrupuleux.",
-    userBaseFr: "8,2 millions d'utilisateurs actifs en France",
+      "eBay, pionnier des marketplaces online depuis 1995, reste un canal de vente de produits luxe et sneakers en seconde main. Son programme Authenticity Guarantee, lancé en 2020, authentifie certaines catégories (sneakers > 100 $, montres, sacs de luxe sélectionnés) via des experts tiers avant livraison à l'acheteur. Mais la couverture reste partielle et l'écosystème global expose à des vendeurs internationaux moins scrupuleux.",
     authProgram: "Authenticity Guarantee pour sneakers > 100 $, montres > 2 000 $, sacs sélectionnés",
     accentColor: "#E53238",
     shortLabel: "eB",
@@ -200,25 +184,21 @@ export const platforms: Platform[] = [
         title: "Articles hors périmètre Authenticity Guarantee",
         description:
           "Le programme eBay Authenticity Guarantee couvre uniquement les sneakers > 100 $, certaines montres et une liste limitée de sacs de luxe. Tout le reste (vêtements, accessoires, chaussures < 100 $, sacs non couverts) est vendu sans vérification, exactement comme sur Leboncoin. Vérifiez le badge vert sur la fiche produit.",
-        frequency: "very-common",
       },
       {
         title: "Vendeurs internationaux basés en Asie",
         description:
-          "Une grande partie des contrefaçons sur eBay provient de vendeurs situés en Chine, au Vietnam ou en Turquie, présentés comme des particuliers mais en réalité des revendeurs de stock AliExpress repackagé. Filtrez systématiquement la provenance : privilégiez les vendeurs européens ou nord-américains avec ≥ 100 évaluations positives.",
-        frequency: "very-common",
+          "Des contrefaçons sur eBay proviennent de vendeurs situés en Chine, au Vietnam ou en Turquie, présentés comme des particuliers mais en réalité des revendeurs de stock AliExpress repackagé. Filtrez systématiquement la provenance : privilégiez les vendeurs européens ou nord-américains avec ≥ 100 évaluations positives.",
       },
       {
         title: "Description générique copiée-collée",
         description:
           "Les revendeurs de masse utilisent des descriptions-types copiées d'annonce en annonce (« Brand new with tags », « 100 % authentic, guaranteed »). Ces mentions ne garantissent rien sans badge Authenticity Guarantee. Méfiez-vous des descriptions excessivement génériques sans détail spécifique sur l'article vendu.",
-        frequency: "common",
       },
       {
         title: "Détournement de la Money-Back Guarantee",
         description:
           "Certains vendeurs profitent des délais longs de livraison internationale (15-30 jours) pour faire expirer la période de réclamation eBay. D'autres envoient des articles réels sur le suivi colis puis substituent une contrefaçon à la dernière minute. Activez la déclaration écrite dès réception et photographiez l'ouverture du colis.",
-        frequency: "occasional",
       },
     ],
     faqs: [
@@ -249,8 +229,7 @@ export const platforms: Platform[] = [
     name: "Depop",
     tagline: "La plateforme mode de la Gen Z",
     description:
-      "Depop, lancée à Milan en 2011 et rachetée par Etsy en 2021, est devenue la marketplace mode dominante chez les 15-25 ans. Très orientée streetwear, vintage et sneakers, la plateforme compte plus de 35 millions d'utilisateurs mondiaux, dont 90 % de moins de 26 ans. Son interface inspirée d'Instagram encourage les achats d'impulsion, mais l'absence totale de service d'authentification et la jeunesse de sa base utilisateur en font une cible privilégiée pour les contrefacteurs spécialisés dans le streetwear (Supreme, Travis Scott, Yeezy, Off-White).",
-    userBaseFr: "1,5 million d'utilisateurs actifs en France",
+      "Depop, lancée à Milan en 2011, a été rachetée par Etsy en 2021. La plateforme est très orientée streetwear, vintage et sneakers. Son interface inspirée d'Instagram encourage les achats d'impulsion, mais l'absence totale de service d'authentification et la jeunesse de sa base utilisateur en font une cible pour les contrefacteurs spécialisés dans le streetwear (Supreme, Travis Scott, Yeezy, Off-White).",
     authProgram: null,
     accentColor: "#FF2301",
     shortLabel: "Dp",
@@ -260,32 +239,28 @@ export const platforms: Platform[] = [
         title: "Réplicas assumées déguisées en authentiques",
         description:
           "Depop abrite une économie parallèle de vendeurs qui postent des réplicas sous des intitulés ambigus (« inspired by », « dupe », « faithful replica »). Certains basculent ensuite en message privé vers des articles déclarés authentiques à prix cassé. Si un vendeur a ne serait-ce qu'une annonce « replica » dans son profil, considérez toutes ses annonces comme suspectes.",
-        frequency: "very-common",
       },
       {
         title: "Ciblage des drops hyped (Travis Scott, Yeezy, Off-White)",
         description:
-          "Les sorties limitées (Travis Scott Jordan, Yeezy 350, Off-White x Nike) sont les cibles prioritaires des contrefacteurs sur Depop, car la demande explose à la revente. Un Travis Scott Jordan 1 Low Mocha à 250 € sur Depop quand StockX affiche 1 100 € est quasi systématiquement une contrefaçon.",
-        frequency: "very-common",
+          "Les sorties limitées (Travis Scott Jordan, Yeezy 350, Off-White x Nike) sont des cibles des contrefacteurs sur Depop, car la demande explose à la revente. Un Travis Scott Jordan 1 Low Mocha à 250 € sur Depop quand StockX affiche 1 100 € est un signal d'alerte.",
       },
       {
         title: "Profils avec followers achetés",
         description:
-          "Depop fonctionne sur une logique sociale avec followers et likes, ce qui peut donner une fausse impression de légitimité. Certains vendeurs achètent 2 000-5 000 followers pour paraître établis. Vérifiez l'ancienneté du compte, l'engagement réel (commentaires), et la cohérence du stock avant d'acheter.",
-        frequency: "common",
+          "Depop fonctionne sur une logique sociale avec followers et likes, ce qui peut donner une fausse impression de légitimité. Certains vendeurs achètent des followers pour paraître établis. Vérifiez l'ancienneté du compte, l'engagement réel (commentaires), et la cohérence du stock avant d'acheter.",
       },
       {
         title: "Paiement hors Depop via Instagram ou WhatsApp",
         description:
           "Les arnaqueurs Depop tentent régulièrement de détourner la transaction vers des DMs Instagram ou WhatsApp pour contourner les protections de la plateforme. Une fois payé par virement ou PayPal Friends, impossible de récupérer votre argent. Restez toujours sur Depop Payments avec protection acheteur.",
-        frequency: "common",
       },
     ],
     faqs: [
       {
         question: "Depop vérifie-t-il les articles avant l'envoi ?",
         answer:
-          "Non. Depop ne dispose d'aucun service d'authentification, contrairement à StockX ou eBay pour les sneakers. La responsabilité de vérifier l'article revient entièrement à l'acheteur. C'est la plateforme la moins protégée parmi les marketplaces mode mainstream en 2026.",
+          "Non. Depop ne dispose d'aucun service d'authentification, contrairement à StockX ou eBay pour les sneakers. La responsabilité de vérifier l'article revient entièrement à l'acheteur.",
       },
       {
         question: "La Depop Buyer Protection fonctionne-t-elle bien ?",
@@ -309,8 +284,7 @@ export const platforms: Platform[] = [
     name: "Facebook Marketplace",
     tagline: "Le Far West des petites annonces locales",
     description:
-      "Facebook Marketplace, lancé en 2016 et adossé à l'écosystème Meta (3,5 milliards d'utilisateurs), est devenu un acteur massif du C2C local en France depuis 2020. Sa force : l'intégration native dans Facebook, la gratuité totale, et la géolocalisation pour les transactions en main propre. Son faiblesse majeure : aucun mécanisme d'authentification, aucun paiement sécurisé imposé, et une modération quasi inexistante sur les articles de luxe. C'est statistiquement la plateforme avec le plus haut taux de contrefaçons parmi celles couvertes dans ce guide.",
-    userBaseFr: "12 millions d'utilisateurs mensuels en France",
+      "Facebook Marketplace, lancé en 2016 et adossé à l'écosystème Meta, est devenu un acteur massif du C2C local en France depuis 2020. Sa force : l'intégration native dans Facebook, la gratuité totale, et la géolocalisation pour les transactions en main propre. Son faiblesse majeure : aucun mécanisme d'authentification, aucun paiement sécurisé imposé, et une modération quasi inexistante sur les articles de luxe.",
     authProgram: null,
     accentColor: "#1877F2",
     shortLabel: "FB",
@@ -320,25 +294,21 @@ export const platforms: Platform[] = [
         title: "Zéro authentification, zéro protection acheteur",
         description:
           "Facebook Marketplace ne propose ni authentification, ni paiement sécurisé intégré, ni médiation en cas de litige. La plateforme se positionne comme un simple « tableau d'affichage » sans responsabilité sur les transactions. Si vous payez en liquide à la rencontre et recevez une contrefaçon, vous êtes seul face au vendeur, sans recours Meta.",
-        frequency: "very-common",
       },
       {
         title: "Comptes Facebook récents ou piratés",
         description:
           "Les contrefacteurs exploitent deux modus operandi : créer des comptes Facebook récents via de fausses identités, ou racheter des comptes piratés à des utilisateurs ordinaires pour bénéficier de leur historique « propre ». Vérifiez l'ancienneté du compte, les photos personnelles cohérentes, et l'activité Facebook hors Marketplace.",
-        frequency: "very-common",
       },
       {
         title: "Pression pour clôturer en moins de 24h",
         description:
           "« J'ai 3 personnes intéressées, il faut décider vite », « Je pars en vacances demain, venez ce soir ». Cette urgence artificielle vise à court-circuiter votre réflexion et votre vérification. Un vendeur sérieux laisse toujours 48-72h pour la décision. Toute pression temporelle forte est un signal d'arnaque.",
-        frequency: "common",
       },
       {
         title: "Rencontres en lieu isolé ou en soirée",
         description:
           "Un vendeur qui insiste pour un rendez-vous dans un parking isolé, à son domicile, ou en soirée tardive présente un double risque : arnaque sur l'article (pas d'éclairage correct pour inspecter) et risque physique. Refusez et proposez un lieu public de jour : gare, café, centre commercial. Un vendeur honnête acceptera toujours.",
-        frequency: "common",
       },
     ],
     faqs: [

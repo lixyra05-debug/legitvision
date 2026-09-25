@@ -8,7 +8,7 @@ export const nikeSignals: GuideSignal[] = [
     category: "sneakers",
     tagline: "Lire une tongue label Nike : police, alignement, informations obligatoires",
     intro:
-      "L'étiquette cousue à l'intérieur de la langue (« tongue label ») est l'un des indices d'authentification Nike les plus riches et aussi l'un des plus mal contrefaits. Sur une paire authentique, elle rassemble en quelques centimètres carrés la pointure (US/UK/EU/CM), le style code à 9 caractères, la date de fabrication (MM/YY) et le pays d'assemblage — le tout imprimé dans une typographie Helvetica Neue fine, avec un kerning régulier et des contrastes de gras maîtrisés. Les contrefaçons, elles, trahissent presque toujours un défaut : police trop grasse, espacement irrégulier, ligne « MADE IN » alignée différemment, ou — très fréquent — un style code qui ne correspond pas au colorway photographié sur Nike.com. Les super-fakes asiatiques imitent le visuel mais butent sur un détail : le point de couture qui fixe le haut de l'étiquette est quasi systématiquement décalé d'un ou deux millimètres, et la couleur du fil (noir ou blanc selon modèle) ne correspond pas à celle utilisée en usine Nike. Savoir lire cette étiquette est le réflexe numéro un quand une paire arrive en main — ça prend trente secondes et élimine 70 % des contrefaçons de bas de gamme.",
+      "L'étiquette cousue à l'intérieur de la langue (« tongue label ») est l'un des indices d'authentification Nike les plus riches et aussi l'un des plus mal contrefaits. Sur une paire authentique, elle rassemble en quelques centimètres carrés la pointure (US/UK/EU/CM), le style code à 9 caractères, la date de fabrication (MM/YY) et le pays d'assemblage — le tout imprimé dans une typographie Helvetica Neue fine, avec un kerning régulier et des contrastes de gras maîtrisés. Les contrefaçons, elles, trahissent presque toujours un défaut : police trop grasse, espacement irrégulier, ligne « MADE IN » alignée différemment, ou — très fréquent — un style code qui ne correspond pas au colorway photographié sur Nike.com. Les super-fakes asiatiques imitent le visuel mais butent sur un détail : le point de couture qui fixe le haut de l'étiquette est quasi systématiquement décalé d'un ou deux millimètres, et la couleur du fil (noir ou blanc selon modèle) ne correspond pas à celle utilisée en usine Nike. Savoir lire cette étiquette est le réflexe numéro un quand une paire arrive en main — ça prend trente secondes.",
     steps: [
       {
         title: "Photographier la langue à plat, éclairage neutre",
@@ -23,7 +23,7 @@ export const nikeSignals: GuideSignal[] = [
       {
         title: "Vérifier le style code à 9 caractères",
         description:
-          "Deux lettres + quatre chiffres + tiret + trois chiffres (ex : « DH7138-006 »). Ce code doit exister sur Nike.com ou sur StockX et correspondre au colorway en main. Un code introuvable, ou attribué à un autre coloris, est une preuve quasi définitive de contrefaçon.",
+          "Deux lettres + quatre chiffres + tiret + trois chiffres (ex : « DH7138-006 »). Ce code doit exister sur Nike.com ou sur StockX et correspondre au colorway en main. Un code introuvable, ou attribué à un autre coloris, est un signal fort de contrefaçon.",
       },
       {
         title: "Contrôler la date et le pays",
@@ -75,7 +75,7 @@ export const nikeSignals: GuideSignal[] = [
     category: "sneakers",
     tagline: "Décoder la box label Nike : style code, colorway nominal, code-barre",
     intro:
-      "La box label est collée sur le petit côté de la boîte Nike et concentre autant d'informations que la tongue label, mais avec un angle différent : c'est l'étiquette « logistique » utilisée en entrepôt. On y trouve le style code, le colorway nominal complet (pas juste le surnom marketing), la pointure, le code-barre EAN-13, et parfois un QR code depuis 2020. La typographie est toujours Helvetica Neue, mais plus grasse que sur la tongue label — c'est un repère fort. Les contrefaçons butent sur trois détails : la colle qui laisse des bulles d'air sous l'étiquette, le code-barre qui ne scanne pas (ou scanne vers un produit n'ayant rien à voir), et le colorway nominal qui utilise des séparateurs incorrects — Nike utilise systématiquement le format « COLOR1/COLOR2-COLOR3 » avec une barre oblique et un tiret, jamais trois tirets ou trois barres obliques. Sur une paire hypée comme une Jordan 1 Chicago, le colorway sera « WHITE/BLACK-VARSITY RED » — jamais « WHITE-BLACK-RED » ni « White/Black/Red ». Un détail de ponctuation suffit à trancher 30 % des cas douteux.",
+      "La box label est collée sur le petit côté de la boîte Nike et concentre autant d'informations que la tongue label, mais avec un angle différent : c'est l'étiquette « logistique » utilisée en entrepôt. On y trouve le style code, le colorway nominal complet (pas juste le surnom marketing), la pointure, le code-barre EAN-13, et parfois un QR code depuis 2020. La typographie est toujours Helvetica Neue, mais plus grasse que sur la tongue label — c'est un repère fort. Les contrefaçons butent sur trois détails : la colle qui laisse des bulles d'air sous l'étiquette, le code-barre qui ne scanne pas (ou scanne vers un produit n'ayant rien à voir), et le colorway nominal qui utilise des séparateurs incorrects — Nike utilise systématiquement le format « COLOR1/COLOR2-COLOR3 » avec une barre oblique et un tiret, jamais trois tirets ou trois barres obliques. Sur une paire hypée comme une Jordan 1 Chicago, le colorway sera « WHITE/BLACK-VARSITY RED » — jamais « WHITE-BLACK-RED » ni « White/Black/Red ».",
     steps: [
       {
         title: "Vérifier l'adhésion de l'étiquette",
@@ -188,7 +188,7 @@ export const nikeSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires ignorent souvent le dessous de l'insole car ils savent que la majorité des acheteurs ne décolle jamais. Les super-fakes haut de gamme (> 200 € de prix de production) ajoutent un embossage sommaire sur le dessous, mais la profondeur est typiquement 0,3-0,5 mm au lieu de 1-1,5 mm authentique. La mousse Ortholite est aussi un goulot d'étranglement : Ortholite est une marque déposée qui ne vend qu'à Nike, Adidas et quelques autres — les contrefaçons utilisent des substituts chinois qui imitent la couleur mais ratent la densité.",
+      "Les faussaires ignorent souvent le dessous de l'insole. Les super-fakes haut de gamme (> 200 € de prix de production) ajoutent un embossage sommaire sur le dessous, mais la profondeur est typiquement 0,3-0,5 mm au lieu de 1-1,5 mm authentique. La mousse Ortholite est aussi un goulot d'étranglement : Ortholite est une marque déposée qui ne vend qu'à Nike, Adidas et quelques autres — les contrefaçons utilisent des substituts chinois qui imitent la couleur mais ratent la densité.",
     faqs: [
       {
         question: "Pourquoi les insoles de mes Air Max sont-elles plus dures qu'avant ?",
@@ -265,7 +265,7 @@ export const nikeSignals: GuideSignal[] = [
       {
         question: "Le Swoosh peut-il se détacher sur une paire Nike authentique ?",
         answer:
-          "Très rarement, et presque toujours sur les modèles anciens (> 10 ans) où la colle sous les coutures a séché. Sur une paire récente (< 5 ans), un Swoosh qui se décolle est un défaut rarissime qui justifie un retour SAV Nike — pas un signe de fake. En revanche, un Swoosh qui se décolle sur une paire neuve est presque toujours un fake bas de gamme avec collage mal exécuté.",
+          "Très rarement, et presque toujours sur les modèles anciens (> 10 ans) où la colle sous les coutures a séché. Sur une paire récente (< 5 ans), un Swoosh qui se décolle est un défaut rarissime qui justifie un retour SAV Nike — pas un signe de fake. En revanche, un Swoosh qui se décolle sur une paire neuve doit faire suspecter un fake bas de gamme avec collage mal exécuté.",
       },
     ],
   },
@@ -322,7 +322,7 @@ export const nikeSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "La stratégie faussaire la plus courante est le « SKU match » : copier un code Nike réel populaire (Jordan 1 Chicago, Dunk Panda) et l'imprimer sur un fake. La faiblesse : les super-fakes se concentrent sur les codes ultra-hyped, mais les codes moins populaires (ex : Nike Pegasus Trail 4) sont rarement contrefaits car le marché est trop petit. Paradoxalement, vérifier un code Nike populaire est moins fiable que vérifier un code moins connu — les populaires sont tous copiés, les obscurs révèlent plus facilement un fake si le code est correct (car le fake est alors rare).",
+      "Une stratégie faussaire est le « SKU match » : copier un code Nike réel populaire (Jordan 1 Chicago, Dunk Panda) et l'imprimer sur un fake. La faiblesse : les super-fakes se concentrent sur les codes ultra-hyped, mais les codes moins populaires (ex : Nike Pegasus Trail 4) sont rarement contrefaits car le marché est trop petit. Paradoxalement, vérifier un code Nike populaire est moins fiable que vérifier un code moins connu — les populaires sont tous copiés, les obscurs révèlent plus facilement un fake si le code est correct (car le fake est alors rare).",
     faqs: [
       {
         question: "Que faire si le Style Code existe sur StockX mais pas sur Nike.com ?",

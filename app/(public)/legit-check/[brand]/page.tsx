@@ -15,6 +15,7 @@ import {
 import { SITE_URL } from "@/lib/site-url";
 import { buildCheckUrl } from "@/lib/seo/check-url";
 import { facts } from "@/lib/site-facts";
+import { formatRange } from "@/lib/seo/seo-facts";
 
 const FACTS = facts();
 
@@ -148,7 +149,7 @@ export default async function BrandLegitCheckHub(props: Props) {
             Choisissez votre modèle
           </h2>
           <p className="mt-2 text-ui text-muted-foreground">
-            {brandModels.length} modèles documentés avec 5 signaux d&apos;authentification spécifiques chacun.
+            {brandModels.length} modèles documentés avec {formatRange(brandModels.map((m) => m.signals.length))} signaux d&apos;authentification spécifiques chacun.
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

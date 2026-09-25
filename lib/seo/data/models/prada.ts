@@ -10,7 +10,7 @@ export const pradaModels: ModelData[] = [
     retailYear: "2020 (réédition du 2005 original)",
     tagline: "La mini pochette nylon Y2K hit Gen Z 2022",
     intro:
-      "Le Prada Re-Edition 2005, lancé en 2020 comme réédition du sac original de 2005, est devenu viral grâce à Gen Z sur TikTok (#reedition a dépassé 450 M de vues) et Instagram. Son format hobo miniature en nylon Re-Nylon (nylon recyclé) avec triangle Prada frontal en a fait le sac signature Y2K 2022-2024. Retail 2026 : 1 600-2 100 € selon matériau (Re-Nylon, Saffiano, Satin). Prix marché secondaire : 1 200-1 900 € (forte demande). Les contrefaçons Re-Edition 2005 sont massives sur Shein, Vinted, AliExpress (clones à 20-50 €) et super-fakes à 200-400 €. Les cinq signaux : triangle Prada métal (gravure, finition), Re-Nylon texture, stitching bord, zip YKK gravé, et numéro série.",
+      "Le Prada Re-Edition 2005, lancé en 2020 comme réédition du sac original de 2005, est devenu viral grâce à Gen Z sur TikTok et Instagram. Son format hobo miniature en nylon Re-Nylon (nylon recyclé) avec triangle Prada frontal en a fait le sac signature Y2K 2022-2024. Retail 2026 : 1 600-2 100 € selon matériau (Re-Nylon, Saffiano, Satin). Prix marché secondaire : 1 200-1 900 € (forte demande). Les contrefaçons Re-Edition 2005 sont massives sur Shein, Vinted, AliExpress (clones à 20-50 €) et super-fakes à 200-400 €. Les signaux : triangle Prada métal (gravure, finition), Re-Nylon texture, stitching bord, zip YKK gravé, et numéro série.",
     signals: [
       {
         title: "Triangle Prada — gravure et émail",
@@ -77,7 +77,7 @@ export const pradaModels: ModelData[] = [
     retailYear: "2007 (production continue)",
     tagline: "Le tote Saffiano rigide, sac workday iconique",
     intro:
-      "Le Prada Galleria Medium, lancé en 2007 et nommé d'après la Galleria Vittorio Emanuele II (galerie historique milanaise où Prada a ouvert en 1913), est le tote Saffiano rigide emblématique de Prada. Retail 2026 : 3 400-4 200 € selon taille (Small, Medium, Large). Prix marché secondaire : 2 300-3 500 €. Le cuir Saffiano (gaufré croisé) est une signature Prada inventée en 1913 par Mario Prada. Les contrefaçons Galleria visent les acheteuses business 30-50 ans sur Vestiaire et Vinted. Les 5 signaux : Saffiano gaufré précis, triangle Prada frontal, double poignée cuir, sangle amovible, et numéro série.",
+      "Le Prada Galleria Medium, lancé en 2007 et nommé d'après la Galleria Vittorio Emanuele II (galerie historique milanaise où Prada a ouvert en 1913), est le tote Saffiano rigide emblématique de Prada. Retail 2026 : 3 400-4 200 € selon taille (Small, Medium, Large). Prix marché secondaire : 2 300-3 500 €. Le cuir Saffiano (gaufré croisé) est une signature Prada inventée en 1913 par Mario Prada. Les contrefaçons Galleria visent les acheteuses business sur Vestiaire et Vinted. Les signaux : Saffiano gaufré précis, triangle Prada frontal, double poignée cuir, sangle amovible, et numéro série.",
     signals: [
       {
         title: "Saffiano gaufré — croisé géométrique",
@@ -144,7 +144,7 @@ export const pradaModels: ModelData[] = [
     retailYear: "2021 (production continue)",
     tagline: "La lune crescent 1990s rééditée au cuir brossé",
     intro:
-      "Le Prada Cleo, lancé en 2021 comme revival d'un sac 1990s, a une forme crescent (croissant de lune) caractéristique et utilise principalement un cuir brossé (Brushed Leather) avec finition semi-mat. Retail 2026 : 2 400-3 300 € selon taille (Small, Medium) et matériau. Prix marché secondaire : 1 800-2 900 €. Sa silhouette asymétrique avec sangle courte épaule unique et triangle Prada discret en font un sac signature moderne. Les contrefaçons Cleo ciblent la Gen Z (popularisé par Hailey Bieber, Kendall Jenner). Les 5 signaux : forme crescent exacte, cuir brossé finition, triangle Prada, sangle rigide, et numéro série.",
+      "Le Prada Cleo, lancé en 2021 comme revival d'un sac 1990s, a une forme crescent (croissant de lune) caractéristique et utilise principalement un cuir brossé (Brushed Leather) avec finition semi-mat. Retail 2026 : 2 400-3 300 € selon taille (Small, Medium) et matériau. Prix marché secondaire : 1 800-2 900 €. Sa silhouette asymétrique avec sangle courte épaule unique et triangle Prada discret en font un sac signature moderne. Les contrefaçons Cleo ciblent la Gen Z (popularisé par Hailey Bieber, Kendall Jenner). Les signaux : forme crescent exacte, cuir brossé finition, triangle Prada, sangle rigide, et numéro série.",
     signals: [
       {
         title: "Forme crescent — courbure précise",
@@ -193,7 +193,7 @@ export const pradaModels: ModelData[] = [
       {
         question: "Pourquoi le Cleo est-il devenu viral ?",
         answer:
-          "Sa silhouette crescent unique et son esthétique 1990s minimaliste correspondent parfaitement à la vague « quiet luxury » 2022-2024. Porté par Hailey Bieber, Kendall Jenner, Dua Lipa, le Cleo a généré +300 % de recherches Google en 2022. Résultat : demande secondaire forte et contrefaçons massives.",
+          "Sa silhouette crescent unique et son esthétique 1990s minimaliste correspondent parfaitement à la vague « quiet luxury » 2022-2024. Le Cleo a été porté par Hailey Bieber, Kendall Jenner, Dua Lipa. Résultat : demande secondaire forte et contrefaçons massives.",
       },
       {
         question: "Le Cleo taille-t-il normalement ?",
@@ -211,7 +211,7 @@ export const pradaModels: ModelData[] = [
     retailYear: "2022 (production continue)",
     tagline: "Le sac en forme de lune, Re-Nylon ou cuir",
     intro:
-      "Le Prada Moon Bag, lancé en 2022, est un sac de forme ovale (lune pleine) disponible en Re-Nylon matelassé ou cuir matelassé. Retail 2026 : 2 200-2 900 € selon matériau. Prix marché secondaire : 1 500-2 500 €. Sa forme unique (ovale aplati, pas rectangle ni rond), son quilting losange et son triangle Prada frontal en font un sac immédiatement reconnaissable. Les contrefaçons Moon Bag sont apparues en 2023-2024 sur Vinted et AliExpress. Les 5 signaux : forme ovale exacte, quilting losange, triangle Prada, sangle courte épaule, et Re-Nylon / cuir qualité.",
+      "Le Prada Moon Bag, lancé en 2022, est un sac de forme ovale (lune pleine) disponible en Re-Nylon matelassé ou cuir matelassé. Retail 2026 : 2 200-2 900 € selon matériau. Prix marché secondaire : 1 500-2 500 €. Sa forme unique (ovale aplati, pas rectangle ni rond), son quilting losange et son triangle Prada frontal en font un sac immédiatement reconnaissable. Les contrefaçons Moon Bag sont apparues en 2023-2024 sur Vinted et AliExpress. Les signaux : forme ovale exacte, quilting losange, triangle Prada, sangle courte épaule, et Re-Nylon / cuir qualité.",
     signals: [
       {
         title: "Forme ovale — proportions exactes",
@@ -253,7 +253,7 @@ export const pradaModels: ModelData[] = [
       {
         title: "« Moon Bag coloris exclusif drop 2026 »",
         description:
-          "Prada sort des coloris saisonniers drop, mais pas en « exclusivité Vinted ». Les vendeurs narratifs « drop exclusif » vendent presque toujours des fakes.",
+          "Prada sort des coloris saisonniers drop, mais pas en « exclusivité Vinted ». Le narratif « drop exclusif » est un signal d'alerte.",
       },
     ],
     faqs: [

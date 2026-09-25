@@ -8,9 +8,9 @@ export const adidasModels: ModelData[] = [
     category: "sneakers",
     priceRange: "220-1 200 €",
     retailYear: "2016",
-    tagline: "La Yeezy la plus copiée, plus de 15 coloris OG",
+    tagline: "Plus de 15 coloris OG",
     intro:
-      "La Yeezy Boost 350 V2, co-signée par Kanye West et adidas en 2016, reste la sneaker Yeezy la plus produite et la plus contrefaite au monde. Après la rupture de Kanye avec adidas fin 2022, les stocks restants ont été remis en vente via les adidas CONFIRMED drops de 2023-2024, ce qui a rendu les prix de retail à nouveau accessibles (230-250 €) mais a aussi multiplié les super-fakes produits à Putian et Longyan. Les coloris OG (Zebra, Beluga, Cream White, Bred, Oreo, Static) se négocient entre 300 € et 1 200 €, avec les drops rares (Infrared, MX Oat) qui dépassent régulièrement 800 €. Les contrefaçons 2025-2026 reproduisent fidèlement le pattern Primeknit, la sangle SPLY-350 et la semelle Boost, rendant l'identification visuelle au coup d'œil impossible. Les cinq points de contrôle ci-dessous ciblent les défauts qui résistent encore aux UA batches : le tissage Primeknit spécifique du V2, la géométrie exacte du texte SPLY-350, la qualité des granules Boost TPU, l'insert du heel counter interne et le format exact du tag de taille Made in China.",
+      "La Yeezy Boost 350 V2 a été co-signée par Kanye West et adidas en 2016. Après la rupture de Kanye avec adidas fin 2022, les stocks restants ont été remis en vente via les adidas CONFIRMED drops de 2023-2024, ce qui a rendu les prix de retail à nouveau accessibles (230-250 €) mais a aussi multiplié les super-fakes produits à Putian et Longyan. Les coloris OG (Zebra, Beluga, Cream White, Bred, Oreo, Static) se négocient entre 300 € et 1 200 €, avec les drops rares (Infrared, MX Oat) qui dépassent régulièrement 800 €. Les contrefaçons 2025-2026 reproduisent fidèlement le pattern Primeknit, la sangle SPLY-350 et la semelle Boost, rendant l'identification visuelle au coup d'œil impossible. Les cinq points de contrôle ci-dessous ciblent les défauts qui résistent encore aux UA batches : le tissage Primeknit spécifique du V2, la géométrie exacte du texte SPLY-350, la qualité des granules Boost TPU, l'insert du heel counter interne et le format exact du tag de taille Made in China.",
     signals: [
       {
         title: "Primeknit — densité et motif spécifique au V2",
@@ -47,7 +47,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "« Yeezy Zebra neuve à 150 € avec boîte »",
         description:
-          "La Yeezy Zebra OG a un prix marché stable à 350-500 €. Toute annonce sous 250 € boîte incluse est une contrefaçon quasi-certaine, souvent des UA batches Pandabuy revendus sur Vinted avec photos volées à StockX.",
+          "La Yeezy Zebra OG a un prix marché stable à 350-500 €. Toute annonce sous 250 € boîte incluse est suspecte, surtout avec des photos volées à StockX.",
       },
       {
         title: "Receipt adidas CONFIRMED photographiée",
@@ -59,7 +59,7 @@ export const adidasModels: ModelData[] = [
       {
         question: "Les Yeezy 350 V2 sont-elles authentifiables par StockX/GOAT ?",
         answer:
-          "Oui, StockX et GOAT authentifient les Yeezy 350 V2 sur tous les coloris OG. Le taux de rejet pour contrefaçon dépasse 12 % sur les drops récents, ce qui confirme la prévalence des super-fakes. LegitVision vous permet de pré-authentifier vos photos avant un achat hors plateforme Vinted ou Leboncoin.",
+          "Oui, StockX et GOAT authentifient les Yeezy 350 V2 sur tous les coloris OG. LegitVision vous permet de pré-authentifier vos photos avant un achat hors plateforme Vinted ou Leboncoin.",
       },
       {
         question: "Existe-t-il encore des Yeezy 350 V2 neuves en vente officielle en 2026 ?",
@@ -77,7 +77,7 @@ export const adidasModels: ModelData[] = [
     retailYear: "2017",
     tagline: "La Wave Runner chunky du dad-shoe trend",
     intro:
-      "La Yeezy Boost 700, lancée en 2017 avec le coloris « Wave Runner », a initié la vague dad-shoe qui a dominé la sneaker culture 2018-2020. Sa silhouette massive, son empiècement suède-mesh-cuir et sa semelle Boost pleine longueur en font l'un des designs les plus complexes de la ligne Yeezy — donc l'un des plus difficiles à contrefaire correctement. Les coloris Wave Runner, Mauve, Salt, Inertia et Magnet se négocient entre 400 € et 900 €, avec la Wave Runner OG qui peut atteindre 1 500 € en taille PC. Les super-fakes actuels reproduisent la silhouette mais échouent systématiquement sur la densité de la Boost pleine longueur, l'alignement des empiècements sur le mid-foot et la qualité 3M des overlays réfléchissants. Les cinq signaux ci-dessous permettent d'écarter 90 % des contrefaçons en moins de 3 minutes : empiècements tri-matières, 3M réflectif, géométrie Boost pleine longueur, texte YEEZY BOOST embroidered sur la languette, et format du size tag.",
+      "La Yeezy Boost 700, lancée en 2017 avec le coloris « Wave Runner », a initié la vague dad-shoe qui a dominé la sneaker culture 2018-2020. Sa silhouette massive, son empiècement suède-mesh-cuir et sa semelle Boost pleine longueur en font l'un des designs les plus complexes de la ligne Yeezy — donc l'un des plus difficiles à contrefaire correctement. Les coloris Wave Runner, Mauve, Salt, Inertia et Magnet se négocient entre 400 € et 900 €, avec la Wave Runner OG qui peut atteindre 1 500 € en taille PC. Les super-fakes actuels reproduisent la silhouette mais échouent systématiquement sur la densité de la Boost pleine longueur, l'alignement des empiècements sur le mid-foot et la qualité 3M des overlays réfléchissants. Les signaux ci-dessous : empiècements tri-matières, 3M réflectif, géométrie Boost pleine longueur, texte YEEZY BOOST embroidered sur la languette, et format du size tag.",
     signals: [
       {
         title: "Empiècements tri-matières — jointures nettes",
@@ -119,7 +119,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "« Taille rare EU 45 en stock » sur Instagram",
         description:
-          "Les comptes Instagram vendant exclusivement des « tailles rares » Yeezy 700 à prix moyens sont à 95 % des contrefacteurs Putian. Vérifiez l'ancienneté du compte, les avis clients et exigez un paiement PayPal biens et services (pas Friends & Family).",
+          "Les comptes Instagram vendant exclusivement des « tailles rares » Yeezy 700 à prix moyens sont suspects. Vérifiez l'ancienneté du compte, les avis clients et exigez un paiement PayPal biens et services (pas Friends & Family).",
       },
     ],
     faqs: [
@@ -144,7 +144,7 @@ export const adidasModels: ModelData[] = [
     retailYear: "2018",
     tagline: "La dad-shoe brutaliste avec semelle Adiprene+",
     intro:
-      "La Yeezy 500, sortie en 2018 avec le coloris Blush puis Supermoon Yellow, se distingue de la ligne Yeezy par l'absence de semelle Boost : elle utilise Adiprene+ en full-length, une mousse plus dense et plus lourde, qui lui donne son poids caractéristique de 580 g par chaussure en taille 42. L'upper combine mesh premium, cuir nubuck et suède en empiècements subtils, sans logo visible à l'extérieur — ce qui en fait paradoxalement l'un des modèles Yeezy les plus difficiles à contrefaire correctement, car tout défaut saute aux yeux sur une chaussure si épurée. Les coloris Blush, Super Moon Yellow, Utility Black et Stone se négocient entre 300 € et 700 €. Les contrefaçons échouent sur la densité exacte de la mousse Adiprene+, la texture du nubuck, et l'alignement parfait des empiècements sur une silhouette volontairement minimaliste. Les cinq signaux ci-dessous couvrent les points de contrôle les plus fiables : densité Adiprene+, texture nubuck, empiècements zero-gap, insole embossée et le code article spécifique.",
+      "La Yeezy 500, sortie en 2018 avec le coloris Blush puis Supermoon Yellow, se distingue de la ligne Yeezy par l'absence de semelle Boost : elle utilise Adiprene+ en full-length, une mousse plus dense et plus lourde, qui lui donne son poids caractéristique de 580 g par chaussure en taille 42. L'upper combine mesh premium, cuir nubuck et suède en empiècements subtils, sans logo visible à l'extérieur — ce qui en fait paradoxalement l'un des modèles Yeezy les plus difficiles à contrefaire correctement, car tout défaut saute aux yeux sur une chaussure si épurée. Les coloris Blush, Super Moon Yellow, Utility Black et Stone se négocient entre 300 € et 700 €. Les contrefaçons échouent sur la densité exacte de la mousse Adiprene+, la texture du nubuck, et l'alignement parfait des empiècements sur une silhouette volontairement minimaliste. Les signaux ci-dessous couvrent les points de contrôle les plus fiables : densité Adiprene+, texture nubuck, empiècements zero-gap, insole embossée et le code article spécifique.",
     signals: [
       {
         title: "Adiprene+ — densité et compression",
@@ -186,7 +186,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "Vendeur qui refuse photo de la semelle",
         description:
-          "Les contrefaçons Yeezy 500 ont une semelle Adiprene+ mal moulée (bords irréguliers, logo manquant). Un vendeur qui refuse de fournir une photo HD de la semelle de côté et du dessous est à 90 % sur une fake.",
+          "Les contrefaçons Yeezy 500 ont une semelle Adiprene+ mal moulée (bords irréguliers, logo manquant). Un vendeur qui refuse de fournir une photo HD de la semelle de côté et du dessous est suspect.",
       },
     ],
     faqs: [
@@ -209,9 +209,9 @@ export const adidasModels: ModelData[] = [
     category: "sneakers",
     priceRange: "60-250 €",
     retailYear: "2019",
-    tagline: "La slide EVA mono-bloc la plus copiée de 2024",
+    tagline: "La slide EVA mono-bloc",
     intro:
-      "La Yeezy Slide, lancée en 2019 et explosée pendant la pandémie 2020-2022, est devenue le produit Yeezy le plus accessible (retail 55-75 €) et paradoxalement l'un des plus contrefaits en volume brut. Sa construction mono-bloc en EVA foam, son absence totale de couture et son logo « YEEZY » débossé discret la rendent faussement simple à copier, mais plusieurs détails résistent aux super-fakes : densité exacte de l'EVA, géométrie du logo débossé, texture intérieure du footbed et format du tag size imprimé. Les coloris Bone, Pure, Onyx, Resin, Core et Glow Green se négocient entre 100 € et 250 € sur le marché secondaire, avec les drops rares (Flax, Sulfur, Ochre) qui dépassent 300 €. Les contrefaçons sont massivement présentes sur Vinted, Shein, AliExpress et Instagram dropship. Les cinq signaux ci-dessous ciblent les défauts les plus fréquents : densité EVA, YEEZY débossé, footbed pattern, size tag exact et poids.",
+      "La Yeezy Slide, lancée en 2019 et explosée pendant la pandémie 2020-2022, est devenue le produit Yeezy le plus accessible (retail 55-75 €). Sa construction mono-bloc en EVA foam, son absence totale de couture et son logo « YEEZY » débossé discret la rendent faussement simple à copier, mais plusieurs détails résistent aux super-fakes : densité exacte de l'EVA, géométrie du logo débossé, texture intérieure du footbed et format du tag size imprimé. Les coloris Bone, Pure, Onyx, Resin, Core et Glow Green se négocient entre 100 € et 250 € sur le marché secondaire, avec les drops rares (Flax, Sulfur, Ochre) qui dépassent 300 €. Les contrefaçons sont massivement présentes sur Vinted, Shein, AliExpress et Instagram dropship. Les signaux ci-dessous ciblent : densité EVA, YEEZY débossé, footbed pattern, size tag exact et poids.",
     signals: [
       {
         title: "Densité EVA — compression et rebond",
@@ -265,7 +265,7 @@ export const adidasModels: ModelData[] = [
       {
         question: "Peut-on authentifier une Yeezy Slide sans la boîte ?",
         answer:
-          "Oui, la boîte n'est pas déterminante pour l'authentification des slides. Les 5 signaux physiques (densité EVA, débossé YEEZY, footbed, tag, poids) suffisent. LegitVision analyse vos photos même sans boîte pour les Yeezy Slide.",
+          "Oui, la boîte n'est pas déterminante pour l'authentification des slides. Les signaux physiques (densité EVA, débossé YEEZY, footbed, tag, poids) suffisent. LegitVision analyse vos photos même sans boîte pour les Yeezy Slide.",
       },
     ],
   },
@@ -278,7 +278,7 @@ export const adidasModels: ModelData[] = [
     retailYear: "1950 (rééditée en continu)",
     tagline: "Le hit retro 2023-2026 relancé par Bella Hadid",
     intro:
-      "La adidas Samba OG, créée en 1950 pour le football en salle, est passée du statut de sneaker fonctionnelle à icône mode retro grâce au revival porté par Bella Hadid, Harry Styles et la vague « quiet luxury » 2023-2024. Les coloris White/Black/Gum, Black/White/Gum et les collaborations Wales Bonner se négocient entre 110 € (retail) et 300 € (collabs revendues), avec les restocks sporadiques créant régulièrement des ruptures et des hausses de prix. Le retour massif de la Samba a déclenché une vague de contrefaçons très bien exécutées : les super-fakes Putian reproduisent correctement la silhouette, le T-toe suède et la semelle gomme, ce qui force à vérifier des détails plus subtils. Les cinq signaux ci-dessous ciblent les points où les contrefaçons échouent encore en 2026 : qualité du T-toe suède, pattern de la semelle gomme, alignement des 3 bandes, broderie du Trefoil languette et stamp pays/date.",
+      "La adidas Samba OG, créée en 1950 pour le football en salle, est passée du statut de sneaker fonctionnelle à icône mode retro grâce au revival porté par Bella Hadid, Harry Styles et la vague « quiet luxury » 2023-2024. Les coloris White/Black/Gum, Black/White/Gum et les collaborations Wales Bonner se négocient entre 110 € (retail) et 300 € (collabs revendues), avec les restocks sporadiques créant régulièrement des ruptures et des hausses de prix. Le retour massif de la Samba a déclenché une vague de contrefaçons très bien exécutées : les super-fakes Putian reproduisent correctement la silhouette, le T-toe suède et la semelle gomme, ce qui force à vérifier des détails plus subtils. Les signaux ci-dessous ciblent les points où les contrefaçons échouent encore en 2026 : qualité du T-toe suède, pattern de la semelle gomme, alignement des 3 bandes, broderie du Trefoil languette et stamp pays/date.",
     signals: [
       {
         title: "T-toe suède — grain, épaisseur, jointure",
@@ -320,7 +320,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "Restock « en avant-première » Instagram",
         description:
-          "Les restocks Samba sont exclusifs adidas.com et CONFIRMED app. Les comptes Instagram promettant des « restocks avant-première » à prix retail sont des arnaques à 100 %. adidas ne vend jamais via DM privé.",
+          "Les restocks Samba sont exclusifs adidas.com et CONFIRMED app. Les comptes Instagram promettant des « restocks avant-première » à prix retail sont suspects. adidas ne vend jamais via DM privé.",
       },
     ],
     faqs: [
@@ -345,7 +345,7 @@ export const adidasModels: ModelData[] = [
     retailYear: "1968 (rééditée en continu)",
     tagline: "Le modèle suède 100 % qui divise les collectionneurs",
     intro:
-      "La adidas Gazelle, lancée en 1968 comme chaussure d'entraînement légère, est la cousine retro de la Samba mais avec une signature exclusivement suède (pas de cuir lisse). Après des décennies de présence constante dans le catalogue adidas Originals, elle a bénéficié du revival terrace 2024-2025 et s'impose en 2026 comme l'une des sneakers suède les plus vendues en Europe. Retail 110 € pour les coloris OG (Black/White, Red/White, Navy/White), avec les collaborations Wales Bonner, Gucci et Pharrell qui s'échangent entre 200 € et 600 €. Les super-fakes Gazelle 2025 maîtrisent la silhouette et la couleur, mais échouent sur quatre points techniques invariables : la texture exacte du suède 100 % (pas de renforts cuir cachés), la géométrie de la languette, le stitching doré du Trefoil et la semelle intérieure embossée. Les cinq signaux ci-dessous construisent une check-list rapide pour distinguer une vraie Gazelle des UA batches courants sur Vinted et Leboncoin.",
+      "La adidas Gazelle, lancée en 1968 comme chaussure d'entraînement légère, est la cousine retro de la Samba mais avec une signature exclusivement suède (pas de cuir lisse). Après des décennies de présence constante dans le catalogue adidas Originals, elle a bénéficié du revival terrace 2024-2025. Retail 110 € pour les coloris OG (Black/White, Red/White, Navy/White), avec les collaborations Wales Bonner, Gucci et Pharrell qui s'échangent entre 200 € et 600 €. Les super-fakes Gazelle 2025 maîtrisent la silhouette et la couleur, mais échouent sur quatre points techniques invariables : la texture exacte du suède 100 % (pas de renforts cuir cachés), la géométrie de la languette, le stitching doré du Trefoil et la semelle intérieure embossée. Les signaux ci-dessous construisent une check-list rapide pour distinguer une vraie Gazelle des UA batches courants sur Vinted et Leboncoin.",
     signals: [
       {
         title: "Suède 100 % — absence de renforts cuir",
@@ -382,12 +382,12 @@ export const adidasModels: ModelData[] = [
       {
         title: "Gazelle Rouge « taille 44 » à 55 € avec boîte",
         description:
-          "La Gazelle retail à 110 € et son prix marché ne descend jamais sous 80 € en taille courante. Une annonce à 55 € boîte incluse est quasi-certainement une contrefaçon, souvent issue des UA batches Pandabuy.",
+          "La Gazelle retail à 110 € et son prix marché ne descend jamais sous 80 € en taille courante. Une annonce à 55 € boîte incluse est suspecte.",
       },
       {
         title: "Collab Gucci x adidas à prix « ami »",
         description:
-          "La Gucci x adidas Gazelle a un retail à 850 € et un prix marché 600-900 €. Les comptes Instagram proposant cette collab à 250-400 € « prix entre amis » vendent à 100 % des contrefaçons. La collab authentique est vendue exclusivement sur gucci.com et boutiques Gucci.",
+          "La Gucci x adidas Gazelle a un retail à 850 € et un prix marché 600-900 €. Les comptes Instagram proposant cette collab à 250-400 € « prix entre amis » sont suspects. La collab authentique est vendue exclusivement sur gucci.com et boutiques Gucci.",
       },
     ],
     faqs: [
@@ -412,7 +412,7 @@ export const adidasModels: ModelData[] = [
     retailYear: "1980 (version 00s rééditée en 2022)",
     tagline: "Le suède silhouette épaisse, hit TikTok 2024",
     intro:
-      "La adidas Campus 00s, réédition 2022 du modèle de 1980 inspiré des chaussures de basket universitaire, s'est imposée comme l'alternative épaisse à la Gazelle et la Samba. Sa silhouette plus robuste (upper suède structurel, semelle EVA blanche pure), son succès TikTok 2024 (#campus00s a dépassé 180 M de vues), et ses coloris street (Dark Green, Better Scarlet, Off White, Wonder White) la placent parmi les trois sneakers suède les plus vendues en Europe en 2025-2026. Retail 120 €, prix marché stable 140-180 €. Les contrefaçons exploitent sa popularité sur TikTok avec des campagnes Vinted ciblant les 18-24 ans. Les cinq signaux ci-dessous distinguent la Campus 00s authentique des fakes : épaisseur du suède (plus rigide que Gazelle), géométrie des 3 bandes perforées, forme du midsole EVA, stitching du T-toe et code article BY/ID.",
+      "La adidas Campus 00s, réédition 2022 du modèle de 1980 inspiré des chaussures de basket universitaire, s'est imposée comme l'alternative épaisse à la Gazelle et la Samba. Sa silhouette plus robuste (upper suède structurel, semelle EVA blanche pure), son succès TikTok 2024, et ses coloris street (Dark Green, Better Scarlet, Off White, Wonder White) la distinguent. Retail 120 €, prix marché stable 140-180 €. Les contrefaçons exploitent sa popularité sur TikTok avec des campagnes Vinted ciblant les 18-24 ans. Les signaux ci-dessous distinguent la Campus 00s authentique des fakes : épaisseur du suède (plus rigide que Gazelle), géométrie des 3 bandes perforées, forme du midsole EVA, stitching du T-toe et code article BY/ID.",
     signals: [
       {
         title: "Suède structurel — épaisseur et rigidité",
@@ -477,9 +477,9 @@ export const adidasModels: ModelData[] = [
     category: "sneakers",
     priceRange: "100-180 €",
     retailYear: "1963 (rééditée en continu)",
-    tagline: "La tennis blanche la plus vendue de l'histoire",
+    tagline: "La tennis blanche",
     intro:
-      "La adidas Stan Smith, introduite en 1963 sous le nom « Robert Haillet » puis rebaptisée en 1978 en hommage au champion de tennis Stanley Smith, est la sneaker la plus vendue de l'histoire (plus de 100 millions de paires écoulées). Son succès est porté par sa simplicité : upper cuir lisse blanc, 3 bandes perforées (pas en relief), heel tab coloré, visage de Stan Smith embossé sur la languette. Retail 110 € pour les coloris OG (White/Green, White/Navy), avec les versions Mihara Yasuhiro, Raf Simons et Primegreen qui s'étagent entre 150 € et 500 €. La Stan Smith est une cible massive de contrefaçon en volume brut : Putian produit des milliers de pairs par mois, revendues sur Vinted, Amazon Marketplace et Shein. Les cinq signaux ci-dessous permettent d'identifier 95 % des fakes en moins de 2 minutes : cuir qualité, perforations 3 bandes, heel tab, visage Stan Smith et code article.",
+      "La adidas Stan Smith a été introduite en 1963 sous le nom « Robert Haillet » puis rebaptisée en 1978 en hommage au champion de tennis Stanley Smith. Son succès est porté par sa simplicité : upper cuir lisse blanc, 3 bandes perforées (pas en relief), heel tab coloré, visage de Stan Smith embossé sur la languette. Retail 110 € pour les coloris OG (White/Green, White/Navy), avec les versions Mihara Yasuhiro, Raf Simons et Primegreen qui s'étagent entre 150 € et 500 €. La Stan Smith est une cible massive de contrefaçon en volume brut : Putian produit des contrefaçons, revendues sur Vinted, Amazon Marketplace et Shein. Les signaux ci-dessous : cuir qualité, perforations 3 bandes, heel tab, visage Stan Smith et code article.",
     signals: [
       {
         title: "Cuir — souplesse, absence d'odeur chimique",
@@ -516,7 +516,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "Stan Smith « lot de 3 paires » à 150 €",
         description:
-          "Les annonces vendant plusieurs pairs de Stan Smith à prix cassé (lots) sont à 100 % des contrefaçons. adidas ne vend jamais en lot à prix cassé, et un particulier avec 3 pairs neuves identiques vient quasi-toujours de Pandabuy.",
+          "Les annonces vendant plusieurs pairs de Stan Smith à prix cassé (lots) sont suspectes. adidas ne vend jamais en lot à prix cassé, et un particulier avec 3 pairs neuves identiques doit éveiller la méfiance.",
       },
       {
         title: "Faux « Adidas CONFIRMED receipt »",
@@ -546,7 +546,7 @@ export const adidasModels: ModelData[] = [
     retailYear: "1969 (rééditée en continu)",
     tagline: "La shell-toe qui a dominé hip-hop et basket",
     intro:
-      "La adidas Superstar, lancée en 1969 pour le basket professionnel et propulsée icône hip-hop par Run-DMC en 1986, est l'un des modèles les plus reconnaissables de l'histoire de la sneaker. Sa signature « shell toe » (la coque plastique sur les orteils) la distingue immédiatement des autres low-top adidas. Retail 110 € pour les coloris OG (White/Black, All Black, White/Core Black), avec les collaborations (Kenny Powers, Atmos, Human Made) qui dépassent 300 €. Malgré son iconicité, la Superstar est massivement contrefaite car elle reste une cible facile : silhouette simple, cuir classique, 3 bandes standards. Les contrefaçons échouent sur quatre points invariables : la rigidité et la courbure exacte de la shell toe, le positionnement du Trefoil gold languette, le stitching des 3 bandes, et le format du tag size avec date de production. Les cinq signaux ci-dessous construisent une check-list efficace pour les acheteurs Vinted, Leboncoin, Depop.",
+      "La adidas Superstar, lancée en 1969 pour le basket professionnel et propulsée icône hip-hop par Run-DMC en 1986, est l'un des modèles les plus reconnaissables de l'histoire de la sneaker. Sa signature « shell toe » (la coque plastique sur les orteils) la distingue immédiatement des autres low-top adidas. Retail 110 € pour les coloris OG (White/Black, All Black, White/Core Black), avec les collaborations (Kenny Powers, Atmos, Human Made) qui dépassent 300 €. Malgré son iconicité, la Superstar est massivement contrefaite car elle reste une cible facile : silhouette simple, cuir classique, 3 bandes standards. Les contrefaçons échouent sur quatre points invariables : la rigidité et la courbure exacte de la shell toe, le positionnement du Trefoil gold languette, le stitching des 3 bandes, et le format du tag size avec date de production. Les signaux ci-dessous construisent une check-list efficace pour les acheteurs Vinted, Leboncoin, Depop.",
     signals: [
       {
         title: "Shell toe — courbure exacte et rigidité",
@@ -613,7 +613,7 @@ export const adidasModels: ModelData[] = [
     retailYear: "1984 (rééditée en 2021)",
     tagline: "Le basket retro à strap, hit des collabs Bad Bunny",
     intro:
-      "La adidas Forum Low, réédition en 2021 du modèle basket de 1984, s'est imposée grâce aux collaborations Bad Bunny (Last Forum, Pony of The Americas, Back to School) qui ont dépassé 1 000 € en resell. Sa signature est la sangle (strap) qui traverse le cou-de-pied avec la boucle métal « Forum », combinée à l'upper cuir et la semelle vulcanisée blanche. Retail 120 € pour les coloris OG, avec les collabs Bad Bunny qui s'échangent entre 400 € et 1 500 €. Les contrefaçons visent principalement les collabs Bad Bunny, où la marge est maximale. Les cinq signaux ci-dessous ciblent les défauts les plus fréquents : qualité du cuir épais, boucle strap metal, semelle vulcanisée, stitching 3 bandes et insole co-brandée. Pour les collabs Bad Bunny, un 6e point critique est le hangtag et la dust bag personnalisés, qui sont quasi-impossibles à contrefaire correctement.",
+      "La adidas Forum Low, réédition en 2021 du modèle basket de 1984, s'est imposée grâce aux collaborations Bad Bunny (Last Forum, Pony of The Americas, Back to School) qui ont dépassé 1 000 € en resell. Sa signature est la sangle (strap) qui traverse le cou-de-pied avec la boucle métal « Forum », combinée à l'upper cuir et la semelle vulcanisée blanche. Retail 120 € pour les coloris OG, avec les collabs Bad Bunny qui s'échangent entre 400 € et 1 500 €. Les contrefaçons visent principalement les collabs Bad Bunny, où la marge est maximale. Les signaux ci-dessous ciblent : qualité du cuir épais, boucle strap metal, semelle vulcanisée, stitching 3 bandes et insole co-brandée. Pour les collabs Bad Bunny, un 6e point critique est le hangtag et la dust bag personnalisés, qui sont quasi-impossibles à contrefaire correctement.",
     signals: [
       {
         title: "Cuir épais — 2,3 mm, grain visible",
@@ -655,7 +655,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "Compte Instagram « sneaker plug » — paiement Revolut",
         description:
-          "Les comptes Instagram proposant des Forum Low collab à prix cassé en demandant paiement Revolut ou Wise (non remboursable) sont des arnaques à 100 %. Exigez PayPal biens et services, ou annulez la transaction.",
+          "Les comptes Instagram proposant des Forum Low collab à prix cassé en demandant paiement Revolut ou Wise (non remboursable) sont suspects. Exigez PayPal biens et services, ou annulez la transaction.",
       },
     ],
     faqs: [
@@ -680,7 +680,7 @@ export const adidasModels: ModelData[] = [
     retailYear: "1970s (rééditée en continu)",
     tagline: "La terrace sneaker portée par tout Londres en 2024",
     intro:
-      "La adidas Handball Spezial, créée dans les années 1970 pour le handball indoor et relancée comme terrace sneaker auprès des supporters anglais des années 1980, est devenue l'un des modèles les plus désirés de 2024-2025. Le coloris Light Blue/White est quasi-impossible à trouver en boutique retail, créant un prix marché à 180-250 € pour un retail à 130 €. Sa silhouette low-profile, son upper suède intégral, ses bandes latérales aux contours plats et sa semelle gomme distincte de la Samba en font un modèle très spécifique. Les contrefaçons 2025 exploitent sa rareté avec des UA batches diffusés sur Vinted à prix « bonne affaire ». Les cinq signaux ci-dessous distinguent la Spezial authentique des clones : suède épais spécifique, bandes plates embroidered (pas stitchées), semelle gomme pattern distinct, languette fine et code article IE/GY.",
+      "La adidas Handball Spezial a été créée dans les années 1970 pour le handball indoor et relancée comme terrace sneaker auprès des supporters anglais des années 1980. Le coloris Light Blue/White est quasi-impossible à trouver en boutique retail, créant un prix marché à 180-250 € pour un retail à 130 €. Sa silhouette low-profile, son upper suède intégral, ses bandes latérales aux contours plats et sa semelle gomme distincte de la Samba en font un modèle très spécifique. Les contrefaçons 2025 exploitent sa rareté avec des UA batches diffusés sur Vinted à prix « bonne affaire ». Les signaux ci-dessous distinguent la Spezial authentique des clones : suède épais spécifique, bandes plates embroidered (pas stitchées), semelle gomme pattern distinct, languette fine et code article IE/GY.",
     signals: [
       {
         title: "Suède épais — texture granuleuse",
@@ -717,7 +717,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "Light Blue « neuve » à 80 €",
         description:
-          "La Spezial Light Blue a un prix marché stable 150-220 € neuve. Une annonce à 80 € est une contrefaçon quasi-certaine. adidas rupture régulièrement ce coloris, donc un stock particulier est improbable.",
+          "La Spezial Light Blue a un prix marché stable 150-220 € neuve. Une annonce à 80 € est suspecte. adidas rupture régulièrement ce coloris, donc un stock particulier est improbable.",
       },
       {
         title: "Confusion avec la Samba rebrandée",
@@ -734,7 +734,7 @@ export const adidasModels: ModelData[] = [
       {
         question: "La Spezial existe-t-elle en dehors du Light Blue ?",
         answer:
-          "Oui, la Spezial se décline en plusieurs coloris (Navy/White, Burgundy/White, Green/White, Black/Gum). Le Light Blue reste le plus désiré. Chaque coloris a son code article spécifique à vérifier sur adidas.com.",
+          "Oui, la Spezial se décline en plusieurs coloris (Navy/White, Burgundy/White, Green/White, Black/Gum). Chaque coloris a son code article spécifique à vérifier sur adidas.com.",
       },
     ],
   },

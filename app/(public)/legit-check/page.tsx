@@ -14,6 +14,7 @@ import {
 import { SITE_URL } from "@/lib/site-url";
 import { buildCheckUrl } from "@/lib/seo/check-url";
 import { facts } from "@/lib/site-facts";
+import { SEO_COUNTS } from "@/lib/seo/seo-facts";
 
 const FACTS = facts();
 
@@ -21,14 +22,14 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title:
-    "Legit Check : 72 guides d'authentification par marque et modèle",
+    `Legit Check : ${SEO_COUNTS.modelGuides} guides d'authentification par marque et modèle`,
   description:
-    `Guides 2026 pour authentifier 72 modèles de sneakers (Nike, Jordan, Adidas, Yeezy, New Balance), sacs de luxe (Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada) et streetwear (Supreme, Off-White, Stone Island, BAPE). Signaux techniques, arnaques, pré-authentification IA ${FACTS.priceSingle}.`,
+    `Guides 2026 pour authentifier ${SEO_COUNTS.modelGuides} modèles de sneakers (Nike, Jordan, Adidas, Yeezy, New Balance), sacs de luxe (Louis Vuitton, Chanel, Hermès, Gucci, Dior, Prada) et streetwear (Supreme, Off-White, Stone Island, BAPE). Signaux techniques, arnaques, pré-authentification IA ${FACTS.priceSingle}.`,
   alternates: { canonical: "/legit-check" },
   openGraph: {
-    title: "Legit Check — 72 guides LegitVision",
+    title: `Legit Check — ${SEO_COUNTS.modelGuides} guides LegitVision`,
     description:
-      "Sélection de 72 guides d'authentification par marque et modèle pour sneakers, sacs de luxe et streetwear.",
+      `Sélection de ${SEO_COUNTS.modelGuides} guides d'authentification par marque et modèle pour sneakers, sacs de luxe et streetwear.`,
     url: `${SITE_URL}/legit-check`,
     type: "website",
   },
@@ -91,7 +92,7 @@ export default function LegitCheckHubPage() {
             Legit Check : authentifier marque par marque, modèle par modèle.
           </h1>
           <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
-            Guides 2026 pour pré-authentifier {totalModels} modèles des marques les plus contrefaites : sneakers hype, sacs de luxe iconiques, streetwear japonais et italien. Signaux techniques propres à chaque modèle, arnaques spécifiques, prix marché actuel, et pré-authentification IA en {FACTS.median} secondes (durée médiane) à {FACTS.priceSingle}.
+            Guides 2026 pour pré-authentifier {totalModels} modèles : sneakers hype, sacs de luxe iconiques, streetwear japonais et italien. Signaux techniques propres à chaque modèle, arnaques spécifiques, prix marché actuel, et pré-authentification IA en {FACTS.median} secondes (durée médiane) à {FACTS.priceSingle}.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">

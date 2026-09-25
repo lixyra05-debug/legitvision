@@ -9,9 +9,9 @@ export const brands: Brand[] = [
     name: "Nike",
     category: "sneakers",
     logo: "/images/brands/nike.jpg",
-    tagline: "La marque sneakers la plus contrefaite au monde",
+    tagline: "La marque sneakers du Swoosh",
     description:
-      "Nike, fondée à Beaverton en 1964, domine le marché mondial du sneaker avec plus de 51 milliards de dollars de chiffre d'affaires annuel. Ses lignes iconiques — Air Force 1, Dunk, Blazer, Cortez — et ses collaborations hyped (Travis Scott, Off-White, sacai) en font la cible privilégiée des contrefacteurs. Selon les principales plateformes d'authentification, près d'une paire Nike sur cinq en circulation sur le marché secondaire européen est une contrefaçon. Les super-fakes produits en Chine du Sud sont aujourd'hui visuellement très convaincants, exigeant une expertise pointue sur le swoosh, les étiquettes intérieures et la géométrie de la semelle.",
+      "Nike a été fondée à Beaverton en 1964. Ses lignes iconiques — Air Force 1, Dunk, Blazer, Cortez — et ses collaborations hyped (Travis Scott, Off-White, sacai) en font une cible des contrefacteurs. Les super-fakes produits en Chine du Sud sont aujourd'hui visuellement très convaincants, exigeant une expertise pointue sur le swoosh, les étiquettes intérieures et la géométrie de la semelle.",
     priceRange: "80-300 € selon modèle",
     productType: "paire de sneakers",
     productPossessive: "une paire de",
@@ -50,14 +50,9 @@ export const brands: Brand[] = [
     ],
     faqs: [
       {
-        question: "Quels modèles Nike sont les plus contrefaits en 2026 ?",
-        answer:
-          "Par ordre décroissant : les Air Force 1 Low blanches (volume #1), les Dunk Low Panda, les Jordan 1 Chicago (via marque Jordan), les Travis Scott Jordan, et les collaborations Off-White x Nike. Ces cinq catégories représentent environ 65 % des contrefaçons Nike circulant sur le marché secondaire européen.",
-      },
-      {
         question: "Comment vérifier le Style Code Nike ?",
         answer:
-          "Le Style Code est au format XX1234-567 (2 lettres, 4 chiffres, tiret, 3 chiffres). Recherchez-le sur Nike.com ou StockX — il doit exister et correspondre au modèle + colorway exact présenté. Un Style Code inexistant, attribué à un autre modèle ou un autre colorway est une preuve quasi-définitive de contrefaçon.",
+          "Le Style Code est au format XX1234-567 (2 lettres, 4 chiffres, tiret, 3 chiffres). Recherchez-le sur Nike.com ou StockX — il doit exister et correspondre au modèle + colorway exact présenté. Un Style Code inexistant, attribué à un autre modèle ou un autre colorway est un signal fort de contrefaçon.",
       },
       {
         question: "Les Nike « Made in China » sont-elles toutes fausses ?",
@@ -79,7 +74,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/jordan.jpg",
     tagline: "Le Saint-Graal des sneakerheads — et des contrefacteurs",
     description:
-      "Air Jordan, marque fondée en 1984 autour de Michael Jordan et opérée par Nike, représente à elle seule plus de 6 milliards de dollars de chiffre d'affaires annuel. Les modèles Jordan 1, Jordan 4 et Jordan 11 sont parmi les produits textiles les plus contrefaits au monde toutes catégories confondues. Les Jordan 1 Retro High Chicago, Bred Toe et Travis Scott Mocha comptent respectivement plus de 50 000, 30 000 et 45 000 paires contrefaites identifiées en circulation. La sophistication croissante des super-fakes (cuir premium, box label quasi parfaite) rend la vérification particulièrement complexe en 2026.",
+      "Air Jordan est une marque fondée en 1984 autour de Michael Jordan et opérée par Nike. La sophistication croissante des super-fakes (cuir premium, box label quasi parfaite) rend la vérification particulièrement complexe en 2026.",
     priceRange: "180-2 500 € selon collaboration",
     productType: "paire de Jordan",
     productPossessive: "une paire de",
@@ -125,12 +120,12 @@ export const brands: Brand[] = [
       {
         question: "Pourquoi les Jordan 1 Chicago sont-elles si contrefaites ?",
         answer:
-          "Les Jordan 1 Chicago (coloris rouge/blanc/noir original de 1985) combinent trois facteurs : une popularité culturelle ininterrompue, un prix retail à 180 € mais une valeur marché de 800-1 500 € selon la génération, et un design graphique simple qui se copie facilement. Leur ratio profit/complexité de copie en fait la cible #1 des contrefacteurs chinois.",
+          "Les Jordan 1 Chicago (coloris rouge/blanc/noir original de 1985) combinent trois facteurs : une popularité culturelle ininterrompue, un prix retail à 180 € mais une valeur marché de 800-1 500 € selon la génération, et un design graphique simple qui se copie facilement.",
       },
       {
         question: "Existe-t-il des super-fakes Jordan vraiment indétectables ?",
         answer:
-          "Les super-fakes « UA » (Unauthorized Authentic) atteignent aujourd'hui un niveau tel que 15-20 % des authentificateurs humains se trompent sur des paires non portées. Les différences résident sur des détails millimétriques (épaisseur des coutures, rendu exact de la mousse) que seule une analyse comparative fine peut révéler. C'est précisément là que l'IA vision de LegitVision apporte une précision constante.",
+          "Les super-fakes « UA » (Unauthorized Authentic) atteignent aujourd'hui un niveau tel que des authentificateurs humains se trompent sur des paires non portées. Les différences résident sur des détails millimétriques (épaisseur des coutures, rendu exact de la mousse) que seule une analyse comparative fine peut révéler. C'est sur ces détails que porte l'analyse IA de LegitVision.",
       },
       {
         question: "Que vaut le service Nike Jordan Authentication ?",
@@ -146,7 +141,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/adidas.png",
     tagline: "Le géant allemand entre heritage et lifestyle",
     description:
-      "adidas, fondée à Herzogenaurach en 1949, pèse 22 milliards d'euros de chiffre d'affaires en 2025 et reste la deuxième marque sneakers mondiale. Ses lignes Originals (Samba, Gazelle, Stan Smith, Campus) ont connu une renaissance massive depuis 2023, avec une explosion de la demande et, mécaniquement, des contrefaçons. La rupture avec Kanye West en 2022 a également relancé le marché secondaire Yeezy à des niveaux records, attirant une nouvelle vague de super-fakes. Les signaux d'authentification adidas diffèrent substantiellement de Nike, notamment sur les trois bandes, la structure du talon et le marquage des languettes.",
+      "adidas a été fondée à Herzogenaurach en 1949. Ses lignes Originals (Samba, Gazelle, Stan Smith, Campus) ont connu une renaissance massive depuis 2023, avec une explosion de la demande et, mécaniquement, des contrefaçons. La rupture avec Kanye West en 2022 a également relancé le marché secondaire Yeezy, attirant une nouvelle vague de super-fakes. Les signaux d'authentification adidas diffèrent substantiellement de Nike, notamment sur les trois bandes, la structure du talon et le marquage des languettes.",
     priceRange: "90-400 € selon modèle",
     productType: "paire de sneakers adidas",
     productPossessive: "une paire de",
@@ -173,7 +168,7 @@ export const brands: Brand[] = [
       {
         title: "Box label adidas : format et QR code",
         description:
-          "La box label adidas authentique est collée droite avec une tolérance < 2 mm, et mentionne : Article Number (6 chiffres), pointure multi-système, colorway nominal, date de fabrication au format MM/AAAA, et QR code fonctionnel qui redirige vers adidas.com/[product]. Une box avec QR qui ne fonctionne pas, ou un Article Number inexistant sur le site officiel, est presque toujours une contrefaçon.",
+          "La box label adidas authentique est collée droite avec une tolérance < 2 mm, et mentionne : Article Number (6 chiffres), pointure multi-système, colorway nominal, date de fabrication au format MM/AAAA, et QR code fonctionnel qui redirige vers adidas.com/[product]. Une box avec QR qui ne fonctionne pas, ou un Article Number inexistant sur le site officiel, est un signal d'alerte.",
         difficulty: 1,
       },
       {
@@ -197,7 +192,7 @@ export const brands: Brand[] = [
       {
         question: "Les Samba et Gazelle sont-elles massivement contrefaites ?",
         answer:
-          "Oui, depuis 2023-2024. La viralité TikTok et Instagram des Samba OG et Gazelle Indoor a multiplié par 8 les contrefaçons en circulation. Les super-fakes les plus récentes reproduisent parfaitement le gum sole, le cuir pull-up et les 3 bandes, avec des écarts détectables uniquement sur la typographie de l'étiquette intérieure et le marquage gravé.",
+          "Oui, depuis 2023-2024. Les super-fakes les plus récentes reproduisent parfaitement le gum sole, le cuir pull-up et les 3 bandes, avec des écarts détectables uniquement sur la typographie de l'étiquette intérieure et le marquage gravé.",
       },
       {
         question: "adidas propose-t-il un service d'authentification officiel ?",
@@ -213,7 +208,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/new-balance.png",
     tagline: "Le retour en grâce du Made in USA/UK",
     description:
-      "New Balance, fondée à Boston en 1906, était historiquement cantonnée au segment running et lifestyle discret jusqu'à son explosion culturelle en 2022-2024 via les collaborations Aimé Leon Dore, Joe Freshgoods et Salehe Bembury. Les modèles 990v5, 990v6, 550 et 2002R sont aujourd'hui les sneakers les plus recherchées du marché premium, avec des prix secondaires dépassant régulièrement les 500 €. Cette demande explosive a attiré une vague massive de contrefaçons depuis 2023, concentrée sur les modèles Made in USA (990v5 Grey, 993) et Made in UK (991, 1500) dont les signaux d'authentification sont spécifiques et mal connus du grand public.",
+      "New Balance, fondée à Boston en 1906, était historiquement cantonnée au segment running et lifestyle discret jusqu'à son explosion culturelle en 2022-2024 via les collaborations Aimé Leon Dore, Joe Freshgoods et Salehe Bembury. Les modèles 990v5, 990v6, 550 et 2002R sont aujourd'hui des sneakers recherchées sur le marché premium, avec des prix secondaires dépassant régulièrement les 500 €. Cette demande explosive a attiré une vague massive de contrefaçons depuis 2023, concentrée sur les modèles Made in USA (990v5 Grey, 993) et Made in UK (991, 1500) dont les signaux d'authentification sont spécifiques et mal connus du grand public.",
     priceRange: "130-600 € selon modèle",
     productType: "paire de New Balance",
     productPossessive: "une paire de",
@@ -234,7 +229,7 @@ export const brands: Brand[] = [
       {
         title: "Box label : format et provenance cohérente",
         description:
-          "La box New Balance authentique mentionne : modèle (ex. M990GL5), pointure, colorway, date de fabrication, et lieu de production (Flimby UK, Lawrence MA USA, Vietnam, Indonésie). Vérifiez la cohérence entre le pays de la box et celui imprimé sur l'étiquette intérieure — une incohérence est presque toujours une contrefaçon. La typographie NB est spécifique, toujours en Helvetica, sans empâtements.",
+          "La box New Balance authentique mentionne : modèle (ex. M990GL5), pointure, colorway, date de fabrication, et lieu de production (Flimby UK, Lawrence MA USA, Vietnam, Indonésie). Vérifiez la cohérence entre le pays de la box et celui imprimé sur l'étiquette intérieure — une incohérence est un signal d'alerte. La typographie NB est spécifique, toujours en Helvetica, sans empâtements.",
         difficulty: 2,
       },
       {
@@ -259,17 +254,17 @@ export const brands: Brand[] = [
       {
         question: "Le Made in USA / UK est-il vraiment un gage de qualité ?",
         answer:
-          "Oui. La production Flimby (UK) et Lawrence/Skowhegan (USA) applique des standards de contrôle qualité supérieurs à la production asiatique, avec des cuirs premium (Horween Leather pour certaines collabs) et un assemblage main pour certaines étapes. Les modèles Made in USA coûtent 40-60 % plus cher que les équivalents Made in Asia, ce qui justifie les prix élevés.",
+          "Oui. La production Flimby (UK) et Lawrence/Skowhegan (USA) applique des standards de contrôle qualité supérieurs à la production asiatique, avec des cuirs premium (Horween Leather pour certaines collabs) et un assemblage main pour certaines étapes.",
       },
       {
         question: "Comment vérifier l'authenticité sans expérience New Balance ?",
         answer:
-          `Si vous achetez vos premières New Balance en seconde main, concentrez-vous sur trois signaux rapides : box label cohérente avec l'étiquette intérieure, pays de fabrication cohérent entre les deux, et sensation de qualité du N latéral au toucher (cuir/suède authentique vs synthétique low-cost). En cas de doute, une analyse IA LegitVision à ${FACTS.priceSingle} règle la question.`,
+          `Si vous achetez vos premières New Balance en seconde main, concentrez-vous sur trois signaux rapides : box label cohérente avec l'étiquette intérieure, pays de fabrication cohérent entre les deux, et sensation de qualité du N latéral au toucher (cuir/suède authentique vs synthétique low-cost). En cas de doute, une analyse IA LegitVision à ${FACTS.priceSingle} apporte un premier avis.`,
       },
       {
-        question: "Les New Balance 550 sont-elles moins contrefaites que les 990 ?",
+        question: "Quels modèles New Balance les contrefacteurs visent-ils ?",
         answer:
-          "Proportionnellement oui, car leur prix retail (130-150 €) et leur prix marché (150-250 €) offrent une marge de contrefaçon plus faible. Les contrefacteurs concentrent leurs efforts sur les modèles à forte plus-value : 990v5/v6, 2002R, et les collabs Aimé Leon Dore ou Joe Freshgoods qui dépassent souvent 400-500 € au marché.",
+          "Les 550 (retail 130-150 €, marché 150-250 €) offrent une marge de contrefaçon plus faible. Les contrefacteurs concentrent leurs efforts sur les modèles à forte plus-value : 990v5/v6, 2002R, et les collabs Aimé Leon Dore ou Joe Freshgoods qui dépassent souvent 400-500 € au marché.",
       },
     ],
   },
@@ -278,9 +273,9 @@ export const brands: Brand[] = [
     name: "Louis Vuitton",
     category: "bags",
     logo: "/images/brands/louis-vuitton.png",
-    tagline: "La maison française la plus contrefaite de l'histoire",
+    tagline: "La maison française du monogramme",
     description:
-      "Louis Vuitton, maison fondée en 1854 et pilier du groupe LVMH, génère plus de 23 milliards d'euros de chiffre d'affaires annuel, dont plus de 60 % sur la maroquinerie. Les modèles Neverfull, Speedy, Alma et Keepall figurent dans le top 5 des articles les plus contrefaits au monde, avec une production clandestine estimée à 30 millions de pièces par an — soit près de 10 fois la production officielle. La sophistication des super-fakes LV a atteint en 2024-2026 un niveau critique : cuir Vachetta convaincant, monogramme imprimé quasi parfait, et quincaillerie dorée correctement lourde. Seuls les micro-détails (code date, alignement monogramme, police du heat-stamp) permettent la distinction.",
+      "Louis Vuitton, maison fondée en 1854, est un pilier du groupe LVMH. La sophistication des super-fakes LV a atteint en 2024-2026 un niveau critique : cuir Vachetta convaincant, monogramme imprimé quasi parfait, et quincaillerie dorée correctement lourde. Seuls les micro-détails (code date, alignement monogramme, police du heat-stamp) permettent la distinction.",
     priceRange: "800-25 000 € selon modèle",
     productType: "sac Louis Vuitton",
     productPossessive: "un sac",
@@ -307,7 +302,7 @@ export const brands: Brand[] = [
       {
         title: "Puce RFID — depuis 2021",
         description:
-          "Depuis mars 2021, Louis Vuitton a remplacé le code date par une puce RFID cachée dans la doublure. Cette puce contient les informations de production et de traçabilité. Les vendeurs authentiques peuvent obtenir la validation en boutique LV avec un simple scan. En l'absence de puce détectable (après 2021) ou d'un code date manifestement incorrect (avant 2021), la contrefaçon est probable à 95 %.",
+          "Depuis mars 2021, Louis Vuitton a remplacé le code date par une puce RFID cachée dans la doublure. Cette puce contient les informations de production et de traçabilité. Les vendeurs authentiques peuvent obtenir la validation en boutique LV avec un simple scan. L'absence de puce détectable (après 2021) ou un code date manifestement incorrect (avant 2021) est un signal d'alerte.",
         difficulty: 3,
       },
       {
@@ -321,17 +316,12 @@ export const brands: Brand[] = [
       {
         question: "Louis Vuitton propose-t-il un service d'authentification officiel ?",
         answer:
-          "Partiellement. Les boutiques Louis Vuitton peuvent confirmer ou infirmer l'authenticité d'un sac en visuel, mais ne délivrent aucun certificat écrit officiel. Cette pratique est informelle et dépend du vendeur en boutique. Les seules authentifications écrites reconnues proviennent d'experts tiers : Entrupy, Real Authentication, LegitGrails, ou LegitVision (IA).",
+          "Partiellement. Les boutiques Louis Vuitton peuvent confirmer ou infirmer l'authenticité d'un sac en visuel, mais ne délivrent aucun certificat écrit officiel. Cette pratique est informelle et dépend du vendeur en boutique. Les seules authentifications écrites reconnues proviennent d'experts tiers : Entrupy, Real Authentication, LegitGrails. LegitVision, lui, fournit une pré-authentification par IA.",
       },
       {
         question: "Que signifie « code date » Louis Vuitton ?",
         answer:
           "Le code date est un marquage à 4 caractères (2 lettres + 4 chiffres) gravé à l'intérieur des sacs Louis Vuitton produits avant mars 2021. Les lettres codent le lieu de fabrication, les chiffres la semaine et l'année. Depuis 2021, LV a remplacé ce système par une puce RFID. Un sac récent (2022+) sans puce RFID ni code date est nécessairement une contrefaçon.",
-      },
-      {
-        question: "Les Neverfull sont-elles les plus contrefaites ?",
-        answer:
-          "Oui, de loin. Le Neverfull MM (taille moyenne) en Monogram est le modèle LV le plus contrefait au monde, avec plus de 8 millions de contrefaçons produites chaque année selon les douanes européennes. Sa popularité, son prix retail autour de 1 800-2 500 € et son design relativement simple à copier en font la cible prioritaire absolue des contrefacteurs.",
       },
       {
         question: "Un Louis Vuitton sans dust bag est-il forcément faux ?",
@@ -347,7 +337,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/chanel.png",
     tagline: "L'exclusivité française au cœur du super-fake",
     description:
-      "Chanel, maison parisienne fondée par Gabrielle Chanel en 1910, reste l'une des deux icônes absolues du luxe mondial avec Hermès. Ses sacs Classic Flap, 2.55, Boy et 19 constituent un marché d'investissement à part entière, avec des hausses annuelles de prix retail de 8-12 % depuis 2019. Cette rareté orchestrée (quotas d'achat, listes d'attente) a alimenté un marché secondaire estimé à 3,2 milliards d'euros par an, où 25-35 % des sacs en circulation seraient des contrefaçons selon les douanes françaises. Les super-fakes Chanel produits depuis 2023 atteignent un réalisme tel que même les experts visuels se trompent sur des photos — seul l'examen physique du cuir, du matelassage et de la puce permet la distinction finale.",
+      "Chanel, maison parisienne fondée par Gabrielle Chanel en 1910, reste l'une des deux icônes absolues du luxe mondial avec Hermès. Ses sacs Classic Flap, 2.55, Boy et 19 constituent un marché d'investissement à part entière. Cette rareté orchestrée (quotas d'achat, listes d'attente) a alimenté un marché secondaire. Les super-fakes Chanel produits depuis 2023 atteignent un réalisme tel que même les experts visuels se trompent sur des photos — seul l'examen physique du cuir, du matelassage et de la puce permet la distinction finale.",
     priceRange: "3 500-30 000 € selon modèle",
     productType: "sac Chanel",
     productPossessive: "un sac",
@@ -398,12 +388,12 @@ export const brands: Brand[] = [
       {
         question: "Les super-fakes Chanel sont-ils détectables ?",
         answer:
-          "Oui, mais c'est de plus en plus difficile sur photo. Les super-fakes 2024-2026 reproduisent correctement l'hologramme, le matelassage visible et le CC logo principal. Les différences résident sur des micro-détails : grain exact du cuir, poids précis de la quincaillerie, régularité du matelassage sur les angles cachés, et micro-gravures sur les fermoirs. Une analyse IA multi-zones est devenue la méthode la plus fiable.",
+          "Oui, mais c'est de plus en plus difficile sur photo. Les super-fakes 2024-2026 reproduisent correctement l'hologramme, le matelassage visible et le CC logo principal. Les différences résident sur des micro-détails : grain exact du cuir, poids précis de la quincaillerie, régularité du matelassage sur les angles cachés, et micro-gravures sur les fermoirs.",
       },
       {
         question: "Pourquoi les prix Chanel augmentent-ils chaque année ?",
         answer:
-          "Chanel applique une stratégie délibérée d'augmentation retail annuelle (8-12 % par an depuis 2019) pour positionner ses sacs comme actifs d'investissement et justifier la rareté. Un Classic Flap Medium en caviar vendu 5 100 € en 2019 coûte aujourd'hui 10 800 € chez Chanel. Cette inflation a alimenté le marché secondaire et, mécaniquement, les contrefaçons.",
+          "Chanel applique une stratégie délibérée d'augmentation retail annuelle pour positionner ses sacs comme actifs d'investissement et justifier la rareté. Un Classic Flap Medium en caviar vendu 5 100 € en 2019 coûte aujourd'hui 10 800 € chez Chanel. Cette inflation a alimenté le marché secondaire et, mécaniquement, les contrefaçons.",
       },
     ],
   },
@@ -414,7 +404,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/gucci.png",
     tagline: "L'italien baroque aux mille déclinaisons",
     description:
-      "Gucci, maison fondée à Florence en 1921 et pilier du groupe Kering, reste dans le top 3 mondial du luxe avec 10,5 milliards d'euros de chiffre d'affaires en 2025. Sa diversification massive (maroquinerie, prêt-à-porter, chaussures, accessoires, beauté, horlogerie) et ses multiples monogrammes (GG Supreme, Double G, Horsebit, Web Stripe) en font l'une des marques les plus contrefaites au monde, avec des volumes comparables à Louis Vuitton. Les modèles Dionysus, Marmont, Jackie et Ophidia concentrent plus de 70 % des faux en circulation. La variabilité des codes d'authentification selon les collections (Tom Ford, Frida Giannini, Alessandro Michele, Sabato De Sarno) complexifie la vérification pour les non-initiés.",
+      "Gucci, maison fondée à Florence en 1921, est un pilier du groupe Kering. Sa diversification massive (maroquinerie, prêt-à-porter, chaussures, accessoires, beauté, horlogerie) et ses multiples monogrammes (GG Supreme, Double G, Horsebit, Web Stripe) en font une cible des contrefacteurs. La variabilité des codes d'authentification selon les collections (Tom Ford, Frida Giannini, Alessandro Michele, Sabato De Sarno) complexifie la vérification pour les non-initiés.",
     priceRange: "900-15 000 € selon modèle",
     productType: "article Gucci",
     productPossessive: "un",
@@ -460,7 +450,7 @@ export const brands: Brand[] = [
       {
         question: "Pourquoi les Marmont Gucci sont-elles autant contrefaites ?",
         answer:
-          "Le GG Marmont Matelassé (sortie 2016, ère Alessandro Michele) est devenu en une décennie l'un des sacs Gucci les plus vendus au monde. Son design relativement simple (chevron quilting, Double G), son prix retail accessible (1 200-2 500 €) et sa très forte notoriété en font une cible prioritaire des contrefacteurs. On estime que 40 % des GG Marmont en circulation en seconde main sont des contrefaçons.",
+          "Le GG Marmont Matelassé est sorti en 2016, à l'ère Alessandro Michele. Son design relativement simple (chevron quilting, Double G), son prix retail accessible (1 200-2 500 €) et sa très forte notoriété en font une cible des contrefacteurs.",
       },
       {
         question: "Comment distinguer Gucci d'époque Tom Ford d'Alessandro Michele ?",
@@ -479,9 +469,9 @@ export const brands: Brand[] = [
     name: "Hermès",
     category: "bags",
     logo: "/images/brands/hermes.png",
-    tagline: "L'artisanat français le plus copié — et le plus dur à reproduire",
+    tagline: "L'artisanat français le plus dur à reproduire",
     description:
-      "Hermès, maison parisienne fondée en 1837, incarne le sommet absolu de la maroquinerie mondiale avec ses modèles Birkin, Kelly et Constance vendus 7 000 à 250 000 € en boutique — et souvent 2 à 5 fois leur prix retail en seconde main. Sa production exclusivement artisanale (1 sac = 1 artisan = 15-25 heures de travail) et sa politique d'allocation stricte (pas de vente libre, listes d'attente) créent une rareté orchestrée qui a généré un marché noir massif. Les contrefaçons Hermès se divisent en deux catégories : les super-fakes « UA » produites à partir de cuirs premium par d'anciens artisans, et les fakes industrielles plus grossières. L'authentification Hermès est la plus technique du luxe, nécessitant expertise sur le cuir, les selliers-tâcherons, et les codes de production changeants chaque année.",
+      "Hermès, maison parisienne fondée en 1837, incarne le sommet absolu de la maroquinerie mondiale avec ses modèles Birkin, Kelly et Constance vendus 7 000 à 250 000 € en boutique. Sa production exclusivement artisanale (1 sac = 1 artisan = 15-25 heures de travail) et sa politique d'allocation stricte (pas de vente libre, listes d'attente) créent une rareté orchestrée qui a généré un marché noir massif. Les contrefaçons Hermès se divisent en deux catégories : les super-fakes « UA » produites à partir de cuirs premium par d'anciens artisans, et les fakes industrielles plus grossières. L'authentification Hermès est la plus technique du luxe, nécessitant expertise sur le cuir, les selliers-tâcherons, et les codes de production changeants chaque année.",
     priceRange: "7 000-250 000 € selon modèle et cuir",
     productType: "sac Hermès",
     productPossessive: "un sac",
@@ -537,7 +527,7 @@ export const brands: Brand[] = [
       {
         question: "Vaut-il mieux acheter Hermès chez Vestiaire Collective ?",
         answer:
-          "Oui, Vestiaire Collective est la plateforme la plus sûre pour acheter du Hermès d'occasion grâce à leur équipe d'authentification dédiée au luxe. Cependant, même Vestiaire peut laisser passer des super-fakes très récentes. Pour un sac > 10 000 €, un double contrôle via Entrupy ou LegitVision reste fortement recommandé avant d'accepter la livraison.",
+          "Vestiaire Collective dispose d'une équipe d'authentification dédiée au luxe. Cependant, même Vestiaire peut laisser passer des super-fakes très récentes. Pour un sac > 10 000 €, un double contrôle via Entrupy ou LegitVision reste fortement recommandé avant d'accepter la livraison.",
       },
     ],
   },
@@ -548,7 +538,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/prada.png",
     tagline: "Le renouveau italien porté par Re-Edition",
     description:
-      "Prada, maison milanaise fondée en 1913, vit depuis 2020 une renaissance culturelle majeure portée par la collection Re-Edition 2000 (nylon Saffiano), la collaboration Prada x adidas, et la renaissance du minimalisme italien. Les modèles Re-Edition Nylon Mini, Cleo, Galleria et Saffiano Bag concentrent l'essentiel de la demande en seconde main en 2025-2026, avec des prix marché dépassant régulièrement 30-50 % le retail en boutique. Cette inflation a attiré une vague de contrefaçons concentrée sur le nylon Saffiano (triangle logo) et la quincaillerie Prada, avec des super-fakes atteignant un niveau visuel convaincant sur photo. Les codes d'authentification Prada (triangle logo, carte authenticité, code produit) sont relativement précis et permettent une détection fiable au toucher physique.",
+      "Prada, maison milanaise fondée en 1913, vit depuis 2020 une renaissance culturelle majeure portée par la collection Re-Edition 2000 (nylon Saffiano), la collaboration Prada x adidas, et la renaissance du minimalisme italien. Cette renaissance a attiré une vague de contrefaçons concentrée sur le nylon Saffiano (triangle logo) et la quincaillerie Prada, avec des super-fakes atteignant un niveau visuel convaincant sur photo. Les codes d'authentification Prada (triangle logo, carte authenticité, code produit) sont relativement précis et permettent une détection fiable au toucher physique.",
     priceRange: "1 200-8 000 € selon modèle",
     productType: "article Prada",
     productPossessive: "un",
@@ -601,11 +591,6 @@ export const brands: Brand[] = [
         answer:
           "Le nylon Saffiano Prada authentique a un grain ripstop visible de près (quadrillage fin), une résistance à l'eau supérieure (test de la goutte d'eau qui perle), un toucher satiné mais non plastifié, et un poids plus dense au mètre carré. Le nylon générique est souvent plus lisse, plus brillant, moins hydrofuge, et plus léger. L'étiquette intérieure Prada précise « 100 % nylon tecno » ou « nylon tessuto ».",
       },
-      {
-        question: "Les sacs Prada vintage sont-ils moins contrefaits ?",
-        answer:
-          "Oui, proportionnellement. Les modèles Prada des années 90-2010 (Saffiano originelle, Galleria d'origine) ont un marché secondaire moins liquide que la Re-Edition, donc moins de contrefaçons. En revanche, la vague vintage Y2K de 2023-2025 a relancé la production de fakes sur certains modèles historiques (Prada Tessuto 2005, Boston Bag d'époque).",
-      },
     ],
   },
   {
@@ -615,7 +600,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/dior.png",
     tagline: "La couture française au cœur de la revente spéculative",
     description:
-      "Christian Dior, maison parisienne fondée en 1946 et pilier du groupe LVMH, a connu depuis 2016 (arrivée de Maria Grazia Chiuri) une transformation massive de sa maroquinerie avec le lancement du Saddle Bag 2018 (réédition), du Book Tote, du Lady Dior updates, et de la Bobby Bag. Ces lancements, couplés à des drops limités, ont créé un marché secondaire estimé à 1,8 milliards d'euros en 2025, particulièrement tendu sur le Saddle Bag (prix retail 3 500 €, marché 4 500-5 500 €) et le Book Tote XL. Cette spéculation a attiré une vague massive de super-fakes produits dès 2021, atteignant un niveau de détail croissant sur le Oblique canvas, le Cannage quilting et la quincaillerie D charms. Les signaux d'authentification Dior (typographie spécifique, placement exact des tags, qualité du canvas) permettent néanmoins une détection fiable pour un œil entraîné.",
+      "Christian Dior, maison parisienne fondée en 1946 et pilier du groupe LVMH, a connu depuis 2016 (arrivée de Maria Grazia Chiuri) une transformation massive de sa maroquinerie avec le lancement du Saddle Bag 2018 (réédition), du Book Tote, du Lady Dior updates, et de la Bobby Bag. Ces lancements, couplés à des drops limités, ont créé un marché secondaire particulièrement tendu sur le Saddle Bag (prix retail 3 500 €, marché 4 500-5 500 €) et le Book Tote XL. Cette spéculation a attiré une vague massive de super-fakes produits dès 2021, atteignant un niveau de détail croissant sur le Oblique canvas, le Cannage quilting et la quincaillerie D charms. Les signaux d'authentification Dior (typographie spécifique, placement exact des tags, qualité du canvas) permettent néanmoins une détection fiable pour un œil entraîné.",
     priceRange: "1 800-12 000 € selon modèle",
     productType: "sac Dior",
     productPossessive: "un sac",
@@ -666,12 +651,12 @@ export const brands: Brand[] = [
       {
         question: "Pourquoi les Saddle Bag sont-elles si contrefaites ?",
         answer:
-          "La Saddle Bag originale (John Galliano 2000, re-éditée en 2018 par Maria Grazia Chiuri) est devenue un must-have millenial/Gen Z avec plus de 2 millions de pièces vendues depuis sa réédition. Son prix retail à 3 500 € et son marché secondaire à 4 500-5 500 € (jusqu'à 8 000 € pour les colorways limités) offrent une marge de contrefaçon exceptionnelle. Plus de 35 % des Saddle Bags en circulation en seconde main sont des contrefaçons selon les estimations.",
+          "La Saddle Bag originale (John Galliano 2000, re-éditée en 2018 par Maria Grazia Chiuri) est devenue un must-have millenial/Gen Z. Son prix retail à 3 500 € et son marché secondaire à 4 500-5 500 € (jusqu'à 8 000 € pour les colorways limités) offrent une marge de contrefaçon exceptionnelle.",
       },
       {
         question: "Les collaborations Dior Jordan sont-elles contrefaites aussi ?",
         answer:
-          "Oui, massivement. Les Dior Jordan 1 High (sortie 2020, 13 000 paires produites, retail 2 200 €, marché 8 000-15 000 €) sont parmi les sneakers les plus contrefaites au monde malgré leur rareté. Les contrefaçons circulent avec des boîtes Dior/Jordan dupliquées et des charms D-pendentifs reproduits. Une authentification professionnelle est indispensable pour ce modèle spécifique.",
+          "Oui, massivement. Les Dior Jordan 1 High (sortie 2020, retail 2 200 €, marché 8 000-15 000 €) sont contrefaites malgré leur rareté. Les contrefaçons circulent avec des boîtes Dior/Jordan dupliquées et des charms D-pendentifs reproduits. Une authentification professionnelle est indispensable pour ce modèle spécifique.",
       },
     ],
   },
@@ -680,9 +665,9 @@ export const brands: Brand[] = [
     name: "Supreme",
     category: "clothing",
     logo: "/images/brands/supreme.png",
-    tagline: "La marque streetwear la plus contrefaite de l'histoire",
+    tagline: "La marque streetwear du Box Logo",
     description:
-      "Supreme, fondée à New York en 1994 par James Jebbia, a érigé la rareté en stratégie commerciale : chaque drop hebdomadaire s'épuise en quelques secondes, créant un marché secondaire hystérique. Le Box Logo est devenu l'un des symboles textiles les plus contrefaits au monde. Près de 80 % des articles marqués « Supreme » en circulation seconde main sont des contrefaçons selon les estimations. La marque a été rachetée par VF Corporation en 2020 puis par EssilorLuxottica en 2024, mais sa méthode drop-scarcity inchangée maintient un gap hystérique entre offre et demande.",
+      "Supreme, fondée à New York en 1994 par James Jebbia, a érigé la rareté en stratégie commerciale : chaque drop hebdomadaire s'épuise en quelques secondes, créant un marché secondaire hystérique. La marque a été rachetée par VF Corporation en 2020 puis par EssilorLuxottica en 2024, mais sa méthode drop-scarcity inchangée maintient un gap hystérique entre offre et demande.",
     priceRange: "50-1 500 € selon pièce",
     productType: "pièce Supreme",
     productPossessive: "une pièce de",
@@ -722,7 +707,7 @@ export const brands: Brand[] = [
       {
         question: "Les fakes Supreme sont-ils détectables à l'œil nu ?",
         answer:
-          "Les fakes low-tier (15-30 €) sont détectables immédiatement : police mal alignée, couleurs saturées, étiquette imprimée. Les super-fakes (100-200 €) exigent une vérification de la police Futura au millimètre, du poids du tissu à la main, et de la cohérence avec l'archive du drop. LegitVision détecte les deux types via analyse IA.",
+          "Les fakes low-tier (15-30 €) sont détectables immédiatement : police mal alignée, couleurs saturées, étiquette imprimée. Les super-fakes (100-200 €) exigent une vérification de la police Futura au millimètre, du poids du tissu à la main, et de la cohérence avec l'archive du drop. L'analyse IA de LegitVision porte sur ces mêmes détails.",
       },
     ],
   },
@@ -733,7 +718,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/off-white.png",
     tagline: "L'héritage Virgil Abloh, le terrain des contrefacteurs",
     description:
-      "Off-White, fondée par Virgil Abloh en 2013 et devenue propriété de LVMH en 2021, est l'une des marques streetwear haut de gamme les plus copiées au monde. Ses codes signatures — les flèches diagonales, les guillemets autour des mots, le zip tie rouge, la ceinture industrielle jaune — sont systématiquement reproduits à bas coût. Après le décès de Virgil Abloh fin 2021, la collection « c/o Virgil Abloh » a atteint des prix records sur le secondary, attirant massivement les contrefacteurs. Plus de 50 % des articles Off-White en circulation seconde main en Europe sont estimés contrefaits.",
+      "Off-White, fondée par Virgil Abloh en 2013, est devenue propriété de LVMH en 2021. Ses codes signatures — les flèches diagonales, les guillemets autour des mots, le zip tie rouge, la ceinture industrielle jaune — sont systématiquement reproduits à bas coût. Après le décès de Virgil Abloh fin 2021, la collection « c/o Virgil Abloh » a attiré massivement les contrefacteurs.",
     priceRange: "200-2 500 € selon pièce",
     productType: "pièce Off-White",
     productPossessive: "une pièce de",
@@ -771,9 +756,9 @@ export const brands: Brand[] = [
           "Photographiez le zip tie et le numéro lisiblement. Le numéro doit être 6-8 chiffres sans lettre, gravé en creux (pas imprimé en surface). Demandez au vendeur le zip tie avec l'article : son absence n'est pas rédhibitoire mais sa présence avec un numéro cohérent est un signal positif majeur.",
       },
       {
-        question: "Les pièces c/o Virgil sont-elles plus contrefaites ?",
+        question: "Les pièces c/o Virgil sont-elles contrefaites ?",
         answer:
-          "Oui. La collection posthume c/o Virgil Abloh (drops 2022-2023) a vu ses prix doubler voire tripler sur le secondary, déclenchant une vague massive de super-fakes. Les Arrows hoodies c/o Virgil à 400-500 € sur Vinted/Grailed sont à 85 % des contrefaçons — le prix authentique secondaire tourne autour de 800-1 400 €.",
+          "Oui. La collection posthume c/o Virgil Abloh (drops 2022-2023) a déclenché une vague massive de super-fakes. Les Arrows hoodies c/o Virgil à 400-500 € sur Vinted/Grailed sont un signal d'alerte — le prix authentique secondaire tourne autour de 800-1 400 €.",
       },
     ],
   },
@@ -782,9 +767,9 @@ export const brands: Brand[] = [
     name: "Stone Island",
     category: "clothing",
     logo: "/images/brands/stone-island.png",
-    tagline: "Le badge compass, terrain de jeu privilégié des contrefacteurs",
+    tagline: "Le badge compass, cible des contrefacteurs",
     description:
-      "Stone Island, fondée par Massimo Osti en 1982 puis rachetée par Moncler en 2020, est devenue depuis 2015 l'une des marques techwear/streetwear premium les plus recherchées au monde. Sa patch compass (la fameuse boussole cousue sur la manche gauche) symbolise son ADN techno : chaque pièce utilise des teintures expérimentales et des traitements brevetés. Cette patch est aussi le sigle le plus contrefait du segment. Plus de 40 % des Stone Island en circulation seconde main à moins de 300 € sont des contrefaçons selon les marchands professionnels. Les super-fakes atteignent désormais un niveau où le tissu et la coupe sont techniquement convaincants.",
+      "Stone Island, fondée par Massimo Osti en 1982, a été rachetée par Moncler en 2020. Sa patch compass (la fameuse boussole cousue sur la manche gauche) symbolise son ADN techno : chaque pièce utilise des teintures expérimentales et des traitements brevetés. Les super-fakes atteignent désormais un niveau où le tissu et la coupe sont techniquement convaincants.",
     priceRange: "250-1 800 € selon pièce",
     productType: "pièce Stone Island",
     productPossessive: "une pièce de",
@@ -835,7 +820,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/bape.webp",
     tagline: "A Bathing Ape — 30 ans d'ADN streetwear hypercopié",
     description:
-      "BAPE (A Bathing Ape), fondée par Nigo à Tokyo en 1993, est l'une des marques streetwear les plus influentes de l'histoire du hip-hop et du Japon contemporain. Ses motifs Shark et ABC Camo sont aujourd'hui les imprimés streetwear les plus contrefaits au monde avec le Box Logo Supreme. Depuis le rachat par I.T Group en 2011 et l'expansion globale (ouvertures NYC, LA, Paris), la hype BAPE a explosé, faisant exploser en parallèle le volume de contrefaçons. Environ 70 % des BAPE en circulation seconde main à moins de 250 € sont des contrefaçons — les super-fakes du quartier Canal Street NYC et des usines chinoises de Putian atteignent désormais un niveau de sophistication élevé.",
+      "BAPE (A Bathing Ape), fondée par Nigo à Tokyo en 1993, est l'une des marques streetwear les plus influentes de l'histoire du hip-hop et du Japon contemporain. Depuis le rachat par I.T Group en 2011 et l'expansion globale (ouvertures NYC, LA, Paris), la hype BAPE a explosé, faisant exploser en parallèle le volume de contrefaçons. Les super-fakes du quartier Canal Street NYC et des usines chinoises de Putian atteignent désormais un niveau de sophistication élevé.",
     priceRange: "150-2 000 € selon pièce",
     productType: "pièce BAPE",
     productPossessive: "une pièce de",
@@ -873,9 +858,9 @@ export const brands: Brand[] = [
           "BAPE propose depuis 2021 un service SAV avec authentification sur les produits achetés en boutique officielle (avec preuve d'achat). Pour les achats seconde main, aucune authentification officielle n'est possible. Il faut passer par des services tiers (LegitVision, Legit App, ou plateformes comme StockX qui authentifient leurs pièces BAPE revendues).",
       },
       {
-        question: "Le Shark Hoodie Full Zip est-il plus contrefait ?",
+        question: "Le Shark Hoodie Full Zip est-il contrefait ?",
         answer:
-          "Oui. Le Full Zip Shark (retail 380 €, marché 600-1 100 € selon coloris) est le modèle BAPE le plus contrefait au monde. La complexité du motif Shark rend les super-fakes techniquement convaincantes. Vérifiez systématiquement : nombre de dents (14 total), angle 22°, coutures des oreilles, zip YKK gravé, étiquette intérieure tissée avec triangle NOWHERE.",
+          "Oui. Le Full Zip Shark (retail 380 €, marché 600-1 100 € selon coloris) est une cible des contrefacteurs. La complexité du motif Shark rend les super-fakes techniquement convaincantes. Vérifiez systématiquement : nombre de dents (14 total), angle 22°, coutures des oreilles, zip YKK gravé, étiquette intérieure tissée avec triangle NOWHERE.",
       },
     ],
   },
