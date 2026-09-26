@@ -11,6 +11,8 @@
  * la modifier.
  */
 
+import { ANALYSIS_OUTCOME_MAX_MINUTES } from "./analysis-limits";
+
 type Lang = "fr" | "en";
 
 /**
@@ -64,6 +66,16 @@ export const PHOTOS_BY_CATEGORY = {
  */
 export const ANALYSIS_MEDIAN_SECONDS = 47;
 
+/**
+ * Délai maximal annoncé, en minutes, entre le lancement d'une analyse et
+ * l'affichage de son rapport ou de son échec (sans débit). LIMITE CHOISIE, pas
+ * une mesure : elle découle des durées de lib/analysis-limits.ts (durée
+ * maximale de la route, reprise des analyses bloquées), où elle est calculée
+ * et vérifiée par tests/unit/analysis-limits.test.ts. Exposée ici pour que les
+ * textes la lisent, comme tout chiffre affiché, dans cette source unique.
+ */
+export const ANALYSIS_MAX_MINUTES = ANALYSIS_OUTCOME_MAX_MINUTES;
+
 /** Prix TTC en euros. Doivent rester égaux aux prix Stripe (STRIPE_*_PRICE_ID). */
 export const PRICES = {
   single: 3.99,
@@ -113,6 +125,7 @@ export function facts(lang: Lang = "fr") {
     sneakersPhotosMax: String(PHOTOS_BY_CATEGORY.sneakers.max),
     photosMax: String(CATALOG.photosMax),
     median: String(ANALYSIS_MEDIAN_SECONDS),
+    analysisMaxMinutes: String(ANALYSIS_MAX_MINUTES),
     priceSingle: formatPrice(PRICES.single, lang),
     pricePro: formatPrice(PRICES.pro, lang),
     priceBusiness: formatPrice(PRICES.business, lang),

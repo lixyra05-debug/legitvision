@@ -266,7 +266,10 @@ export const translations = {
         "Échec de la conversion de la photo HEIC. Réessayez ou choisissez une photo JPEG/PNG.",
       analyze: "Lancer l'analyse",
       analyzing: "Analyse en cours…",
-      uploading: "Upload en cours…",
+      uploadingPhotos: "Envoi des photos",
+      uploadingHint: "Ne fermez pas cette page : l'analyse démarre une fois les photos envoyées.",
+      analyzingHint:
+        `Durée médiane : ${FACTS.median} s, envoi des photos compris. Le rapport, ou l'échec sans crédit décompté, s'affiche au plus tard ${FACTS.analysisMaxMinutes} minutes après la fin de l'envoi des photos. Ne fermez pas cette page.`,
       continueToPhotos: "Continuer aux photos",
       noCredits: "Aucun crédit d'analyse",
       buyCredits:
@@ -277,12 +280,17 @@ export const translations = {
       retryLater: "Réessayez dans quelques minutes ou contactez le support.",
       paymentSecure: "Paiement sécurisé Stripe · Résiliable à tout moment",
       backLink: "Retour",
-      errorCreate: "Erreur lors de la création de l'analyse.",
-      errorInvalid: "Le serveur a retourné une réponse invalide. Vérifiez les logs serveur.",
-      errorUpload: "Erreur upload photo",
-      errorPhotoRecord: "Erreur lors de l'enregistrement des photos.",
-      errorUnexpected: "Une erreur inattendue est survenue.",
-      errorAnalysisFailed: "Erreur lors de l'analyse.",
+      // Erreurs AVANT l'appel à la route d'analyse : rien ne peut avoir été
+      // débité. Après cet appel, toute issue incertaine renvoie vers la page
+      // de l'analyse, qui dit la vérité (voir check/new).
+      errorCreate:
+        "L'analyse n'a pas pu être créée. Vérifiez votre connexion et réessayez : aucun crédit n'a été décompté.",
+      errorUpload:
+        "L'envoi de la photo « {photo} » a échoué. Vérifiez votre connexion et relancez l'analyse : aucun crédit n'a été décompté.",
+      errorPhotoRecord:
+        "L'enregistrement des photos a échoué. Relancez l'analyse : aucun crédit n'a été décompté.",
+      errorBeforeLaunch:
+        "Une erreur est survenue avant le lancement de l'analyse. Aucun crédit n'a été décompté : relancez-la.",
     },
     pricing: {
       single: "Analyse unique",
@@ -331,16 +339,27 @@ export const translations = {
       severityCritical: "Critique",
       severityImportant: "Important",
       severityMinor: "Mineur",
-      analysisFailedShort: "Analyse échouée",
-      analysisFailedTitle: "L'analyse a échoué",
-      analysisFailedDesc: "Une erreur est survenue lors du traitement. Aucun crédit n'a été décompté : veuillez réessayer.",
+      analysisFailedShort: "Analyse non aboutie",
+      analysisFailedTitle: "L'analyse n'a pas abouti",
+      analysisFailedDesc:
+        "Aucun rapport n'a été produit et aucun crédit n'a été décompté. L'analyse a échoué, a dépassé sa durée maximale, ou n'a pas été lancée (envoi des photos interrompu, lancement refusé ou perdu). Relancez une analyse.",
       // Aucune revue humaine n'existe : ces résultats (score 40-60 ou confiance
       // faible, statut « expert_review » en base) sont définitifs, et le disent.
       uncertainResultTitle: "Résultat à interpréter avec prudence",
       uncertainResultDesc:
         "Le score se situe dans une zone intermédiaire : l'estimation reste incertaine. Ce résultat est définitif : aucune vérification humaine n'est prévue. Suivez les recommandations ci-dessous et, pour un article de valeur, faites-le examiner par un authentificateur indépendant.",
       analyzingDesc:
-        `Une analyse dure ${FACTS.median} secondes en médiane. Actualisez la page dans un instant pour afficher le rapport.`,
+        `Une analyse dure ${FACTS.median} secondes en médiane, envoi des photos compris. Le rapport, ou l'échec sans crédit décompté, s'affiche ici au plus tard ${FACTS.analysisMaxMinutes} minutes après la fin de l'envoi des photos. Cette page se met à jour toute seule.`,
+      // Statut « pending » : toutes les photos sont envoyées, le lancement est
+      // demandé (check/new), la route ne l'a pas encore réservé.
+      launchingTitle: "Lancement de l'analyse…",
+      launchingDesc:
+        "Toutes les photos sont envoyées : l'analyse démarre dans quelques secondes. Si la demande de lancement s'est perdue, l'analyse s'affichera ici comme non aboutie, sans aucun crédit décompté. Cette page se met à jour toute seule.",
+      // Statut « uploading » : l'envoi des photos n'est pas terminé, ou a été
+      // interrompu. Rien ne dit lequel : le texte ne tranche pas.
+      notStartedTitle: "Analyse non lancée",
+      notStartedDesc:
+        "Cette analyse n'a pas été lancée : soit les photos sont encore en cours d'envoi depuis votre appareil, soit l'envoi ou le lancement a été interrompu. Dans ce cas, elle ne démarrera pas et aucun crédit ne sera décompté : relancez une analyse. Cette page se met à jour toute seule.",
     },
     dashboard: {
       greeting: "Bonjour",
@@ -356,6 +375,11 @@ export const translations = {
       startAnalysis: "Lancer une analyse",
       deleteAnalysis: "Supprimer cette analyse",
       credits: "crédits",
+      pagination: "Pages de l'historique",
+      newer: "Plus récentes",
+      older: "Plus anciennes",
+      page: "Page",
+      pageOf: "sur",
     },
     subscription: {
       pageTitle: "Gérer mon abonnement",
@@ -734,7 +758,10 @@ export const translations = {
         "HEIC photo conversion failed. Try again or choose a JPEG/PNG photo.",
       analyze: "Start analysis",
       analyzing: "Analyzing…",
-      uploading: "Uploading…",
+      uploadingPhotos: "Uploading photos",
+      uploadingHint: "Don't close this page: the analysis starts once the photos are uploaded.",
+      analyzingHint:
+        `Median duration: ${FACTS_EN.median} s, photo upload included. The report, or the failure with no credit used, appears within ${FACTS_EN.analysisMaxMinutes} minutes after the photos finish uploading. Don't close this page.`,
       continueToPhotos: "Continue to photos",
       noCredits: "No analysis credits",
       buyCredits:
@@ -745,12 +772,14 @@ export const translations = {
       retryLater: "Try again in a few minutes or contact support.",
       paymentSecure: "Secure Stripe payment · Cancel anytime",
       backLink: "Back",
-      errorCreate: "Error creating the analysis.",
-      errorInvalid: "The server returned an invalid response. Check server logs.",
-      errorUpload: "Photo upload error",
-      errorPhotoRecord: "Error saving photos.",
-      errorUnexpected: "An unexpected error occurred.",
-      errorAnalysisFailed: "Error during analysis.",
+      errorCreate:
+        "The analysis could not be created. Check your connection and try again: no credit was used.",
+      errorUpload:
+        "Uploading the photo “{photo}” failed. Check your connection and start the analysis again: no credit was used.",
+      errorPhotoRecord:
+        "Saving the photos failed. Start the analysis again: no credit was used.",
+      errorBeforeLaunch:
+        "An error occurred before the analysis started. No credit was used: start it again.",
     },
     pricing: {
       single: "Single analysis",
@@ -797,14 +826,21 @@ export const translations = {
       severityCritical: "Critical",
       severityImportant: "Important",
       severityMinor: "Minor",
-      analysisFailedShort: "Analysis failed",
-      analysisFailedTitle: "The analysis failed",
-      analysisFailedDesc: "An error occurred during processing. No credit was used: please try again.",
+      analysisFailedShort: "Analysis not completed",
+      analysisFailedTitle: "The analysis did not complete",
+      analysisFailedDesc:
+        "No report was produced and no credit was used. The analysis failed, exceeded its maximum duration, or was not started (photo upload interrupted, launch refused or lost). Start a new analysis.",
       uncertainResultTitle: "Interpret this result with caution",
       uncertainResultDesc:
         "The score falls in an intermediate range: the estimate remains uncertain. This result is final: no human review is planned. Follow the recommendations below and, for a valuable item, have it examined by an independent authenticator.",
       analyzingDesc:
-        `An analysis takes a median of ${FACTS_EN.median} seconds. Refresh the page in a moment to see your report.`,
+        `An analysis takes a median of ${FACTS_EN.median} seconds, photo upload included. The report, or the failure with no credit used, appears here within ${FACTS_EN.analysisMaxMinutes} minutes after the photos finish uploading. This page updates by itself.`,
+      launchingTitle: "Starting the analysis…",
+      launchingDesc:
+        "All photos are uploaded: the analysis starts in a few seconds. If the launch request was lost, the analysis will show here as not completed, with no credit used. This page updates by itself.",
+      notStartedTitle: "Analysis not started",
+      notStartedDesc:
+        "This analysis has not started: either the photos are still being uploaded from your device, or the upload or the launch was interrupted. In that case, it will not start and no credit will be used: start a new analysis. This page updates by itself.",
     },
     dashboard: {
       greeting: "Hello",
@@ -820,6 +856,11 @@ export const translations = {
       startAnalysis: "Start an analysis",
       deleteAnalysis: "Delete this analysis",
       credits: "credits",
+      pagination: "History pages",
+      newer: "Newer",
+      older: "Older",
+      page: "Page",
+      pageOf: "of",
     },
     subscription: {
       pageTitle: "Manage subscription",

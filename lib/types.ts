@@ -239,13 +239,16 @@ export function getVerdictLabel(verdict: Verdict, locale: Locale = "fr"): string
   }
 }
 
+// « uploading » : envoi des photos pas terminé, ou interrompu (rien ne dit
+// lequel) ; « pending » : photos envoyées, lancement demandé à la route. Les
+// deux passent en échec au-delà de leur seuil (lib/analysis-limits.ts).
 export function getStatusLabel(status: AnalysisStatus, locale: Locale = "fr"): string {
   if (locale === "en") {
     switch (status) {
       case "pending":
-        return "Pending";
+        return "Launch requested";
       case "uploading":
-        return "Uploading";
+        return "Not started";
       case "analyzing":
         return "Analyzing";
       case "completed":
@@ -258,9 +261,9 @@ export function getStatusLabel(status: AnalysisStatus, locale: Locale = "fr"): s
   }
   switch (status) {
     case "pending":
-      return "En attente";
+      return "Lancement demandé";
     case "uploading":
-      return "Upload en cours";
+      return "Non lancée";
     case "analyzing":
       return "Analyse en cours";
     case "completed":

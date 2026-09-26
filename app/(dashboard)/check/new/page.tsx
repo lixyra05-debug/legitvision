@@ -22,8 +22,70 @@ import { PhotoUploader } from "@/components/check/PhotoUploader";
 import type { Category, Brand, Model, PhotoSlot } from "@/lib/types";
 import { facts } from "@/lib/site-facts";
 import { NO_AUTH_POINTS } from "@/lib/analyzable";
+import {
+  ANALYSIS_CLIENT_TIMEOUT_SECONDS,
+  NOT_STARTED_STATUSES,
+} from "@/lib/analysis-limits";
 
 const FACTS = facts();
+
+/**
+ * Issue de la requête d'analyse, vue du client :
+ * - "report" : aller sur la page de l'analyse. C'est le cas du succès, mais
+ *   aussi de toute issue INCERTAINE (connexion coupée, délai du client dépassé,
+ *   réponse illisible comme un 504 de Vercel, 409) : le serveur a pu finir,
+ *   enregistrer le rapport et débiter. La page de l'analyse dit la vérité
+ *   (rapport, en cours, ou échec sans débit).
+ * - "error" : la route a répondu par un refus ou un échec qu'elle a écrit
+ *   elle-même, sans débit ; son message s'affiche sur le formulaire.
+ */
+type LaunchOutcome = { kind: "report" } | { kind: "error"; message: string };
+
+async function launchAnalysis(body: {
+  analysisId: string;
+  variant_selected: string | null;
+  collab_selected: string | null;
+}): Promise<LaunchOutcome> {
+  // Un peu au-delà de la durée maximale de la fonction : la réponse de la
+  // route, ou le 504 de la plateforme, arrive toujours avant.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ANALYSIS_CLIENT_TIMEOUT_SECONDS * 1000);
+  let response: Response;
+  try {
+    response = await fetch("/api/analyze", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
+  } catch {
+    return { kind: "report" };
+  } finally {
+    clearTimeout(timer);
+  }
+
+  // 409 : l'analyse n'est plus à lancer (déjà lancée, ou classée en échec).
+  if (response.ok || response.status === 409) return { kind: "report" };
+
+  // Toutes les réponses d'erreur de la route portent un message texte. Tout
+  // autre corps vient d'ailleurs (plateforme, proxy) : issue incertaine.
+  let payload: unknown = null;
+  try {
+    payload = await response.json();
+  } catch {
+    // corps illisible
+  }
+  const message =
+    payload && typeof payload === "object" && "error" in payload
+      ? (payload as { error: unknown }).error
+      : null;
+  return typeof message === "string" && message.length > 0
+    ? { kind: "error", message }
+    : { kind: "report" };
+}
+
+/** Étape du lancement : envoi des photos, puis analyse par la route. */
+type SubmitPhase = "idle" | "uploading" | "analyzing";
 
 interface PhotoFile {
   file: File;
@@ -89,8 +151,10 @@ export default function NewCheckPage() {
 
   // Step 4
   const [photos, setPhotos] = useState<Record<string, PhotoFile>>({});
-  const [submitting, setSubmitting] = useState(false);
+  const [phase, setPhase] = useState<SubmitPhase>("idle");
+  const [uploadProgress, setUploadProgress] = useState<{ done: number; total: number } | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const submitting = phase !== "idle";
 
   // Paywall (zero-credit) modal state
   const [showPaywall, setShowPaywall] = useState(false);
@@ -314,14 +378,24 @@ export default function NewCheckPage() {
   const handleSubmit = useCallback(async () => {
     if (!category || !selectedBrand || !selectedModel || !allRequiredUploaded) return;
 
-    setSubmitting(true);
+    setPhase("uploading");
     setSubmitError(null);
+    // Vrai dès que la page part ailleurs : le bouton reste alors désactivé,
+    // pour qu'un second clic ne crée pas une seconde analyse.
+    let leaving = false;
+    // Identifiant de l'analyse dès sa création : une erreur avant le
+    // lancement la clôt en « failed » (rien n'est débité avant la route).
+    let createdId: string | null = null;
+    // Identifiant de l'analyse dès que la requête d'analyse est partie : toute
+    // issue incertaine renvoie alors vers sa page.
+    let launchedId: string | null = null;
 
     try {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) {
+        leaving = true;
         router.push("/auth");
         return;
       }
@@ -356,9 +430,12 @@ export default function NewCheckPage() {
         setSubmitError(t("check.errorCreate"));
         return;
       }
+      createdId = analysis.id;
 
-      // Upload photos to Supabase Storage
+      // Upload photos to Supabase Storage. Tant que la route n'est pas
+      // appelée, rien ne peut être débité : les messages le disent.
       const photoEntries = Object.entries(photos);
+      setUploadProgress({ done: 0, total: photoEntries.length });
       for (let i = 0; i < photoEntries.length; i++) {
         const [photoType, photoFile] = photoEntries[i];
         const ext = photoFile.file.name.split(".").pop() ?? "jpg";
@@ -377,7 +454,10 @@ export default function NewCheckPage() {
             .from("analyses")
             .update({ status: "failed" })
             .eq("id", analysis.id);
-          setSubmitError(`${t("check.errorUpload")} "${photoType}": ${uploadError.message}`);
+          // Libellé de l'emplacement (« Semelle »…), normalisé comme `protocol`.
+          const slots = selectedBrand.photo_protocol as unknown as Array<{ name?: string; type?: string; label: string }>;
+          const label = slots.find((slot) => (slot.name ?? slot.type) === photoType)?.label ?? photoType;
+          setSubmitError(t("check.errorUpload").replace("{photo}", label));
           return;
         }
 
@@ -405,45 +485,77 @@ export default function NewCheckPage() {
           setSubmitError(t("check.errorPhotoRecord"));
           return;
         }
+        setUploadProgress({ done: i + 1, total: photoEntries.length });
       }
 
-      // Call the AI analysis API.
-      // Note: the route accepts both "uploading" and "pending" status,
-      // so no client-side status update is needed before calling it.
-      const analyzeResponse = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          analysisId: analysis.id,
-          variant_selected: selectedVariant !== "Standard" ? selectedVariant : null,
-          collab_selected: selectedCollab,
-        }),
+      // Toutes les photos sont envoyées : l'analyse passe à « pending »
+      // (lancement demandé). Si la requête qui suit n'arrive jamais à la
+      // route, sa page le dit et la classe en échec au bout de
+      // LAUNCH_STALE_AFTER_SECONDS, au lieu d'annoncer un envoi en cours.
+      // Conditionnel : une analyse déjà classée en échec n'est pas relancée.
+      // Si cette écriture échoue, la route accepte aussi « uploading » : le
+      // lancement reste possible.
+      setPhase("analyzing");
+      await supabase
+        .from("analyses")
+        .update({ status: "pending" })
+        .eq("id", analysis.id)
+        .eq("status", "uploading");
+
+      // Appel de la route d'analyse.
+      launchedId = analysis.id;
+      const outcome = await launchAnalysis({
+        analysisId: analysis.id,
+        variant_selected: selectedVariant !== "Standard" ? selectedVariant : null,
+        collab_selected: selectedCollab,
       });
 
-      // Safely parse JSON — the route may return an HTML error page on
-      // unexpected crashes, which would throw on .json().
-      let analyzeResult: { error?: string } = {};
-      try {
-        analyzeResult = await analyzeResponse.json();
-      } catch {
-        setSubmitError(
-          t("check.errorInvalid")
-        );
+      if (outcome.kind === "error") {
+        // Refus avant lancement (crédits, limite de débit…) : l'analyse reste
+        // « pending » (ou « uploading »). On la clôt ici, comme après un échec
+        // d'envoi, pour qu'elle n'apparaisse pas « en cours » dans le tableau
+        // de bord. Si la route l'a déjà passée à « failed », cette mise à jour
+        // ne touche rien.
+        await supabase
+          .from("analyses")
+          .update({ status: "failed" })
+          .eq("id", analysis.id)
+          .in("status", [...NOT_STARTED_STATUSES]);
+        setSubmitError(outcome.message);
         return;
       }
 
-      if (!analyzeResponse.ok) {
-        setSubmitError(
-          analyzeResult.error ?? t("check.errorAnalysisFailed")
-        );
-        return;
-      }
-
+      leaving = true;
       router.push(`/check/${analysis.id}`);
     } catch {
-      setSubmitError(t("check.errorUnexpected"));
+      if (launchedId) {
+        // Requête d'analyse partie : le serveur a pu aller au bout. Sa page
+        // dit où elle en est.
+        leaving = true;
+        router.push(`/check/${launchedId}`);
+        return;
+      }
+      // Erreur avant le lancement : la route n'a pas été appelée, rien n'est
+      // débité. L'analyse créée est close, comme dans les branches d'erreur
+      // ci-dessus, pour ne pas rester « non lancée » dans l'historique. Si
+      // cette écriture échoue aussi, la reprise la classera plus tard.
+      if (createdId) {
+        try {
+          await supabase
+            .from("analyses")
+            .update({ status: "failed" })
+            .eq("id", createdId)
+            .in("status", [...NOT_STARTED_STATUSES]);
+        } catch {
+          // reprise différée : voir lib/analysis-stale.ts
+        }
+      }
+      setSubmitError(t("check.errorBeforeLaunch"));
     } finally {
-      setSubmitting(false);
+      if (!leaving) {
+        setPhase("idle");
+        setUploadProgress(null);
+      }
     }
   }, [
     category,
@@ -455,6 +567,7 @@ export default function NewCheckPage() {
     selectedCollab,
     supabase,
     router,
+    t,
   ]);
 
   // Nav réutilisée par les 3 états (loading, paywall, flow normal)
@@ -851,7 +964,8 @@ export default function NewCheckPage() {
         <div className="mt-10 flex items-center justify-between">
           <button
             onClick={step === 1 ? () => router.push("/dashboard") : handleBack}
-            className="flex items-center gap-2 rounded-md border border-line px-5 py-2.5 text-ui font-medium transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
+            disabled={submitting}
+            className="flex items-center gap-2 rounded-md border border-line px-5 py-2.5 text-ui font-medium transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover disabled:opacity-40 disabled:hover:border-line disabled:hover:bg-transparent"
           >
             <ArrowLeft className="size-4" />
             {step === 1 ? "Dashboard" : "Retour"}
@@ -873,10 +987,16 @@ export default function NewCheckPage() {
               disabled={!allRequiredUploaded || submitting}
               className="flex items-center gap-2 rounded-md bg-accent px-6 py-2.5 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card disabled:opacity-40 disabled:hover:bg-accent disabled:hover:shadow-none"
             >
-              {submitting ? (
+              {phase === "uploading" ? (
                 <>
                   <Loader2 className="size-4 animate-spin" />
-                  {t("check.uploading")}
+                  {t("check.uploadingPhotos")}
+                  {uploadProgress ? ` ${uploadProgress.done}/${uploadProgress.total}` : ""}…
+                </>
+              ) : phase === "analyzing" ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  {t("check.analyzing")}
                 </>
               ) : (
                 t("check.analyze")
@@ -884,6 +1004,13 @@ export default function NewCheckPage() {
             </button>
           )}
         </div>
+        {/* Durée annoncée : médiane mesurée (site-facts), borne = délai au-delà
+            duquel le rapport ou l'échec s'affiche (lib/analysis-limits.ts). */}
+        {step === 4 && submitting && (
+          <p aria-live="polite" className="mt-3 text-right text-caption text-muted-foreground">
+            {phase === "uploading" ? t("check.uploadingHint") : t("check.analyzingHint")}
+          </p>
+        )}
       </main>
 
       {/* ── Paywall modal — affiché si l'utilisateur n'a aucun crédit ───────── */}
