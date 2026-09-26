@@ -314,10 +314,10 @@ export const translations = {
       ocrTitle: "Textes détectés (OCR)",
       recommendationsTitle: "Recommandations",
       missingEvidenceTitle: "Éléments manquants",
-      insufficientTitle: "Analyse non concluante — photos insuffisantes",
+      insufficientTitle: "Photos insuffisantes — analyse non facturée",
       insufficientDesc:
-        "Les photos fournies ne permettent pas d'authentifier l'article de façon fiable (qualité, cadrage ou angles manquants).",
-      insufficientNoCredit: "Aucun crédit n'a été débité pour cette analyse.",
+        "L'IA a jugé vos photos insuffisantes pour authentifier l'article de façon fiable (qualité, cadrage ou angles manquants).",
+      insufficientNoCredit: "Cette analyse n'est pas facturée : votre crédit reste disponible.",
       insufficientCta: "Reprendre de meilleures photos",
       lowConfidenceWarnTitle: "Confiance faible — résultat indicatif",
       lowConfidenceWarnDesc:
@@ -333,12 +333,12 @@ export const translations = {
       severityMinor: "Mineur",
       analysisFailedShort: "Analyse échouée",
       analysisFailedTitle: "L'analyse a échoué",
-      analysisFailedDesc: "Une erreur est survenue lors du traitement. Veuillez réessayer.",
+      analysisFailedDesc: "Une erreur est survenue lors du traitement. Aucun crédit n'a été décompté : veuillez réessayer.",
       // Aucune revue humaine n'existe : ces résultats (score 40-60 ou confiance
       // faible, statut « expert_review » en base) sont définitifs, et le disent.
       uncertainResultTitle: "Résultat à interpréter avec prudence",
       uncertainResultDesc:
-        "Le score se situe dans une zone où l'IA ne peut pas trancher avec assurance. Ce résultat est définitif : aucune vérification humaine n'est prévue. Suivez les recommandations ci-dessous et, pour un article de valeur, faites-le examiner par un authentificateur indépendant.",
+        "Le score se situe dans une zone intermédiaire : l'estimation reste incertaine. Ce résultat est définitif : aucune vérification humaine n'est prévue. Suivez les recommandations ci-dessous et, pour un article de valeur, faites-le examiner par un authentificateur indépendant.",
       analyzingDesc:
         `Une analyse dure ${FACTS.median} secondes en médiane. Actualisez la page dans un instant pour afficher le rapport.`,
     },
@@ -780,10 +780,10 @@ export const translations = {
       ocrTitle: "Detected text (OCR)",
       recommendationsTitle: "Recommendations",
       missingEvidenceTitle: "Missing elements",
-      insufficientTitle: "Inconclusive analysis — insufficient photos",
+      insufficientTitle: "Insufficient photos — analysis not charged",
       insufficientDesc:
-        "The photos provided do not allow a reliable authentication of the item (quality, framing or missing angles).",
-      insufficientNoCredit: "No credit was charged for this analysis.",
+        "The AI judged your photos insufficient to reliably authenticate the item (quality, framing or missing angles).",
+      insufficientNoCredit: "This analysis is not charged: your credit is still available.",
       insufficientCta: "Retake better photos",
       lowConfidenceWarnTitle: "Low confidence — indicative result",
       lowConfidenceWarnDesc:
@@ -799,10 +799,10 @@ export const translations = {
       severityMinor: "Minor",
       analysisFailedShort: "Analysis failed",
       analysisFailedTitle: "The analysis failed",
-      analysisFailedDesc: "An error occurred during processing. Please try again.",
+      analysisFailedDesc: "An error occurred during processing. No credit was used: please try again.",
       uncertainResultTitle: "Interpret this result with caution",
       uncertainResultDesc:
-        "The score falls in a range where the AI cannot decide with confidence. This result is final: no human review is planned. Follow the recommendations below and, for a valuable item, have it examined by an independent authenticator.",
+        "The score falls in an intermediate range: the estimate remains uncertain. This result is final: no human review is planned. Follow the recommendations below and, for a valuable item, have it examined by an independent authenticator.",
       analyzingDesc:
         `An analysis takes a median of ${FACTS_EN.median} seconds. Refresh the page in a moment to see your report.`,
     },
