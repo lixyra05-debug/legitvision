@@ -3,6 +3,7 @@ import sharp, { type Metadata } from "sharp";
 import { getAuthenticationPrompt } from "./authentication-prompts";
 import { calculateWeightedScore } from "./scoring";
 import type { AuthenticationPoint, Confidence, Verdict } from "@/lib/types";
+import { runWithDeadline } from "@/lib/analysis-deadline";
 
 function getAnthropicClient(): Anthropic {
   return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
@@ -51,7 +52,7 @@ export interface AnalysisOutput {
 
 // ── Image preprocessing ──
 
-export async function preprocessImage(buffer: Buffer, filename?: string): Promise<Buffer> {
+export async function preprocessImage(buffer: Buffer, label?: string): Promise<Buffer> {
   try {
     return await sharp(buffer)
       // Redresse selon l'orientation EXIF : un téléphone enregistre souvent la
@@ -61,9 +62,9 @@ export async function preprocessImage(buffer: Buffer, filename?: string): Promis
       .jpeg({ quality: 90 })
       .toBuffer();
   } catch (err) {
-    console.error(`[preprocessImage] Failed to process image${filename ? ` "${filename}"` : ""}:`, err);
+    console.error(`[preprocessImage] Failed to process image${label ? ` "${label}"` : ""}:`, err);
     throw new AnalysisError(
-      `Impossible de traiter l'image${filename ? ` "${filename}"` : ""}. Format non supporté ou fichier corrompu.`,
+      `Impossible de traiter la photo${label ? ` « ${label} »` : ""} : format non pris en charge ou fichier abîmé. Remplacez-la, puis relancez l'analyse : aucun crédit n'a été décompté.`,
       "IMAGE_PROCESSING_ERROR"
     );
   }
@@ -97,7 +98,7 @@ export async function validateImageBuffer(
   if (buffer.length > MAX_PHOTO_BYTES) {
     return {
       valid: false,
-      reason: `La photo "${label}" dépasse la taille maximale de 10 Mo.`,
+      reason: `La photo « ${label} » dépasse la taille maximale de 10 Mo.`,
     };
   }
 
@@ -110,14 +111,14 @@ export async function validateImageBuffer(
   } catch {
     return {
       valid: false,
-      reason: `La photo "${label}" est illisible ou n'est pas une image.`,
+      reason: `La photo « ${label} » est illisible ou n'est pas une image.`,
     };
   }
 
   if (!meta.format || !ALLOWED_IMAGE_FORMATS.includes(meta.format)) {
     return {
       valid: false,
-      reason: `La photo "${label}" a un format non supporté (JPEG, PNG ou WebP requis).`,
+      reason: `La photo « ${label} » a un format non pris en charge (JPEG, PNG ou WebP requis).`,
     };
   }
 
@@ -129,7 +130,7 @@ export async function validateImageBuffer(
   ) {
     return {
       valid: false,
-      reason: `La photo "${label}" est trop petite (résolution minimale 800×800 px).`,
+      reason: `La photo « ${label} » est trop petite (résolution minimale 800×800 px).`,
     };
   }
 
@@ -147,6 +148,7 @@ export async function runAnalysis({
   variantSelected,
   collabSelected,
   specificAuthPoints,
+  deadline,
 }: {
   images: ImageInput[];
   brandName: string;
@@ -156,13 +158,21 @@ export async function runAnalysis({
   variantSelected?: string | null;
   collabSelected?: string | null;
   specificAuthPoints?: string[] | null;
+  /**
+   * Échéance de l'appel au modèle (ms depuis l'époque) : voir
+   * analysisModelDeadline (lib/analysis-limits.ts). Au-delà, l'appel est
+   * interrompu et runAnalysis lève AnalysisError("ANALYSIS_TIMEOUT").
+   */
+  deadline: number;
 }): Promise<AnalysisOutput> {
   // Preprocess all images
   const processedImages = await Promise.all(
     images.map(async (img) => {
       return {
         ...img,
-        buffer: await preprocessImage(img.buffer, img.filename),
+        // Libellé de l'emplacement (« Semelle »…), pas le chemin de stockage :
+        // le message d'erreur est montré au client.
+        buffer: await preprocessImage(img.buffer, img.label),
       };
     })
   );
@@ -213,25 +223,43 @@ export async function runAnalysis({
     text: userPrompt,
   });
 
-  // Call Claude Vision API
+  // Call Claude Vision API, borné par l'échéance : le signal abandonne la
+  // requête HTTP en cours, `timeout` borne chaque tentative, et les nouvelles
+  // tentatives du SDK (2, sur 408/409/429/5xx et erreurs de connexion) restent
+  // permises tant qu'elles tiennent avant l'échéance. runWithDeadline rejette
+  // à l'échéance même pendant l'attente entre deux tentatives, que le SDK ne
+  // borne pas.
   const anthropic = getAnthropicClient();
-  const response = await anthropic.messages.create({
-    model: "claude-opus-4-8",
-    max_tokens: 16000,
-    thinking: { type: "adaptive" },
-    system: systemPrompt,
-    messages: [
-      {
-        role: "user",
-        content,
-      },
-    ],
-  });
+  const remainingMs = Math.floor(deadline - Date.now());
+  const response = await runWithDeadline(
+    remainingMs,
+    (signal) =>
+      anthropic.messages.create(
+        {
+          model: "claude-opus-4-8",
+          max_tokens: 16000,
+          thinking: { type: "adaptive" },
+          system: systemPrompt,
+          messages: [
+            {
+              role: "user",
+              content,
+            },
+          ],
+        },
+        { signal, timeout: Math.max(1, remainingMs), maxRetries: 2 },
+      ),
+    () =>
+      new AnalysisError(
+        ANALYSIS_TIMEOUT_MESSAGE,
+        "ANALYSIS_TIMEOUT"
+      ),
+  );
 
   // M2: Détecter une réponse tronquée par limite de tokens (JSON probablement invalide)
   if (response.stop_reason === "max_tokens") {
     throw new AnalysisError(
-      "Réponse IA tronquée (limite de tokens atteinte). Réessayez avec moins de photos.",
+      "La réponse de l'IA a été tronquée. Aucun crédit n'a été décompté : relancez l'analyse.",
       "MAX_TOKENS"
     );
   }
@@ -240,7 +268,7 @@ export async function runAnalysis({
   const textBlock = response.content.find((block) => block.type === "text");
   if (!textBlock || textBlock.type !== "text") {
     throw new AnalysisError(
-      "Aucune réponse textuelle de l'API Vision.",
+      "L'IA n'a renvoyé aucune réponse exploitable. Aucun crédit n'a été décompté : relancez l'analyse.",
       "NO_RESPONSE"
     );
   }
@@ -258,7 +286,7 @@ export async function runAnalysis({
     aiResult = JSON.parse(jsonStr);
   } catch {
     throw new AnalysisError(
-      "L'IA a retourné un format de réponse invalide.",
+      "L'IA a renvoyé une réponse illisible. Aucun crédit n'a été décompté : relancez l'analyse.",
       "PARSE_ERROR"
     );
   }
@@ -272,7 +300,7 @@ export async function runAnalysis({
     !aiResult.confidence_level
   ) {
     throw new AnalysisError(
-      "Réponse IA incomplète (champs requis manquants).",
+      "L'IA a renvoyé une réponse incomplète. Aucun crédit n'a été décompté : relancez l'analyse.",
       "INVALID_RESPONSE"
     );
   }
@@ -297,6 +325,14 @@ export async function runAnalysis({
 
 // ── Error handling ──
 
+/**
+ * Délai interne dépassé : l'appel au modèle a été interrompu avant la coupure
+ * de la plateforme. Le catch de la route marque l'analyse « failed » ; le
+ * débit, qui suit l'enregistrement du rapport, n'a pas lieu.
+ */
+export const ANALYSIS_TIMEOUT_MESSAGE =
+  "L'analyse a pris trop de temps et a été interrompue. Aucun crédit n'a été décompté : relancez l'analyse.";
+
 export class AnalysisError extends Error {
   code: string;
 
@@ -305,6 +341,23 @@ export class AnalysisError extends Error {
     this.name = "AnalysisError";
     this.code = code;
   }
+}
+
+/**
+ * Vrai si le corps d'erreur d'Anthropic désigne une image. Le message du
+ * service donne le chemin du champ en cause (« messages.0.content.2.image.
+ * source.base64: … ») : on cherche « image » dans ce message, pas ailleurs.
+ */
+function anthropicErrorMentionsImage(body: unknown): boolean {
+  let text: string | null = null;
+  if (typeof body === "string") {
+    text = body;
+  } else if (body && typeof body === "object") {
+    const inner = body as { error?: { message?: unknown }; message?: unknown };
+    const message = inner.error?.message ?? inner.message;
+    if (typeof message === "string") text = message;
+  }
+  return text !== null && /\bimages?\b/i.test(text);
 }
 
 export function handleAnalysisError(
@@ -326,22 +379,34 @@ export function handleAnalysisError(
   if (err.status === 429) {
     return {
       message:
-        "Service temporairement surchargé. Réessayez dans quelques secondes.",
+        "Le service d'analyse est momentanément surchargé. Aucun crédit n'a été décompté : relancez l'analyse dans quelques minutes.",
       code: "RATE_LIMITED",
     };
   }
 
+  // 400 : les photos ont déjà été validées (format réel, 10 Mo, 800 px) puis
+  // réencodées en JPEG de 1568 px au plus avant l'envoi. Un refus vient donc
+  // presque toujours d'un paramètre de la requête (précédent : budget_tokens
+  // rejeté par les modèles 4.6+) : on ne parle de photo que si le service
+  // désigne explicitement une image. Le détail reste au journal (ci-dessus).
   if (err.status === 400) {
-    console.error("[handleAnalysisError] Anthropic 400 — likely image too large or invalid format");
+    if (anthropicErrorMentionsImage(err.error ?? err.message)) {
+      return {
+        message:
+          "Le service d'analyse n'a pas pu lire l'une des photos. Aucun crédit n'a été décompté : relancez l'analyse et, si l'erreur se répète, reprenez les photos.",
+        code: "BAD_REQUEST_IMAGE",
+      };
+    }
     return {
       message:
-        "Une ou plusieurs photos sont invalides. Vérifiez le format (JPEG/PNG/WebP) et la taille (max 10 MB).",
+        "L'analyse n'a pas abouti à cause d'une erreur technique. Aucun crédit n'a été décompté : relancez l'analyse.",
       code: "BAD_REQUEST",
     };
   }
 
   return {
-    message: "Erreur inattendue lors de l'analyse.",
+    message:
+      "L'analyse n'a pas abouti à cause d'une erreur technique. Aucun crédit n'a été décompté : relancez l'analyse.",
     code: "UNKNOWN",
   };
 }

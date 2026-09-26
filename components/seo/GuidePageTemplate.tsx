@@ -232,7 +232,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
         <section id="etapes" className="mb-16 scroll-mt-20">
           <div className="mb-8">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-caption font-medium text-muted-foreground">
-              Protocole
+              {data.signal.headline ? "À retenir" : "Protocole"}
             </span>
             <h2 className="mt-4 font-heading text-h2 font-bold">
               {data.signal.headline
@@ -240,7 +240,9 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
                 : `${data.steps.length} étapes pour vérifier ${data.signal.name}`}
             </h2>
             <p className="mt-3 max-w-2xl text-body text-muted-foreground">
-              Suivez le protocole ci-dessous avec votre {data.brand.name} en main. Chaque étape est pensée pour isoler un indicateur mesurable.
+              {data.signal.headline
+                ? "Ce que ce signal permet de conclure, et surtout ce qu'il ne permet pas."
+                : `Suivez le protocole ci-dessous avec votre ${data.brand.name} en main. Chaque étape est pensée pour isoler un indicateur mesurable.`}
             </p>
           </div>
 
@@ -334,7 +336,10 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
               Croisez visuel + IA pour trancher un doute sur {data.brand.name}
             </h2>
             <p className="mt-4 max-w-2xl text-body text-muted-foreground">
-              Ce signal visuel fait partie des indicateurs évalués par l&apos;IA. {FACTS.priceSingle} pour obtenir un score de confiance qui agrège jusqu&apos;à {FACTS.maxPointsPerModel} points d&apos;authentification, en {FACTS.median} secondes (durée médiane).
+              {data.signal.headline
+                ? "Ce signal ne se vérifie pas sur photo : l'IA analyse les signaux visibles de vos photos (coutures, marquages, matériaux)."
+                : "Ce signal visuel fait partie des indicateurs évalués par l'IA."}{" "}
+              {FACTS.priceSingle} pour obtenir un score de confiance qui agrège jusqu&apos;à {FACTS.maxPointsPerModel} points d&apos;authentification, en {FACTS.median} secondes (durée médiane).
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link

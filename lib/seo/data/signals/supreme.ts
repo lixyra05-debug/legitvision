@@ -79,7 +79,7 @@ export const supremeSignals: GuideSignal[] = [
     tagline:
       "Lire l'étiquette de col Supreme : typographie, composition, pays d'assemblage",
     intro:
-      "L'étiquette cousue à l'intérieur du col — visible en retournant le vêtement — concentre plus d'informations que le Box Logo et reste paradoxalement moins scrutée par les acheteurs non initiés. Sur une pièce d'origine, elle affiche en haut le logo « Supreme » en Futura Heavy Oblique (même police que le Box Logo, inclinée à 13°), suivi de la composition textile (ex. « 100% COTTON » pour les tees, « 80% COTTON / 20% POLYESTER » pour les hoodies FW), la taille (S/M/L/XL en lettres, jamais en chiffres), le pays d'assemblage (« MADE IN CANADA » jusqu'en 2017, « MADE IN USA » ensuite pour la majorité des hoodies et tees), et un petit numéro de série à 4-6 chiffres imprimé verticalement à droite. La typographie respecte un interlignage régulier de 2 mm, et l'étiquette est cousue au vêtement par une couture à 6-8 points par cm sur les 4 côtés. Les contrefaçons trahissent plusieurs défauts récurrents : police Futura remplacée par Helvetica ou Arial (très proches mais les « a » et « e » diffèrent), ligne « MADE IN » alignée à gauche alors qu'elle doit être centrée, composition textile incohérente avec la saison (un « 100% COTTON » sur un hoodie FW23 est un drapeau rouge — les hoodies FW intègrent 20 % polyester pour le confort thermique), ou couture à 10-12 points par cm trop grossière. Le numéro de série vertical est un détail à vérifier : son absence ou une orientation horizontale est un signal de contrefaçon.",
+      "L'étiquette cousue à l'intérieur du col — visible en retournant le vêtement — concentre plus d'informations que le Box Logo et reste paradoxalement moins scrutée par les acheteurs non initiés. Sur une pièce d'origine, elle affiche en haut le logo « Supreme » en Futura Heavy Oblique (même police que le Box Logo, inclinée à 13°), suivi de la composition textile (ex. « 100% COTTON » pour les tees, « 80% COTTON / 20% POLYESTER » pour les hoodies FW), la taille (S/M/L/XL en lettres, jamais en chiffres), le pays de fabrication (il varie selon les produits et les époques : le Canada ou les États-Unis, notamment, pour les hoodies Box Logo selon les revendeurs spécialisés, qui divergent), et un petit numéro de série à 4-6 chiffres imprimé verticalement à droite. La typographie respecte un interlignage régulier de 2 mm, et l'étiquette est cousue au vêtement par une couture à 6-8 points par cm sur les 4 côtés. Les contrefaçons trahissent plusieurs défauts récurrents : police Futura remplacée par Helvetica ou Arial (très proches mais les « a » et « e » diffèrent), ligne « MADE IN » alignée à gauche alors qu'elle doit être centrée, composition textile incohérente avec la saison (un « 100% COTTON » sur un hoodie FW23 est un drapeau rouge — les hoodies FW intègrent 20 % polyester pour le confort thermique), ou couture à 10-12 points par cm trop grossière. Le numéro de série vertical est un détail à vérifier : son absence ou une orientation horizontale est un signal de contrefaçon.",
     steps: [
       {
         title: "Photographier l'étiquette en pleine lumière",
@@ -114,9 +114,9 @@ export const supremeSignals: GuideSignal[] = [
           "Le verso de l'étiquette porte parfois les instructions de lavage en symboles ISO + texte. Un verso vierge sur certaines saisons (tee SS classique) est normal ; sur hoodies et crewnecks, il est toujours imprimé.",
       },
       {
-        title: "Confondre « MADE IN CANADA » et « MADE IN USA » avec l'année",
+        title: "Juger une pièce sur la seule mention du pays",
         description:
-          "Supreme a basculé la majorité de sa production hoodies/tees vers les USA en 2017-2018. Un hoodie FW23 « MADE IN CANADA » est suspect ; un hoodie FW15 « MADE IN CANADA » est normal. Vérifiez toujours la cohérence année ↔ pays.",
+          "Le Canada et les États-Unis figurent tous deux sur des hoodies Box Logo authentiques selon les revendeurs spécialisés, qui divergent sur les saisons concernées. Le pays seul ne tranche pas : comparez l'étiquette entière (police, alignement, numéro, coutures) avec une photo de référence du même produit et de la même saison.",
       },
       {
         title: "Ignorer le numéro de série vertical",
@@ -137,7 +137,7 @@ export const supremeSignals: GuideSignal[] = [
         question:
           "Pourquoi certaines pièces Supreme ont-elles une étiquette « MADE IN PORTUGAL » ?",
         answer:
-          "Depuis 2019, Supreme produit certaines pièces techniques (GORE-TEX, pantalons, pièces collab avec marques européennes) au Portugal, en Italie ou en Turquie. Une étiquette « MADE IN PORTUGAL » sur une GORE-TEX shell FW21 ou un pantalon collab FW22 est cohérente. Sur un hoodie Box Logo classique ou un tee, elle reste suspecte — ces produits restent assemblés USA/Canada. Vérifiez toujours la cohérence modèle ↔ pays en consultant les fiches produit archivées sur supremecommunity.com.",
+          "Parce que le pays de fabrication varie selon les produits Supreme. Sur un hoodie Box Logo, les revendeurs spécialisés relèvent surtout « MADE IN CANADA » ou « MADE IN USA », et divergent sur la proportion : un autre pays est une question à poser au vendeur, pas une preuve à lui seul. Comparez avec des photos de référence du même produit, par exemple sur les fiches archivées de supremecommunity.com.",
       },
     ],
   },
@@ -219,7 +219,7 @@ export const supremeSignals: GuideSignal[] = [
     tagline:
       "Identifier les tags saison Supreme : police Futura, numéro de collection, papier kraft",
     intro:
-      "Les tags saison — étiquettes papier suspendues au vêtement à l'achat — sont souvent jetés après ouverture, ce qui les rend précieux pour une authentification différée : une pièce Supreme « deadstock » (jamais portée, tags toujours attachés) permet un test rapide. Sur une pièce d'origine, le tag principal est un rectangle de papier kraft brun clair (Pantone 7501C à 7508C selon saison), format 5×9 cm, portant le logo Box Logo rouge en haut, la mention de la saison en Futura Heavy capitales (« FALL/WINTER 2023 », « SPRING/SUMMER 2024 », etc.), le nom du modèle en lettres capitales, un numéro de référence à 8-10 chiffres en bas à droite, et un code-barre EAN-13 scannable. Un deuxième tag plus petit (3×5 cm) porte le prix retail et la taille. Les contrefaçons butent sur plusieurs détails : papier trop blanc ou trop glacé (pas de kraft brun naturel), police remplacée par Helvetica sur la ligne de saison, numéro de référence invalide (ne correspond à aucun produit dans les bases Grailed/StockX), ou code-barre qui ne scanne pas — ou scanne vers un produit totalement différent (un shirt chinois random plutôt que le hoodie Supreme attendu). Le détail le plus discriminant reste la texture du papier : Supreme utilise un kraft 250 g/m² légèrement granuleux au toucher, les fakes utilisent du carton lisse 300 g/m² qui sonne plus « carte postale » que « tag streetwear ».",
+      "Les tags saison — étiquettes papier suspendues au vêtement à l'achat — sont souvent jetés après ouverture, ce qui les rend précieux pour une authentification différée : une pièce Supreme « deadstock » (jamais portée, tags toujours attachés) permet un test rapide. Sur une pièce d'origine, le tag principal est un rectangle de papier kraft brun clair (Pantone 7501C à 7508C selon saison), format 5×9 cm, portant le logo Box Logo rouge en haut, la mention de la saison en Futura Heavy capitales (« FALL/WINTER 2023 », « SPRING/SUMMER 2024 », etc.), le nom du modèle en lettres capitales, un numéro de référence à 8-10 chiffres en bas à droite, et un code-barre. Un deuxième tag plus petit (3×5 cm) porte le prix retail et la taille. Les contrefaçons butent sur plusieurs détails : papier trop blanc ou trop glacé (pas de kraft brun naturel), police remplacée par Helvetica sur la ligne de saison, ou numéro de référence qui ne correspond à aucune fiche du même produit (Grailed, StockX). Le code-barre, lui, se recopie d'un vrai tag : un scan qui aboutit ne prouve rien. Le détail le plus discriminant reste la texture du papier : Supreme utilise un kraft 250 g/m² légèrement granuleux au toucher, les fakes utilisent du carton lisse 300 g/m² qui sonne plus « carte postale » que « tag streetwear ».",
     steps: [
       {
         title: "Photographier les deux faces du tag principal",
@@ -237,9 +237,9 @@ export const supremeSignals: GuideSignal[] = [
           "La ligne « FALL/WINTER 2023 » ou équivalent doit être en Futura Heavy capitales, interlignage régulier. Une Helvetica Bold (très proche visuellement) trahit un contrefacteur. Le « a » à double étage de la Futura est absent — c'est le signe différenciateur.",
       },
       {
-        title: "Scanner le code-barre EAN-13",
+        title: "Lire le code-barre, sans rien en conclure seul",
         description:
-          "Utilisez une app gratuite (Barcode Scanner Android ou la Camera native iOS). Le scan doit retourner un produit identifiable (même si Supreme ne publie pas ses EAN, le code doit au moins être valide EAN-13 — 13 chiffres avec checksum correct). Un scan en erreur ou vers un produit non-Supreme est un signal fort.",
+          "Un code-barre se recopie d'un vrai tag : un scan qui aboutit ne prouve rien. Un scan qui échoue ne prouve pas la contrefaçon (tag froissé, impression usée, application qui ne connaît pas le code). Un code qui renvoie vers un produit sans rapport est un signal d'alerte, à croiser avec le papier, la police et la pièce.",
       },
       {
         title: "Croiser le numéro de référence avec Grailed/StockX",
@@ -265,7 +265,7 @@ export const supremeSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les contrefacteurs impriment leurs tags sur papier 250 g/m² lisse (type bristol) plutôt que sur kraft granuleux — première erreur repérable au toucher. Ils utilisent ensuite la police Helvetica Bold plutôt que Futura Heavy, que seul un œil entraîné distingue. Le code-barre est souvent bidon (13 chiffres aléatoires qui ne satisfont pas la checksum EAN-13, ou qui renvoient vers un produit Amazon random au scan). Les fakes haut de gamme reproduisent un vrai numéro de référence copié-collé depuis une photo StockX — dans ce cas, le numéro scanne vers un produit cohérent, mais la texture du papier trahit : kraft versus bristol reste un test tactile immédiat.",
+      "Les contrefacteurs impriment leurs tags sur papier 250 g/m² lisse (type bristol) plutôt que sur kraft granuleux — première erreur repérable au toucher. Ils utilisent ensuite la police Helvetica Bold plutôt que Futura Heavy, que seul un œil entraîné distingue. Le code-barre ne départage rien : un code inventé trahit un tag bâclé, mais les fakes haut de gamme reproduisent un vrai numéro de référence copié-collé depuis une photo StockX, et le code se lit alors normalement. La texture du papier reste à examiner : kraft ou bristol, cela se sent au toucher.",
     faqs: [
       {
         question: "Les tags Supreme varient-ils d'une saison à l'autre ?",
@@ -276,7 +276,7 @@ export const supremeSignals: GuideSignal[] = [
         question:
           "Puis-je tester la checksum EAN-13 d'un code-barre sans scanner ?",
         answer:
-          "Oui. Un code EAN-13 valide suit une règle mathématique : multipliez les chiffres en position paire par 3, ajoutez les chiffres en position impaire, la somme totale modulo 10 doit donner 0 (ou le chiffre de contrôle en position 13). Des calculateurs gratuits en ligne (search « EAN-13 checksum calculator ») font ce test en 3 secondes. Un code qui échoue la checksum est définitivement faux, même s'il semble plausible à l'œil.",
+          "Oui. Un code EAN-13 valide suit une règle mathématique : multipliez les chiffres en position paire par 3, ajoutez les chiffres en position impaire, la somme totale modulo 10 doit donner 0 (ou le chiffre de contrôle en position 13). Des calculateurs gratuits en ligne (search « EAN-13 checksum calculator ») font ce test en 3 secondes. Un code qui échoue n'est pas un code EAN-13 valide : relisez d'abord chaque chiffre, une erreur de lecture suffit. À l'inverse, un code valide ne prouve rien, puisqu'un code réel se recopie. Ce test ne suffit donc jamais seul : examinez aussi le papier du tag et la pièce.",
       },
     ],
   },

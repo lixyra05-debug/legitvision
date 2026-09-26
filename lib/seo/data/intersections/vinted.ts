@@ -9,7 +9,7 @@ export const vintedIntersections: Intersection[] = [
     platformSlug: "vinted",
     brandSlug: "nike",
     angle:
-      "Les Air Force 1 Low blanches et les Dunk Low Panda sont visées par les contrefacteurs : leur prix retail élevé (110-130 €) comparé à un coût de production clandestine de 8-15 € offre une marge profitable. Les revendeurs opèrent souvent depuis des comptes récents créés sur mesure, avec des photos issues de StockX ou du site Nike officiel, puis expédient un produit chinois à bas de gamme. Un contrôle préalable au paiement est donc vital.",
+      "Les Air Force 1 Low blanches et les Dunk Low Panda sont visées par les contrefacteurs : leur prix retail (110-130 €) laisse de la marge aux contrefacteurs. Les revendeurs opèrent souvent depuis des comptes récents créés sur mesure, avec des photos issues de StockX ou du site Nike officiel, puis expédient un produit chinois à bas de gamme. Un contrôle préalable au paiement est donc vital.",
     faqs: [
       {
         question: "Quel prix minimum raisonnable pour des Nike authentiques sur Vinted ?",
@@ -99,17 +99,17 @@ export const vintedIntersections: Intersection[] = [
     platformSlug: "vinted",
     brandSlug: "chanel",
     angle:
-      "Chanel est une marque sensible sur Vinted : les prix marché (5 000-30 000 € selon modèle) et la rareté organisée par Chanel rendent toute annonce à moins de 3 000 € hautement suspecte. Les super-fakes Chanel de 2024-2026 atteignent un réalisme qui trompe même des vendeuses expérimentées sur photo. Le signal le plus fiable pour distinguer vrai et faux sur Vinted reste l'hologramme d'authenticité avec son numéro de série à 7-8 chiffres, la carte associée, et la cohérence du matelassage sur les angles cachés que les vendeurs montrent rarement en photo. Un achat Chanel sans vérification préalable est un pari.",
+      "Chanel est une marque sensible sur Vinted : les prix marché (5 000-30 000 € selon modèle) et la rareté organisée par Chanel rendent toute annonce à moins de 3 000 € hautement suspecte. Les super-fakes Chanel de 2024-2026 atteignent un réalisme qui trompe même des vendeuses expérimentées sur photo. Sur les sacs antérieurs au passage à la puce, l'hologramme d'authenticité avec son numéro de série à 7-8 chiffres et la carte associée restent des signaux utiles ; sur les sacs récents, une puce intégrée les remplace (à partir de 2021 selon les revendeurs spécialisés), et elle ne se vérifie pas au téléphone. Dans tous les cas, vérifiez la cohérence du matelassage sur les angles cachés, que les vendeurs montrent rarement en photo. Un achat Chanel sans vérification préalable est un pari.",
     faqs: [
       {
         question: "Un Classic Flap à 2 000 € sur Vinted peut-il être vrai ?",
         answer:
-          "Le Classic Flap Medium en caviar noir quincaillerie or retail à 10 800 € (2025) avec un marché secondaire à 6 500-8 500 € en état très bon. Une annonce à 2 000 € est suspecte. Les rares cas authentiques sous 3 000 € concernent des modèles portés abondamment ou abîmés — vérifiez systématiquement photos de l'état et hologramme avant toute considération.",
+          "Le Classic Flap Medium en caviar noir quincaillerie or retail à 10 800 € (2025) avec un marché secondaire à 6 500-8 500 € en état très bon. Une annonce à 2 000 € est suspecte. Les rares cas authentiques sous 3 000 € concernent des modèles portés abondamment ou abîmés — vérifiez systématiquement photos de l'état et hologramme (sur les sacs antérieurs à la puce) avant toute considération.",
       },
       {
         question: "L'hologramme Chanel est-il vérifiable sur photo Vinted ?",
         answer:
-          "Partiellement. Un hologramme flou ou pris de loin ne permet pas l'authentification. Demandez au vendeur une photo ultra-nette, de face et à 45° (pour voir la grille de sécurité), avec le numéro lisible. Si le vendeur refuse ou fournit une photo de mauvaise qualité volontaire, c'est un signal fort de contrefaçon. L'hologramme doit correspondre exactement à la période de fabrication revendiquée.",
+          "Partiellement. Un hologramme flou ou pris de loin ne permet pas l'authentification. Demandez au vendeur une photo ultra-nette, de face et à 45° (pour voir la grille de sécurité), avec le numéro lisible. Si le vendeur refuse ou fournit une photo de mauvaise qualité volontaire, c'est un signal fort de contrefaçon. L'hologramme doit correspondre exactement à la période de fabrication revendiquée. Sur un sac récent, son absence est normale : une puce intégrée le remplace (à partir de 2021 selon les revendeurs spécialisés).",
       },
     ],
   },
@@ -181,7 +181,7 @@ export const vintedIntersections: Intersection[] = [
       {
         question: "Comment reconnaître un vrai Book Tote Dior ?",
         answer:
-          "Le Book Tote authentique présente une broderie (pas une impression) du motif Dior sur l'extérieur, avec des fils de broderie réguliers et une densité de 15-20 points par centimètre. Le tag intérieur « CHRISTIAN DIOR PARIS » est en cuir cousu sur 4 côtés. Le blind stamp alphanumérique au dos du tag est obligatoire (format 2 lettres + 4 chiffres). Les contrefaçons utilisent souvent une impression en relief simulé plutôt qu'une vraie broderie.",
+          "Le Book Tote authentique présente une broderie (pas une impression) du motif Dior sur l'extérieur, avec des fils de broderie réguliers et une densité de 15-20 points par centimètre. Le tag intérieur « CHRISTIAN DIOR PARIS » est en cuir cousu sur 4 côtés. Le blind stamp alphanumérique au dos du tag (format 2 lettres + 4 chiffres) figure sur les sacs antérieurs au passage à la puce : selon les revendeurs spécialisés, une puce invisible le remplace progressivement depuis 2021, et son absence sur un Book Tote récent n'est pas suspecte. Les contrefaçons utilisent souvent une impression en relief simulé plutôt qu'une vraie broderie.",
       },
     ],
   },

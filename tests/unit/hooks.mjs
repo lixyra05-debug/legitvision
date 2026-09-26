@@ -2,7 +2,9 @@
 // - « @/x » (alias de tsconfig.json) devient <racine du dépôt>/x ;
 // - un chemin relatif sans extension essaie .ts, .tsx puis /index.ts, comme
 //   le fait la résolution « bundler » de TypeScript.
-// Les paquets nommés (sharp, @anthropic-ai/sdk) gardent la résolution normale.
+// Les paquets nommés (sharp, @anthropic-ai/sdk) gardent la résolution normale ;
+// un sous-chemin sans carte « exports » (next/server) essaie aussi « .js »,
+// comme le fait le bundler de Next.
 import { existsSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
@@ -28,5 +30,15 @@ export async function resolve(specifier, context, nextResolve) {
       }
     }
   }
-  return nextResolve(cible, context);
+  const sousCheminNu =
+    !relatif && !cible.startsWith("file:") && !cible.startsWith("node:") &&
+    /^(@[^/]+\/)?[^/@][^/]*\/.+/.test(cible) && !/\.[cm]?js$/.test(cible);
+  try {
+    return await nextResolve(cible, context);
+  } catch (erreur) {
+    if (sousCheminNu && erreur?.code === "ERR_MODULE_NOT_FOUND") {
+      return nextResolve(`${cible}.js`, context);
+    }
+    throw erreur;
+  }
 }

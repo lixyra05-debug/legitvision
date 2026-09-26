@@ -7,14 +7,22 @@ import {
   handleAnalysisError,
   validateImageBuffer,
   PhotoValidationError,
+  ANALYSIS_TIMEOUT_MESSAGE,
   type ImageInput,
+  type AnalysisOutput,
 } from "@/lib/ai/analyze";
+import { analysisModelDeadline } from "@/lib/analysis-limits";
 import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 import type { Brand, Model, PhotoSlot } from "@/lib/types";
 import { hasAuthenticationPoints } from "@/lib/analyzable";
 import { z } from "zod";
 
-export const maxDuration = 60; // Vercel function timeout
+// Durée maximale de la fonction, en secondes. Next exige une valeur
+// littérale : elle doit rester égale à ANALYSIS_MAX_SECONDS
+// (lib/analysis-limits.ts) et à vercel.json, ce que vérifie
+// tests/unit/analysis-limits.test.ts. L'appel au modèle s'arrête avant
+// (analysisModelDeadline), pour que l'échec soit toujours écrit.
+export const maxDuration = 300;
 
 // Validation Zod du body (C). analysisId = UUID (table analyses.id UUID).
 const analyzeBodySchema = z.object({
@@ -25,10 +33,15 @@ const analyzeBodySchema = z.object({
 
 const MAX_PHOTOS = 15;
 
-// Statuses that indicate the analysis is ready to be processed
+// Statuts d'une analyse à lancer : « pending » (photos envoyées, lancement
+// demandé : check/new l'écrit juste avant d'appeler la route) et « uploading »
+// (si cette écriture a échoué, le lancement reste possible).
 const PROCESSABLE_STATUSES = ["pending", "uploading"];
 
 export async function POST(request: NextRequest) {
+  // Début de la requête : l'échéance de l'appel au modèle en découle.
+  const requestStartedAt = Date.now();
+
   // 1. Verify auth via user client (reads cookies — does NOT bypass RLS)
   const supabase = await createClient();
   const {
@@ -36,18 +49,26 @@ export async function POST(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Votre session a expiré : reconnectez-vous, puis relancez l'analyse. Aucun crédit n'a été décompté." },
+      { status: 401 }
+    );
   }
 
-  // 1b. Rate-limit (A) : 10 analyses/min/user. Dégrade proprement si Upstash non configuré.
+  // 1b. Rate-limit (A) : 10 analyses/min/user. Upstash borné et doublé d'un
+  //     limiteur en mémoire (lib/rate-limit.ts) : jamais plus de quelques
+  //     centaines de ms perdues ici.
   const rl = await rateLimit(`analyze:${user.id}`, 10, 60);
   if (!rl.success) return tooManyRequests(rl.reset);
 
-  // 2. Guard: ANTHROPIC_API_KEY must be set
+  // 2. Guard: ANTHROPIC_API_KEY must be set. La cause (configuration du
+  //    serveur) va au journal ; le client lit ce qui le concerne. Avant toute
+  //    réservation : aucun crédit ne peut avoir été décompté.
   if (!process.env.ANTHROPIC_API_KEY) {
+    console.error("[analyze] ANTHROPIC_API_KEY absente de l'environnement : analyse refusée.");
     return NextResponse.json(
-      { error: "Clé API IA manquante. Vérifiez la configuration du serveur." },
-      { status: 500 }
+      { error: "Le service d'analyse est momentanément indisponible. Aucun crédit n'a été décompté : réessayez plus tard." },
+      { status: 503 }
     );
   }
 
@@ -100,8 +121,8 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Accept both "pending" and "uploading" — the client-side status update
-  // to "pending" can fail silently when RLS UPDATE policies are not configured.
+  // « pending » ou « uploading » : voir PROCESSABLE_STATUSES. Une analyse
+  // classée en échec (lib/analysis-stale.ts) n'est plus lancée.
   if (!PROCESSABLE_STATUSES.includes(analysis.status)) {
     return NextResponse.json(
       { error: "Cette analyse a déjà été traitée" },
@@ -197,13 +218,21 @@ export async function POST(request: NextRequest) {
     .in("status", PROCESSABLE_STATUSES)
     .select("id");
 
+  // 409 : l'analyse n'est plus à lancer (réservée par une autre requête, ou
+  // classée en échec entre-temps). Le client ouvre alors sa page, qui dit où
+  // elle en est.
   if (!claimed || claimed.length === 0) {
     return NextResponse.json(
-      { error: "Une analyse est déjà en cours. Veuillez patienter." },
-      { status: 429 }
+      { error: "Cette analyse a déjà été lancée ou n'est plus disponible." },
+      { status: 409 }
     );
   }
 
+  // Tout ce qui peut échouer AVANT le débit est dans ce try : son catch écrit
+  // l'échec et répond « aucun crédit décompté », ce qui n'est vrai que parce
+  // que le débit (étape 13) est hors du try, après l'enregistrement du rapport.
+  let result: AnalysisOutput;
+  let finalStatus: "completed" | "expert_review";
   try {
     // 9. Download photos from Supabase Storage
     const images: ImageInput[] = await Promise.all(
@@ -237,7 +266,7 @@ export async function POST(request: NextRequest) {
     );
 
     // 10. Run AI analysis
-    const result = await runAnalysis({
+    result = await runAnalysis({
       images,
       brandName: brand.name,
       modelName: model.name,
@@ -246,6 +275,7 @@ export async function POST(request: NextRequest) {
       variantSelected,
       collabSelected,
       specificAuthPoints: model.specific_auth_points ?? null,
+      deadline: analysisModelDeadline(requestStartedAt),
     });
 
     // 11. Determine if expert review is needed
@@ -256,10 +286,13 @@ export async function POST(request: NextRequest) {
       ((result.overallScore >= 40 && result.overallScore <= 60) ||
         result.confidence === "low");
 
-    const finalStatus = needsExpertReview ? "expert_review" : "completed";
+    finalStatus = needsExpertReview ? "expert_review" : "completed";
 
-    // 12. Save results
-    const { error: saveError } = await admin
+    // 12. Save results — CONDITIONNEL : seulement si l'analyse est encore
+    //     « analyzing ». Si la reprise des analyses bloquées
+    //     (lib/analysis-stale.ts) l'a classée « failed » entre-temps, le client
+    //     a pu lire « aucun crédit décompté » : rien n'est enregistré ni débité.
+    const { data: saved, error: saveError } = await admin
       .from("analyses")
       .update({
         status: finalStatus,
@@ -270,7 +303,9 @@ export async function POST(request: NextRequest) {
         findings: result.findings,
         ai_raw_response: result.aiRawResponse,
       })
-      .eq("id", analysisId);
+      .eq("id", analysisId)
+      .eq("status", "analyzing")
+      .select("id");
 
     // Rapport non enregistré : rien n'est débité (le débit suit), et le catch
     // marque l'analyse « failed ». Les CGU le promettent : une erreur technique
@@ -281,55 +316,68 @@ export async function POST(request: NextRequest) {
         "SAVE_ERROR"
       );
     }
-
-    // 13. Déduire 1 crédit ATOMIQUEMENT via RPC (B-RACE — fix TOCTOU)
-    //     La RPC fait UPDATE conditionnel + INSERT credits_transactions dans
-    //     une seule transaction. Si crédits < 1 au moment du débit (race),
-    //     l'erreur est loggée mais l'analyse réussit (l'user a payé Claude
-    //     côté coût mais pas côté crédit — situation rare grâce aux guards).
-    // P1-3 : si l'IA juge les photos insuffisantes (résultat non exploitable),
-    // on NE débite PAS le crédit — le client n'a pas eu de résultat utilisable.
-    if (!result.insufficient) {
-      const { error: decrementError } = await admin.rpc(
-        "decrement_credits_atomic",
-        {
-          p_user_id: user.id,
-          p_analysis_id: analysisId,
-          p_description: `Analyse ${analysisId}`,
-        }
-      );
-      if (decrementError) {
-        console.error(
-          "[analyze] decrement_credits_atomic failed (race condition or insufficient credits):",
-          decrementError.message
-        );
-      }
+    if (!saved || saved.length === 0) {
+      throw new AnalysisError(ANALYSIS_TIMEOUT_MESSAGE, "ANALYSIS_EXPIRED");
     }
-
-    return NextResponse.json({
-      success: true,
-      analysisId,
-      overallScore: result.overallScore,
-      confidence: result.confidence,
-      verdict: result.verdict,
-      status: finalStatus,
-      insufficient: result.insufficient,
-    });
   } catch (error) {
     console.error("[analyze] Error during analysis:", error);
-    // Mark analysis as failed so it doesn't stay stuck
+    // Mark analysis as failed so it doesn't stay stuck. Conditionnel : un
+    // rapport déjà enregistré (statut sorti de « analyzing ») n'est jamais
+    // écrasé. Toute erreur arrivant ici précède le débit : aucun crédit n'a
+    // été décompté, ce que disent les messages renvoyés.
     await admin
       .from("analyses")
       .update({ status: "failed" })
-      .eq("id", analysisId);
+      .eq("id", analysisId)
+      .eq("status", "analyzing");
 
     // B : photos invalides → 400 message clair (aucun crédit débité : le débit
     // est en aval, sur le chemin succès uniquement).
     if (error instanceof PhotoValidationError) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
+      return NextResponse.json(
+        {
+          error: `${error.message} Remplacez-la, puis relancez l'analyse : aucun crédit n'a été décompté.`,
+        },
+        { status: 400 }
+      );
     }
 
     const { message, code } = handleAnalysisError(error);
     return NextResponse.json({ error: message, code }, { status: 500 });
   }
+
+  // 13. Rapport enregistré (étape 12, conditionnelle). Déduire 1 crédit
+  //     ATOMIQUEMENT via RPC (B-RACE — fix TOCTOU)
+  //     La RPC fait UPDATE conditionnel + INSERT credits_transactions dans
+  //     une seule transaction. Si crédits < 1 au moment du débit (race),
+  //     l'erreur est loggée mais l'analyse réussit (l'user a payé Claude
+  //     côté coût mais pas côté crédit — situation rare grâce aux guards).
+  // P1-3 : si l'IA juge les photos insuffisantes (résultat non exploitable),
+  // on NE débite PAS le crédit — le client n'a pas eu de résultat utilisable.
+  if (!result.insufficient) {
+    const { error: decrementError } = await admin.rpc(
+      "decrement_credits_atomic",
+      {
+        p_user_id: user.id,
+        p_analysis_id: analysisId,
+        p_description: `Analyse ${analysisId}`,
+      }
+    );
+    if (decrementError) {
+      console.error(
+        "[analyze] decrement_credits_atomic failed (race condition or insufficient credits):",
+        decrementError.message
+      );
+    }
+  }
+
+  return NextResponse.json({
+    success: true,
+    analysisId,
+    overallScore: result.overallScore,
+    confidence: result.confidence,
+    verdict: result.verdict,
+    status: finalStatus,
+    insufficient: result.insufficient,
+  });
 }

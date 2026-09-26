@@ -345,7 +345,7 @@ export const airJordanModels: ModelData[] = [
     retailYear: "2017 (collabs récurrentes)",
     tagline: "La collab Cactus Jack",
     intro:
-      "Les collaborations Travis Scott x Air Jordan, lancées en 2017 avec la AJ4 Olive et poursuivies sur AJ1 (Mocha, Fragment, Reverse Mocha, British Khaki), AJ6 (British Khaki, Medium Olive, Washed Denim), AJ4 (Purple, Cactus Jack Khaki), ont un prix marché de 800 € à 3 500 € selon rareté et taille. La AJ1 Mocha a atteint 1 500-2 500 € en taille PC, la AJ1 Fragment 2 000-4 000 €. Cette prime extrême attire les contrefacteurs professionnels qui ont massivement investi dans les super-fakes Travis Scott — certains UA batches coûtent 300-400 € à produire pour tromper des acheteurs inexpérimentés. Les signaux ci-dessous regroupent les points les plus résistants aux super-fakes : logo Cactus Jack inversé, qualité du nubuck/suède, boîte brown Cactus Jack, hangtag signé Travis, et Style Code.",
+      "Les collaborations Travis Scott x Air Jordan, lancées en 2017 avec la AJ4 Olive et poursuivies sur AJ1 (Mocha, Fragment, Reverse Mocha, British Khaki), AJ6 (British Khaki, Medium Olive, Washed Denim), AJ4 (Purple, Cactus Jack Khaki), ont un prix marché de 800 € à 3 500 € selon rareté et taille. La AJ1 Mocha a atteint 1 500-2 500 € en taille PC, la AJ1 Fragment 2 000-4 000 €. Cette prime extrême attire les contrefacteurs professionnels qui ont massivement investi dans les super-fakes Travis Scott, conçus pour tromper des acheteurs inexpérimentés. Les signaux ci-dessous regroupent les points les plus résistants aux super-fakes : logo Cactus Jack inversé, qualité du nubuck/suède, boîte brown Cactus Jack, hangtag signé Travis, et Style Code.",
     signals: [
       {
         title: "Logo Cactus Jack inversé — précision typographique",
@@ -387,7 +387,7 @@ export const airJordanModels: ModelData[] = [
       {
         title: "AJ1 Fragment x Travis Scott à 800 €",
         description:
-          "La AJ1 Fragment x Travis Scott a un prix marché 2 000-4 000 €. Une annonce à 800 € est très probablement une contrefaçon. Même les UA premium ne s'approchent pas de ce niveau de détail pour moins de 300 € de coût de production.",
+          "La AJ1 Fragment x Travis Scott a un prix marché 2 000-4 000 €. Une annonce à 800 € est très probablement une contrefaçon.",
       },
     ],
     faqs: [

@@ -10,7 +10,7 @@ export const offWhiteModels: ModelData[] = [
     retailYear: "2013-présent",
     tagline: "Le t-shirt signature Virgil Abloh aux flèches croisées",
     intro:
-      "L'Off-White Arrows Tee, lancé par Virgil Abloh en 2013 avec la naissance de la marque, est le t-shirt emblématique d'Off-White c/o Virgil Abloh™, reconnaissable à ses flèches croisées imprimées sur le dos. Retail 280-380 € selon saison, avec prix marché secondaire 180-500 € selon coloris et collection (SS18-FW23). Les coloris « black » et « white » sont les plus accessibles (180-280 €), tandis que les collabs (Nike, Ikea, Takashi Murakami) et les tees spéciaux (Caravaggio, Mona Lisa, For All) atteignent 400-800 €. La contrefaçon Arrows Tee est massive : Putian et iOffer produisent des fakes, revendus sur Vinted, Dhgate, AliExpress, et Grailed. Les signaux d'authentification ciblent : police des flèches (impression précise avec alignement parfait), tag intérieur Off-White (fabriqué en Italie avec code produit), zip tag jaune iconique (orange tag avec numéro série), qualité du coton (180-220 gsm premium), et quotation marks « » (guillemets typographiques utilisés par Virgil).",
+      "L'Off-White Arrows Tee, lancé par Virgil Abloh en 2013 avec la naissance de la marque, est le t-shirt emblématique d'Off-White c/o Virgil Abloh™, reconnaissable à ses flèches croisées imprimées sur le dos. Retail 280-380 € selon saison, avec prix marché secondaire 180-500 € selon coloris et collection (SS18-FW23). Les coloris « black » et « white » sont les plus accessibles (180-280 €), tandis que les collabs (Nike, Ikea, Takashi Murakami) et les tees spéciaux (Caravaggio, Mona Lisa, For All) atteignent 400-800 €. La contrefaçon Arrows Tee est massive : Putian et iOffer produisent des fakes, revendus sur Vinted, Dhgate, AliExpress, et Grailed. Les signaux d'authentification ciblent : police des flèches (impression précise avec alignement parfait), tag intérieur Off-White (pays de fabrication et code produit), zip tag jaune iconique (orange tag avec numéro série), qualité du coton (180-220 gsm premium), et quotation marks « » (guillemets typographiques utilisés par Virgil).",
     signals: [
       {
         title: "Impression flèches — précision pixel-perfect",
@@ -19,9 +19,9 @@ export const offWhiteModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "Tag intérieur — « Made in Italy » + code produit",
+        title: "Tag intérieur — pays de fabrication + code produit",
         description:
-          "Le tag intérieur indique « Made in Italy » avec un code produit à 8-10 chiffres (ex: OMAA027S23JER). Police spécifique Helvetica Bold. Les contrefaçons ont souvent « Made in China », code incorrect ou police trop fine.",
+          "Le tag intérieur indique le pays de fabrication, qui varie selon les pièces (il ne tranche pas à lui seul), et un code produit à 8-10 chiffres (ex: OMAA027S23JER). Police spécifique Helvetica Bold. Les contrefaçons ont souvent un code incorrect ou une police trop fine.",
         difficulty: 1,
       },
       {
@@ -114,7 +114,7 @@ export const offWhiteModels: ModelData[] = [
       {
         title: "Industrial Belt « yellow/black » à 40 €",
         description:
-          "L'Industrial Belt yellow/black classique a un prix marché 120-200 €. Toute annonce à 40 € avec photos « deadstock » est une contrefaçon Dhgate (prix de production fake = 10-15 €).",
+          "L'Industrial Belt yellow/black classique a un prix marché 120-200 €. Toute annonce à 40 € avec photos « deadstock » est une contrefaçon Dhgate.",
       },
       {
         title: "Dustbag Off-White photographié recyclé",

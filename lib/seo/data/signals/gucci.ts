@@ -64,7 +64,7 @@ export const gucciSignals: GuideSignal[] = [
       {
         question: "Gucci utilise-t-il un autre système de traçabilité ?",
         answer:
-          "Oui, depuis 2020 : un QR code intérieur permet de scanner avec l'app « Gucci Discovery » pour authentification digitale. Les deux systèmes coexistent (numéro 2 lignes + QR code). Un sac Gucci post-2020 sans QR code est suspect. Un sac pré-2020 n'a pas de QR code (normal).",
+          "Sur une partie de ses sacs récents, oui : selon les revendeurs spécialisés, une étiquette en tissu noir portant un QR code est cousue à l'intérieur, en plus de la patte qui porte le numéro de série, depuis le milieu des années 2010 (les dates avancées varient d'une source à l'autre). Son absence ne prouve pas une contrefaçon, et un scan, reconnu ou non, ne prouve rien à lui seul : voir le guide Gucci consacré au QR code.",
       },
     ],
   },
@@ -142,7 +142,7 @@ export const gucciSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Vérifier la gravure des boucles et anneaux hardware Gucci",
     intro:
-      "Chaque pièce de hardware métallique sur un sac Gucci (boucles, anneaux, fermoirs, rivets, piercings) porte une gravure précise, généralement « GUCCI » en majuscules serif avec police Garamond modifiée, ou « GUCCI MADE IN ITALY » sur les pièces plus grandes. Cette gravure est embossée à froid par pressage mécanique avec une profondeur de 0,2-0,4 mm, parfaitement nette, kerning régulier. Le matériau hardware est toujours du laiton massif plaqué or 24 carats (finition gold), palladium (finition silver) ou ruthénium (finition antique brass). Quatre tests discriminent authentique et fake : 1) test magnétique — laiton non magnétique, un hardware attiré par aimant = acier fake ; 2) lecture à la loupe x10 — gravure Gucci authentique a des lignes fines, nettes, sans bavure ; 3) test de poids — un fermoir Gucci standard pèse 8-15 g selon modèle, fake creux 4-7 g ; 4) comportement thermique — le laiton chauffe lentement à température ambiante (moins conductif que l'acier), l'acier fake se réchauffe rapidement au contact. La combinaison de ces 4 tests tranche définitivement. La gravure « GUCCI » peut également apparaître avec le logo GG entrelacé sur certaines pièces — même critères de netteté et kerning.",
+      "Chaque pièce de hardware métallique sur un sac Gucci (boucles, anneaux, fermoirs, rivets, piercings) porte une gravure précise, généralement « GUCCI » en majuscules serif avec police Garamond modifiée, ou « GUCCI MADE IN ITALY » sur les pièces plus grandes. Cette gravure est embossée à froid par pressage mécanique avec une profondeur de 0,2-0,4 mm, parfaitement nette, kerning régulier. Le hardware existe en plusieurs finitions (dorée, argentée, ruthénium) selon le modèle : sa couleur seule ne dit rien de l'authenticité. Quatre tests discriminent authentique et fake : 1) test magnétique — laiton non magnétique, un hardware attiré par aimant = acier fake ; 2) lecture à la loupe x10 — gravure Gucci authentique a des lignes fines, nettes, sans bavure ; 3) test de poids — un fermoir Gucci standard pèse 8-15 g selon modèle, fake creux 4-7 g ; 4) comportement thermique — le laiton chauffe lentement à température ambiante (moins conductif que l'acier), l'acier fake se réchauffe rapidement au contact. Aucun de ces tests ne suffit seul : leur combinaison donne un signal plus solide, à croiser avec les autres signaux du sac, sans constituer une preuve. La gravure « GUCCI » peut également apparaître avec le logo GG entrelacé sur certaines pièces — même critères de netteté et kerning.",
     steps: [
       {
         title: "Identifier toutes les pièces hardware",
@@ -167,7 +167,7 @@ export const gucciSignals: GuideSignal[] = [
       {
         title: "Vérifier la finition de surface",
         description:
-          "Laiton plaqué or : finition satiné ou poli, avec chaleur visuelle. Acier chromé fake : miroir brillant, froid visuel. Sous lumière directe, laiton absorbe et renvoie une lueur chaude, chrome réfléchit comme un miroir.",
+          "Quelle que soit la finition (dorée, argentée, ruthénium), la surface d'une pièce neuve est régulière, sans bulle, piqûre ni zone terne isolée. Sa couleur et son éclat seuls ne disent rien de l'authenticité. Un placage irrégulier ou qui s'écaille est un signal d'alerte à croiser avec la gravure.",
       },
     ],
     commonErrors: [
@@ -177,9 +177,9 @@ export const gucciSignals: GuideSignal[] = [
           "Gucci grave EN MAJUSCULES (« GUCCI »). Une gravure en minuscules (« gucci ») n'existe pas sur hardware Gucci authentique — c'est une erreur fake fréquente. Rejet immédiat.",
       },
       {
-        title: "Confondre laiton patiné et fake décoloré",
+        title: "Confondre usure régulière et écaillage en plaques",
         description:
-          "Le laiton authentique se patine avec l'âge (vieillissement noble, couleur vers cuivre-or). C'est un signe d'authenticité. Le fake se décolore en plaques (plaquage or écaillé révélant acier gris). Distinguez patine noble (uniforme) et décoloration fake (en plaques).",
+          "Avec l'usage, le hardware perd de son brillant et prend une teinte plus chaude. Une usure régulière est normale et ne prouve rien, ni dans un sens ni dans l'autre. Un écaillage en plaques, qui laisse voir un métal gris, est un signal d'alerte à croiser avec la gravure et les autres signaux, pas une preuve.",
       },
       {
         title: "Tester l'aimant trop près",
@@ -188,12 +188,12 @@ export const gucciSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les fakes haut de gamme utilisent du laiton réel (non magnétique) avec gravure quasi-parfaite — résolvant les critères simples. Le défaut résiduel : la finition de plaquage. Gucci utilise un plaquage galvanique or 24k sur laiton poli (procédé stable 10+ ans). Les fakes utilisent un plaquage plus fin (3-5 microns au lieu de 8-10 microns Gucci) qui s'use en 1-2 ans, révélant le laiton nu ou l'acier en-dessous. Sur un sac fake « neuf », le plaquage est parfait — mais un sac fake de 2-3 ans montre des zones d'usure précoce (angles, coins) que l'authentique ne montre pas. Acheter un fake « 2ème main de 2-3 ans » permet souvent de détecter ce défaut.",
+      "Les fakes haut de gamme utilisent du laiton réel (non magnétique) avec gravure quasi-parfaite — résolvant les critères simples. Le défaut résiduel peut être la finition du plaquage : sur une contrefaçon, il s'use souvent vite et par plaques, aux angles et aux coins, révélant le métal en dessous. Un plaquage impeccable sur un sac « neuf » ne prouve rien. Sur une pièce portée, une usure en plaques est un signal d'alerte, pas une preuve : le plaquage d'un sac authentique finit aussi par s'user aux points de friction.",
     faqs: [
       {
         question: "Le hardware Gucci peut-il se ternir avec l'âge ?",
         answer:
-          "Oui, naturellement. Le plaquage or 24k s'oxyde avec transpiration, humidité, frictions. Après 5-10 ans, le hardware peut perdre un peu de brillant et virer vers une teinte or plus chaude. Cette patine est un signe d'AUTHENTICITÉ. Un hardware qui reste miroir brillant après 10 ans d'usage est suspect (chrome imperméable = fake). Un noircissement en plaques irrégulières révèle un plaquage fake de mauvaise qualité.",
+          "Oui. Avec l'usage (transpiration, humidité, frottements), le hardware peut perdre de son brillant et prendre une teinte plus chaude. Cette usure, régulière, est normale et ne dit rien à elle seule de l'authenticité. Un écaillage ou un noircissement en plaques irrégulières est un signal d'alerte, à croiser avec la gravure et les autres signaux.",
       },
       {
         question: "Toutes les pièces hardware d'un sac Gucci portent-elles la gravure ?",
@@ -204,68 +204,69 @@ export const gucciSignals: GuideSignal[] = [
   },
   {
     slug: "qr-code",
-    name: "QR code d'authentification",
+    name: "QR code intérieur (sacs récents)",
     brandSlug: "gucci",
     category: "bags",
-    tagline: "Scanner et vérifier le QR code Gucci via l'app Discovery",
+    tagline: "Ce que le QR code des sacs Gucci récents permet de vérifier, et ce qu'il ne permet pas",
+    headline: "QR code des sacs Gucci : ce qu'il prouve, et ce qu'il ne prouve pas",
     intro:
-      "Depuis 2020, Gucci intègre un QR code d'authentification à l'intérieur de ses sacs (patte de cuir spécifique ou étiquette dédiée). Ce QR code, scanné via l'app officielle « Gucci Discovery » (disponible iOS/Android), permet une authentification digitale en quelques secondes : le scan vérifie l'identifiant unique du sac dans les bases Gucci et renvoie une confirmation d'authenticité + informations produit (collection, année, matériau, référence). Ce système est l'évolution moderne du numéro de série physique. Pour le consommateur, le test est simple et décisif : installer l'app Gucci Discovery gratuite → onglet « Authenticate » → scanner le QR code du sac → attendre la réponse (1-5 secondes). Si le QR renvoie une page produit cohérente avec le sac (même modèle, même matériau), le sac est authentifié. Si le QR renvoie une page différente ou « non reconnu », le sac est une contrefaçon. Les faussaires impriment des QR codes génériques qui mènent à des sites tiers (pages fausses imitant Gucci) ou à des QR non-fonctionnels. Quelques faussaires haut de gamme ont tenté de reverse-engineer le système, mais Gucci a renforcé la cryptographie en 2023.",
+      "Sur une partie de ses sacs récents, Gucci coud à l'intérieur une petite étiquette en tissu noir portant un QR code, distincte de la patte en cuir qui porte le numéro de série. Selon les revendeurs spécialisés, elle apparaît au milieu des années 2010, sans date nette (les sources ne s'accordent pas), et les petites pièces n'en ont souvent pas. L'application officielle Gucci annonce, dans sa description sur l'App Store, permettre de « scanner le certificat d'authenticité des articles sélectionnés » : tous les articles ne sont donc pas concernés. Un QR code se recopie à l'identique : un code reconnu ne prouve pas, à lui seul, que le sac en main est authentique, et un code que l'application ne reconnaît pas ne prouve pas la contrefaçon. Ce guide dit ce qu'on peut tirer de ce QR code, et surtout ce qu'on ne peut pas en tirer.",
     steps: [
       {
-        title: "Vérifier la date de production (post-2020)",
+        title: "Ne pas exiger de QR code",
         description:
-          "Le QR code est présent uniquement sur sacs produits après 2020. Les sacs pré-2020 n'en ont pas (normal). Déterminez la date via le numéro de série ligne 1 croisé avec la date de drop du modèle sur gucci.com.",
+          "Tous les sacs Gucci n'ont pas d'étiquette à QR code : selon les revendeurs spécialisés, les sacs plus anciens n'en ont pas, et les petites pièces souvent pas. Un sac sans QR code n'est donc pas suspect pour cette seule raison.",
       },
       {
-        title: "Localiser le QR code",
+        title: "Savoir ce qu'un scan peut montrer",
         description:
-          "Emplacement standard : petite étiquette cuir intérieure ou sur la doublure textile. Format : carré 15-20 mm, impression noire sur fond beige. Parfois dans une poche dédiée.",
+          "L'application officielle Gucci annonce pouvoir scanner le certificat d'authenticité de certains articles seulement. Selon les revendeurs spécialisés, les lecteurs de QR code courants ne lisent pas ce code : leur échec ne dit rien du sac.",
       },
       {
-        title: "Installer l'app Gucci Discovery",
+        title: "Ne rien conclure du scan",
         description:
-          "App Store / Google Play : « Gucci Discovery » officielle (développeur Gucci, pas tierces). Téléchargement gratuit, pas de connexion compte requise pour scan authentification.",
+          "Un code reconnu ne prouve pas l'authenticité : un QR code se recopie à l'identique. Un code que l'application ne reconnaît pas ne prouve pas la contrefaçon : l'article peut ne pas faire partie des articles concernés, ou l'étiquette être abîmée.",
       },
       {
-        title: "Scanner le QR via l'onglet Authenticate",
+        title: "Demander la preuve d'achat",
         description:
-          "Ouvrez l'app → onglet « Authenticate » (peut être « Scan » selon version). Cadrez le QR code dans le viseur de l'app. Attendez la reconnaissance (1-3 secondes).",
+          "Demandez la facture ou le ticket d'achat d'origine, cohérent avec le sac et avec le récit du vendeur.",
       },
       {
-        title: "Analyser la réponse de l'app",
+        title: "Vérifier les signaux visibles",
         description:
-          "Réponse positive : page produit Gucci avec photos, référence, matériau cohérent avec le sac en main. Réponse négative : « QR not recognized » ou redirection vers page externe = contrefaçon.",
+          "Numéro de série, gravure du hardware, motif GG, cuir : ces signaux se vérifient sur photo. Voir les autres guides Gucci.",
       },
     ],
     commonErrors: [
       {
-        title: "Scanner avec un QR reader générique",
+        title: "Conclure à une contrefaçon faute de réponse au scan",
         description:
-          "Les apps QR génériques (Barcode Scanner, smartphone natif) peuvent lire le QR mais ne se connectent pas aux bases Gucci — elles affichent juste un lien URL. Utilisez EXCLUSIVEMENT l'app officielle Gucci Discovery pour authentification véritable.",
+          "Un QR code que l'application ou un lecteur ne reconnaît pas ne prouve rien : l'article peut ne pas être concerné, l'étiquette peut être abîmée, et un lecteur courant peut ne pas savoir le lire.",
       },
       {
-        title: "Conclure « fake » sans l'app officielle",
+        title: "Prendre un scan reconnu pour une preuve",
         description:
-          "Un QR qui ne fonctionne pas avec un reader générique ne prouve rien. Le test valable est via app Gucci Discovery. Essayez d'abord cette app avant de rejeter.",
+          "Un QR code se recopie à l'identique : un code reconnu ne dit pas que le sac en main est celui auquel il a été attribué.",
       },
       {
-        title: "Ignorer une redirection vers site non-Gucci",
+        title: "Se fier à la page qu'ouvre un QR code",
         description:
-          "Si le QR ouvre un site externe (pas gucci.com ou app.gucci) = fake évident. Certains fakes imitent visuellement Gucci avec des URL piégées (« gucci-authenticate.com ») — ce ne sont PAS des domaines Gucci officiels.",
+          "N'importe qui peut créer un QR code qui mène à une page imitant Gucci et « confirmant » l'authenticité. Une telle page ne prouve rien, même si son adresse ressemble à celle de Gucci.",
       },
     ],
     counterfeiterTactics:
-      "Les faussaires génèrent des QR codes pointant vers des sites miroirs (pages HTML clonées de gucci.com) qui affichent « authenticated » sans vérification réelle. Ces sites sont facilement détectables : URL non-officielle, HTTPS avec certificat autosigné ou manquant, contenu incomplet. Autre tactique : fakes avec QR pointant vers gucci.com mais une page produit aléatoire (pas le produit en main) — l'app Gucci Discovery détecte ce différentiel. Certains fakes 2024 ultra-haut-de-gamme ont tenté de clonage cryptographique complet du système Gucci : Gucci a riposté avec un renforcement AES-256 rendant ces clones inopérants depuis juin 2023. Le système d'authentification digital Gucci est actuellement l'un des plus robustes du luxe.",
+      "Certains vendeurs mettent en avant un QR code qui « fonctionne », ou une page qui « confirme » l'authenticité. Un QR code se recopie, et n'importe qui peut en créer un qui mène à une page imitant Gucci : cet argument ne prouve rien. L'étiquette elle-même se reproduit comme le reste du sac : sa présence ne prouve rien non plus. Jugez le sac sur ses signaux visibles et sur sa preuve d'achat.",
     faqs: [
       {
-        question: "Mon sac Gucci post-2020 n'a pas de QR code, est-il forcément fake ?",
+        question: "Mon sac Gucci n'a pas de QR code : est-il faux ?",
         answer:
-          "C'est un signal fort. Gucci a généralisé les QR à partir de 2020 sur tous les sacs. Un sac post-2020 sans QR est suspect. Exceptions possibles : certaines éditions limitées ou collaborations peuvent avoir un système différent — vérifiez via gucci.com la fiche produit exact. En cas de doute, apportez le sac en boutique Gucci pour vérification gratuite.",
+          "Pas pour cette raison. Selon les revendeurs spécialisés, les sacs plus anciens n'ont pas d'étiquette à QR code, les petites pièces souvent pas, et les dates d'apparition avancées varient d'une source à l'autre. Jugez sur les signaux visibles et sur la preuve d'achat.",
       },
       {
-        question: "Le QR peut-il s'effacer avec le temps ?",
+        question: "Peut-on vérifier le QR code d'un sac Gucci avec une appli ?",
         answer:
-          "Possible sur sacs très portés (3+ ans). L'impression peut s'abîmer si l'étiquette est frottée. Si le QR est partiellement illisible, essayez un scan en inclinant le smartphone ou avec meilleur éclairage. Si totalement illisible, apportez le sac en boutique Gucci : ils peuvent authentifier via leur base interne avec le numéro de série. Un QR effacé N'invalide PAS l'authentification si autres indicateurs cohérents.",
+          "L'application officielle Gucci annonce pouvoir scanner le certificat d'authenticité de certains articles. Un scan reconnu ne prouve pas, à lui seul, l'authenticité, puisqu'un QR code se recopie ; un scan qui échoue ne prouve pas la contrefaçon. Selon les revendeurs spécialisés, les lecteurs de QR code courants ne lisent pas ce code. Jugez sur les signaux visibles et sur la preuve d'achat.",
       },
     ],
   },
@@ -318,7 +319,7 @@ export const gucciSignals: GuideSignal[] = [
       {
         title: "Rejeter la vachetta brune comme fake",
         description:
-          "Un sac Gucci de 5+ ans a une vachetta patinée brune — c'est normal et signe d'authenticité. Rejeter « trop brun » est une erreur. Critiquer la patine revient à critiquer l'âge du sac, pas son authenticité.",
+          "Une vachetta qui a bruni avec l'âge et l'usage est normale : sa couleur ne dit rien, à elle seule, de l'authenticité. Rejeter « trop brun » est une erreur. Critiquer la patine revient à critiquer l'âge du sac, pas son authenticité.",
       },
     ],
     counterfeiterTactics:

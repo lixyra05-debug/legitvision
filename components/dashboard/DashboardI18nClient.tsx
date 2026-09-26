@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import {
   getStatusLabel,
@@ -111,6 +111,53 @@ export function VerdictLabel({ verdict }: { verdict: Verdict }) {
 export function StatusLabel({ status }: { status: AnalysisStatus }) {
   const { locale } = useTranslation();
   return <>{getStatusLabel(status, locale)}</>;
+}
+
+/**
+ * Pagination de l'historique : plus récentes à gauche (page précédente), plus
+ * anciennes à droite. Rien quand tout tient sur une page.
+ */
+export function DashboardPagination({
+  page,
+  pageCount,
+  total,
+}: {
+  page: number;
+  pageCount: number;
+  total: number;
+}) {
+  const { t } = useTranslation();
+  if (pageCount <= 1) return null;
+  const href = (n: number) => (n <= 1 ? "/dashboard" : `/dashboard?page=${n}`);
+  const linkClass =
+    "inline-flex h-10 items-center gap-1.5 rounded-md border border-line px-4 text-ui font-medium transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover";
+  return (
+    <nav
+      aria-label={t("dashboard.pagination")}
+      className="mt-8 flex flex-wrap items-center justify-between gap-3"
+    >
+      {page > 1 ? (
+        <Link href={href(page - 1)} className={linkClass}>
+          <ChevronLeft className="size-4" />
+          {t("dashboard.newer")}
+        </Link>
+      ) : (
+        <span aria-hidden="true" />
+      )}
+      <p className="text-ui text-muted-foreground">
+        {t("dashboard.page")} {page} {t("dashboard.pageOf")} {pageCount} · {total}{" "}
+        {total > 1 ? t("dashboard.analysesCountPlural") : t("dashboard.analysesCount")}
+      </p>
+      {page < pageCount ? (
+        <Link href={href(page + 1)} className={linkClass}>
+          {t("dashboard.older")}
+          <ChevronRight className="size-4" />
+        </Link>
+      ) : (
+        <span aria-hidden="true" />
+      )}
+    </nav>
+  );
 }
 
 /** Date formatted according to current locale (fr-FR / en-US) */

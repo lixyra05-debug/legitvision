@@ -37,9 +37,9 @@ export const newBalanceModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "Tag size — UK/EU/US/CM alignés, Made in Indonesia",
+        title: "Tag size — UK/EU/US/CM alignés, pays de fabrication",
         description:
-          "Le tag authentique indique UK/EU/US/CM alignés sur 4 colonnes, avec « Made in Indonesia » ou « Made in Vietnam ». Les contrefaçons ont souvent « Made in China » (faux pour les 550 modernes) ou un alignement décalé.",
+          "Le tag authentique indique UK/EU/US/CM alignés sur 4 colonnes, avec le pays de fabrication (par exemple « Made in Indonesia » ou « Made in Vietnam »). Les contrefaçons ont souvent un alignement décalé.",
         difficulty: 1,
       },
     ],

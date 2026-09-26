@@ -10,7 +10,7 @@ export const diorModels: ModelData[] = [
     retailYear: "1995 (production continue)",
     tagline: "Le sac offert par Bernadette Chirac à Lady Di",
     intro:
-      "Le Lady Dior Medium, offert par Bernadette Chirac à Lady Diana en 1995 et renommé en son honneur après le succès immédiat, est le sac le plus iconique de Dior. Retail 2026 : 5 800-7 200 € selon cuir (Cannage Lambskin, Ultramatte, Suede). Prix marché secondaire : 4 500-6 500 €. Sa signature : le cannage quilting (motif losanges cousus caractéristique), les charms D-I-O-R suspendus à la poignée et la forme structurée rectangulaire. Les contrefaçons Lady Dior sont sophistiquées (les super-fakes coûtent 300-800 €) car le cannage et les charms sont immédiatement reconnaissables. Cependant, la qualité du Lambskin, la précision du cannage 3D, la gravure des charms D-I-O-R et le code série résistent aux UA batches. Les signaux ci-dessous.",
+      "Le Lady Dior Medium, offert par Bernadette Chirac à Lady Diana en 1995 et renommé en son honneur après le succès immédiat, est le sac le plus iconique de Dior. Retail 2026 : 5 800-7 200 € selon cuir (Cannage Lambskin, Ultramatte, Suede). Prix marché secondaire : 4 500-6 500 €. Sa signature : le cannage quilting (motif losanges cousus caractéristique), les charms D-I-O-R suspendus à la poignée et la forme structurée rectangulaire. Les contrefaçons Lady Dior sont sophistiquées car le cannage et les charms sont immédiatement reconnaissables. Cependant, la qualité du Lambskin, la précision du cannage 3D, la gravure des charms D-I-O-R et le code série résistent aux UA batches. Les signaux ci-dessous.",
     signals: [
       {
         title: "Cannage 3D — relief uniforme et alignement",

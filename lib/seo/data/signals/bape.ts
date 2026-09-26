@@ -24,7 +24,7 @@ export const bapeSignals: GuideSignal[] = [
       {
         title: "Chercher les Ape Heads cachés (2,5×2 cm)",
         description:
-          "Au zoom x5, 4 à 6 têtes de singe BAPE sont cachées dans les formes du camo, dissimulées dans les zones foncées. Leur absence totale est éliminatoire — le 1st Camo les contient systématiquement depuis 2000.",
+          "Au zoom x5, 4 à 6 têtes de singe BAPE sont cachées dans les formes du camo, dissimulées dans les zones foncées. Leur absence totale est un signal d'alerte fort — le 1st Camo les contient systématiquement depuis 2000.",
       },
       {
         title: "Mesurer le pattern de répétition (55-60 cm)",
@@ -121,7 +121,7 @@ export const bapeSignals: GuideSignal[] = [
       {
         title: "Accepter un fil polyester comme « variation matière »",
         description:
-          "BAPE n'utilise pas de fil polyester pour sa broderie WGM — c'est toujours du coton mercerisé. Un fil brillant au flash est éliminatoire, pas une variation acceptable.",
+          "BAPE n'utilise pas de fil polyester pour sa broderie WGM — c'est toujours du coton mercerisé. Un fil brillant au flash est un signal d'alerte fort, à croiser avec les autres signaux.",
       },
     ],
     counterfeiterTactics:
@@ -186,7 +186,7 @@ export const bapeSignals: GuideSignal[] = [
       {
         title: "Ignorer la bande textile latérale « A BATHING APE »",
         description:
-          "Cette bande est imprimée sur toute la longueur du zip (souvent 50-60 cm sur un Shark Hoodie). Son absence, ou le remplacement par une bande unie, est éliminatoire.",
+          "Cette bande est imprimée sur toute la longueur du zip (souvent 50-60 cm sur un Shark Hoodie). Son absence, ou le remplacement par une bande unie, est un signal d'alerte fort, à croiser avec les autres signaux.",
       },
       {
         title: "Ne pas tester la gravure à l'ongle sur le curseur",
@@ -218,7 +218,7 @@ export const bapeSignals: GuideSignal[] = [
     tagline:
       "Lire les tags BAPE : papier doré, impression embossée, numéro de référence",
     intro:
-      "Les tags suspendus au vêtement BAPE à l'achat — deux étiquettes en papier doré reliées par un cordon noir — sont un signal d'authentification puissant pour les pièces « deadstock » (jamais portées, tags toujours attachés). Sur une pièce d'origine, le tag principal est un rectangle de papier cartonné doré métallisé (finition embossée type foil doré chaud), format 6×10 cm, portant au recto le logo « A BATHING APE » en capitales Helvetica Bold noir, l'Ape Head central embossé en relief, le nom du modèle, le prix retail en yen japonais (JPY) ou en USD/EUR selon marché, un numéro de référence à 10-12 chiffres en bas à droite, et un code-barre EAN-13. Le verso porte l'adresse du siège NOWHERE Co. à Shibuya (Tokyo), les mentions légales en japonais et anglais, et le copyright « © NIGO × BAPE ». Le tag secondaire (plus petit, 3×5 cm) porte la taille et la couleur. La finition dorée est obtenue par embossage à chaud (gold foil stamping), perceptible à l'ongle comme une surface légèrement rugueuse et chaude. Les contrefaçons trahissent plusieurs défauts : finition dorée imprimée en surface (plane au toucher) au lieu d'embossée, papier trop fin (bristol 200 g/m² au lieu du carton 350 g/m² officiel), Ape Head imprimé plat au lieu d'embossé en relief, absence de numéro de référence ou numéro incohérent avec la base de données BAPE/StockX, code-barre qui ne scanne pas, ou adresse du siège incorrecte (« Tokyo, Japan » générique au lieu de « 4-28-23 Jingumae, Shibuya-ku, Tokyo »).",
+      "Les tags suspendus au vêtement BAPE à l'achat — deux étiquettes en papier doré reliées par un cordon noir — sont un signal d'authentification puissant pour les pièces « deadstock » (jamais portées, tags toujours attachés). Sur une pièce d'origine, le tag principal est un rectangle de papier cartonné doré métallisé (finition embossée type foil doré chaud), format 6×10 cm, portant au recto le logo « A BATHING APE » en capitales Helvetica Bold noir, l'Ape Head central embossé en relief, le nom du modèle, le prix retail en yen japonais (JPY) ou en USD/EUR selon marché, un numéro de référence en bas à droite, et un code-barre. Le verso porte l'adresse du siège NOWHERE Co. à Shibuya (Tokyo), les mentions légales en japonais et anglais, et le copyright « © NIGO × BAPE ». Le tag secondaire (plus petit, 3×5 cm) porte la taille et la couleur. La finition dorée est obtenue par embossage à chaud (gold foil stamping), perceptible à l'ongle comme une surface légèrement rugueuse et chaude. Les contrefaçons trahissent plusieurs défauts : finition dorée imprimée en surface (plane au toucher) au lieu d'embossée, papier trop fin (bristol 200 g/m² au lieu du carton 350 g/m² officiel), Ape Head imprimé plat au lieu d'embossé en relief, absence de numéro de référence ou numéro incohérent avec les fiches du même article, ou adresse du siège incorrecte (« Tokyo, Japan » générique au lieu de « 4-28-23 Jingumae, Shibuya-ku, Tokyo »).",
     steps: [
       {
         title: "Photographier les deux tags avant découpage",
@@ -241,9 +241,9 @@ export const bapeSignals: GuideSignal[] = [
           "L'adresse officielle complète est « 4-28-23 Jingumae, Shibuya-ku, Tokyo, Japan » ou une variante précise selon l'année. Une adresse générique « Tokyo, Japan » sans numéro de rue est un signal fort.",
       },
       {
-        title: "Scanner le code-barre EAN-13 et vérifier le numéro de référence",
+        title: "Relever le numéro de référence, sans rien conclure du code-barre",
         description:
-          "Le code-barre doit être valide EAN-13 (scan réussi sur app Barcode). Le numéro de référence à 10-12 chiffres doit correspondre à une fiche produit sur stockx.com ou bapeonline.com archive.",
+          "Comparez le numéro de référence et le nom du modèle avec une fiche du même article (site BAPE, photos de référence). Un code-barre se recopie d'un vrai tag : un scan qui aboutit ne prouve rien, et un scan qui échoue (tag froissé, impression usée) ne prouve pas la contrefaçon.",
       },
     ],
     commonErrors: [
@@ -274,9 +274,9 @@ export const bapeSignals: GuideSignal[] = [
       },
       {
         question:
-          "Les tags BAPE incluent-ils toujours un QR code moderne ?",
+          "Un QR code sur un tag BAPE prouve-t-il quelque chose ?",
         answer:
-          "Depuis 2020 environ, BAPE ajoute un QR code sur les tags principaux qui renvoie vers bapeonline.com avec la fiche produit spécifique. Les pièces antérieures à 2020 n'en ont pas — leur authentification passe uniquement par le code-barre EAN-13 et le numéro de référence. Un tag « vintage 2018 » avec QR code est suspect. Un tag « 2023 » sans QR code est également suspect. Vérifiez la cohérence année de drop ↔ présence/absence du QR code. Le QR scanné doit renvoyer au modèle exact (nom, colorway, taille) — un QR qui scanne vers une page générique bapeonline.com sans fiche produit précise est un signal fort.",
+          "Non. Aucune source vérifiée ne dit quels tags BAPE portent un QR code, ni depuis quand : ne jugez pas une pièce sur sa présence ou son absence. Un QR code se recopie à l'identique : un code qui mène à une page BAPE ne prouve pas que la pièce en main est authentique, et un tag sans QR code, ou un code qui ne mène nulle part, ne prouve pas la contrefaçon. Un code qui mène vers un domaine qui n'est pas celui de BAPE est un signal d'alerte fort, pas une preuve à lui seul. Jugez sur l'embossage du tag, l'Ape Head en relief et les autres signaux de la pièce.",
       },
     ],
   },

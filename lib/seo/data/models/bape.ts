@@ -37,9 +37,9 @@ export const bapeModels: ModelData[] = [
         difficulty: 3,
       },
       {
-        title: "Coton 450 gsm lourd — poids et toucher",
+        title: "Coton lourd — épaisseur et toucher",
         description:
-          "Le Shark Hoodie utilise un coton 450 gsm (lourd et dense) produit au Japon, poids M = 1 100-1 200 g. Les contrefaçons utilisent un coton 300-350 gsm, poids M = 800-900 g (plus léger). Le toucher authentique est dense-cartonné, les fakes sont plus souples.",
+          "Le Shark Hoodie utilise un coton lourd et dense. Les contrefaçons utilisent souvent un coton plus fin et plus léger. Le toucher authentique est dense-cartonné, les fakes sont plus souples. Le poids d'une pièce varie avec la taille et le lavage : il ne tranche pas à lui seul.",
         difficulty: 2,
       },
     ],
@@ -98,15 +98,15 @@ export const bapeModels: ModelData[] = [
         difficulty: 3,
       },
       {
-        title: "Coton japonais — 400 gsm mid-weight",
+        title: "Coton — épaisseur et toucher",
         description:
-          "Le coton ABC Camo Hoodie est japonais (Osaka/Nagoya) avec densité 400 gsm (légèrement moins lourd que Shark Hoodie 450 gsm). Poids M = 900-1 000 g authentique. Les contrefaçons utilisent coton 280-320 gsm (poids M = 700-800 g), plus léger et souple.",
+          "Le ABC Camo Hoodie est taillé dans un coton épais. Les contrefaçons utilisent souvent un coton plus fin, plus léger et plus souple. Le poids d'une pièce varie avec la taille et le lavage : il ne tranche pas à lui seul.",
         difficulty: 2,
       },
       {
         title: "Drawstring aglets — embouts métal BAPE",
         description:
-          "Les aglets (embouts du cordon de la capuche) sont en métal avec logo BAPE « Ape Head » gravé. Les contrefaçons utilisent souvent des aglets en plastique (pas métal) ou métal sans logo gravé. Détail pro : les aglets authentiques pèsent chacun 2-3 g.",
+          "Les aglets (embouts du cordon de la capuche) sont en métal avec logo BAPE « Ape Head » gravé. Les contrefaçons utilisent souvent des aglets en plastique (pas métal) ou métal sans logo gravé.",
         difficulty: 2,
       },
     ],

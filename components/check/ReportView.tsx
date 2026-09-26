@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Plus,
@@ -14,6 +15,7 @@ import {
   ScanText,
   Lightbulb,
   Loader2,
+  Upload,
 } from "lucide-react";
 import { ScoreGauge } from "./ScoreGauge";
 import { FindingCard, type Finding } from "./FindingCard";
@@ -23,6 +25,7 @@ import { LanguageToggle } from "@/components/LanguageToggle";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { getScoreColor, getScoreSolidBg } from "@/lib/types";
 import type { Verdict, Confidence } from "@/lib/types";
+import { REPORT_REFRESH_SECONDS } from "@/lib/analysis-limits";
 
 const VERDICT_TO_KEY: Record<Verdict, "authentic" | "suspect" | "fake"> = {
   likely_authentic: "authentic",
@@ -112,6 +115,29 @@ const OCR_LABEL_KEY: Record<string, string> = {
 
 // ── Sub-components ──
 
+/**
+ * Relit la page (composant serveur) toutes les REPORT_REFRESH_SECONDS tant
+ * que l'analyse n'est pas terminée, et dès que l'onglet redevient visible.
+ * Chaque relecture passe aussi par la reprise des analyses bloquées
+ * (check/[id]/page.tsx) : une analyse abandonnée finit donc affichée en
+ * échec, sans action du client. Démonté dès que le statut est final.
+ */
+function AutoRefresh() {
+  const router = useRouter();
+  useEffect(() => {
+    const refreshIfVisible = () => {
+      if (document.visibilityState === "visible") router.refresh();
+    };
+    const interval = setInterval(refreshIfVisible, REPORT_REFRESH_SECONDS * 1000);
+    document.addEventListener("visibilitychange", refreshIfVisible);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", refreshIfVisible);
+    };
+  }, [router]);
+  return null;
+}
+
 function SubScoreBar({ label, score }: { label: string; score: number }) {
   const [width, setWidth] = useState(0);
 
@@ -185,10 +211,14 @@ function formatDate(iso: string): string {
 // ── Main export ──
 
 export function ReportView({ data }: { data: ReportData }) {
-  const isPending =
-    data.status === "pending" ||
-    data.status === "uploading" ||
-    data.status === "analyzing";
+  // Pas lancée : envoi des photos pas terminé, ou interrompu (rien ne dit lequel).
+  const isNotStarted = data.status === "uploading";
+  // Photos toutes envoyées, lancement demandé : la route va la réserver, ou la
+  // demande s'est perdue (la reprise la passera en échec).
+  const isLaunching = data.status === "pending";
+  // Lancée : la route travaille (ou a été coupée ; la reprise la passera en échec).
+  const isAnalyzing = data.status === "analyzing";
+  const isPending = isNotStarted || isLaunching || isAnalyzing;
 
   const isFailed = data.status === "failed";
 
@@ -292,9 +322,10 @@ export function ReportView({ data }: { data: ReportData }) {
           </div>
         </div>
 
-        {/* ── PENDING STATE ── */}
-        {isPending && (
-          <div className="flex flex-col items-center gap-6 rounded-lg border border-line-subtle bg-card py-16">
+        {/* ── PENDING STATE — la page se relit seule jusqu'au statut final ── */}
+        {isPending && <AutoRefresh />}
+        {isAnalyzing && (
+          <div className="flex flex-col items-center gap-6 rounded-lg border border-line-subtle bg-card px-6 py-16">
             <Loader2 className="size-12 animate-spin text-muted-foreground" />
             <div className="text-center">
               <p className="font-heading text-lead font-semibold">
@@ -302,6 +333,32 @@ export function ReportView({ data }: { data: ReportData }) {
               </p>
               <p className="mt-1 text-ui text-muted-foreground">
                 {t("results.analyzingDesc")}
+              </p>
+            </div>
+          </div>
+        )}
+        {isLaunching && (
+          <div className="flex flex-col items-center gap-6 rounded-lg border border-line-subtle bg-card px-6 py-16">
+            <Loader2 className="size-12 animate-spin text-muted-foreground" />
+            <div className="text-center">
+              <p className="font-heading text-lead font-semibold">
+                {t("results.launchingTitle")}
+              </p>
+              <p className="mt-1 text-ui text-muted-foreground">
+                {t("results.launchingDesc")}
+              </p>
+            </div>
+          </div>
+        )}
+        {isNotStarted && (
+          <div className="flex flex-col items-center gap-6 rounded-lg border border-line-subtle bg-card px-6 py-16">
+            <Upload className="size-12 text-muted-foreground" />
+            <div className="text-center">
+              <p className="font-heading text-lead font-semibold">
+                {t("results.notStartedTitle")}
+              </p>
+              <p className="mt-1 text-ui text-muted-foreground">
+                {t("results.notStartedDesc")}
               </p>
             </div>
           </div>

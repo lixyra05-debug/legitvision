@@ -75,7 +75,7 @@ export const nikeSignals: GuideSignal[] = [
     category: "sneakers",
     tagline: "Décoder la box label Nike : style code, colorway nominal, code-barre",
     intro:
-      "La box label est collée sur le petit côté de la boîte Nike et concentre autant d'informations que la tongue label, mais avec un angle différent : c'est l'étiquette « logistique » utilisée en entrepôt. On y trouve le style code, le colorway nominal complet (pas juste le surnom marketing), la pointure, le code-barre EAN-13, et parfois un QR code depuis 2020. La typographie est toujours Helvetica Neue, mais plus grasse que sur la tongue label — c'est un repère fort. Les contrefaçons butent sur trois détails : la colle qui laisse des bulles d'air sous l'étiquette, le code-barre qui ne scanne pas (ou scanne vers un produit n'ayant rien à voir), et le colorway nominal qui utilise des séparateurs incorrects — Nike utilise systématiquement le format « COLOR1/COLOR2-COLOR3 » avec une barre oblique et un tiret, jamais trois tirets ou trois barres obliques. Sur une paire hypée comme une Jordan 1 Chicago, le colorway sera « WHITE/BLACK-VARSITY RED » — jamais « WHITE-BLACK-RED » ni « White/Black/Red ».",
+      "La box label est collée sur le petit côté de la boîte Nike et concentre autant d'informations que la tongue label, mais avec un angle différent : c'est l'étiquette « logistique » utilisée en entrepôt. On y trouve le style code, le colorway nominal complet (pas juste le surnom marketing), la pointure, un code-barre, et parfois un QR code. La typographie est toujours Helvetica Neue, mais plus grasse que sur la tongue label — c'est un repère fort. Les contrefaçons butent souvent sur deux détails : la colle qui laisse des bulles d'air sous l'étiquette, et le colorway nominal qui utilise des séparateurs incorrects — Nike utilise systématiquement le format « COLOR1/COLOR2-COLOR3 » avec une barre oblique et un tiret, jamais trois tirets ou trois barres obliques. Sur une paire hypée comme une Jordan 1 Chicago, le colorway sera « WHITE/BLACK-VARSITY RED » — jamais « WHITE-BLACK-RED » ni « White/Black/Red ». Le code-barre et le QR code, eux, se recopient d'une vraie boîte : un scan qui aboutit ne prouve rien.",
     steps: [
       {
         title: "Vérifier l'adhésion de l'étiquette",
@@ -88,9 +88,9 @@ export const nikeSignals: GuideSignal[] = [
           "Le style code (format XX1234-567) doit correspondre au style code de la tongue label. Le colorway nominal doit utiliser le format exact « COLOR1/COLOR2-COLOR3 » avec barre oblique et tiret, pas d'autre séparateur. Exemple authentique : « WHITE/BLACK-VARSITY RED ».",
       },
       {
-        title: "Scanner le code-barre EAN-13",
+        title: "Relever le code-barre, sans rien en conclure seul",
         description:
-          "Le code-barre doit scanner correctement (13 chiffres) et mener au bon modèle. Utilisez une app gratuite de scan EAN (Barcode Reader, ScanLife). Un code qui ne scanne pas, ou qui scanne vers un autre produit (chaussettes, sac Nike), est une preuve de contrefaçon.",
+          "Un code-barre se recopie d'une vraie boîte : un scan qui aboutit ne prouve pas l'authenticité. Un scan qui échoue ne prouve pas la contrefaçon (étiquette abîmée, application qui ne connaît pas le code). Un code qui renvoie vers un tout autre produit est un signal d'alerte, à croiser avec le style code et la paire.",
       },
       {
         title: "Croiser la pointure étiquette ↔ langue ↔ semelle",
@@ -98,9 +98,9 @@ export const nikeSignals: GuideSignal[] = [
           "La pointure doit être identique sur trois emplacements : box label, tongue label, et estampille intérieure de la semelle (parfois embossée). Une asymétrie — box dit « US 9 » mais tongue dit « US 9.5 » — révèle un remplacement d'étiquette.",
       },
       {
-        title: "Vérifier le QR code (paires 2020+)",
+        title: "Lire le QR code, sans rien en conclure seul",
         description:
-          "Depuis 2020 sur certains drops SNKRS, un QR code est ajouté à la box label. Scannez-le : il doit mener à une page nike.com/launch, nike.com/snkrs ou app.snkrs.com. Un QR menant à un autre domaine, ou inerte, est suspect.",
+          "Selon les revendeurs spécialisés, le QR code de certaines box labels n'est pas propre à chaque paire et se recopie facilement : un code qui mène chez Nike ne prouve rien. Un code qui mène vers un domaine qui n'est pas celui de Nike est un signal d'alerte fort, pas une preuve à lui seul. Une boîte sans QR code n'est pas suspecte pour cette seule raison.",
       },
     ],
     commonErrors: [
@@ -112,7 +112,7 @@ export const nikeSignals: GuideSignal[] = [
       {
         title: "Valider sur le seul code-barre",
         description:
-          "Un code-barre peut être copié d'une vraie paire et réimprimé sur une étiquette fake. Le scan correct est nécessaire mais pas suffisant — croisez avec typographie et adhésion de l'étiquette.",
+          "Un code-barre peut être copié d'une vraie paire et réimprimé sur une étiquette fake. Un scan qui aboutit ne prouve rien, un scan qui échoue non plus — croisez avec typographie et adhésion de l'étiquette.",
       },
       {
         title: "Croire qu'une boîte abîmée = fake",
@@ -184,11 +184,11 @@ export const nikeSignals: GuideSignal[] = [
       {
         title: "Ne pas croiser insole ↔ tongue ↔ box",
         description:
-          "Le code usine de l'insole doit être cohérent avec la date de fabrication de la tongue et de la box. Un code usine ancien (« 0412 » = semaine 4 de 2012) sur une paire drop 2023 est une preuve immédiate de contrefaçon.",
+          "Le code usine de l'insole doit être cohérent avec la date de fabrication de la tongue et de la box. Un code usine ancien (« 0412 » = semaine 4 de 2012) sur une paire drop 2023 est un signal d'alerte fort, à croiser avec les autres signaux.",
       },
     ],
     counterfeiterTactics:
-      "Les faussaires ignorent souvent le dessous de l'insole. Les super-fakes haut de gamme (> 200 € de prix de production) ajoutent un embossage sommaire sur le dessous, mais la profondeur est typiquement 0,3-0,5 mm au lieu de 1-1,5 mm authentique. La mousse Ortholite est aussi un goulot d'étranglement : Ortholite est une marque déposée qui ne vend qu'à Nike, Adidas et quelques autres — les contrefaçons utilisent des substituts chinois qui imitent la couleur mais ratent la densité.",
+      "Les faussaires ignorent souvent le dessous de l'insole. Les super-fakes haut de gamme ajoutent un embossage sommaire sur le dessous, mais la profondeur est typiquement 0,3-0,5 mm au lieu de 1-1,5 mm authentique. La mousse Ortholite est aussi un goulot d'étranglement : Ortholite est une marque déposée qui ne vend qu'à Nike, Adidas et quelques autres — les contrefaçons utilisent des substituts chinois qui imitent la couleur mais ratent la densité.",
     faqs: [
       {
         question: "Pourquoi les insoles de mes Air Max sont-elles plus dures qu'avant ?",

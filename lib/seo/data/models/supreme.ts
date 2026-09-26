@@ -10,7 +10,7 @@ export const supremeModels: ModelData[] = [
     retailYear: "1996 (drops récurrents)",
     tagline: "Le hoodie streetwear lancé en 1996 par James Jebbia",
     intro:
-      "Le Supreme Box Logo Hoodie, lancé pour la première fois en 1996 par James Jebbia (fondateur Supreme), est un drop récurrent depuis. Retail 168 $ (environ 160 €) au drop, avec prix marché secondaire 250-1 500 € selon coloris et année. Les box logos « White on White », « Black on Black », « Red on Red » sont les plus accessibles (200-400 €), tandis que les collaborations (Louis Vuitton 2017, Nike, Takashi Murakami, Rammellzee) atteignent 2 000-5 000 €. La contrefaçon Box Logo est une industrie à part entière : Putian produit des fakes, revendus sur Vinted, Depop, Grailed, StockX. Les signaux ci-dessous ciblent les points invariables : police du box logo (Futura Heavy Oblique italique), couture bouton de col, tag intérieur Made in Canada, qualité du coton 500 gsm et étiquette taille stitché.",
+      "Le Supreme Box Logo Hoodie, lancé pour la première fois en 1996 par James Jebbia (fondateur Supreme), est un drop récurrent depuis. Retail 168 $ (environ 160 €) au drop, avec prix marché secondaire 250-1 500 € selon coloris et année. Les box logos « White on White », « Black on Black », « Red on Red » sont les plus accessibles (200-400 €), tandis que les collaborations (Louis Vuitton 2017, Nike, Takashi Murakami, Rammellzee) atteignent 2 000-5 000 €. La contrefaçon Box Logo est une industrie à part entière : Putian produit des fakes, revendus sur Vinted, Depop, Grailed, StockX. Les signaux ci-dessous ciblent les points invariables : police du box logo (Futura Heavy Oblique italique), couture bouton de col, tag intérieur et wash label, qualité du coton 500 gsm et étiquette taille stitché.",
     signals: [
       {
         title: "Police Box Logo — Futura Heavy Oblique italique",
@@ -25,9 +25,9 @@ export const supremeModels: ModelData[] = [
         difficulty: 3,
       },
       {
-        title: "Tag intérieur — Made in Canada + wash label",
+        title: "Tag intérieur — pays de fabrication + wash label",
         description:
-          "Le tag intérieur indique « Made in Canada » avec un wash label blanc séparé (instructions lavage). Police spécifique avec espacement précis. Les contrefaçons ont souvent « Made in China » ou un tag unique incluant wash label (fusion incorrecte).",
+          "Le tag intérieur indique le pays de fabrication (le Canada ou les États-Unis, notamment, selon les revendeurs spécialisés), avec un wash label blanc séparé (instructions lavage). Police spécifique avec espacement précis. Les contrefaçons ont souvent un tag unique incluant wash label (fusion incorrecte).",
         difficulty: 2,
       },
       {
@@ -39,7 +39,7 @@ export const supremeModels: ModelData[] = [
       {
         title: "Étiquette taille — stitché, pas imprimé",
         description:
-          "L'étiquette taille (S/M/L/XL) est stitchée sur le tag Made in Canada, pas imprimée séparément. Les contrefaçons ont souvent une étiquette taille imprimée directement sur le tissu ou collée avec adhésif thermique.",
+          "L'étiquette taille (S/M/L/XL) est stitchée sur le tag intérieur, pas imprimée séparément. Les contrefaçons ont souvent une étiquette taille imprimée directement sur le tissu ou collée avec adhésif thermique.",
         difficulty: 2,
       },
     ],
@@ -64,7 +64,7 @@ export const supremeModels: ModelData[] = [
       {
         question: "Les Box Logos collabs (LV, Murakami) sont-ils aussi contrefaits ?",
         answer:
-          "Oui, massivement. La collab LV x Supreme 2017 a un prix marché 3 000-8 000 € et les super-fakes coûtent 400-600 € à produire. Pour les collabs rares, exigez des photos HD de tous les tags intérieurs + receipt original + dustbag LV + bag LV (tous fournis avec collab authentique).",
+          "Oui, massivement. La collab LV x Supreme 2017 a un prix marché 3 000-8 000 €. Pour les collabs rares, exigez des photos HD de tous les tags intérieurs + receipt original + dustbag LV + bag LV (tous fournis avec collab authentique).",
       },
     ],
   },
@@ -94,7 +94,7 @@ export const supremeModels: ModelData[] = [
       {
         title: "Tag Made in USA ou Canada — police",
         description:
-          "Les Box Logo Tees sont « Made in USA » ou « Made in Canada » selon année. Police tag spécifique. Les contrefaçons ont souvent « Made in China » ou une police bold incorrecte.",
+          "Les Box Logo Tees sont « Made in USA » ou « Made in Canada » selon année. Police tag spécifique. Les contrefaçons ont souvent une police bold incorrecte.",
         difficulty: 2,
       },
       {

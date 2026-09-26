@@ -77,9 +77,9 @@ export const offWhiteSignals: GuideSignal[] = [
     brandSlug: "off-white",
     category: "clothing",
     tagline:
-      "Décoder l'étiquette col Off-White : mention FIRENZE, made in Portugal, typographie Helvetica",
+      "Décoder l'étiquette col Off-White : ligne principale, pays de fabrication, typographie Helvetica",
     intro:
-      "L'étiquette principale cousue à l'intérieur du col Off-White est le signal d'identification le plus dense de la pièce — elle concentre l'identité de la maison (« OFF-WHITE c/o VIRGIL ABLOH™ - FIRENZE »), le pays d'assemblage, la composition textile, la taille, et un numéro de série à 7-8 chiffres qui croise avec le zip tie. Sur une pièce d'origine, l'étiquette mesure 6,5×4 cm, est imprimée sur tissé synthétique mat (pas brillant), et utilise une typographie Helvetica Neue Bold pour la ligne principale, Helvetica Neue Regular pour les informations techniques. La mention « FIRENZE » est obligatoire — Off-White étant légalement basée à Florence (siège New Guards Group, propriétaire de la marque depuis 2012). Le pays d'assemblage indique « MADE IN PORTUGAL » pour la majorité des tees et hoodies, « MADE IN ITALY » pour les pièces couture, « MADE IN ROMANIA » pour certaines denim et workwear. La composition textile respecte un format normé : « 100% COTTON » pour tees SS, « 80% COTTON / 20% POLYESTER » pour hoodies FW, avec chiffres exacts (jamais « 80-82% »). L'étiquette est cousue par 4 coutures droites aux 4 coins, 6-8 points/cm en fil noir ou ton sur ton. Les contrefaçons trahissent plusieurs défauts : tissu brillant (type satin au lieu de synthétique mat), typographie Arial ou Helvetica Standard au lieu de Neue, mention « FIRENZE » orthographiée « FIRENCE » ou « FLORENCE », numéro de série absent ou incohérent avec le zip tie.",
+      "L'étiquette principale cousue à l'intérieur du col Off-White est le signal d'identification le plus dense de la pièce — elle concentre l'identité de la maison (ligne « OFF-WHITE c/o VIRGIL ABLOH™ »), le pays d'assemblage, la composition textile, la taille, et un numéro de série à 7-8 chiffres qui croise avec le zip tie. Sur une pièce d'origine, l'étiquette mesure 6,5×4 cm, est imprimée sur tissé synthétique mat (pas brillant), et utilise une typographie Helvetica Neue Bold pour la ligne principale, Helvetica Neue Regular pour les informations techniques. Le pays de fabrication varie selon les pièces et les époques : les revendeurs et services d'authentification spécialisés citent notamment le Portugal et l'Italie, et divergent sur d'autres pays (la Chine, par exemple). Il ne tranche pas à lui seul. La composition textile respecte un format normé : « 100% COTTON » pour tees SS, « 80% COTTON / 20% POLYESTER » pour hoodies FW, avec chiffres exacts (jamais « 80-82% »). L'étiquette est cousue par 4 coutures droites aux 4 coins, 6-8 points/cm en fil noir ou ton sur ton. Les contrefaçons trahissent plusieurs défauts : tissu brillant (type satin au lieu de synthétique mat), typographie Arial ou Helvetica Standard au lieu de Neue, faute d'orthographe ou lettres baveuses dans la ligne principale, numéro de série absent ou incohérent avec le zip tie.",
     steps: [
       {
         title: "Retourner le col pour exposer l'étiquette principale",
@@ -87,9 +87,9 @@ export const offWhiteSignals: GuideSignal[] = [
           "Retournez le vêtement, écartez le col, photographiez l'étiquette à plat sous éclairage neutre. Elle doit être parfaitement lisible, sans plis ni reflets synthétiques.",
       },
       {
-        title: "Vérifier la mention « FIRENZE » (pas Florence, pas Firence)",
+        title: "Vérifier la netteté et l'orthographe de la ligne principale",
         description:
-          "La ville de référence est Florence, mais Off-White indique toujours « FIRENZE » (italien). Une orthographe « FLORENCE » (anglaise) ou « FIRENCE » (faute) est un signal immédiat de contrefaçon. La mention complète est « OFF-WHITE c/o VIRGIL ABLOH™ - FIRENZE ».",
+          "Lisez la ligne « OFF-WHITE c/o VIRGIL ABLOH™ » lettre par lettre : orthographe exacte, lettres nettes, sans bavure ni lettre décalée. Comparez-la avec une photo de référence de la même pièce et de la même saison. Une faute ou une impression floue est un signal d'alerte à croiser avec les autres points.",
       },
       {
         title: "Contrôler la typographie Helvetica Neue Bold",
@@ -97,9 +97,9 @@ export const offWhiteSignals: GuideSignal[] = [
           "La ligne principale utilise Helvetica Neue Bold. Comparez les lettres « O », « W », « F » avec une référence officielle. Une Arial Bold (très proche) trahit un contrefacteur qui n'a pas acquis la Neue. Le « a » à double étage et le « R » à jambe droite sont les différenciateurs.",
       },
       {
-        title: "Lire le pays d'assemblage cohérent avec le modèle",
+        title: "Lire le pays de fabrication sans conclure sur lui seul",
         description:
-          "Tees/hoodies : MADE IN PORTUGAL. Pièces couture, vestes tailorées : MADE IN ITALY. Denim, workwear : MADE IN ROMANIA. Un tee classique « MADE IN CHINA » est impossible. Vérifiez la cohérence modèle ↔ pays.",
+          "Le pays varie selon les pièces et les époques (le Portugal et l'Italie, notamment, selon les revendeurs spécialisés, qui divergent sur d'autres pays). Un pays inattendu est une question à poser au vendeur, pas une preuve de contrefaçon.",
       },
       {
         title: "Identifier le numéro de série à 7-8 chiffres",
@@ -109,9 +109,9 @@ export const offWhiteSignals: GuideSignal[] = [
     ],
     commonErrors: [
       {
-        title: "Accepter « FLORENCE » au lieu de « FIRENZE »",
+        title: "Juger l'étiquette sur une seule mention",
         description:
-          "Off-White n'utilise que l'italien « FIRENZE ». Une étiquette « FLORENCE » est soit une contrefaçon bas de gamme, soit une impression erronée — dans les deux cas, c'est un signal définitif à écarter.",
+          "Aucune mention isolée (ville, pays, taille) ne suffit à trancher. Une faute d'orthographe ou une ligne mal imprimée justifie d'examiner le reste de la pièce ; une ligne correcte ne prouve rien, car les contrefaçons récentes la reproduisent. Croisez tissu, typographie, numéro et coutures.",
       },
       {
         title:
@@ -126,13 +126,13 @@ export const offWhiteSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les contrefacteurs peuvent reproduire la mention « OFF-WHITE c/o VIRGIL ABLOH™ - FIRENZE » correctement. Ils butent sur trois détails. Premier : le tissu — ils utilisent du satin brillant pour « faire cher » alors que l'original est mat. Deuxième : le numéro de série — ils impriment un code aléatoire qui ne croise pas avec le zip tie. Troisième : le pays — ils mettent « MADE IN ITALY » sur tous les modèles pour impressionner, alors que les tees et hoodies classiques sont portugais. Les fakes haut de gamme récents (2024+) maîtrisent l'étiquette et le zip tie de manière cohérente — pour ces cas, l'impression arrows et les coutures d'épaules restent discriminantes.",
+      "Les contrefacteurs peuvent reproduire la ligne « OFF-WHITE c/o VIRGIL ABLOH™ » correctement. Ils butent sur deux détails. Premier : le tissu — ils utilisent du satin brillant pour « faire cher » alors que l'original est mat. Deuxième : le numéro de série — ils impriment un code aléatoire qui ne croise pas avec le zip tie. Les fakes haut de gamme récents (2024+) maîtrisent l'étiquette et le zip tie de manière cohérente — pour ces cas, l'impression arrows et les coutures d'épaules restent discriminantes.",
     faqs: [
       {
         question:
-          "Pourquoi Off-White utilise-t-il « FIRENZE » alors que la marque est associée à Milan ?",
+          "La mention d'une ville sur l'étiquette prouve-t-elle quelque chose ?",
         answer:
-          "Off-White a été fondée à Milan par Virgil Abloh en 2013, mais la marque est légalement détenue depuis 2012 par New Guards Group, entité italienne basée à Florence (Firenze en italien). La mention « FIRENZE » reflète le siège social légal de la marque, pas le lieu de création. C'est un détail juridique qui authentifie la pièce — les contrefacteurs mal informés l'ignorent et écrivent « MILANO » ou « FLORENCE » en pensant bien faire.",
+          "Non. Aucune source vérifiée ne permet d'imposer une ville sur l'étiquette de col Off-White, ni d'en faire à elle seule un signe de contrefaçon. Regardez plutôt la ligne principale (orthographe, netteté), le tissu de l'étiquette et le numéro, et comparez-les avec une photo de référence de la même pièce et de la même saison.",
       },
       {
         question:
@@ -220,7 +220,7 @@ export const offWhiteSignals: GuideSignal[] = [
     tagline:
       "Décoder l'étiquette lavage Off-White : symboles ISO, copyright, code RN/CA",
     intro:
-      "L'étiquette de lavage cousue à l'intérieur du vêtement (généralement sur le côté gauche à hauteur de hanche) est l'un des signaux d'authentification les plus discriminants. Elle concentre des informations réglementaires obligatoires qu'un contrefacteur pressé oublie souvent : symboles de lavage ISO 3758 (5 pictogrammes standards), composition textile détaillée en pourcentages exacts (doit correspondre à l'étiquette col), code RN ou CA (registration number US/Canada, 5-6 chiffres), pays d'assemblage répété, copyright « © OFF-WHITE™ 20XX » avec année exacte, et un numéro de lot à 4-5 chiffres imprimé horizontalement. L'étiquette mesure 5×8 cm, est imprimée en Helvetica Neue Regular 6pt sur tissé mat blanc, avec un interlignage serré mais lisible à la loupe. Les contrefaçons trahissent plusieurs défauts : symboles ISO incorrects ou mal positionnés (l'ordre officiel est : lavage, blanchiment, séchage, repassage, nettoyage à sec), absence de code RN/CA (les fakes oublient cette mention obligatoire aux USA et Canada), année de copyright incohérente avec la saison du drop (un tee SS24 avec © 2020 est impossible), ou typographie en Arial au lieu d'Helvetica. Le détail le plus discriminant reste la correspondance composition étiquette lavage ↔ étiquette col : elles doivent être strictement identiques en pourcentages. Une divergence (80% / 20% au col, 82% / 18% au lavage) révèle une contrefaçon qui a recopié deux sources différentes.",
+      "L'étiquette de lavage cousue à l'intérieur du vêtement (généralement sur le côté gauche à hauteur de hanche) est l'un des signaux d'authentification les plus discriminants. Elle concentre des informations réglementaires obligatoires qu'un contrefacteur pressé oublie souvent : symboles de lavage ISO 3758 (5 pictogrammes standards), composition textile détaillée en pourcentages exacts (doit correspondre à l'étiquette col), code RN ou CA (registration number US/Canada, 5-6 chiffres), pays d'assemblage répété, copyright « © OFF-WHITE™ 20XX » avec année exacte, et un numéro de lot à 4-5 chiffres imprimé horizontalement. L'étiquette mesure 5×8 cm, est imprimée en Helvetica Neue Regular 6pt sur tissé mat blanc, avec un interlignage serré mais lisible à la loupe. Les contrefaçons trahissent plusieurs défauts : symboles ISO incorrects ou mal positionnés (l'ordre officiel est : lavage, blanchiment, séchage, repassage, nettoyage à sec), année de copyright incohérente avec la saison du drop (un tee SS24 avec © 2020 est impossible), ou typographie en Arial au lieu d'Helvetica. Le détail le plus discriminant reste la correspondance composition étiquette lavage ↔ étiquette col : elles doivent être strictement identiques en pourcentages. Une divergence (80% / 20% au col, 82% / 18% au lavage) révèle une contrefaçon qui a recopié deux sources différentes.",
     steps: [
       {
         title: "Localiser l'étiquette de lavage (côté gauche, hauteur hanche)",
@@ -238,9 +238,9 @@ export const offWhiteSignals: GuideSignal[] = [
           "Les pourcentages de composition textile doivent être strictement identiques entre étiquette col et étiquette lavage. Une divergence de 2 % révèle une contrefaçon qui a utilisé deux templates.",
       },
       {
-        title: "Lire le code RN ou CA (5-6 chiffres)",
+        title: "Lire le code RN ou CA, sans rien en conclure seul",
         description:
-          "Pour l'export USA/Canada, Off-White imprime un « RN 12345 » ou « CA 98765 ». L'absence totale de ce code sur un tee destiné au marché US est un signal fort. Vérifiez avec le site rn.ftc.gov si le code existe.",
+          "Une étiquette destinée aux États-Unis peut porter un numéro RN, mais la réglementation américaine permet d'indiquer à sa place le nom de l'entreprise responsable : son absence ne prouve rien. La base publique de la FTC (rn.ftc.gov) donne le titulaire d'un numéro RN. Un numéro inexistant est un signal d'alerte fort ; un numéro existant ne prouve rien, car il se recopie d'une vraie étiquette.",
       },
       {
         title: "Vérifier le copyright « © OFF-WHITE™ 20XX » cohérent avec la saison",
@@ -257,7 +257,7 @@ export const offWhiteSignals: GuideSignal[] = [
       {
         title: "Ignorer la cohérence copyright ↔ année de drop",
         description:
-          "C'est le test le plus rapide : une divergence d'année est un signal définitif. Certains fakes réutilisent un template 2020 pour toutes les saisons — une erreur éliminatoire.",
+          "C'est un contrôle rapide : une divergence d'année est un signal d'alerte fort, à croiser avec les autres signaux. Certains fakes réutilisent un template 2020 pour toutes les saisons.",
       },
       {
         title: "Accepter une composition textile non identique au col",
@@ -266,12 +266,12 @@ export const offWhiteSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les contrefacteurs bas de gamme reproduisent l'étiquette col avec soin, mais négligent l'étiquette lavage — ils y mettent des symboles ISO génériques téléchargés sur Google, un code RN imaginaire, une composition approximative, et un copyright « © 2020 » recopié d'un ancien drop. Résultat : incohérence immédiate avec le col. Les fakes haut de gamme 2024 synchronisent les deux étiquettes, mais butent sur le code RN : ils impriment soit un code inexistant (vérifiable sur rn.ftc.gov), soit un code attribué à une marque concurrente (catastrophe immédiate au croisement). Le test RN est l'un des plus rapides : 30 secondes sur rn.ftc.gov suffisent pour confirmer ou infirmer.",
+      "Les contrefacteurs bas de gamme reproduisent l'étiquette col avec soin, mais négligent l'étiquette lavage — ils y mettent des symboles ISO génériques téléchargés sur Google, un code RN imaginaire, une composition approximative, et un copyright « © 2020 » recopié d'un ancien drop. Résultat : incohérence immédiate avec le col. Les fakes haut de gamme 2024 synchronisent les deux étiquettes, mais le code RN peut les trahir : un numéro inexistant, ou enregistré par une entreprise sans lien avec Off-White, se repère en 30 secondes sur rn.ftc.gov. À l'inverse, un numéro valide se recopie d'une vraie étiquette : le test RN signale des incohérences, il ne confirme rien.",
     faqs: [
       {
         question: "Comment vérifier un code RN en ligne ?",
         answer:
-          "Rendez-vous sur rn.ftc.gov (site officiel de la Federal Trade Commission US). Entrez le code à 5-6 chiffres trouvé sur l'étiquette lavage. Le site retourne le nom de l'entreprise détentrice. Pour Off-White, le code doit renvoyer à « New Guards Group » ou à une de ses filiales (Off-White Operating ou équivalent). Un retour « Off-White International », « Off White LLC » ou tout autre nom est suspect — c'est souvent un code inventé. L'absence totale de résultat est un signal fort de contrefaçon sur une pièce destinée au marché US.",
+          "Sur rn.ftc.gov, la base publique de la Federal Trade Commission américaine : entrez le numéro trouvé sur l'étiquette lavage, le site indique l'entreprise qui l'a enregistré. Un numéro inexistant, ou enregistré par une entreprise sans lien avec Off-White, est un signal d'alerte fort. Un numéro valide ne prouve rien : il se recopie d'une vraie étiquette. Et une étiquette sans numéro RN n'est pas suspecte pour cette seule raison : la réglementation américaine permet d'indiquer à sa place le nom de l'entreprise responsable.",
       },
       {
         question:

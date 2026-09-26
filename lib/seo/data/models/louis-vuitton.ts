@@ -275,10 +275,10 @@ export const louisVuittonModels: ModelData[] = [
     brandSlug: "louis-vuitton",
     category: "bags",
     priceRange: "2 000-2 500 €",
-    retailYear: "2017 (production continue)",
+    retailYear: "2012 (production continue)",
     tagline: "Le crossbody Monogram Empreinte",
     intro:
-      "La Louis Vuitton Pochette Metis, lancée en 2017 en Monogram Canvas puis en Monogram Empreinte (cuir embossé), connaît des ruptures permanentes en boutique et un marché secondaire très liquide (Vestiaire, Rebag, Fashionphile). Retail 2026 : 2 100-2 400 € selon version (Canvas, Empreinte). La version Monogram Empreinte (cuir souple embossé) fait l'objet d'une vraie pénurie en boutique qui alimente le marché gris. Les super-fakes Pochette Metis sont devenus extrêmement convaincants en 2025 : reproduction correcte de l'embossage Empreinte, fermoir S-lock fonctionnel et strap détachable. Les signaux ci-dessous : embossage Empreinte, fermoir S-lock, strap, format exact et date code.",
+      "La Louis Vuitton Pochette Metis, lancée en Monogram Canvas (en 2012 selon les revendeurs spécialisés) puis déclinée en Monogram Empreinte (cuir embossé), connaît des ruptures permanentes en boutique et un marché secondaire très liquide (Vestiaire, Rebag, Fashionphile). Retail 2026 : 2 100-2 400 € selon version (Canvas, Empreinte). La version Monogram Empreinte (cuir souple embossé) fait l'objet d'une vraie pénurie en boutique qui alimente le marché gris. Les super-fakes Pochette Metis sont devenus extrêmement convaincants en 2025 : reproduction correcte de l'embossage Empreinte, fermoir S-lock fonctionnel et strap détachable. Les signaux ci-dessous : embossage Empreinte, fermoir S-lock, strap, format exact et date code.",
     signals: [
       {
         title: "Embossage Empreinte — profondeur et netteté",
@@ -315,7 +315,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "Pochette Metis Empreinte « neuve » à 900 €",
         description:
-          "La Pochette Metis Empreinte retail 2 100 € et son prix marché est stable à 1 800-2 200 € en bon état (parfois au-dessus à cause de la pénurie). Une annonce à 900 € est une contrefaçon Empreinte fake.",
+          "Une Pochette Metis Empreinte « neuve » à 900 € est très en dessous du prix marché indiqué en tête de cette fiche. C'est un signal d'alerte fort, surtout sur une version en pénurie.",
       },
       {
         title: "« Pré-commande boutique » à prix retail + 200 €",
