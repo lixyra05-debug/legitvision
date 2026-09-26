@@ -77,7 +77,9 @@ export function buildAllGuideSchemas(data: GuidePageData): JsonLd[] {
     buildGuideBreadcrumbSchema(data),
     buildGuideArticleSchema(data),
     buildStepsItemListSchema(
-      `Protocole de vérification — ${data.signal.name} (${data.brand.name})`,
+      data.signal.headline
+        ? `Points à retenir — ${data.signal.name} (${data.brand.name})`
+        : `Protocole de vérification — ${data.signal.name} (${data.brand.name})`,
       data.canonical,
       data.steps,
     ),

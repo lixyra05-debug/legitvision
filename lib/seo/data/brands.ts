@@ -296,7 +296,7 @@ export const brands: Brand[] = [
       {
         title: "Code date (date code) — sacs antérieurs à la puce",
         description:
-          "Les Louis Vuitton antérieurs au passage à la puce portent un code date de 6 caractères (2 lettres + 4 chiffres) gravé sur un cuir intérieur. Les 2 lettres indiquent l'atelier de production et les 4 chiffres la date de fabrication (depuis 2007 : 1er et 3e chiffres = semaine, 2e et 4e = année). Exemple : MB1189 = semaine 18 de 2019. Un code incohérent (lettre inconnue, date impossible, semaine impossible) est un signal d'alerte.",
+          "Les Louis Vuitton antérieurs au passage à la puce portent un code date gravé sur un cuir intérieur. Son format a varié selon les époques ; sur la plupart des sacs, il associe 2 lettres d'atelier et 4 chiffres de date (depuis 2007 : 1er et 3e chiffres = semaine, 2e et 4e = année). Exemple : MB1189 = semaine 18 de 2019. Un code incohérent avec le format de son époque ou avec la date de lancement du modèle est un signal d'alerte.",
         difficulty: 2,
       },
       {
@@ -321,7 +321,7 @@ export const brands: Brand[] = [
       {
         question: "Que signifie « code date » Louis Vuitton ?",
         answer:
-          "Le code date est un marquage de 6 caractères (2 lettres + 4 chiffres) à l'intérieur des sacs Louis Vuitton antérieurs au passage à la puce. Les lettres codent l'atelier, les chiffres la semaine et l'année. Sur les sacs récents, une puce intégrée, invisible, le remplace (à partir de 2021 selon les revendeurs spécialisés) : un sac récent sans code date n'est pas suspect pour autant.",
+          "Le code date est un marquage à l'intérieur des sacs Louis Vuitton antérieurs au passage à la puce ; sur la plupart, il associe 2 lettres d'atelier et 4 chiffres de date. Sur les sacs récents, une puce intégrée, invisible, le remplace (à partir de 2021 selon les revendeurs spécialisés) : un sac récent sans code date n'est pas suspect pour autant.",
       },
       {
         question: "Un Louis Vuitton sans dust bag est-il forcément faux ?",

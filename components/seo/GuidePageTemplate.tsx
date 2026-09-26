@@ -235,7 +235,9 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
               Protocole
             </span>
             <h2 className="mt-4 font-heading text-h2 font-bold">
-              {data.steps.length} étapes pour vérifier {data.signal.name}
+              {data.signal.headline
+                ? `${data.steps.length} points à retenir`
+                : `${data.steps.length} étapes pour vérifier ${data.signal.name}`}
             </h2>
             <p className="mt-3 max-w-2xl text-body text-muted-foreground">
               Suivez le protocole ci-dessous avec votre {data.brand.name} en main. Chaque étape est pensée pour isoler un indicateur mesurable.

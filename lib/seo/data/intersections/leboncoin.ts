@@ -90,7 +90,7 @@ export const leboncoinIntersections: Intersection[] = [
       {
         question: "Comment vérifier un LV en main propre sur Leboncoin ?",
         answer:
-          "Protocole en 3 minutes : 1) Heat-stamp intérieur « LOUIS VUITTON Paris » suivi du pays de fabrication (la France n'est pas le seul), typographie nette ; 2) Si le sac porte un code date : 2 lettres + 4 chiffres, et une année plausible pour le modèle ; son absence sur un sac récent est normale, et la puce ne se vérifie pas au téléphone ; 3) Cuir Vachetta non teinté artificiellement, odeur cuir authentique ; 4) Alignement du monogramme aux coutures latérales ; 5) Quincaillerie or/argent pesante (pas en plastique plaqué). Un seul point douteux = signal d'alerte, pas une preuve : dans le doute, ne payez pas.",
+          "Protocole en 3 minutes : 1) Heat-stamp intérieur « LOUIS VUITTON Paris », typographie nette (la mention du pays de fabrication, quand elle figure, varie selon l'atelier) ; 2) Si le sac porte un code date : un format et une année plausibles pour le modèle ; son absence sur un sac récent est normale, et la puce ne se vérifie pas au téléphone ; 3) Cuir Vachetta non teinté artificiellement, odeur cuir authentique ; 4) Alignement du monogramme aux coutures latérales ; 5) Quincaillerie or/argent pesante (pas en plastique plaqué). Un seul point douteux = signal d'alerte, pas une preuve : dans le doute, ne payez pas.",
       },
     ],
   },

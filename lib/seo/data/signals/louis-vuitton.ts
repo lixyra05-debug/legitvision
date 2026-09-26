@@ -8,7 +8,7 @@ export const louisVuittonSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Déchiffrer le date code LV : atelier, semaine, année",
     intro:
-      "Jusqu'au passage à la puce (2021 selon les revendeurs spécialisés), Louis Vuitton marquait ses sacs d'un date code — une séquence de 2 lettres + 4 chiffres embossée discrètement dans une patte de cuir intérieure, souvent cachée sous une poche ou à l'intérieur d'un rabat. Ce code identifie l'atelier de fabrication (les 2 lettres) et la date de production (les 4 chiffres). Les codes d'atelier les plus courants : SP/AN/SR/CA (France), CA/LO (Espagne), SD/FL/FH/OS (France ou USA selon période), VI (Italie), LM (Suisse pour petite maroquinerie). Les 4 chiffres se décodent différemment selon période : 1990-2006 = semaine + année (ex : 0999 = semaine 09 année 1999), 2007-2021 = 1er et 3ème chiffres = semaine, 2ème et 4ème chiffres = année (ex : 1179 = semaine 17 année 2019). Ce décodage croisé avec le design du sac permet de trancher des cas douteux : un modèle Neverfull (lancé en 2007) avec un date code antérieur à 2007 est une contrefaçon immédiate. Sur les sacs récents, une puce invisible remplace le date code : un sac récent sans date code n'est pas suspect, et un code qui indiquerait une année postérieure à ce changement l'est.",
+      "Jusqu'au passage à la puce (2021 selon les revendeurs spécialisés), Louis Vuitton marquait ses sacs d'un date code — une séquence de 2 lettres + 4 chiffres embossée discrètement dans une patte de cuir intérieure, souvent cachée sous une poche ou à l'intérieur d'un rabat. Ce code identifie l'atelier de fabrication (les 2 lettres) et la date de production (les 4 chiffres). Une même paire de lettres a pu désigner des ateliers différents selon les périodes : ne concluez pas à un pays sur les seules lettres. Selon les revendeurs spécialisés, les 4 chiffres se décodent différemment selon la période : de 1990 à 2006, 1er et 3e chiffres = mois, 2e et 4e = année (ex : 1003 = octobre 2003) ; depuis 2007, 1er et 3e chiffres = semaine, 2e et 4e = année (ex : 1179 = semaine 17 de 2019). Les codes des années 1980 ont un autre format. Ce décodage croisé avec le design du sac permet de trancher des cas douteux : un modèle Neverfull (lancé en 2007) avec un date code antérieur à 2007 est une contrefaçon immédiate. Sur les sacs récents, une puce invisible remplace le date code : un sac récent sans date code n'est pas suspect, et un code qui indiquerait une année postérieure à ce changement l'est.",
     steps: [
       {
         title: "Localiser le date code dans le sac",
@@ -23,12 +23,12 @@ export const louisVuittonSignals: GuideSignal[] = [
       {
         title: "Décoder l'atelier (2 lettres)",
         description:
-          "Listes d'ateliers publiées par Authentic4U et LVlovers (référence communautaire) : SP/AN/CA = France Sainte-Florence/Anjou/Cadenas. LO/CA = Espagne Loire/Cataluña. Un code d'atelier inconnu des bases communautaires est une alerte.",
+          "Les 2 lettres désignent l'atelier. Des listes communautaires existent (Authentic4U, LVlovers) ; une même paire de lettres a pu servir à plusieurs ateliers selon les périodes. Un code d'atelier absent de ces listes est une alerte, pas une preuve.",
       },
       {
         title: "Décoder la semaine/année (4 chiffres post-2007)",
         description:
-          "Format depuis 2007 : chiffre1 + chiffre3 = semaine (2 chiffres), chiffre2 + chiffre4 = année (2 chiffres). Exemple « 1179 » = semaine 17, année 19 (semaine du 22 avril 2019). Une semaine > 52 ou une année < 07 est un code fake mal fabriqué.",
+          "Format depuis 2007 : chiffre1 + chiffre3 = semaine (2 chiffres), chiffre2 + chiffre4 = année (2 chiffres). Exemple « 1179 » = semaine 17, année 19 (semaine du 22 avril 2019). Une semaine au-delà de 53 est impossible. Une année antérieure à 07 signale l'ancien format (mois + année, de 1990 à 2006) : décodez-la comme tel.",
       },
       {
         title: "Croiser date ↔ modèle",
@@ -45,7 +45,7 @@ export const louisVuittonSignals: GuideSignal[] = [
       {
         title: "Accepter un code 3 lettres ou 5 chiffres",
         description:
-          "Le format authentique est STRICTEMENT 2 lettres + 4 chiffres (6 caractères total). Un code à 3 lettres (« SPX1234 »), 5 chiffres (« SP12345 ») ou avec des tirets (« SP-1234 ») est une invention de contrefaçon.",
+          "Depuis 1990, le format est 2 lettres + 4 chiffres. Un code à 3 lettres (« SPX1234 »), à 5 chiffres (« SP12345 ») ou avec des tirets (« SP-1234 ») ne correspond pas à ce format : c'est un signal d'alerte.",
       },
       {
         title: "Ignorer la profondeur d'embossage",
