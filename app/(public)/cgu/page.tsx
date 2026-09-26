@@ -35,7 +35,7 @@ export default function CguPage() {
         <h1 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl">
           Conditions Générales d&apos;Utilisation
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Dernière mise à jour : avril 2026</p>
+        <p className="mt-2 text-sm text-muted-foreground">Dernière mise à jour : septembre 2026</p>
 
         <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
           <p className="text-amber-400 text-sm font-medium">
@@ -119,8 +119,8 @@ export default function CguPage() {
             </div>
             <div className="mt-4 space-y-2 text-muted-foreground">
               <p>
-                Les crédits sont <strong className="text-foreground">renouvelés chaque mois</strong> à la date d&apos;anniversaire de l&apos;abonnement.
-                Les crédits non utilisés ne sont pas reportés au mois suivant.
+                Les crédits de la formule sont <strong className="text-foreground">ajoutés chaque mois</strong> à la date d&apos;anniversaire de l&apos;abonnement.
+                Les crédits non utilisés sont reportés d&apos;un mois sur l&apos;autre et restent utilisables après la résiliation de l&apos;abonnement.
               </p>
               <p>
                 Les crédits sont <strong className="text-foreground">non remboursables</strong> sauf en cas d&apos;erreur technique

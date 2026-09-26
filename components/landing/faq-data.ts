@@ -17,11 +17,11 @@ const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: "Que se passe-t-il si l'IA se trompe ?",
-    a: "L'IA peut se tromper, c'est pourquoi nous fournissons un score de confiance et non une certification. Si le score est entre 40 et 60, l'analyse est automatiquement signalée pour revue. Nous recommandons toujours de croiser nos résultats avec d'autres sources.",
+    a: "L'IA peut se tromper, c'est pourquoi nous fournissons un score de confiance et non une certification. Nous recommandons toujours de croiser nos résultats avec d'autres sources.",
   },
   {
     q: "Mes photos sont-elles stockées ?",
-    a: "Vos photos sont hébergées de manière sécurisée en Europe (Supabase, Irlande) et servent uniquement à votre analyse. Pour la produire, elles sont transmises chiffrées à notre sous-traitant d'IA, Anthropic, qui les supprime sous 30 jours, sauf exceptions prévues par ses conditions, et ne s'en sert pas pour entraîner ses modèles. Nous conservons vos photos avec votre analyse ; vous pouvez en demander l'effacement à tout moment.",
+    a: `Vos photos sont hébergées de manière sécurisée en Europe (Supabase, Irlande) et servent uniquement à votre analyse. Pour la produire, elles sont transmises chiffrées à notre sous-traitant d'IA, Anthropic, qui les supprime sous 30 jours, sauf exceptions prévues par ses conditions, et ne s'en sert pas pour entraîner ses modèles. Nous les supprimons de notre espace de stockage ${FACTS.photoRetentionDays} jours après leur envoi : le rapport conservé dans votre compte ne contient aucune photo. Vous pouvez en demander l'effacement plus tôt.`,
   },
   {
     q: "Quelles marques sont supportées ?",
@@ -52,11 +52,11 @@ const FAQ_ITEMS_EN: FaqItem[] = [
   },
   {
     q: "What if the AI gets it wrong?",
-    a: "The AI can be wrong, which is why we provide a confidence score rather than a certification. If the score is between 40 and 60, the analysis is automatically flagged for review. We always recommend cross-checking our results with other sources.",
+    a: "The AI can be wrong, which is why we provide a confidence score rather than a certification. We always recommend cross-checking our results with other sources.",
   },
   {
     q: "Are my photos stored?",
-    a: "Your photos are securely hosted in Europe (Supabase, Ireland) and used only for your analysis. To produce it, they are sent encrypted to our AI subprocessor, Anthropic, which deletes them within 30 days, except as provided in its terms, and does not use them to train its models. We keep your photos with your analysis; you can ask us to erase them at any time.",
+    a: `Your photos are securely hosted in Europe (Supabase, Ireland) and used only for your analysis. To produce it, they are sent encrypted to our AI subprocessor, Anthropic, which deletes them within 30 days, except as provided in its terms, and does not use them to train its models. We delete them from our storage ${FACTS_EN.photoRetentionDays} days after upload: the report kept in your account contains no photos. You can ask us to erase them sooner.`,
   },
   {
     q: "Which brands are supported?",
