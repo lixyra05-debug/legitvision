@@ -85,7 +85,7 @@ export const depopIntersections: Intersection[] = [
       {
         question: "Peut-on trouver un vrai LV sur Depop ?",
         answer:
-          "C'est possible, mais une annonce LV sur Depop est suspecte. Le public Depop (Gen Z, 15-25 ans) n'est généralement pas propriétaire de vrais sacs Louis Vuitton neufs, donc les ventes authentiques concernent souvent des héritages ou des revendeurs luxe qui utilisent Depop en second canal. Signaux rassurants : vendeur avec historique varié luxe (pas uniquement LV), prix raisonnable (pas cassé), documentation fournie spontanément, code date / puce RFID photographiée nettement.",
+          "C'est possible, mais une annonce LV sur Depop est suspecte. Le public Depop (Gen Z, 15-25 ans) n'est généralement pas propriétaire de vrais sacs Louis Vuitton neufs, donc les ventes authentiques concernent souvent des héritages ou des revendeurs luxe qui utilisent Depop en second canal. Signaux rassurants : vendeur avec historique varié luxe (pas uniquement LV), prix raisonnable (pas cassé), documentation fournie spontanément, code date photographié nettement (sur un sac ancien).",
       },
       {
         question: "Pochette Métis à 400 € sur Depop : forcément une arnaque ?",

@@ -26,9 +26,9 @@ export const CONTENT_PUBLISHED = "2026-04-22";
 export const CONTENT_REVISED = {
   site: "2026-06-22",
   hub: "2026-06-24",
-  guide: "2026-04-23",
-  legitCheck: "2026-04-23",
-  acheterAuthentique: "2026-04-23",
+  guide: "2026-09-26",
+  legitCheck: "2026-09-26",
+  acheterAuthentique: "2026-09-26",
 } as const;
 
 /**

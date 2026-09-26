@@ -13,7 +13,7 @@ export const leboncoinIntersections: Intersection[] = [
       {
         question: "Leboncoin est-il sûr pour acheter des Nike ?",
         answer:
-          `Non, Leboncoin est une plateforme risquée pour acheter des Nike en seconde main : aucune authentification, aucun paiement sécurisé imposé, zéro médiation en cas de litige. Pour limiter le risque, exigez 8-12 photos détaillées avant la rencontre, payez uniquement via le paiement sécurisé Leboncoin (pas de liquide), et passez l'annonce par LegitVision à ${FACTS.priceSingle} avant de vous déplacer.`,
+          `Non, Leboncoin est une plateforme risquée pour acheter des Nike en seconde main : aucune authentification, aucun paiement sécurisé imposé, zéro médiation en cas de litige. Pour limiter le risque, exigez du vendeur, avant la rencontre, les ${FACTS.sneakersPhotosMin} à ${FACTS.sneakersPhotosMax} photos détaillées que demande l'analyse LegitVision pour des sneakers, payez uniquement via le paiement sécurisé Leboncoin (pas de liquide), et lancez l'analyse à ${FACTS.priceSingle} avant de vous déplacer.`,
       },
       {
         question: "Paiement sécurisé ou main propre pour Nike Leboncoin ?",
@@ -85,12 +85,12 @@ export const leboncoinIntersections: Intersection[] = [
       {
         question: "Un Neverfull à 600 € en main propre : vrai ou faux ?",
         answer:
-          "À 600 €, l'annonce est suspecte. Le Neverfull MM Monogram en état correct ne se revend pas sous 1 200-1 500 €. Les seuls cas authentiques à 600 € concernent des sacs très abîmés (usure visible, tâches, anses patinées) ou des sacs vintage (> 15 ans) avec certificat d'origine. Demandez systématiquement photos preuve d'achat + code date / puce RFID avant tout déplacement.",
+          "À 600 €, l'annonce est suspecte. Le Neverfull MM Monogram en état correct ne se revend pas sous 1 200-1 500 €. Les seuls cas authentiques à 600 € concernent des sacs très abîmés (usure visible, taches, anses patinées) ou des sacs vintage (> 15 ans). Demandez systématiquement une photo de la preuve d'achat et, si le sac en porte un, du code date avant tout déplacement.",
       },
       {
         question: "Comment vérifier un LV en main propre sur Leboncoin ?",
         answer:
-          "Protocole en 3 minutes : 1) Heat-stamp intérieur « LOUIS VUITTON Paris made in France » avec typographie nette ; 2) Code date (pré-2021) à 4 caractères cohérent ou puce RFID détectable par appli RFID (post-2021) ; 3) Cuir Vachetta non teinté artificiellement, odeur cuir authentique ; 4) Alignement du monogramme aux coutures latérales ; 5) Quincaillerie or/argent pesante (pas en plastique plaqué). Un seul échec = signal de contrefaçon.",
+          "Protocole en 3 minutes : 1) Heat-stamp intérieur « LOUIS VUITTON Paris » suivi du pays de fabrication (la France n'est pas le seul), typographie nette ; 2) Si le sac porte un code date : 2 lettres + 4 chiffres, et une année plausible pour le modèle ; son absence sur un sac récent est normale, et la puce ne se vérifie pas au téléphone ; 3) Cuir Vachetta non teinté artificiellement, odeur cuir authentique ; 4) Alignement du monogramme aux coutures latérales ; 5) Quincaillerie or/argent pesante (pas en plastique plaqué). Un seul point douteux = signal d'alerte, pas une preuve : dans le doute, ne payez pas.",
       },
     ],
   },
@@ -152,7 +152,7 @@ export const leboncoinIntersections: Intersection[] = [
     platformSlug: "leboncoin",
     brandSlug: "prada",
     angle:
-      "Prada sur Leboncoin concentre son risque de contrefaçon sur la Re-Edition 2000, modèle phare du revival Y2K. Les annonces Re-Edition 2000 à moins de 900 € sont suspectes, et les super-fakes peuvent tromper sur photo. Le protocole recommandé : exiger 8 photos détaillées (triangle logo, carte d'authenticité, jacquard intérieur, quincaillerie), vérification LegitVision avant déplacement, paiement sécurisé Leboncoin + livraison. La norme main propre + liquide est à refuser systématiquement pour tout Prada > 800 €.",
+      `Prada sur Leboncoin concentre son risque de contrefaçon sur la Re-Edition 2000, modèle phare du revival Y2K. Les annonces Re-Edition 2000 à moins de 900 € sont suspectes, et les super-fakes peuvent tromper sur photo. Le protocole recommandé : exiger du vendeur les ${FACTS.bagPhotosMin} à ${FACTS.bagPhotosMax} photos détaillées que demande l'analyse LegitVision pour un sac (dont le logo triangle, l'intérieur et la quincaillerie en gros plan), plus la carte d'authenticité s'il l'a, vérification LegitVision avant déplacement, paiement sécurisé Leboncoin + livraison. La norme main propre + liquide est à refuser systématiquement pour tout Prada > 800 €.`,
     faqs: [
       {
         question: "Prada Galleria sur Leboncoin : risque faible ou élevé ?",

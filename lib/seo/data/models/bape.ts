@@ -10,7 +10,7 @@ export const bapeModels: ModelData[] = [
     retailYear: "2005-présent",
     tagline: "Le hoodie japonais au visage de requin iconique",
     intro:
-      "Le BAPE Shark Hoodie, lancé par A Bathing Ape en 2005 sous la direction de Nigo, est le hoodie zippé intégral avec impression « visage de requin » sur la capuche (dents, yeux, nez en ABC camo). Retail 320-400 $ (environ 300-380 €), avec prix marché secondaire 250-600 € selon coloris et année. Les coloris classiques (green, purple, black, pink camo) sont les plus accessibles (250-400 €), tandis que les coloris spéciaux (1st camo, limited drops, collabs Adidas/Undefeated) atteignent 500-1 200 €. La contrefaçon Shark Hoodie est massive et sophistiquée : les « super fakes » (UA quality, Putian) sont très proches de l'authentique et trompent même certains revendeurs. Les signaux ci-dessous ciblent les points les plus difficiles à contrefaire : impression visage requin (alignement dents/yeux), zipper YKK full length, tag intérieur BAPE Made in Japan, broderie WGM arrière, et qualité coton 450 gsm lourd.",
+      "Le BAPE Shark Hoodie, lancé par A Bathing Ape en 2005 sous la direction de Nigo, est le hoodie zippé intégral avec impression « visage de requin » sur la capuche (dents, yeux, nez en ABC camo). Son prix neuf varie selon le coloris et l'édition, avec un prix marché secondaire de 250-600 € selon coloris et année. Les coloris classiques (green, purple, black, pink camo) sont les plus accessibles (250-400 €), tandis que les coloris spéciaux (1st camo, limited drops, collabs Adidas/Undefeated) atteignent 500-1 200 €. La contrefaçon Shark Hoodie est massive et sophistiquée : les « super fakes » (UA quality, Putian) sont très proches de l'authentique et trompent même certains revendeurs. Les signaux ci-dessous ciblent les points les plus difficiles à contrefaire : impression visage requin (alignement dents/yeux), zipper YKK full length, tag intérieur BAPE, broderie WGM arrière, et qualité coton 450 gsm lourd.",
     signals: [
       {
         title: "Impression visage requin — alignement parfait",
@@ -25,9 +25,9 @@ export const bapeModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "Tag intérieur — « Made in Japan » police exacte",
+        title: "Tag intérieur — police et pays de fabrication",
         description:
-          "Le tag intérieur indique « A Bathing Ape — Made in Japan » avec police exacte (serif spécifique BAPE). Les contrefaçons ont souvent « Made in China » ou une police sans-serif incorrecte. Le tag inclut aussi un code produit 13 chiffres spécifique.",
+          "Le tag intérieur indique « A Bathing Ape » et le pays de fabrication. BAPE fabrique aussi en Chine : « Made in China » n'est pas, à lui seul, un signe de contrefaçon. Comparez police et mise en page avec des photos de référence du même modèle.",
         difficulty: 2,
       },
       {
@@ -47,7 +47,7 @@ export const bapeModels: ModelData[] = [
       {
         title: "Shark Hoodie « 1st camo green » à 100 €",
         description:
-          "Le Shark Hoodie 1st camo green (coloris classique) a un prix marché 300-450 €. Toute annonce à 100 € avec photos « deadstock » est une contrefaçon Putian (prix de production fake UA quality = 50-80 €).",
+          "Le Shark Hoodie 1st camo green (coloris classique) a un prix marché 300-450 €. Toute annonce à 100 € avec photos « deadstock » est une contrefaçon Putian.",
       },
       {
         title: "Vente avec « receipt BAPE store Harajuku »",
@@ -57,14 +57,14 @@ export const bapeModels: ModelData[] = [
     ],
     faqs: [
       {
-        question: "Comment distinguer un Shark Hoodie BAPE original d'un Bape USA ?",
+        question: "Un Shark Hoodie « Made in China » est-il forcément faux ?",
         answer:
-          "BAPE a ouvert des stores US avec production locale (prix plus bas, 280-320 €). Tag intérieur « Made in USA » au lieu de « Made in Japan ». Les collectionneurs préfèrent les Made in Japan (valeur revente supérieure). Les contrefaçons imitent souvent Made in Japan (plus recherché).",
+          "Non. BAPE fabrique aussi en Chine : l'étiquette d'une pièce authentique peut indiquer la Chine comme le Japon. Le pays seul ne tranche pas : comparez la police, la mise en page et les autres signaux avec des photos de référence du même modèle.",
       },
       {
         question: "Les Shark Hoodies collabs (Adidas, Undefeated) sont-ils aussi contrefaits ?",
         answer:
-          "Oui. Les collabs Adidas x BAPE Shark Hoodie 2003-2024 ont des prix marché 500-1 500 €, les super-fakes coûtent 150-200 € à produire. Exigez photos HD de tous les tags intérieurs (double tag BAPE + Adidas), receipt original et dustbag Adidas. Les collabs Undefeated x BAPE ont un tag spécifique « UNDFTD x BAPE ».",
+          "Oui. Les collabs Adidas x BAPE Shark Hoodie 2003-2024 ont des prix marché 500-1 500 €. Exigez photos HD de tous les tags intérieurs (double tag BAPE + Adidas), receipt original et dustbag Adidas. Les collabs Undefeated x BAPE ont un tag spécifique « UNDFTD x BAPE ».",
       },
     ],
   },
@@ -77,7 +77,7 @@ export const bapeModels: ModelData[] = [
     retailYear: "2000-présent",
     tagline: "Le hoodie camouflage lettres BAPE iconique",
     intro:
-      "Le BAPE ABC Camo Hoodie, produit depuis 2000 par A Bathing Ape sous la direction de Nigo, est le hoodie pull-over avec camouflage « ABC » (composé des lettres A-B-A-T-H-I-N-G-A-P-E formant le motif camo). Retail 250-320 $ (environ 240-300 €), avec prix marché secondaire 200-450 € selon coloris et millésime. Les coloris classiques (green, purple, blue, pink ABC camo) sont les plus accessibles (200-300 €), tandis que les coloris rares (1st camo 2000-2005, collabs Pharrell Williams, limited drops) atteignent 400-800 €. Les signaux d'authentification ciblent : motif ABC camo (lettres lisibles à zoom), tag BAPE Made in Japan, broderie « Ape Head » frontale, qualité coton japonais, et drawstring aglets (embouts cordon capuche).",
+      "Le BAPE ABC Camo Hoodie, produit depuis 2000 par A Bathing Ape sous la direction de Nigo, est le hoodie pull-over avec camouflage « ABC » (composé des lettres A-B-A-T-H-I-N-G-A-P-E formant le motif camo). Retail 250-320 $ (environ 240-300 €), avec prix marché secondaire 200-450 € selon coloris et millésime. Les coloris classiques (green, purple, blue, pink ABC camo) sont les plus accessibles (200-300 €), tandis que les coloris rares (1st camo 2000-2005, collabs Pharrell Williams, limited drops) atteignent 400-800 €. Les signaux d'authentification ciblent : motif ABC camo (lettres lisibles à zoom), tag BAPE, broderie « Ape Head » frontale, qualité coton japonais, et drawstring aglets (embouts cordon capuche).",
     signals: [
       {
         title: "Motif ABC camo — lettres lisibles au zoom",
@@ -86,9 +86,9 @@ export const bapeModels: ModelData[] = [
         difficulty: 1,
       },
       {
-        title: "Tag intérieur — « A Bathing Ape Made in Japan »",
+        title: "Tag intérieur — « A Bathing Ape » et pays de fabrication",
         description:
-          "Le tag intérieur indique « A Bathing Ape — Made in Japan » avec police exacte et code produit 13 chiffres (commence généralement par 001CSM ou 001CSP). Les contrefaçons ont souvent « Made in China » ou un code produit trop court/incorrect.",
+          "Le tag intérieur indique « A Bathing Ape » et le pays de fabrication, qui n'est pas toujours le Japon (la Chine, par exemple). Comparez police et mise en page avec des photos de référence du même modèle.",
         difficulty: 2,
       },
       {

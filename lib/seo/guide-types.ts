@@ -23,6 +23,11 @@ export type GuideSignal = {
   brandSlug: string;
   category: GuideCategory;
   tagline: string;
+  /**
+   * Titre (h1 et headline du JSON-LD) quand le gabarit « Comment vérifier … sur un
+   * … authentique » promettrait une vérification que le signal ne permet pas.
+   */
+  headline?: string;
   intro: string;
   steps: GuideStep[];
   commonErrors: GuideError[];

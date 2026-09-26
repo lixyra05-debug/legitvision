@@ -10,7 +10,7 @@ export const hermesModels: ModelData[] = [
     retailYear: "1984 (production continue)",
     tagline: "Le sac d'investissement ultime du luxe",
     intro:
-      "Le Hermès Birkin 30 a été créé en 1984 pour l'actrice Jane Birkin. Retail boutique Hermès 2026 : 12 500-16 500 € pour les cuirs courants (Togo, Epsom, Clemence), mais obtenir un Birkin « en boutique » nécessite un historique d'achats Hermès. Sur le marché secondaire (Sotheby's, Christie's, The RealReal), les prix Birkin 30 vont de 12 000 € (cuirs courants) à 150 000 € (Himalaya Niloticus crocodile blanc diamond), avec la moyenne 20 000-35 000 € pour les couleurs populaires (Noir, Etoupe, Rouge Tomate, Gold). Les super-fakes de Birkin coûtent 2 000-5 000 € à produire et se revendent 8 000-15 000 €. Les signaux ci-dessous sont les plus résistants aux super-fakes : saddle stitching main (2 aiguilles), stamp année blind/square/circle, hardware plaqué or 24k, clochette + clés + cadenas cohérents, et sangle + sangle de retenue.",
+      "Le Hermès Birkin 30 a été créé en 1984 pour l'actrice Jane Birkin. Retail boutique Hermès 2026 : 12 500-16 500 € pour les cuirs courants (Togo, Epsom, Clemence), mais obtenir un Birkin « en boutique » nécessite un historique d'achats Hermès. Sur le marché secondaire (Sotheby's, Christie's, The RealReal), les prix Birkin 30 vont de 12 000 € (cuirs courants) à 150 000 € (Himalaya Niloticus crocodile blanc diamond), avec la moyenne 20 000-35 000 € pour les couleurs populaires (Noir, Etoupe, Rouge Tomate, Gold). Les signaux ci-dessous sont les plus résistants aux super-fakes : saddle stitching main (2 aiguilles), stamp année blind/square/circle, hardware (placage et gravures), clochette + clés + cadenas cohérents, et sangle + sangle de retenue.",
     signals: [
       {
         title: "Saddle stitching main — 2 aiguilles alternées",
@@ -19,15 +19,15 @@ export const hermesModels: ModelData[] = [
         difficulty: 3,
       },
       {
-        title: "Blind stamp année — format carré/rond selon décennie",
+        title: "Blind stamp année — lettre seule ou dans une forme selon la période",
         description:
-          "Hermès marque chaque Birkin d'une lettre dans un carré, rond ou losange selon la décennie : carré (1995-2004 + 2015-2024), rond (2005-2014), losange (cuirs spéciaux). La lettre change chaque année (X = 2016, Y = 2017, Z = 2018, A = 2019, B = 2020, C = 2021, D = 2022, U = 2023, V = 2024, W = 2025). Les contrefaçons mélangent souvent lettres et formes (ex. « Z dans un carré » = impossible, 2018 était rond).",
+          "Hermès marque chaque Birkin d'une lettre millésime, seule ou dans une forme selon la période : dans un cercle de 1971 à 1996, dans un carré de 1997 à 2014, seule depuis 2015 (T = 2015, X = 2016, A = 2017, C = 2018, D = 2019, Y = 2020, Z = 2021). C'est la cohérence entre la lettre, sa forme et le design du sac qui compte.",
         difficulty: 2,
       },
       {
-        title: "Hardware plaqué or 24k / palladium — poids et finition",
+        title: "Hardware — placage et gravures",
         description:
-          "Le hardware Hermès (turnlock, bride, cadenas) est plaqué or 24k ou palladium véritable, avec un poids spécifique et une finition brossée fine. Les contrefaçons utilisent du métal plaqué chinois (chrome jaune) qui s'oxyde en 6-12 mois, et ont un poids inférieur de 20-30 %.",
+          "Le hardware Hermès (turnlock, bride, cadenas) existe en plusieurs finitions (or, palladium et d'autres), brillantes ou brossées. Ses gravures sont nettes. Sur une contrefaçon, cherchez un placage irrégulier ou qui s'écaille, et des gravures floues.",
         difficulty: 3,
       },
       {
@@ -98,9 +98,9 @@ export const hermesModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "Hardware — poids spécifique 35",
+        title: "Hardware — placage et gravures",
         description:
-          "Le Birkin 35 a un hardware légèrement plus lourd que le 30 (turnlock plus grand + cadenas taille 35). Pesez le sac vide : Birkin 35 Togo = 1,4-1,6 kg. Contrefaçons = 1,1-1,3 kg (hardware léger).",
+          "Le hardware du Birkin 35 (turnlock, bride, cadenas) se contrôle comme celui du 30 : placage régulier et gravures nettes. Sur une contrefaçon, cherchez un placage irrégulier ou qui s'écaille, et des gravures floues.",
         difficulty: 3,
       },
       {
@@ -155,7 +155,7 @@ export const hermesModels: ModelData[] = [
       {
         title: "Blind stamp + stamp artisan",
         description:
-          "Outre le blind stamp année (lettre + forme), certaines Kelly ont un stamp artisan (initiales de l'artisan qui a cousu le sac). Les contrefaçons oublient souvent ce stamp artisan ou l'inventent avec une police trop bold.",
+          "Outre le blind stamp année (lettre seule ou dans une forme selon la période), certaines Kelly ont un stamp artisan (initiales de l'artisan qui a cousu le sac). Les contrefaçons oublient souvent ce stamp artisan ou l'inventent avec une police trop bold.",
         difficulty: 2,
       },
       {
@@ -232,9 +232,9 @@ export const hermesModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "Hardware Gold/Palladium — poids uniforme",
+        title: "Hardware — placage et gravures",
         description:
-          "Le turnlock Kelly 28 pèse 85 g (Gold) ou 90 g (Palladium). Les contrefaçons utilisent du métal plaqué chinois qui pèse 60-70 g et s'oxyde en 6 mois.",
+          "Le turnlock de la Kelly 28 existe en plusieurs finitions (or, palladium et d'autres). Ses gravures sont nettes. Sur une contrefaçon, cherchez un placage irrégulier ou qui s'écaille, et des gravures floues.",
         difficulty: 3,
       },
       {
@@ -295,7 +295,7 @@ export const hermesModels: ModelData[] = [
       {
         title: "Blind stamp année — bride intérieure",
         description:
-          "Le blind stamp est sur la bride intérieure (face avant). Lettre + forme selon décennie. Les contrefaçons placent parfois sur le cuir extérieur ou oublient.",
+          "Le blind stamp est sur la bride intérieure (face avant) : une lettre, seule ou dans une forme selon la période. Les contrefaçons placent parfois sur le cuir extérieur ou oublient.",
         difficulty: 2,
       },
       {
@@ -332,7 +332,7 @@ export const hermesModels: ModelData[] = [
       {
         question: "Le H de la Constance peut-il s'oxyder ?",
         answer:
-          "Oui, le H Gold peut légèrement ternir après 5-10 ans (or 24k sur laiton). Un H uniformément patiné est compatible avec authentique. Mais un H qui s'oxyde en 6-12 mois indique un placage chinois bas de gamme = contrefaçon.",
+          "Oui, un H plaqué or peut ternir ou se patiner avec l'usage, sur une pièce authentique aussi : une patine uniforme n'est pas, à elle seule, un signe de contrefaçon. Jugez sur les autres signaux de cette fiche.",
       },
     ],
   },

@@ -109,6 +109,8 @@ export function facts(lang: Lang = "fr") {
     photosMin: String(CATALOG.photosMin),
     bagPhotosMin: String(PHOTOS_BY_CATEGORY.bag.min),
     bagPhotosMax: String(PHOTOS_BY_CATEGORY.bag.max),
+    sneakersPhotosMin: String(PHOTOS_BY_CATEGORY.sneakers.min),
+    sneakersPhotosMax: String(PHOTOS_BY_CATEGORY.sneakers.max),
     photosMax: String(CATALOG.photosMax),
     median: String(ANALYSIS_MEDIAN_SECONDS),
     priceSingle: formatPrice(PRICES.single, lang),

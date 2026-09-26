@@ -10,7 +10,7 @@ export const louisVuittonModels: ModelData[] = [
     retailYear: "2007 (production continue)",
     tagline: "Le tote iconique de LV",
     intro:
-      "Le Louis Vuitton Neverfull MM a été lancé en 2007. Disponible en Monogram Canvas, Damier Ebene, Damier Azur et coloris saisonniers (Escale, By The Pool, Jungle), son prix retail 2026 est de 1 600 € pour la version standard, avec les éditions limitées collaborations (Yayoi Kusama, Takashi Murakami) atteignant 2 500-4 000 € en resell. Les super-fakes chinois (China 1:1) coûtent 150-300 € à produire et se revendent jusqu'à 800-1 000 € sur les marketplaces. Les contrefaçons 2025-2026 maîtrisent le pattern Monogram Canvas, la forme trapézoïdale et les poignées en cuir Vachetta, mais échouent sur quatre points invariables : l'alignement du Monogram sur les couture, la qualité du Vachetta naturel non teinté, le date code format DU/SD/SP et le zipper pochette intérieure amovible.",
+      "Le Louis Vuitton Neverfull MM a été lancé en 2007. Disponible en Monogram Canvas, Damier Ebene, Damier Azur et coloris saisonniers (Escale, By The Pool, Jungle), son prix retail 2026 est de 1 600 € pour la version standard, avec les éditions limitées collaborations (Yayoi Kusama, Takashi Murakami) atteignant 2 500-4 000 € en resell. Les contrefaçons 2025-2026 maîtrisent le pattern Monogram Canvas, la forme trapézoïdale et les poignées en cuir Vachetta, mais échouent sur quatre points invariables : l'alignement du Monogram sur les coutures, la qualité du Vachetta naturel non teinté, le date code (sur les pièces antérieures à la puce) et le zipper pochette intérieure amovible.",
     signals: [
       {
         title: "Alignement Monogram — symétrie sur couture centrale",
@@ -25,9 +25,9 @@ export const louisVuittonModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "Date code — format DU/SD/SP + 4 chiffres",
+        title: "Date code — 2 lettres d'atelier + 4 chiffres",
         description:
-          "Le date code intérieur authentique (Neverfull produits avant 2021) est au format DU1234 (France), SP2345 (Espagne), SD3456 (USA), avec 2 lettres + 4 chiffres décodables (1er+3e = semaine, 2e+4e = année). À partir de mars 2021, LV utilise des RFID chip au lieu de date codes. Une Neverfull 2025 avec date code est une contrefaçon.",
+          "Le date code des Neverfull antérieures au passage à la puce associe 2 lettres d'atelier et 4 chiffres (1er+3e = semaine, 2e+4e = année), par exemple DU1139 (semaine 13 de 2019). Sur les Neverfull récentes, une puce intégrée le remplace : son absence n'est pas suspecte. Un code qui indiquerait une année postérieure à ce changement l'est.",
         difficulty: 1,
       },
       {
@@ -59,12 +59,12 @@ export const louisVuittonModels: ModelData[] = [
       {
         question: "Pourquoi certaines Neverfull n'ont-elles pas de date code ?",
         answer:
-          "Depuis mars 2021, Louis Vuitton a remplacé les date codes par des micro-chips RFID embarqués dans la doublure. Une Neverfull post-mars 2021 sans date code est normale. Une Neverfull 2025 avec un date code est une contrefaçon.",
+          "Parce que Louis Vuitton a remplacé le date code par une puce intégrée, invisible, à partir de 2021 selon les revendeurs spécialisés. Une Neverfull récente sans date code est donc normale.",
       },
       {
-        question: "Comment authentifier une Neverfull sans date code (post-2021) ?",
+        question: "Comment authentifier une Neverfull récente, sans date code ?",
         answer:
-          "Sans date code, l'authentification repose sur les 4 autres signaux (alignement Monogram, Vachetta, stitching, zipper) et l'inspection interne (RFID chip détectable). LegitVision analyse vos photos HD pour détecter les incohérences sur pièces post-2021.",
+          "Sans date code, l'authentification repose sur les 4 autres signaux (alignement Monogram, Vachetta, stitching, zipper). Le contenu de la puce n'est lisible que par Louis Vuitton : un scan de téléphone ne tranche pas. LegitVision analyse vos photos HD pour détecter les incohérences sur les pièces récentes.",
       },
     ],
   },
@@ -106,7 +106,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "Date code — localisation intérieure poche zippée",
         description:
-          "Sur la Speedy pre-2021, le date code est sur un petit patch cuir à l'intérieur de la poche zippée intérieure (pas sur la doublure principale). Les contrefaçons placent souvent le date code au mauvais endroit (sur la doublure tissu visible immédiatement).",
+          "Sur les Speedy antérieures à la puce, le date code est sur un petit patch cuir à l'intérieur de la poche zippée intérieure (pas sur la doublure principale). Les contrefaçons placent souvent le date code au mauvais endroit (sur la doublure tissu visible immédiatement).",
         difficulty: 1,
       },
     ],
@@ -173,7 +173,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "Date code — intérieur poche zippée",
         description:
-          "Le date code est sur un petit patch à l'intérieur de la poche zippée intérieure (pas visible au premier coup d'œil). Format DU/SD/FL + 4 chiffres. Les contrefaçons placent souvent le date code sur la doublure principale, immédiatement visible.",
+          "Le date code (sur les pièces antérieures à la puce : 2 lettres d'atelier + 4 chiffres) est sur un petit patch à l'intérieur de la poche zippée intérieure (pas visible au premier coup d'œil). Les contrefaçons placent souvent le date code sur la doublure principale, immédiatement visible.",
         difficulty: 1,
       },
     ],
@@ -240,7 +240,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "Date code — poche zippée interne",
         description:
-          "Le date code est sur un patch cuir à l'intérieur de la poche zippée (format DU/SD/FL + 4 chiffres pour pre-2021). Les contrefaçons le placent sur la doublure centrale.",
+          "Le date code (sur les pièces antérieures à la puce : 2 lettres d'atelier + 4 chiffres) est sur un patch cuir à l'intérieur de la poche zippée. Les contrefaçons le placent sur la doublure centrale.",
         difficulty: 1,
       },
     ],
@@ -305,9 +305,9 @@ export const louisVuittonModels: ModelData[] = [
         difficulty: 3,
       },
       {
-        title: "Date code / RFID — post-2021 absence normale",
+        title: "Date code ou puce — absence de code normale sur les pièces récentes",
         description:
-          "Les Pochette Metis produites après mars 2021 utilisent un micro-chip RFID embarqué (pas de date code visible). Les pre-2021 ont un date code au format DU/SD/FL + 4 chiffres. Une Metis 2024 avec date code est une contrefaçon.",
+          "Les Pochette Métis récentes portent une puce intégrée au lieu d'un date code visible : l'absence de code n'est pas suspecte. Les plus anciennes ont un date code de 2 lettres d'atelier + 4 chiffres. Un code qui indiquerait une année postérieure au passage à la puce est suspect.",
         difficulty: 1,
       },
     ],
@@ -345,7 +345,7 @@ export const louisVuittonModels: ModelData[] = [
     retailYear: "2013 (production continue)",
     tagline: "Le sac couture au LV métal latéral pivotant",
     intro:
-      "Le Louis Vuitton Capucines BB, créé en 2013 et nommé d'après la rue Capucines (adresse historique LV à Paris), est positionné comme le sac « haute couture » de LV, plus proche d'une Birkin que d'un Monogram Canvas. Retail 2026 : 5 700-7 200 € selon cuir (Taurillon, Galet, Python, Croco en édition limitée 25 000 €+). Son cuir Taurillon (bovin tanné minéral), son monogramme LV métal pivotant sur le flanc et sa forme rigide avec poignée + sangle détachable en font un sac de statut premium. Les contrefaçons Capucines (prix de production UA élevé, ~500 €+) existent et visent les acheteurs d'occasion sur Vestiaire Collective, The RealReal, Rebag. Les signaux spécifiques Capucines : cuir Taurillon (grain orangé pebble), LV métal pivotant, stitching tone-on-tone, doublure agneau, et hallmark argent platinium.",
+      "Le Louis Vuitton Capucines BB, créé en 2013 et nommé d'après la rue Capucines (adresse historique LV à Paris), est positionné comme le sac « haute couture » de LV, plus proche d'une Birkin que d'un Monogram Canvas. Son prix neuf varie selon le cuir. Son cuir Taurillon (bovin tanné minéral), son monogramme LV métal pivotant sur le flanc et sa forme rigide avec poignée + sangle détachable en font un sac de statut premium. Les contrefaçons Capucines existent et visent les acheteurs d'occasion sur Vestiaire Collective, The RealReal, Rebag. Les signaux spécifiques Capucines : cuir Taurillon (grain orangé pebble), LV métal pivotant, stitching tone-on-tone, doublure agneau, et hallmark argent platinium.",
     signals: [
       {
         title: "Cuir Taurillon — grain pebble orangé",
@@ -382,7 +382,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         title: "Capucines BB Taurillon « neuve » à 2 500 €",
         description:
-          "La Capucines BB retail 5 700 € et son prix marché est stable à 4 500-5 500 € en bon état. Une annonce à 2 500 € est une contrefaçon Taurillon fake ou une Capucines très usée restaurée.",
+          "Une Capucines BB « neuve » à 2 500 € est très en dessous du prix marché indiqué en tête de cette fiche. C'est un signal d'alerte : contrefaçon, ou Capucines très usée restaurée.",
       },
       {
         title: "Python « édition limitée » à 8 000 €",
@@ -399,7 +399,7 @@ export const louisVuittonModels: ModelData[] = [
       {
         question: "La Capucines a-t-elle un numéro de série ou date code ?",
         answer:
-          "Oui, les Capucines pre-2021 ont un date code format DU/SD/FL. Post-2021, elles utilisent un RFID chip intégré. Le hallmark intérieur argent platinium sert de signature complémentaire. LegitVision analyse la cohérence hallmark/date code/format.",
+          "Les Capucines les plus anciennes portent un date code (2 lettres d'atelier + 4 chiffres) ; les plus récentes, une puce intégrée, invisible. LegitVision analyse la cohérence des marquages visibles sur vos photos.",
       },
     ],
   },

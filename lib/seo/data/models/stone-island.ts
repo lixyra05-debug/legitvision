@@ -119,7 +119,7 @@ export const stoneIslandModels: ModelData[] = [
       {
         title: "Vente Raso Gommato « déstockage boutique »",
         description:
-          "Prétexte fréquent : « ancien stock boutique, prix cassé ». Stone Island ne fait jamais de déstockage public en-dessous de 40% off (prix minimum = 540 € pour Raso Gommato retail 900 €). Toute annonce à moins de 400 € est suspecte.",
+          "Prétexte fréquent : « ancien stock boutique, prix cassé ». Un déstockage ne se vérifie pas sur une annonce : demandez la facture ou le ticket d'origine, et contrôlez les signaux ci-dessus avant de payer.",
       },
     ],
     faqs: [
