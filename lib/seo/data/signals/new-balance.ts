@@ -8,12 +8,12 @@ export const newBalanceSignals: GuideSignal[] = [
     category: "sneakers",
     tagline: "Reconnaître une étiquette Made in USA ou Made in UK authentique",
     intro:
-      "New Balance maintient une production aux États-Unis et au Royaume-Uni. Les mentions « Made in USA » (usines de Skowhegan, Norridgewock, Lawrence) et « Made in UK » (usine de Flimby) concernent une liste restreinte et documentée de modèles : 990v3/v4/v5/v6, 993, 998, 997.5, 992, 1300, M1400 côté USA ; 577, 670, 991v1/v2, 1500 côté UK. Tous les autres modèles (550, 327, 574, 9060, 2002R, 860) sont fabriqués en Asie (Vietnam, Indonésie, Chine) et n'ont jamais été Made in USA/UK. Une étiquette « Made in USA » sur une 550 ou sur une 9060 est donc un signal fort de contrefaçon. L'étiquette authentique est cousue à l'intérieur de la chaussure, généralement sur le quartier intérieur, en textile blanc avec impression noire, police Helvetica médium. Elle comporte la mention « MADE IN USA » ou « MADE IN UK » en majuscules, la pointure en US/UK/EU/CM, le style code (format « M990GL5 » ou « U9060GRY »), et un numéro de lot à 4-5 chiffres. Certaines contrefaçons — particulièrement sur 550 et 9060 — ajoutent frauduleusement une mention « Made in USA » pour augmenter la valeur perçue. Vérifier cette cohérence modèle ↔ origine prend dix secondes.",
+      "New Balance maintient une production aux États-Unis et au Royaume-Uni. Les mentions « Made in USA » (usines de Skowhegan, Norridgewock, Lawrence) et « Made in UK » (usine de Flimby) concernent certains modèles et certaines éditions : par exemple 990, 993 et 998 côté USA ; 991 et 1500 côté UK. La plupart des autres modèles sont fabriqués en Asie (Vietnam, Indonésie, Chine), mais la frontière n'est pas fixe : la 574, par exemple, a connu des éditions Made in UK. Une mention « Made in USA » ou « Made in UK » se vérifie donc sur la référence exacte (style code), dans le catalogue MADE in USA / MADE in UK de New Balance ou sur la fiche de sortie du coloris. L'étiquette authentique est cousue à l'intérieur de la chaussure, généralement sur le quartier intérieur, en textile blanc avec impression noire, police Helvetica médium. Elle comporte la mention « MADE IN USA » ou « MADE IN UK » en majuscules, la pointure en US/UK/EU/CM, le style code (format « M990GL5 » ou « U9060GRY »), et un numéro de lot à 4-5 chiffres. Certaines contrefaçons — particulièrement sur 550 et 9060 — ajoutent frauduleusement une mention « Made in USA » pour augmenter la valeur perçue. Vérifier cette cohérence référence ↔ origine prend quelques minutes.",
     steps: [
       {
         title: "Identifier le modèle exact",
         description:
-          "Lisez le style code sur la tongue ou sur la box label. Les 3 premiers chiffres indiquent la ligne : 990, 993, 998, 991 = Made in USA/UK autorisé. 550, 327, 574, 9060, 2002R = production Asie uniquement. Vérification immédiate sur la page newbalance.com/pages/made-in-us.",
+          "Lisez le style code sur la tongue ou sur la box label. Vérifiez ensuite si cette référence exacte existe en Made in USA ou Made in UK : catalogue MADE in USA / MADE in UK de newbalance.com, ou fiche de sortie du coloris.",
       },
       {
         title: "Localiser l'étiquette dans la chaussure",
@@ -23,7 +23,7 @@ export const newBalanceSignals: GuideSignal[] = [
       {
         title: "Vérifier la cohérence modèle ↔ mention",
         description:
-          "Si le modèle autorise USA/UK : la mention doit être présente et lisible. Si le modèle n'autorise PAS USA/UK (ex : 550, 9060) : toute mention « Made in USA » est une contrefaçon. Pour les modèles Asie, la mention authentique est « Made in Vietnam », « Made in Indonesia » ou « Made in China ».",
+          "Si la référence existe en Made in USA/UK : la mention doit être présente et lisible. Si vous ne trouvez aucune version Made in USA/UK de cette référence, une telle mention est un signal d'alerte fort, à vérifier avant d'acheter. Pour les modèles fabriqués en Asie, la mention authentique est par exemple « Made in Vietnam », « Made in Indonesia » ou « Made in China ».",
       },
       {
         title: "Contrôler la police et le kerning",
@@ -54,12 +54,12 @@ export const newBalanceSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires produisent des 550 et 9060 fakes avec une étiquette « Made in USA » imprimée — sachant que cette mention gonfle la valeur perçue sur les plateformes secondaires. Cette tactique vise particulièrement les drops hypés (9060 Baby Shower Blue, 550 Aimé Leon Dore). Signal fort : la mention USA apparaît sur des étiquettes imprimées en encre bavante (jet d'encre fake) au lieu de l'impression sérigraphie authentique. Passer une goutte d'eau sur l'étiquette — l'authentique ne bavera pas, le fake oui. Autre tactique : impression « Made in USA » sur étiquette qui comporte aussi un code EAN-13 asiatique (commençant par 49 pour Japon ou 69 pour Chine), incohérence révélatrice.",
+      "Les faussaires produisent des 550 et 9060 fakes avec une étiquette « Made in USA » imprimée — sachant que cette mention gonfle la valeur perçue sur les plateformes secondaires. Cette tactique vise particulièrement les drops hypés (9060 Baby Shower Blue, 550 Aimé Leon Dore). Signal fort : la mention USA apparaît sur des étiquettes imprimées en encre bavante (jet d'encre fake) au lieu de l'impression sérigraphie authentique. Passer une goutte d'eau sur l'étiquette — l'authentique ne bavera pas, le fake oui.",
     faqs: [
       {
         question: "Les 550 peuvent-elles être Made in USA ?",
         answer:
-          "Non. La New Balance 550, lancée en 1989 et relancée en 2020 via la collaboration Aimé Leon Dore, est exclusivement fabriquée en Asie (Vietnam et Indonésie principalement). Aucune 550 authentique ne porte la mention « Made in USA ».",
+          "Les 550 courantes sont fabriquées en Asie (Vietnam et Indonésie principalement). La New Balance 550 a été lancée en 1989 et relancée en 2020 via la collaboration Aimé Leon Dore. Une 550 étiquetée « Made in USA » est un signal d'alerte fort : vérifiez la référence exacte (style code) dans le catalogue de New Balance avant d'acheter.",
       },
       {
         question: "Comment vérifier qu'une 990v6 Made in USA est authentique ?",
@@ -209,7 +209,7 @@ export const newBalanceSignals: GuideSignal[] = [
     category: "sneakers",
     tagline: "Déchiffrer le SKU New Balance : préfixe, suffixe, cohérence colorway",
     intro:
-      "Le SKU (Stock Keeping Unit) de New Balance suit une structure logique qui permet un décodage rapide et une vérification de cohérence. Format type : 1 lettre de genre (M = men, W = women, U = unisexe, GC = grade school, PC = preschool) + 3-4 chiffres de modèle (990, 9060, 550, 2002) + 1-3 lettres/chiffres de version ou colorway (GL5, GRY, BA). Exemples : M990GL5 = men 990v5 grey, U9060GRY = unisexe 9060 grey, BB550WT1 = basketball 550 white. Chaque SKU est unique à un colorway précis et référencé sur newbalance.com, StockX et GOAT. Les contrefacteurs commettent deux erreurs typiques : 1) un SKU inventé qui n'existe nulle part (preuve immédiate de contrefaçon), 2) un SKU emprunté à un autre colorway du même modèle (par exemple un SKU de 550 white apposé sur une 550 gris). Le cross-check SKU ↔ colorway visuel est un des tests les plus rapides : recherche du SKU sur StockX → photo officielle → comparaison avec la paire en main. Un décalage de colorway (la paire est blanche mais le SKU correspond à la bleue) tranche définitivement. Ce test prend 30 secondes.",
+      "Le SKU (Stock Keeping Unit) de New Balance suit une structure logique qui permet un décodage rapide et une vérification de cohérence. Format type : 1 lettre de genre (M = men, W = women, U = unisexe, GC = grade school, PC = preschool) + 3-4 chiffres de modèle (990, 9060, 550, 2002) + 1-3 lettres/chiffres de version ou colorway (GL5, GRY, BA). Exemples : M990GL5 = men 990v5 grey, U9060GRY = unisexe 9060 grey, BB550WT1 = basketball 550 white. Chaque SKU est unique à un colorway précis et référencé sur newbalance.com, StockX et GOAT. Les contrefacteurs commettent deux erreurs typiques : 1) un SKU inventé qui n'existe nulle part (signal d'alerte fort), 2) un SKU emprunté à un autre colorway du même modèle (par exemple un SKU de 550 white apposé sur une 550 gris). Le cross-check SKU ↔ colorway visuel est un des tests les plus rapides : recherche du SKU sur StockX → photo officielle → comparaison avec la paire en main. Un décalage de colorway (la paire est blanche mais le SKU correspond à la bleue) est un signal d'alerte fort, à croiser avec les autres signaux ; un SKU qui correspond ne prouve rien, car il se recopie. Ce test prend 30 secondes.",
     steps: [
       {
         title: "Lire le SKU sur la box label et la tongue",
@@ -219,12 +219,12 @@ export const newBalanceSignals: GuideSignal[] = [
       {
         title: "Rechercher le SKU sur newbalance.com",
         description:
-          "Tapez le SKU exact dans la barre de recherche newbalance.com. Il doit apparaître (même si la page produit a été retirée du catalogue, Google cache garde une trace). Un SKU totalement introuvable partout est un signal fort de contrefaçon.",
+          "Tapez le SKU exact dans la barre de recherche newbalance.com. Une page retirée du catalogue peut ne plus apparaître : cherchez aussi sur StockX et GOAT. Un SKU introuvable partout est un signal d'alerte fort, pas une preuve à lui seul.",
       },
       {
         title: "Cross-check sur StockX / GOAT",
         description:
-          "Recherche du SKU sur stockx.com et goat.com. La photo officielle doit correspondre exactement au colorway de la paire en main : même teintes, même matériaux, mêmes détails. Un colorway discordant = contrefaçon.",
+          "Recherche du SKU sur stockx.com et goat.com. La photo officielle doit correspondre exactement au colorway de la paire en main : même teintes, même matériaux, mêmes détails. Un colorway discordant est un signal d'alerte fort, à croiser avec les autres signaux.",
       },
       {
         title: "Vérifier la lettre de genre",

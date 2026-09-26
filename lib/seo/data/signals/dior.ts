@@ -8,7 +8,7 @@ export const diorSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Décoder le code date Dior XX-MM-YY embossé",
     intro:
-      "Christian Dior marque chaque sac d'un code date embossé discrètement sur une patte de cuir intérieure, généralement cachée sous une couture ou à l'intérieur d'un rabat. Le format post-2003 est XX-MM-YY : 2 lettres (code atelier) + 2 chiffres (mois) + 2 chiffres (année). Exemple : « MA-12-19 » = atelier MA, décembre 2019. Les lettres d'atelier les plus courantes : MA et BO (France, Italie principalement), 07/08 (ateliers italiens Milano). Les pré-2003 utilisaient un format différent (4-6 chiffres sans lettres). Tous les Dior Lady Dior, Book Tote, Saddle, 30 Montaigne modernes portent ce code. Les contrefaçons trahissent trois erreurs : 1) code inventé avec lettres d'atelier inconnues (« XZ-01-22 » — aucun atelier Dior ne commence par XZ), 2) incohérence modèle ↔ date (un 30 Montaigne marqué « 05-15 » = mai 2015, impossible car le 30 Montaigne a été lancé en 2019), 3) embossage superficiel (< 0,2 mm) ou imprimé à l'encre (pas embossé). Ce contrôle prend 2 minutes. Pour les sacs Lady Dior vintage (pré-2010), le code peut être une séquence numérique simple — ne pas exiger le format XX-MM-YY sur ces pièces.",
+      "Christian Dior marque chaque sac d'un code date embossé discrètement sur une patte de cuir intérieure, généralement cachée sous une couture ou à l'intérieur d'un rabat. Le format post-2003 est XX-MM-YY : 2 lettres (code atelier) + 2 chiffres (mois) + 2 chiffres (année). Exemple : « MA-12-19 » = atelier MA, décembre 2019. Les lettres d'atelier les plus courantes : MA et BO (France, Italie principalement), 07/08 (ateliers italiens Milano). Les pré-2003 utilisaient un format différent (4-6 chiffres sans lettres). Sur les sacs récents, selon les revendeurs spécialisés, une puce invisible intégrée à la doublure remplace progressivement ce code depuis 2021 : un sac récent sans code n'est pas suspect pour cette seule raison. Les contrefaçons trahissent trois erreurs : 1) code inventé avec lettres d'atelier inconnues (« XZ-01-22 » — aucun atelier Dior ne commence par XZ), 2) incohérence modèle ↔ date (un 30 Montaigne marqué « 05-15 » = mai 2015, impossible car le 30 Montaigne a été lancé en 2019), 3) embossage superficiel (< 0,2 mm) ou imprimé à l'encre (pas embossé). Ce contrôle prend 2 minutes. Pour les sacs Lady Dior vintage (pré-2010), le code peut être une séquence numérique simple — ne pas exiger le format XX-MM-YY sur ces pièces.",
     steps: [
       {
         title: "Localiser la patte de code",
@@ -64,7 +64,7 @@ export const diorSignals: GuideSignal[] = [
       {
         question: "Dior utilise-t-il un autre système de traçabilité ?",
         answer:
-          "Oui : puce NFC intégrée sur certains modèles premium (Lady Dior, Book Tote). Scannable via l'app Dior (service en développement). Les codes embossés continuent d'exister en parallèle. En cas de doute, vérifiez avec une boutique Dior.",
+          "Oui, sur les sacs récents : selon les revendeurs spécialisés, une puce NFC invisible, intégrée à la doublure, remplace progressivement le code embossé depuis 2021. Selon ces mêmes revendeurs, elle n'est pas conçue pour être lue par le public : aucun scan de téléphone n'authentifie un sac Dior, et une puce qui répond ne prouve rien à elle seule. Un sac récent sans code date n'est pas suspect pour cette seule raison. Jugez sur les signaux visibles et sur la preuve d'achat.",
       },
     ],
   },
@@ -75,7 +75,7 @@ export const diorSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Reconnaître le matelassage cannage Dior : losanges, coutures, rembourrage",
     intro:
-      "Le cannage est le matelassage signature de Dior depuis 1994 avec le Lady Dior — un motif inspiré des chaises Napoléon III utilisées lors des défilés Dior. Il consiste en un quadrillage de losanges matelassés (différent du diamond quilting Chanel par son aspect plus géométrique et moins prononcé). Sur un Lady Dior Medium (24 cm), la face avant compte 4×4 losanges = 16 losanges visibles, chacun mesurant environ 50×50 mm (losanges plus grands que Chanel à 25×20 mm). Sur Lady Dior Mini (17 cm) : 3×3 = 9 losanges. Sur Lady Dior Large (32 cm) : 5×5 = 25 losanges. Ces comptages sont strictement respectés par Dior et vérifiables en 1 minute. La couture aux intersections forme un losange fin sans rembourrage creux (contrairement aux intersections Chanel en X). Le rembourrage interne des losanges Dior est en ouate synthétique dense. Les fakes trahissent : nombre de losanges incorrect (5×4 au lieu de 4×4 sur Medium), dimensions décalées (55×45 mm au lieu de 50×50 mm strictement carré), couture aux intersections fluctuante. Test rapide : compter 4×4 sur Lady Dior Medium avec dimensions 50×50 mm tranche en 90 secondes.",
+      "Le cannage est le matelassage signature de Dior depuis 1994 avec le Lady Dior — un motif inspiré des chaises Napoléon III utilisées lors des défilés Dior. Il consiste en un quadrillage de losanges matelassés (différent du diamond quilting Chanel par son aspect plus géométrique et moins prononcé). Sur un Lady Dior Medium (24 cm), la face avant compte 4×4 losanges = 16 losanges visibles, chacun mesurant environ 50×50 mm (losanges plus grands que Chanel à 25×20 mm). Sur Lady Dior Mini (17 cm) : 3×3 = 9 losanges. Sur Lady Dior Large (32 cm) : 5×5 = 25 losanges. Ces comptages sont strictement respectés par Dior et vérifiables en 1 minute. La couture aux intersections forme un losange fin sans rembourrage creux (contrairement aux intersections Chanel en X). Le rembourrage interne des losanges Dior est en ouate synthétique dense. Les fakes trahissent : nombre de losanges incorrect (5×4 au lieu de 4×4 sur Medium), dimensions décalées (55×45 mm au lieu de 50×50 mm strictement carré), couture aux intersections fluctuante. Test rapide (90 secondes) : compter 4×4 sur Lady Dior Medium avec dimensions 50×50 mm ; un écart est un signal d'alerte, à croiser avec les autres signaux.",
     steps: [
       {
         title: "Compter les losanges face avant",
@@ -142,7 +142,7 @@ export const diorSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Authentifier les 4 breloques lettres DIOR en laiton doré",
     intro:
-      "Les 4 breloques en laiton formant le mot « DIOR » suspendues à l'anse du Lady Dior sont un détail signature emblématique. Chaque breloque est une plaque ovale verticale de 20×12 mm, en laiton plaqué or 24 carats (finition gold) ou palladium (finition silver), avec la lettre « D », « I », « O » ou « R » embossée sur la face visible et la mention « CHRISTIAN DIOR PARIS » gravée au verso. Les 4 breloques sont reliées par un anneau en laiton fin de 8 mm de diamètre, chacune positionnée à équidistance (lettres qui retombent naturellement en lisant « D-I-O-R » de gauche à droite quand on regarde le sac porté). Le poids total des 4 breloques + anneau = 18-22 g. Les contrefaçons trahissent plusieurs défauts : 1) breloques trop légères (10-12 g au total = acier creux), 2) gravure verso floue ou absente, 3) lettres D/I/O/R mal positionnées (ordre incorrect, lettres décalées d'équidistance), 4) plaquage or trop brillant qui s'écaille en 1-2 ans. Le test magnétique (laiton non magnétique) + le test de poids + la lecture de la gravure verso discriminent efficacement. Sur Lady Dior authentique, les breloques sonnent clair et métallique quand on les secoue — un son mat « plastique » révèle un acier creux fake.",
+      "Les 4 breloques en laiton formant le mot « DIOR » suspendues à l'anse du Lady Dior sont un détail signature emblématique. Chaque breloque est une plaque ovale verticale de 20×12 mm, en laiton, en finition dorée ou argentée selon la version, avec la lettre « D », « I », « O » ou « R » embossée sur la face visible et la mention « CHRISTIAN DIOR PARIS » gravée au verso. Les 4 breloques sont reliées par un anneau en laiton fin de 8 mm de diamètre, chacune positionnée à équidistance (lettres qui retombent naturellement en lisant « D-I-O-R » de gauche à droite quand on regarde le sac porté). Le poids total des 4 breloques + anneau = 18-22 g. Les contrefaçons trahissent plusieurs défauts : 1) breloques trop légères (10-12 g au total = acier creux), 2) gravure verso floue ou absente, 3) lettres D/I/O/R mal positionnées (ordre incorrect, lettres décalées d'équidistance), 4) plaquage or trop brillant qui s'écaille vite. Le test magnétique (laiton non magnétique) + le test de poids + la lecture de la gravure verso discriminent efficacement. Sur Lady Dior authentique, les breloques sonnent clair et métallique quand on les secoue — un son mat « plastique » révèle un acier creux fake.",
     steps: [
       {
         title: "Vérifier la présence des 4 breloques",
@@ -209,7 +209,7 @@ export const diorSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Inspecter la gravure des boucles et anneaux Dior",
     intro:
-      "Les pièces hardware métalliques des sacs Dior (boucles, anneaux, fermoirs, breloques décoratives) portent systématiquement la gravure « CHRISTIAN DIOR PARIS MADE IN ITALY » ou variantes courtes selon taille de la pièce. La police utilisée est Didot (signature Dior depuis les années 50) avec empattements fins très spécifiques. La gravure est embossée à froid par pressage mécanique avec profondeur 0,2-0,4 mm. Le matériau : laiton massif plaqué or 24 carats (gold) ou palladium (silver), non magnétique. Tests : 1) magnétique (laiton authentique non attiré), 2) poids (pièces massives, pas creuses), 3) lecture gravure à loupe x10 (police Didot empattements fins, kerning régulier), 4) finition surface (laiton satiné ou poli, pas chrome miroir). Sur Book Tote, 30 Montaigne, Saddle modernes, l'inspection du fermoir principal avec gravure visible est un point d'authentification rapide. Les fakes commettent deux erreurs récurrentes : gravure avec police sans-serif (Arial, Helvetica) au lieu de Didot serif, et absence de mention « MADE IN ITALY » (Dior produit ses sacs en Italie pour la maroquinerie principale, pas en France).",
+      "Les pièces hardware métalliques des sacs Dior (boucles, anneaux, fermoirs, breloques décoratives) portent systématiquement la gravure « CHRISTIAN DIOR PARIS » ou des variantes courtes selon taille de la pièce. La police utilisée est Didot (signature Dior depuis les années 50) avec empattements fins très spécifiques. La gravure est embossée à froid par pressage mécanique avec profondeur 0,2-0,4 mm. Le matériau : laiton massif en finition dorée ou argentée selon la version, non magnétique. Tests : 1) magnétique (laiton authentique non attiré), 2) poids (pièces massives, pas creuses), 3) lecture gravure à loupe x10 (police Didot empattements fins, kerning régulier), 4) finition surface (laiton satiné ou poli, pas chrome miroir). Sur Book Tote, 30 Montaigne, Saddle modernes, l'inspection du fermoir principal avec gravure visible est un point d'authentification rapide. Erreur récurrente des fakes : une gravure en police sans-serif (Arial, Helvetica) au lieu de Didot serif. La mention du pays de fabrication, elle, ne tranche pas : selon les revendeurs spécialisés, la plupart des sacs Dior récents indiquent l'Italie, mais d'autres pays figurent aussi sur des sacs authentiques.",
     steps: [
       {
         title: "Identifier les pièces hardware à inspecter",
@@ -224,7 +224,7 @@ export const diorSignals: GuideSignal[] = [
       {
         title: "Lire la gravure à la loupe x10",
         description:
-          "« CHRISTIAN DIOR PARIS MADE IN ITALY » en majuscules serif Didot, kerning régulier, empattements fins. Une police sans-serif (Arial-style) = fake. Absence de « MADE IN ITALY » = fake (Dior maroquinerie fabrique en Italie).",
+          "« CHRISTIAN DIOR PARIS » en majuscules serif Didot, kerning régulier, empattements fins. Une police sans-serif (Arial-style) = fake. L'absence de mention du pays sur une pièce métallique ne prouve rien.",
       },
       {
         title: "Vérifier la profondeur d'embossage",
@@ -239,9 +239,9 @@ export const diorSignals: GuideSignal[] = [
     ],
     commonErrors: [
       {
-        title: "Accepter « MADE IN FRANCE » sur maroquinerie",
+        title: "Juger une pièce sur la seule mention du pays",
         description:
-          "Dior maroquinerie (sacs, portefeuilles) est fabriquée en ITALIE, pas en France. Les ateliers maroquinerie sont à Gênes, Florence, Venise principalement. « Made in France » sur hardware Dior = fake ou confusion avec couture (défilés) qui eux sont France.",
+          "Selon les revendeurs spécialisés, la plupart des sacs Dior récents sont fabriqués en Italie, mais d'autres pays figurent aussi sur des sacs authentiques (l'Espagne, par exemple). La mention du pays ne tranche pas : jugez la police, la netteté et la régularité de la gravure.",
       },
       {
         title: "Ignorer la police Didot spécifique",
@@ -255,12 +255,12 @@ export const diorSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les fakes haut de gamme utilisent du laiton réel (non magnétique) avec gravure Didot — résolvant tests basiques. Le défaut : l'épaisseur du plaquage or. Dior utilise un plaquage 8-10 microns qui résiste 10+ ans. Les fakes utilisent 3-5 microns qui s'usent en 1-2 ans, révélant le laiton nu par plaques (zones d'usure aux angles, frictions). Acheter un fake « 2ème main 2 ans » permet de voir ce défaut. Autre tactique : gravure Didot quasi-parfaite mais avec empattements légèrement trop épais (outil pressage moins précis). À la loupe x10, comparaison avec photo officielle révèle le différentiel.",
+      "Les fakes haut de gamme utilisent du laiton réel (non magnétique) avec gravure Didot — résolvant tests basiques. Le défaut peut être le plaquage : sur une contrefaçon, il s'use souvent vite et par plaques, aux angles et aux zones de friction. Sur une pièce portée, une usure en plaques est un signal d'alerte, pas une preuve : le plaquage d'un sac authentique finit aussi par s'user aux points de friction. Autre tactique : gravure Didot quasi-parfaite mais avec empattements légèrement trop épais (outil pressage moins précis). À la loupe x10, comparaison avec photo officielle révèle le différentiel.",
     faqs: [
       {
         question: "Le hardware Dior peut-il se décolorer naturellement ?",
         answer:
-          "Oui, patine noble. Le laiton plaqué or s'oxyde avec le temps : teinte or plus chaude après 5-10 ans, légère patine sur zones de friction. Signe d'authenticité. Hardware qui reste miroir brillant après 10 ans = chrome imperméable = fake. Noircissement en plaques irrégulières = plaquage fake mal appliqué.",
+          "Oui. Avec l'usage (transpiration, humidité, frottements), le hardware peut perdre de son brillant et prendre une teinte plus chaude, surtout aux zones de friction. Cette usure, régulière, est normale et ne dit rien à elle seule de l'authenticité. Un écaillage ou un noircissement en plaques irrégulières est un signal d'alerte, à croiser avec la gravure et les autres signaux.",
       },
       {
         question: "Pourquoi certaines pièces hardware sont-elles en finition « ruthenium » ?",
@@ -271,12 +271,12 @@ export const diorSignals: GuideSignal[] = [
   },
   {
     slug: "etiquette-made-in-italy",
-    name: "Étiquette « Made in Italy »",
+    name: "Étiquette intérieure",
     brandSlug: "dior",
     category: "bags",
-    tagline: "Analyser l'étiquette intérieure Made in Italy Dior",
+    tagline: "Analyser l'étiquette intérieure d'un sac Dior : mention, police, fixation",
     intro:
-      "Chaque sac Dior (maroquinerie) porte une étiquette intérieure cousue avec la mention « CHRISTIAN DIOR / MADE IN ITALY » en broderie ou impression selon modèle. Cette étiquette est positionnée dans la doublure, généralement sous une couture intérieure, en textile ivoire ou noir selon colorway du sac. La mention est en Helvetica ou Didot (selon génération, Didot sur modèles post-2018) avec kerning régulier, lettres nettes. L'étiquette est cousue avec 7-9 points par cm, fil assorti à la couleur du textile. Les contrefaçons commettent trois erreurs : 1) « MADE IN FRANCE » au lieu de « MADE IN ITALY » (Dior maroquinerie = Italie, confusion fake avec haute couture France), 2) étiquette collée au lieu de cousue (se détache facilement), 3) police incorrecte (Arial bold moderne au lieu de Didot élégant). Le test rapide : localiser l'étiquette, vérifier « MADE IN ITALY » avec police Didot serif, et inspecter la couture de fixation. Ce test prend 30 secondes. Pour les modèles vintage pré-2000, les étiquettes pouvaient varier (ex : simplement « MADE IN FRANCE » pour certaines petites maroquineries produites en France, ou étiquettes en cuir embossé au lieu de textile). Croiser avec la date du sac pour éviter les erreurs d'interprétation sur vintage.",
+      "Les sacs Dior (maroquinerie) portent une étiquette intérieure cousue avec la mention « CHRISTIAN DIOR » et le pays de fabrication, en broderie ou impression selon modèle. Selon les revendeurs spécialisés, la plupart des sacs récents indiquent « MADE IN ITALY », mais d'autres pays figurent aussi sur des sacs authentiques (l'Espagne, par exemple) : la mention du pays ne tranche pas à elle seule. Cette étiquette est positionnée dans la doublure, généralement sous une couture intérieure, en textile ivoire ou noir selon colorway du sac. La mention est en Helvetica ou Didot (selon génération, Didot sur modèles post-2018) avec kerning régulier, lettres nettes. L'étiquette est cousue avec 7-9 points par cm, fil assorti à la couleur du textile. Les contrefaçons commettent deux erreurs fréquentes : 1) étiquette collée au lieu de cousue (se détache facilement), 2) police incorrecte (Arial bold moderne au lieu de Didot élégant). Le test rapide : localiser l'étiquette, vérifier la police et la netteté de la mention, et inspecter la couture de fixation. Ce test prend 30 secondes. Pour les modèles vintage pré-2000, les étiquettes pouvaient varier (ex : simplement « MADE IN FRANCE » pour certaines petites maroquineries produites en France, ou étiquettes en cuir embossé au lieu de textile). Croiser avec la date du sac pour éviter les erreurs d'interprétation sur vintage.",
     steps: [
       {
         title: "Localiser l'étiquette intérieure",
@@ -284,9 +284,9 @@ export const diorSignals: GuideSignal[] = [
           "Doublure intérieure, généralement sous une couture ou à l'intérieur d'une poche. Lady Dior = fond intérieur. Book Tote = doublure intérieure haute. Petit rectangle 20×30 mm de textile avec inscription.",
       },
       {
-        title: "Lire la mention « MADE IN ITALY »",
+        title: "Lire la mention et le pays",
         description:
-          "« CHRISTIAN DIOR » ligne 1 + « MADE IN ITALY » ligne 2, ou combiné selon taille. Majuscules, police Didot sur modèles modernes. Vérifiez ITALY (pas France sur maroquinerie moderne).",
+          "« CHRISTIAN DIOR » puis le pays de fabrication (le plus souvent « MADE IN ITALY » sur les sacs récents, selon les revendeurs spécialisés), sur une ou deux lignes selon la taille. Majuscules, police Didot sur modèles modernes. Le pays seul ne tranche pas : jugez la netteté et la régularité des lettres.",
       },
       {
         title: "Contrôler la police Didot",
@@ -306,9 +306,9 @@ export const diorSignals: GuideSignal[] = [
     ],
     commonErrors: [
       {
-        title: "Confondre « Made in Italy » et « Made in France »",
+        title: "Juger un sac sur la seule mention du pays",
         description:
-          "Dior = maroquinerie Italie, haute couture France. Les deux existent dans l'univers Dior mais séparément. Un sac (maroquinerie) doit être Made in Italy. Une robe (couture) doit être Made in France. Sac avec « Made in France » = fake ou confusion marketing frauduleuse.",
+          "Selon les revendeurs spécialisés, la plupart des sacs Dior récents indiquent l'Italie, mais d'autres pays figurent aussi sur des sacs authentiques, et les étiquettes vintage varient. Une mention de pays inattendue est une question à poser au vendeur, pas une preuve de contrefaçon.",
       },
       {
         title: "Accepter une étiquette floue",
@@ -322,17 +322,17 @@ export const diorSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les fakes reproduisent l'étiquette avec textile similaire et impression Didot — passant tests visuels basiques. Le défaut : la TRAME du textile. Dior utilise un textile tissé serré avec fils fins (80-100 fils/cm²). Les fakes utilisent un textile plus grossier (50-70 fils/cm²). À la loupe x10, la différence de finesse de trame est visible : authentique = trame dense et régulière, fake = trame plus lâche avec fils irréguliers. Autre tactique : fakes haut de gamme avec textile importé italien correct — mais la couture de fixation reste à la machine avec 10-12 points/cm (trop serré) au lieu des 7-9 points Dior authentique. Comptage de points rapide tranche.",
+      "Les fakes reproduisent l'étiquette avec textile similaire et impression Didot — passant tests visuels basiques. Le défaut : la TRAME du textile. Dior utilise un textile tissé serré avec fils fins (80-100 fils/cm²). Les fakes utilisent un textile plus grossier (50-70 fils/cm²). À la loupe x10, la différence de finesse de trame est visible : authentique = trame dense et régulière, fake = trame plus lâche avec fils irréguliers. Autre tactique : fakes haut de gamme avec textile importé italien correct — mais la couture de fixation reste à la machine avec 10-12 points/cm (trop serré) au lieu des 7-9 points Dior authentique. Le comptage des points est rapide ; un écart est un signal d'alerte, pas une preuve à lui seul.",
     faqs: [
       {
         question: "Un sac Dior « Made in France » est-il obligatoirement fake ?",
         answer:
-          "Dior maroquinerie est fabriquée exclusivement en Italie depuis que la production a été consolidée dans les ateliers italiens (Gênes, Florence). Exceptions historiques : certaines petites maroquineries Dior pré-1995 ont pu être produites en France. Sur vintage ancien, « Made in France » peut être authentique. Sur moderne, c'est fake. Vérifiez la date du sac (code date) pour discriminer.",
+          "Non. Selon les revendeurs spécialisés, la plupart des sacs Dior récents sont fabriqués en Italie, mais leurs avis divergent sur les autres pays (France, Espagne), et les pièces vintage portent des mentions variées. Le pays seul ne tranche pas : jugez la police, la netteté et la fixation de l'étiquette, et croisez avec les autres signaux.",
       },
       {
         question: "L'étiquette peut-elle être décolorée avec l'âge ?",
         answer:
-          "Légèrement. Le textile jaunit avec l'exposition UV après 5-10 ans (oxydation naturelle des fibres). Cette patine est un signe d'authenticité. En revanche, un textile qui devient grisâtre ou jaune foncé après 2-3 ans révèle un textile fake bas de gamme (teinte instable). Comparez la décoloration de l'étiquette avec la décoloration interne de la doublure — cohérence d'âge.",
+          "Légèrement. Avec l'âge et la lumière, le textile peut jaunir un peu. Une décoloration régulière, cohérente avec celle de la doublure, est normale et ne prouve rien à elle seule. Une décoloration forte ou par taches sur un sac présenté comme récent est un signal d'alerte, à croiser avec la police, la netteté et la fixation de l'étiquette.",
       },
     ],
   },

@@ -211,7 +211,7 @@ export const nikeModels: ModelData[] = [
     retailYear: "1982 (production continue)",
     tagline: "La sneaker designée par Bruce Kilgore en 1982",
     intro:
-      "La Nike Air Force 1 Low a été designée par Bruce Kilgore en 1982. Son prix retail bas (109-130 €) comparé à un coût de production clandestine de 8-15 € offre une marge rentable pour les contrefacteurs industriels chinois. Paradoxalement, la simplicité du design rend les super-fakes techniquement crédibles sur photo — il faut examiner 5 détails précis pour les distinguer d'une paire authentique : le Swoosh, la forme du Air sole, la cupsole, l'étiquette intérieure et le Style Code.",
+      "La Nike Air Force 1 Low a été designée par Bruce Kilgore en 1982. Son prix retail (109-130 €) laisse de la marge aux contrefacteurs industriels. Paradoxalement, la simplicité du design rend les super-fakes techniquement crédibles sur photo — il faut examiner 5 détails précis pour les distinguer d'une paire authentique : le Swoosh, la forme du Air sole, la cupsole, l'étiquette intérieure et le Style Code.",
     signals: [
       {
         title: "Swoosh : forme asymétrique et pointe fine",

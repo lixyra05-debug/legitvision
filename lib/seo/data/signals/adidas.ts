@@ -112,7 +112,7 @@ export const adidasSignals: GuideSignal[] = [
       {
         title: "Accepter une date incohérente sur les Yeezy Boost",
         description:
-          "Les Yeezy 350 V2 Zebra ont droppé en février 2017. Une étiquette datée « 09 2015 » sur ce modèle est une preuve de contrefaçon — la paire n'existait pas encore à cette date. Vérifiez systématiquement date étiquette ↔ date de drop StockX.",
+          "Les Yeezy 350 V2 Zebra ont droppé en février 2017. Une étiquette datée « 09 2015 » sur ce modèle est un signal d'alerte fort — la paire n'était pas encore sortie — à croiser avec les autres signaux. Vérifiez systématiquement date étiquette ↔ date de drop StockX.",
       },
       {
         title: "Confondre étiquette Adidas classique et Adidas Originals",
@@ -209,7 +209,7 @@ export const adidasSignals: GuideSignal[] = [
     category: "sneakers",
     tagline: "Vérifier le numéro de série Adidas : emplacement, format, base Adidas",
     intro:
-      "Le numéro de série Adidas — distinct du code produit SKU — est un identifiant unique à 14-16 chiffres imprimé à trois endroits : sous l'étiquette intérieure de la langue (petite étiquette cachée, nécessitant de soulever l'étiquette principale), à l'intérieur de la tige près du talon (imprimé directement sur la doublure), et parfois sur la box label (post-2020). Ce numéro sert au tracking logistique et garantie SAV. Chaque paire a un serial unique — si deux paires partagent le même serial, au moins l'une des deux est fake. Le format dépend de l'usine : usines vietnamiennes = 14 chiffres commençant par « 814 », usines chinoises = 15 chiffres commençant par « 851 », usines indonésiennes = 16 chiffres commençant par « 863 ». Les contrefaçons utilisent souvent des serials inventés aléatoirement sans respecter ce format — première lettre/chiffre inhabituelle, longueur incorrecte, ou serial dupliqué d'une paire authentique photographiée ailleurs. La vérification demande un peu d'effort (soulever l'étiquette intérieure) mais élimine les contrefaçons les plus grossières.",
+      "Le numéro de série Adidas — distinct du code produit SKU — est un identifiant unique à 14-16 chiffres imprimé à trois endroits : sous l'étiquette intérieure de la langue (petite étiquette cachée, nécessitant de soulever l'étiquette principale), à l'intérieur de la tige près du talon (imprimé directement sur la doublure), et parfois sur la box label (post-2020). Ce numéro sert au tracking logistique et garantie SAV. Chaque paire a un serial unique — si deux paires partagent le même serial, au moins l'une des deux est fake. Son format (longueur, premiers chiffres) varie selon le modèle et l'usine : comparez-le avec celui d'une paire de référence du même modèle, sans en déduire le pays de fabrication. Les contrefaçons utilisent souvent des serials inventés, dont le format diffère de celui des paires de référence, ou le serial dupliqué d'une paire authentique photographiée ailleurs. La vérification demande un peu d'effort (soulever l'étiquette intérieure) mais élimine les contrefaçons les plus grossières.",
     steps: [
       {
         title: "Soulever partiellement l'étiquette principale",
@@ -222,9 +222,9 @@ export const adidasSignals: GuideSignal[] = [
           "Prenez une photo rapprochée (mode macro) du serial. Les 14-16 chiffres doivent être nets, bien imprimés, sans bavure. Une impression floue ou partielle est suspecte.",
       },
       {
-        title: "Vérifier le préfixe selon l'usine",
+        title: "Comparer le format avec une paire de référence",
         description:
-          "Les 3 premiers chiffres indiquent l'usine : 814 = Vietnam, 851 = China, 863 = Indonesia, 847 = Thailand. Croisez avec la ligne « MADE IN » de l'étiquette principale. Préfixe 814 mais « Made in China » sur étiquette = incohérence.",
+          "Comparez la longueur et les premiers chiffres du serial avec ceux d'une paire de référence du même modèle et du même coloris. Ne déduisez pas le pays de fabrication de ces chiffres : un écart de format est une question à poser au vendeur, pas une preuve à lui seul.",
       },
       {
         title: "Croiser avec la doublure intérieure",
@@ -265,74 +265,75 @@ export const adidasSignals: GuideSignal[] = [
       {
         question: "Les Yeezy ont-elles un format de serial différent ?",
         answer:
-          "Oui, partiellement. Les Yeezy 350 V2 produites aux USA (Missouri) ont un préfixe « 009 » (format spécifique Yeezy USA, 14 chiffres). Les Yeezy 350 V2 chinoises ont le préfixe standard « 851 ». Les Yeezy 500 produites au Vietnam ont « 814 ». Le préfixe doit matcher le pays sur l'étiquette — une Yeezy « Made in USA » avec préfixe « 851 » = fake.",
+          "Le format peut varier selon le modèle et l'usine. Ne déduisez pas le pays de fabrication du préfixe du serial, et ne concluez pas sur ce préfixe seul. Comparez l'étiquette avec des photos de référence de la même paire (même modèle, même coloris, même pays de fabrication).",
       },
     ],
   },
   {
     slug: "qr-code",
-    name: "QR code CONFIRMED et scan adidas",
+    name: "QR code de la box label",
     brandSlug: "adidas",
     category: "sneakers",
-    tagline: "Scanner le QR code Adidas CONFIRMED : destination et cohérence",
+    tagline: "Ce que le QR code des boîtes adidas permet de vérifier, et ce qu'il ne permet pas",
+    headline: "QR code des boîtes adidas : ce qu'il prouve, et ce qu'il ne prouve pas",
     intro:
-      "Depuis 2019, Adidas a ajouté un QR code sur la box label de certains drops hypés — Yeezy, collabs Consortium, releases CONFIRMED app. Le scan du QR renvoie vers une page confirmed.adidas.com ou adidas.com/yeezy avec la fiche du produit exact. C'est un ajout fort car le QR est généré par Adidas et ne peut pas être recopié sur un autre domaine : scanner un QR qui renvoie vers un domaine tiers (aliexpress.com, dhgate.com, domaine obscur) = fake. Les contrefaçons tentent trois approches : (1) pas de QR du tout (paire avec box label basique ne matchant pas le drop CONFIRMED) — détectable ; (2) QR menant vers une fausse page adidas clone — détectable en vérifiant le certificat HTTPS ; (3) QR inerte renvoyant une erreur 404 — détectable au scan. Attention : tous les drops Adidas n'ont pas de QR — son absence n'est pas en soi une preuve de fake. Mais sur un drop CONFIRMED-documenté avec QR, l'absence = red flag. Vérifiez sur stockx ou sneakernews les photos officielles pour confirmer si le QR doit être présent.",
+      "Selon les revendeurs et services d'authentification spécialisés, la box label de certaines paires adidas, des Yeezy notamment, porte un QR code ; aucune source vérifiée ne dit lesquelles, ni depuis quand. La page d'aide d'adidas sur l'authenticité ne mentionne pas ce QR code : elle indique qu'acheter sur la boutique en ligne adidas ou chez un revendeur officiel est le meilleur moyen d'avoir un produit authentique. Un QR code se recopie à l'identique : un code qui mène à une page adidas ne prouve pas, à lui seul, que la paire en main est authentique, et une boîte sans QR code ne prouve pas la contrefaçon. Un code qui mène vers un domaine qui n'est pas celui d'adidas est un signal d'alerte fort, pas une preuve à lui seul : la boîte a pu être remplacée ou ré-étiquetée. Ce guide dit ce qu'on peut tirer de ce QR code, et surtout ce qu'on ne peut pas en tirer.",
     steps: [
       {
-        title: "Localiser le QR code sur la box label",
+        title: "Ne pas exiger de QR code",
         description:
-          "Le QR code (carré noir avec pixels, 2-3 cm de côté) se trouve sur la box label, généralement en bas à droite ou juste sous le code-barre. Si la paire est un drop CONFIRMED documenté avec QR, absence du QR = suspect.",
+          "Toutes les box labels adidas ne portent pas de QR code, et aucune source vérifiée ne dit lesquelles en portent. Une boîte sans QR code n'est donc pas suspecte pour cette seule raison.",
       },
       {
-        title: "Scanner avec l'appareil photo (iOS) ou Google Lens",
+        title: "Lire l'adresse avant d'ouvrir la page",
         description:
-          "Utilisez l'appareil photo iPhone (détection QR auto) ou Google Lens sur Android. Évitez les apps QR tierces qui peuvent injecter des pubs. Le QR doit se scanner proprement en moins de 2 secondes.",
+          "L'appareil photo du téléphone lit le QR code et affiche l'adresse de destination. Lisez-la avant d'ouvrir la page, et ne saisissez aucune donnée personnelle ni bancaire sur une page ouverte par un QR code.",
       },
       {
-        title: "Vérifier le domaine de destination",
+        title: "Traiter un domaine étranger à adidas comme une alerte",
         description:
-          "Le QR authentique redirige vers confirmed.adidas.com, adidas.com/yeezy ou adidas.com/launch. Toute redirection vers un autre domaine (notamment en .cn, .ru, ou des subdomains inconnus) est une preuve de fake.",
+          "Un QR code qui mène vers un domaine qui n'est pas celui d'adidas est un signal d'alerte fort, pas une preuve à lui seul : la boîte a pu être remplacée ou ré-étiquetée. Examinez alors la paire elle-même de près.",
       },
       {
-        title: "Contrôler la fiche produit affichée",
+        title: "Ne rien conclure d'un scan qui mène chez adidas",
         description:
-          "La page Adidas doit afficher la fiche exacte de la paire en main (même colorway, même nom, même référence). Si la page affiche un autre produit, ou une erreur 404, c'est suspect.",
+          "Un QR code se recopie à l'identique : un code relevé sur une vraie boîte mène à une vraie page adidas, quelle que soit la paire dans la boîte. Une page adidas qui affiche le bon modèle ne prouve donc pas l'authenticité.",
       },
       {
-        title: "Vérifier le certificat HTTPS",
+        title: "Vérifier la paire et la preuve d'achat",
         description:
-          "Cliquez sur le cadenas dans la barre d'adresse : le certificat doit indiquer « adidas AG » ou « adidas International B.V. ». Un certificat émis pour un autre nom d'entreprise = site frauduleux clonant l'interface Adidas.",
+          "Étiquette intérieure, numéro de série, semelle BOOST : ces signaux portent sur la paire elle-même. Voir les autres guides adidas. Demandez aussi la preuve d'achat, cohérente avec la paire et avec le récit du vendeur.",
       },
     ],
     commonErrors: [
       {
-        title: "Scanner avec une app QR tierce suspecte",
+        title: "Conclure à une contrefaçon faute de QR code",
         description:
-          "Certaines apps QR gratuites injectent des redirections publicitaires qui peuvent masquer le vrai domaine cible. Utilisez uniquement l'appareil photo natif iOS ou Google Lens — pas d'app QR tierce.",
+          "Toutes les box labels n'ont pas de QR code, et une paire authentique peut être vendue dans une autre boîte. L'absence de QR code ne prouve rien.",
       },
       {
-        title: "Accepter un QR qui mène à un site Adidas en langue chinoise",
+        title: "Prendre un scan qui mène chez adidas pour une preuve",
         description:
-          "Adidas a un site adidas.com.cn pour la Chine — légitime. Mais un QR sur une paire vendue en Europe qui mène vers adidas.com.cn est suspect (paire grise importée depuis Chine, possiblement revendue sans garantie EU). Pas forcément fake mais circuit non-officiel.",
+          "Un QR code se recopie à l'identique : il ne dit pas que la paire en main est celle pour laquelle la boîte a été imprimée.",
       },
       {
-        title: "Conclure fake sur absence de QR",
+        title: "Se fier à la page qu'ouvre un QR code",
         description:
-          "Beaucoup de drops Adidas Performance (running, football) n'ont pas de QR — c'est réservé aux CONFIRMED et Yeezy. Croisez avec le modèle : une Ultraboost running sans QR = normal ; une Yeezy 350 V2 drop 2021 sans QR = suspect.",
+          "N'importe qui peut créer un QR code qui mène à une page imitant adidas et « confirmant » l'authenticité. Une adresse proche de celle d'adidas, à une lettre ou à un mot près, est un signal d'alerte fort ; une page d'apparence officielle ne prouve rien.",
       },
     ],
     counterfeiterTactics:
-      "Les faussaires génèrent parfois leurs propres QR codes imprimés sur les box labels fake, menant à des sites miroir d'adidas.com hébergés sur domaines chinois ou russes. Ces sites clonent visuellement l'interface Adidas et affichent une fausse fiche produit « confirmant » l'authenticité. Test décisif : tapez le domaine du QR dans whois.com — un domaine enregistré depuis moins de 6 mois, avec protection WHOIS, est typiquement un site frauduleux. Adidas.com est enregistré depuis 1995 avec données d'entreprise publiques.",
+      "Certains vendeurs mettent en avant un QR code qui « fonctionne », ou une page qui « confirme » l'authenticité. Un QR code se recopie, et n'importe qui peut en créer un qui mène à une page imitant adidas : cet argument ne prouve rien. La boîte elle-même se reproduit, ou se revend vide : sa présence ne prouve rien non plus. Jugez la paire sur ses propres signaux et sur sa preuve d'achat.",
     faqs: [
       {
-        question: "Les Yeezy avant 2019 avaient-elles un QR code sur la box ?",
+        question: "Ma boîte adidas n'a pas de QR code : la paire est-elle fausse ?",
         answer:
-          "Non. Les premiers QR codes sur box Adidas datent de fin 2019 — uniquement sur les drops CONFIRMED app. Les Yeezy 2016-2019 (Turtle Dove, Zebra, Beluga, Cream White) n'ont pas de QR : leur absence est normale et ne doit pas être considérée comme un fake. Pour ces modèles, croisez serial number + étiquette intérieure + BOOST texture.",
+          "Pas pour cette raison. Selon les revendeurs spécialisés, seules certaines box labels portent un QR code, et aucune source vérifiée ne dit lesquelles ni depuis quand. Jugez la paire sur ses propres signaux et sur la preuve d'achat.",
       },
       {
-        question: "Le QR code peut-il être sur la paire elle-même, pas juste sur la box ?",
+        question: "Peut-on vérifier une paire adidas en scannant le QR code de sa boîte ?",
         answer:
-          "Sur les Adidas Originals lifestyle, le QR est uniquement sur la box label. Sur certaines collabs (Parley for the Oceans, Consortium), un QR secondaire est intégré à un hang tag ou à une carte fournie avec la paire. Sur la paire elle-même (tige, semelle), il n'y a jamais de QR — un QR imprimé sur la chaussure est un signe de fake systématique.",
+          "Non. La page d'aide d'adidas sur l'authenticité ne mentionne pas ce QR code ; elle recommande d'acheter sur la boutique en ligne adidas ou chez un revendeur officiel. Un scan qui mène chez adidas ne prouve pas l'authenticité, puisqu'un QR code se recopie ; un scan qui mène ailleurs est un signal d'alerte fort, pas une preuve à lui seul.",
       },
     ],
   },

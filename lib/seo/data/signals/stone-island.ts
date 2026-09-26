@@ -46,7 +46,7 @@ export const stoneIslandSignals: GuideSignal[] = [
       {
         title: "Ignorer le système de fixation bouton-velcro",
         description:
-          "C'est le test le plus discriminant sur les pièces classiques : Stone Island ne coud pas ses badges fixe (sauf sur pièces junior et quelques modèles SS). Un badge fixe sur une veste ou un sweat adulte est un signal définitif.",
+          "C'est le test le plus discriminant sur les pièces classiques : Stone Island ne coud pas ses badges fixe (sauf sur pièces junior et quelques modèles SS). Un badge fixe sur une veste ou un sweat adulte est un signal d'alerte fort, à croiser avec les autres signaux.",
       },
       {
         title:
@@ -78,68 +78,68 @@ export const stoneIslandSignals: GuideSignal[] = [
     brandSlug: "stone-island",
     category: "clothing",
     tagline:
-      "Vérifier le Certilogo Stone Island : code à 13 chiffres, scan via certilogo.com",
+      "Ce que le code Certilogo des pièces Stone Island permet de vérifier, et ce qu'il ne prouve pas",
+    headline: "Certilogo Stone Island : ce que le code vérifie, et ce qu'il ne prouve pas",
     intro:
-      "Le Certilogo est un système d'authentification officiel implanté par Stone Island sur la quasi-totalité de sa production depuis 2014. C'est une petite étiquette noire cousue à l'intérieur du vêtement (généralement côté gauche à hauteur de hanche, parfois dans la poche intérieure sur les vestes), qui porte un QR code et un code numérique à 13 chiffres. Ce code se vérifie gratuitement sur certilogo.com : en l'entrant sur le site ou en scannant le QR via l'app Certilogo (iOS/Android), le système confirme ou infirme la pièce dans les 5 secondes. Le retour officiel affiche la marque, la saison, le modèle, le pays d'assemblage, et un verdict « The product is most likely an original » ou « This code does not match a Stone Island product in our database ». Les contrefaçons trahissent plusieurs niveaux. Premier niveau : le Certilogo est absent (les fakes bas de gamme ne prennent pas la peine de le reproduire). Deuxième niveau : le Certilogo existe physiquement mais le code ne scanne pas ou retourne une erreur (code inventé). Troisième niveau : le code retourne un produit réel, mais associé à un modèle différent de celui en main — indique une contrefaçon haut de gamme qui a recopié un vrai code trouvé en ligne. Dans ce cas, comparez saison/modèle/pays du retour Certilogo avec la pièce physique — une divergence est un signal définitif. Ce test est le plus rapide de l'arsenal d'authentification Stone Island : 30 secondes pour un premier résultat.",
+      "Depuis la collection printemps-été 2014, Stone Island propose de vérifier l'authenticité de ses pièces avec le service Certilogo. Selon la marque, un code Certilogo à 12 chiffres et un QR code figurent sur une étiquette de sécurité cousue à l'intérieur des vêtements ; les pièces Stone Island Junior en portent depuis la collection automne-hiver 2020-2021, et certaines familles de produits n'en ont pas (les chaussures et certains accessoires). Le code se saisit sur le site de Stone Island, qui renvoie vers le service Certilogo, ou le QR code se scanne avec un téléphone. Certilogo affirme que des copies de son code ne trompent pas son service ; selon des revendeurs spécialisés, des contrefaçons réutilisent pourtant des codes authentiques. Un résultat positif ne prouve donc pas, à lui seul, que la pièce en main est authentique, et une pièce sans code n'est pas une contrefaçon pour cette seule raison. Ce guide dit ce qu'on peut tirer du Certilogo, et ce qu'on ne peut pas en tirer.",
     steps: [
       {
-        title: "Localiser l'étiquette Certilogo (côté gauche, hauteur hanche)",
+        title: "Savoir quelles pièces portent un code",
         description:
-          "L'étiquette est une petite bande noire 3×5 cm cousue à l'intérieur du vêtement, généralement côté gauche dans la couture latérale à hauteur de hanche. Sur les vestes, elle peut être dans la poche intérieure.",
+          "Selon Stone Island, le service couvre les collections à partir du printemps-été 2014 (de l'automne-hiver 2020-2021 pour Stone Island Junior), et les chaussures et certains accessoires n'ont pas de code. Une pièce plus ancienne sans code n'est pas suspecte pour cette raison.",
       },
       {
-        title: "Photographier le QR code et lire le code à 13 chiffres",
+        title: "Localiser l'étiquette de sécurité",
         description:
-          "Le code à 13 chiffres est imprimé en blanc sous le QR code, parfaitement lisible à l'œil nu. Format : XXXX-XXXX-XXXX-X (groupes séparés par des tirets).",
+          "Stone Island indique que le code à 12 chiffres et le QR code figurent sur une étiquette de sécurité cousue à l'intérieur du vêtement. Une étiquette recousue ou mal fixée justifie d'examiner le reste de la pièce.",
       },
       {
-        title: "Vérifier le code sur certilogo.com",
+        title: "Faire la vérification soi-même, pièce en main",
         description:
-          "Rendez-vous sur certilogo.com (ou téléchargez l'app Certilogo), entrez le code à 13 chiffres. Le retour affiche soit « The product is most likely an original » avec détails du modèle, soit un message d'erreur.",
+          "Saisissez le code sur le site de Stone Island, qui renvoie vers le service Certilogo, ou scannez le QR code, puis répondez aux questions posées. Selon Certilogo, la vérification se fait avec le produit en main, et sa réponse dépend aussi de qui la fait : une capture d'écran envoyée par le vendeur ne prouve rien.",
       },
       {
-        title: "Croiser le retour Certilogo avec la pièce physique",
+        title: "Ne pas conclure du seul résultat",
         description:
-          "Le retour indique la saison, le modèle, le pays d'assemblage, le colorway. Vérifiez la cohérence avec la pièce en main. Une veste FW22 grise retournée comme « tee SS19 bleu » révèle un code recopié sur un autre produit — contrefaçon haut de gamme.",
+          "Un résultat positif ne prouve pas, à lui seul, que la pièce en main est authentique : selon des revendeurs spécialisés, des contrefaçons réutilisent des codes authentiques. Un résultat négatif est un signal d'alerte fort, pas une preuve à lui seul : vérifiez d'abord la saisie du code.",
       },
       {
-        title: "Signaler un code utilisé plusieurs fois",
+        title: "Vérifier les signaux de la pièce",
         description:
-          "Certilogo détecte les scans multiples d'un même code. Si le retour indique « This code has been verified more than X times, which may indicate a counterfeit », c'est un signal fort : le code a été copié sur des centaines de fakes.",
+          "Badge boussole, boutons, étiquette de composition : ces signaux portent sur le vêtement lui-même. Voir les autres guides Stone Island. Demandez aussi la preuve d'achat, cohérente avec la pièce et avec le récit du vendeur.",
       },
     ],
     commonErrors: [
       {
-        title: "Ignorer le Certilogo parce que « ça a l'air d'origine »",
+        title: "Se contenter d'une capture d'écran du vendeur",
         description:
-          "Le Certilogo est le test le plus rapide et le plus fiable. Ne pas le faire parce que la pièce « semble authentique » est une erreur fréquente. 30 secondes suffisent — toujours le faire.",
+          "Une capture d'écran de résultat, ou la photo d'un code valide, ne dit pas que la pièce proposée est celle qui porte ce code. Faites la vérification vous-même, pièce en main.",
       },
       {
-        title:
-          "Accepter un retour « originel » sans croiser avec la pièce physique",
+        title: "Prendre un résultat positif pour une preuve",
         description:
-          "Un code peut retourner un verdict positif mais sur un autre modèle que celui en main. Croisez toujours saison/modèle/pays du retour avec la réalité physique.",
+          "Selon des revendeurs spécialisés, des contrefaçons réutilisent des codes authentiques. Un résultat positif se croise avec le badge, les boutons et l'étiquette de composition.",
       },
       {
-        title: "Penser qu'un Certilogo absent = pièce vintage d'origine",
+        title: "Conclure à une contrefaçon faute de code",
         description:
-          "Le Certilogo est implanté depuis 2014. Une pièce antérieure (2010-2013) n'en a pas, normalement. Mais à partir de 2015, l'absence totale de Certilogo est un signal fort. Vérifiez la saison avant de conclure.",
+          "Les pièces antérieures à la collection printemps-été 2014, les chaussures et certains accessoires n'ont pas de code Certilogo. Sur une pièce plus récente, une étiquette absente justifie d'examiner le reste de la pièce, sans prouver la contrefaçon : elle a pu être coupée.",
       },
     ],
     counterfeiterTactics:
-      "Trois niveaux de sophistication chez les contrefacteurs. Niveau 1 : pas de Certilogo du tout. Niveau 2 : Certilogo physique avec code inventé qui ne scanne pas. Niveau 3 (super-fakes) : vrai code recopié depuis une photo StockX ou Grailed d'une pièce officielle — le scan retourne un résultat positif, mais sur un modèle différent. Dans ce cas, seul le croisement saison/modèle/pays avec la pièce physique révèle la fraude. Certains fakes très récents (2024+) investissent même dans des codes achetés au marché noir (codes volés dans des entrepôts officiels) — mais Certilogo détecte les scans multiples et alerte l'utilisateur après 3-5 vérifications du même code. Le système se protège ainsi de manière dynamique.",
+      "Certains vendeurs envoient une capture d'écran de résultat « authentique », ou le code d'une pièce authentique. Selon Certilogo, la vérification se fait avec le produit en main et sa réponse dépend aussi de qui la fait : une capture ne prouve rien. Selon des revendeurs spécialisés, des contrefaçons réutilisent aussi des codes authentiques. Jugez la pièce sur ses signaux visibles et sur sa preuve d'achat.",
     faqs: [
       {
         question:
-          "Que faire si Certilogo retourne « This code has been verified more than 5 times » ?",
+          "Certilogo répond négativement pour une pièce que je crois authentique : est-elle fausse ?",
         answer:
-          "C'est un signal fort mais pas définitif. Certilogo alerte après plusieurs scans d'un même code — ce qui peut arriver légitimement si la pièce a changé plusieurs fois de propriétaire (marché second-hand actif) et que chaque nouveau propriétaire scanne pour vérifier. Dans ce cas, un 3-4 scans sont plausibles. Au-delà de 10-15 scans, c'est un signal d'alerte : le code a pu être recopié sur des contrefaçons. Combinez ce signal avec badge compass, boutons gravés et certilogo physique (étiquette intacte ou recousue) pour trancher.",
+          "C'est un signal d'alerte fort, pas une preuve à lui seul. Vérifiez d'abord la saisie du code. Certilogo indique que sa réponse dépend aussi de qui fait la vérification. Croisez avec le badge, les boutons et l'étiquette de composition, et, en cas de doute, renoncez à l'achat ou contactez le service client de Stone Island.",
       },
       {
         question:
-          "Le Certilogo peut-il être présent mais ne pas scanner (QR code endommagé) ?",
+          "Le QR code de l'étiquette ne se scanne plus : que faire ?",
         answer:
-          "Oui, sur les pièces vintage ou très portées. Un QR code frotté par 5 ans de port peut devenir illisible au scan. Dans ce cas, entrez le code à 13 chiffres manuellement sur certilogo.com — le système accepte l'une ou l'autre méthode. Si le code manuel retourne un résultat positif cohérent avec la pièce, l'authentification tient. Si le code manuel échoue aussi, c'est un signal fort de contrefaçon — les codes d'origine restent scannables manuellement même après usure du QR.",
+          "Saisissez le code à 12 chiffres sur le site de Stone Island : la marque indique que la vérification se fait par le code ou par le QR code. Un QR code usé qui ne se lit plus ne prouve rien. Si le code lui-même est illisible, jugez la pièce sur ses autres signaux.",
       },
     ],
   },
@@ -151,7 +151,7 @@ export const stoneIslandSignals: GuideSignal[] = [
     tagline:
       "Lire les boutons métalliques Stone Island : gravure, laiton doré, finition",
     intro:
-      "Les boutons métalliques qui fixent le badge boussole au bras — deux boutons pression en laiton doré — sont un signal d'authentification secondaire mais très discriminant quand le badge a été retiré. Sur une pièce d'origine, les boutons mesurent 14 mm de diamètre (tolérance ± 0,5 mm), sont gravés en creux de la mention « STONE ISLAND » en capitales Helvetica autour du cercle, avec un creux de gravure de 0,4 mm perceptible à l'ongle. Le laiton est doré à l'or jaune 14 carats (finition brillante satinée, pas chromée), et le mécanisme à pression est de fabrication italienne (souvent Prym ou YKK Snap, reconnaissables à un petit marquage sur le dos). La rondelle de pression intérieure est également gravée « STONE ISLAND » en petites capitales. Les contrefaçons trahissent plusieurs défauts : gravure imprimée au lieu de gravée (test à l'ongle immédiat), laiton trop rouge (cuivré) ou trop pâle (alliage bas de gamme), chromage brillant au lieu du satiné doré, diamètre 12 ou 16 mm au lieu de 14, mécanisme de pression chinois bas de gamme qui se casse après 5-10 utilisations. La rondelle intérieure non gravée est également un signal — les fakes économisent sur cette pièce invisible au porter. Ce signal est particulièrement utile quand le badge compass est manquant.",
+      "Les boutons métalliques qui fixent le badge boussole au bras — deux boutons pression en laiton doré — sont un signal d'authentification secondaire mais très discriminant quand le badge a été retiré. Sur une pièce d'origine, les boutons mesurent 14 mm de diamètre (tolérance ± 0,5 mm), sont gravés en creux de la mention « STONE ISLAND » en capitales Helvetica autour du cercle, avec un creux de gravure de 0,4 mm perceptible à l'ongle. Le laiton a une finition dorée satinée, pas chromée. La rondelle de pression intérieure est également gravée « STONE ISLAND » en petites capitales. Les contrefaçons trahissent plusieurs défauts : gravure imprimée au lieu de gravée (test à l'ongle immédiat), laiton trop rouge (cuivré) ou trop pâle (alliage bas de gamme), chromage brillant au lieu du satiné doré, diamètre 12 ou 16 mm au lieu de 14, mécanisme de pression bas de gamme qui prend vite du jeu. La rondelle intérieure non gravée est également un signal — les fakes économisent sur cette pièce invisible au porter. Ce signal est particulièrement utile quand le badge compass est manquant.",
     steps: [
       {
         title: "Retirer délicatement le badge pour exposer les boutons",
@@ -166,7 +166,7 @@ export const stoneIslandSignals: GuideSignal[] = [
       {
         title: "Tester la gravure « STONE ISLAND » à l'ongle",
         description:
-          "Passez l'ongle sur les lettres « S-T-O-N-E-I-S-L-A-N-D » autour du cercle. Vous devez sentir un creux de 0,4 mm. Une surface lisse (impression) est un signal définitif.",
+          "Passez l'ongle sur les lettres « S-T-O-N-E-I-S-L-A-N-D » autour du cercle. Vous devez sentir un creux de 0,4 mm. Une surface lisse (impression) est un signal d'alerte fort, à croiser avec les autres signaux.",
       },
       {
         title: "Vérifier la finition dorée satinée (pas chromée)",
@@ -197,13 +197,13 @@ export const stoneIslandSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires reproduisent la forme générale du bouton et la gravure extérieure. Ils butent sur : la profondeur de gravure (souvent 0,2 mm au lieu de 0,4, test à l'ongle immédiat), la teinte dorée (chromage bas coût au lieu de laiton or 14k), et surtout la rondelle intérieure. Les super-fakes 2024 gravent aussi la rondelle, mais avec une profondeur moindre et une typographie Arial au lieu d'Helvetica. La qualité du mécanisme de pression est également un indicateur : les boutons d'origine résistent à 200+ pressions sans jeu ; les fakes commencent à avoir du jeu après 30-50 pressions, symptôme d'un acier ressort bas de gamme.",
+      "Les faussaires reproduisent la forme générale du bouton et la gravure extérieure. Ils butent sur : la profondeur de gravure (souvent 0,2 mm au lieu de 0,4, test à l'ongle immédiat), la teinte dorée (chromage bas coût au lieu du laiton doré), et surtout la rondelle intérieure. Les super-fakes 2024 gravent aussi la rondelle, mais avec une profondeur moindre et une typographie Arial au lieu d'Helvetica. La qualité du mécanisme de pression est également un indicateur : sur les fakes, il prend souvent du jeu plus vite.",
     faqs: [
       {
         question:
           "Les boutons peuvent-ils s'oxyder ou se ternir avec le temps sur une pièce d'origine ?",
         answer:
-          "Oui, légèrement. Le laiton doré à l'or 14 carats reste stable pendant 5-7 ans en usage normal, mais peut présenter une légère patine (teinte qui fonce) après 10+ ans de port, surtout si la pièce a été stockée dans un environnement humide. Cette patine est uniforme et graduelle. En revanche, une oxydation verdâtre ou noirâtre localisée (tache d'oxydation) est typique des alliages bas de gamme utilisés dans les contrefaçons — le vrai laiton doré ne développe pas ce type de défaut. La gravure, elle, reste intacte même avec patine.",
+          "Oui, légèrement. Avec le temps et l'usage, surtout si la pièce a été stockée dans un environnement humide, le laiton doré peut se patiner (teinte qui fonce), de façon uniforme et graduelle. Une tache d'oxydation verdâtre ou noirâtre localisée est un signal d'alerte, à croiser avec la gravure et les autres signaux. La gravure, elle, reste lisible même avec patine.",
       },
       {
         question:
@@ -221,7 +221,7 @@ export const stoneIslandSignals: GuideSignal[] = [
     tagline:
       "Décoder l'étiquette composition Stone Island : pays, fibres, code saison",
     intro:
-      "L'étiquette de composition cousue à l'intérieur du vêtement sur la couture latérale gauche est un signal d'authentification moins iconique que le badge ou le Certilogo, mais très complet — elle concentre les informations réglementaires obligatoires et révèle l'histoire de production de la pièce. Sur une pièce d'origine, l'étiquette mesure 6×9 cm, est imprimée sur tissé mat blanc, et comporte cinq blocs d'information en Helvetica Neue 7pt : composition textile détaillée (pourcentages exacts, nommage par fibre — « 100% COTTON », « 80% COTTON / 20% POLYAMIDE », « 100% WOOL » pour les maille, « SHELL: 100% NYLON / LINING: 100% POLYESTER » pour les vestes), pays d'assemblage (« MADE IN ITALY », « MADE IN ROMANIA » pour certains basiques, « MADE IN PORTUGAL » pour quelques projets spéciaux), symboles de lavage ISO 3758 (5 pictogrammes), code saison (format 7 caractères, ex. « 10 0001 » où 10 = FW10, 0001 = référence modèle), et copyright « © Sportswear Company 20XX » (Sportswear Company étant la société mère italienne de Stone Island). Les contrefaçons trahissent plusieurs défauts : composition en pourcentages arrondis (« 80% COTTON » au lieu de « 80% COTTON / 20% POLYAMIDE »), pays « MADE IN CHINA » impossible chez Stone Island, copyright « © Stone Island » au lieu de « © Sportswear Company » (erreur fréquente), code saison incohérent avec le modèle (un sweat FW23 avec code « 05 XXXX » de 2005 est impossible).",
+      "L'étiquette de composition cousue à l'intérieur du vêtement sur la couture latérale gauche est un signal d'authentification moins iconique que le badge ou le Certilogo, mais très complet — elle concentre les informations réglementaires obligatoires et révèle l'histoire de production de la pièce. Sur une pièce d'origine, l'étiquette mesure 6×9 cm, est imprimée sur tissé mat blanc, et comporte cinq blocs d'information en Helvetica Neue 7pt : composition textile détaillée (pourcentages exacts, nommage par fibre — « 100% COTTON », « 80% COTTON / 20% POLYAMIDE », « 100% WOOL » pour les maille, « SHELL: 100% NYLON / LINING: 100% POLYESTER » pour les vestes), pays de fabrication (l'Italie, mais aussi, selon les revendeurs et la presse spécialisés, la Roumanie ou la Tunisie, par exemple), symboles de lavage ISO 3758 (5 pictogrammes), code saison (format 7 caractères, ex. « 10 0001 » où 10 = FW10, 0001 = référence modèle), et copyright « © Sportswear Company 20XX » (Sportswear Company étant la société mère italienne de Stone Island). Les contrefaçons trahissent plusieurs défauts : composition en pourcentages arrondis (« 80% COTTON » au lieu de « 80% COTTON / 20% POLYAMIDE »), copyright « © Stone Island » au lieu de « © Sportswear Company » (erreur fréquente), code saison incohérent avec le modèle (un sweat FW23 avec code « 05 XXXX » de 2005 est impossible).",
     steps: [
       {
         title: "Localiser l'étiquette sur la couture latérale gauche",
@@ -234,9 +234,9 @@ export const stoneIslandSignals: GuideSignal[] = [
           "Une étiquette d'origine précise toujours chaque fibre avec son pourcentage exact. « 100% COTTON » seul, ou « 80% COTTON / 20% POLYAMIDE » avec les deux fibres. Une mention « 80% COTTON » sans le complément à 100 % est un signal fort.",
       },
       {
-        title: "Contrôler le pays d'assemblage cohérent",
+        title: "Lire le pays de fabrication sans conclure sur lui seul",
         description:
-          "MADE IN ITALY, MADE IN ROMANIA (basiques), MADE IN PORTUGAL (spécial). Jamais MADE IN CHINA, MADE IN TURKEY ou MADE IN BANGLADESH sur une pièce Stone Island récente.",
+          "Le pays varie selon les pièces : l'Italie, mais aussi, selon les revendeurs et la presse spécialisés, la Roumanie ou la Tunisie, par exemple ; les sources divergent sur d'autres pays. Un pays inattendu est une question à poser au vendeur, pas une preuve : vérifiez le Certilogo si la pièce en porte un.",
       },
       {
         title: "Vérifier le copyright « © Sportswear Company »",
@@ -253,7 +253,7 @@ export const stoneIslandSignals: GuideSignal[] = [
       {
         title: "Accepter « © Stone Island » au lieu de « © Sportswear Company »",
         description:
-          "Les faussaires mettent logiquement « © Stone Island » en pensant bien faire. Mais la société mère légale est Sportswear Company — c'est cette mention qui figure. Test définitif en 5 secondes.",
+          "Les faussaires mettent logiquement « © Stone Island » en pensant bien faire. Mais la société mère légale est Sportswear Company — c'est cette mention qui figure. Un contrôle de 5 secondes, qui donne un signal d'alerte, pas une preuve à lui seul.",
       },
       {
         title: "Ignorer la cohérence code saison ↔ année de drop",
@@ -267,7 +267,7 @@ export const stoneIslandSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires utilisent plusieurs raccourcis sur l'étiquette composition. Premier : ils omettent le copyright ou écrivent « © Stone Island » au lieu de « © Sportswear Company ». Deuxième : ils simplifient la composition en arrondissant (« 80% COTTON » au lieu de « 80% COTTON / 20% POLYAMIDE »). Troisième : ils utilisent un code saison générique recopié sur un produit officiel qu'ils fakent, sans vérifier la cohérence avec leur propre lot (résultat : des fakes du même modèle partagent le même code). Quatrième : ils mettent « MADE IN ITALY » sur toutes les pièces, même celles qui devraient être roumaines ou portugaises, en pensant que « Italy » vend mieux. Chacun de ces défauts est éliminatoire à lui seul.",
+      "Les faussaires utilisent plusieurs raccourcis sur l'étiquette composition. Premier : ils omettent le copyright ou écrivent « © Stone Island » au lieu de « © Sportswear Company ». Deuxième : ils simplifient la composition en arrondissant (« 80% COTTON » au lieu de « 80% COTTON / 20% POLYAMIDE »). Troisième : ils utilisent un code saison générique recopié sur un produit officiel qu'ils fakent, sans vérifier la cohérence avec leur propre lot (résultat : des fakes du même modèle partagent le même code). Chacun de ces défauts est un signal d'alerte, à croiser avec les autres signaux de la pièce.",
     faqs: [
       {
         question: "Pourquoi le copyright indique-t-il « Sportswear Company » et pas « Stone Island » ?",

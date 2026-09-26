@@ -8,12 +8,12 @@ export const chanelSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Analyser le sticker hologramme Chanel : position, changement d'angle, numéro",
     intro:
-      "Le sticker hologramme Chanel est collé à l'intérieur de chaque sac depuis 1986, en complément de la carte d'authenticité et du numéro de série embossé. C'est un petit sticker argenté mesurant environ 20×12 mm, collé dans une position précise selon modèle : Classic Flap = intérieur du rabat sous la patte de serrure ; Boy = à l'intérieur du compartiment central sur la doublure ; WOC = intérieur du compartiment principal. Le sticker authentique a quatre caractéristiques techniques : 1) un numéro à 7-8 chiffres qui doit correspondre EXACTEMENT au numéro embossé sur la carte d'authenticité ; 2) un hologramme 3D qui change de motif selon l'angle de vue (le logo Chanel CC apparaît sous certains angles, disparaît sous d'autres) ; 3) une police spécifique pour le numéro, Helvetica Neue Bold, taille 8pt, kerning ultra-régulier ; 4) un fond argenté avec reflets arc-en-ciel légers sous lumière directe. Les contrefaçons trahissent plusieurs erreurs typiques : numéro qui ne correspond pas à la carte, hologramme statique sans changement d'angle (impression simple sur film métallisé au lieu du véritable hologramme), police trop grasse ou mal kernée, ou encore un sticker décollable facilement (LV utilise une colle industrielle qui fusionne au cuir). Le test d'angle de vue (incliner le sticker de 0° à 90°) est le plus révélateur : hologramme authentique = animation fluide du logo CC, fake = motif figé. Ce test prend dix secondes et tranche les fakes moyen de gamme.",
+      "De 1986 au passage à la puce (2021 selon les revendeurs spécialisés), le sticker hologramme Chanel est collé à l'intérieur de chaque sac, en complément de la carte d'authenticité et du numéro de série embossé. C'est un petit sticker mesurant environ 20×12 mm, collé dans une position précise selon modèle : Classic Flap = intérieur du rabat sous la patte de serrure ; Boy = à l'intérieur du compartiment central sur la doublure ; WOC = intérieur du compartiment principal. Le sticker authentique a trois caractéristiques techniques : 1) un numéro à 7-8 chiffres qui doit correspondre EXACTEMENT au numéro embossé sur la carte d'authenticité ; 2) un hologramme 3D qui change de motif selon l'angle de vue (le logo Chanel CC apparaît sous certains angles, disparaît sous d'autres) ; 3) une police spécifique pour le numéro, Helvetica Neue Bold, taille 8pt, kerning ultra-régulier. Sa couleur de fond seule ne dit rien de l'authenticité. Les contrefaçons trahissent plusieurs erreurs typiques : numéro qui ne correspond pas à la carte, hologramme statique sans changement d'angle (impression simple sur film métallisé au lieu du véritable hologramme), police trop grasse ou mal kernée, ou encore un sticker décollable facilement (LV utilise une colle industrielle qui fusionne au cuir). Le test d'angle de vue (incliner le sticker de 0° à 90°) est le plus révélateur : hologramme authentique = animation fluide du logo CC, fake = motif figé. Ce test prend dix secondes ; un motif figé est un signal d'alerte, pas une preuve à lui seul.",
     steps: [
       {
         title: "Localiser le sticker selon modèle",
         description:
-          "Classic Flap : sous la patte de serrure à l'intérieur du rabat. Boy Bag : doublure du compartiment central. WOC : intérieur du rabat. Sticker mesurant ~20×12 mm, argenté.",
+          "Classic Flap : sous la patte de serrure à l'intérieur du rabat. Boy Bag : doublure du compartiment central. WOC : intérieur du rabat. Sticker mesurant ~20×12 mm.",
       },
       {
         title: "Tester l'hologramme 3D",
@@ -33,14 +33,14 @@ export const chanelSignals: GuideSignal[] = [
       {
         title: "Décoder le millésime (premier chiffre)",
         description:
-          "Chaque chiffre initial correspond à une période : 1=1986-1988, 4=1996-1997, 8=2003-2004, 14=2010-2011, 24=2017-2018, 30=2022+. Vérifiez cohérence millésime ↔ design (un Boy Bag marqué « 4 » serait suspect, le Boy ayant été lancé en 2011).",
+          "Chaque chiffre initial correspond à une période : 1=1986-1988, 4=1996-1997, 8=2003-2004, 14=2010-2011, 24=2017-2018. Les sacs plus récents n'ont plus de sticker : une puce intégrée le remplace (à partir de 2021 selon les revendeurs spécialisés). Vérifiez cohérence millésime ↔ design (un Boy Bag marqué « 4 » serait suspect, le Boy ayant été lancé en 2011).",
       },
     ],
     commonErrors: [
       {
         title: "Croire que tous les Chanel ont un sticker hologramme",
         description:
-          "Certains modèles vintage pré-1986 n'ont pas de sticker (authentification par autres moyens). Les nouveaux modèles post-2021 avec puce NFC ont parfois le sticker + la puce. Vérifiez le millésime avant d'exiger un sticker.",
+          "Certains modèles vintage pré-1986 n'ont pas de sticker (authentification par autres moyens). Sur les sacs récents, une puce intégrée a remplacé le sticker et la carte d'authenticité (à partir de 2021 selon les revendeurs spécialisés) : leur absence n'y est pas suspecte. Vérifiez le millésime avant d'exiger un sticker.",
       },
       {
         title: "Tester l'hologramme en lumière faible",
@@ -59,12 +59,12 @@ export const chanelSignals: GuideSignal[] = [
       {
         question: "Mon sticker hologramme est décollé dans mon sac Chanel, fake ?",
         answer:
-          "Pas nécessairement. Sur des sacs très anciens (10+ ans), la colle peut se dégrader et le sticker se détacher partiellement. Si le sticker est présent (collé ou détaché) et que le numéro correspond à la carte d'authenticité, le sac peut rester authentique. En revanche, un sticker absent totalement (jamais collé ou perdu) sur un sac post-1986 est problématique — l'authentification devient dépendante des autres indicateurs (cuir, coutures, hardware).",
+          "Pas nécessairement. Sur des sacs très anciens (10+ ans), la colle peut se dégrader et le sticker se détacher partiellement. Si le sticker est présent (collé ou détaché) et que le numéro correspond à la carte d'authenticité, le sac peut rester authentique. En revanche, un sticker absent totalement (jamais collé ou perdu) sur un sac produit entre 1986 et le passage à la puce est problématique — l'authentification devient dépendante des autres indicateurs (cuir, coutures, hardware).",
       },
       {
-        question: "Les Chanel neuves (post-2021) ont-elles encore un sticker ?",
+        question: "Les sacs Chanel récents ont-ils encore un sticker ?",
         answer:
-          "Oui, en complément d'une puce NFC invisible. Chanel a conservé le sticker hologramme pour continuité avec les sacs vintage et familiarité client. La puce NFC (scannable avec smartphone) ajoute une couche cryptographique. Un Chanel post-2021 qui n'a QUE le sticker (sans puce NFC détectable) est suspect — demandez une vérification en boutique Chanel.",
+          "Non. Selon les revendeurs spécialisés, Chanel a remplacé à partir de 2021 le sticker hologramme et la carte d'authenticité par une puce intégrée, logée dans une petite plaque métallique à l'intérieur du sac. Un sac récent sans sticker ni carte n'est donc pas suspect pour cette raison. Le contenu de la puce n'est lisible que par Chanel : aucun scan de téléphone ne tranche.",
       },
     ],
   },
@@ -75,7 +75,7 @@ export const chanelSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Vérifier le numéro de série Chanel et sa cohérence millésime",
     intro:
-      "Chaque sac Chanel produit depuis 1986 porte un numéro de série unique à 7 chiffres (1986-2004) ou 8 chiffres (à partir de 2005, pour absorber le volume de production croissant). Ce numéro apparaît à trois endroits : embossé discrètement sur un morceau de cuir intérieur (souvent sous une couture), imprimé sur le sticker hologramme, et imprimé sur la carte d'authenticité blanche livrée avec le sac. Ces trois numéros doivent être ABSOLUMENT identiques — tout différentiel signe une contrefaçon ou un sac reconstitué. La séquence des premiers chiffres permet de déterminer l'année de production : série 1xxxxxx = 1986-1988, 5xxxxxx = 1997-1999, 9xxxxxx = 2004-2005, 13xxxxxx = 2008-2009, 17xxxxxx = 2012-2013, 21xxxxxx = 2015-2016, 25xxxxxx = 2018-2019, 29xxxxxx = 2021-2022, 32xxxxxx = 2024+. Ces correspondances sont documentées par la communauté d'authentification et fiables à ±6 mois. Les contrefacteurs commettent trois erreurs : 1) numéro inventé qui ne rentre dans aucune plage historique, 2) incohérence millésime ↔ modèle (un sac Boy marqué « 9xxxxxx » = année 2004, alors que le Boy a été lancé en 2011), 3) décalage numérique entre le cuir embossé et le sticker. Vérifier ces cohérences prend cinq minutes avec un accès à la grille de millésimes.",
+      "Chaque sac Chanel produit de 1986 au passage à la puce porte un numéro de série unique à 7 chiffres (1986-2004) ou 8 chiffres (à partir de 2005, pour absorber le volume de production croissant). Ce numéro apparaît à trois endroits : embossé discrètement sur un morceau de cuir intérieur (souvent sous une couture), imprimé sur le sticker hologramme, et imprimé sur la carte d'authenticité blanche livrée avec le sac. Ces trois numéros doivent être ABSOLUMENT identiques — tout différentiel signe une contrefaçon ou un sac reconstitué. La séquence des premiers chiffres permet de déterminer l'année de production : série 1xxxxxx = 1986-1988, 5xxxxxx = 1997-1999, 9xxxxxx = 2004-2005, 13xxxxxx = 2008-2009, 17xxxxxx = 2012-2013, 21xxxxxx = 2015-2016, 25xxxxxx = 2018-2019. Sur les sacs récents, une puce intégrée remplace le sticker et la carte (à partir de 2021 selon les revendeurs spécialisés). Ces correspondances sont documentées par la communauté d'authentification et fiables à ±6 mois. Les contrefacteurs commettent trois erreurs : 1) numéro inventé qui ne rentre dans aucune plage historique, 2) incohérence millésime ↔ modèle (un sac Boy marqué « 9xxxxxx » = année 2004, alors que le Boy a été lancé en 2011), 3) décalage numérique entre le cuir embossé et le sticker. Vérifier ces cohérences prend cinq minutes avec un accès à la grille de millésimes.",
     steps: [
       {
         title: "Localiser le numéro embossé sur cuir",
@@ -209,7 +209,7 @@ export const chanelSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Vérifier la chaîne entrelacée cuir + métal et le poids total",
     intro:
-      "La chaîne Chanel — signature Classic Flap avec cuir entrelacé dans les maillons métalliques — est un élément d'authentification à la fois visuel et physique. Chanel utilise une chaîne en laiton massif plaqué or 24 carats (hardware doré) ou palladium (hardware argenté), composée de maillons oblongs de 8-10 mm de long, reliés entre eux par anneaux ronds de 6-7 mm. Un lambskin noir ou assorti à la couleur du sac s'entrelace dans la chaîne sur toute sa longueur. Les signaux physiques : 1) poids de la chaîne seule ≈ 180-220 g sur Classic Flap Medium (chaîne totale) ; 2) chaque maillon est fermé par soudure invisible, sans jointure ouverte ; 3) le laiton plaqué or résiste au test magnétique (rivets non attirés par aimant) ; 4) le lambskin entrelacé est souple mais tendu, sans plis ni zones qui flottent. Le poids TOTAL d'un Classic Flap Medium authentique (sac vide + chaîne) est de 830-870 grammes selon millésime. Cette mesure est un premier tri efficace : un sac sous 700 g ou au-dessus de 1 kg doit faire suspecter une contrefaçon (matières de poids incorrect). Les fakes utilisent une chaîne en acier creux léger (gain de poids de 40-60 %) plaquée or brillant chrome, ou une chaîne en laiton mais avec maillons mal soudés qui s'ouvrent sous traction. Test rapide : soulever le sac à une main — un authentique donne une sensation de densité « rassurante », un fake semble « creux ».",
+      "La chaîne Chanel — signature Classic Flap avec cuir entrelacé dans les maillons métalliques — est un élément d'authentification à la fois visuel et physique. Selon la version, la chaîne est dorée, argentée ou d'une autre finition (sa couleur seule ne dit rien de l'authenticité) ; elle est composée de maillons oblongs de 8-10 mm de long, reliés entre eux par anneaux ronds de 6-7 mm. Un lambskin noir ou assorti à la couleur du sac s'entrelace dans la chaîne sur toute sa longueur. Les signaux physiques : 1) poids de la chaîne seule ≈ 180-220 g sur Classic Flap Medium (chaîne totale) ; 2) chaque maillon est fermé par soudure invisible, sans jointure ouverte ; 3) le laiton (non magnétique) n'est pas attiré par l'aimant ; 4) le lambskin entrelacé est souple mais tendu, sans plis ni zones qui flottent. Le poids TOTAL d'un Classic Flap Medium authentique (sac vide + chaîne) est de 830-870 grammes selon millésime. Cette mesure est un premier tri efficace : un sac sous 700 g ou au-dessus de 1 kg doit faire suspecter une contrefaçon (matières de poids incorrect). Les fakes utilisent une chaîne en acier creux léger (gain de poids de 40-60 %) plaquée or brillant chrome, ou une chaîne en laiton mais avec maillons mal soudés qui s'ouvrent sous traction. Test rapide : soulever le sac à une main — un authentique donne une sensation de densité « rassurante », un fake semble « creux ».",
     steps: [
       {
         title: "Peser le sac vide (sans contenu)",
@@ -255,7 +255,7 @@ export const chanelSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les fakes haut de gamme 2023-2024 utilisent des chaînes en laiton réel (non magnétique, respectant le poids) — résolvant les critères simples. Le défaut résiduel : la géométrie des maillons. Chanel utilise un outillage de précision qui donne des maillons strictement identiques, avec un angle d'ovale de 35° par rapport à l'axe de traction. Les maillons fakes sont produits par stamping moins précis, avec une variation d'angle de 30° à 45° visible à l'œil comparatif : en tirant la chaîne bien tendue, les maillons authentiques s'alignent parfaitement tandis que les fakes présentent des « crans » (maillons non alignés). Autre tactique : la chaîne fake en laiton peut être trop épaisse (8 mm de diamètre au lieu des 6 mm Chanel) pour compenser la moindre qualité du métal. Mesurer précisément avec un pied à coulisse l'épaisseur d'un maillon tranche.",
+      "Les fakes haut de gamme 2023-2024 utilisent des chaînes en laiton réel (non magnétique, respectant le poids) — résolvant les critères simples. Le défaut résiduel : la géométrie des maillons. Chanel utilise un outillage de précision qui donne des maillons strictement identiques, avec un angle d'ovale de 35° par rapport à l'axe de traction. Les maillons fakes sont produits par stamping moins précis, avec une variation d'angle de 30° à 45° visible à l'œil comparatif : en tirant la chaîne bien tendue, les maillons authentiques s'alignent parfaitement tandis que les fakes présentent des « crans » (maillons non alignés). Autre tactique : la chaîne fake en laiton peut être trop épaisse (8 mm de diamètre au lieu des 6 mm Chanel) pour compenser la moindre qualité du métal. Mesurer au pied à coulisse l'épaisseur d'un maillon donne un signal de plus, à croiser avec les autres.",
     faqs: [
       {
         question: "Le poids peut-il varier selon le millésime du Chanel ?",
@@ -265,74 +265,75 @@ export const chanelSignals: GuideSignal[] = [
       {
         question: "Une chaîne qui se ternit avec le temps est-elle fake ?",
         answer:
-          "Non. Le laiton plaqué or s'oxyde naturellement avec la transpiration, l'air humide, les frictions. Après 5-10 ans, la chaîne peut perdre un peu de brillant et virer vers une teinte or plus chaude, plus « vieil or ». Cette patine est un signe d'authenticité (laiton réel). Une chaîne qui reste miroir brillant après 10 ans est suspecte (chrome imperméable à l'oxydation = fake). Un noircissement en plaques irrégulières est en revanche un signe de plaquage fake de mauvaise qualité.",
+          "Non. Avec l'usage (transpiration, humidité, frottements), une chaîne peut perdre de son brillant et prendre une teinte plus chaude. Cette usure, régulière, est normale et ne dit rien à elle seule de l'authenticité. Un écaillage ou un noircissement en plaques irrégulières est un signal d'alerte, à croiser avec les autres signaux.",
       },
     ],
   },
   {
     slug: "puce-nfc",
-    name: "Puce NFC Chanel",
+    name: "Puce intégrée (sacs récents)",
     brandSlug: "chanel",
     category: "bags",
-    tagline: "Détecter la puce NFC Chanel (post-2021) et ses spécifications",
+    tagline: "Ce que la puce des sacs Chanel récents permet de vérifier, et ce qu'elle ne permet pas",
+    headline: "Puce des sacs Chanel récents : ce qu'elle prouve, et ce qu'elle ne prouve pas",
     intro:
-      "Chanel a intégré progressivement depuis 2021 une puce NFC (Near Field Communication) dans ses sacs de la collection haut de gamme (Classic Flap, Boy, 19, WOC) en complément du sticker hologramme et du numéro de série. Cette puce, de taille millimétrique, est cousue dans la doublure interne ou intégrée dans la patte de cuir portant le numéro embossé. Elle est invisible à l'œil nu mais détectable via smartphone NFC (app « NFC Tools »). Contrairement à Louis Vuitton qui a abandonné le date code physique, Chanel maintient les deux systèmes (numéro de série + puce NFC) pour une double vérification. La puce Chanel utilise un chip custom produit par STMicroelectronics (probablement ST25TV series) avec un ID unique lié au numéro de série du sac dans les bases internes Chanel. Pour le consommateur, la présence physique d'une puce détectable par un smartphone standard est déjà un indicateur fort. À terme, un service d'authentification via l'app Chanel permettra une vérification cryptographique complète (roadmap Chanel 2024-2025). Tous les sacs Chanel produits après 2021 doivent comporter une puce détectable — l'absence sur un sac neuf est une preuve de contrefaçon. Les sacs pré-2021 n'ont pas de puce (leur authentification repose sur sticker + numéro), ce qui est normal.",
+      "Sur ses sacs récents, Chanel a remplacé le sticker hologramme et la carte d'authenticité par une puce intégrée. Selon les revendeurs spécialisés, le changement date de 2021 ; la puce est logée dans une petite plaque métallique gravée, fixée à l'intérieur du sac. Son contenu n'est lisible que par la maison : aucune appli publique n'authentifie un sac par sa puce. Un téléphone peut signaler une puce, ou ne rien détecter ; ni l'un ni l'autre ne prouve quoi que ce soit. Ce guide dit ce qu'on peut tirer de la puce, et surtout ce qu'on ne peut pas en tirer.",
     steps: [
       {
-        title: "Vérifier la date de production via numéro de série",
+        title: "Ne pas exiger de sticker ni de carte sur un sac récent",
         description:
-          "Décodez le numéro de série pour déterminer le millésime. Numéro 29xxxxxx = 2021-2022 : puce attendue. Numéro 25xxxxxx = 2018-2019 : pas de puce attendue.",
+          "Sur les sacs récents, la puce remplace le sticker hologramme et la carte d'authenticité. Un sac récent sans sticker ni carte n'est donc pas suspect pour cette seule raison.",
       },
       {
-        title: "Installer app NFC Tools sur smartphone",
+        title: "Savoir ce qu'un téléphone peut montrer",
         description:
-          "iOS : App Store, « NFC Tools ». Android : Google Play, « NFC Tools » ou « TagInfo ». Activez le NFC dans paramètres téléphone.",
+          "Une appli NFC peut signaler la présence d'une puce, sans en afficher le contenu. Elle peut aussi ne rien détecter : la réception dépend du téléphone, de sa coque et de l'emplacement de la puce.",
       },
       {
-        title: "Scanner les zones stratégiques du sac",
+        title: "Ne rien conclure du scan",
         description:
-          "Zones typiques : doublure intérieure près du numéro embossé, patte de cuir intérieure haute, poche zippée (doublure fond). Smartphone à 1-2 cm, balayage lent.",
+          "Une puce qui répond ne prouve pas l'authenticité : une puce du commerce répond aussi. Une puce que le téléphone ne détecte pas ne prouve pas la contrefaçon.",
       },
       {
-        title: "Lire la réponse NFC",
+        title: "Demander la preuve d'achat",
         description:
-          "La puce répond en 1-3 secondes avec un ID hexadécimal. L'app affiche le format (NFC Forum Type 4 ou 5 pour Chanel ST25TV). Notez l'ID.",
+          "Chanel indique qu'aucun revendeur n'est autorisé à vendre sa maroquinerie sur Internet : elle se vend en boutique Chanel ou chez les revendeurs agréés par la maison. Demandez la facture d'origine, cohérente avec le sac et avec le récit du vendeur.",
       },
       {
-        title: "Vérifier la correspondance ID ↔ numéro de série",
+        title: "Vérifier les signaux visibles",
         description:
-          "Via l'app Chanel (service en déploiement 2024-2025) : scan du sac + vérification cryptographique. En attendant, la simple présence d'une puce répondant est un indicateur positif.",
+          "Matelassage, cuir, chaîne, fermoir : ces signaux se vérifient sur photo. Voir les autres guides Chanel.",
       },
     ],
     commonErrors: [
       {
-        title: "Chercher une puce sur sac pré-2021",
+        title: "Conclure à une contrefaçon faute de réponse NFC",
         description:
-          "Les Chanel produits avant 2021 n'ont pas de puce NFC. L'absence est normale et ne prouve rien. Croisez avec numéro de série + sticker hologramme + carte d'authenticité pour les pré-2021.",
+          "Un téléphone qui ne détecte pas de puce ne prouve rien : le modèle du téléphone, la coque ou l'emplacement de la puce peuvent l'expliquer.",
       },
       {
-        title: "Confondre puce NFC et sticker hologramme",
+        title: "Prendre une réponse NFC pour une preuve",
         description:
-          "Sticker hologramme = visible, collé, depuis 1986. Puce NFC = invisible, cousue dans doublure, depuis 2021. Les deux existent simultanément sur les sacs post-2021. Les deux doivent être présents sur un post-2021.",
+          "N'importe quelle puce du commerce répond à un scan. Seul Chanel lit le contenu de ses puces.",
       },
       {
-        title: "Valider avec n'importe quelle réponse NFC",
+        title: "Exiger un sticker hologramme sur un sac récent",
         description:
-          "Une puce NFC générique achetée 0,50 € sur Alibaba répond au scan avec un ID arbitraire. La simple réponse ne prouve pas l'authenticité — seul le cross-check cryptographique via l'app Chanel (à venir) le fera. En attendant, combinez avec autres indicateurs.",
+          "Sur les sacs récents, la puce a remplacé le sticker et la carte : leur absence n'est pas suspecte. À l'inverse, un sticker dans un sac présenté comme postérieur au passage à la puce est un signal d'alerte, pas une preuve.",
       },
     ],
     counterfeiterTactics:
-      "Les faussaires intègrent des puces NFC génériques (NTAG213 NXP) dans leurs fakes post-2021 Chanel. Ces puces répondent au scan mais renvoient un ID arbitraire sans correspondance dans les bases Chanel. Le défaut technique : les puces Chanel authentiques utilisent un chip ST25TV avec support cryptographique AES-128, alors que les NTAG213 fakes utilisent uniquement un lecture basique sans chiffrement. Un dump NFC complet avec TagInfo Advanced révèle cette différence de structure — absence du NDEF chiffré Chanel sur fake. Autre tactique : intégrer une puce réelle ST25TV (achetable par unité, 3 € l'unité) mais sans programmation Chanel — résultat : la puce répond avec format correct mais ID non enregistré. Le service d'app Chanel de vérification démasquera ces fakes à sa sortie.",
+      "Certains vendeurs mettent en avant une puce qui « répond » au téléphone, ou une appli qui « confirme » l'authenticité. Aucune appli publique ne lit le contenu des puces Chanel : cet argument ne prouve rien. Selon les revendeurs spécialisés, des contrefaçons reproduisent aussi la plaque métallique qui loge la puce : sa présence ne prouve rien non plus. Jugez le sac sur ses signaux visibles et sur sa preuve d'achat.",
     faqs: [
       {
-        question: "Mon Chanel post-2021 ne répond à aucun scan NFC, est-il fake ?",
+        question: "Mon sac Chanel récent ne répond à aucun scan NFC : est-il faux ?",
         answer:
-          "C'est un signal fort mais pas définitif. Vérifiez d'abord : 1) le NFC du smartphone est activé ; 2) vous scannez lentement toutes les zones ; 3) le smartphone est à 1-2 cm (pas 5 cm) du sac. Si malgré ces précautions aucune réponse sur aucun smartphone testé, c'est un signal de contrefaçon. Allez dans une boutique Chanel pour double-check — ils disposent d'outils internes de vérification. Ne concluez pas « fake » uniquement sur un seul test smartphone.",
+          "Pas pour cette raison. La détection dépend du téléphone, de sa coque et de l'emplacement de la puce, et le contenu de la puce n'est lisible que par Chanel. Jugez sur les signaux visibles et sur la preuve d'achat.",
       },
       {
-        question: "Chanel va-t-il officialiser une app d'authentification publique ?",
+        question: "Peut-on faire vérifier la puce d'un sac Chanel ?",
         answer:
-          "Oui, probablement en 2025. Chanel a annoncé en 2023 un service d'authentification digitale intégré à son app officielle, permettant aux clients de scanner leurs sacs et recevoir une confirmation cryptographique. Calendrier officiel non communiqué. En attendant, l'authentification reste manuelle par experts humains (boutique, services type Entrupy) ou communautaire (forums d'authentification spécialisés).",
+          "Pas avec une appli. Une appli NFC comme NFC Tools peut au mieux signaler qu'une puce est présente. Selon les revendeurs spécialisés, aucune appli publique ne lit le contenu des puces Chanel : seules les boutiques Chanel ont l'équipement de lecture, et elles peuvent refuser de vérifier un sac acheté d'occasion.",
       },
     ],
   },
@@ -343,7 +344,7 @@ export const chanelSignals: GuideSignal[] = [
     category: "bags",
     tagline: "Différencier cuir caviar et lambskin authentiques Chanel",
     intro:
-      "Chanel utilise deux cuirs signatures pour ses Classic Flap : le cuir caviar (veau grainé texturé) et le lambskin (agneau lisse). Chaque cuir a des propriétés physiques distinctes qui permettent de discriminer authentique et contrefaçon. Le caviar authentique est un cuir de veau tanné végétal avec un grain spécifique imitant des œufs de poisson — petites bosselures rondes régulières de 0,8-1,2 mm de diamètre, sans alignement strict mais avec une densité homogène. Il est ferme, tient la forme, résiste aux éraflures quotidiennes, et se patine en 10+ ans sans décoloration notable. Le lambskin authentique est un cuir d'agneau full-grain, ultra-souple, avec une surface lisse marbrée de micro-veines naturelles (reconnaissables à la loupe x10). Il est plus fragile que le caviar (marque aux chocs, craquelures possibles après 5-7 ans de port intensif) mais offre un toucher soie incomparable. Les contrefaçons caviar utilisent souvent un « faux grain » embossé artificiellement — bosselures trop régulières, parfois alignées en rangées strictes (impossible sur cuir naturel) ou de tailles identiques (le grain caviar authentique a une variation naturelle). Les contrefaçons lambskin utilisent du cuir split leather (face inférieure du cuir) trop lisse, sans veines naturelles, ou du synthétique PU qui brille uniformément. Quatre tests tranchent : 1) test bosselure caviar (régularité vs alignement), 2) test toucher lambskin (soie vs synthétique), 3) test d'odeur (cuir tanné authentique = odeur douce, fake = odeur chimique), 4) test patine (authentique vieillit noblement, fake se dégrade).",
+      "Chanel utilise deux cuirs signatures pour ses Classic Flap : le cuir caviar (veau grainé texturé) et le lambskin (agneau lisse). Chaque cuir a des propriétés physiques distinctes qui permettent de discriminer authentique et contrefaçon. Le caviar authentique est un cuir de veau tanné végétal avec un grain spécifique imitant des œufs de poisson — petites bosselures rondes régulières de 0,8-1,2 mm de diamètre, sans alignement strict mais avec une densité homogène. Il est ferme, tient la forme, résiste aux éraflures quotidiennes, et se patine en 10+ ans sans décoloration notable. Le lambskin authentique est un cuir d'agneau full-grain, ultra-souple, avec une surface lisse marbrée de micro-veines naturelles (reconnaissables à la loupe x10). Il est plus fragile que le caviar (marque aux chocs, craquelures possibles après 5-7 ans de port intensif) mais offre un toucher soie incomparable. Les contrefaçons caviar utilisent souvent un « faux grain » embossé artificiellement — bosselures trop régulières, parfois alignées en rangées strictes (impossible sur cuir naturel) ou de tailles identiques (le grain caviar authentique a une variation naturelle). Les contrefaçons lambskin utilisent du cuir split leather (face inférieure du cuir) trop lisse, sans veines naturelles, ou du synthétique PU qui brille uniformément. Quatre tests aident à se faire un avis, aucun ne suffisant seul : 1) test bosselure caviar (régularité vs alignement), 2) test toucher lambskin (soie vs synthétique), 3) test d'odeur (cuir tanné authentique = odeur douce, fake = odeur chimique), 4) test patine (authentique vieillit noblement, fake se dégrade).",
     steps: [
       {
         title: "Identifier le cuir (caviar ou lambskin)",

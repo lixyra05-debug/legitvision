@@ -10,7 +10,7 @@ export const chanelModels: ModelData[] = [
     retailYear: "1983 (production continue)",
     tagline: "Le sac réintroduit par Karl Lagerfeld en 1983",
     intro:
-      "Le Chanel Classic Flap Medium, réintroduit par Karl Lagerfeld en 1983 (sur la base du 2.55 de 1955), est le sac d'investissement par excellence du luxe — son retail est passé de 1 150 $ en 1990 à 10 800 € en 2024, et l'ajustement 2025-2026 le porte à 11 500-12 500 € selon cuir. Caviar (cuir grainé) et Lambskin (agneau lisse) sont les deux finitions principales. Hardware : doré, argenté ou ruthénium selon la version ; sa couleur seule ne dit rien de l'authenticité. Le Classic Flap Medium (25,5 cm) a un prix marché d'occasion de 10 000-12 500 € selon état. Les super-fakes de Classic Flap (« China 1:1 mirror ») coûtent 500-1 500 € à produire et se revendent 3 000-6 000 €, piégeant même des authentificateurs expérimentés. Les signaux ci-dessous restent parmi les plus résistants aux super-fakes : cuir grain exact (Caviar) ou souplesse Lambskin, quilting 9 losanges/11 losanges, CC clasp interlocking précision, serial sticker (ou micro-chip RFID post-2021) et stitching alignement.",
+      "Le Chanel Classic Flap Medium, réintroduit par Karl Lagerfeld en 1983 (sur la base du 2.55 de 1955), est le sac d'investissement par excellence du luxe — son retail est passé de 1 150 $ en 1990 à 10 800 € en 2024, et l'ajustement 2025-2026 le porte à 11 500-12 500 € selon cuir. Caviar (cuir grainé) et Lambskin (agneau lisse) sont les deux finitions principales. Hardware : doré, argenté ou ruthénium selon la version ; sa couleur seule ne dit rien de l'authenticité. Le Classic Flap Medium (25,5 cm) a un prix marché d'occasion de 10 000-12 500 € selon état. Les super-fakes de Classic Flap (« China 1:1 mirror ») piègent même des authentificateurs expérimentés. Les signaux ci-dessous restent parmi les plus résistants aux super-fakes : cuir grain exact (Caviar) ou souplesse Lambskin, quilting 9 losanges/11 losanges, CC clasp interlocking précision, serial sticker (ou puce intégrée sur les exemplaires récents) et stitching alignement.",
     signals: [
       {
         title: "Caviar grain — texture pebble uniforme",
@@ -33,7 +33,7 @@ export const chanelModels: ModelData[] = [
       {
         title: "Serial sticker — 7 ou 8 chiffres + hologramme",
         description:
-          "Le serial sticker pre-2021 est collé à l'intérieur (près du patch CHANEL Made in France) avec 7 ou 8 chiffres et un hologramme intact (sticker thermosensible qui marque le code si décollé). Chanel a abandonné les stickers en 2021 au profit de RFID chips. Un Classic Flap 2024 avec serial sticker est une contrefaçon.",
+          "Sur les Classic Flap antérieurs au passage à la puce, le serial sticker est collé à l'intérieur (près du patch CHANEL Made in France) avec 7 ou 8 chiffres et un hologramme intact (sticker thermosensible qui marque le code si décollé). Selon les revendeurs spécialisés, une puce intégrée, logée dans une petite plaque métallique, remplace le sticker et la carte à partir de 2021 : un Classic Flap récent sans sticker n'est pas suspect. Un sticker dans un Classic Flap présenté comme postérieur au passage à la puce est un signal d'alerte, pas une preuve.",
         difficulty: 1,
       },
       {
@@ -62,9 +62,9 @@ export const chanelModels: ModelData[] = [
           "Chanel applique une stratégie d'augmentation annuelle pour positionner le Flap comme « ultimate luxury ».",
       },
       {
-        question: "Comment authentifier un Classic Flap post-2021 sans serial sticker ?",
+        question: "Comment authentifier un Classic Flap récent, sans serial sticker ?",
         answer:
-          "Depuis 2021, Chanel intègre un micro-chip RFID dans la doublure. Les 4 autres signaux (Caviar grain, quilting 9 ou 11 losanges, CC clasp precision, stitching) restent vérifiables. LegitVision pré-authentifie vos photos HD avec score de confiance.",
+          "Sur les Classic Flap récents, une puce intégrée remplace le sticker (à partir de 2021 selon les revendeurs spécialisés). Son contenu n'est lisible que par Chanel : un scan de téléphone ne tranche pas. Les 4 autres signaux (Caviar grain, quilting 9 ou 11 losanges, CC clasp precision, stitching) restent vérifiables. LegitVision pré-authentifie vos photos HD avec score de confiance.",
       },
     ],
   },
@@ -104,9 +104,9 @@ export const chanelModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "Serial sticker / RFID — même système que Classic Flap",
+        title: "Serial sticker ou puce — même système que Classic Flap",
         description:
-          "Pre-2021 : serial sticker 7-8 chiffres avec hologramme intact. Post-2021 : RFID chip intégré. Le patch CHANEL Made in France/Italy à l'intérieur est en cuir embossé, avec gravure nette.",
+          "Sur les Boy antérieurs au passage à la puce : serial sticker 7-8 chiffres avec hologramme intact. Sur les plus récents : puce intégrée, logée dans une petite plaque métallique gravée à l'intérieur du sac (à partir de 2021 selon les revendeurs spécialisés), dont seul Chanel lit le contenu ; l'absence de sticker n'y est pas suspecte, et la plaque peut être reproduite. Le patch CHANEL Made in France/Italy à l'intérieur est en cuir embossé, avec gravure nette.",
         difficulty: 1,
       },
     ],
@@ -171,9 +171,9 @@ export const chanelModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "RFID chip — obligatoire post-2021",
+        title: "Serial sticker ou puce selon la date de fabrication",
         description:
-          "Le 19 a été lancé en 2019 donc les premiers batches ont un serial sticker. Depuis 2021, tous les 19 ont un RFID chip. Un 19 produit en 2024 avec serial sticker est une contrefaçon.",
+          "Le 19 a été lancé en 2019 : les premiers exemplaires ont un serial sticker. Sur les plus récents, une puce intégrée, logée dans une petite plaque métallique gravée à l'intérieur du sac, remplace le sticker et la carte (à partir de 2021 selon les revendeurs spécialisés) : l'absence de sticker n'y est pas suspecte, et seul Chanel lit le contenu de la puce. La plaque peut être reproduite : elle ne prouve rien à elle seule. Un sticker dans un 19 présenté comme postérieur au passage à la puce est un signal d'alerte, pas une preuve.",
         difficulty: 1,
       },
     ],
@@ -186,7 +186,7 @@ export const chanelModels: ModelData[] = [
       {
         title: "« Cadeau ex, petite taille, prix cassé »",
         description:
-          "Le narratif « cadeau ex » est classique des vendeurs de fakes Chanel. Un 19 authentique ne descend jamais sous 3 500 € même abîmé. Demandez des photos HD du RFID/serial sticker et du fermoir CC 3D.",
+          "Le narratif « cadeau ex » est classique des vendeurs de fakes Chanel. Un 19 authentique ne descend jamais sous 3 500 € même abîmé. Demandez des photos HD du serial sticker (sur les exemplaires antérieurs à la puce) et du fermoir CC 3D.",
       },
     ],
     faqs: [
@@ -307,7 +307,7 @@ export const chanelModels: ModelData[] = [
       {
         title: "Numéro série 2.55 — format spécifique",
         description:
-          "Le 2.55 Reissue a son propre format de serial numbers (batches post-2005). Vérifiez la cohérence année/format. Post-2021 : RFID chip intégré.",
+          "Le 2.55 Reissue a son propre format de serial numbers (batches post-2005). Vérifiez la cohérence année/format. Sur les exemplaires récents, une puce intégrée remplace le sticker (à partir de 2021 selon les revendeurs spécialisés) : l'absence de numéro de sticker n'y est pas suspecte.",
         difficulty: 2,
       },
     ],

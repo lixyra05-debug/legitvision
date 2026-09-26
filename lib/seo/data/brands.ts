@@ -168,7 +168,7 @@ export const brands: Brand[] = [
       {
         title: "Box label adidas : format et QR code",
         description:
-          "La box label adidas authentique est collée droite avec une tolérance < 2 mm, et mentionne : Article Number (6 chiffres), pointure multi-système, colorway nominal, date de fabrication au format MM/AAAA, et QR code fonctionnel qui redirige vers adidas.com/[product]. Une box avec QR qui ne fonctionne pas, ou un Article Number inexistant sur le site officiel, est un signal d'alerte.",
+          "La box label adidas authentique est collée droite avec une tolérance < 2 mm, et mentionne : Article Number (6 chiffres), pointure multi-système, colorway nominal, date de fabrication au format MM/AAAA, et parfois un QR code. Un QR code se recopie : un code qui mène chez adidas ne prouve rien, et une box sans QR code n'est pas suspecte pour cette seule raison. Un QR code qui mène vers un autre domaine qu'adidas, ou un Article Number inexistant sur le site officiel, est un signal d'alerte.",
         difficulty: 1,
       },
       {
@@ -187,7 +187,7 @@ export const brands: Brand[] = [
       {
         question: "Comment vérifier l'Article Number adidas ?",
         answer:
-          "L'Article Number est au format 6 chiffres (ex. IE1000) ou plus récemment alphanumérique. Cherchez-le sur adidas.com/article-[numéro] ou sur StockX. Il doit exister et correspondre au modèle + colorway exact. Un numéro inexistant ou attribué à un autre modèle est une preuve de contrefaçon presque définitive.",
+          "L'Article Number est au format 6 chiffres (ex. IE1000) ou plus récemment alphanumérique. Cherchez-le sur adidas.com/article-[numéro] ou sur StockX. Il doit exister et correspondre au modèle + colorway exact. Un numéro inexistant ou attribué à un autre modèle est un signal d'alerte fort ; un numéro existant ne prouve rien, car il se recopie.",
       },
       {
         question: "Les Samba et Gazelle sont-elles massivement contrefaites ?",
@@ -337,7 +337,7 @@ export const brands: Brand[] = [
     logo: "/images/brands/chanel.png",
     tagline: "L'exclusivité française au cœur du super-fake",
     description:
-      "Chanel, maison parisienne fondée par Gabrielle Chanel en 1910, reste l'une des deux icônes absolues du luxe mondial avec Hermès. Ses sacs Classic Flap, 2.55, Boy et 19 constituent un marché d'investissement à part entière. Cette rareté orchestrée (quotas d'achat, listes d'attente) a alimenté un marché secondaire. Les super-fakes Chanel les plus récents atteignent un réalisme tel que même les experts visuels se trompent sur des photos — seul l'examen physique du cuir, du matelassage et de la puce permet la distinction finale.",
+      "Chanel, maison parisienne fondée par Gabrielle Chanel en 1910, reste l'une des deux icônes absolues du luxe mondial avec Hermès. Ses sacs Classic Flap, 2.55, Boy et 19 constituent un marché d'investissement à part entière. Cette rareté orchestrée (quotas d'achat, listes d'attente) a alimenté un marché secondaire. Les super-fakes Chanel les plus récents atteignent un réalisme tel que même les experts visuels se trompent sur des photos — seul l'examen physique du cuir, du matelassage et des finitions permet la distinction finale.",
     priceRange: "3 500-30 000 € selon modèle",
     productType: "sac Chanel",
     productPossessive: "un sac",
@@ -346,13 +346,13 @@ export const brands: Brand[] = [
       {
         title: "Hologramme d'authenticité : grille et sérialisation",
         description:
-          "Les sacs Chanel produits depuis 1986 portent un sticker hologramme rond avec un numéro de série à 7-8 chiffres (selon l'année). L'hologramme authentique présente une grille de sécurité précise, un fond doré nuancé, et la police du numéro est spécifique — les 0 ont une forme ovale légèrement allongée, les 7 une barre oblique. Les contrefaçons montrent souvent une police trop générique, un hologramme trop brillant uniformément, ou une absence de grille de sécurité visible à 45°.",
+          "Les sacs Chanel produits de 1986 au passage à la puce portent un sticker hologramme avec un numéro de série à 7-8 chiffres (selon l'année) ; sur les sacs récents, une puce intégrée le remplace (à partir de 2021 selon les revendeurs spécialisés). L'hologramme authentique présente une grille de sécurité précise, et la police du numéro est spécifique — les 0 ont une forme ovale légèrement allongée, les 7 une barre oblique. Les contrefaçons montrent souvent une police trop générique, un hologramme trop brillant uniformément, ou une absence de grille de sécurité visible à 45°.",
         difficulty: 2,
       },
       {
         title: "Carte d'authenticité : matière, coins et texte",
         description:
-          "La carte d'authenticité Chanel authentique est en carton noir mat avec le numéro de série en embossage (relief tactile, pas imprimé) et des coins parfaitement coupés à 90°. Elle correspond systématiquement au numéro de l'hologramme dans le sac. Les contrefaçons produisent des cartes avec numéros imprimés à plat, du carton brillant, ou des coins légèrement arrondis. Une absence totale de carte sur un sac récent (< 10 ans) est également un signal d'alerte.",
+          "La carte d'authenticité Chanel authentique est en carton noir mat avec le numéro de série en embossage (relief tactile, pas imprimé) et des coins parfaitement coupés à 90°. Elle correspond systématiquement au numéro de l'hologramme dans le sac. Les contrefaçons produisent des cartes avec numéros imprimés à plat, du carton brillant, ou des coins légèrement arrondis. Sur les sacs récents, une puce intégrée remplace la carte et le sticker (à partir de 2021 selon les revendeurs spécialisés) : l'absence de carte n'y est pas suspecte.",
         difficulty: 1,
       },
       {
@@ -383,7 +383,7 @@ export const brands: Brand[] = [
       {
         question: "Que signifie le numéro de série Chanel ?",
         answer:
-          "Le numéro de série à 7-8 chiffres sur l'hologramme intérieur permet de dater approximativement la production du sac. Chaque plage de numéros correspond à une année (ex. 22xxxxxx = 2016-2017, 25xxxxxx = 2018-2019, 29xxxxxx = 2020-2021, 31xxxxxx = 2022-2024). Un numéro incohérent avec le design du sac (style ancien + numéro récent) est une preuve de contrefaçon.",
+          "Le numéro de série à 7-8 chiffres sur l'hologramme intérieur permet de dater approximativement la production du sac. Chaque plage de numéros correspond à une année (ex. 22xxxxxx = 2016-2017, 25xxxxxx = 2018-2019, 29xxxxxx = 2020-2021). Sur les sacs récents, une puce intégrée remplace l'hologramme (à partir de 2021 selon les revendeurs spécialisés). Un numéro incohérent avec le design du sac (style ancien + numéro récent) est un signal d'alerte.",
       },
       {
         question: "Les super-fakes Chanel sont-ils détectables ?",
@@ -480,7 +480,7 @@ export const brands: Brand[] = [
       {
         title: "Heat-stamp « HERMÈS PARIS MADE IN FRANCE »",
         description:
-          "Le heat-stamp Hermès authentique est gravé à chaud sous le rabat ou à l'intérieur du sac, en majuscules parfaites. L'accent grave sur le È est précis (pas une apostrophe), les espacements sont calibrés, et la profondeur de gravure est uniforme à 0,3-0,5 mm. Le « MADE IN FRANCE » n'est jamais absent ni remplacé par un autre pays — Hermès ne produit qu'en France. Une contrefaçon avec « Made in Italy » ou police approximative est détectable immédiatement.",
+          "Le heat-stamp Hermès authentique est gravé à chaud sous le rabat ou à l'intérieur du sac, en majuscules parfaites. L'accent grave sur le È est précis (pas une apostrophe), les espacements sont calibrés, et la profondeur de gravure est uniforme à 0,3-0,5 mm. Une contrefaçon peut reproduire la mention « MADE IN FRANCE » : jugez la police, les espacements et la netteté de la gravure, pas la seule mention du pays.",
         difficulty: 1,
       },
       {
@@ -502,9 +502,9 @@ export const brands: Brand[] = [
         difficulty: 3,
       },
       {
-        title: "Quincaillerie palladium/or : poids, finition, marquage",
+        title: "Quincaillerie : finition et marquage",
         description:
-          "La quincaillerie Hermès authentique (cadenas, clés, tournants) est en palladium massif ou en or 18 carats sur les pièces premium. Le poids est caractéristique : un cadenas Birkin pèse 35-40 g en palladium. Chaque pièce est marquée « HERMÈS » gravé finement à l'intérieur, avec police spécifique. Les contrefaçons utilisent du laiton plaqué argenté/doré, 2-3 fois plus léger, avec une gravure absente ou mal formée.",
+          "La quincaillerie Hermès (cadenas, clés, tournants) existe en plusieurs finitions (or, palladium et d'autres), brillantes ou brossées. Chaque pièce porte une gravure « HERMÈS » fine, avec police spécifique. Sur une contrefaçon, cherchez un placage irrégulier ou qui s'écaille, et une gravure absente, floue ou mal formée.",
         difficulty: 2,
       },
     ],
@@ -621,7 +621,7 @@ export const brands: Brand[] = [
       {
         title: "Tag intérieur en cuir : format, gravure et blind stamp",
         description:
-          "Chaque sac Dior authentique porte un tag intérieur en cuir (souvent agneau ou veau) avec « CHRISTIAN DIOR » et « MADE IN ITALY » (ou France pour certains modèles) gravés à chaud, plus un blind stamp alphanumérique sur le revers indiquant le code de production (modèle + année + trimestre). Le tag est toujours cousu sur 4 côtés avec couture régulière. Les contrefaçons ont souvent un tag mal cousu sur 2-3 côtés seulement, ou un blind stamp au dos absent ou illisible.",
+          "Chaque sac Dior authentique porte un tag intérieur en cuir (souvent agneau ou veau) avec « CHRISTIAN DIOR » et « MADE IN ITALY » (ou France pour certains modèles) gravés à chaud, plus, sur les sacs antérieurs au passage à la puce, un blind stamp alphanumérique sur le revers indiquant le code de production (modèle + année + trimestre). Le tag est toujours cousu sur 4 côtés avec couture régulière. Les contrefaçons ont souvent un tag mal cousu sur 2-3 côtés seulement, ou un blind stamp illisible. Sur les sacs récents, selon les revendeurs spécialisés, une puce invisible remplace progressivement le blind stamp depuis 2021 : son absence n'y est pas suspecte.",
         difficulty: 3,
       },
       {
@@ -646,7 +646,7 @@ export const brands: Brand[] = [
       {
         question: "Que signifie le code intérieur Dior ?",
         answer:
-          "Chaque sac Dior authentique porte un blind stamp alphanumérique au dos du tag cuir intérieur, au format 2 lettres + 4 chiffres (ex. BO0178). Les 2 lettres indiquent le modèle et l'usine de production, les 4 chiffres la date de fabrication au format trimestre/année ou semaine/année selon les collections. Ce code n'est pas publiquement vérifiable mais son format doit être cohérent.",
+          "Les sacs Dior antérieurs au passage à la puce portent un blind stamp alphanumérique au dos du tag cuir intérieur, au format 2 lettres + 4 chiffres (ex. BO0178). Les 2 lettres indiquent le modèle et l'usine de production, les 4 chiffres la date de fabrication au format trimestre/année ou semaine/année selon les collections. Ce code n'est pas publiquement vérifiable mais son format doit être cohérent. Sur les sacs récents, selon les revendeurs spécialisés, une puce invisible le remplace progressivement depuis 2021 : son absence n'y est pas suspecte, et aucun scan de téléphone n'authentifie un sac Dior.",
       },
       {
         question: "Pourquoi les Saddle Bag sont-elles si contrefaites ?",
@@ -805,7 +805,7 @@ export const brands: Brand[] = [
       {
         question: "Peut-on vérifier le numéro Stone Island en ligne ?",
         answer:
-          "Non, Stone Island ne met pas à disposition de vérificateur public. Le numéro de série sert d'outil interne pour le SAV mais n'est pas interrogeable. Pour vérifier l'authenticité, il faut donc s'appuyer sur les signaux physiques : broderie de la patch, boutons, traitements textiles, coupe et poids du tissu.",
+          "Oui, pour les pièces qui portent un code Certilogo. Depuis la collection printemps-été 2014, Stone Island indique que ses vêtements portent, sur une étiquette de sécurité intérieure, un code Certilogo à 12 chiffres et un QR code, à vérifier sur son site ou en scannant le QR code ; les chaussures et certains accessoires n'en ont pas. Le résultat ne prouve rien à lui seul : selon des revendeurs spécialisés, des contrefaçons réutilisent des codes authentiques. Croisez-le avec les signaux physiques : broderie de la patch, boutons, traitements textiles, coupe et poids du tissu.",
       },
       {
         question: "Les fakes Stone Island sont-ils détectables au toucher ?",

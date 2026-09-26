@@ -44,7 +44,7 @@ export const facebookMarketplaceIntersections: Intersection[] = [
     platformSlug: "facebook-marketplace",
     brandSlug: "adidas",
     angle:
-      "adidas sur Facebook Marketplace suit la même logique de risque que Nike : absence totale de protection, culture du liquide main propre, et présence de contrefaçons sur les modèles hyped (Yeezy, Samba, Gazelle collabs). Les vendeurs de contrefaçons Yeezy exploitent la rareté mécanique post-rupture Kanye/adidas pour justifier des prix encore élevés (280-450 €) sur des fakes coûtant 30-50 € à produire. L'utilisation de comptes piratés est également massive, notamment pour les Yeezy à prix intermédiaires (150-250 €).",
+      "adidas sur Facebook Marketplace suit la même logique de risque que Nike : absence totale de protection, culture du liquide main propre, et présence de contrefaçons sur les modèles hyped (Yeezy, Samba, Gazelle collabs). Les vendeurs de contrefaçons Yeezy exploitent la rareté mécanique post-rupture Kanye/adidas pour justifier des prix encore élevés (280-450 €) sur des contrefaçons. L'utilisation de comptes piratés est également massive, notamment pour les Yeezy à prix intermédiaires (150-250 €).",
     faqs: [
       {
         question: "Peut-on acheter des Yeezy authentiques sur Facebook en 2026 ?",
@@ -98,12 +98,12 @@ export const facebookMarketplaceIntersections: Intersection[] = [
     platformSlug: "facebook-marketplace",
     brandSlug: "chanel",
     angle:
-      "Le décalage entre les prix marché (5 000-30 000 € selon modèle) et les annonces Facebook (souvent 2 000-4 000 €) rend ces annonces suspectes. Un sac Chanel à moins de 3 500 € est un signal d'alerte. Les super-fakes Chanel récents sont sophistiqués : hologramme imprimé convaincant, matelassage correct sur photo, CC logo visuellement juste. Seul l'examen physique du cuir, du poids des quincailleries CC (60-80 g authentique), et de la grille de sécurité de l'hologramme à 45° permet la détection. Facebook n'a aucune expertise pour filtrer ces arnaques.",
+      "Le décalage entre les prix marché (5 000-30 000 € selon modèle) et les annonces Facebook (souvent 2 000-4 000 €) rend ces annonces suspectes. Un sac Chanel à moins de 3 500 € est un signal d'alerte. Les super-fakes Chanel récents sont sophistiqués : hologramme imprimé convaincant, matelassage correct sur photo, CC logo visuellement juste. Seul l'examen physique du cuir, du poids des quincailleries CC (60-80 g authentique), et, sur les sacs antérieurs au passage à la puce, de la grille de sécurité de l'hologramme à 45° permet la détection. Facebook n'a aucune expertise pour filtrer ces arnaques.",
     faqs: [
       {
         question: "Comment reconnaître un super-fake Chanel sur photo Facebook ?",
         answer:
-          "Quatre zones critiques à exiger en photo HD : 1) Hologramme d'authenticité avec grille de sécurité visible à 45° (demandez photo sous angle) + police du numéro spécifique ; 2) Carte d'authenticité avec numéro embossé en relief tactile (pas imprimé à plat) ; 3) Quincaillerie CC avec proportions exactes (épaisseur uniforme, angle d'entrecroisement précis) ; 4) Matelassage sur les angles (12 points par diamant Classic Flap Medium). Un seul écart = signal d'alerte.",
+          "Quatre zones critiques à exiger en photo HD : 1) Hologramme d'authenticité avec grille de sécurité visible à 45° (demandez photo sous angle) + police du numéro spécifique ; 2) Carte d'authenticité avec numéro embossé en relief tactile (pas imprimé à plat) ; 3) Quincaillerie CC avec proportions exactes (épaisseur uniforme, angle d'entrecroisement précis) ; 4) Matelassage sur les angles (12 points par diamant Classic Flap Medium). Un seul écart = signal d'alerte. Sur un sac récent, hologramme et carte sont remplacés par une puce intégrée (à partir de 2021 selon les revendeurs spécialisés), qui ne se vérifie pas au téléphone : leur absence n'y est pas un écart.",
       },
       {
         question: "Chanel à 2 500 € sur Facebook : arnaque assurée ?",

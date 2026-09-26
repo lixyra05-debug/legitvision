@@ -27,19 +27,19 @@ export const stoneIslandModels: ModelData[] = [
       {
         title: "Tag intérieur — code produit 6 chiffres",
         description:
-          "Le tag intérieur tissé indique la marque « Stone Island » + code produit 6 chiffres (ex: 64120, 64220, 631541). Le tag a aussi la mention « Made in Italy » avec police exacte. Les contrefaçons ont souvent « Made in China/Turkey » ou un code produit inexistant dans le catalogue Stone Island.",
+          "Le tag intérieur tissé indique la marque « Stone Island » + code produit 6 chiffres (ex: 64120, 64220, 631541). Le tag indique aussi le pays de fabrication, qui n'est pas toujours l'Italie : il ne tranche pas à lui seul. Les contrefaçons ont souvent un code produit inexistant dans le catalogue Stone Island.",
         difficulty: 2,
       },
       {
-        title: "Coton Italian-made — densité et ghost effect",
+        title: "Coton — densité et ghost effect",
         description:
-          "Le coton est produit en Italie (Ravenne) avec densité 350-450 gsm (selon modèle) et traitement « garment dyed » (teint après confection) qui donne un effet légèrement délavé et unique à chaque pièce. Les contrefaçons ont un coton uniforme (teint avant confection), avec densité 250-300 gsm plus légère.",
+          "Le coton reçoit un traitement « garment dyed » (teint après confection) qui donne un effet légèrement délavé et unique à chaque pièce. Les contrefaçons ont souvent un coton uniforme (teint avant confection), plus léger et moins dense.",
         difficulty: 3,
       },
       {
         title: "Hang tag — cartonné premium avec numéro série",
         description:
-          "Le hang tag est en carton premium épais (1 mm) avec numéro série unique à 10 chiffres, hologramme Stone Island, et QR code de vérification. Les contrefaçons ont souvent un hang tag en carton fin, sans hologramme ou avec QR code menant à un site fake.",
+          "Le hang tag est en carton premium épais (1 mm) avec numéro série unique à 10 chiffres et hologramme Stone Island. Les contrefaçons ont souvent un hang tag en carton fin ou sans hologramme. Le code Certilogo et son QR code figurent, selon Stone Island, sur une étiquette de sécurité cousue à l'intérieur : un résultat positif ne prouve pas à lui seul que la pièce est authentique, et un QR code qui mène vers un site qui n'est ni celui de Stone Island ni celui de Certilogo est un signal d'alerte fort.",
         difficulty: 1,
       },
     ],
@@ -77,7 +77,7 @@ export const stoneIslandModels: ModelData[] = [
     retailYear: "1982-présent",
     tagline: "La veste technique italienne au patch compass",
     intro:
-      "La Stone Island Jacket — terme générique regroupant les vestes iconiques David-TC, Raso Gommato, Nylon Metal, Tela Stella — est le vêtement technique signature de la marque italienne depuis 1982. Retail 450-900 € selon matériau, avec prix marché secondaire 350-1 200 € selon modèle et millésime. Les vestes classiques David-TC (navy, black, khaki) sont les plus accessibles (350-600 €), tandis que les Raso Gommato (coton enduit), Nylon Metal Shiny et les Heat Reactive Ice Jackets (changement de couleur selon température) atteignent 800-1 500 €. La contrefaçon Stone Island Jacket est particulièrement rentable pour les fakers (marge de 500-800 € par pièce), donc très présente sur Vinted UK, Grailed et sites russes. Les signaux ci-dessous ciblent : patch compass premium, zippers YKK italiens, tag intérieur triangulaire, fabric tech (membrane respirante spécifique), et hang tag avec care instructions détaillées.",
+      "La Stone Island Jacket — terme générique regroupant les vestes iconiques David-TC, Raso Gommato, Nylon Metal, Tela Stella — est le vêtement technique signature de la marque italienne depuis 1982. Retail 450-900 € selon matériau, avec prix marché secondaire 350-1 200 € selon modèle et millésime. Les vestes classiques David-TC (navy, black, khaki) sont les plus accessibles (350-600 €), tandis que les Raso Gommato (coton enduit), Nylon Metal Shiny et les Heat Reactive Ice Jackets (changement de couleur selon température) atteignent 800-1 500 €. La contrefaçon Stone Island Jacket est rentable pour les fakers, donc très présente sur Vinted UK, Grailed et sites russes. Les signaux ci-dessous ciblent : patch compass premium, zippers YKK, tag intérieur triangulaire, fabric tech (membrane respirante spécifique), et hang tag avec care instructions détaillées.",
     signals: [
       {
         title: "Patch compass — boutons + double liserés",
@@ -86,9 +86,9 @@ export const stoneIslandModels: ModelData[] = [
         difficulty: 2,
       },
       {
-        title: "Zippers YKK italiens — marquage spécifique",
+        title: "Zippers YKK — marquage spécifique",
         description:
-          "Tous les zippers sont YKK italiens avec marquage « YKK » + « Stone Island » gravé sur le tirette principale. Les contrefaçons utilisent souvent des zippers génériques (pas YKK) ou YKK asiatiques sans co-branding Stone Island.",
+          "Les zippers portent le marquage « YKK » + « Stone Island » gravé sur la tirette principale. Les contrefaçons utilisent souvent des zippers génériques (pas YKK) ou des YKK sans co-branding Stone Island.",
         difficulty: 2,
       },
       {
@@ -98,15 +98,15 @@ export const stoneIslandModels: ModelData[] = [
         difficulty: 3,
       },
       {
-        title: "Fabric tech — membrane respirante Italie",
+        title: "Fabric tech — tissu technique et étiquette",
         description:
-          "Les jackets techniques (David-TC, Raso Gommato) utilisent des membranes respirantes développées en Italie par SOFILETA ou équivalent, avec étiquette intérieure « Laminated Fabric Made in Italy ». Les contrefaçons utilisent des membranes chinoises sans étiquette ou avec une étiquette générique.",
+          "Les jackets techniques (David-TC, Raso Gommato) utilisent des tissus techniques spécifiques, avec une étiquette intérieure de composition détaillée. Les contrefaçons utilisent souvent des tissus sans étiquette ou avec une étiquette générique.",
         difficulty: 3,
       },
       {
-        title: "Hang tag — care instructions détaillées + QR",
+        title: "Hang tag — care instructions détaillées",
         description:
-          "Le hang tag inclut des care instructions détaillées spécifiques au matériau (ex: Raso Gommato = pas de machine, nettoyage à sec uniquement), un numéro série à 10 chiffres, et un QR code de vérification. Les contrefaçons ont souvent des care instructions génériques ou absentes.",
+          "Le hang tag inclut des care instructions détaillées spécifiques au matériau (ex: Raso Gommato = pas de machine, nettoyage à sec uniquement) et un numéro série à 10 chiffres. Les contrefaçons ont souvent des care instructions génériques ou absentes. Le code Certilogo, lui, figure selon Stone Island sur une étiquette de sécurité intérieure ; son résultat ne prouve rien à lui seul.",
         difficulty: 1,
       },
     ],

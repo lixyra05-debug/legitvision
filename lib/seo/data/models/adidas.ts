@@ -307,7 +307,7 @@ export const adidasModels: ModelData[] = [
       {
         title: "Stamp size tag — Made in Indonesia/Vietnam, format",
         description:
-          "Le tag authentique indique « Made in Indonesia » ou « Made in Vietnam » (selon batch), avec un code article au format B/ID XX00000 et les dates de production (ex. 09/23). Les contrefaçons ont souvent « Made in China » (faux pour la Samba OG moderne) ou un format de date incorrect.",
+          "Le tag authentique indique « Made in Indonesia » ou « Made in Vietnam » (selon batch), avec un code article au format B/ID XX00000 et les dates de production (ex. 09/23). Les contrefaçons ont souvent un format de date incorrect.",
         difficulty: 1,
       },
     ],
