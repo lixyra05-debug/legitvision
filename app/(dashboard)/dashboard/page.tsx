@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -18,8 +19,16 @@ import {
   StatusLabel,
   InsufficientLabel,
   FormattedDate,
+  DashboardPagination,
 } from "@/components/dashboard/DashboardI18nClient";
 import { deleteAnalysis } from "./actions";
+import { staleKind } from "@/lib/analysis-limits";
+import { expireStaleAnalyses } from "@/lib/analysis-stale";
+import {
+  historyWindow,
+  lookupCatalogNames,
+  parseHistoryPage,
+} from "@/lib/analysis-history";
 import {
   getScoreColor,
   getScoreBgColor,
@@ -33,9 +42,20 @@ export const metadata = {
   title: "Dashboard",
 };
 
+type AnalysisRow = Omit<AnalysisWithDetails, "brand_name" | "brand_slug" | "model_name"> & {
+  // Jointures facultatives : null si la marque ou le modèle a été désactivé
+  // depuis (RLS « is_active = true »). Les noms sont alors relus en admin.
+  brands: { name: string; slug: string } | null;
+  models: { name: string } | null;
+};
+
 export default async function DashboardPage(
   props: {
-    searchParams: Promise<{ session_id?: string; plan_changed?: string }>;
+    searchParams: Promise<{
+      session_id?: string;
+      plan_changed?: string;
+      page?: string | string[];
+    }>;
   }
 ) {
   const searchParams = await props.searchParams;
@@ -46,34 +66,81 @@ export default async function DashboardPage(
 
   if (!user) redirect("/auth");
 
-  // Fetch profile for credits
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single<Profile>();
+  // Profil (crédits) et nombre TOTAL d'analyses : l'historique est paginé,
+  // toutes les analyses restent accessibles.
+  const [{ data: profile }, { count }] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single<Profile>(),
+    supabase
+      .from("analyses")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id),
+  ]);
+  const total = count ?? 0;
+  const { page, pageCount, from, to } = historyWindow(
+    parseHistoryPage(searchParams.page),
+    total,
+  );
 
-  // Fetch analyses with brand/model names
+  // Page d'analyses, plus récentes d'abord (id départage deux dates égales :
+  // l'ordre reste stable d'une page à l'autre). Jointures SANS !inner : une
+  // analyse dont la marque ou le modèle a été désactivé reste listée.
   const { data: analyses } = await supabase
     .from("analyses")
     .select(
       `
       *,
-      brands!inner(name, slug),
-      models!inner(name)
+      brands(name, slug),
+      models(name)
     `
     )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
-    .limit(20);
+    .order("id", { ascending: false })
+    .range(from, to);
 
-  const formattedAnalyses: AnalysisWithDetails[] = (analyses ?? []).map(
-    (a: Record<string, unknown>) => ({
-      ...(a as unknown as AnalysisWithDetails),
-      brand_name: (a.brands as { name: string }).name,
-      brand_slug: (a.brands as { slug: string }).slug,
-      model_name: (a.models as { name: string }).name,
-    })
+  const rows = (analyses ?? []) as unknown as AnalysisRow[];
+
+  // Analyses abandonnées (fonction coupée, client parti pendant l'envoi,
+  // demande de lancement perdue) : classées « failed » ici, comme sur leur
+  // page. Aucun débit possible sur ce chemin : voir lib/analysis-stale.ts.
+  // Noms manquants relus en admin.
+  const now = Date.now();
+  const staleRows = rows.filter((a) => staleKind(a.status, a.updated_at, now) !== null);
+  const unnamed = rows.filter((a) => !a.brands || !a.models);
+  let expired = new Set<string>();
+  let names: Awaited<ReturnType<typeof lookupCatalogNames>> | null = null;
+  if (staleRows.length > 0 || unnamed.length > 0) {
+    const admin = createAdminClient();
+    [expired, names] = await Promise.all([
+      staleRows.length > 0
+        ? expireStaleAnalyses(admin, user.id, staleRows, now)
+        : Promise.resolve(new Set<string>()),
+      unnamed.length > 0
+        ? lookupCatalogNames(
+            admin,
+            unnamed.map((a) => a.brand_id),
+            unnamed.map((a) => a.model_id),
+          )
+        : Promise.resolve(null),
+    ]);
+  }
+
+  const formattedAnalyses: AnalysisWithDetails[] = rows.map(
+    ({ brands, models, ...a }) => {
+      const brand = brands ?? names?.brands.get(a.brand_id) ?? null;
+      const model = models ?? names?.models.get(a.model_id) ?? null;
+      return {
+        ...a,
+        status: expired.has(a.id) ? "failed" : a.status,
+        brand_name: brand?.name ?? "",
+        brand_slug: brand?.slug ?? "",
+        model_name: model?.name ?? "",
+      };
+    }
   );
 
   const firstName =
@@ -124,7 +191,7 @@ export default async function DashboardPage(
           <div>
             <DashboardGreeting
               firstName={firstName ?? ""}
-              count={formattedAnalyses.length}
+              count={total}
             />
           </div>
           <DashboardNewAnalysisButton />
@@ -233,6 +300,8 @@ export default async function DashboardPage(
             })}
           </RevealGroup>
         )}
+
+        <DashboardPagination page={page} pageCount={pageCount} total={total} />
       </main>
     </div>
   );
