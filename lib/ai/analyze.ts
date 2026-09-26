@@ -54,6 +54,9 @@ export interface AnalysisOutput {
 export async function preprocessImage(buffer: Buffer, filename?: string): Promise<Buffer> {
   try {
     return await sharp(buffer)
+      // Redresse selon l'orientation EXIF : un téléphone enregistre souvent la
+      // photo « couchée » avec une étiquette que le modèle ne lit pas.
+      .rotate()
       .resize(1568, 1568, { fit: "inside", withoutEnlargement: true })
       .jpeg({ quality: 90 })
       .toBuffer();

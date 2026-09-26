@@ -40,3 +40,7 @@ next-env.d.ts
 
 # Sauvegardes locales d'assets (l'original reste dans l'historique git)
 .backup/
+
+# Réglages locaux de Claude Code (permissions, chemins de la machine) : jamais
+# versionnés, le dépôt est PUBLIC. Vérifié le 26/09 : aucun secret dans l'historique.
+.claude/settings.local.json

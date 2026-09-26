@@ -6,9 +6,9 @@ export const louisVuittonSignals: GuideSignal[] = [
     name: "Date code Louis Vuitton",
     brandSlug: "louis-vuitton",
     category: "bags",
-    tagline: "Déchiffrer le date code LV (avant mars 2021) : atelier, semaine, année",
+    tagline: "Déchiffrer le date code LV : atelier, semaine, année",
     intro:
-      "Jusqu'à mars 2021, Louis Vuitton marquait chaque sac d'un date code — une séquence de 2 lettres + 4 chiffres embossée discrètement dans une patte de cuir intérieure, souvent cachée sous une poche ou à l'intérieur d'un rabat. Ce code identifie l'atelier de fabrication (les 2 lettres) et la date de production (les 4 chiffres). Les codes d'atelier les plus courants : SP/AN/SR/CA (France), CA/LO (Espagne), SD/FL/FH/OS (France ou USA selon période), VI (Italie), LM (Suisse pour petite maroquinerie). Les 4 chiffres se décodent différemment selon période : 1990-2006 = semaine + année (ex : 0999 = semaine 09 année 1999), 2007-2021 = 1er et 3ème chiffres = semaine, 2ème et 4ème chiffres = année (ex : 1179 = semaine 17 année 2019). Ce décodage croisé avec le design du sac permet de trancher des cas douteux : un modèle Neverfull (lancé en 2007) avec un date code antérieur à 2007 est une contrefaçon immédiate. Depuis mars 2021, LV a remplacé le date code par une puce RFID invisible — tout sac récent (post-2021) sans puce RFID mais avec un date code date-codé récent (ex : 2340 = 2023) est suspect. Ce contrôle de cohérence prend deux minutes.",
+      "Jusqu'au passage à la puce (2021 selon les revendeurs spécialisés), Louis Vuitton marquait ses sacs d'un date code — une séquence de 2 lettres + 4 chiffres embossée discrètement dans une patte de cuir intérieure, souvent cachée sous une poche ou à l'intérieur d'un rabat. Ce code identifie l'atelier de fabrication (les 2 lettres) et la date de production (les 4 chiffres). Une même paire de lettres a pu désigner des ateliers différents selon les périodes : ne concluez pas à un pays sur les seules lettres. Selon les revendeurs spécialisés, les 4 chiffres se décodent différemment selon la période : de 1990 à 2006, 1er et 3e chiffres = mois, 2e et 4e = année (ex : 1003 = octobre 2003) ; depuis 2007, 1er et 3e chiffres = semaine, 2e et 4e = année (ex : 1179 = semaine 17 de 2019). Les codes des années 1980 ont un autre format. Ce décodage croisé avec le design du sac permet de trancher des cas douteux : un modèle Neverfull (lancé en 2007) avec un date code antérieur à 2007 est une contrefaçon immédiate. Sur les sacs récents, une puce invisible remplace le date code : un sac récent sans date code n'est pas suspect, et un code qui indiquerait une année postérieure à ce changement l'est.",
     steps: [
       {
         title: "Localiser le date code dans le sac",
@@ -23,12 +23,12 @@ export const louisVuittonSignals: GuideSignal[] = [
       {
         title: "Décoder l'atelier (2 lettres)",
         description:
-          "Listes d'ateliers publiées par Authentic4U et LVlovers (référence communautaire) : SP/AN/CA = France Sainte-Florence/Anjou/Cadenas. LO/CA = Espagne Loire/Cataluña. Un code d'atelier inconnu des bases communautaires est une alerte.",
+          "Les 2 lettres désignent l'atelier. Des listes communautaires existent (Authentic4U, LVlovers) ; une même paire de lettres a pu servir à plusieurs ateliers selon les périodes. Un code d'atelier absent de ces listes est une alerte, pas une preuve.",
       },
       {
         title: "Décoder la semaine/année (4 chiffres post-2007)",
         description:
-          "Format depuis 2007 : chiffre1 + chiffre3 = semaine (2 chiffres), chiffre2 + chiffre4 = année (2 chiffres). Exemple « 1179 » = semaine 17, année 19 (semaine du 22 avril 2019). Une semaine > 52 ou une année < 07 est un code fake mal fabriqué.",
+          "Format depuis 2007 : chiffre1 + chiffre3 = semaine (2 chiffres), chiffre2 + chiffre4 = année (2 chiffres). Exemple « 1179 » = semaine 17, année 19 (semaine du 22 avril 2019). Une semaine au-delà de 53 est impossible. Une année antérieure à 07 signale l'ancien format (mois + année, de 1990 à 2006) : décodez-la comme tel.",
       },
       {
         title: "Croiser date ↔ modèle",
@@ -38,14 +38,14 @@ export const louisVuittonSignals: GuideSignal[] = [
     ],
     commonErrors: [
       {
-        title: "Chercher un date code sur un LV post-mars 2021",
+        title: "Chercher un date code sur un sac LV récent",
         description:
-          "Depuis mars 2021, LV ne marque plus ses sacs avec un date code physique — la traçabilité passe par puce RFID invisible. Un sac LV acheté après mars 2021 SANS date code est normal. Un sac post-2021 AVEC un date code date-codé récent (2340, 2210) est une contrefaçon.",
+          "Sur les sacs récents, une puce invisible remplace le date code : leur absence de code est normale. Un date code se juge sur l'année qu'il indique, pas sur la date d'achat du sac.",
       },
       {
         title: "Accepter un code 3 lettres ou 5 chiffres",
         description:
-          "Le format authentique est STRICTEMENT 2 lettres + 4 chiffres (6 caractères total). Un code à 3 lettres (« SPX1234 »), 5 chiffres (« SP12345 ») ou avec des tirets (« SP-1234 ») est une invention de contrefaçon.",
+          "Depuis 1990, le format est 2 lettres + 4 chiffres. Un code à 3 lettres (« SPX1234 »), à 5 chiffres (« SP12345 ») ou avec des tirets (« SP-1234 ») ne correspond pas à ce format : c'est un signal d'alerte.",
       },
       {
         title: "Ignorer la profondeur d'embossage",
@@ -54,12 +54,12 @@ export const louisVuittonSignals: GuideSignal[] = [
       },
     ],
     counterfeiterTactics:
-      "Les faussaires achètent des générateurs de date codes LV (disponibles sur Taobao, ~50 €) qui produisent des codes cohérents par atelier + semaine + année. Ces codes passent les vérifications automatiques de format, mais le défaut reste l'embossage : les fakes utilisent une presse thermique trop chaude qui brûle légèrement le cuir autour de chaque caractère, laissant une auréole brunâtre visible à la loupe x10. Le date code authentique est embossé à froid, sans altération de couleur du cuir périphérique. Autre tactique : des fakes récents tentent de reproduire les deux systèmes (date code + puce RFID factice) pour tromper les vérifications manuelles.",
+      "Les faussaires achètent des générateurs de date codes LV (disponibles sur Taobao, ~50 €) qui produisent des codes cohérents par atelier + semaine + année. Ces codes passent les vérifications automatiques de format, mais le défaut reste l'embossage : les fakes utilisent une presse thermique trop chaude qui brûle légèrement le cuir autour de chaque caractère, laissant une auréole brunâtre visible à la loupe x10. Le date code authentique est embossé à froid, sans altération de couleur du cuir périphérique.",
     faqs: [
       {
-        question: "Tous les LV avant 2021 ont-ils un date code ?",
+        question: "Tous les LV antérieurs à la puce ont-ils un date code ?",
         answer:
-          "Oui, depuis 1980. Avant 1980, les sacs LV n'avaient pas de date code systématique — une pièce vintage pré-1980 sans date code peut être authentique (vérifier plutôt la qualité des matériaux et coutures). De 1980 à mars 2021, TOUS les sacs LV produits ont un date code. Un sac LV supposé « 1990 » sans date code est très suspect.",
+          "Du début des années 1980 au passage à la puce (2021 selon les revendeurs spécialisés), les sacs LV portent un date code. Avant les années 1980, ils n'en avaient pas de façon systématique : une pièce vintage plus ancienne sans date code peut être authentique (vérifier plutôt la qualité des matériaux et des coutures). Un sac LV supposé « 1990 » sans date code est très suspect, sauf si le code s'est effacé avec l'usure.",
       },
       {
         question: "Un date code effacé (cuir frotté) invalide-t-il l'authentification ?",
@@ -338,68 +338,69 @@ export const louisVuittonSignals: GuideSignal[] = [
   },
   {
     slug: "puce-rfid",
-    name: "Puce RFID LV (post-mars 2021)",
+    name: "Puce intégrée (sacs récents)",
     brandSlug: "louis-vuitton",
     category: "bags",
-    tagline: "Détecter la puce RFID LV et l'utiliser pour authentifier",
+    tagline: "Ce que la puce des sacs LV récents permet de vérifier, et ce qu'elle ne permet pas",
+    headline: "Puce des sacs Louis Vuitton récents : ce qu'elle prouve, et ce qu'elle ne prouve pas",
     intro:
-      "Depuis mars 2021, Louis Vuitton a remplacé le date code physique par une puce RFID (Radio Frequency Identification) intégrée dans chaque sac nouvellement produit. Cette puce passive, de taille millimétrique (environ 3×3 mm), est cousue dans une doublure interne ou intégrée dans une patte de cuir discrète. Elle n'est pas visible à l'œil nu — seulement détectable par scan électromagnétique. Chaque puce contient un identifiant unique lié au sac dans les bases de données LV, permettant à terme une authentification digitale complète via l'app Louis Vuitton (service de vérification en développement). Pour le consommateur averti, la détection de la puce avec un smartphone NFC (app « NFC Tools » gratuite sur iOS/Android) est déjà possible : approcher le smartphone de différentes zones du sac révèle la présence d'une puce qui répond avec un ID hexadécimal. Un sac LV produit après mars 2021 SANS puce RFID détectable doit faire suspecter une contrefaçon. Les faussaires tentent d'intégrer des puces NFC génériques achetables sur Alibaba (0,50 € l'unité) qui répondent au scan mais avec un ID non enregistré dans les bases LV — une vérification plus avancée via l'app LV révèle cet écart. Pour l'instant, le test smartphone basique est déjà très discriminant.",
+      "Sur ses sacs récents, Louis Vuitton a remplacé le date code embossé par une puce intégrée, invisible. Selon les revendeurs spécialisés, le changement a commencé en 2021 et s'est fait progressivement ; la puce est le plus souvent placée sous la doublure ou dans une couture. Son contenu n'est lisible que par la maison : aucune appli publique n'authentifie un sac par sa puce. Un téléphone peut signaler une puce, ou ne rien détecter ; ni l'un ni l'autre ne prouve quoi que ce soit. Ce guide dit ce qu'on peut tirer de la puce, et surtout ce qu'on ne peut pas en tirer.",
     steps: [
       {
-        title: "Vérifier la date de production du sac",
+        title: "Ne pas exiger de date code sur un sac récent",
         description:
-          "La puce RFID concerne uniquement les sacs produits après mars 2021. Un sac produit avant cette date n'aura pas de puce — c'est normal. Consultez la facture d'achat ou le date code (si présent, sac pré-2021).",
+          "Une puce invisible remplace le date code sur les sacs récents. Un sac récent sans date code n'est donc pas suspect pour cette seule raison.",
       },
       {
-        title: "Installer une app NFC sur smartphone",
+        title: "Savoir ce qu'un téléphone peut montrer",
         description:
-          "Sur iPhone (iOS 14+) : app « NFC Tools » gratuite. Sur Android : app « NFC Tools » ou « TagInfo ». Autorisez l'accès NFC du smartphone. Assurez-vous que le NFC est activé (paramètres du téléphone).",
+          "Une appli NFC peut signaler la présence d'une puce, sans en afficher le contenu. Elle peut aussi ne rien détecter : la réception dépend du téléphone, de sa coque et de l'emplacement de la puce.",
       },
       {
-        title: "Scanner différentes zones du sac",
+        title: "Ne rien conclure du scan",
         description:
-          "Approchez le smartphone à 1-2 cm du sac, lentement, en balayant différentes zones : doublure intérieure, pattes de cuir, poches. La puce répond en 1-3 secondes avec un vibreur + notification. Zones typiques de puce : patte intérieure haute, doublure du fond.",
+          "Une puce qui répond ne prouve pas l'authenticité : une puce du commerce répond aussi. Une puce que le téléphone ne détecte pas ne prouve pas la contrefaçon.",
       },
       {
-        title: "Lire l'ID hexadécimal retourné",
+        title: "Demander la preuve d'achat",
         description:
-          "L'app NFC Tools affiche l'ID de la puce (ex : « 04 A2 B3 C4 D5 E6 F7 »). Notez cet ID. Les puces LV authentiques utilisent un format NFC Forum Type 4 ou 5. Une puce qui renvoie un format non-standard (DESFire custom LV) est prometteuse.",
+          "Louis Vuitton indique ne vendre ses produits que dans ses boutiques, sur son site officiel et sur 24s.com. Demandez la facture ou le ticket de l'un de ces canaux, cohérent avec le sac et avec le récit du vendeur.",
       },
       {
-        title: "Vérifier via l'app Louis Vuitton (futur)",
+        title: "Vérifier les signaux visibles",
         description:
-          "LV développe un service d'authentification intégré à son app officielle. Dès disponibilité, il suffira de scanner le sac via l'app pour vérifier l'authenticité cryptographiquement. En attendant, la présence physique de la puce est déjà un bon indicateur.",
+          "Alignement du monogramme, toile, coutures, rivets : ces signaux se vérifient sur photo. Voir les autres guides Louis Vuitton.",
       },
     ],
     commonErrors: [
       {
-        title: "Chercher une puce sur un sac pré-2021",
+        title: "Conclure à une contrefaçon faute de réponse NFC",
         description:
-          "Les sacs produits avant mars 2021 N'ONT PAS de puce RFID. L'absence est normale et ne prouve pas la contrefaçon. Croisez avec le date code physique qui doit être présent sur pré-2021. Un pré-2021 SANS date code ET SANS puce est suspect (mais pour raison d'absence de date code, pas de puce).",
+          "Un téléphone qui ne détecte pas de puce ne prouve rien : le modèle du téléphone, la coque ou l'emplacement de la puce peuvent l'expliquer.",
       },
       {
-        title: "Valider avec une simple réponse NFC",
+        title: "Prendre une réponse NFC pour une preuve",
         description:
-          "N'importe quelle puce NFC commerciale achetée sur Alibaba répond au scan. La réponse n'authentifie pas — seul l'ID vérifié dans la base LV authentifie. En attendant le service LV, une puce qui répond est un indicateur positif mais non définitif.",
+          "N'importe quelle puce du commerce répond à un scan. Seul Louis Vuitton lit le contenu de ses puces.",
       },
       {
-        title: "Scanner avec un NFC faible (étui épais)",
+        title: "Juger un date code sur la date d'achat",
         description:
-          "Les étuis smartphone épais (coques robustes, portefeuilles) peuvent bloquer le signal NFC. Retirez l'étui avant scan. Si absence de réponse persistante malgré scan de toutes zones, testez avec un autre smartphone avant de conclure à une absence de puce.",
+          "Un date code se juge sur l'année qu'il indique, pas sur la date à laquelle le sac a été acheté.",
       },
     ],
     counterfeiterTactics:
-      "Les faussaires intègrent des puces NFC génériques (NTAG213 de NXP, 0,30-0,80 € l'unité, achetables par millier sur Alibaba) dans leurs fakes post-2021. Ces puces répondent au scan avec un ID arbitraire qui ne correspond à rien dans les bases LV. Le défaut : les puces authentiques LV utilisent un silicon custom (probablement HID Global ou Legic Advant) avec des commandes cryptographiques NDEF enrichies. Un dump NFC complet via TagInfo Advanced révèle cette différence de structure. Pour le consommateur averti, le test simple « la puce répond ? » est déjà une première filtre (les fakes bas de gamme n'ont souvent AUCUNE puce, 0 réponse NFC). Pour les fakes haut de gamme, attendre le service d'authentification LV intégré à l'app officielle.",
+      "Certains vendeurs mettent en avant une puce qui « répond » au téléphone, ou une appli qui « confirme » l'authenticité. Aucune appli publique ne lit le contenu des puces Louis Vuitton : cet argument ne prouve rien. Jugez le sac sur ses signaux visibles et sur sa preuve d'achat.",
     faqs: [
       {
-        question: "Pourquoi mon sac post-2021 ne répond-il à aucun scan NFC ?",
+        question: "Mon sac récent ne répond à aucun scan NFC : est-il faux ?",
         answer:
-          "Plusieurs possibilités : 1) La puce est profondément enfouie — balayez plus lentement et en contact direct avec le sac. 2) Le smartphone NFC est faible — essayez un autre téléphone. 3) La puce est défaillante (rare sur LV) — visitez une boutique LV qui peut scanner en interne. 4) Le sac est une contrefaçon — éliminez les options précédentes avant de conclure. Combinez systématiquement avec les autres signaux (cuir, coutures, rivets) avant de trancher.",
+          "Pas pour cette raison. La détection dépend du téléphone, de sa coque et de l'emplacement de la puce, et le contenu de la puce n'est lisible que par Louis Vuitton. Jugez sur les signaux visibles et sur la preuve d'achat.",
       },
       {
-        question: "LV a-t-il officialisé l'usage de l'app NFC Tools ?",
+        question: "Peut-on vérifier la puce d'un sac Louis Vuitton avec une appli ?",
         answer:
-          "Non. NFC Tools est une app tierce gratuite utilisée par la communauté pour détecter la présence de puces. LV n'a pas officialisé cet usage ni publié les spécifications de ses puces. L'authentification officielle passera par l'app Louis Vuitton (développement en cours 2024-2025). En attendant, NFC Tools permet de vérifier la simple PRÉSENCE d'une puce — ce qui est déjà un indicateur utile, mais pas une preuve cryptographique d'authenticité.",
+          "Non. Une appli NFC comme NFC Tools peut au mieux signaler qu'une puce est présente. Selon les revendeurs spécialisés, aucune appli publique ne lit le contenu des puces Louis Vuitton ni n'authentifie un sac par ce moyen.",
       },
     ],
   },

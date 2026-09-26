@@ -16,6 +16,7 @@ import {
   DashboardCreditsLabel,
   VerdictLabel,
   StatusLabel,
+  InsufficientLabel,
   FormattedDate,
 } from "@/components/dashboard/DashboardI18nClient";
 import { deleteAnalysis } from "./actions";
@@ -147,6 +148,11 @@ export default async function DashboardPage(
             {formattedAnalyses.map((analysis) => {
               const isDeletable = DELETABLE_STATUSES.includes(analysis.status);
               const deleteAction = deleteAnalysis.bind(null, analysis.id);
+              // Même règle que le rapport (check/[id]) : photos jugées insuffisantes par
+              // l'IA → analyse non facturée, ni score ni verdict affichés.
+              const insufficient =
+                (analysis.ai_raw_response as { confidence_level?: string } | null)
+                  ?.confidence_level === "insufficient";
 
               return (
                 <RevealItem key={analysis.id}>
@@ -180,7 +186,7 @@ export default async function DashboardPage(
                             {analysis.model_name}
                           </p>
                         </div>
-                        {analysis.overall_score != null ? (
+                        {insufficient ? null : analysis.overall_score != null ? (
                           <div
                             className={`flex size-12 shrink-0 items-center justify-center rounded-md border ${getScoreBgColor(analysis.overall_score)}`}
                           >
@@ -203,12 +209,18 @@ export default async function DashboardPage(
                         )}
                       </div>
 
-                      {analysis.verdict && (
-                        <p
-                          className={`mt-3 text-ui font-medium ${getScoreColor(analysis.overall_score ?? 0)}`}
-                        >
-                          <VerdictLabel verdict={analysis.verdict} />
+                      {insufficient ? (
+                        <p className="mt-3 text-ui font-medium text-muted-foreground">
+                          <InsufficientLabel />
                         </p>
+                      ) : (
+                        analysis.verdict && (
+                          <p
+                            className={`mt-3 text-ui font-medium ${getScoreColor(analysis.overall_score ?? 0)}`}
+                          >
+                            <VerdictLabel verdict={analysis.verdict} />
+                          </p>
+                        )
                       )}
 
                       <p className="mt-3 text-caption text-muted-foreground">

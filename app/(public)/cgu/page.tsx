@@ -53,7 +53,7 @@ export default function CguPage() {
             </h2>
             <p className="text-muted-foreground">
               LegitVision est une plateforme en ligne proposant un service d&apos;analyse visuelle d&apos;articles
-              de luxe (sneakers, maroquinerie, montres, vêtements) par intelligence artificielle.
+              de luxe (sneakers, maroquinerie, vêtements) par intelligence artificielle.
               Le service produit un <strong className="text-foreground">score de probabilité d&apos;authenticité</strong> basé
               sur l&apos;analyse des photos soumises par l&apos;utilisateur.
             </p>
@@ -119,13 +119,15 @@ export default function CguPage() {
             </div>
             <div className="mt-4 space-y-2 text-muted-foreground">
               <p>
-                Les crédits de la formule sont <strong className="text-foreground">ajoutés chaque mois</strong> à la date d&apos;anniversaire de l&apos;abonnement.
-                Les crédits non utilisés sont reportés d&apos;un mois sur l&apos;autre et restent utilisables après la résiliation de l&apos;abonnement.
+                Les crédits sont <strong className="text-foreground">renouvelés chaque mois</strong> à la date d&apos;anniversaire de l&apos;abonnement.
+                Les crédits non utilisés ne sont pas reportés au mois suivant.
               </p>
               <p>
-                Les crédits sont <strong className="text-foreground">non remboursables</strong> sauf en cas d&apos;erreur technique
-                avérée de notre service empêchant la réalisation de l&apos;analyse. Dans ce cas,
-                le crédit est automatiquement recrédité sur le compte de l&apos;utilisateur.
+                Une analyse <strong className="text-foreground">n&apos;est pas décomptée</strong> quand l&apos;IA juge les photos
+                insuffisantes, ni quand une erreur technique de notre service empêche de produire le rapport : le crédit
+                reste disponible. Tout autre résultat est décompté,
+                y compris un verdict non concluant (affiché « Éléments suspects ») ou une confiance faible. En dehors de
+                ces cas, les crédits sont <strong className="text-foreground">non remboursables</strong>.
               </p>
               <p>
                 Les abonnements payants sont gérés via Stripe. Vous pouvez résilier votre abonnement

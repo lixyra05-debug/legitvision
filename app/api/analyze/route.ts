@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import {
   runAnalysis,
+  AnalysisError,
   handleAnalysisError,
   validateImageBuffer,
   PhotoValidationError,
@@ -258,7 +259,7 @@ export async function POST(request: NextRequest) {
     const finalStatus = needsExpertReview ? "expert_review" : "completed";
 
     // 12. Save results
-    await admin
+    const { error: saveError } = await admin
       .from("analyses")
       .update({
         status: finalStatus,
@@ -270,6 +271,16 @@ export async function POST(request: NextRequest) {
         ai_raw_response: result.aiRawResponse,
       })
       .eq("id", analysisId);
+
+    // Rapport non enregistré : rien n'est débité (le débit suit), et le catch
+    // marque l'analyse « failed ». Les CGU le promettent : une erreur technique
+    // qui empêche de produire le rapport n'est pas décomptée.
+    if (saveError) {
+      throw new AnalysisError(
+        "Le rapport n'a pas pu être enregistré. Aucun crédit n'a été décompté : relancez l'analyse.",
+        "SAVE_ERROR"
+      );
+    }
 
     // 13. Déduire 1 crédit ATOMIQUEMENT via RPC (B-RACE — fix TOCTOU)
     //     La RPC fait UPDATE conditionnel + INSERT credits_transactions dans

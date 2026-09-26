@@ -95,6 +95,12 @@ export function DeleteAnalysisTitle() {
   return t("dashboard.deleteAnalysis");
 }
 
+/** Analyse que l'IA a jugée sur photos insuffisantes : non facturée, même libellé que le rapport. */
+export function InsufficientLabel() {
+  const { t } = useTranslation();
+  return <>{t("results.insufficientTitle")}</>;
+}
+
 /** Verdict label localized (delegates to lib/types.getVerdictLabel) */
 export function VerdictLabel({ verdict }: { verdict: Verdict }) {
   const { locale } = useTranslation();

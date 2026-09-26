@@ -288,21 +288,21 @@ export const brands: Brand[] = [
         difficulty: 2,
       },
       {
-        title: "Heat-stamp : « LOUIS VUITTON Paris made in France »",
+        title: "Heat-stamp : « LOUIS VUITTON Paris » et pays de fabrication",
         description:
-          "Le heat-stamp intérieur Louis Vuitton authentique présente une typographie spécifique avec le L et le V de « LOUIS VUITTON » en majuscules parfaitement formées, un tiret précis dans « LOUIS VUITTON », et un espacement calibré. La profondeur de gravure est uniforme. Les contrefaçons montrent souvent un L trop courbé, un V asymétrique, ou une profondeur irrégulière. Sur les modèles récents (> 2021), la mention exact du pays varie (France, Espagne, Italie, États-Unis, Suisse).",
+          "Le heat-stamp intérieur Louis Vuitton authentique présente une typographie spécifique avec le L et le V de « LOUIS VUITTON » en majuscules parfaitement formées, un tiret précis dans « LOUIS VUITTON », et un espacement calibré. La profondeur de gravure est uniforme. Les contrefaçons montrent souvent un L trop courbé, un V asymétrique, ou une profondeur irrégulière. Le pays indiqué varie selon l'atelier : la France, mais aussi, par exemple, l'Espagne, l'Italie, les États-Unis ou la Suisse.",
         difficulty: 2,
       },
       {
-        title: "Code date (date code) — jusqu'en 2021",
+        title: "Code date (date code) — sacs antérieurs à la puce",
         description:
-          "Les Louis Vuitton produits avant mars 2021 portent un code date de 4 caractères (2 lettres + 4 chiffres) gravé sur un cuir intérieur. Les 2 lettres indiquent le lieu de production (SD = France, CA = Espagne, FL = USA, etc.) et les 4 chiffres la semaine + année au format SSAA. Exemple : MB1189 = fabriqué en France en semaine 18 de 2019. Un code incohérent (lettre inconnue, date impossible, semaine 53+) est une preuve de contrefaçon.",
+          "Les Louis Vuitton antérieurs au passage à la puce portent un code date gravé sur un cuir intérieur. Son format a varié selon les époques ; sur la plupart des sacs, il associe 2 lettres d'atelier et 4 chiffres de date (depuis 2007 : 1er et 3e chiffres = semaine, 2e et 4e = année). Exemple : MB1189 = semaine 18 de 2019. Un code incohérent avec le format de son époque ou avec la date de lancement du modèle est un signal d'alerte.",
         difficulty: 2,
       },
       {
-        title: "Puce RFID — depuis 2021",
+        title: "Puce intégrée — sacs récents",
         description:
-          "Depuis mars 2021, Louis Vuitton a remplacé le code date par une puce RFID cachée dans la doublure. Cette puce contient les informations de production et de traçabilité. Les vendeurs authentiques peuvent obtenir la validation en boutique LV avec un simple scan. L'absence de puce détectable (après 2021) ou un code date manifestement incorrect (avant 2021) est un signal d'alerte.",
+          "Sur ses sacs récents, Louis Vuitton a remplacé le code date par une puce intégrée, invisible (à partir de 2021 selon les revendeurs spécialisés). Seule la maison en lit le contenu : aucune appli publique n'authentifie un sac par sa puce, et un téléphone qui ne la détecte pas ne prouve rien. Sur un sac ancien, un code date incohérent reste un signal d'alerte.",
         difficulty: 3,
       },
       {
@@ -321,7 +321,7 @@ export const brands: Brand[] = [
       {
         question: "Que signifie « code date » Louis Vuitton ?",
         answer:
-          "Le code date est un marquage à 4 caractères (2 lettres + 4 chiffres) gravé à l'intérieur des sacs Louis Vuitton produits avant mars 2021. Les lettres codent le lieu de fabrication, les chiffres la semaine et l'année. Depuis 2021, LV a remplacé ce système par une puce RFID. Un sac récent (2022+) sans puce RFID ni code date est nécessairement une contrefaçon.",
+          "Le code date est un marquage à l'intérieur des sacs Louis Vuitton antérieurs au passage à la puce ; sur la plupart, il associe 2 lettres d'atelier et 4 chiffres de date. Sur les sacs récents, une puce intégrée, invisible, le remplace (à partir de 2021 selon les revendeurs spécialisés) : un sac récent sans code date n'est pas suspect pour autant.",
       },
       {
         question: "Un Louis Vuitton sans dust bag est-il forcément faux ?",
@@ -841,9 +841,9 @@ export const brands: Brand[] = [
         difficulty: 2,
       },
       {
-        title: "Étiquette intérieure A BATHING APE + made in Japan",
+        title: "Étiquette intérieure A BATHING APE",
         description:
-          "Les hoodies BAPE authentiques sont produits soit au Japon soit en Chine (usines officielles), avec une étiquette intérieure tissée « A BATHING APE » et un triangle rouge avec « NOWHERE CO. LTD. ». Les contrefaçons omettent souvent le triangle NOWHERE ou utilisent une étiquette imprimée au lieu de tissée.",
+          "Les hoodies BAPE authentiques ne sont pas tous fabriqués au Japon : certains le sont en Chine, par exemple. Ils portent une étiquette intérieure tissée « A BATHING APE » et un triangle rouge avec « NOWHERE CO. LTD. ». Les contrefaçons omettent souvent le triangle NOWHERE ou utilisent une étiquette imprimée au lieu de tissée.",
         difficulty: 2,
       },
       {

@@ -23,9 +23,12 @@ export function buildGuideArticleSchema(data: GuidePageData): JsonLd {
     "@id": `${data.canonical}#article`,
     mainEntityOfPage: { "@type": "WebPage", "@id": data.canonical },
     url: data.canonical,
-    headline: `Comment vérifier ${data.signal.name} sur un ${data.brand.name} authentique`,
-    name: `Comment vérifier ${data.signal.name} sur un ${data.brand.name} authentique`,
-    description: `Guide en ${data.steps.length} étapes pour pré-authentifier ${data.signal.name} sur ${data.brand.name} et détecter les contrefaçons.`,
+    headline: data.h1,
+    name: data.h1,
+    // Un titre dédié (signal.headline) signale un guide qui ne promet pas de vérification : sa description suit.
+    description: data.signal.headline
+      ? data.signal.tagline
+      : `Guide en ${data.steps.length} étapes pour pré-authentifier ${data.signal.name} sur ${data.brand.name} et détecter les contrefaçons.`,
     image: siteUrl(data.ogImage),
     inLanguage: "fr-FR",
     datePublished: CONTENT_PUBLISHED,
@@ -74,7 +77,9 @@ export function buildAllGuideSchemas(data: GuidePageData): JsonLd[] {
     buildGuideBreadcrumbSchema(data),
     buildGuideArticleSchema(data),
     buildStepsItemListSchema(
-      `Protocole de vérification — ${data.signal.name} (${data.brand.name})`,
+      data.signal.headline
+        ? `Points à retenir — ${data.signal.name} (${data.brand.name})`
+        : `Protocole de vérification — ${data.signal.name} (${data.brand.name})`,
       data.canonical,
       data.steps,
     ),

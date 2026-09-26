@@ -18,7 +18,7 @@ export const facebookMarketplaceIntersections: Intersection[] = [
       {
         question: "Comment se protéger lors d'un achat Nike sur Facebook ?",
         answer:
-          `Protocole en 4 étapes obligatoires : 1) Vérifier le profil vendeur (ancienneté ≥ 2 ans, photos personnelles, activité Facebook hors Marketplace) ; 2) Exiger 8-12 photos détaillées avant tout déplacement, passage par LegitVision à ${FACTS.priceSingle} ; 3) Refuser liquide, imposer PayPal Goods & Services (Protection Acheteurs 180 jours) ; 4) Rendez-vous en lieu public de jour, inspecter minutieusement avant paiement. Un seul refus du vendeur = annulez.`,
+          `Protocole en 4 étapes obligatoires : 1) Vérifier le profil vendeur (ancienneté ≥ 2 ans, photos personnelles, activité Facebook hors Marketplace) ; 2) Exiger, avant tout déplacement, les ${FACTS.sneakersPhotosMin} à ${FACTS.sneakersPhotosMax} photos détaillées que demande l'analyse LegitVision pour des sneakers, puis lancer l'analyse à ${FACTS.priceSingle} ; 3) Refuser liquide, imposer PayPal Goods & Services (Protection Acheteurs 180 jours) ; 4) Rendez-vous en lieu public de jour, inspecter minutieusement avant paiement. Un seul refus du vendeur = annulez.`,
       },
     ],
   },

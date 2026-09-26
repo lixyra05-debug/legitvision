@@ -259,7 +259,9 @@ export function ReportView({ data }: { data: ReportData }) {
       <main className="mx-auto max-w-3xl space-y-6 px-4 py-8 sm:py-12">
         {/* ── HEADER ── */}
         <div className="space-y-3">
-          {verdictCfg && (
+          {/* Photos jugées insuffisantes : pas de badge de verdict (« Éléments suspects »
+              est un verdict facturé) ; le panneau dédié plus bas dit « non facturée ». */}
+          {verdictCfg && !isInsufficient && (
             <div
               className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 ${verdictCfg.bg}`}
             >

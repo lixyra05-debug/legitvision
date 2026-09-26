@@ -81,7 +81,7 @@ export const vintedIntersections: Intersection[] = [
     platformSlug: "vinted",
     brandSlug: "louis-vuitton",
     angle:
-      "Louis Vuitton sur Vinted représente un segment risqué de la plateforme. Vinted a déployé un service d'authentification payant (10 €) pour les articles à partir de 100 €, mais il reste optionnel et souvent négligé par les acheteurs. La présence ou l'absence de code date (pré-2021) ou de puce RFID (post-2021) est le signal le plus discriminant dans cette configuration.",
+      "Louis Vuitton sur Vinted représente un segment risqué de la plateforme. Vinted a déployé un service d'authentification payant (10 €) pour les articles à partir de 100 €, mais il reste optionnel et souvent négligé par les acheteurs. Sur un sac récent, l'absence de code date est normale : une puce invisible le remplace, et elle ne se vérifie pas au téléphone.",
     faqs: [
       {
         question: "Vinted authentifie-t-il automatiquement les Louis Vuitton ?",

@@ -31,7 +31,7 @@ export function buildGuidePageData(
 
   const title = `${signal.name} — ${brand.name}`;
   const description = `${signal.tagline}. Guide détaillé : ${signal.steps.length} étapes, ${signal.commonErrors.length} erreurs fréquentes, FAQ et pré-authentification IA ${brand.name} en ${FACTS.median} secondes (durée médiane) à ${FACTS.priceSingle}.`;
-  const h1 = `Comment vérifier ${signal.name} sur un ${brand.name} authentique`;
+  const h1 = signal.headline ?? `Comment vérifier ${signal.name} sur un ${brand.name} authentique`;
   const subtitle = signal.tagline;
 
   const breadcrumbs: BreadcrumbItem[] = [
