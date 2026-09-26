@@ -53,7 +53,7 @@ export default function CguPage() {
             </h2>
             <p className="text-muted-foreground">
               LegitVision est une plateforme en ligne proposant un service d&apos;analyse visuelle d&apos;articles
-              de luxe (sneakers, maroquinerie, montres, vêtements) par intelligence artificielle.
+              de luxe (sneakers, maroquinerie, vêtements) par intelligence artificielle.
               Le service produit un <strong className="text-foreground">score de probabilité d&apos;authenticité</strong> basé
               sur l&apos;analyse des photos soumises par l&apos;utilisateur.
             </p>
