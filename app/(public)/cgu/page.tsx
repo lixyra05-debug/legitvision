@@ -195,7 +195,7 @@ export default function CguPage() {
             </p>
             <p className="mt-3 text-muted-foreground">
               La responsabilité de LegitVision est en tout état de cause limitée au montant des sommes
-              effectivement versées par l&apos;utilisateur au titre de l&apos;abonnement en cours au moment du dommage.
+              effectivement versées par l&apos;utilisateur au titre de ses achats des 12 derniers mois.
             </p>
           </section>
 

@@ -42,13 +42,13 @@ export const CHATBOT_RULES: ChatbotRule[] = [
           fr:
             "Nous proposons 3 formules adaptées à vos besoins :\n\n" +
             `• Utilisation unique — ${FACTS.priceSingle} par analyse\n` +
-            `• Mensuel — ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses\n` +
+            `• Pro — ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses\n` +
             `• Business — ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses\n\n` +
             "Chaque analyse inclut un rapport détaillé avec score sur 100, sous-scores par zone et recommandations. Vous pouvez commencer avec une analyse unique pour tester.",
           en:
             "We offer 3 plans to fit your needs:\n\n" +
             `• Single use — ${FACTS_EN.priceSingle} per analysis\n` +
-            `• Monthly — ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses\n` +
+            `• Pro — ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses\n` +
             `• Business — ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses\n\n` +
             "Every analysis includes a detailed report with a score out of 100, per-zone sub-scores and recommendations. You can start with a single analysis to test.",
         }
