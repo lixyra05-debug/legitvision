@@ -439,7 +439,11 @@ export default function NewCheckPage() {
       setUploadProgress({ done: 0, total: photoEntries.length });
       for (let i = 0; i < photoEntries.length; i++) {
         const [photoType, photoFile] = photoEntries[i];
-        const ext = photoFile.file.name.split(".").pop() ?? "jpg";
+        // Extension réduite à des lettres et des chiffres : le chemin reste un
+        // nom simple, le seul que la base accepte (migration 018, même règle
+        // que lib/photo-path.ts).
+        const ext =
+          (photoFile.file.name.split(".").pop() ?? "").toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 8) || "jpg";
         const storagePath = `${user.id}/${analysis.id}/${photoType}.${ext}`;
 
         const { error: uploadError } = await supabase.storage
