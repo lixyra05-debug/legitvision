@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { stripe } from "@/lib/stripe/server";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 import { ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -31,6 +32,9 @@ export default async function SubscriptionPage() {
     .select("full_name, subscription_plan, stripe_subscription_id, credits_remaining")
     .eq("id", user.id)
     .single();
+
+  // Abonnements fermés : la page ne sert qu'à un titulaire d'abonnement (résiliation).
+  if (!SUBSCRIPTIONS_ON_SALE && !profile?.stripe_subscription_id) redirect("/dashboard");
 
   const plan = profile?.subscription_plan ?? "free";
   const credits = profile?.credits_remaining ?? 0;

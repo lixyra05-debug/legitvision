@@ -10,6 +10,7 @@ import {
   formatContentDate,
 } from "@/lib/seo/content-dates";
 import { facts } from "@/lib/site-facts";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 
 const FACTS = facts();
 
@@ -352,7 +353,7 @@ export function GuidePageTemplate({ data }: { data: GuidePageData }) {
                 href="/#pricing"
                 className="inline-flex items-center justify-center rounded-full border border-line bg-surface-raised px-6 py-3 text-ui font-semibold text-foreground transition-colors duration-fast hover:bg-surface-hover"
               >
-                Voir les forfaits
+                {SUBSCRIPTIONS_ON_SALE ? "Voir les forfaits" : "Voir le tarif"}
               </Link>
             </div>
           </div>

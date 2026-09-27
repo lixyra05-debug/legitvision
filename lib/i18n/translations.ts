@@ -426,6 +426,8 @@ export const translations = {
     successBanner: {
       title: "Abonnement activé avec succès !",
       desc: "Vos crédits ont été crédités. Profitez de LegitVision Pro.",
+      singleTitle: "Paiement confirmé",
+      singleDesc: "Votre crédit d'analyse est ajouté dès que Stripe valide le paiement.",
       planChangeTitle: "Plan mis à jour avec succès !",
       planChangeDesc:
         "Votre abonnement a été modifié. Stripe applique le prorata automatiquement.",
@@ -448,7 +450,7 @@ export const translations = {
       title: "Assistant LegitVision",
       placeholder: "Posez votre question…",
       welcome:
-        "Bonjour ! Je suis l'assistant LegitVision. Comment puis-je vous aider ?\n\nVous pouvez me demander :\n• Comment fonctionne l'analyse\n• Les tarifs et formules\n• Les marques supportées\n• Toute autre question",
+        "Bonjour ! Je suis l'assistant LegitVision. Comment puis-je vous aider ?\n\nVous pouvez me demander :\n• Comment fonctionne l'analyse\n• Les tarifs\n• Les marques supportées\n• Toute autre question",
       send: "Envoyer",
       writing: "L'assistant écrit",
     },
@@ -912,6 +914,8 @@ export const translations = {
     successBanner: {
       title: "Subscription activated successfully!",
       desc: "Your credits have been added. Enjoy LegitVision Pro.",
+      singleTitle: "Payment confirmed",
+      singleDesc: "Your analysis credit is added as soon as Stripe validates the payment.",
       planChangeTitle: "Plan updated successfully!",
       planChangeDesc:
         "Your subscription has been changed. Stripe applies proration automatically.",
@@ -934,7 +938,7 @@ export const translations = {
       title: "LegitVision Assistant",
       placeholder: "Ask a question…",
       welcome:
-        "Hi! I'm the LegitVision assistant. How can I help?\n\nYou can ask me about:\n• How the analysis works\n• Pricing and plans\n• Supported brands\n• Any other question",
+        "Hi! I'm the LegitVision assistant. How can I help?\n\nYou can ask me about:\n• How the analysis works\n• Pricing\n• Supported brands\n• Any other question",
       send: "Send",
       writing: "Assistant is typing",
     },

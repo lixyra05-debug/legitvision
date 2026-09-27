@@ -7,7 +7,7 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
 export function SuccessBanner({
   variant = "purchase",
 }: {
-  variant?: "purchase" | "planChange";
+  variant?: "purchase" | "single" | "planChange";
 }) {
   const { t } = useTranslation();
   const [visible, setVisible] = useState(true);
@@ -17,6 +17,7 @@ export function SuccessBanner({
     const url = new URL(window.location.href);
     url.searchParams.delete("session_id");
     url.searchParams.delete("plan_changed");
+    url.searchParams.delete("purchased");
     window.history.replaceState({}, "", url.toString());
   }, []);
 
@@ -28,10 +29,22 @@ export function SuccessBanner({
         <CheckCircle2 className="size-5 shrink-0 text-accent" />
         <div>
           <p className="text-ui font-semibold text-accent">
-            {t(variant === "planChange" ? "successBanner.planChangeTitle" : "successBanner.title")}
+            {t(
+              variant === "planChange"
+                ? "successBanner.planChangeTitle"
+                : variant === "single"
+                  ? "successBanner.singleTitle"
+                  : "successBanner.title"
+            )}
           </p>
           <p className="mt-0.5 text-caption text-muted-foreground">
-            {t(variant === "planChange" ? "successBanner.planChangeDesc" : "successBanner.desc")}
+            {t(
+              variant === "planChange"
+                ? "successBanner.planChangeDesc"
+                : variant === "single"
+                  ? "successBanner.singleDesc"
+                  : "successBanner.desc"
+            )}
           </p>
         </div>
       </div>

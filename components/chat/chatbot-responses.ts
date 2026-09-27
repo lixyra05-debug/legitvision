@@ -253,14 +253,14 @@ export const CHATBOT_RULES: ChatbotRule[] = [
 export const DEFAULT_RESPONSE = {
   fr:
     "Je ne suis pas sûr de comprendre votre question. Voici ce que je peux vous aider avec :\n\n" +
-    "• Tarifs et formules\n" +
+    "• Tarifs\n" +
     "• Comment fonctionne l'analyse\n" +
     "• Marques et modèles supportés\n" +
     "• Contact et support\n\n" +
     `Ou écrivez-nous directement à ${CONTACT_EMAIL}`,
   en:
     "I'm not sure I understand your question. Here's what I can help with:\n\n" +
-    "• Pricing and plans\n" +
+    "• Pricing\n" +
     "• How the analysis works\n" +
     "• Supported brands and models\n" +
     "• Contact and support\n\n" +
