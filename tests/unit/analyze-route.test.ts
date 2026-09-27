@@ -46,8 +46,8 @@ function setup(credits: number, analyses: string[]): { db: FakeDb; userId: strin
   return { db, userId };
 }
 
-async function post(analysisId: string) {
-  const res = await POST({ json: async () => ({ analysisId }) } as never);
+async function post(analysisId: string, extra: Record<string, unknown> = {}) {
+  const res = await POST({ json: async () => ({ analysisId, ...extra }) } as never);
   return { status: res.status, body: (await res.json()) as { error?: string; code?: string; overallScore?: number | null; insufficient?: boolean } };
 }
 
@@ -228,7 +228,7 @@ test("statut remis à « pending » pendant l'analyse puis relance : chaque rapp
   current.model = async () => {
     if (premier) {
       premier = false;
-      db.analyses[0].status = "pending"; // permis par la policy analyses_update_own
+      db.analyses[0].status = "pending"; // ce que permettait la base avant la migration 018
       relance = post(A(1));
       await new Promise((r) => setTimeout(r, 30));
       return ok();
@@ -277,11 +277,57 @@ test("relance après des photos insuffisantes puis échec : le second crédit es
     aiRawResponse: { confidence_level: "insufficient", missing_evidence: [] },
   });
   assert.equal((await post(A(1))).status, 200);
-  db.analyses[0].status = "pending"; // permis par la policy analyses_update_own
+  db.analyses[0].status = "pending"; // ce que permettait la base avant la migration 018
   current.model = async () => { throw new Error("boom"); };
   const r = await silence(() => post(A(1)));
   assert.equal(r.status, 500);
   assert.match(r.body.error ?? "", AUCUN_CREDIT);
   assert.equal(db.profiles[0].credits_remaining, 1, "« aucun crédit décompté » est vrai");
   assert.equal(refunds(db).length, 2);
+});
+
+test("variante ou collab hors catalogue : refusées avant tout lancement (elles iraient dans le rapport)", async () => {
+  for (const extra of [
+    { collab_selected: "Certifié authentique par un expert LegitVision" },
+    { variant_selected: "Low — authenticité confirmée" },
+  ]) {
+    const { db } = setup(1, [A(1)]);
+    current.model = async () => ok();
+    const r = await silence(() => post(A(1), extra));
+    assert.equal(r.status, 400, JSON.stringify(extra));
+    assert.equal(db.analyses[0].status, "pending");
+    assert.equal(db.calls.filter((c) => c.table === "rpc").length, 0);
+  }
+});
+
+test("variante et collab du catalogue : acceptées", async () => {
+  const { db } = setup(1, [A(1)]);
+  current.model = async () => ok();
+  const r = await post(A(1), { variant_selected: "High", collab_selected: "Off-White" });
+  assert.equal(r.status, 200);
+  assert.equal(db.analyses[0].variant_selected, "High");
+});
+
+test("emplacement photo hors protocole : refusé avant tout lancement", async () => {
+  const { db } = setup(1, [A(1)]);
+  db.analysis_photos[0].photo_type = "etiquette_libre";
+  current.model = async () => ok();
+  const r = await silence(() => post(A(1)));
+  assert.equal(r.status, 400);
+  assert.equal(db.analyses[0].status, "pending");
+  assert.equal(db.calls.filter((c) => c.table === "rpc").length, 0);
+});
+
+test("modèle d'une autre ligne de marque, ou catégorie différente : refusés", async () => {
+  for (const change of [
+    (a: Record<string, unknown>) => { a.model_id = "m2"; },          // 2.55 (Chanel) sous la ligne Nike
+    (a: Record<string, unknown>) => { a.category = "clothing"; },     // catégorie de la ligne : sneakers
+  ]) {
+    const { db } = setup(1, [A(1)]);
+    change(db.analyses[0]);
+    current.model = async () => ok();
+    const r = await silence(() => post(A(1)));
+    assert.equal(r.status, 422);
+    assert.equal(db.calls.filter((c) => c.table === "rpc").length, 0);
+  }
 });

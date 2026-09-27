@@ -26,8 +26,9 @@ import { staleCutoffs, staleKind } from "@/lib/analysis-limits";
  * net après la réservation. Sa ligne « usage » ne porte ni remboursement (ligne
  * « refund » qui la cite) ni mention ajoutée par la route (« rapport
  * enregistré », « crédit à rendre »…) : crédit à rendre à la main, jusqu'à la
- * migration qui confiera réservation et remboursement à la base. Jamais de
- * remboursement sur la foi du statut : l'utilisateur peut le modifier.
+ * migration qui confiera réservation et remboursement à la base. Depuis la
+ * migration 018, seul le serveur écrit « analyzing » : ce statut pourra
+ * servir à rendre automatiquement ces crédits.
  *
  * Renvoie les identifiants effectivement passés à « failed ».
  */

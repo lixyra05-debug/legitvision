@@ -1,9 +1,10 @@
 /**
  * Chemin de stockage d'une photo d'analyse : {user_id}/{analysis_id}/{nom}
  * (CLAUDE.md, règle 4 ; le nom est {photo_type}.{extension}). Le navigateur
- * l'écrit lui-même dans analysis_photos, dont la policy d'insertion ne vérifie
- * que user_id : le serveur, qui lit et supprime avec la clé de service, ne suit
- * un chemin que s'il désigne un fichier du dossier de CETTE analyse.
+ * l'écrit lui-même dans analysis_photos. La base le vérifie à l'insertion
+ * (migration 018, public.is_own_photo_path, même règle) ; le serveur, qui lit
+ * et supprime avec la clé de service, le revérifie : il ne suit un chemin que
+ * s'il désigne un fichier du dossier de CETTE analyse.
  *
  * Le nom doit être un seul segment ordinaire. storage-js n'encode pas le
  * chemin et fetch le normalise ; sont donc refusés :

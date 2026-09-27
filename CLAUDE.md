@@ -112,7 +112,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 1. JAMAIS écrire "certifié authentique" ou "garanti" — toujours "estimation", "probabilité", "score de confiance"
 2. TOUJOURS vérifier les crédits avant de lancer une analyse
 3. TOUJOURS valider la qualité des photos avant envoi à l'API (résolution min 800x800, format JPEG/PNG/WebP)
-4. Les photos sont stockées dans Supabase Storage bucket "analysis-photos" avec path: {user_id}/{analysis_id}/{photo_type}.jpg
+4. Les photos sont stockées dans Supabase Storage bucket "analysis-photos" avec path: {user_id}/{analysis_id}/{photo_type}.{extension} (un seul nom simple : `lib/photo-path.ts`, vérifié aussi en base)
 5. L'API route /api/analyze ne doit JAMAIS exposer la clé API Anthropic au client
 6. Stripe webhooks doivent être vérifiés avec la signature
 7. Le scoring utilise une moyenne pondérée (voir lib/ai/scoring.ts)
@@ -123,6 +123,8 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 12. Les photos d'analyse sont supprimées `PHOTO_RETENTION_DAYS` jours (30) après leur envoi par la purge quotidienne (`lib/purge-photos.ts`, route `/api/cron/purge-photos` appelée par Vercel Cron, `CRON_SECRET` requis). La politique de confidentialité le promet : ne jamais afficher de photo dans un rapport ni en garder de copie ailleurs ; quand la revue expert existera, la faire avant l'échéance.
 13. Le nombre de photos affiché vient du protocole de la ligne de marque (`brands.photo_protocol` : emplacements obligatoires, puis au total), jamais de `models.min_photos` / `max_photos`, qui ne sont pas tenus à jour.
 14. Contenu d'authentification : une couleur, une date, une gravure ou un résultat de scan présentés comme obligatoires font soupçonner des articles authentiques. N'en écrire qu'avec une source vérifiée (corrigés le 2026-09-25 : fermoir du 2.55 et du Classic Flap, pieds du GST, codes millésime Hermès, puce LV).
+15. Une analyse n'est écrite que par le serveur (clé service_role, route `/api/analyze`) : statut « analyzing » et suivants, score, verdict, observations, réponse du modèle. Le navigateur crée une analyse vide, ne la fait avancer qu'avant son lancement (uploading → pending, → failed), et n'ajoute une photo qu'à une analyse encore « uploading », dans son propre dossier. En base : déclencheur `guard_analyses` et règle `analysis_photos_insert_own` (migration 018). Correction à la main : `set local role service_role;` dans la transaction, comme pour les profils (`guard_profiles`).
+16. Toute fonction, tout déclencheur, toute règle RLS et tout droit de la base vivent dans `supabase/migrations/` : rien ne se crée à la main dans l'éditeur SQL. Un changement passe par une migration testée et relue, qu'Hector exécute.
 
 ## Flux Principal (Happy Path)
 1. User se connecte → /dashboard

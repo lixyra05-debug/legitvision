@@ -16,7 +16,7 @@ import { releaseReservedCredit } from "@/lib/credit-release";
 import { isOwnPhotoPath } from "@/lib/photo-path";
 import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 import type { Brand, Model, PhotoSlot } from "@/lib/types";
-import { hasAuthenticationPoints } from "@/lib/analyzable";
+import { catalogProblem, unknownPhotoTypes } from "@/lib/launch-check";
 import { z } from "zod";
 
 // Durée maximale de la fonction, en secondes. Next exige une valeur
@@ -184,19 +184,35 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 6b. Un modèle sans point d'authentification n'est plus proposé à la
-  //     sélection (lib/analyzable.ts). Ce garde couvre une page ouverte avant
-  //     la mise en ligne ou une requête forgée. Avant tout claim : aucun
-  //     changement de statut, aucun crédit débité.
-  if (!hasAuthenticationPoints(model)) {
+  // 6b. Ce que le navigateur a choisi doit sortir du catalogue
+  //     (lib/launch-check.ts) : modèle analysable, de cette ligne de marque et
+  //     de cette catégorie ; variante et collab connues du modèle. Elles
+  //     entrent dans le prompt et au début du résumé du rapport. Couvre aussi
+  //     une page ouverte avant un changement du catalogue. Avant tout claim :
+  //     aucun changement de statut, aucun crédit débité.
+  const problem = catalogProblem({
+    brand,
+    model,
+    category: analysis.category,
+    variant: variantSelected,
+    collab: collabSelected,
+  });
+  if (problem) {
+    console.warn("[analyze] lancement refusé :", problem.reason, { analysisId });
     return NextResponse.json(
-      { error: "Ce modèle n'est pas encore pris en charge par l'analyse. Choisissez-en un autre." },
-      { status: 422 }
+      {
+        error:
+          problem.kind === "catalog"
+            ? "Ce modèle n'est pas encore pris en charge par l'analyse. Choisissez-en un autre."
+            : "La variante ou l'édition choisie n'existe pas pour ce modèle : lancez une nouvelle analyse. Aucun crédit n'a été décompté.",
+      },
+      { status: problem.kind === "catalog" ? 422 : 400 }
     );
   }
 
-  // 7. Fetch analysis photos. Filtrées aussi par propriétaire : la policy
-  //    d'insertion de analysis_photos ne vérifie que user_id, pas l'analyse.
+  // 7. Fetch analysis photos. Filtrées aussi par propriétaire, en plus de la
+  //    base (migration 018 : une photo n'est acceptée que pour une analyse de
+  //    son auteur, dans son dossier).
   const { data: photos } = await admin
     .from("analysis_photos")
     .select("*")
@@ -223,7 +239,12 @@ export async function POST(request: NextRequest) {
   //     (lib/photo-path.ts). La route télécharge avec la clé serveur : un chemin
   //     hors du dossier de CETTE analyse ferait analyser (et décrire dans le
   //     rapport) la photo d'un autre.
-  if (photos.some((p) => !isOwnPhotoPath(p.storage_path, user.id, analysisId))) {
+  //     Emplacement : un de ceux du protocole de la ligne de marque, dont le
+  //     libellé part dans le prompt (jamais le texte brut du navigateur).
+  if (
+    photos.some((p) => !isOwnPhotoPath(p.storage_path, user.id, analysisId)) ||
+    unknownPhotoTypes(brand.photo_protocol, photos.map((p) => p.photo_type)).length > 0
+  ) {
     return NextResponse.json(
       { error: "Une photo de cette analyse est invalide : lancez une nouvelle analyse. Aucun crédit n'a été décompté." },
       { status: 400 }
@@ -271,7 +292,7 @@ export async function POST(request: NextRequest) {
         }
 
         const protocol = brand.photo_protocol as PhotoSlot[];
-        const slot = protocol.find((s) => s.name === photo.photo_type);
+        const slot = protocol.find((s) => (s.name ?? (s as { type?: string }).type) === photo.photo_type);
         const label = slot?.label ?? photo.photo_type;
         const buffer = Buffer.from(await data.arrayBuffer());
 
