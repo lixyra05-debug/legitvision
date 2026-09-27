@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { stripe, getPriceId, getOrCreateCustomer } from "@/lib/stripe/server";
 import { z } from "zod";
 import { SITE_URL } from "@/lib/site-url";
+import { isPlanOnSale } from "@/lib/stripe/config";
 
 // Construit l'URL de redirect d'erreur — ramène l'utilisateur sur le paywall
 // avec un message clair (au lieu de revenir silencieusement sur la landing).
@@ -33,7 +34,7 @@ export default async function CheckoutPage(
   } = await supabase.auth.getUser();
 
   if (!user) {
-    const redirectParam = encodeURIComponent(`/checkout?plan=${rawPlan ?? "pro"}`);
+    const redirectParam = encodeURIComponent(`/checkout?plan=${rawPlan ?? "single"}`);
     redirect(`/auth?redirect=${redirectParam}`);
   }
 
@@ -43,6 +44,12 @@ export default async function CheckoutPage(
     redirect("/#pricing");
   }
   const planId = planParse.data;
+
+  // Abonnements fermés (SUBSCRIPTIONS_ON_SALE) : ni nouvelle session, ni
+  // changement de formule, même depuis un ancien lien. Retour aux tarifs.
+  if (!isPlanOnSale(planId)) {
+    redirect("/#pricing");
+  }
 
   // ── 3. Fetch profile ─────────────────────────────────────────────────────
   const admin = createAdminClient();

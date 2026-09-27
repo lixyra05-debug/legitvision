@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { facts } from "@/lib/site-facts";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 
 const FACTS = facts();
 
@@ -98,7 +99,9 @@ export default function CguPage() {
               3. Système de crédits et facturation
             </h2>
             <p className="text-muted-foreground mb-3">
-              L&apos;utilisation du service est soumise à un système de crédits selon le plan souscrit :
+              {SUBSCRIPTIONS_ON_SALE
+                ? "L'utilisation du service est soumise à un système de crédits selon le plan souscrit :"
+                : "L'utilisation du service est soumise à un système de crédits : une analyse consomme un crédit, acheté à l'unité."}
             </p>
             <div className="rounded-xl border border-white/5 bg-card overflow-hidden">
               <div className="grid grid-cols-3 gap-px bg-white/5">
@@ -106,6 +109,13 @@ export default function CguPage() {
                 <div className="bg-card px-4 py-3 text-foreground font-medium">Crédits</div>
                 <div className="bg-card px-4 py-3 text-foreground font-medium">Prix</div>
               </div>
+              <div className="grid grid-cols-3 gap-px bg-white/5">
+                <div className="bg-card px-4 py-3 text-muted-foreground">Analyse unique</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">1</div>
+                <div className="bg-card px-4 py-3 text-muted-foreground">{FACTS.priceSingle}</div>
+              </div>
+              {SUBSCRIPTIONS_ON_SALE && (
+              <>
               <div className="grid grid-cols-3 gap-px bg-white/5">
                 <div className="bg-card px-4 py-3 text-muted-foreground">Pro</div>
                 <div className="bg-card px-4 py-3 text-muted-foreground">{FACTS.proAnalyses} / mois</div>
@@ -116,12 +126,16 @@ export default function CguPage() {
                 <div className="bg-card px-4 py-3 text-muted-foreground">{FACTS.businessAnalyses} / mois</div>
                 <div className="bg-card px-4 py-3 text-muted-foreground">{FACTS.priceBusiness} / mois</div>
               </div>
+              </>
+              )}
             </div>
             <div className="mt-4 space-y-2 text-muted-foreground">
-              <p>
-                Les crédits sont <strong className="text-foreground">renouvelés chaque mois</strong> à la date d&apos;anniversaire de l&apos;abonnement.
-                Les crédits non utilisés ne sont pas reportés au mois suivant.
-              </p>
+              {SUBSCRIPTIONS_ON_SALE && (
+                <p>
+                  Les crédits sont <strong className="text-foreground">renouvelés chaque mois</strong> à la date d&apos;anniversaire de l&apos;abonnement.
+                  Les crédits non utilisés ne sont pas reportés au mois suivant.
+                </p>
+              )}
               <p>
                 Une analyse <strong className="text-foreground">n&apos;est pas décomptée</strong> quand l&apos;IA juge les photos
                 insuffisantes, ni quand une erreur technique de notre service empêche de produire le rapport : le crédit
@@ -129,11 +143,15 @@ export default function CguPage() {
                 y compris un verdict non concluant (affiché « Éléments suspects ») ou une confiance faible. En dehors de
                 ces cas, les crédits sont <strong className="text-foreground">non remboursables</strong>.
               </p>
-              <p>
-                Les abonnements payants sont gérés via Stripe. Vous pouvez résilier votre abonnement
-                à tout moment depuis votre espace personnel. La résiliation prend effet à la fin de
-                la période de facturation en cours.
-              </p>
+              {SUBSCRIPTIONS_ON_SALE ? (
+                <p>
+                  Les abonnements payants sont gérés via Stripe. Vous pouvez résilier votre abonnement
+                  à tout moment depuis votre espace personnel. La résiliation prend effet à la fin de
+                  la période de facturation en cours.
+                </p>
+              ) : (
+                <p>Les paiements sont gérés via Stripe. Aucun abonnement n&apos;est proposé pour le moment.</p>
+              )}
             </div>
           </section>
 

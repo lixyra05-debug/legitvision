@@ -10,6 +10,7 @@ import { SITE_URL } from "@/lib/site-url";
 import { buildCheckUrl } from "@/lib/seo/check-url";
 import { facts } from "@/lib/site-facts";
 import { GUIDES_PER_PLATFORM, SEO_COUNTS, platformGuideCount } from "@/lib/seo/seo-facts";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 
 const FACTS = facts();
 
@@ -78,7 +79,7 @@ export default function AcheterAuthentiqueHubPage() {
               href="/#pricing"
               className="inline-flex items-center justify-center rounded-full border border-line bg-surface-raised px-6 py-3 text-ui font-semibold text-foreground transition-colors duration-fast hover:bg-surface-hover"
             >
-              Voir les forfaits
+              {SUBSCRIPTIONS_ON_SALE ? "Voir les forfaits" : "Voir le tarif"}
             </Link>
           </div>
         </div>
