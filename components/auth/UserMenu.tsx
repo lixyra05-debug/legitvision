@@ -7,6 +7,7 @@ import { LogOut, LayoutDashboard, CreditCard } from "lucide-react";
 import Link from "next/link";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 
 /**
  * Design system : emerald dosé — il ne porte que le bouton de connexion et
@@ -109,14 +110,16 @@ export function UserMenu() {
               <LayoutDashboard className="size-4" />
               {t("userMenu.dashboard")}
             </Link>
-            <Link
-              href="/dashboard/subscription"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-2 rounded-sm px-3 py-2 text-ui text-muted-foreground transition-colors duration-fast hover:bg-surface-hover hover:text-foreground"
-            >
-              <CreditCard className="size-4" />
-              {t("userMenu.manageSubscription")}
-            </Link>
+            {SUBSCRIPTIONS_ON_SALE && (
+              <Link
+                href="/dashboard/subscription"
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2 rounded-sm px-3 py-2 text-ui text-muted-foreground transition-colors duration-fast hover:bg-surface-hover hover:text-foreground"
+              >
+                <CreditCard className="size-4" />
+                {t("userMenu.manageSubscription")}
+              </Link>
+            )}
           </div>
 
           <div className="border-t border-line py-1">

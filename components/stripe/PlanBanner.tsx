@@ -1,7 +1,7 @@
 "use client";
 
 import { Zap, Crown } from "lucide-react";
-import type { PlanId } from "@/lib/stripe/config";
+import { SUBSCRIPTIONS_ON_SALE, type PlanId } from "@/lib/stripe/config";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 interface PlanBannerProps {
@@ -47,12 +47,35 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
             </p>
           </div>
         </div>
+        {SUBSCRIPTIONS_ON_SALE && (
+          <a
+            href="/checkout?plan=business"
+            className="flex items-center gap-1.5 rounded-md bg-accent/10 px-3 py-1.5 text-caption font-medium text-accent transition-colors duration-fast hover:bg-accent/20"
+          >
+            <Crown className="size-3" />
+            {t("planBanner.upgradeToBusiness")}
+          </a>
+        )}
+      </div>
+    );
+  }
+
+  // Abonnements fermés : l'analyse à l'unité seule.
+  if (!SUBSCRIPTIONS_ON_SALE) {
+    return (
+      <div className="flex flex-col gap-3 rounded-md border border-line bg-surface px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-ui font-semibold">{t("planBanner.singleTitle")}</p>
+          <p className="mt-0.5 text-caption text-muted-foreground">
+            {t("planBanner.singleDesc")}
+          </p>
+        </div>
         <a
-          href="/checkout?plan=business"
-          className="flex items-center gap-1.5 rounded-md bg-accent/10 px-3 py-1.5 text-caption font-medium text-accent transition-colors duration-fast hover:bg-accent/20"
+          href="/checkout?plan=single"
+          className="flex items-center justify-center gap-1.5 rounded-md border border-accent/30 bg-accent/10 px-3 py-1.5 text-caption font-semibold text-accent transition-colors duration-fast hover:bg-accent/20"
         >
-          <Crown className="size-3" />
-          {t("planBanner.upgradeToBusiness")}
+          <Zap className="size-3" />
+          {t("planBanner.singleCta")}
         </a>
       </div>
     );

@@ -15,6 +15,7 @@ import { RevealGroup, RevealItem } from "./Reveal";
 import { Counter } from "./Counter";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { ANALYSIS_MEDIAN_SECONDS, CATALOG } from "@/lib/site-facts";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 
 /**
  * 5 sections client de la landing — i18n FR/EN.
@@ -251,11 +252,18 @@ const PLAN_DEFS: {
   },
 ];
 
+/** Formules affichées : l'analyse unique seule tant que les abonnements sont fermés. */
+const VISIBLE_PLANS = SUBSCRIPTIONS_ON_SALE ? PLAN_DEFS : PLAN_DEFS.filter((p) => p.tier === "single");
+
 export function PlansSection() {
   const { t } = useTranslation();
   return (
-    <RevealGroup className="mt-16 grid gap-6 sm:grid-cols-3">
-      {PLAN_DEFS.map((plan) => {
+    <RevealGroup
+      className={
+        VISIBLE_PLANS.length > 1 ? "mt-16 grid gap-6 sm:grid-cols-3" : "mx-auto mt-16 grid max-w-sm gap-6"
+      }
+    >
+      {VISIBLE_PLANS.map((plan) => {
         const name = t(`plans.${plan.tier}.name`);
         const price = t(`plans.${plan.tier}.price`);
         const period = t(`plans.${plan.tier}.period`);

@@ -72,6 +72,20 @@ export const PLAN_META: Record<PlanId, PlanMeta> = {
 
 export const PAID_PLANS: PlanId[] = ["pro", "business"];
 
+/**
+ * Abonnements Pro et Business en vente. Fermés le 27/09/2026 (décision
+ * d'Hector) jusqu'à la migration 020 (abonnements sans report) : seule
+ * l'analyse unique est vendue. Tant que false, aucune offre d'abonnement n'est
+ * affichée, et le serveur refuse d'ouvrir une session d'abonnement ou de
+ * changer de formule (app/checkout/page.tsx, app/api/stripe/checkout/route.ts).
+ */
+export const SUBSCRIPTIONS_ON_SALE = false;
+
+/** La formule peut-elle être achetée aujourd'hui ? L'analyse unique, toujours ; un abonnement, si les abonnements sont en vente. */
+export function isPlanOnSale(plan: "single" | "pro" | "business"): boolean {
+  return plan === "single" || SUBSCRIPTIONS_ON_SALE;
+}
+
 /** Crédits accordés à chaque facturation mensuelle (free = bonus à l'inscription, mais désactivé depuis mig 016) */
 export const PLAN_CREDITS: Record<PlanId, number> = {
   free: 0,

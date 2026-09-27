@@ -22,6 +22,7 @@ import { PhotoUploader } from "@/components/check/PhotoUploader";
 import type { Category, Brand, Model, PhotoSlot } from "@/lib/types";
 import { facts } from "@/lib/site-facts";
 import { NO_AUTH_POINTS } from "@/lib/analyzable";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 import {
   ANALYSIS_CLIENT_TIMEOUT_SECONDS,
   NOT_STARTED_STATUSES,
@@ -409,7 +410,7 @@ export default function NewCheckPage() {
         .single();
 
       if (!profile || profile.credits_remaining < 1) {
-        // Pas de crédit → afficher le modal paywall (3 formules Stripe)
+        // Pas de crédit → afficher le modal paywall (formules en vente)
         setShowPaywall(true);
         return;
       }
@@ -649,20 +650,24 @@ export default function NewCheckPage() {
                 <span>{t("pricing.single")}</span>
                 <span className="font-heading text-body">{FACTS.priceSingle}</span>
               </button>
-              <button
-                onClick={() => { window.location.href = "/checkout?plan=pro"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
-              >
-                <span>{t("pricing.proDesc")}</span>
-                <span className="font-heading text-body">{FACTS.pricePro}{t("check.perMonth")}</span>
-              </button>
-              <button
-                onClick={() => { window.location.href = "/checkout?plan=business"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
-              >
-                <span>{t("pricing.premiumDesc")}</span>
-                <span className="font-heading text-body">{FACTS.priceBusiness}{t("check.perMonth")}</span>
-              </button>
+              {SUBSCRIPTIONS_ON_SALE && (
+                <>
+                  <button
+                    onClick={() => { window.location.href = "/checkout?plan=pro"; }}
+                    className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
+                  >
+                    <span>{t("pricing.proDesc")}</span>
+                    <span className="font-heading text-body">{FACTS.pricePro}{t("check.perMonth")}</span>
+                  </button>
+                  <button
+                    onClick={() => { window.location.href = "/checkout?plan=business"; }}
+                    className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
+                  >
+                    <span>{t("pricing.premiumDesc")}</span>
+                    <span className="font-heading text-body">{FACTS.priceBusiness}{t("check.perMonth")}</span>
+                  </button>
+                </>
+              )}
             </div>
             <div className="relative mt-5 flex items-center justify-between text-caption text-subtle">
               <span>{t("check.paymentSecure")}</span>
@@ -1051,7 +1056,9 @@ export default function NewCheckPage() {
                 Aucun crédit d&apos;analyse
               </h3>
               <p className="mt-2 text-ui text-muted-foreground">
-                Choisissez une formule pour lancer votre analyse.
+                {SUBSCRIPTIONS_ON_SALE
+                  ? "Choisissez une formule pour lancer votre analyse."
+                  : "Achetez un crédit pour lancer votre analyse."}
               </p>
             </div>
 
@@ -1063,20 +1070,24 @@ export default function NewCheckPage() {
                 <span>{t("pricing.single")}</span>
                 <span className="font-heading text-body">{FACTS.priceSingle}</span>
               </button>
-              <button
-                onClick={() => { window.location.href = "/checkout?plan=pro"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
-              >
-                <span>{t("pricing.proDesc")}</span>
-                <span className="font-heading text-body">{FACTS.pricePro}{t("check.perMonth")}</span>
-              </button>
-              <button
-                onClick={() => { window.location.href = "/checkout?plan=business"; }}
-                className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
-              >
-                <span>{t("pricing.premiumDesc")}</span>
-                <span className="font-heading text-body">{FACTS.priceBusiness}{t("check.perMonth")}</span>
-              </button>
+              {SUBSCRIPTIONS_ON_SALE && (
+                <>
+                  <button
+                    onClick={() => { window.location.href = "/checkout?plan=pro"; }}
+                    className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
+                  >
+                    <span>{t("pricing.proDesc")}</span>
+                    <span className="font-heading text-body">{FACTS.pricePro}{t("check.perMonth")}</span>
+                  </button>
+                  <button
+                    onClick={() => { window.location.href = "/checkout?plan=business"; }}
+                    className="flex h-12 w-full items-center justify-between gap-3 rounded-md border border-line bg-surface px-5 text-ui font-semibold text-foreground transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover"
+                  >
+                    <span>{t("pricing.premiumDesc")}</span>
+                    <span className="font-heading text-body">{FACTS.priceBusiness}{t("check.perMonth")}</span>
+                  </button>
+                </>
+              )}
             </div>
 
             <p className="relative mt-5 text-center text-caption text-subtle">

@@ -50,6 +50,7 @@ import {
 } from "@/components/landing/LandingI18nClient";
 import { SITE_URL } from "@/lib/site-url";
 import { facts, PRICES } from "@/lib/site-facts";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 
 const FACTS = facts();
 
@@ -518,7 +519,9 @@ export default async function LandingPage() {
               <LandingLabel tkey="landing.labelPricing" />
             </p>
             <SectionH2 tkey="landing.pricingMainTitle" />
-            <SectionSub tkey="landing.pricingMainSubtitle" />
+            <SectionSub
+              tkey={SUBSCRIPTIONS_ON_SALE ? "landing.pricingMainSubtitle" : "landing.pricingMainSubtitleSingle"}
+            />
           </Reveal>
 
           <PlansSection />

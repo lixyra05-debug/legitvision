@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/i18n/translations";
 import { facts } from "@/lib/site-facts";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 
 const FACTS = facts();
 const FACTS_EN = facts("en");
@@ -29,7 +30,9 @@ const FAQ_ITEMS_FR: FaqItem[] = [
   },
   {
     q: "Combien coûte une analyse ?",
-    a: `L'utilisation unique coûte ${FACTS.priceSingle}. Le forfait Mensuel est à ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses. Le Premium est à ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses. Aucune analyse gratuite n'est incluse.`,
+    a: SUBSCRIPTIONS_ON_SALE
+      ? `L'utilisation unique coûte ${FACTS.priceSingle}. Le forfait Mensuel est à ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses. Le Business est à ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses. Aucune analyse gratuite n'est incluse.`
+      : `Une analyse coûte ${FACTS.priceSingle}, payée à l'unité, sans abonnement. Aucune analyse gratuite n'est incluse.`,
   },
   {
     q: "Combien de temps prend une analyse ?",
@@ -64,7 +67,9 @@ const FAQ_ITEMS_EN: FaqItem[] = [
   },
   {
     q: "How much does an analysis cost?",
-    a: `Single use costs ${FACTS_EN.priceSingle}. The Monthly plan is ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses. Premium is ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses. No free analysis is included.`,
+    a: SUBSCRIPTIONS_ON_SALE
+      ? `Single use costs ${FACTS_EN.priceSingle}. The Monthly plan is ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses. Business is ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses. No free analysis is included.`
+      : `An analysis costs ${FACTS_EN.priceSingle}, paid one at a time, with no subscription. No free analysis is included.`,
   },
   {
     q: "How long does an analysis take?",

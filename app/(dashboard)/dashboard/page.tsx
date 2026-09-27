@@ -54,6 +54,7 @@ export default async function DashboardPage(
     searchParams: Promise<{
       session_id?: string;
       plan_changed?: string;
+      purchased?: string;
       page?: string | string[];
     }>;
   }
@@ -183,7 +184,9 @@ export default async function DashboardPage(
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
         {/* Bandeau succès Stripe */}
-        {searchParams.session_id && <SuccessBanner />}
+        {searchParams.session_id && (
+          <SuccessBanner variant={searchParams.purchased === "single" ? "single" : "purchase"} />
+        )}
         {searchParams.plan_changed && <SuccessBanner variant="planChange" />}
 
         {/* Header */}

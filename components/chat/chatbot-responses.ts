@@ -1,5 +1,6 @@
 import type { Locale } from "@/lib/i18n/translations";
 import { facts } from "@/lib/site-facts";
+import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 
 const FACTS = facts();
 const FACTS_EN = facts("en");
@@ -36,20 +37,29 @@ export const CHATBOT_RULES: ChatbotRule[] = [
       "fees",
       "how much",
     ],
-    response: {
-      fr:
-        "Nous proposons 3 formules adaptées à vos besoins :\n\n" +
-        `• Utilisation unique — ${FACTS.priceSingle} par analyse\n` +
-        `• Mensuel — ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses\n` +
-        `• Premium — ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses\n\n` +
-        "Chaque analyse inclut un rapport détaillé avec score sur 100, sous-scores par zone et recommandations. Vous pouvez commencer avec une analyse unique pour tester.",
-      en:
-        "We offer 3 plans to fit your needs:\n\n" +
-        `• Single use — ${FACTS_EN.priceSingle} per analysis\n` +
-        `• Monthly — ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses\n` +
-        `• Premium — ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses\n\n` +
-        "Every analysis includes a detailed report with a score out of 100, per-zone sub-scores and recommendations. You can start with a single analysis to test.",
-    },
+    response: SUBSCRIPTIONS_ON_SALE
+      ? {
+          fr:
+            "Nous proposons 3 formules adaptées à vos besoins :\n\n" +
+            `• Utilisation unique — ${FACTS.priceSingle} par analyse\n` +
+            `• Mensuel — ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses\n` +
+            `• Business — ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses\n\n` +
+            "Chaque analyse inclut un rapport détaillé avec score sur 100, sous-scores par zone et recommandations. Vous pouvez commencer avec une analyse unique pour tester.",
+          en:
+            "We offer 3 plans to fit your needs:\n\n" +
+            `• Single use — ${FACTS_EN.priceSingle} per analysis\n` +
+            `• Monthly — ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses\n` +
+            `• Business — ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses\n\n` +
+            "Every analysis includes a detailed report with a score out of 100, per-zone sub-scores and recommendations. You can start with a single analysis to test.",
+        }
+      : {
+          fr:
+            `Une analyse coûte ${FACTS.priceSingle}, payée à l'unité, sans abonnement.\n\n` +
+            "Chaque analyse inclut un rapport détaillé avec score sur 100, sous-scores par zone et recommandations.",
+          en:
+            `An analysis costs ${FACTS_EN.priceSingle}, paid one at a time, with no subscription.\n\n` +
+            "Every analysis includes a detailed report with a score out of 100, per-zone sub-scores and recommendations.",
+        },
   },
   {
     keywords: [
@@ -66,20 +76,27 @@ export const CHATBOT_RULES: ChatbotRule[] = [
       "unsubscribe",
       "subscription",
     ],
-    response: {
-      fr:
-        "Pour gérer ou résilier votre abonnement :\n\n" +
-        "1. Connectez-vous à votre compte\n" +
-        "2. Cliquez sur votre avatar en haut à droite\n" +
-        "3. Sélectionnez « Gérer l'abonnement »\n\n" +
-        `La résiliation prend effet à la fin de la période en cours. Vous conservez l'accès jusqu'à cette date. Besoin d'aide ? Écrivez-nous à ${CONTACT_EMAIL}`,
-      en:
-        "To manage or cancel your subscription:\n\n" +
-        "1. Sign in to your account\n" +
-        "2. Click your avatar in the top right\n" +
-        "3. Select \"Manage subscription\"\n\n" +
-        `Cancellation takes effect at the end of the current period. You keep access until that date. Need help? Email us at ${CONTACT_EMAIL}`,
-    },
+    response: !SUBSCRIPTIONS_ON_SALE
+      ? {
+          fr:
+            `Nous ne proposons pas d'abonnement pour le moment : chaque analyse se paie à l'unité (${FACTS.priceSingle}), sans engagement. Une question sur un paiement ? Écrivez-nous à ${CONTACT_EMAIL}`,
+          en:
+            `We don't offer subscriptions at the moment: each analysis is paid one at a time (${FACTS_EN.priceSingle}), with no commitment. A question about a payment? Email us at ${CONTACT_EMAIL}`,
+        }
+      : {
+          fr:
+            "Pour gérer ou résilier votre abonnement :\n\n" +
+            "1. Connectez-vous à votre compte\n" +
+            "2. Cliquez sur votre avatar en haut à droite\n" +
+            "3. Sélectionnez « Gérer l'abonnement »\n\n" +
+            `La résiliation prend effet à la fin de la période en cours. Vous conservez l'accès jusqu'à cette date. Besoin d'aide ? Écrivez-nous à ${CONTACT_EMAIL}`,
+          en:
+            "To manage or cancel your subscription:\n\n" +
+            "1. Sign in to your account\n" +
+            "2. Click your avatar in the top right\n" +
+            "3. Select \"Manage subscription\"\n\n" +
+            `Cancellation takes effect at the end of the current period. You keep access until that date. Need help? Email us at ${CONTACT_EMAIL}`,
+        },
   },
   {
     keywords: [
@@ -236,14 +253,14 @@ export const CHATBOT_RULES: ChatbotRule[] = [
 export const DEFAULT_RESPONSE = {
   fr:
     "Je ne suis pas sûr de comprendre votre question. Voici ce que je peux vous aider avec :\n\n" +
-    "• Tarifs et formules\n" +
+    "• Tarifs\n" +
     "• Comment fonctionne l'analyse\n" +
     "• Marques et modèles supportés\n" +
     "• Contact et support\n\n" +
     `Ou écrivez-nous directement à ${CONTACT_EMAIL}`,
   en:
     "I'm not sure I understand your question. Here's what I can help with:\n\n" +
-    "• Pricing and plans\n" +
+    "• Pricing\n" +
     "• How the analysis works\n" +
     "• Supported brands and models\n" +
     "• Contact and support\n\n" +

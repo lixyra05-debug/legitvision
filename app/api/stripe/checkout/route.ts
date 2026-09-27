@@ -5,6 +5,7 @@ import { stripe, getPriceId, getOrCreateCustomer } from "@/lib/stripe/server";
 import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 import { z } from "zod";
 import { normalizeBaseUrl } from "@/lib/site-url";
+import { isPlanOnSale } from "@/lib/stripe/config";
 
 // Cet endpoint ne gère QUE les abonnements (mode: subscription).
 // "single" (paiement unique) passe par app/checkout/page.tsx, jamais ici.
@@ -39,6 +40,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Plan invalide" }, { status: 400 });
   }
   const planId = checkoutParsed.data.planId;
+
+  // 2b. Abonnements fermés (SUBSCRIPTIONS_ON_SALE) : aucune session créée.
+  if (!isPlanOnSale(planId)) {
+    return NextResponse.json(
+      { error: "Les abonnements ne sont pas proposés pour le moment." },
+      { status: 403 }
+    );
+  }
 
   // 3. Récupérer le profil (pour stripe_customer_id éventuel)
   const admin = createAdminClient();
