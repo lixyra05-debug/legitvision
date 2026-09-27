@@ -188,7 +188,7 @@ export const translations = {
         badge: "",
       },
       pro: {
-        name: "Mensuel",
+        name: "Pro",
         price: FACTS.pricePro,
         period: "/mois",
         description: "Pour les acheteurs réguliers",
@@ -687,7 +687,7 @@ export const translations = {
         badge: "",
       },
       pro: {
-        name: "Monthly",
+        name: "Pro",
         price: FACTS_EN.pricePro,
         period: "/month",
         description: "For regular buyers",

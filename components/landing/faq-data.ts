@@ -31,7 +31,7 @@ const FAQ_ITEMS_FR: FaqItem[] = [
   {
     q: "Combien coûte une analyse ?",
     a: SUBSCRIPTIONS_ON_SALE
-      ? `L'utilisation unique coûte ${FACTS.priceSingle}. Le forfait Mensuel est à ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses. Le Business est à ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses. Aucune analyse gratuite n'est incluse.`
+      ? `L'utilisation unique coûte ${FACTS.priceSingle}. Le forfait Pro est à ${FACTS.pricePro}/mois pour ${FACTS.proAnalyses} analyses. Le Business est à ${FACTS.priceBusiness}/mois pour ${FACTS.businessAnalyses} analyses. Aucune analyse gratuite n'est incluse.`
       : `Une analyse coûte ${FACTS.priceSingle}, payée à l'unité, sans abonnement. Aucune analyse gratuite n'est incluse.`,
   },
   {
@@ -68,7 +68,7 @@ const FAQ_ITEMS_EN: FaqItem[] = [
   {
     q: "How much does an analysis cost?",
     a: SUBSCRIPTIONS_ON_SALE
-      ? `Single use costs ${FACTS_EN.priceSingle}. The Monthly plan is ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses. Business is ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses. No free analysis is included.`
+      ? `Single use costs ${FACTS_EN.priceSingle}. The Pro plan is ${FACTS_EN.pricePro}/month for ${FACTS_EN.proAnalyses} analyses. Business is ${FACTS_EN.priceBusiness}/month for ${FACTS_EN.businessAnalyses} analyses. No free analysis is included.`
       : `An analysis costs ${FACTS_EN.priceSingle}, paid one at a time, with no subscription. No free analysis is included.`,
   },
   {
