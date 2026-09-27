@@ -29,11 +29,13 @@ export const ANALYSIS_MAX_SECONDS = 300;
  * coupure de la plateforme :
  * - au démarrage à froid de la fonction, compté par Vercel mais pas par
  *   l'horloge de la route (quelques secondes) ;
- * - à l'enregistrement du rapport, au débit et à la réponse, ou à
- *   l'enregistrement de l'échec (fonctions à iad1, base à eu-west-1 : chaque
+ * - à l'enregistrement du rapport et à la réponse, ou à l'enregistrement de
+ *   l'échec et au remboursement du crédit réservé, retenté au plus deux fois
+ *   à une seconde d'intervalle (fonctions à iad1, base à eu-west-1 : chaque
  *   écriture traverse l'Atlantique).
- * 30 s couvrent largement ces étapes, qui prennent environ une seconde
- * (mesure du 2026-09-24 : 0,4 s entre l'enregistrement et le débit).
+ * 30 s couvrent largement ces étapes, qui prennent environ une seconde, ou
+ * quelques-unes si le remboursement est retenté (mesure du 2026-09-24 : 0,4 s
+ * entre l'enregistrement et le débit).
  */
 export const ANALYSIS_END_MARGIN_SECONDS = 30;
 
@@ -44,7 +46,8 @@ export const ANALYSIS_END_MARGIN_SECONDS = 30;
  * l'écart d'horloge entre la base (updated_at) et le serveur qui lit, de
  * l'ordre de la seconde (horloges synchronisées par NTP) : 30 s le couvrent
  * largement. Une marge trop courte ne coûterait rien au client : la route
- * n'enregistre ni ne débite une analyse qui n'est plus « analyzing ».
+ * n'enregistre pas une analyse qui n'est plus « analyzing », et rend alors le
+ * crédit réservé.
  */
 export const ANALYSIS_STALE_MARGIN_SECONDS = 30;
 
@@ -87,8 +90,8 @@ export const ANALYSIS_CLIENT_TIMEOUT_SECONDS = ANALYSIS_MAX_SECONDS + 30;
 export const REPORT_REFRESH_SECONDS = 5;
 
 /**
- * Borne ANNONCÉE au client, en minutes entières : le rapport, ou l'échec sans
- * débit, s'affiche sur la page de l'analyse au plus tard ce délai après la fin
+ * Borne ANNONCÉE au client, en minutes entières : le rapport, ou l'avis
+ * d'échec, s'affiche sur la page de l'analyse au plus tard ce délai après la fin
  * de l'envoi des photos (la réservation par la route suit cet envoi). Pire cas : la fonction est coupée sans écrire l'échec (l'échéance
  * interne ne borne que l'appel au modèle) ; l'analyse est alors reprise
  * au-delà de ANALYSIS_STALE_AFTER_SECONDS, au rafraîchissement suivant de sa
@@ -121,8 +124,9 @@ export function analysisModelDeadline(requestStartedAt: number): number {
  * - "not_started" : restée « uploading » au-delà de UPLOAD_STALE_AFTER_SECONDS
  *   (client parti pendant l'envoi des photos), ou « pending » au-delà de
  *   LAUNCH_STALE_AFTER_SECONDS (demande de lancement jamais arrivée).
- * Dans tous les cas, rien n'a été débité : le débit suit l'enregistrement du
- * rapport, qui n'a pas eu lieu.
+ * « not_started » : la route n'a rien réservé. « timed_out » : la fonction a pu
+ * être coupée après la réservation du crédit, sans le rendre (voir
+ * lib/analysis-stale.ts).
  */
 export type StaleKind = "timed_out" | "not_started";
 

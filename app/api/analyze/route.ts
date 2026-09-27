@@ -11,7 +11,9 @@ import {
   type ImageInput,
   type AnalysisOutput,
 } from "@/lib/ai/analyze";
-import { analysisModelDeadline } from "@/lib/analysis-limits";
+import { analysisModelDeadline, ANALYSIS_MAX_SECONDS } from "@/lib/analysis-limits";
+import { releaseReservedCredit } from "@/lib/credit-release";
+import { isOwnPhotoPath } from "@/lib/photo-path";
 import { rateLimit, tooManyRequests } from "@/lib/rate-limit";
 import type { Brand, Model, PhotoSlot } from "@/lib/types";
 import { hasAuthenticationPoints } from "@/lib/analyzable";
@@ -32,6 +34,17 @@ const analyzeBodySchema = z.object({
 });
 
 const MAX_PHOTOS = 15;
+
+const CONTACT_EMAIL = "legitvision.contact@gmail.com";
+
+// Aucune nouvelle tentative de remboursement dans les dernières secondes avant
+// la coupure de la plateforme (ANALYSIS_MAX_SECONDS).
+const REFUND_STOP_BEFORE_END_SECONDS = 5;
+
+// Attente avant de chercher la ligne « usage » d'une réservation dont la
+// réponse s'est perdue : une requête encore en cours côté base a le temps
+// d'aboutir (verrou sur le profil tenu par un autre débit, quelques ms).
+const RESERVATION_SETTLE_MS = 1000;
 
 // Statuts d'une analyse à lancer : « pending » (photos envoyées, lancement
 // demandé : check/new l'écrit juste avant d'appeler la route) et « uploading »
@@ -182,11 +195,13 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // 7. Fetch analysis photos
+  // 7. Fetch analysis photos. Filtrées aussi par propriétaire : la policy
+  //    d'insertion de analysis_photos ne vérifie que user_id, pas l'analyse.
   const { data: photos } = await admin
     .from("analysis_photos")
     .select("*")
     .eq("analysis_id", analysisId)
+    .eq("user_id", user.id)
     .order("order_index");
 
   if (!photos || photos.length === 0) {
@@ -200,6 +215,17 @@ export async function POST(request: NextRequest) {
   if (photos.length > MAX_PHOTOS) {
     return NextResponse.json(
       { error: `Trop de photos (maximum ${MAX_PHOTOS} par analyse).` },
+      { status: 400 }
+    );
+  }
+
+  // 7b. Chemin de stockage : écrit par le navigateur, donc à vérifier
+  //     (lib/photo-path.ts). La route télécharge avec la clé serveur : un chemin
+  //     hors du dossier de CETTE analyse ferait analyser (et décrire dans le
+  //     rapport) la photo d'un autre.
+  if (photos.some((p) => !isOwnPhotoPath(p.storage_path, user.id, analysisId))) {
+    return NextResponse.json(
+      { error: "Une photo de cette analyse est invalide : lancez une nouvelle analyse. Aucun crédit n'a été décompté." },
       { status: 400 }
     );
   }
@@ -228,14 +254,12 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Tout ce qui peut échouer AVANT le débit est dans ce try : son catch écrit
-  // l'échec et répond « aucun crédit décompté », ce qui n'est vrai que parce
-  // que le débit (étape 13) est hors du try, après l'enregistrement du rapport.
-  let result: AnalysisOutput;
-  let finalStatus: "completed" | "expert_review";
+  // 9. Download photos from Supabase Storage, et validation SERVEUR du contenu
+  //    réel du bucket. AVANT la réservation du crédit : une photo refusée ne
+  //    réserve (et ne rend) rien.
+  let images: ImageInput[];
   try {
-    // 9. Download photos from Supabase Storage
-    const images: ImageInput[] = await Promise.all(
+    images = await Promise.all(
       photos.map(async (photo) => {
         const { data, error } = await admin.storage
           .from("analysis-photos")
@@ -251,8 +275,8 @@ export async function POST(request: NextRequest) {
         const label = slot?.label ?? photo.photo_type;
         const buffer = Buffer.from(await data.arrayBuffer());
 
-        // B : validation SERVEUR du contenu réel du bucket (format/résolution/taille).
-        //     Ne pas faire confiance à la validation client (PhotoUploader).
+        // B : format/résolution/taille. Ne pas faire confiance à la
+        //     validation client (PhotoUploader).
         const check = await validateImageBuffer(buffer, label);
         if (!check.valid) throw new PhotoValidationError(check.reason);
 
@@ -264,8 +288,70 @@ export async function POST(request: NextRequest) {
         };
       })
     );
+  } catch (error) {
+    await admin
+      .from("analyses")
+      .update({ status: "failed" })
+      .eq("id", analysisId)
+      .eq("status", "analyzing");
+    if (error instanceof PhotoValidationError) {
+      return NextResponse.json(
+        { error: `${error.message} Remplacez-la, puis relancez l'analyse : aucun crédit n'a été décompté.` },
+        { status: 400 }
+      );
+    }
+    console.error("[analyze] photos illisibles :", error);
+    return NextResponse.json(
+      { error: "Impossible de télécharger une photo. Aucun crédit n'a été décompté : relancez l'analyse." },
+      { status: 500 }
+    );
+  }
 
-    // 10. Run AI analysis
+  // 10. RÉSERVATION du crédit AVANT l'appel au modèle (course au débit, 27/09).
+  //     decrement_credits_atomic (UPDATE conditionnel « ≥ 1 » et ligne « usage »
+  //     dans la même transaction) sert de verrou : deux analyses lancées
+  //     ensemble avec un seul crédit, une seule passe, l'autre reçoit 402 sans
+  //     rien consommer. Le contrôle de l'étape 4b n'est qu'un raccourci.
+  //     Le crédit est rendu (releaseReservedCredit) si les photos sont jugées
+  //     insuffisantes ou si l'analyse échoue : la règle des CGU est tenue.
+  //     La description porte un identifiant de lancement : elle désigne la
+  //     ligne « usage » de CETTE requête (et non d'un lancement antérieur de la
+  //     même analyse).
+  const reservation = `Analyse ${analysisId} (lancement ${crypto.randomUUID()})`;
+  const launch: Launch = { userId: user.id, analysisId, reservation };
+  const refundDeadline =
+    requestStartedAt + (ANALYSIS_MAX_SECONDS - REFUND_STOP_BEFORE_END_SECONDS) * 1000;
+  const { error: reserveError } = await admin.rpc("decrement_credits_atomic", {
+    p_user_id: user.id,
+    p_analysis_id: analysisId,
+    p_description: reservation,
+  });
+  if (reserveError) {
+    await admin
+      .from("analyses")
+      .update({ status: "failed" })
+      .eq("id", analysisId)
+      .eq("status", "analyzing");
+    if (/INSUFFICIENT_CREDITS/.test(reserveError.message)) {
+      return NextResponse.json(
+        { error: "Crédits insuffisants. Rechargez votre compte pour continuer." },
+        { status: 402 }
+      );
+    }
+    console.error("[analyze] réservation du crédit en erreur :", reserveError.message);
+    return NextResponse.json(
+      { error: await releaseLostReservation(admin, launch, refundDeadline) },
+      { status: 503 }
+    );
+  }
+
+  // Tout ce qui peut échouer après la réservation du crédit est dans ce try :
+  // son catch écrit l'échec, REND le crédit réservé, et ne dit « aucun crédit
+  // décompté » que si le remboursement a réussi.
+  let result: AnalysisOutput;
+  let finalStatus: "completed" | "expert_review";
+  try {
+    // 11. Run AI analysis
     result = await runAnalysis({
       images,
       brandName: brand.name,
@@ -278,9 +364,9 @@ export async function POST(request: NextRequest) {
       deadline: analysisModelDeadline(requestStartedAt),
     });
 
-    // 11. Determine if expert review is needed
+    // 12. Determine if expert review is needed
     // P1-3 : "insufficient" ne déclenche PAS de revue expert (un expert ne corrige
-    // pas des photos illisibles) → status restera "completed", et crédit non débité.
+    // pas des photos illisibles) → status restera "completed", et crédit rendu.
     const needsExpertReview =
       !result.insufficient &&
       ((result.overallScore >= 40 && result.overallScore <= 60) ||
@@ -288,28 +374,47 @@ export async function POST(request: NextRequest) {
 
     finalStatus = needsExpertReview ? "expert_review" : "completed";
 
-    // 12. Save results — CONDITIONNEL : seulement si l'analyse est encore
+    // 13. Save results — CONDITIONNEL : seulement si l'analyse est encore
     //     « analyzing ». Si la reprise des analyses bloquées
-    //     (lib/analysis-stale.ts) l'a classée « failed » entre-temps, le client
-    //     a pu lire « aucun crédit décompté » : rien n'est enregistré ni débité.
+    //     (lib/analysis-stale.ts) l'a classée « failed » entre-temps, rien
+    //     n'est enregistré, et le catch rend le crédit.
+    //     Photos insuffisantes : l'analyse n'est pas décomptée, donc rien de
+    //     ce que le modèle a dit n'est gardé, hormis ce que le rapport affiche
+    //     (le motif et les éléments manquants). Le reste serait lisible par
+    //     l'API sans avoir été payé.
     const { data: saved, error: saveError } = await admin
       .from("analyses")
-      .update({
-        status: finalStatus,
-        overall_score: result.overallScore,
-        confidence: result.confidence,
-        verdict: result.verdict,
-        sub_scores: result.subScores,
-        findings: result.findings,
-        ai_raw_response: result.aiRawResponse,
-      })
+      .update(
+        result.insufficient
+          ? {
+              status: finalStatus,
+              overall_score: null,
+              confidence: result.confidence,
+              verdict: result.verdict,
+              sub_scores: null,
+              findings: null,
+              ai_raw_response: {
+                confidence_level: "insufficient",
+                missing_evidence: result.aiRawResponse.missing_evidence ?? [],
+              },
+            }
+          : {
+              status: finalStatus,
+              overall_score: result.overallScore,
+              confidence: result.confidence,
+              verdict: result.verdict,
+              sub_scores: result.subScores,
+              findings: result.findings,
+              ai_raw_response: result.aiRawResponse,
+            }
+      )
       .eq("id", analysisId)
       .eq("status", "analyzing")
       .select("id");
 
-    // Rapport non enregistré : rien n'est débité (le débit suit), et le catch
-    // marque l'analyse « failed ». Les CGU le promettent : une erreur technique
-    // qui empêche de produire le rapport n'est pas décomptée.
+    // Rapport non enregistré : le catch marque l'analyse « failed » et rend le
+    // crédit réservé. Les CGU le promettent : une erreur technique qui empêche
+    // de produire le rapport n'est pas décomptée.
     if (saveError) {
       throw new AnalysisError(
         "Le rapport n'a pas pu être enregistré. Aucun crédit n'a été décompté : relancez l'analyse.",
@@ -321,24 +426,38 @@ export async function POST(request: NextRequest) {
     }
   } catch (error) {
     console.error("[analyze] Error during analysis:", error);
-    // Mark analysis as failed so it doesn't stay stuck. Conditionnel : un
-    // rapport déjà enregistré (statut sorti de « analyzing ») n'est jamais
-    // écrasé. Toute erreur arrivant ici précède le débit : aucun crédit n'a
-    // été décompté, ce que disent les messages renvoyés.
-    await admin
-      .from("analyses")
-      .update({ status: "failed" })
-      .eq("id", analysisId)
-      .eq("status", "analyzing");
+    const issue = await closeFailedAnalysis(admin, analysisId);
 
-    // B : photos invalides → 400 message clair (aucun crédit débité : le débit
-    // est en aval, sur le chemin succès uniquement).
-    if (error instanceof PhotoValidationError) {
+    // L'écriture du rapport a abouti malgré l'erreur reçue (réponse perdue) :
+    // le rapport est là, le client est envoyé vers lui. Rapport complet : il
+    // est dû. Photos insuffisantes : non décompté, le crédit est rendu.
+    if (issue === "report") {
+      await markReservation(admin, launch, "rapport enregistré");
+      return NextResponse.json({ success: true, analysisId });
+    }
+    if (issue === "report_insufficient") {
+      await refundLaunch(admin, launch, "photos insuffisantes", refundDeadline);
+      return NextResponse.json({ success: true, analysisId });
+    }
+
+    // Le crédit réservé par CETTE requête est rendu ; les messages de
+    // handleAnalysisError ne disent « aucun crédit décompté » qu'ensuite.
+    const rendu =
+      issue === "failed" && (await refundLaunch(admin, launch, "échec de l'analyse", refundDeadline));
+    if (!rendu) {
+      if (issue === "unknown") {
+        console.error("[analyze] issue inconnue après un échec : rapport et solde à vérifier", { analysisId });
+        await markReservation(admin, launch, "issue inconnue : vérifier le rapport et le solde");
+      }
       return NextResponse.json(
         {
-          error: `${error.message} Remplacez-la, puis relancez l'analyse : aucun crédit n'a été décompté.`,
+          error:
+            issue === "unknown"
+              ? `Une erreur technique empêche de confirmer l'issue de l'analyse. Ouvrez-la depuis votre tableau de bord dans quelques minutes : si aucun rapport n'y figure et qu'un crédit manque à votre solde, écrivez-nous à ${CONTACT_EMAIL}, nous le rendrons.`
+              : `L'analyse n'a pas abouti et le crédit réservé n'a pas pu vous être rendu automatiquement. Écrivez-nous à ${CONTACT_EMAIL} : nous le rendrons.`,
+          code: "REFUND_PENDING",
         },
-        { status: 400 }
+        { status: 500 }
       );
     }
 
@@ -346,38 +465,135 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: message, code }, { status: 500 });
   }
 
-  // 13. Rapport enregistré (étape 12, conditionnelle). Déduire 1 crédit
-  //     ATOMIQUEMENT via RPC (B-RACE — fix TOCTOU)
-  //     La RPC fait UPDATE conditionnel + INSERT credits_transactions dans
-  //     une seule transaction. Si crédits < 1 au moment du débit (race),
-  //     l'erreur est loggée mais l'analyse réussit (l'user a payé Claude
-  //     côté coût mais pas côté crédit — situation rare grâce aux guards).
-  // P1-3 : si l'IA juge les photos insuffisantes (résultat non exploitable),
-  // on NE débite PAS le crédit — le client n'a pas eu de résultat utilisable.
-  if (!result.insufficient) {
-    const { error: decrementError } = await admin.rpc(
-      "decrement_credits_atomic",
-      {
-        p_user_id: user.id,
-        p_analysis_id: analysisId,
-        p_description: `Analyse ${analysisId}`,
-      }
-    );
-    if (decrementError) {
-      console.error(
-        "[analyze] decrement_credits_atomic failed (race condition or insufficient credits):",
-        decrementError.message
-      );
-    }
+  // 14. Rapport enregistré. P1-3 : si l'IA juge les photos insuffisantes
+  //     (résultat non exploitable), le crédit réservé est rendu : le client
+  //     n'a pas eu de résultat utilisable. Sinon, la ligne « usage » est
+  //     marquée : le crédit a servi à un rapport enregistré.
+  if (result.insufficient) {
+    await refundLaunch(admin, launch, "photos insuffisantes", refundDeadline);
+  } else {
+    await markReservation(admin, launch, "rapport enregistré");
   }
 
   return NextResponse.json({
     success: true,
     analysisId,
-    overallScore: result.overallScore,
+    overallScore: result.insufficient ? null : result.overallScore,
     confidence: result.confidence,
     verdict: result.verdict,
     status: finalStatus,
     insufficient: result.insufficient,
   });
+}
+
+type Admin = ReturnType<typeof createAdminClient>;
+
+/** Un lancement : sa réservation est la description de sa ligne « usage ». */
+type Launch = { userId: string; analysisId: string; reservation: string };
+
+/**
+ * Rend le crédit réservé par ce lancement. S'il n'est pas rendu, la ligne
+ * « usage » le dit, pour le support : « crédit à rendre » (rien n'a été
+ * écrit) ou « remboursement incertain » (l'écriture a pu passer : vérifier le
+ * solde avant de rendre quoi que ce soit).
+ * @returns true si le crédit est rendu.
+ */
+async function refundLaunch(admin: Admin, launch: Launch, motif: string, deadline: number): Promise<boolean> {
+  const outcome = await releaseReservedCredit(admin, launch, motif, { deadline });
+  if (outcome === "released") return true;
+  console.error("[analyze] CRÉDIT NON RENDU : à vérifier à la main", {
+    analysisId: launch.analysisId,
+    motif,
+    outcome,
+  });
+  await markReservation(
+    admin,
+    launch,
+    outcome === "uncertain" ? "remboursement incertain : vérifier le solde" : "crédit à rendre"
+  );
+  return false;
+}
+
+/**
+ * La réservation a renvoyé une erreur : elle a pu être validée quand même
+ * (réponse perdue). La ligne « usage » de ce lancement le dit ; si elle existe,
+ * le crédit est rendu. « Aucun crédit » n'est écrit que si c'est vrai.
+ * @returns le message pour le client.
+ */
+async function releaseLostReservation(admin: Admin, launch: Launch, deadline: number): Promise<string> {
+  await new Promise((resolve) => setTimeout(resolve, RESERVATION_SETTLE_MS));
+  const { data: debit, error: readError } = await admin
+    .from("credits_transactions")
+    .select("id")
+    .eq("analysis_id", launch.analysisId)
+    .eq("type", "usage")
+    .eq("description", launch.reservation)
+    .limit(1);
+  if (readError) {
+    console.error("[analyze] réservation incertaine : crédit peut-être à rendre à la main", {
+      analysisId: launch.analysisId,
+    });
+    await markReservation(admin, launch, "réservation incertaine : vérifier le solde");
+    return `L'analyse n'a pas pu démarrer. Si un crédit manque à votre solde, écrivez-nous à ${CONTACT_EMAIL} : nous le rendrons.`;
+  }
+  if (debit && debit.length > 0 && !(await refundLaunch(admin, launch, "lancement interrompu", deadline))) {
+    return `L'analyse n'a pas pu démarrer et le crédit réservé n'a pas pu vous être rendu automatiquement. Écrivez-nous à ${CONTACT_EMAIL} : nous le rendrons.`;
+  }
+  return "L'analyse n'a pas pu démarrer. Aucun crédit n'a été décompté : réessayez dans un instant.";
+}
+
+/**
+ * Après un échec survenu une fois le crédit réservé : marque l'analyse
+ * « failed » si elle est encore « analyzing », sinon relit son état.
+ * - "failed" : aucun rapport enregistré, le crédit est à rendre ;
+ * - "report" : un rapport complet est enregistré (l'écriture a abouti mais sa
+ *   réponse s'est perdue) : il est dû, rien n'est rendu ;
+ * - "report_insufficient" : idem, mais photos jugées insuffisantes : non
+ *   décompté, le crédit est rendu ;
+ * - "unknown" : la base ne répond pas, ou l'analyse est dans un état que
+ *   cette requête n'explique pas (encore « analyzing », remise à lancer) :
+ *   rien ne peut être affirmé, rien n'est rendu automatiquement.
+ */
+async function closeFailedAnalysis(
+  admin: Admin,
+  analysisId: string
+): Promise<"failed" | "report" | "report_insufficient" | "unknown"> {
+  const { data: marked, error: markError } = await admin
+    .from("analyses")
+    .update({ status: "failed" })
+    .eq("id", analysisId)
+    .eq("status", "analyzing")
+    .select("id");
+  if (!markError && marked && marked.length > 0) return "failed";
+
+  const { data: current, error: readError } = await admin
+    .from("analyses")
+    .select("status, ai_raw_response")
+    .eq("id", analysisId)
+    .single();
+  if (readError || !current) return "unknown";
+  if (current.status === "failed") return "failed";
+  if (current.status === "completed" || current.status === "expert_review") {
+    const raw = current.ai_raw_response as { confidence_level?: string } | null;
+    return raw?.confidence_level === "insufficient" ? "report_insufficient" : "report";
+  }
+  return "unknown";
+}
+
+/**
+ * Complète la description de la ligne « usage » de ce lancement : trace pour
+ * le support (« rapport enregistré », « crédit à rendre »…). Une réservation
+ * sans mention ni remboursement vient d'une fonction coupée net : crédit à
+ * rendre. Un échec ici ne change rien pour le client : journalisé seulement.
+ */
+async function markReservation(admin: Admin, launch: Launch, mention: string): Promise<void> {
+  const { error } = await admin
+    .from("credits_transactions")
+    .update({ description: `${launch.reservation} — ${mention}` })
+    .eq("analysis_id", launch.analysisId)
+    .eq("type", "usage")
+    .eq("description", launch.reservation);
+  if (error) {
+    console.error("[analyze] ligne « usage » non annotée", { analysisId: launch.analysisId, mention });
+  }
 }
