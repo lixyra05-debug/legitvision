@@ -269,7 +269,7 @@ export const translations = {
       uploadingPhotos: "Envoi des photos",
       uploadingHint: "Ne fermez pas cette page : l'analyse démarre une fois les photos envoyées.",
       analyzingHint:
-        `Durée médiane : ${FACTS.median} s, envoi des photos compris. Le rapport, ou l'échec sans crédit décompté, s'affiche au plus tard ${FACTS.analysisMaxMinutes} minutes après la fin de l'envoi des photos. Ne fermez pas cette page.`,
+        `Durée médiane : ${FACTS.median} s, envoi des photos compris. Le rapport, ou l'avis d'échec, s'affiche au plus tard ${FACTS.analysisMaxMinutes} minutes après la fin de l'envoi des photos. Ne fermez pas cette page.`,
       continueToPhotos: "Continuer aux photos",
       noCredits: "Aucun crédit d'analyse",
       buyCredits:
@@ -325,7 +325,8 @@ export const translations = {
       insufficientTitle: "Photos insuffisantes — analyse non facturée",
       insufficientDesc:
         "L'IA a jugé vos photos insuffisantes pour authentifier l'article de façon fiable (qualité, cadrage ou angles manquants).",
-      insufficientNoCredit: "Cette analyse n'est pas facturée : votre crédit reste disponible.",
+      insufficientNoCredit:
+        "Cette analyse n'est pas facturée : le crédit réservé vous est rendu. S'il manque à votre solde, écrivez-nous à legitvision.contact@gmail.com et nous le rendrons.",
       insufficientCta: "Reprendre de meilleures photos",
       lowConfidenceWarnTitle: "Confiance faible — résultat indicatif",
       lowConfidenceWarnDesc:
@@ -342,14 +343,14 @@ export const translations = {
       analysisFailedShort: "Analyse non aboutie",
       analysisFailedTitle: "L'analyse n'a pas abouti",
       analysisFailedDesc:
-        "Aucun rapport n'a été produit et aucun crédit n'a été décompté. L'analyse a échoué, a dépassé sa durée maximale, ou n'a pas été lancée (envoi des photos interrompu, lancement refusé ou perdu). Relancez une analyse.",
+        "Aucun rapport n'a été produit. Une analyse qui échoue n'est pas décomptée : si un crédit a été réservé, il vous est rendu. S'il manque encore à votre solde, écrivez-nous à legitvision.contact@gmail.com et nous le rendrons. L'analyse a échoué, a dépassé sa durée maximale, ou n'a pas été lancée (envoi des photos interrompu, lancement refusé ou perdu). Relancez une analyse.",
       // Aucune revue humaine n'existe : ces résultats (score 40-60 ou confiance
       // faible, statut « expert_review » en base) sont définitifs, et le disent.
       uncertainResultTitle: "Résultat à interpréter avec prudence",
       uncertainResultDesc:
         "Le score se situe dans une zone intermédiaire : l'estimation reste incertaine. Ce résultat est définitif : aucune vérification humaine n'est prévue. Suivez les recommandations ci-dessous et, pour un article de valeur, faites-le examiner par un authentificateur indépendant.",
       analyzingDesc:
-        `Une analyse dure ${FACTS.median} secondes en médiane, envoi des photos compris. Le rapport, ou l'échec sans crédit décompté, s'affiche ici au plus tard ${FACTS.analysisMaxMinutes} minutes après la fin de l'envoi des photos. Cette page se met à jour toute seule.`,
+        `Une analyse dure ${FACTS.median} secondes en médiane, envoi des photos compris. Le rapport, ou l'avis d'échec, s'affiche ici au plus tard ${FACTS.analysisMaxMinutes} minutes après la fin de l'envoi des photos. Cette page se met à jour toute seule.`,
       // Statut « pending » : toutes les photos sont envoyées, le lancement est
       // demandé (check/new), la route ne l'a pas encore réservé.
       launchingTitle: "Lancement de l'analyse…",
@@ -761,7 +762,7 @@ export const translations = {
       uploadingPhotos: "Uploading photos",
       uploadingHint: "Don't close this page: the analysis starts once the photos are uploaded.",
       analyzingHint:
-        `Median duration: ${FACTS_EN.median} s, photo upload included. The report, or the failure with no credit used, appears within ${FACTS_EN.analysisMaxMinutes} minutes after the photos finish uploading. Don't close this page.`,
+        `Median duration: ${FACTS_EN.median} s, photo upload included. The report, or the failure notice, appears within ${FACTS_EN.analysisMaxMinutes} minutes after the photos finish uploading. Don't close this page.`,
       continueToPhotos: "Continue to photos",
       noCredits: "No analysis credits",
       buyCredits:
@@ -812,7 +813,8 @@ export const translations = {
       insufficientTitle: "Insufficient photos — analysis not charged",
       insufficientDesc:
         "The AI judged your photos insufficient to reliably authenticate the item (quality, framing or missing angles).",
-      insufficientNoCredit: "This analysis is not charged: your credit is still available.",
+      insufficientNoCredit:
+        "This analysis is not charged: the reserved credit is returned to you. If it is missing from your balance, write to us at legitvision.contact@gmail.com and we will return it.",
       insufficientCta: "Retake better photos",
       lowConfidenceWarnTitle: "Low confidence — indicative result",
       lowConfidenceWarnDesc:
@@ -829,12 +831,12 @@ export const translations = {
       analysisFailedShort: "Analysis not completed",
       analysisFailedTitle: "The analysis did not complete",
       analysisFailedDesc:
-        "No report was produced and no credit was used. The analysis failed, exceeded its maximum duration, or was not started (photo upload interrupted, launch refused or lost). Start a new analysis.",
+        "No report was produced. A failed analysis is not charged: if a credit was reserved, it is returned to you. If it is still missing from your balance, write to us at legitvision.contact@gmail.com and we will return it. The analysis failed, exceeded its maximum duration, or was not started (photo upload interrupted, launch refused or lost). Start a new analysis.",
       uncertainResultTitle: "Interpret this result with caution",
       uncertainResultDesc:
         "The score falls in an intermediate range: the estimate remains uncertain. This result is final: no human review is planned. Follow the recommendations below and, for a valuable item, have it examined by an independent authenticator.",
       analyzingDesc:
-        `An analysis takes a median of ${FACTS_EN.median} seconds, photo upload included. The report, or the failure with no credit used, appears here within ${FACTS_EN.analysisMaxMinutes} minutes after the photos finish uploading. This page updates by itself.`,
+        `An analysis takes a median of ${FACTS_EN.median} seconds, photo upload included. The report, or the failure notice, appears here within ${FACTS_EN.analysisMaxMinutes} minutes after the photos finish uploading. This page updates by itself.`,
       launchingTitle: "Starting the analysis…",
       launchingDesc:
         "All photos are uploaded: the analysis starts in a few seconds. If the launch request was lost, the analysis will show here as not completed, with no credit used. This page updates by itself.",

@@ -18,11 +18,16 @@ import { staleCutoffs, staleKind } from "@/lib/analysis-limits";
  * « uploading » ou « pending » : une analyse passée ici à « failed » n'est
  * plus lancée.
  *
- * Aucun débit n'est possible ici ni après : ce chemin n'écrit que le statut ;
- * le débit (decrement_credits_atomic) n'est appelé que par /api/analyze, et
- * seulement après avoir enregistré le rapport sur une analyse encore
- * « analyzing » (mise à jour conditionnelle, voir la route). Une analyse passée
- * ici à « failed » ne peut donc plus être enregistrée ni débitée.
+ * Ce chemin n'écrit que le statut : il ne débite ni ne rembourse. Depuis le
+ * 27/09, /api/analyze réserve le crédit AVANT l'appel au modèle et le rend
+ * elle-même en cas d'échec ; une analyse passée ici à « failed » pendant que
+ * la route tourne encore n'est plus enregistrée (mise à jour conditionnelle),
+ * et la route rend alors le crédit. Seul cas non couvert : une fonction coupée
+ * net après la réservation. Sa ligne « usage » ne porte ni remboursement (ligne
+ * « refund » qui la cite) ni mention ajoutée par la route (« rapport
+ * enregistré », « crédit à rendre »…) : crédit à rendre à la main, jusqu'à la
+ * migration qui confiera réservation et remboursement à la base. Jamais de
+ * remboursement sur la foi du statut : l'utilisateur peut le modifier.
  *
  * Renvoie les identifiants effectivement passés à « failed ».
  */
@@ -69,8 +74,12 @@ export async function expireStaleAnalyses(
     for (const row of (data ?? []) as Array<{ id: string }>) expired.add(row.id);
   }
   if (expired.size > 0) {
+    // « analyzing » : la fonction a été coupée, peut-être après la réservation
+    // du crédit. Identifiants journalisés pour le rapprochement.
+    const coupees = byStatus.analyzing.ids.filter((id) => expired.has(id));
     console.warn(
-      `[analysis-stale] ${expired.size} analyse(s) abandonnée(s) passée(s) à « failed », sans débit.`,
+      `[analysis-stale] ${expired.size} analyse(s) abandonnée(s) passée(s) à « failed ».`,
+      coupees.length > 0 ? { reservationAVerifier: coupees } : "",
     );
   }
   return expired;

@@ -125,7 +125,7 @@ export default function CguPage() {
               <p>
                 Une analyse <strong className="text-foreground">n&apos;est pas décomptée</strong> quand l&apos;IA juge les photos
                 insuffisantes, ni quand une erreur technique de notre service empêche de produire le rapport : le crédit
-                reste disponible. Tout autre résultat est décompté,
+                réservé au lancement de l&apos;analyse vous est rendu. Tout autre résultat est décompté,
                 y compris un verdict non concluant (affiché « Éléments suspects ») ou une confiance faible. En dehors de
                 ces cas, les crédits sont <strong className="text-foreground">non remboursables</strong>.
               </p>

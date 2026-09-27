@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx app components lib",
-    "test:unit": "node --disable-warning=ExperimentalWarning --import ./tests/unit/register.mjs --test 'tests/unit/*.test.ts'"
+    "test:unit": "node --disable-warning=ExperimentalWarning --experimental-test-module-mocks --import ./tests/unit/register.mjs --test 'tests/unit/*.test.ts'"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.79.0",

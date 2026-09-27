@@ -76,7 +76,7 @@ const ALLOWED_IMAGE_FORMATS = ["jpeg", "png", "webp"];
 const MIN_PHOTO_DIMENSION = 800;
 const MAX_PHOTO_BYTES = 10 * 1024 * 1024; // 10 Mo
 
-/** Erreur de validation de photo → mappée en HTTP 400 par la route (pas de débit). */
+/** Erreur de validation de photo → mappée en HTTP 400 par la route, avant la réservation du crédit. */
 export class PhotoValidationError extends Error {
   constructor(message: string) {
     super(message);
@@ -327,8 +327,8 @@ export async function runAnalysis({
 
 /**
  * Délai interne dépassé : l'appel au modèle a été interrompu avant la coupure
- * de la plateforme. Le catch de la route marque l'analyse « failed » ; le
- * débit, qui suit l'enregistrement du rapport, n'a pas lieu.
+ * de la plateforme. Le catch de la route marque l'analyse « failed » et rend
+ * le crédit réservé ; ce message n'est renvoyé qu'une fois le crédit rendu.
  */
 export const ANALYSIS_TIMEOUT_MESSAGE =
   "L'analyse a pris trop de temps et a été interrompue. Aucun crédit n'a été décompté : relancez l'analyse.";

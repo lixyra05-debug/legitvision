@@ -34,10 +34,11 @@ const FACTS = facts();
  * - "report" : aller sur la page de l'analyse. C'est le cas du succès, mais
  *   aussi de toute issue INCERTAINE (connexion coupée, délai du client dépassé,
  *   réponse illisible comme un 504 de Vercel, 409) : le serveur a pu finir,
- *   enregistrer le rapport et débiter. La page de l'analyse dit la vérité
- *   (rapport, en cours, ou échec sans débit).
+ *   enregistrer le rapport et décompter le crédit. La page de l'analyse dit
+ *   la vérité (rapport, en cours, ou échec).
  * - "error" : la route a répondu par un refus ou un échec qu'elle a écrit
- *   elle-même, sans débit ; son message s'affiche sur le formulaire.
+ *   elle-même ; son message dit si un crédit a été décompté ou reste à
+ *   rendre, et s'affiche sur le formulaire.
  */
 type LaunchOutcome = { kind: "report" } | { kind: "error"; message: string };
 
