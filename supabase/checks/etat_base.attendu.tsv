@@ -1,0 +1,65 @@
+bucket	analysis-photos	public:false taille-max:10485760 types:image/jpeg,image/png,image/webp
+declencheur	auth.users.on_auth_user_created	O 6ee743739ce4ec4da080d6a04e0b6f0a
+declencheur	public.analyses.guard_analyses	O 97ed8d584a882b3882c1748692476eca
+declencheur	public.analyses.set_analyses_updated_at	O 041f87a6c292313799f548cddfe7bd75
+declencheur	public.profiles.guard_profiles	O ea78021193d160fef4ba8f6a8e94059b
+declencheur	public.profiles.set_profiles_updated_at	O fa2ecdcde100bedcb14b949b0fb945af
+droit-defaut	postgres.global.f	{postgres=X/postgres}
+droit-defaut	postgres.public.S	{postgres=rwU/postgres,service_role=rwU/postgres}
+droit-defaut	postgres.public.f	{postgres=X/postgres,service_role=X/postgres}
+droit-defaut	postgres.public.r	{postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+droit-defaut	postgres.storage.S	{postgres=rwU/postgres,anon=rwU/postgres,authenticated=rwU/postgres,service_role=rwU/postgres}
+droit-defaut	postgres.storage.f	{postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}
+droit-defaut	postgres.storage.r	{postgres=arwdDxtm/postgres,anon=arwdDxtm/postgres,authenticated=arwdDxtm/postgres,service_role=arwdDxtm/postgres}
+droit-defaut	supabase_admin.public.S	{postgres=rwU/supabase_admin,anon=rwU/supabase_admin,authenticated=rwU/supabase_admin,service_role=rwU/supabase_admin}
+droit-defaut	supabase_admin.public.f	{postgres=X/supabase_admin,anon=X/supabase_admin,authenticated=X/supabase_admin,service_role=X/supabase_admin}
+droit-defaut	supabase_admin.public.r	{postgres=arwdDxtm/supabase_admin,anon=arwdDxtm/supabase_admin,authenticated=arwdDxtm/supabase_admin,service_role=arwdDxtm/supabase_admin}
+extension	moddatetime	public
+extension	pg_stat_statements	extensions
+extension	pgcrypto	extensions
+extension	plpgsql	pg_catalog
+extension	supabase_vault	vault
+extension	uuid-ossp	extensions
+fonction	private.current_user_role()	proprietaire:postgres definer search_path="" {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres} retour:text corps:2316cdb260cd0979aaea5016ac4670dc
+fonction	public.decrement_credits_atomic(p_user_id uuid, p_analysis_id uuid, p_description text)	proprietaire:postgres definer search_path="" {postgres=X/postgres,service_role=X/postgres} retour:integer corps:08ca6ae7ce476f55b7c8cb391d941ab4
+fonction	public.handle_new_user()	proprietaire:postgres definer search_path="" {postgres=X/postgres,service_role=X/postgres} retour:trigger corps:2990ff45a27be2de2982dd1f0cf3635b
+fonction	public.is_own_photo_path(p_path text, p_user_id uuid, p_analysis_id uuid)	proprietaire:postgres invoker search_path="" {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres} retour:boolean corps:5e8cc6acd08684160aa82ec570308333
+fonction	public.lock_analysis_results()	proprietaire:postgres invoker search_path="" {postgres=X/postgres,service_role=X/postgres} retour:trigger corps:1449f088da838ff98f940ad7a7d2f55c
+fonction	public.lock_privileged_profile_cols()	proprietaire:postgres invoker search_path="" {postgres=X/postgres,service_role=X/postgres} retour:trigger corps:253df961a19a503cb152b9469a2beab9
+regle	public.analyses.analyses_delete	PERMISSIVE DELETE {authenticated} bb2b9af288b754ffccbc47b9391ab5f5
+regle	public.analyses.analyses_insert	PERMISSIVE INSERT {authenticated} e84cb62f587423f22fb6e1415dd4c80c
+regle	public.analyses.analyses_select	PERMISSIVE SELECT {authenticated} 9f54527a80e5ed22ef396fb53cbeba31
+regle	public.analyses.analyses_update	PERMISSIVE UPDATE {authenticated} 801a52a2fbf75fffd0f4370f0b6611be
+regle	public.analysis_photos.analysis_photos_delete	PERMISSIVE DELETE {authenticated} bb2b9af288b754ffccbc47b9391ab5f5
+regle	public.analysis_photos.analysis_photos_insert	PERMISSIVE INSERT {authenticated} d322fbad9c59915a1d6a8bb7d0ec64b5
+regle	public.analysis_photos.analysis_photos_select	PERMISSIVE SELECT {authenticated} 4c313c603a82be7059df18eca214c9d6
+regle	public.analysis_photos.analysis_photos_update	PERMISSIVE UPDATE {authenticated} ef035bf6e4ce88a87bd920eeb6555c9a
+regle	public.brands.brands_delete	PERMISSIVE DELETE {authenticated} bb2b9af288b754ffccbc47b9391ab5f5
+regle	public.brands.brands_insert	PERMISSIVE INSERT {authenticated} fc91f7db92db0d60ff150bef16850c65
+regle	public.brands.brands_select	PERMISSIVE SELECT {authenticated} 804bb7ea33f288e3916c22c67fc49994
+regle	public.brands.brands_select_anon	PERMISSIVE SELECT {anon} 557e76234f96943495cd98d2d1c614d6
+regle	public.brands.brands_update	PERMISSIVE UPDATE {authenticated} ef035bf6e4ce88a87bd920eeb6555c9a
+regle	public.credits_transactions.credits_transactions_select	PERMISSIVE SELECT {authenticated} e7207b8d43e80d2ddea5195cb48fb249
+regle	public.models.models_delete	PERMISSIVE DELETE {authenticated} bb2b9af288b754ffccbc47b9391ab5f5
+regle	public.models.models_insert	PERMISSIVE INSERT {authenticated} fc91f7db92db0d60ff150bef16850c65
+regle	public.models.models_select	PERMISSIVE SELECT {authenticated} 804bb7ea33f288e3916c22c67fc49994
+regle	public.models.models_select_anon	PERMISSIVE SELECT {anon} 557e76234f96943495cd98d2d1c614d6
+regle	public.models.models_update	PERMISSIVE UPDATE {authenticated} ef035bf6e4ce88a87bd920eeb6555c9a
+regle	public.profiles.profiles_select	PERMISSIVE SELECT {authenticated} 920cb2742906dbfe33d58e17e4874917
+regle	storage.objects.analysis_photos_delete_own	PERMISSIVE DELETE {authenticated} 7bb68ddfcbe47db9c93784026575e800
+regle	storage.objects.analysis_photos_insert_own	PERMISSIVE INSERT {authenticated} b3ea8b6342e415ebd59fd22866e894c5
+regle	storage.objects.analysis_photos_select_own	PERMISSIVE SELECT {authenticated} 7bb68ddfcbe47db9c93784026575e800
+regle	storage.objects.analysis_photos_update_own	PERMISSIVE UPDATE {authenticated} 7bb68ddfcbe47db9c93784026575e800
+schema	private	proprietaire:postgres {postgres=UC/postgres,authenticated=U/postgres,service_role=U/postgres}
+schema	public	proprietaire:pg_database_owner {pg_database_owner=UC/pg_database_owner,=U/pg_database_owner,postgres=U/pg_database_owner,anon=U/pg_database_owner,authenticated=U/pg_database_owner,service_role=U/pg_database_owner}
+schema	storage	proprietaire:supabase_admin {supabase_admin=UC/supabase_admin,postgres=U*/supabase_admin,anon=U/supabase_admin,authenticated=U/supabase_admin,service_role=U/supabase_admin,supabase_storage_admin=U*C*/supabase_admin,dashboard_user=UC/supabase_admin}
+table	private.migrations	type:r proprietaire:postgres {postgres=arwdDxtm/postgres} rls:true forcee:false
+table	public.analyses	type:r proprietaire:postgres {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=arwd/postgres} rls:true forcee:false
+table	public.analysis_photos	type:r proprietaire:postgres {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=arwd/postgres} rls:true forcee:false
+table	public.brands	type:r proprietaire:postgres {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,anon=r/postgres,authenticated=arwd/postgres} rls:true forcee:false
+table	public.credits_transactions	type:r proprietaire:postgres {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=r/postgres} rls:true forcee:false
+table	public.models	type:r proprietaire:postgres {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,anon=r/postgres,authenticated=arwd/postgres} rls:true forcee:false
+table	public.profiles	type:r proprietaire:postgres {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres,authenticated=r/postgres} rls:true forcee:false
+table	public.stripe_events	type:r proprietaire:postgres {postgres=arwdDxtm/postgres,service_role=arwdDxtm/postgres} rls:true forcee:false
+table	storage.buckets	type:r proprietaire:supabase_storage_admin {supabase_storage_admin=a*r*w*d*D*x*t*m*/supabase_storage_admin,service_role=arwdDxtm/supabase_storage_admin,authenticated=arwdDxtm/supabase_storage_admin,anon=arwdDxtm/supabase_storage_admin,postgres=a*r*w*d*D*x*t*m*/supabase_storage_admin} rls:true forcee:false
+table	storage.objects	type:r proprietaire:supabase_storage_admin {supabase_storage_admin=a*r*w*d*D*x*t*m*/supabase_storage_admin,service_role=arwdDxtm/supabase_storage_admin,authenticated=arwdDxtm/supabase_storage_admin,anon=arwdDxtm/supabase_storage_admin,postgres=a*r*w*d*D*x*t*m*/supabase_storage_admin} rls:true forcee:false
