@@ -100,8 +100,7 @@ export type ReleaseOutcome = "released" | "not_released" | "uncertain";
  *   par lancement.
  *
  * Appelée UNIQUEMENT par la requête qui a elle-même réservé le crédit, une
- * fois au plus : jamais sur la foi d'un statut d'analyse, qu'un utilisateur
- * peut modifier.
+ * fois au plus : jamais sur la foi du seul statut d'une analyse.
  */
 export async function releaseReservedCredit(
   admin: AdminClient,
