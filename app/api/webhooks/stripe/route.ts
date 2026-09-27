@@ -6,6 +6,7 @@ import type { PlanId } from "@/lib/stripe/config";
 import { renderPaymentConfirmationEmail } from "@/lib/emails/payment-confirmation";
 import { sendTransactionalEmail } from "@/lib/emails/send";
 import { SITE_URL } from "@/lib/site-url";
+import { adjustCreditsAtomically } from "@/lib/credit-release";
 import { facts } from "@/lib/site-facts";
 
 const FACTS = facts();
@@ -111,16 +112,26 @@ export async function POST(request: NextRequest) {
             .eq("id", userId)
             .single();
 
-          if (profileError || !profile) {
+          // Lecture en erreur (autre que « aucune ligne ») : Stripe renvoie
+          // l'événement plutôt que de laisser un paiement sans crédit.
+          if (profileError && profileError.code !== "PGRST116") {
+            throw new Error(`single: profil illisible (${profileError.message})`);
+          }
+          if (!profile) {
             console.error("[webhook/stripe] single: profil non trouvé pour user", userId);
             break;
           }
 
-          const newBalance = profile.credits_remaining + 1;
-          await admin
-            .from("profiles")
-            .update({ credits_remaining: newBalance })
-            .eq("id", userId);
+          // Mise à jour conditionnelle : un débit concurrent n'est pas écrasé.
+          const ajout = await adjustCreditsAtomically(admin, userId, 1);
+          if ("failure" in ajout) {
+            // Rien d'écrit → exception → catch → 500 : Stripe renvoie l'événement.
+            if (ajout.failure === "not_written") throw new Error("single: crédit non ajouté");
+            // Issue inconnue : un renvoi pourrait créditer deux fois.
+            console.error("[webhook/stripe] CRÉDIT À VÉRIFIER À LA MAIN : ajout à l'issue inconnue", { eventId: event.id, userId, credits: 1 });
+            break;
+          }
+          const newBalance = ajout.balance;
 
           const paymentIntentId =
             typeof session.payment_intent === "string"
@@ -219,12 +230,17 @@ export async function POST(request: NextRequest) {
         if (!planId) break;
 
         // Retrouver l'utilisateur via stripe_customer_id
-        const { data: profile } = await admin
+        const { data: profile, error: profileError } = await admin
           .from("profiles")
           .select("id, credits_remaining")
           .eq("stripe_customer_id", customerId)
           .single();
 
+        // Lecture en erreur (autre que « aucune ligne ») : Stripe renvoie
+        // l'événement plutôt que de laisser une facture payée sans crédits.
+        if (profileError && profileError.code !== "PGRST116") {
+          throw new Error(`invoice.paid: profil illisible (${profileError.message})`);
+        }
         if (!profile) {
           console.error("[webhook/stripe] invoice.paid: profil non trouvé pour customer", customerId);
           break;
@@ -232,12 +248,16 @@ export async function POST(request: NextRequest) {
 
         // B-BIZ-2 : tous les plans (pro=10, business=50) ajoutent leurs crédits
         const creditsToAdd = PLAN_CREDITS[planId];
-        const newBalance = profile.credits_remaining + creditsToAdd;
-
-        await admin
-          .from("profiles")
-          .update({ credits_remaining: newBalance })
-          .eq("id", profile.id);
+        // Mise à jour conditionnelle : un débit concurrent n'est pas écrasé.
+        const ajout = await adjustCreditsAtomically(admin, profile.id, creditsToAdd);
+        if ("failure" in ajout) {
+          // Rien d'écrit → exception → catch → 500 : Stripe renvoie l'événement.
+          if (ajout.failure === "not_written") throw new Error("invoice.paid: crédits non ajoutés");
+          // Issue inconnue : un renvoi pourrait créditer deux fois.
+          console.error("[webhook/stripe] CRÉDITS À VÉRIFIER À LA MAIN : ajout à l'issue inconnue", { eventId: event.id, userId: profile.id, credits: creditsToAdd });
+          break;
+        }
+        const newBalance = ajout.balance;
 
         await admin.from("credits_transactions").insert({
           user_id: profile.id,
@@ -307,12 +327,15 @@ export async function POST(request: NextRequest) {
         const newPlan = priceId ? getPlanFromPriceId(priceId) : null;
         if (!newPlan) break;
 
-        const { data: profile } = await admin
+        const { data: profile, error: profileError } = await admin
           .from("profiles")
           .select("id, subscription_plan, credits_remaining")
           .eq("stripe_customer_id", customerId)
           .single();
 
+        if (profileError && profileError.code !== "PGRST116") {
+          throw new Error(`subscription.updated: profil illisible (${profileError.message})`);
+        }
         if (!profile) {
           console.error("[webhook/stripe] subscription.updated: profil non trouvé pour customer", customerId);
           break;
@@ -333,14 +356,32 @@ export async function POST(request: NextRequest) {
         // UPDATE conditionnel sur l'ancien plan : atomique (row-level) contre deux
         // events subscription.updated concurrents — le 2e voit subscription_plan
         // != oldPlan, ne touche aucune ligne, et ne re-crédite donc pas.
-        const { data: applied } = await admin
+        // Conditionnel aussi sur le solde lu : un débit ou un remboursement
+        // concurrent n'est jamais écrasé. Rejouable sans risque : une fois le
+        // plan changé, un renvoi ne touche plus aucune ligne.
+        const { data: applied, error: applyError } = await admin
           .from("profiles")
           .update({ subscription_plan: newPlan, credits_remaining: newBalance })
           .eq("id", profile.id)
           .eq("subscription_plan", oldPlan)
+          .eq("credits_remaining", profile.credits_remaining)
           .select("id");
 
-        if (!applied || applied.length === 0) break;
+        if (applyError) throw new Error(`subscription.updated: écriture en erreur (${applyError.message})`);
+        if (!applied || applied.length === 0) {
+          const { data: now, error: nowError } = await admin
+            .from("profiles")
+            .select("subscription_plan")
+            .eq("id", profile.id)
+            .single();
+          if (nowError) throw new Error(`subscription.updated: relecture impossible (${nowError.message})`);
+          // Plan inchangé : c'est le solde qui a bougé entre-temps. Stripe
+          // renvoie l'événement, retraité sur le solde à jour.
+          if (now?.subscription_plan === oldPlan) {
+            throw new Error("subscription.updated: solde modifié pendant le traitement");
+          }
+          break;
+        }
 
         if (creditsToAdd > 0) {
           await admin.from("credits_transactions").insert({
