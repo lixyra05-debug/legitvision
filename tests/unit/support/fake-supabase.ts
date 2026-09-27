@@ -163,7 +163,19 @@ export function seedAnalyses({ userId, credits, analyses }: { userId: string; cr
       id: `ph-${id}`, analysis_id: id, user_id: userId, storage_path: `${userId}/${id}/sole.jpg`,
       photo_type: "sole", order_index: 0,
     })),
-    brands: [{ id: "b1", name: "Nike", photo_protocol: [{ name: "sole", label: "Semelle" }] }],
-    models: [{ id: "m1", name: "Dunk", authentication_points: [{ zone: "sole", weight: 1 }], specific_auth_points: null }],
+    brands: [
+      { id: "b1", name: "Nike", category: "sneakers", is_active: true, photo_protocol: [{ name: "sole", label: "Semelle", required: true }] },
+      { id: "b2", name: "Chanel", category: "bag", is_active: true, photo_protocol: [{ name: "front", label: "Face", required: true }] },
+    ],
+    models: [
+      {
+        id: "m1", brand_id: "b1", name: "Dunk", is_active: true, authentication_points: [{ zone: "sole", weight: 1 }],
+        specific_auth_points: null, variants: ["Low", "High"], collaborations: [{ name: "Off-White", detail: "" }],
+      },
+      {
+        id: "m2", brand_id: "b2", name: "2.55", is_active: true, authentication_points: [{ zone: "front", weight: 1 }],
+        specific_auth_points: null, variants: [], collaborations: [],
+      },
+    ],
   };
 }
