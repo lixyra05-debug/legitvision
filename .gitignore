@@ -44,3 +44,6 @@ next-env.d.ts
 # Réglages locaux de Claude Code (permissions, chemins de la machine) : jamais
 # versionnés, le dépôt est PUBLIC. Vérifié le 26/09 : aucun secret dans l'historique.
 .claude/settings.local.json
+
+# Configuration MCP locale : jamais versionnée (clés, jetons, serveurs privés)
+.mcp.json
