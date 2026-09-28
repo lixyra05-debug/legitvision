@@ -1,4 +1,109 @@
 bucket	analysis-photos	public:false taille-max:10485760 types:image/jpeg,image/png,image/webp
+colonne	private.migrations.appliquee_le	timestamp with time zone non-nul defaut:now()
+colonne	private.migrations.nom	text non-nul defaut:aucun
+colonne	private.migrations.note	text nul defaut:aucun
+colonne	private.migrations.numero	integer non-nul defaut:aucun
+colonne	public.analyses.ai_raw_response	jsonb nul defaut:aucun
+colonne	public.analyses.brand_id	uuid non-nul defaut:aucun
+colonne	public.analyses.category	text non-nul defaut:aucun
+colonne	public.analyses.collab_selected	text nul defaut:aucun
+colonne	public.analyses.confidence	text nul defaut:aucun
+colonne	public.analyses.created_at	timestamp with time zone non-nul defaut:now()
+colonne	public.analyses.expert_id	uuid nul defaut:aucun
+colonne	public.analyses.expert_notes	text nul defaut:aucun
+colonne	public.analyses.findings	jsonb nul defaut:aucun
+colonne	public.analyses.id	uuid non-nul defaut:extensions.uuid_generate_v4()
+colonne	public.analyses.model_id	uuid non-nul defaut:aucun
+colonne	public.analyses.overall_score	integer nul defaut:aucun
+colonne	public.analyses.status	text non-nul defaut:'pending'::text
+colonne	public.analyses.sub_scores	jsonb nul defaut:aucun
+colonne	public.analyses.updated_at	timestamp with time zone non-nul defaut:now()
+colonne	public.analyses.user_id	uuid non-nul defaut:aucun
+colonne	public.analyses.variant_selected	text nul defaut:aucun
+colonne	public.analyses.verdict	text nul defaut:aucun
+colonne	public.analysis_photos.analysis_id	uuid non-nul defaut:aucun
+colonne	public.analysis_photos.created_at	timestamp with time zone non-nul defaut:now()
+colonne	public.analysis_photos.id	uuid non-nul defaut:extensions.uuid_generate_v4()
+colonne	public.analysis_photos.order_index	integer non-nul defaut:0
+colonne	public.analysis_photos.photo_type	text non-nul defaut:aucun
+colonne	public.analysis_photos.quality_check	jsonb nul defaut:aucun
+colonne	public.analysis_photos.storage_path	text non-nul defaut:aucun
+colonne	public.analysis_photos.user_id	uuid non-nul defaut:aucun
+colonne	public.brands.category	text non-nul defaut:aucun
+colonne	public.brands.created_at	timestamp with time zone non-nul defaut:now()
+colonne	public.brands.id	uuid non-nul defaut:extensions.uuid_generate_v4()
+colonne	public.brands.is_active	boolean non-nul defaut:true
+colonne	public.brands.logo_url	text nul defaut:aucun
+colonne	public.brands.name	text non-nul defaut:aucun
+colonne	public.brands.photo_protocol	jsonb non-nul defaut:'[]'::jsonb
+colonne	public.brands.slug	text non-nul defaut:aucun
+colonne	public.credits_transactions.amount	integer non-nul defaut:aucun
+colonne	public.credits_transactions.analysis_id	uuid nul defaut:aucun
+colonne	public.credits_transactions.balance_after	integer non-nul defaut:aucun
+colonne	public.credits_transactions.created_at	timestamp with time zone non-nul defaut:now()
+colonne	public.credits_transactions.description	text nul defaut:aucun
+colonne	public.credits_transactions.id	uuid non-nul defaut:extensions.uuid_generate_v4()
+colonne	public.credits_transactions.stripe_payment_id	text nul defaut:aucun
+colonne	public.credits_transactions.type	text non-nul defaut:aucun
+colonne	public.credits_transactions.user_id	uuid non-nul defaut:aucun
+colonne	public.models.authentication_points	jsonb non-nul defaut:'[]'::jsonb
+colonne	public.models.brand_id	uuid non-nul defaut:aucun
+colonne	public.models.collaborations	jsonb non-nul defaut:'[]'::jsonb
+colonne	public.models.created_at	timestamp with time zone non-nul defaut:now()
+colonne	public.models.id	uuid non-nul defaut:extensions.uuid_generate_v4()
+colonne	public.models.is_active	boolean non-nul defaut:true
+colonne	public.models.max_photos	integer non-nul defaut:12
+colonne	public.models.min_photos	integer non-nul defaut:8
+colonne	public.models.name	text non-nul defaut:aucun
+colonne	public.models.slug	text non-nul defaut:aucun
+colonne	public.models.specific_auth_points	jsonb nul defaut:aucun
+colonne	public.models.variants	jsonb non-nul defaut:'[]'::jsonb
+colonne	public.profiles.avatar_url	text nul defaut:aucun
+colonne	public.profiles.created_at	timestamp with time zone non-nul defaut:now()
+colonne	public.profiles.credits_remaining	integer non-nul defaut:0
+colonne	public.profiles.full_name	text nul defaut:aucun
+colonne	public.profiles.id	uuid non-nul defaut:aucun
+colonne	public.profiles.role	text non-nul defaut:'user'::text
+colonne	public.profiles.stripe_customer_id	text nul defaut:aucun
+colonne	public.profiles.stripe_subscription_id	text nul defaut:aucun
+colonne	public.profiles.subscription_plan	text non-nul defaut:'free'::text
+colonne	public.profiles.updated_at	timestamp with time zone non-nul defaut:now()
+colonne	public.stripe_events.event_type	text non-nul defaut:aucun
+colonne	public.stripe_events.id	text non-nul defaut:aucun
+colonne	public.stripe_events.processed_at	timestamp with time zone nul defaut:now()
+contrainte	private.migrations.migrations_pkey	PRIMARY KEY (numero)
+contrainte	public.analyses.analyses_brand_id_fkey	FOREIGN KEY (brand_id) REFERENCES public.brands(id)
+contrainte	public.analyses.analyses_category_check	CHECK ((category = ANY (ARRAY['sneakers'::text, 'bag'::text, 'watch'::text, 'clothing'::text])))
+contrainte	public.analyses.analyses_confidence_check	CHECK ((confidence = ANY (ARRAY['high'::text, 'medium'::text, 'low'::text])))
+contrainte	public.analyses.analyses_expert_id_fkey	FOREIGN KEY (expert_id) REFERENCES auth.users(id)
+contrainte	public.analyses.analyses_model_id_fkey	FOREIGN KEY (model_id) REFERENCES public.models(id)
+contrainte	public.analyses.analyses_overall_score_check	CHECK (((overall_score >= 0) AND (overall_score <= 100)))
+contrainte	public.analyses.analyses_pkey	PRIMARY KEY (id)
+contrainte	public.analyses.analyses_status_check	CHECK ((status = ANY (ARRAY['pending'::text, 'uploading'::text, 'analyzing'::text, 'completed'::text, 'expert_review'::text, 'failed'::text])))
+contrainte	public.analyses.analyses_user_id_fkey	FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+contrainte	public.analyses.analyses_verdict_check	CHECK ((verdict = ANY (ARRAY['likely_authentic'::text, 'likely_fake'::text, 'inconclusive'::text])))
+contrainte	public.analysis_photos.analysis_photos_analysis_id_fkey	FOREIGN KEY (analysis_id) REFERENCES public.analyses(id) ON DELETE CASCADE
+contrainte	public.analysis_photos.analysis_photos_pkey	PRIMARY KEY (id)
+contrainte	public.analysis_photos.analysis_photos_user_id_fkey	FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+contrainte	public.brands.brands_category_check	CHECK ((category = ANY (ARRAY['sneakers'::text, 'bag'::text, 'watch'::text, 'clothing'::text])))
+contrainte	public.brands.brands_name_category_key	UNIQUE (name, category)
+contrainte	public.brands.brands_pkey	PRIMARY KEY (id)
+contrainte	public.brands.brands_slug_key	UNIQUE (slug)
+contrainte	public.credits_transactions.credits_transactions_analysis_id_fkey	FOREIGN KEY (analysis_id) REFERENCES public.analyses(id) ON DELETE SET NULL
+contrainte	public.credits_transactions.credits_transactions_pkey	PRIMARY KEY (id)
+contrainte	public.credits_transactions.credits_transactions_type_check	CHECK ((type = ANY (ARRAY['purchase'::text, 'usage'::text, 'refund'::text, 'bonus'::text])))
+contrainte	public.credits_transactions.credits_transactions_user_id_fkey	FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
+contrainte	public.models.models_brand_id_fkey	FOREIGN KEY (brand_id) REFERENCES public.brands(id) ON DELETE CASCADE
+contrainte	public.models.models_brand_id_slug_key	UNIQUE (brand_id, slug)
+contrainte	public.models.models_pkey	PRIMARY KEY (id)
+contrainte	public.profiles.profiles_credits_remaining_check	CHECK ((credits_remaining >= 0))
+contrainte	public.profiles.profiles_id_fkey	FOREIGN KEY (id) REFERENCES auth.users(id) ON DELETE CASCADE
+contrainte	public.profiles.profiles_pkey	PRIMARY KEY (id)
+contrainte	public.profiles.profiles_role_check	CHECK ((role = ANY (ARRAY['user'::text, 'expert'::text, 'admin'::text])))
+contrainte	public.profiles.profiles_stripe_customer_id_key	UNIQUE (stripe_customer_id)
+contrainte	public.profiles.profiles_stripe_subscription_id_key	UNIQUE (stripe_subscription_id)
+contrainte	public.profiles.profiles_subscription_plan_check	CHECK ((subscription_plan = ANY (ARRAY['free'::text, 'starter'::text, 'pro'::text, 'business'::text])))
+contrainte	public.stripe_events.stripe_events_pkey	PRIMARY KEY (id)
 declencheur	auth.users.on_auth_user_created	O 6ee743739ce4ec4da080d6a04e0b6f0a
 declencheur	public.analyses.guard_analyses	O 97ed8d584a882b3882c1748692476eca
 declencheur	public.analyses.set_analyses_updated_at	O 041f87a6c292313799f548cddfe7bd75
@@ -26,6 +131,32 @@ fonction	public.handle_new_user()	proprietaire:postgres definer search_path="" {
 fonction	public.is_own_photo_path(p_path text, p_user_id uuid, p_analysis_id uuid)	proprietaire:postgres invoker search_path="" {postgres=X/postgres,authenticated=X/postgres,service_role=X/postgres} retour:boolean corps:5e8cc6acd08684160aa82ec570308333
 fonction	public.lock_analysis_results()	proprietaire:postgres invoker search_path="" {postgres=X/postgres,service_role=X/postgres} retour:trigger corps:1449f088da838ff98f940ad7a7d2f55c
 fonction	public.lock_privileged_profile_cols()	proprietaire:postgres invoker search_path="" {postgres=X/postgres,service_role=X/postgres} retour:trigger corps:253df961a19a503cb152b9469a2beab9
+index	private.migrations_pkey	CREATE UNIQUE INDEX migrations_pkey ON private.migrations USING btree (numero)
+index	public.analyses_pkey	CREATE UNIQUE INDEX analyses_pkey ON public.analyses USING btree (id)
+index	public.analysis_photos_pkey	CREATE UNIQUE INDEX analysis_photos_pkey ON public.analysis_photos USING btree (id)
+index	public.brands_name_category_key	CREATE UNIQUE INDEX brands_name_category_key ON public.brands USING btree (name, category)
+index	public.brands_pkey	CREATE UNIQUE INDEX brands_pkey ON public.brands USING btree (id)
+index	public.brands_slug_key	CREATE UNIQUE INDEX brands_slug_key ON public.brands USING btree (slug)
+index	public.credits_transactions_pkey	CREATE UNIQUE INDEX credits_transactions_pkey ON public.credits_transactions USING btree (id)
+index	public.idx_analyses_brand_id	CREATE INDEX idx_analyses_brand_id ON public.analyses USING btree (brand_id)
+index	public.idx_analyses_created	CREATE INDEX idx_analyses_created ON public.analyses USING btree (created_at DESC)
+index	public.idx_analyses_expert_id	CREATE INDEX idx_analyses_expert_id ON public.analyses USING btree (expert_id)
+index	public.idx_analyses_model_id	CREATE INDEX idx_analyses_model_id ON public.analyses USING btree (model_id)
+index	public.idx_analyses_status	CREATE INDEX idx_analyses_status ON public.analyses USING btree (status)
+index	public.idx_analyses_user_id	CREATE INDEX idx_analyses_user_id ON public.analyses USING btree (user_id)
+index	public.idx_analysis_photos_analysis_id	CREATE INDEX idx_analysis_photos_analysis_id ON public.analysis_photos USING btree (analysis_id)
+index	public.idx_analysis_photos_user_id	CREATE INDEX idx_analysis_photos_user_id ON public.analysis_photos USING btree (user_id)
+index	public.idx_credits_tx_analysis_id	CREATE INDEX idx_credits_tx_analysis_id ON public.credits_transactions USING btree (analysis_id)
+index	public.idx_credits_tx_created	CREATE INDEX idx_credits_tx_created ON public.credits_transactions USING btree (created_at DESC)
+index	public.idx_credits_tx_user_id	CREATE INDEX idx_credits_tx_user_id ON public.credits_transactions USING btree (user_id)
+index	public.idx_models_brand_id	CREATE INDEX idx_models_brand_id ON public.models USING btree (brand_id)
+index	public.idx_profiles_stripe_customer_id	CREATE INDEX idx_profiles_stripe_customer_id ON public.profiles USING btree (stripe_customer_id)
+index	public.models_brand_id_slug_key	CREATE UNIQUE INDEX models_brand_id_slug_key ON public.models USING btree (brand_id, slug)
+index	public.models_pkey	CREATE UNIQUE INDEX models_pkey ON public.models USING btree (id)
+index	public.profiles_pkey	CREATE UNIQUE INDEX profiles_pkey ON public.profiles USING btree (id)
+index	public.profiles_stripe_customer_id_key	CREATE UNIQUE INDEX profiles_stripe_customer_id_key ON public.profiles USING btree (stripe_customer_id)
+index	public.profiles_stripe_subscription_id_key	CREATE UNIQUE INDEX profiles_stripe_subscription_id_key ON public.profiles USING btree (stripe_subscription_id)
+index	public.stripe_events_pkey	CREATE UNIQUE INDEX stripe_events_pkey ON public.stripe_events USING btree (id)
 regle	public.analyses.analyses_delete	PERMISSIVE DELETE {authenticated} bb2b9af288b754ffccbc47b9391ab5f5
 regle	public.analyses.analyses_insert	PERMISSIVE INSERT {authenticated} e84cb62f587423f22fb6e1415dd4c80c
 regle	public.analyses.analyses_select	PERMISSIVE SELECT {authenticated} 9f54527a80e5ed22ef396fb53cbeba31

@@ -14,7 +14,12 @@
 --   auth.users : tous ses déclencheurs ;
 --   storage : règles et droits de objects et buckets, réglages des buckets ;
 --   droits par défaut de postgres et supabase_admin (global, public,
---     private, storage) ; droits des schémas ; schéma de chaque extension.
+--     private, storage) ; droits des schémas ; schéma de chaque extension ;
+--   structure des tables des schémas public et private (ajoutée le
+--     2026-09-28, après le constat de la 010 : une contrainte de brands
+--     changée à la main n'apparaissait nulle part) : colonnes (type, nullité,
+--     valeur par défaut), contraintes et index. La structure de storage,
+--     gérée par Supabase, n'en fait pas partie.
 -- Fonctionne avant la 019 (schéma private absent) comme après.
 
 set search_path = pg_catalog;
@@ -92,6 +97,35 @@ extensions as (
     from pg_extension e
     join pg_namespace n on n.oid = e.extnamespace
 ),
+structure as (
+  select 'colonne', n.nspname || '.' || c.relname || '.' || a.attname,
+         concat_ws(' ',
+           format_type(a.atttypid, a.atttypmod),
+           case when a.attnotnull then 'non-nul' else 'nul' end,
+           'defaut:' || coalesce(pg_get_expr(d.adbin, d.adrelid), 'aucun'),
+           case when a.attidentity <> '' then 'identite:' || a.attidentity::text end,
+           case when a.attgenerated <> '' then 'generee:' || a.attgenerated::text end)
+    from pg_attribute a
+    join pg_class c on c.oid = a.attrelid
+    join pg_namespace n on n.oid = c.relnamespace
+    left join pg_attrdef d on d.adrelid = a.attrelid and d.adnum = a.attnum
+   where n.nspname in ('public', 'private') and c.relkind in ('r', 'p')
+     and a.attnum > 0 and not a.attisdropped
+),
+contraintes as (
+  select 'contrainte', n.nspname || '.' || c.relname || '.' || k.conname, pg_get_constraintdef(k.oid)
+    from pg_constraint k
+    join pg_class c on c.oid = k.conrelid
+    join pg_namespace n on n.oid = c.relnamespace
+   where n.nspname in ('public', 'private')
+),
+index_ as (
+  select 'index', n.nspname || '.' || i.relname, pg_get_indexdef(i.oid)
+    from pg_index x
+    join pg_class i on i.oid = x.indexrelid
+    join pg_namespace n on n.oid = i.relnamespace
+   where n.nspname in ('public', 'private')
+),
 buckets as (
   select 'bucket', b.id,
          concat_ws(' ',
@@ -109,5 +143,8 @@ select type_, objet, empreinte
         union all select * from droits_defaut
         union all select * from schemas
         union all select * from extensions
-        union all select * from buckets) as tout
+        union all select * from buckets
+        union all select * from structure
+        union all select * from contraintes
+        union all select * from index_) as tout
  order by type_ collate "C", objet collate "C";
