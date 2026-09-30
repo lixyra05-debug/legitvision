@@ -78,6 +78,13 @@ Tables principales :
 - `analyses` : chaque analyse (scores, verdict, findings JSONB, status)
 - `analysis_photos` : photos par analyse (storage_path, photo_type, quality_check)
 - `credits_transactions` : historique crédits (type, amount, balance_after)
+- `analysis_costs` : coût de chaque appel au modèle (jetons, tarif catalogue, issue) ; fermée aux utilisateurs, le serveur lit et ajoute (migration 020)
+- `first_purchase_offers` : registre des analyses offertes au premier achat, automatiques ou accordées à la main, une par compte et une par carte (empreinte Stripe ; nulle : offre accordée à la main sans empreinte connue), gardé après remboursement ; fermée aux utilisateurs (migration 020)
+
+Fonctions réservées au serveur (service_role seulement, migration 020) :
+- `credit_single_purchase` : crédite un achat à l'unité et décide l'analyse offerte, en une transaction, une seule fois par paiement (appelée par le webhook Stripe).
+- `grant_first_purchase_offer` : accorde à la main l'analyse offerte d'un premier achat que le paiement n'a pas pu décider (empreinte absente, retour arrière), aux mêmes règles (un compte, une carte si l'empreinte est connue), jamais par des écritures directes ; Hector l'appelle sous `set local role service_role` et colle lui-même l'empreinte s'il l'a (Claude ne la recopie jamais).
+- `withdraw_first_purchase_offer` : retire l'analyse offerte non utilisée d'un premier achat remboursé, automatique ou accordée à la main ; Hector l'appelle sous `set local role service_role`.
 
 RLS OBLIGATOIRE sur toutes les tables. Un user ne voit que ses propres données.
 
