@@ -8,6 +8,7 @@
 //   - { commitThenError } : la requête s'exécute (écrit) PUIS le client reçoit
 //     une erreur (réponse perdue après la validation : coupure réseau, délai).
 // `guardRevert` : un déclencheur remet l'ancien solde, sans erreur.
+// `analysis_costs` (migration 020) : vide au départ, remplie par la route.
 
 type Row = Record<string, unknown>;
 type DbError = { message: string; code?: string };
@@ -20,6 +21,7 @@ export interface FakeDb {
   analyses: Row[];
   analysis_photos: Row[];
   credits_transactions: Row[];
+  analysis_costs: Row[];
   brands: Row[];
   models: Row[];
   faults: Fault[];
@@ -27,17 +29,18 @@ export interface FakeDb {
   calls: Call[];
 }
 
-type Table = "profiles" | "analyses" | "analysis_photos" | "credits_transactions" | "brands" | "models";
+type Table = "profiles" | "analyses" | "analysis_photos" | "credits_transactions" | "analysis_costs" | "brands" | "models";
 
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 let seq = 0;
 
-export function createFakeSupabase(init: Omit<FakeDb, "faults" | "guardRevert" | "calls" | "credits_transactions">) {
+export function createFakeSupabase(init: Omit<FakeDb, "faults" | "guardRevert" | "calls" | "credits_transactions" | "analysis_costs">) {
   const db: FakeDb = {
     profiles: init.profiles.map((p) => ({ ...p })),
     analyses: init.analyses.map((a) => ({ updated_at: new Date().toISOString(), ...a })),
     analysis_photos: init.analysis_photos.map((p) => ({ ...p })),
     credits_transactions: [],
+    analysis_costs: [],
     brands: init.brands,
     models: init.models,
     faults: [],

@@ -4,9 +4,45 @@ import { getAuthenticationPrompt } from "./authentication-prompts";
 import { calculateWeightedScore } from "./scoring";
 import type { AuthenticationPoint, Confidence, Verdict } from "@/lib/types";
 import { runWithDeadline } from "@/lib/analysis-deadline";
+import { MODELE_ANALYSE } from "./tarifs";
+import { coutIaNonMesure, mesurerCoutIa, rattacherCoutIa, type CoutIa } from "./cout-ia";
 
-function getAnthropicClient(): Anthropic {
-  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+/** Tentatives de l'appel au modèle, vues du réseau. */
+type Tentatives = {
+  /** Une tentative au moins est partie sur le réseau. */
+  parties: boolean;
+  /**
+   * Une tentative partie au moins n'a reçu aucune réponse (connexion perdue
+   * ou refusée, délai d'une tentative, abandon) : elle a pu être facturée.
+   */
+  perdues: boolean;
+};
+
+/**
+ * Client de l'API, qui note ses tentatives dans `tentatives`. Le SDK n'appelle
+ * `fetch` qu'après avoir construit et vérifié la requête (clé, adresse), puis
+ * une fois par nouvelle tentative.
+ */
+function getAnthropicClient(tentatives: Tentatives): Anthropic {
+  return new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+    fetch: (url, init) => {
+      tentatives.parties = true;
+      return fetch(url, init).catch((erreur: unknown) => {
+        tentatives.perdues = true;
+        throw erreur;
+      });
+    },
+  });
+}
+
+/**
+ * Le service a répondu par une erreur HTTP (4xx, 5xx) : réponse sans usage,
+ * appel non facturé. Les erreurs du SDK sans réponse (connexion perdue,
+ * abandon) n'ont pas de statut.
+ */
+function reponseDErreurDuService(error: unknown): boolean {
+  return error instanceof Anthropic.APIError && error.status !== undefined;
 }
 
 // ── Types ──
@@ -48,6 +84,12 @@ export interface AnalysisOutput {
     severity: string;
   }>;
   aiRawResponse: AnalysisAIResult;
+  /**
+   * Coût de l'appel au modèle, mesuré sur sa réponse. La route l'enregistre
+   * dans analysis_costs ; il n'entre ni dans le rapport ni dans la réponse
+   * au client.
+   */
+  coutIa: CoutIa;
 }
 
 // ── Image preprocessing ──
@@ -223,39 +265,79 @@ export async function runAnalysis({
     text: userPrompt,
   });
 
+  // Une tentative partie puis perdue sans réponse lisible a pu être facturée
+  // sans que sa consommation soit connue.
+  const tentatives: Tentatives = { parties: false, perdues: false };
+
   // Call Claude Vision API, borné par l'échéance : le signal abandonne la
   // requête HTTP en cours, `timeout` borne chaque tentative, et les nouvelles
   // tentatives du SDK (2, sur 408/409/429/5xx et erreurs de connexion) restent
   // permises tant qu'elles tiennent avant l'échéance. runWithDeadline rejette
   // à l'échéance même pendant l'attente entre deux tentatives, que le SDK ne
   // borne pas.
-  const anthropic = getAnthropicClient();
+  const anthropic = getAnthropicClient(tentatives);
   const remainingMs = Math.floor(deadline - Date.now());
-  const response = await runWithDeadline(
-    remainingMs,
-    (signal) =>
-      anthropic.messages.create(
-        {
-          model: "claude-opus-4-8",
-          max_tokens: 16000,
-          thinking: { type: "adaptive" },
-          system: systemPrompt,
-          messages: [
-            {
-              role: "user",
-              content,
-            },
-          ],
-        },
-        { signal, timeout: Math.max(1, remainingMs), maxRetries: 2 },
-      ),
-    () =>
-      new AnalysisError(
-        ANALYSIS_TIMEOUT_MESSAGE,
-        "ANALYSIS_TIMEOUT"
-      ),
-  );
+  let response: Anthropic.Messages.Message;
+  try {
+    response = await runWithDeadline(
+      remainingMs,
+      (signal) =>
+        anthropic.messages.create(
+          {
+            model: MODELE_ANALYSE,
+            max_tokens: 16000,
+            thinking: { type: "adaptive" },
+            system: systemPrompt,
+            messages: [
+              {
+                role: "user",
+                content,
+              },
+            ],
+          },
+          { signal, timeout: Math.max(1, remainingMs), maxRetries: 2 },
+        ),
+      () => new AnalysisError(ANALYSIS_TIMEOUT_MESSAGE, "ANALYSIS_TIMEOUT"),
+    );
+  } catch (error) {
+    // Requête partie, puis perdue sans réponse lisible : coupée à l'échéance,
+    // connexion perdue après l'envoi (le SDK retente, puis lève
+    // APIConnectionError), ou corps de la réponse coupé en lecture ; ou
+    // tentative perdue avant qu'une suivante reçoive une erreur HTTP. L'appel
+    // a pu être facturé : il est rattaché comme non mesuré, et la route
+    // l'enregistre avec l'échec. Compté par excès : une connexion refusée, ou
+    // une échéance atteinte entre deux tentatives, compte aussi. Aucun coût si
+    // rien n'est parti (échéance déjà passée, requête refusée par le SDK avant
+    // l'envoi) ou si chaque tentative a reçu une erreur HTTP du service (non
+    // facturée).
+    if (tentatives.parties && (tentatives.perdues || !reponseDErreurDuService(error))) {
+      rattacherCoutIa(error, coutIaNonMesure(MODELE_ANALYSE));
+    }
+    throw error;
+  }
 
+  // Le modèle a répondu : l'appel est facturé, quelle que soit la suite. Toute
+  // erreur levée ensuite, en interprétant sa réponse (tronquée, vide,
+  // illisible, incomplète ou imprévue), emporte ce coût, que la route
+  // enregistre avec l'échec.
+  const coutIa = mesurerCoutIa(response);
+  try {
+    return { ...parseAnalysisResponse(response, authenticationPoints), coutIa };
+  } catch (error) {
+    rattacherCoutIa(error, coutIa);
+    throw error;
+  }
+}
+
+/**
+ * Lit la réponse du modèle et calcule le score pondéré. Lève AnalysisError si
+ * la réponse est tronquée (MAX_TOKENS), sans texte (NO_RESPONSE), illisible
+ * (PARSE_ERROR) ou incomplète (INVALID_RESPONSE).
+ */
+function parseAnalysisResponse(
+  response: Anthropic.Messages.Message,
+  authenticationPoints: AuthenticationPoint[],
+): Omit<AnalysisOutput, "coutIa"> {
   // M2: Détecter une réponse tronquée par limite de tokens (JSON probablement invalide)
   if (response.stop_reason === "max_tokens") {
     throw new AnalysisError(
