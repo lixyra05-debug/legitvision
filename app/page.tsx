@@ -625,7 +625,8 @@ export default async function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="border-t border-line-subtle py-12">
+      {/* pb-24 : « Contact » et « CGU » restent hors de la bulle de l'assistant. */}
+      <footer className="border-t border-line-subtle pt-12 pb-24">
         <div className="mx-auto max-w-6xl px-4">
           {/* Maillage interne SEO : liens vers les hubs d'authentification */}
           <div className="mb-8 flex justify-center sm:justify-start">

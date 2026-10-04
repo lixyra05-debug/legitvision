@@ -267,11 +267,13 @@ export default async function DashboardPage(
                             </span>
                           </div>
                         ) : (
+                          // Pas encore de score : contour pointillé neutre, sans teinte de
+                          // verdict, pour ne pas se confondre avec un score non concluant.
                           <div
                             className={`flex h-7 shrink-0 items-center rounded-full px-3 text-caption ${
                               analysis.status === "failed"
                                 ? "bg-destructive/10 text-destructive"
-                                : "bg-surface-raised text-muted-foreground"
+                                : "border border-dashed border-line-strong text-muted-foreground"
                             }`}
                           >
                             <StatusLabel status={analysis.status} />

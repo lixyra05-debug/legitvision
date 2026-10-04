@@ -18,12 +18,12 @@ export default function NotFound() {
         fetchPriority="high"
       />
       <div className="text-center">
-        <h1 className="font-heading text-6xl font-bold text-emerald-500">404</h1>
+        <h1 className="font-heading text-6xl font-bold text-accent">404</h1>
         <p className="mt-2 text-muted-foreground">{t("notFound.message")}</p>
       </div>
       <Link
         href="/"
-        className="rounded-xl bg-emerald-500 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-400"
+        className="rounded-xl bg-accent px-6 py-2.5 text-sm font-semibold text-accent-foreground transition-colors hover:bg-accent-hover"
       >
         {t("notFound.cta")}
       </Link>

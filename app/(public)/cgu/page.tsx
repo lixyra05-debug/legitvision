@@ -268,7 +268,8 @@ export default function CguPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-8 mt-12">
+      {/* pb-24 : le dernier lien reste hors de la bulle de l'assistant. */}
+      <footer className="border-t border-white/5 pt-8 pb-24 mt-12">
         <div className="mx-auto max-w-3xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 text-sm text-muted-foreground">
             <Image
@@ -280,7 +281,7 @@ export default function CguPage() {
             />
             <span>© {new Date().getFullYear()}</span>
           </div>
-          <div className="flex gap-6 text-sm text-muted-foreground">
+          <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
             <Link href="/mentions-legales" className="transition-colors hover:text-foreground">Mentions légales</Link>
             <Link href="/cgu" className="text-foreground">CGU</Link>
             <Link href="/confidentialite" className="transition-colors hover:text-foreground">Confidentialité</Link>

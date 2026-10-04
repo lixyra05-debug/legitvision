@@ -25,7 +25,11 @@ const DUR_BASE = 0.22; // --dur-base
 const DUR_SLOW = 0.42; // --dur-slow
 const STAGGER = 0.08;
 
-const VIEWPORT = { once: true, amount: 0.2 } as const;
+// Un groupe se révèle dès qu'une partie entre dans la fenêtre, 10 % au-dessus
+// du bas de l'écran (léger retard). Avec une part minimale (0,2 avant le 04/10),
+// une grille plus haute que cinq écrans (historique de 24 analyses sur un petit
+// téléphone) ne l'atteignait jamais et restait invisible.
+const VIEWPORT = { once: true, amount: "some", margin: "0px 0px -10% 0px" } as const;
 
 function itemVariants(reduced: boolean): Variants {
   if (reduced) {
@@ -107,7 +111,10 @@ export function Reveal({
   return (
     <motion.div
       className={cn(className)}
-      initial={reduced ? undefined : { opacity: 0, y: 24 }}
+      // Mouvement réduit : l'état visible est posé dès le montage. Le HTML du
+      // serveur sort caché (useReducedMotion y vaut null) et, sans état initial
+      // explicite, rien ne venait le corriger.
+      initial={reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
       whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
       viewport={VIEWPORT}
       transition={{ duration: DUR_SLOW, ease: EASE, delay: delay / 1000 }}

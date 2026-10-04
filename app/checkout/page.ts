@@ -5,16 +5,10 @@ import { stripe, getPriceId, getOrCreateCustomer } from "@/lib/stripe/server";
 import { z } from "zod";
 import { SITE_URL } from "@/lib/site-url";
 import { isPlanOnSale } from "@/lib/stripe/config";
+import { checkoutErrorRedirect } from "@/lib/checkout-errors";
 
-// Construit l'URL de redirect d'erreur — ramène l'utilisateur sur le paywall
-// avec un message clair (au lieu de revenir silencieusement sur la landing).
-function buildErrorRedirect(reason: string): string {
-  return `/check/new?error=stripe_unavailable&reason=${encodeURIComponent(reason)}`;
-}
-
-// D : message générique unique côté client (le détail est loggé serveur, jamais exposé).
-const GENERIC_PAYMENT_ERROR =
-  "Le service de paiement est momentanément indisponible. Réessayez dans quelques instants.";
+// Retour au paywall avec un code d'erreur (lib/checkout-errors.ts) : le message
+// affiché vient d'une table fixe, le détail est journalisé côté serveur.
 
 // C : les 3 plans valides. "single" = paiement unique ; "pro"/"business" = abonnement.
 const planParamSchema = z.enum(["single", "pro", "business"]);
@@ -68,7 +62,7 @@ export default async function CheckoutPage(
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   if (!stripeKey) {
     console.error("[checkout] STRIPE_SECRET_KEY non défini sur le serveur");
-    redirect(buildErrorRedirect(GENERIC_PAYMENT_ERROR));
+    redirect(checkoutErrorRedirect("indisponible"));
   }
 
   // ── 5b. Changement de plan avec abonnement DÉJÀ actif (pro/business) ──────
@@ -114,7 +108,7 @@ export default async function CheckoutPage(
   // Redirections du CAS B — HORS try/catch (redirect() lève NEXT_REDIRECT).
   if (planChangeError) {
     // détail déjà loggé ci-dessus ; message générique côté client (D).
-    redirect(buildErrorRedirect(GENERIC_PAYMENT_ERROR));
+    redirect(checkoutErrorRedirect("indisponible"));
   }
   if (planChangeDone) {
     redirect("/dashboard?plan_changed=1");
@@ -193,7 +187,7 @@ export default async function CheckoutPage(
   // ── 7. Redirect — OUTSIDE try/catch ───────────────────────────────────────
   if (!sessionUrl) {
     // détail déjà loggé (catch ci-dessus) ; message générique côté client (D).
-    redirect(buildErrorRedirect(GENERIC_PAYMENT_ERROR));
+    redirect(checkoutErrorRedirect("indisponible"));
   }
 
   redirect(sessionUrl);

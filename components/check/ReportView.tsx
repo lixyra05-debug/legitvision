@@ -65,10 +65,11 @@ const VERDICT_VISUAL: Record<
     color: "text-verdict-authentic",
     bg: "border-verdict-authentic/30 bg-verdict-authentic/10",
   },
+  // Couleur du verdict non concluant, jamais l'ambre (décision du 04/10).
   inconclusive: {
     Icon: ShieldAlert,
-    color: "text-warning",
-    bg: "border-warning/30 bg-warning/10",
+    color: "text-verdict-inconclusive",
+    bg: "border-verdict-inconclusive/30 bg-verdict-inconclusive/10",
   },
   likely_fake: {
     Icon: ShieldX,
@@ -85,9 +86,11 @@ const CONFIDENCE_VISUAL: Record<
     color: "text-muted-foreground",
     bg: "border-line bg-surface-raised",
   },
+  // L'ambre est réservé à la confiance faible (décision du 04/10) : la
+  // confiance moyenne reste neutre.
   medium: {
-    color: "text-warning",
-    bg: "border-warning/20 bg-warning/[0.08]",
+    color: "text-muted-foreground",
+    bg: "border-line bg-surface-raised",
   },
   low: {
     color: "text-warning",
@@ -286,7 +289,8 @@ export function ReportView({ data }: { data: ReportData }) {
         </div>
       </nav>
 
-      <main className="mx-auto max-w-3xl space-y-6 px-4 py-8 sm:py-12">
+      {/* pb-24 : la bulle de l'assistant ne couvre plus « Nouvelle analyse ». */}
+      <main className="mx-auto max-w-3xl space-y-6 px-4 pt-8 pb-24 sm:pt-12">
         {/* ── HEADER ── */}
         <div className="space-y-3">
           {/* Photos jugées insuffisantes : pas de badge de verdict (« Éléments suspects »
@@ -377,12 +381,15 @@ export function ReportView({ data }: { data: ReportData }) {
           </div>
         )}
 
-        {/* ── RÉSULTAT INCERTAIN (statut « expert_review » : aucune revue humaine n'existe) ── */}
-        {data.status === "expert_review" && data.confidence !== "low" && (
-          <div className="flex items-start gap-3 rounded-md border border-warning/20 bg-warning/[0.08] p-4">
-            <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" />
+        {/* ── RÉSULTAT INCERTAIN (statut « expert_review » : aucune revue humaine n'existe) ──
+            Seulement sous un verdict non concluant, jamais sous un verdict rouge
+            (scores 40 à 44), et à sa couleur : l'ambre est réservé à la confiance
+            faible, qui a son propre encadré plus bas (M20, décision du 04/10). */}
+        {data.status === "expert_review" && data.verdict === "inconclusive" && data.confidence !== "low" && !isInsufficient && (
+          <div className="flex items-start gap-3 rounded-md border border-verdict-inconclusive/20 bg-verdict-inconclusive/[0.08] p-4">
+            <AlertCircle className="mt-0.5 size-5 shrink-0 text-verdict-inconclusive" />
             <div>
-              <p className="text-ui font-semibold text-warning">
+              <p className="text-ui font-semibold text-verdict-inconclusive">
                 {t("results.uncertainResultTitle")}
               </p>
               <p className="mt-0.5 text-ui text-muted-foreground">

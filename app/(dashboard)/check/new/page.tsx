@@ -22,6 +22,8 @@ import { PhotoUploader } from "@/components/check/PhotoUploader";
 import type { Category, Brand, Model, PhotoSlot } from "@/lib/types";
 import { facts } from "@/lib/site-facts";
 import { NO_AUTH_POINTS } from "@/lib/analyzable";
+import { lignesDeMarquePreselection } from "@/lib/catalogue-recherche";
+import { CHECKOUT_ERROR_PARAM, checkoutErrorMessage } from "@/lib/checkout-errors";
 import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
 import {
   ANALYSIS_CLIENT_TIMEOUT_SECONDS,
@@ -166,15 +168,15 @@ export default function NewCheckPage() {
   const [creditsLoading, setCreditsLoading] = useState(true);
   const [hasCredits, setHasCredits] = useState(false);
 
-  // Erreur de checkout Stripe (lue depuis ?error=stripe_unavailable&reason=...)
-  // Affichée dans le banner rouge en haut de l'écran paywall.
+  // Erreur de checkout Stripe (?error=stripe_unavailable&reason=<code>), affichée
+  // dans le banner rouge du paywall. Le message vient d'une table fixe, jamais
+  // du texte de l'URL (lib/checkout-errors.ts).
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("error") === "stripe_unavailable") {
-      const reason = params.get("reason");
-      setCheckoutError(reason ? decodeURIComponent(reason) : "Erreur Stripe inconnue");
+    if (params.get("error") === CHECKOUT_ERROR_PARAM) {
+      setCheckoutError(checkoutErrorMessage(params.get("reason")));
     }
   }, []);
 
@@ -226,17 +228,8 @@ export default function NewCheckPage() {
       // Seules les lignes ayant au moins un modèle analysable comptent
       // (lib/analyzable.ts) : sans category, une ligne sans modèle, comme Gucci
       // en sneakers, ne doit jamais être retenue.
-      const brandQuery = supabase
-        .from("brands")
-        .select("*, models!inner()")
-        .ilike("name", brandParam!)
-        .eq("is_active", true)
-        .eq("models.is_active", true)
-        .neq("models.authentication_points", NO_AUTH_POINTS);
-      const { data: brandRows } = await (categoryParam
-        ? brandQuery.eq("category", categoryParam)
-        : brandQuery
-      ).order("created_at");
+      // Hors montres aussi : la route d'analyse les refuse (lib/catalogue-recherche.ts).
+      const { data: brandRows } = await lignesDeMarquePreselection(supabase, brandParam!, categoryParam);
 
       // Sans category, une marque peut avoir plusieurs lignes (Dior : sacs,
       // sneakers, vêtements) : la ligne qui porte le modèle demandé l'emporte,
@@ -689,7 +682,9 @@ export default function NewCheckPage() {
     <div className="min-h-screen bg-background">
       {navbar}
 
-      <main className="mx-auto max-w-3xl px-4 py-8 sm:py-12">
+      {/* pb-24 : la bulle de l'assistant (fixe, en bas à droite) ne couvre plus
+          « Lancer l'analyse », dernier élément de la page. */}
+      <main className="mx-auto max-w-3xl px-4 pt-8 pb-24 sm:pt-12">
         {/* M5 : banner stripe_unavailable visible aussi dans le flow normal */}
         {checkoutError && (
           <div

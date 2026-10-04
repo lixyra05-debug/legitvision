@@ -33,6 +33,9 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    // Classes des paliers de score (TIER_* et getScore*), écrites seulement là :
+    // sans cette ligne, barres et pastilles sortaient sans couleur en production.
+    "./lib/types.ts",
   ],
   theme: {
     extend: {

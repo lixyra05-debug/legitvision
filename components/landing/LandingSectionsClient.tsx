@@ -494,11 +494,12 @@ export function NavLinks() {
   );
 }
 
-// ── Hero trust signals (3 tags) ────────────────────────────────────────────
+// ── Hero trust signals (2 tags) ────────────────────────────────────────────
+// « Hébergé EU » retiré le 04/10 (décision d'Hector) : le site est servi par
+// Vercel, aux États-Unis ; seules les photos sont stockées en UE (Irlande).
 const HERO_TAGS = [
   "hero.tagFastResult",
   "hero.tagGdpr",
-  "hero.tagEu",
 ];
 
 export function HeroTrustTags() {

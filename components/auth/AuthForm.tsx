@@ -10,7 +10,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { safeRedirectPath } from "@/lib/safe-redirect";
+import { cleErreurUrl } from "@/lib/auth-errors";
 
+// Messages renvoyés par Supabase à la connexion ou à l'inscription : traduits
+// s'ils sont connus, sinon affichés avec le préfixe « Erreur ».
 const AUTH_ERROR_KEYS: Record<string, string> = {
   "Invalid login credentials": "auth.errorInvalidCreds",
   "User already registered": "auth.errorAlreadyRegistered",
@@ -19,8 +22,8 @@ const AUTH_ERROR_KEYS: Record<string, string> = {
   "Email rate limit exceeded": "auth.errorRateLimit",
   "For security purposes, you can only request this once every 60 seconds":
     "auth.errorWait60",
-  callback_error: "auth.errorCallback",
 };
+
 
 type Mode = "login" | "register";
 
@@ -53,7 +56,9 @@ export function AuthForm() {
   const searchParams = useSearchParams();
   const redirect =
     searchParams?.get("redirect") ?? seoDestination(searchParams) ?? "/dashboard";
-  const urlError = searchParams?.get("error");
+  // Code d'erreur de l'URL : message d'une table fixe, jamais le texte reçu (lib/auth-errors.ts).
+  const urlErrorKey = cleErreurUrl(searchParams?.get("error"));
+  const urlError = urlErrorKey ? t(urlErrorKey) : null;
 
   const supabase = createClient();
 
@@ -117,8 +122,8 @@ export function AuthForm() {
     return (
       <div className="flex min-h-screen items-center justify-center px-4">
         <div className="w-full max-w-sm text-center">
-          <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-2xl bg-emerald-500/10">
-            <Mail className="size-8 text-emerald-500" />
+          <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-2xl bg-accent/10">
+            <Mail className="size-8 text-accent" />
           </div>
           <h2 className="font-heading text-2xl font-bold">
             {t("auth.checkEmailTitle")}
@@ -133,7 +138,7 @@ export function AuthForm() {
               setConfirmationSent(false);
               setMode("login");
             }}
-            className="mt-8 text-sm text-emerald-500 hover:text-emerald-400"
+            className="mt-8 text-sm text-accent hover:text-accent-hover"
           >
             {t("auth.backToLogin")}
           </button>
@@ -157,7 +162,7 @@ export function AuthForm() {
           />
         </Link>
 
-        <div className="mb-8 flex rounded-lg border border-white/10 bg-card p-1">
+        <div className="mb-8 flex rounded-lg border border-line bg-card p-1">
           <button
             onClick={() => {
               setMode("login");
@@ -165,7 +170,7 @@ export function AuthForm() {
             }}
             className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
               mode === "login"
-                ? "bg-emerald-500 text-white"
+                ? "bg-accent text-accent-foreground"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -178,7 +183,7 @@ export function AuthForm() {
             }}
             className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
               mode === "register"
-                ? "bg-emerald-500 text-white"
+                ? "bg-accent text-accent-foreground"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -187,8 +192,8 @@ export function AuthForm() {
         </div>
 
         {(error || urlError) && (
-          <div className="mb-6 rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-            {error ?? translateError(urlError!)}
+          <div role="alert" className="mb-6 rounded-lg border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+            {error ?? urlError}
           </div>
         )}
 
@@ -205,7 +210,7 @@ export function AuthForm() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 required
-                className="h-11 border-white/10 bg-card placeholder:text-muted-foreground/50 focus-visible:ring-emerald-500"
+                className="h-11 border-input bg-card placeholder:text-muted-foreground/50 focus-visible:ring-ring"
               />
             </div>
           )}
@@ -221,7 +226,7 @@ export function AuthForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="h-11 border-white/10 bg-card placeholder:text-muted-foreground/50 focus-visible:ring-emerald-500"
+              className="h-11 border-input bg-card placeholder:text-muted-foreground/50 focus-visible:ring-ring"
             />
           </div>
 
@@ -241,14 +246,14 @@ export function AuthForm() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="h-11 border-white/10 bg-card placeholder:text-muted-foreground/50 focus-visible:ring-emerald-500"
+              className="h-11 border-input bg-card placeholder:text-muted-foreground/50 focus-visible:ring-ring"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="flex h-11 w-full items-center justify-center rounded-lg bg-emerald-500 font-semibold text-white transition-colors hover:bg-emerald-400 disabled:opacity-50"
+            className="flex h-11 w-full items-center justify-center rounded-lg bg-accent font-semibold text-accent-foreground transition-colors hover:bg-accent-hover disabled:opacity-50"
           >
             {loading ? (
               <Loader2 className="size-5 animate-spin" />
@@ -261,14 +266,14 @@ export function AuthForm() {
         </form>
 
         <div className="my-6 flex items-center gap-3">
-          <div className="h-px flex-1 bg-white/10" />
+          <div className="h-px flex-1 bg-line" />
           <span className="text-xs text-muted-foreground">{t("common.or")}</span>
-          <div className="h-px flex-1 bg-white/10" />
+          <div className="h-px flex-1 bg-line" />
         </div>
 
         <button
           onClick={handleGoogleLogin}
-          className="flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-white/10 text-sm font-medium transition-colors hover:border-white/20 hover:bg-white/5"
+          className="flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-line text-sm font-medium transition-colors hover:border-line-strong hover:bg-surface-raised"
         >
           <svg className="size-5" viewBox="0 0 24 24">
             <path
