@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,6 +12,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { Marque } from "@/components/brand/Marque";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -573,17 +573,7 @@ export default function NewCheckPage() {
   const navbar = (
     <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link href="/dashboard" className="flex items-center">
-          <Image
-            src="/images/legitvision-logo.png"
-            alt="LegitVision"
-            width={240}
-            height={64}
-            className="h-16 w-auto"
-            priority
-            fetchPriority="high"
-          />
-        </Link>
+        <Marque href="/dashboard" />
         <div className="flex items-center gap-3">
           <LanguageToggle />
           <ThemeToggle />

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
@@ -20,6 +19,7 @@ import {
 import { ScoreGauge } from "./ScoreGauge";
 import { FindingCard, type Finding } from "./FindingCard";
 import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
+import { Marque } from "@/components/brand/Marque";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
@@ -264,17 +264,7 @@ export function ReportView({ data }: { data: ReportData }) {
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4">
-          <Link href="/dashboard" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
-              priority
-              fetchPriority="high"
-            />
-          </Link>
+          <Marque href="/dashboard" />
           <div className="flex items-center gap-3">
             <LanguageToggle />
             <ThemeToggle />

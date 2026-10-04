@@ -32,17 +32,24 @@ test.describe("Landing page", () => {
   test("navbar has logo, theme toggle, language toggle", async ({ page }) => {
     await page.goto("/");
 
-    // Logo image
-    const logo = page.locator('img[src*="legitvision-logo"]').first();
+    // Marque : le mot LEGITVISION en texte (plus d'image), lien vers l'accueil
+    const logo = page.getByRole("link", { name: "LegitVision, accueil" }).first();
     await expect(logo).toBeVisible();
+    await expect(logo).toHaveAttribute("href", "/");
+    await expect(page.locator('img[src*="legitvision-logo"]')).toHaveCount(0);
 
     // ThemeToggle: button with aria-label containing "mode"
     const themeBtn = page.locator('button[aria-label*="mode"]').first();
     await expect(themeBtn).toBeVisible();
     await expect(themeBtn).toHaveClass(/size-9/);
 
-    // LanguageToggle: button with aria-label "Switch to EN" or "Switch to FR"
+    // LanguageToggle: button with aria-label "Switch to EN" or "Switch to FR".
+    // Sur téléphone (< 640 px), il n'apparaît qu'en anglais : le site est en français.
     const langBtn = page.locator('button[aria-label^="Switch to"]').first();
+    if ((page.viewportSize()?.width ?? 0) < 640) {
+      await expect(langBtn).toBeHidden();
+      return;
+    }
     await expect(langBtn).toBeVisible();
     const label = (await langBtn.textContent())?.trim() ?? "";
     expect(["FR", "EN"]).toContain(label);
@@ -97,6 +104,7 @@ test.describe("Landing page", () => {
   });
 
   test("language toggle switches FR <-> EN and updates H1", async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 0) < 640, "bouton FR/EN masqué sur téléphone en français");
     await page.goto("/");
 
     const langBtn = page.locator('button[aria-label^="Switch to"]').first();
@@ -122,8 +130,8 @@ test.describe("Landing page", () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto("/");
 
-    // Logo still visible
-    const logo = page.locator('img[src*="legitvision-logo"]').first();
+    // Marque still visible
+    const logo = page.getByRole("link", { name: "LegitVision, accueil" }).first();
     await expect(logo).toBeVisible();
 
     // No horizontal overflow on document

@@ -2,8 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Coins, Trash2 } from "lucide-react";
+import { Marque } from "@/components/brand/Marque";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -152,18 +152,9 @@ export default async function DashboardPage(
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={240}
-              height={64}
-              className="h-16 w-auto"
-              priority
-              fetchPriority="high"
-            />
-          </Link>
-          <div className="flex items-center gap-4">
+          <Marque href="/" />
+          {/* gap-3 sur téléphone : le mot et le solde tiennent dès 320 px. */}
+          <div className="flex items-center gap-3 sm:gap-4">
             {profile && (
               <div className="flex items-center gap-1.5 rounded-md border border-line px-3 py-1.5 text-ui">
                 {/* Icône neutre : le vert était constant, y compris à 0 crédit —

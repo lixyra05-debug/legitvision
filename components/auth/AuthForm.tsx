@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Mail } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
+import { Marque } from "@/components/brand/Marque";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { safeRedirectPath } from "@/lib/safe-redirect";
 import { cleErreurUrl } from "@/lib/auth-errors";
@@ -150,17 +150,9 @@ export function AuthForm() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm">
-        <Link href="/" className="mb-8 flex items-center justify-center">
-          <Image
-            src="/images/legitvision-logo.png"
-            alt="LegitVision"
-            width={180}
-            height={48}
-            className="h-12 w-auto"
-            priority
-            fetchPriority="high"
-          />
-        </Link>
+        <div className="mb-8 flex justify-center">
+          <Marque href="/" />
+        </div>
 
         <div className="mb-8 flex rounded-lg border border-line bg-card p-1">
           <button

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Marque } from "@/components/brand/Marque";
 
 export const metadata = {
   title: "Mentions légales",
@@ -14,17 +14,7 @@ export default function MentionsLegalesPage() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-6xl items-center px-4">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={240}
-              height={64}
-              className="h-16 w-auto"
-              priority
-              fetchPriority="high"
-            />
-          </Link>
+          <Marque href="/" />
         </div>
       </nav>
 
@@ -153,14 +143,8 @@ export default function MentionsLegalesPage() {
       {/* pb-24 : le dernier lien reste hors de la bulle de l'assistant. */}
       <footer className="border-t border-white/5 pt-8 pb-24 mt-12">
         <div className="mx-auto max-w-3xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 text-sm text-muted-foreground">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={90}
-              height={24}
-              className="h-6 w-auto"
-            />
+          <div className="flex items-baseline gap-3 text-sm text-muted-foreground">
+            <Marque />
             <span>© {new Date().getFullYear()}</span>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">

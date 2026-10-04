@@ -116,6 +116,9 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         heading: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
+        // Le mot LEGITVISION seul (components/brand/Marque.tsx), qui pose
+        // lui-même la variable --font-marque.
+        marque: ["var(--font-marque)", "system-ui", "sans-serif"],
       },
 
       /**
