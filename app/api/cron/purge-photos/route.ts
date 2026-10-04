@@ -4,8 +4,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { purgeExpiredPhotos } from "@/lib/purge-photos";
 
 /**
- * Purge quotidienne des photos d'analyse (lib/purge-photos.ts), appelée par
- * Vercel Cron (vercel.json) avec « Authorization: Bearer $CRON_SECRET ».
+ * Purge des photos d'analyse (lib/purge-photos.ts), appelée toutes les 6 heures
+ * par Vercel Cron (vercel.json) avec « Authorization: Bearer $CRON_SECRET ».
  * Sans CRON_SECRET configuré, la route refuse tout appel.
  * `?dry=1` compte ce qui serait supprimé, sans rien supprimer.
  */

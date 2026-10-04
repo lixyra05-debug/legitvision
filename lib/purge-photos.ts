@@ -7,11 +7,30 @@ import { PHOTO_RETENTION_DAYS } from "@/lib/site-facts";
  * (politique de confidentialité, rubrique 4). Le rapport n'affiche aucune
  * photo : il reste intact.
  *
- * Lancée une fois par jour par Vercel Cron (vercel.json). Sur l'offre Hobby,
- * l'heure n'est tenue qu'à 59 minutes près : deux passages peuvent être
- * espacés de 25 heures. Chaque passage supprime donc tout ce qui dépasserait
- * la durée avant le suivant, soit ce qui a plus de PHOTO_RETENTION_DAYS jours
- * moins 25 heures.
+ * Lancée toutes les 6 heures par Vercel Cron (vercel.json, PURGE_SCHEDULE :
+ * 0 h, 6 h, 12 h et 18 h UTC). Chaque passage supprime ce qui a plus de
+ * PHOTO_RETENTION_DAYS jours moins PURGE_MARGIN_HOURS. La marge couvre le pire
+ * délai entre deux passages réussis quand UN passage échoue entre les deux
+ * (celui du 2026-10-03 a échoué : base injoignable) : aucune photo ne dépasse
+ * alors la durée. Calcul, d'après la documentation de Vercel relue le
+ * 2026-10-04 :
+ * - offre Pro : un cron part « within the minute specified », soit au plus
+ *   59 s après l'heure prévue (vercel.com/docs/cron-jobs/manage-cron-jobs,
+ *   « Cron jobs accuracy ») ;
+ * - un passage en échec n'est pas relancé (« Vercel will not retry an
+ *   invocation if a cron job fails »), et un déclenchement peut se perdre
+ *   (« Cron job delivery is best effort ») ;
+ * - un passage dure au plus 300 s : maxDuration par défaut avec Fluid compute
+ *   (vercel.com/docs/functions/limitations), la route n'en fixe pas d'autre.
+ * Si un passage échoue, le suivant part au plus 2 × 6 h + 59 s après le
+ * dernier passage réussi, et finit au plus 300 s plus tard : 12 h 5 min 59 s.
+ * Arrondi à l'heure supérieure : 13 h. Chaque passage supprime donc ce qui a
+ * plus de 29 jours et 11 heures ; au pire, une photo est supprimée à
+ * 29 jours, 23 heures et 6 minutes. Même à 800 s (maximum de l'offre Pro),
+ * la marge tiendrait.
+ *
+ * Sur l'offre Hobby, ce programme fait échouer le déploiement : elle n'admet
+ * qu'un passage par jour, à 59 minutes près.
  *
  * Deux sources, parce qu'une photo peut exister dans l'une sans l'autre :
  * - le bucket, parcouru en entier : un fichier sans ligne en base (compte
@@ -25,8 +44,35 @@ import { PHOTO_RETENTION_DAYS } from "@/lib/site-facts";
 
 const BUCKET = "analysis-photos";
 
-/** Écart maximal entre deux passages quotidiens : 24 h + 59 min, arrondi. */
-const MAX_HOURS_BETWEEN_RUNS = 25;
+/**
+ * Programme du cron. Vercel le lit dans vercel.json, où il doit figurer en
+ * clair : tests/unit/purge-photos.test.ts échoue si les deux divergent.
+ */
+export const PURGE_SCHEDULE = "0 */6 * * *";
+
+/** Heures entre deux passages prévus. */
+export const PURGE_INTERVAL_HOURS = 6;
+
+/** Passages consécutifs qui peuvent échouer sans qu'une photo dépasse la durée. */
+export const PURGE_TOLERATED_FAILED_RUNS = 1;
+
+/** Retard maximal d'un déclenchement sur l'offre Pro : dans la minute prévue. */
+export const PURGE_TRIGGER_DELAY_SECONDS = 59;
+
+/** Durée maximale d'un passage : maxDuration par défaut (Fluid compute). */
+export const PURGE_RUN_MAX_SECONDS = 300;
+
+/**
+ * Marge, en heures entières : délai maximal entre le dernier passage réussi
+ * et la fin du suivant, quand PURGE_TOLERATED_FAILED_RUNS passages échouent
+ * entre les deux. 2 × 6 h + 59 s + 300 s, arrondi à l'heure supérieure : 13 h.
+ */
+export const PURGE_MARGIN_HOURS = Math.ceil(
+  ((PURGE_TOLERATED_FAILED_RUNS + 1) * PURGE_INTERVAL_HOURS * 3600 +
+    PURGE_TRIGGER_DELAY_SECONDS +
+    PURGE_RUN_MAX_SECONDS) /
+    3600,
+);
 
 /** Taille des pages de listage et des lots de suppression. */
 const BATCH_SIZE = 100;
@@ -59,8 +105,9 @@ export type PurgeReport = {
   deletedRows: number;
 };
 
+/** Tout fichier écrit avant cet instant est supprimé : 30 jours moins la marge. */
 export function purgeCutoff(now: Date = new Date()): Date {
-  const hours = PHOTO_RETENTION_DAYS * 24 - MAX_HOURS_BETWEEN_RUNS;
+  const hours = PHOTO_RETENTION_DAYS * 24 - PURGE_MARGIN_HOURS;
   return new Date(now.getTime() - hours * 3_600_000);
 }
 

@@ -66,7 +66,6 @@ export const translations = {
       ctaSecondary: "Voir les marques",
       analyzeItem: "Analyser un article",
       tagFastResult: `Résultat : ${FACTS.median} s (médiane)`,
-      tagGdpr: "RGPD",
     },
     landing: {
       brandsTitle: `${FACTS.models} modèles de luxe analysables`,
@@ -567,7 +566,6 @@ export const translations = {
       ctaSecondary: "View brands",
       analyzeItem: "Analyze an item",
       tagFastResult: `Result: ${FACTS_EN.median} s (median)`,
-      tagGdpr: "GDPR",
     },
     landing: {
       brandsTitle: `${FACTS_EN.models} luxury models supported`,
