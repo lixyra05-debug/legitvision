@@ -131,7 +131,6 @@ create table if not exists public.first_purchase_offers (
   card_brand        text,
   card_last4        text check (card_last4 ~ '^[0-9]{4}$'),
   card_country      text,
-  card_funding      text,
   granted_at        timestamptz not null default now(),
   withdrawn_at      timestamptz,
   unique (livemode, card_fingerprint)
@@ -208,7 +207,6 @@ create or replace function public.credit_single_purchase(
   p_card_brand            text,
   p_card_last4            text,
   p_card_country          text,
-  p_card_funding          text,
   p_purchase_description  text,
   p_offer_description     text
 )
@@ -291,10 +289,10 @@ begin
            and o.card_fingerprint is distinct from p_card_fingerprint);
       insert into public.first_purchase_offers
         (user_id, payment_intent, livemode, card_fingerprint, wallet_type,
-         card_brand, card_last4, card_country, card_funding)
+         card_brand, card_last4, card_country)
       values
         (p_user_id, p_payment_intent, p_livemode, p_card_fingerprint, p_wallet_type,
-         p_card_brand, p_card_last4, p_card_country, p_card_funding)
+         p_card_brand, p_card_last4, p_card_country)
       on conflict do nothing
       returning id into v_offre;
       if v_offre is not null then
@@ -338,12 +336,12 @@ begin
 end;
 $$;
 
-revoke all on function public.credit_single_purchase(uuid, text, boolean, boolean, text, text, text, text, text, text, text, text)
+revoke all on function public.credit_single_purchase(uuid, text, boolean, boolean, text, text, text, text, text, text, text)
   from public, anon, authenticated;
-grant execute on function public.credit_single_purchase(uuid, text, boolean, boolean, text, text, text, text, text, text, text, text)
+grant execute on function public.credit_single_purchase(uuid, text, boolean, boolean, text, text, text, text, text, text, text)
   to service_role;
 
-comment on function public.credit_single_purchase(uuid, text, boolean, boolean, text, text, text, text, text, text, text, text) is
+comment on function public.credit_single_purchase(uuid, text, boolean, boolean, text, text, text, text, text, text, text) is
   'Crédite un achat à l''unité (+1) et, au premier achat du compte et de la carte, l''analyse offerte (+1), en une transaction, une seule fois par paiement (migration 020). Serveur seul.';
 
 -- ── 5. Analyse offerte accordée à la main ───────────────────
@@ -381,7 +379,6 @@ create or replace function public.grant_first_purchase_offer(
   p_card_brand        text default null,
   p_card_last4        text default null,
   p_card_country      text default null,
-  p_card_funding      text default null,
   p_description       text default 'Analyse offerte au premier achat, accordée à la main'
 )
 returns table (
@@ -403,7 +400,6 @@ declare
   v_marque     text := nullif(p_card_brand, '');
   v_last4      text := nullif(p_card_last4, '');
   v_pays       text := nullif(p_card_country, '');
-  v_funding    text := nullif(p_card_funding, '');
   v_alerte     boolean := false;
   v_offre      uuid;
 begin
@@ -465,10 +461,10 @@ begin
   -- 6. Registre, puis +1 et la ligne « bonus » du paiement.
   insert into public.first_purchase_offers
     (user_id, payment_intent, livemode, card_fingerprint, wallet_type,
-     card_brand, card_last4, card_country, card_funding)
+     card_brand, card_last4, card_country)
   values
     (v_compte, p_payment_intent, p_livemode, v_empreinte, v_wallet,
-     v_marque, v_last4, v_pays, v_funding)
+     v_marque, v_last4, v_pays)
   on conflict do nothing
   returning id into v_offre;
   if v_offre is null then
@@ -493,12 +489,12 @@ begin
 end;
 $$;
 
-revoke all on function public.grant_first_purchase_offer(text, boolean, text, text, text, text, text, text, text)
+revoke all on function public.grant_first_purchase_offer(text, boolean, text, text, text, text, text, text)
   from public, anon, authenticated;
-grant execute on function public.grant_first_purchase_offer(text, boolean, text, text, text, text, text, text, text)
+grant execute on function public.grant_first_purchase_offer(text, boolean, text, text, text, text, text, text)
   to service_role;
 
-comment on function public.grant_first_purchase_offer(text, boolean, text, text, text, text, text, text, text) is
+comment on function public.grant_first_purchase_offer(text, boolean, text, text, text, text, text, text) is
   'Accorde à la main l''analyse offerte d''un premier achat déjà crédité, aux règles de l''offre automatique (un compte, une carte si l''empreinte est connue) ; inscrite au registre (migration 020). Serveur seul ; à la main : set local role service_role.';
 
 -- ── 6. Retrait de l'analyse offerte ─────────────────────────
@@ -707,9 +703,9 @@ as $f$
     'select concat_ws(%L, r.outcome, %L || r.credits_added, %L || coalesce(r.balance::text, %L),'
     || ' case when r.offer_granted then %L else coalesce(r.offer_refusal, %L) end,'
     || ' case when r.probable_card_match then %L end)'
-    || ' from public.credit_single_purchase(%L, %L, false, %L, %L, null, %L, %L, %L, %L, %L, %L) as r',
+    || ' from public.credit_single_purchase(%L, %L, false, %L, %L, null, %L, %L, %L, %L, %L) as r',
     ' ', '+', 'solde ', '-', 'offerte', '-', 'alerte',
-    p_user, p_pi, p_offre, p_empreinte, 'controle_020', '0000', 'FR', 'credit',
+    p_user, p_pi, p_offre, p_empreinte, 'controle_020', '0000', 'FR',
     'Contrôle 020 : achat', 'Contrôle 020 : analyse offerte')
 $f$;
 

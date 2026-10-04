@@ -10,12 +10,12 @@
 --      éditeur) : chaque ligne dit « ok » (« info » : compte, sans attendu).
 --   3. Exécuter supabase/checks/etat_base.sql en lecture seule et comparer sa
 --      sortie à supabase/checks/etat_base.attendu.tsv : les 196 lignes de
---      l'attendu restent identiques, et s'y ajoutent 60 lignes (256 en tout),
+--      l'attendu restent identiques, et s'y ajoutent 59 lignes (255 en tout),
 --      toutes sur les objets de la 020 : 3 fonctions (credit_single_purchase,
 --      grant_first_purchase_offer, withdraw_first_purchase_offer), 2 tables
---      (analysis_costs, first_purchase_offers), leurs 30 colonnes et 16
+--      (analysis_costs, first_purchase_offers), leurs 29 colonnes et 16
 --      contraintes, et 9 index, dont credits_transactions_purchase_payment_key.
---      Si la sortie est exactement l'attendu plus ces 60 lignes, la relever en
+--      Si la sortie est exactement l'attendu plus ces 59 lignes, la relever en
 --      entier et la committer comme nouvel attendu (CLAUDE.md, règle 16).
 --      Toute autre différence est un objet créé ou modifié hors du dépôt : ne
 --      rien committer, s'arrêter et la rapporter.
@@ -85,7 +85,7 @@ with controles (ordre, controle, attendu, observe) as (
   union all
   select 10, 'Signature de credit_single_purchase',
          'p_user_id uuid, p_payment_intent text, p_livemode boolean, p_offer_allowed boolean, p_card_fingerprint text,'
-         || ' p_wallet_type text, p_card_brand text, p_card_last4 text, p_card_country text, p_card_funding text,'
+         || ' p_wallet_type text, p_card_brand text, p_card_last4 text, p_card_country text,'
          || ' p_purchase_description text, p_offer_description text'
          || ' → TABLE(outcome text, credits_added integer, balance integer, offer_granted boolean, offer_refusal text, probable_card_match boolean)',
          coalesce((select string_agg(pg_get_function_arguments(p.oid) || ' → ' || pg_get_function_result(p.oid), ' | ')
@@ -95,7 +95,7 @@ with controles (ordre, controle, attendu, observe) as (
   select 11, 'Signature de grant_first_purchase_offer',
          'p_payment_intent text, p_livemode boolean, p_card_fingerprint text DEFAULT NULL::text,'
          || ' p_wallet_type text DEFAULT NULL::text, p_card_brand text DEFAULT NULL::text, p_card_last4 text DEFAULT NULL::text,'
-         || ' p_card_country text DEFAULT NULL::text, p_card_funding text DEFAULT NULL::text,'
+         || ' p_card_country text DEFAULT NULL::text,'
          || ' p_description text DEFAULT ''Analyse offerte au premier achat, accordée à la main''::text'
          || ' → TABLE(outcome text, balance integer, offer_refusal text, probable_card_match boolean)',
          coalesce((select string_agg(pg_get_function_arguments(p.oid) || ' → ' || pg_get_function_result(p.oid), ' | ')
@@ -110,7 +110,7 @@ with controles (ordre, controle, attendu, observe) as (
                     where p.pronamespace = 'public'::regnamespace and p.proname = 'withdraw_first_purchase_offer'), 'absente')
   union all
   select 13, 'Corps des fonctions : ceux de la migration relue (md5)',
-         'credit_single_purchase : 85b15ef2f77f8d72d5b6e79f5ae1dfda | grant_first_purchase_offer : e117d515b697221835f00ac9caac75e8'
+         'credit_single_purchase : 83652ffe4e4f7095a411808c373525df | grant_first_purchase_offer : f3545ad98d97f2eb928949cb50fb4373'
          || ' | withdraw_first_purchase_offer : c5cb319455c1b8bf1974ecc9e29d5f05',
          coalesce((select string_agg(p.proname || ' : ' || md5(p.prosrc), ' | ' order by p.proname collate "C")
                      from pg_proc p
@@ -161,7 +161,7 @@ with controles (ordre, controle, attendu, observe) as (
                  (2, 'first_purchase_offers',
                   'id uuid non-nul défaut extensions.uuid_generate_v4(), user_id uuid, payment_intent text non-nul,'
                   || ' livemode boolean non-nul, card_fingerprint text, wallet_type text, card_brand text,'
-                  || ' card_last4 text, card_country text, card_funding text,'
+                  || ' card_last4 text, card_country text,'
                   || ' granted_at timestamp with time zone non-nul défaut now(), withdrawn_at timestamp with time zone'))
          as t(n, nom, attendu)
   union all

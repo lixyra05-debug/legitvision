@@ -48,8 +48,8 @@ end;
 $$;
 
 drop function if exists public.withdraw_first_purchase_offer(text, text);
-drop function if exists public.grant_first_purchase_offer(text, boolean, text, text, text, text, text, text, text);
-drop function if exists public.credit_single_purchase(uuid, text, boolean, boolean, text, text, text, text, text, text, text, text);
+drop function if exists public.grant_first_purchase_offer(text, boolean, text, text, text, text, text, text);
+drop function if exists public.credit_single_purchase(uuid, text, boolean, boolean, text, text, text, text, text, text, text);
 drop index if exists public.credits_transactions_purchase_payment_key;
 drop table if exists public.first_purchase_offers;
 drop table if exists public.analysis_costs;
