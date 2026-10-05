@@ -7,6 +7,7 @@ import type { Verdict, Confidence } from "@/lib/types";
 import { staleKind } from "@/lib/analysis-limits";
 import { expireStaleAnalyses } from "@/lib/analysis-stale";
 import { lookupCatalogNames } from "@/lib/analysis-history";
+import { zoneNamesForPoints } from "@/lib/zone-names";
 
 interface AIRawResponse {
   analyst_summary?: string;
@@ -32,7 +33,9 @@ interface AnalysisRow {
   // Jointures facultatives : null si la marque ou le modèle a été désactivé
   // depuis (RLS « is_active = true »). Les noms sont alors relus en admin.
   brands: { name: string } | null;
-  models: { name: string } | null;
+  // Les points d'authentification du modèle ne servent ici qu'à nommer les
+  // zones du rapport (lib/zone-names.ts). JSONB : forme non garantie.
+  models: { name: string; authentication_points: unknown } | null;
 }
 
 const ANALYSIS_COLUMNS = `
@@ -49,7 +52,7 @@ const ANALYSIS_COLUMNS = `
   brand_id,
   model_id,
   brands(name),
-  models(name)
+  models(name, authentication_points)
 `;
 
 interface PageProps {
@@ -135,6 +138,10 @@ export default async function CheckReportPage(props: PageProps) {
     recommendations: raw?.recommendations ?? null,
     aiConfidence: raw?.confidence_level ?? null,
     createdAt: row.created_at,
+    // Seulement les noms des zones : ni les points, ni leurs poids. Modèle
+    // désactivé depuis (jointure vide) : table vide, le rapport nomme alors
+    // les zones courantes et rend les autres identifiants lisibles.
+    zoneNames: zoneNamesForPoints(row.models?.authentication_points),
   };
 
   return <ReportView data={report} />;

@@ -1,4 +1,5 @@
 import { CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
+import { zoneNameIn, type ZoneNames } from "@/lib/zone-names";
 
 export interface Finding {
   zone: string;
@@ -38,7 +39,8 @@ const STATUS_CONFIG: Record<
     cardBg: "border-verdict-authentic/15 bg-verdict-authentic/5",
   },
   warn: {
-    label: "Attention",
+    // « À vérifier » et non « Attention » (décision d'Hector du 05/10).
+    label: "À vérifier",
     labelColor: "text-warning",
     labelBg: "bg-warning/10",
     icon: AlertTriangle,
@@ -55,8 +57,17 @@ const STATUS_CONFIG: Record<
   },
 };
 
-export function FindingCard(finding: Finding) {
+/**
+ * `zoneNames` : table des noms des zones du modèle (lib/zone-names.ts). La zone
+ * rendue par l'IA peut être un identifiant ou un texte libre : le titre est son
+ * nom en français quand il est connu, sinon l'identifiant rendu lisible.
+ */
+export function FindingCard({
+  zoneNames,
+  ...finding
+}: Finding & { zoneNames?: ZoneNames | null }) {
   const status = resolveStatus(finding);
+  const zoneName = zoneNameIn(zoneNames, finding.zone);
   const { label, labelColor, labelBg, icon: Icon, iconColor, cardBg } =
     STATUS_CONFIG[status];
 
@@ -65,16 +76,25 @@ export function FindingCard(finding: Finding) {
       <div className="flex items-start gap-3">
         <Icon className={`mt-0.5 size-5 shrink-0 ${iconColor}`} />
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-ui font-semibold capitalize text-foreground">
-              {finding.zone.replace(/_/g, " ")}
-            </span>
-            <span
-              className={`rounded-full px-2 py-0.5 text-caption font-semibold uppercase tracking-wide ${labelColor} ${labelBg}`}
-            >
-              {label}
-            </span>
-            <span className="ml-auto text-caption tabular-nums text-muted-foreground">
+          {/* La note reste en haut à droite, sur la ligne du nom. Un nom en
+              français est plus long qu'un identifiant : s'il ne tient pas avec
+              son badge, le badge passe dessous, dans leur groupe, sans emporter
+              la note. Les cartes d'une même liste gardent ainsi la même forme. */}
+          <div className="flex items-baseline justify-between gap-3">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1.5">
+              {/* Pas de « capitalize » : il écrirait « Code Date / Puce Rfid ». */}
+              {zoneName !== "" && (
+                <span className="text-ui font-semibold text-foreground">
+                  {zoneName}
+                </span>
+              )}
+              <span
+                className={`rounded-full px-2 py-0.5 text-caption font-semibold uppercase tracking-wide ${labelColor} ${labelBg}`}
+              >
+                {label}
+              </span>
+            </div>
+            <span className="shrink-0 text-caption tabular-nums text-muted-foreground">
               {finding.score}/100
             </span>
           </div>

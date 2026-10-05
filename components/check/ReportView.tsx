@@ -26,6 +26,7 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { getScoreColor, getScoreSolidBg } from "@/lib/types";
 import type { Verdict, Confidence } from "@/lib/types";
 import { REPORT_REFRESH_SECONDS } from "@/lib/analysis-limits";
+import { zoneNameIn, type ZoneNames } from "@/lib/zone-names";
 
 const VERDICT_TO_KEY: Record<Verdict, "authentic" | "suspect" | "fake"> = {
   likely_authentic: "authentic",
@@ -51,6 +52,8 @@ export interface ReportData {
   ocrExtracted: Record<string, string> | null;
   recommendations: string[] | null;
   createdAt: string;
+  /** Noms affichés des zones du modèle, par identifiant normalisé (lib/zone-names.ts). */
+  zoneNames: ZoneNames | null;
 }
 
 // ── Constants ──
@@ -154,11 +157,12 @@ function SubScoreBar({ label, score }: { label: string; score: number }) {
 
   return (
     <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-ui capitalize text-muted-foreground">
-          {label.replace(/_/g, " ")}
-        </span>
-        <span className={`text-ui font-semibold tabular-nums ${textColor}`}>
+      {/* gap-3 : un nom long passe à la ligne avant de toucher sa note. */}
+      <div className="flex items-center justify-between gap-3">
+        {/* Le nom de la zone, déjà en français : pas de « capitalize », qui
+            écrirait « Code Date / Puce Rfid ». */}
+        <span className="text-ui text-muted-foreground">{label}</span>
+        <span className={`shrink-0 text-ui font-semibold tabular-nums ${textColor}`}>
           {score}
         </span>
       </div>
@@ -260,7 +264,13 @@ export function ReportView({ data }: { data: ReportData }) {
   const missingEvidence = (data.missingEvidence ?? []).filter(Boolean);
 
   return (
-    <div className="min-h-screen bg-background">
+    // data-rapport : la page affiche un rapport. C'est ce que lit la variante
+    // « rapport-mobile: » (tailwind.config.ts) : sous 640 px, le bouton de
+    // l'assistant est rendu dans le flux après ce bloc (ChatWidget). Ce bloc
+    // n'a alors pas de hauteur minimale : le bouton suit le contenu au lieu
+    // d'être repoussé sous l'écran quand le rapport est court. Le fond de
+    // <body> est le même (bg-background, min-h-screen) : rien ne change à l'œil.
+    <div data-rapport className="min-h-screen bg-background rapport-mobile:min-h-0">
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4">
@@ -281,8 +291,11 @@ export function ReportView({ data }: { data: ReportData }) {
         </div>
       </nav>
 
-      {/* pb-24 : la bulle de l'assistant ne couvre plus « Nouvelle analyse ». */}
-      <main className="mx-auto max-w-3xl space-y-6 px-4 pt-8 pb-24 sm:pt-12">
+      {/* pb-24 : la bulle de l'assistant, flottante, ne couvre pas « Nouvelle
+          analyse ». Sous 640 px, elle est dans le flux, 24 px sous le dernier
+          bouton (pb-6) ; sous la même condition qu'elle (rapport-mobile), pour
+          qu'un navigateur qui la garde flottante garde aussi sa place. */}
+      <main className="mx-auto max-w-3xl space-y-6 px-4 pt-8 pb-24 sm:pt-12 rapport-mobile:pb-6">
         {/* ── HEADER ── */}
         <div className="space-y-3">
           {/* Photos jugées insuffisantes : pas de badge de verdict (« Éléments suspects »
@@ -401,7 +414,9 @@ export function ReportView({ data }: { data: ReportData }) {
             <p className="mt-1 text-ui text-muted-foreground">
               {t("results.insufficientDesc")}
             </p>
-            <p className="mt-2 text-caption text-muted-foreground/80">
+            {/* Sans opacité : à 80 %, cette phrase tombait à 3,56:1 en thème
+                clair sur le fond du panneau (5,38:1 désormais ; 6,87:1 en sombre). */}
+            <p className="mt-2 text-caption text-muted-foreground">
               {t("results.insufficientNoCredit")}
             </p>
             {missingEvidence.length > 0 && (
@@ -454,7 +469,10 @@ export function ReportView({ data }: { data: ReportData }) {
             <div className="rounded-lg border border-line-subtle bg-card p-6">
               <ScoreGauge score={data.overallScore} size={220} />
 
-              {confidenceCfg && (
+              {/* Confiance faible : un seul encadré ambre, le bandeau placé
+                  avant le score (décision d'Hector du 05/10). Ce bloc ne
+                  s'affiche qu'en confiance haute ou modérée. */}
+              {confidenceCfg && data.confidence !== "low" && (
                 <div
                   className={`mt-6 rounded-md border p-4 ${confidenceCfg.bg}`}
                 >
@@ -497,7 +515,13 @@ export function ReportView({ data }: { data: ReportData }) {
                 <RevealGroup className="mt-2 grid gap-4 sm:grid-cols-2">
                   {subScoreEntries.map(([zone, score]) => (
                     <RevealItem key={zone} className="h-full">
-                      <SubScoreBar label={zone} score={score} />
+                      {/* Note sans nom de zone (clé vide ou faite de
+                          séparateurs, réponse de l'IA mal formée) : la note
+                          reste affichée, sous un libellé neutre. */}
+                      <SubScoreBar
+                        label={zoneNameIn(data.zoneNames, zone) || t("results.unnamedZone")}
+                        score={score}
+                      />
                     </RevealItem>
                   ))}
                 </RevealGroup>
@@ -515,7 +539,7 @@ export function ReportView({ data }: { data: ReportData }) {
                 <RevealGroup className="space-y-3">
                   {findings.map((f, i) => (
                     <RevealItem key={i}>
-                      <FindingCard {...f} />
+                      <FindingCard {...f} zoneNames={data.zoneNames} />
                     </RevealItem>
                   ))}
                 </RevealGroup>

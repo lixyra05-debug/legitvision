@@ -24,6 +24,34 @@ const pulseAnimation = {
   animation: "pulse-glow var(--dur-ambient) ease-in-out infinite",
 };
 
+/**
+ * Sur téléphone, le bouton flottant recouvrait les notes des zones et le
+ * bouton du bas du rapport. Sur un rapport affiché, sous 640 px, il est rendu
+ * dans le flux, à la fin de la page (décision d'Hector du 05/10). Partout
+ * ailleurs, et à partir de 640 px, il flotte en bas à droite de la fenêtre.
+ *
+ * « rapport-mobile: » (tailwind.config.ts) ne s'applique que si la page
+ * affiche un rapport (ReportView pose data-rapport) et sous 640 px. L'adresse
+ * ne suffit pas : une analyse introuvable ou une erreur gardent l'adresse du
+ * rapport, avec un écran qui occupe toute la fenêtre ; le bouton y reste
+ * flottant, comme sur les autres pages.
+ */
+// Le bouton, flottant : en bas à droite de la fenêtre.
+const BOUTON_FLOTTANT = "fixed bottom-6 right-6";
+// Panneau fermé, sur un rapport sous 640 px : dans le flux. Panneau ouvert, le
+// bouton reste flottant, sous le panneau, comme partout : dans le flux d'un
+// rapport plus court que la fenêtre, il se poserait sur le panneau et sur
+// « Envoyer ».
+const BOUTON_DANS_LE_FLUX = "rapport-mobile:static";
+// Son conteneur suit le contenu de la page (app/layout.tsx). Sur un rapport
+// sous 640 px : bouton aligné à droite, avec la marge de la page (px-4, celle
+// du rapport) et 24 px sous lui ; l'écart avec le dernier bouton vient du bas
+// du rapport (ReportView). La hauteur minimale (56 px du bouton + 24 px) garde
+// la page à la même hauteur quand le panneau s'ouvre et que le bouton quitte
+// le flux. Ailleurs, le conteneur ne pèse rien.
+const CONTENEUR =
+  "rapport-mobile:flex rapport-mobile:min-h-20 rapport-mobile:justify-end rapport-mobile:px-4 rapport-mobile:pb-6";
+
 export function ChatWidget() {
   const { t, locale } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -31,6 +59,7 @@ export function ChatWidget() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const boutonRef = useRef<HTMLButtonElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const idCounterRef = useRef(0);
   const typingTimerRef = useRef<number | null>(null);
@@ -46,10 +75,14 @@ export function ChatWidget() {
 
   useEffect(() => {
     if (!open) return;
+    // Un clic hors du panneau et hors du bouton ferme le panneau. Le
+    // conteneur ne compte pas : dans le flux d'un rapport, il occupe toute la
+    // largeur de la page, et un clic à côté du bouton doit fermer aussi.
     function handleClick(e: MouseEvent) {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+      const cible = e.target as Node;
+      if (panelRef.current?.contains(cible)) return;
+      if (boutonRef.current?.contains(cible)) return;
+      setOpen(false);
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
@@ -95,9 +128,12 @@ export function ChatWidget() {
   }
 
   return (
-    <div ref={panelRef}>
+    <div className={CONTENEUR}>
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-lg border border-line bg-popover shadow-2xl shadow-black/60">
+        <div
+          ref={panelRef}
+          className="fixed bottom-24 right-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-lg border border-line bg-popover shadow-2xl shadow-black/60"
+        >
           <div className="flex items-center justify-between border-b border-line px-4 py-3">
             <div className="flex items-center gap-2">
               <div className="flex size-8 items-center justify-center rounded-full bg-surface">
@@ -189,9 +225,10 @@ export function ChatWidget() {
       )}
 
       <button
+        ref={boutonRef}
         onClick={() => setOpen((v) => !v)}
         style={open ? undefined : pulseAnimation}
-        className="fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full bg-accent text-accent-foreground transition-[transform,background-color] duration-fast hover:scale-105 hover:bg-accent-hover active:scale-95"
+        className={`${BOUTON_FLOTTANT} ${open ? "" : BOUTON_DANS_LE_FLUX} z-50 flex size-14 items-center justify-center rounded-full bg-accent text-accent-foreground transition-[transform,background-color] duration-fast hover:scale-105 hover:bg-accent-hover active:scale-95`}
         aria-label={open ? "Fermer l'assistant" : "Ouvrir l'assistant"}
       >
         {open ? <X className="size-6" /> : <MessageCircle className="size-6" />}

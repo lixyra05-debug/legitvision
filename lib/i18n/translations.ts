@@ -47,7 +47,7 @@ export const translations = {
       signup: "Inscription",
       brands: "Marques",
       faq: "FAQ",
-      dashboard: "Dashboard",
+      dashboard: "Tableau de bord",
       subscription: "Mon abonnement",
       logout: "Déconnexion",
       howItWorks: "Comment ça marche",
@@ -318,6 +318,7 @@ export const translations = {
       confidenceLowDesc:
         "L'estimation repose sur peu d'éléments nets : prenez son score avec prudence.",
       subScoresTitle: "Scores par zone",
+      unnamedZone: "Zone non précisée",
       findingsTitle: "Observations détaillées",
       ocrTitle: "Textes détectés (OCR)",
       recommendationsTitle: "Recommandations",
@@ -490,7 +491,7 @@ export const translations = {
     },
     userMenu: {
       signIn: "Se connecter",
-      dashboard: "Dashboard",
+      dashboard: "Tableau de bord",
       manageSubscription: "Gérer l'abonnement",
       signOut: "Se déconnecter",
     },
@@ -810,6 +811,7 @@ export const translations = {
       confidenceLow: "Low confidence",
       confidenceLowDesc: "The estimate relies on few clear details: treat its score with caution.",
       subScoresTitle: "Scores by zone",
+      unnamedZone: "Unspecified zone",
       findingsTitle: "Detailed observations",
       ocrTitle: "Detected text (OCR)",
       recommendationsTitle: "Recommendations",

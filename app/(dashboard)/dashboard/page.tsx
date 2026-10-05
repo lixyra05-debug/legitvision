@@ -39,7 +39,7 @@ import {
 const DELETABLE_STATUSES = ["failed", "uploading", "pending"];
 
 export const metadata = {
-  title: "Dashboard",
+  title: "Tableau de bord",
 };
 
 type AnalysisRow = Omit<AnalysisWithDetails, "brand_name" | "brand_slug" | "model_name"> & {

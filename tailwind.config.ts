@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 import tailwindAnimate from "tailwindcss-animate";
 
 /**
@@ -192,6 +193,22 @@ const config: Config = {
       },
     },
   },
-  plugins: [tailwindAnimate],
+  plugins: [
+    tailwindAnimate,
+    // « rapport-mobile: » : sur un rapport affiché (ReportView pose data-rapport
+    // sur son bloc), sous le point de rupture « sm ». Sert au bouton de
+    // l'assistant, rendu dans le flux à la fin du rapport sur téléphone
+    // (components/chat/ChatWidget.tsx), et à la place que le rapport lui
+    // réservait. La condition est lue dans la page elle-même, pas dans son
+    // adresse : une page 404 ou d'erreur à l'adresse d'un rapport n'est pas un
+    // rapport. Un navigateur sans :has() ignore ces règles en bloc et garde le
+    // bouton flottant, avec la place réservée sous le rapport.
+    plugin(({ addVariant, theme }) => {
+      addVariant(
+        "rapport-mobile",
+        `@media not all and (min-width: ${theme("screens.sm")}) { body:has([data-rapport]) & }`,
+      );
+    }),
+  ],
 };
 export default config;
