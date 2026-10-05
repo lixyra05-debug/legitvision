@@ -33,10 +33,12 @@ import { PHOTO_RETENTION_DAYS } from "@/lib/site-facts";
  * Deux échecs consécutifs ou plus, ou un cron qui ne part plus (déploiement
  * coupé, cron désactivé, CRON_SECRET absent), dépassent la marge : la route
  * (app/api/cron/purge-photos/route.ts) le rend visible. Elle envoie une alerte
- * par e-mail quand un passage échoue ou trouve une photo déjà plus vieille que
- * PHOTO_RETENTION_DAYS (overdueObjects), et signale chaque passage réussi à
- * une sonde externe (PURGE_HEARTBEAT_URL), qui prévient si les signaux
- * s'arrêtent.
+ * par e-mail quand un passage lève une erreur ou trouve une photo déjà plus
+ * vieille que PHOTO_RETENTION_DAYS (overdueObjects), et signale chaque passage
+ * réussi à une sonde externe (PURGE_HEARTBEAT_URL), qui prévient si les
+ * signaux s'arrêtent. Un passage coupé à PURGE_RUN_MAX_SECONDS n'envoie ni
+ * l'un ni l'autre : rien ici ne borne la durée des appels à Supabase, et seul
+ * l'arrêt des battements le signale.
  *
  * Sur l'offre Hobby, ce programme fait échouer le déploiement : elle n'admet
  * qu'un passage par jour, à 59 minutes près.

@@ -12,6 +12,9 @@ import { test, expect } from "@playwright/test";
  * - Mobile responsive (no horizontal overflow)
  */
 
+/** Bouton FR/EN de l'en-tête, affiché ou non : son nom commence par son libellé. */
+const LANG_BTN = 'nav button[aria-label^="FR, "], nav button[aria-label^="EN, "]';
+
 test.describe("Landing page", () => {
   test("landing renders with H1 and auth link", async ({ page }) => {
     await page.goto("/");
@@ -43,9 +46,10 @@ test.describe("Landing page", () => {
     await expect(themeBtn).toBeVisible();
     await expect(themeBtn).toHaveClass(/size-9/);
 
-    // LanguageToggle: button with aria-label "Switch to EN" or "Switch to FR".
+    // LanguageToggle : son nom commence par le libellé affiché, puis dit la
+    // destination (« FR, English version », « EN, Version française »).
     // Sur téléphone (< 640 px), il n'apparaît qu'en anglais : le site est en français.
-    const langBtn = page.locator('button[aria-label^="Switch to"]').first();
+    const langBtn = page.locator(LANG_BTN).first();
     if ((page.viewportSize()?.width ?? 0) < 640) {
       await expect(langBtn).toBeHidden();
       return;
@@ -107,7 +111,8 @@ test.describe("Landing page", () => {
     test.skip((page.viewportSize()?.width ?? 0) < 640, "bouton FR/EN masqué sur téléphone en français");
     await page.goto("/");
 
-    const langBtn = page.locator('button[aria-label^="Switch to"]').first();
+    const langBtn = page.locator(LANG_BTN).first();
+    await expect(langBtn).toHaveAccessibleName("FR, English version");
     const initialLabel = (await langBtn.textContent())?.trim();
     expect(["FR", "EN"]).toContain(initialLabel);
 
@@ -124,6 +129,39 @@ test.describe("Landing page", () => {
     // H1 text should also have changed (FR <-> EN)
     const newH1 = (await page.locator("h1").first().textContent())?.trim() ?? "";
     expect(newH1).not.toBe(initialH1);
+    await expect(langBtn).toHaveAccessibleName("EN, Version française");
+    await expect(langBtn).toHaveAttribute("lang", "fr");
+  });
+
+  // Visiteur en anglais : le bouton FR/EN ramène au français. Sous 640 px, il se
+  // masque alors ; le focus ne doit pas retomber sur <body> mais passer à
+  // l'élément suivant de l'en-tête. À partir de 640 px, il reste sur le bouton.
+  test("au clavier, le retour au français par le bouton FR/EN garde un focus visible", async ({ page }) => {
+    await page.addInitScript(() => {
+      try {
+        if (!sessionStorage.getItem("e2e-langue")) {
+          sessionStorage.setItem("e2e-langue", "1");
+          localStorage.setItem("legitvision-lang", "en");
+        }
+      } catch {}
+    });
+    await page.goto("/");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+
+    const langBtn = page.locator(LANG_BTN).first();
+    await expect(langBtn).toBeVisible();
+    await expect(langBtn).toHaveAccessibleName("EN, Version française");
+    await langBtn.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("html")).toHaveAttribute("lang", "fr");
+
+    const telephone = (page.viewportSize()?.width ?? 0) < 640;
+    if (telephone) await expect(langBtn).toBeHidden();
+    else await expect(langBtn).toBeFocused();
+    // Le focus est sur un élément affiché de l'en-tête, jamais perdu.
+    const focus = page.locator("nav :focus-visible").first();
+    await expect(focus).toBeVisible();
+    await expect(page.locator("body")).not.toBeFocused();
   });
 
   // Sur téléphone, le bouton FR/EN de l'en-tête est masqué : la langue se change

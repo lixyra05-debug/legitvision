@@ -16,14 +16,17 @@ import { PHOTO_RETENTION_DAYS } from "@/lib/site-facts";
  * passage en échec, et un déclenchement perdu ne laisse aucun journal. D'où
  * deux signaux :
  * - alerte par e-mail (PURGE_ALERT_EMAIL, sinon l'adresse de contact du site)
- *   quand un passage échoue, ou quand il trouve une photo déjà plus vieille
- *   que PHOTO_RETENTION_DAYS (overdueObjects) : la durée promise est dépassée ;
+ *   quand un passage lève une erreur, ou quand il trouve une photo déjà plus
+ *   vieille que PHOTO_RETENTION_DAYS (overdueObjects) : la durée promise est
+ *   dépassée ;
  * - battement après chaque passage réussi, envoyé à PURGE_HEARTBEAT_URL :
  *   l'adresse d'une sonde externe réglée sur 6 h avec 1 h de grâce, qui
  *   prévient si aucun battement n'arrive en 7 h. C'est le seul signal d'un
  *   passage qui n'a pas eu lieu (déploiement coupé, cron désactivé,
- *   déclenchement perdu, CRON_SECRET absent). Sans cette variable, aucun
- *   battement n'est envoyé.
+ *   déclenchement perdu, CRON_SECRET absent) et d'un passage que Vercel coupe
+ *   à maxDuration : coupé, il n'exécute pas son catch, aucun e-mail ne part
+ *   (lib/purge-photos.ts ne borne pas la durée de ses appels à Supabase).
+ *   Sans cette variable, aucun battement n'est envoyé.
  */
 
 /** PURGE_RUN_MAX_SECONDS (lib/purge-photos.ts) : la marge de la purge en dépend. */

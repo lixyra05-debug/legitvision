@@ -4,8 +4,10 @@ import { archivoMarque } from "./police-marque";
 /**
  * Le mot LEGITVISION, en texte, partout où l'interface affichait l'image du
  * logo : en-têtes, pieds de page, /auth, 404 (décision d'Hector du 04/10).
- * L'icône de l'onglet et les images de partage gardent l'ancien logo en
- * attendant le nouveau.
+ * Hors de l'interface, rien ne change en attendant le nouveau logo ; aucun de
+ * ces visuels n'est le même (icône de l'onglet de Next.js, carré « L » des
+ * images de partage, ancien logo des e-mails, bouclier des données
+ * structurées) : voir CLAUDE.md, Design System, « Logo ».
  *
  * Style de texte « Marque » de Figma : Archivo, graisse 800, largeur 125,
  * espacement des lettres 2 % (0,02 em), interligne 100 %, 17 px sur téléphone
