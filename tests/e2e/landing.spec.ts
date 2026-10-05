@@ -126,6 +126,27 @@ test.describe("Landing page", () => {
     expect(newH1).not.toBe(initialH1);
   });
 
+  // Sur téléphone, le bouton FR/EN de l'en-tête est masqué : la langue se change
+  // depuis le pied de page, à toutes les largeurs (décision d'Hector du 05/10).
+  test("la commande de langue du pied de page bascule FR <-> EN", async ({ page }) => {
+    await page.goto("/");
+
+    const commande = page.locator("footer").getByRole("button", { name: /^(English version|Version française)$/ });
+    await commande.scrollIntoViewIfNeeded();
+    await expect(commande).toBeVisible();
+    await expect(commande).toHaveText("English version");
+    await expect(commande).toHaveAttribute("lang", "en");
+    const initialH1 = (await page.locator("h1").first().textContent())?.trim() ?? "";
+
+    await commande.click();
+
+    await expect(commande).toHaveText("Version française");
+    await expect(commande).toHaveAttribute("lang", "fr");
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    const newH1 = (await page.locator("h1").first().textContent())?.trim() ?? "";
+    expect(newH1).not.toBe(initialH1);
+  });
+
   test("mobile responsive — no horizontal overflow", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto("/");

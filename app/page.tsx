@@ -133,13 +133,15 @@ export default async function LandingPage() {
           <Marque href="/" />
           {/* Écarts resserrés sous 1024 px : le mot (146 px sur téléphone,
               172 px au-delà) tient avec les liens et les boutons, de 320 px
-              (sans débordement) à la tablette. */}
+              (sans débordement) à la tablette. Sous 360 px, le bouton de thème
+              ne s'affiche pas (option B, décision d'Hector du 05/10) : le mot
+              et « Se connecter » tiennent sur une ligne. */}
           <div className="flex items-center gap-3 lg:gap-6">
             <nav className="hidden items-center gap-4 md:flex lg:gap-6">
               <NavLinks />
             </nav>
             <LanguageToggle />
-            <ThemeToggle />
+            <ThemeToggle masqueSous360 />
             <UserMenu />
           </div>
         </div>
@@ -637,8 +639,10 @@ export default async function LandingPage() {
                 © {new Date().getFullYear()}
               </span>
             </div>
+            {/* items-center : la commande de langue (24 px de haut) reste
+                alignée sur les liens (21 px). */}
             <div
-              className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-ui sm:justify-end text-subtle"
+              className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-ui sm:justify-end text-subtle"
             >
               <Link href="#faq" className="transition-colors hover:text-foreground">FAQ</Link>
               <Link href="#team" className="transition-colors hover:text-foreground">À propos</Link>

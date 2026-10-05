@@ -3,12 +3,20 @@
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 
 /**
- * Sur téléphone (moins de 640 px), le bouton n'apparaît plus qu'en anglais,
- * pour revenir au français : le site est en français seul (CLAUDE.md, règle 16)
- * et, depuis le 04/10, le mot LEGITVISION occupe sa place dans les en-têtes.
- * `masqueSurTelephone` le masque aussi en anglais, là où la place manque (en-tête
- * du tableau de bord) : le visiteur resté en anglais le retrouve sur l'accueil,
- * la nouvelle analyse et le rapport.
+ * Bouton FR/EN des en-têtes. Sur téléphone (moins de 640 px), il n'apparaît
+ * qu'en anglais, pour revenir au français : le site est en français (décision
+ * d'Hector du 25/09) et, depuis le 04/10, le mot LEGITVISION occupe sa place
+ * dans les en-têtes. `masqueSurTelephone` le masque aussi en anglais, là où la
+ * place manque (en-tête du tableau de bord).
+ *
+ * Où changer de langue sur téléphone, en français comme en anglais (décision
+ * d'Hector du 05/10) : la commande BasculeLangue, affichée à toutes les
+ * largeurs, dans le pied de page de l'accueil et dans le menu du compte
+ * (tableau de bord, nouvelle analyse ; accueil une fois connecté). Le rapport
+ * n'a pas de menu du compte : en anglais, ce bouton y reste affiché ; en
+ * français, la langue se change depuis le tableau de bord, où mène son lien
+ * retour. tests/unit/langue-telephone.test.ts échoue si l'une des deux
+ * commandes disparaît.
  *
  * Anneau de focus : --ring, opaque (5,07:1 en clair, 7,8:1 en sombre), comme
  * le lien de la marque ; l'accent à 50 % ne tenait pas 3:1.
