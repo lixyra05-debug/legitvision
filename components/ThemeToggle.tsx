@@ -3,6 +3,7 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
+/** Anneau de focus : --ring, opaque, comme le lien de la marque (l'accent à 50 % ne tenait pas 3:1). */
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
@@ -13,7 +14,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       aria-label={isDark ? "Passer en mode clair" : "Passer en mode sombre"}
       title={isDark ? "Mode clair" : "Mode sombre"}
-      className="relative flex size-9 items-center justify-center rounded-full border border-line bg-surface text-muted-foreground transition-[color,background-color,border-color] duration-fast hover:border-accent/40 hover:bg-surface-raised hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+      className="relative flex size-9 items-center justify-center rounded-full border border-line bg-surface text-muted-foreground transition-[color,background-color,border-color] duration-fast hover:border-accent/40 hover:bg-surface-raised hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       <Sun
         className={`absolute size-4 transition-[transform,opacity] duration-base ${

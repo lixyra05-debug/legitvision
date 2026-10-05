@@ -87,6 +87,8 @@ for (const [href, nom] of [
     const lien = attributs(html, "a");
     assert.equal(lien.get("href"), href);
     assert.equal(lien.get("aria-label"), nom);
+    // Nom en français, même sous <html lang="en"> (visiteur resté en anglais) : WCAG 3.1.2.
+    assert.equal(lien.get("lang"), "fr");
     // Le nom commence par le mot affiché (WCAG 2.5.3) : la commande vocale « LegitVision » le trouve.
     assert.ok(nom.startsWith(texte(html)), `« ${texte(html)} » absent du début de « ${nom} »`);
     assert.doesNotMatch(html, /<(img|picture|svg)\b/);
@@ -114,7 +116,52 @@ test("hors lien (pied de page, 404) : le mot seul, en capitales par le CSS, au s
     "sm:text-[1.25rem]",
     "uppercase",
     "text-foreground",
+    // Largeur réservée pendant le chargement de la police (voir le test suivant).
+    "inline-block",
+    "w-[8.588em]",
   ]) {
     assert.ok(classes.has(classe), `classe absente : ${classe}`);
   }
+});
+
+// Avances du mot en capitales, Archivo graisse 800 et largeur 125, en em : 8 368
+// unités sur 1 000, mesurées avec HarfBuzz (hb-shape --variations=wght=800,wdth=125)
+// sur la police complète dont le sous-ensemble est tiré (police-marque.ts).
+const AVANCES_EM = 8.368;
+
+test("largeur réservée = avances du mot + une fois l'espacement par lettre", () => {
+  const html = renderToStaticMarkup(createElement(Marque));
+  const classes = attributs(html, "span").get("class")?.split(/\s+/) ?? [];
+  const em = (prefixe: string) => {
+    const classe = classes.find((c) => c.startsWith(`${prefixe}-[`) && c.endsWith("em]"));
+    assert.ok(classe, `classe ${prefixe}-[…em] absente`);
+    return Number(classe.slice(prefixe.length + 2, -3));
+  };
+  const attendu = AVANCES_EM + texte(html).length * em("tracking");
+  assert.equal(em("w").toFixed(3), attendu.toFixed(3), "largeur à recalculer : texte ou espacement changé");
+});
+
+// La police livrée, lue avec le fontkit embarqué par Next (celui de next/font/local).
+const fontkit = createRequire(import.meta.url)("next/dist/compiled/@next/font/dist/fontkit") as {
+  default: Ouvrir & { default?: Ouvrir };
+};
+type Ouvrir = (fichier: Buffer) => {
+  hasGlyphForCodePoint(point: number): boolean;
+  variationAxes: Record<string, { min: number; max: number }>;
+};
+const ouvrir = fontkit.default.default ?? fontkit.default;
+
+test("la police du mot couvre chaque lettre affichée et garde les axes de graisse et de largeur", () => {
+  const police = ouvrir(readFileSync(join(RACINE, "components/brand/fonts/archivo-marque.woff2")));
+  const affiche = texte(renderToStaticMarkup(createElement(Marque))).toUpperCase();
+  const absentes = [...new Set(affiche)].filter((lettre) => !police.hasGlyphForCodePoint(lettre.codePointAt(0)!));
+  assert.deepEqual(absentes, [], "lettres absentes du sous-ensemble : le régénérer (police-marque.ts)");
+  const { wght, wdth } = police.variationAxes;
+  assert.ok(wght && wght.min <= 800 && wght.max >= 800, "axe wght absent ou sans la graisse 800");
+  assert.ok(wdth && wdth.max >= 125, "axe wdth absent ou sous 125 : le mot perdrait sa largeur");
+});
+
+test("police-marque.ts déclare font-stretch en plage, sans quoi font-stretch: 125% n'atteint pas l'axe wdth", () => {
+  const source = readFileSync(join(RACINE, "components/brand/police-marque.ts"), "utf8");
+  assert.match(source, /declarations:\s*\[\{\s*prop:\s*"font-stretch",\s*value:\s*"62% 125%"\s*\}\]/);
 });

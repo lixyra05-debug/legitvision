@@ -81,10 +81,14 @@ export function DashboardEmptyState() {
   );
 }
 
+/**
+ * Libellé du solde de l'en-tête. Sur téléphone, il n'est pas affiché, mais les
+ * lecteurs d'écran le lisent : « 12 crédits », et non « 12 ».
+ */
 export function DashboardCreditsLabel() {
   const { t } = useTranslation();
   return (
-    <span className="hidden text-muted-foreground sm:inline">
+    <span className="sr-only text-muted-foreground sm:not-sr-only">
       {t("dashboard.credits")}
     </span>
   );

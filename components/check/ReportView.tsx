@@ -268,12 +268,14 @@ export function ReportView({ data }: { data: ReportData }) {
           <div className="flex items-center gap-3">
             <LanguageToggle />
             <ThemeToggle />
+            {/* Sur téléphone, la flèche seule : son nom reste lu (sr-only) et sa
+                cible fait 36 px. Libellé en français (règle 16). */}
             <Link
               href="/dashboard"
-              className="flex items-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
+              className="flex min-h-9 min-w-9 items-center justify-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
             >
               <ArrowLeft className="size-4" />
-              <span className="hidden sm:inline">Dashboard</span>
+              <span className="sr-only sm:not-sr-only">Tableau de bord</span>
             </Link>
           </div>
         </div>

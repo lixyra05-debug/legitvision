@@ -153,22 +153,26 @@ export default async function DashboardPage(
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
           <Marque href="/" />
-          {/* gap-3 sur téléphone : le mot et le solde tiennent dès 320 px. */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          {/* Le mot mesure 146 px sur téléphone. Sous 360 px, le solde perd son
+              icône et les écarts se resserrent ; sous 640 px, le bouton FR/EN
+              ne s'affiche pas, même en anglais. Le mot et le groupe tiennent
+              ainsi dès 320 px, à 8 px l'un de l'autre au moins, avec un solde
+              à trois chiffres, en français comme en anglais (mesures du 05/10). */}
+          <div className="flex items-center gap-2 min-[360px]:gap-3 sm:gap-4">
             {profile && (
-              <div className="flex items-center gap-1.5 rounded-md border border-line px-3 py-1.5 text-ui">
+              <div className="flex items-center gap-1.5 rounded-md border border-line px-2 py-1.5 text-ui min-[360px]:px-3">
                 {/* Icône neutre : le vert était constant, y compris à 0 crédit —
                     il ne signalait donc pas le solde, il le décorait. */}
-                <Coins className="size-4 text-muted-foreground" />
+                <Coins className="hidden size-4 text-muted-foreground min-[360px]:block" />
                 <span className="font-medium">
                   {profile.credits_remaining}
                 </span>
                 <DashboardCreditsLabel />
               </div>
             )}
-            <LanguageToggle />
+            <LanguageToggle masqueSurTelephone />
             <ThemeToggle />
-            <UserMenu />
+            <UserMenu connecte />
           </div>
         </div>
       </nav>

@@ -577,7 +577,7 @@ export default function NewCheckPage() {
         <div className="flex items-center gap-3">
           <LanguageToggle />
           <ThemeToggle />
-          <UserMenu />
+          <UserMenu connecte />
         </div>
       </div>
     </nav>

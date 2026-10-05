@@ -13,8 +13,13 @@ import { SUBSCRIPTIONS_ON_SALE } from "@/lib/stripe/config";
  * Design system : emerald dosé — il ne porte que le bouton de connexion et
  * l'avatar, tous deux cliquables. La déconnexion est en --destructive, un rôle
  * d'interface (action irréversible), découplé du verdict « contrefait ».
+ *
+ * `connecte` : la page n'est servie qu'à un visiteur connecté (tableau de bord,
+ * nouvelle analyse). Pendant la lecture de la session, l'emplacement prend la
+ * taille de l'avatar (36 px) et non celle du bouton « Se connecter » : 96 px
+ * faisaient déborder ces en-têtes sur téléphone.
  */
-export function UserMenu() {
+export function UserMenu({ connecte = false }: { connecte?: boolean }) {
   const { t } = useTranslation();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [open, setOpen] = useState(false);
@@ -56,7 +61,11 @@ export function UserMenu() {
   }
 
   if (loading) {
-    return <div className="h-9 w-24 animate-pulse rounded-md bg-surface" />;
+    return connecte ? (
+      <div className="size-9 animate-pulse rounded-full bg-surface" />
+    ) : (
+      <div className="h-9 w-24 animate-pulse rounded-md bg-surface" />
+    );
   }
 
   if (!user) {
