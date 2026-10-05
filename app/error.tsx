@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import type { ErrorInfo } from "next/error";
+import { errorDigest, errorName } from "@/lib/error-digest";
 
 /**
  * Erreur inattendue d'une page : un écran en français, aux jetons du thème, au
@@ -12,7 +13,10 @@ import type { ErrorInfo } from "next/error";
  * Props : le type officiel ErrorInfo de next/error (Next 16.3). `error` y est
  * `unknown` : Next transmet la valeur levée telle quelle, qui n'est pas
  * forcément une Error (next/dist/client/components/error-boundary.js). On la
- * lit donc sans rien supposer de son type.
+ * lit donc sans rien supposer de son type (lib/error-digest.ts).
+ *
+ * Une erreur de la mise en page racine, ou de ce qu'elle affiche autour des
+ * pages, échappe à cet écran : c'est app/global-error.tsx qui la prend.
  *
  * « Réessayer » appelle `retry` (stable depuis Next 16.3.0) : il redemande la
  * page au serveur (router.refresh), puis réaffiche le segment, sans recharger
@@ -20,10 +24,10 @@ import type { ErrorInfo } from "next/error";
  * serveur reviendrait telle quelle.
  */
 export default function ErrorPage({ error, retry }: ErrorInfo) {
-  const digest = digestOf(error);
+  const digest = errorDigest(error);
 
   useEffect(() => {
-    console.error("[page] erreur inattendue", digestOf(error) ?? nameOf(error));
+    console.error("[page] erreur inattendue", errorDigest(error) ?? errorName(error));
   }, [error]);
 
   return (
@@ -55,16 +59,4 @@ export default function ErrorPage({ error, retry }: ErrorInfo) {
       </div>
     </main>
   );
-}
-
-/** Identifiant de l'erreur côté serveur, s'il y en a un et que c'est un texte. */
-function digestOf(error: unknown): string | null {
-  if (typeof error !== "object" || error === null || !("digest" in error)) return null;
-  const { digest } = error;
-  return typeof digest === "string" && digest !== "" ? digest : null;
-}
-
-/** Type de l'erreur, jamais son message : il peut contenir des données. */
-function nameOf(error: unknown): string {
-  return error instanceof Error ? error.name : typeof error;
 }

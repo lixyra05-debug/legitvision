@@ -197,7 +197,7 @@ export default async function PlatformHubPage(props: Props) {
                     />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
+                    <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent-hover transition-colors duration-fast">
                       {brand.name}
                     </h3>
                     <p className="text-caption text-muted-foreground">{brand.priceRange}</p>

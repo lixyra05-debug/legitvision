@@ -1,11 +1,12 @@
-// Purge des photos (lib/purge-photos.ts), lancée toutes les 6 heures depuis le
-// 04/10 : la passe du 03/10 a échoué (base injoignable). Aucune photo ne doit
-// dépasser PHOTO_RETENTION_DAYS, même si UNE passe échoue. Ces tests lient le
-// programme de vercel.json à la marge du code, puis simulent le pire cas.
+// Purge des photos (lib/purge-photos.ts) : un passage toutes les 6 heures,
+// décidé le 04/10 après l'échec de la passe du 03/10 (base injoignable) ; la
+// production garde un passage par jour jusqu'au déploiement de ce programme.
+// Aucune photo ne doit dépasser PHOTO_RETENTION_DAYS, même si UNE passe
+// échoue. Ces tests lient le programme de vercel.json et la durée maximale de
+// la route à la marge du code, puis simulent le pire cas.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import type { SupabaseClient } from "@supabase/supabase-js";
 import {
   PURGE_INTERVAL_HOURS,
   PURGE_MARGIN_HOURS,
@@ -17,6 +18,7 @@ import {
   purgeExpiredPhotos,
 } from "@/lib/purge-photos";
 import { PHOTO_RETENTION_DAYS } from "@/lib/site-facts";
+import { fauxAdmin, type Ligne, type Objet } from "./support/faux-stockage-photos";
 
 const RACINE = new URL("../../", import.meta.url);
 const ROUTE = "/api/cron/purge-photos";
@@ -53,6 +55,18 @@ test("marge : deux intervalles, plus le retard et la durée d'un passage, à l'h
   assert.equal(PURGE_MARGIN_HOURS, 13);
 });
 
+test("la route fixe sa durée maximale à PURGE_RUN_MAX_SECONDS, dont dépend la marge", () => {
+  // maxDuration doit être un littéral (Next le lit à la compilation) : on lit la source.
+  const source = readFileSync(new URL(`app${ROUTE}/route.ts`, RACINE), "utf8");
+  const valeur = source.match(/^export const maxDuration = (\d+);$/m);
+  assert.ok(valeur, "export const maxDuration absent de la route");
+  assert.equal(Number(valeur[1]), PURGE_RUN_MAX_SECONDS);
+});
+
+test("retard du déclenchement : 60 s, borne de « dans la minute prévue » (offre Pro)", () => {
+  assert.equal(PURGE_TRIGGER_DELAY_SECONDS, 60);
+});
+
 test("purgeCutoff : 30 jours moins 13 heures avant le passage", () => {
   const maintenant = new Date("2026-10-04T12:00:00Z");
   assert.equal(purgeCutoff(maintenant).toISOString(), "2026-09-05T01:00:00.000Z");
@@ -81,63 +95,7 @@ test("une passe manquée : aucune photo ne dépasse PHOTO_RETENTION_DAYS", () =>
   assert.ok(DUREE_MAX - pire < HEURE, `pire cas simulé : ${(pire / HEURE).toFixed(2)} h`);
 });
 
-// ── purgeExpiredPhotos sur un faux client : stockage et analysis_photos ───────
-
-type Ligne = { id: string; analysis_id: string; storage_path: string; created_at: string };
-type Objet = { path: string; writtenAt: string; size: number };
-type Entree = {
-  name: string;
-  id: string | null;
-  created_at: string | null;
-  updated_at: string | null;
-  metadata: { size: number } | null;
-};
-
-function fauxAdmin(objets: Objet[], lignes: Ligne[]) {
-  const etat = { objets: [...objets], lignes: [...lignes] };
-  const storage = {
-    from: () => ({
-      async list(dossier: string, { limit, offset }: { limit: number; offset: number }) {
-        const prefixe = dossier ? `${dossier}/` : "";
-        const entrees = new Map<string, Entree>();
-        for (const o of etat.objets.filter((x) => x.path.startsWith(prefixe))) {
-          const [nom, ...sous] = o.path.slice(prefixe.length).split("/");
-          entrees.set(
-            nom,
-            sous.length > 0
-              ? { name: nom, id: null, created_at: null, updated_at: null, metadata: null }
-              : { name: nom, id: o.path, created_at: o.writtenAt, updated_at: o.writtenAt, metadata: { size: o.size } }
-          );
-        }
-        const triees = [...entrees.values()].sort((a, b) => a.name.localeCompare(b.name));
-        return { data: triees.slice(offset, offset + limit), error: null };
-      },
-      async remove(chemins: string[]) {
-        const retires = etat.objets.filter((o) => chemins.includes(o.path));
-        etat.objets = etat.objets.filter((o) => !chemins.includes(o.path));
-        return { data: retires.map((o) => ({ name: o.path })), error: null };
-      },
-    }),
-  };
-  const from = (table: string) => {
-    assert.equal(table, "analysis_photos");
-    return {
-      select: () => ({
-        order: () => ({
-          range: async (de: number, a: number) => ({ data: etat.lignes.slice(de, a + 1), error: null }),
-        }),
-      }),
-      delete: () => ({
-        in: async (_colonne: string, ids: string[]) => {
-          const avant = etat.lignes.length;
-          etat.lignes = etat.lignes.filter((l) => !ids.includes(l.id));
-          return { error: null, count: avant - etat.lignes.length };
-        },
-      }),
-    };
-  };
-  return { admin: { storage, from } as unknown as SupabaseClient, etat };
-}
+// ── purgeExpiredPhotos sur un faux client (support/faux-stockage-photos.ts) ───
 
 test("purgeExpiredPhotos : supprime au-delà de 29 j 11 h, garde en deçà", async () => {
   const maintenant = new Date("2026-10-04T12:00:00Z");
@@ -170,4 +128,26 @@ test("purgeExpiredPhotos : supprime au-delà de 29 j 11 h, garde en deçà", asy
   assert.equal(rapport.deletedRows, 1);
   assert.deepEqual(reel.etat.objets.map((o) => o.path), ["u1/a1/sole.jpg"]);
   assert.deepEqual(reel.etat.lignes.map((l) => l.id), ["p1"]);
+});
+
+test("overdueObjects : les fichiers déjà plus vieux que PHOTO_RETENTION_DAYS au début du passage", async () => {
+  const maintenant = new Date("2026-10-04T12:00:00Z");
+  const il = (heures: number, minutes: number) =>
+    new Date(maintenant.getTime() - heures * HEURE - minutes * 60_000).toISOString();
+  const trenteJours = PHOTO_RETENTION_DAYS * 24;
+  const objets: Objet[] = [
+    { path: "u1/a1/sole.jpg", writtenAt: il(trenteJours - 1, 0), size: 10 }, // expirée, pas en retard
+    { path: "u1/a1/box.jpg", writtenAt: il(trenteJours, 1), size: 20 }, // 30 j et 1 min : en retard
+    { path: "u2/a2/label.jpg", writtenAt: il(trenteJours + 30, 0), size: 30 }, // en retard
+    { path: "u3/a3/tag.jpg", writtenAt: il(24, 0), size: 40 }, // récente
+  ];
+  const essai = fauxAdmin(objets, []);
+  const compte = await purgeExpiredPhotos(essai.admin, { dryRun: true, now: maintenant });
+  assert.equal(compte.overdueObjects, 2);
+  assert.equal(compte.expiredObjects, 3);
+
+  const reel = fauxAdmin(objets, []);
+  const rapport = await purgeExpiredPhotos(reel.admin, { dryRun: false, now: maintenant });
+  assert.equal(rapport.overdueObjects, 2, "compté au début du passage, avant les suppressions");
+  assert.deepEqual(reel.etat.objets.map((o) => o.path), ["u3/a3/tag.jpg"]);
 });

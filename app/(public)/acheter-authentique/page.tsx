@@ -112,7 +112,7 @@ export default function AcheterAuthentiqueHubPage() {
                   {platform.shortLabel}
                 </div>
                 <div>
-                  <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
+                  <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent-hover transition-colors duration-fast">
                     {platform.name}
                   </h3>
                 </div>
@@ -122,7 +122,7 @@ export default function AcheterAuthentiqueHubPage() {
               </p>
               <div className="mt-5 flex items-center justify-between text-caption">
                 <span className="text-muted-foreground">{platformGuideCount(platform.slug)} guides disponibles</span>
-                <span className="font-medium text-accent opacity-0 transition-opacity duration-fast group-hover:opacity-100">
+                <span className="font-medium text-accent-hover opacity-0 transition-opacity duration-fast group-hover:opacity-100">
                   Voir les guides →
                 </span>
               </div>
