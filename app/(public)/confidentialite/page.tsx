@@ -174,7 +174,7 @@ export default function ConfidentialitePage() {
                 },
                 {
                   name: "Vercel",
-                  role: "Hébergement de l&apos;application web",
+                  role: "Hébergement de l'application web",
                   location: "États-Unis (CDN mondial)",
                   note: "L&apos;application est servie via un CDN mondial, pour de meilleures performances.",
                   highlight: false,
