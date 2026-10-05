@@ -15,6 +15,7 @@ export default function Image() {
   return renderOgImage({
     eyebrow: "Authentification par IA",
     title: "Scannez avant d'acheter",
-    subtitle: "Sneakers · Sacs · Montres · Vêtements de luxe",
+    // Seulement les catégories analysables : pas de montres (lib/analyzable.ts).
+    subtitle: "Sneakers · Sacs · Vêtements de luxe",
   });
 }
