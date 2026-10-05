@@ -40,6 +40,11 @@ mock.module("next/link", { defaultExport: createRequire(import.meta.url)("next/l
 // UserMenu les importe ; le bouton du compte et son menu ne s'en servent pas.
 mock.module("next/navigation", { namedExports: { useRouter: () => ({ push() {}, refresh() {} }) } });
 mock.module(module("lib/supabase/client.ts"), { namedExports: { createClient: () => ({}) } });
+// Le pied de page de l'accueil porte aussi la commande de thème (BasculeTheme),
+// qui lit le thème : hors d'un ThemeProvider, useTheme lèverait une erreur.
+mock.module(module("components/ThemeProvider.tsx"), {
+  namedExports: { useTheme: () => ({ theme: "dark", toggleTheme() {}, setTheme() {} }) },
+});
 
 const { createElement } = await import("react");
 const { renderToStaticMarkup } = await import("react-dom/server");
@@ -98,8 +103,11 @@ function verifierCommande(html: string, lieu: string) {
   // Texte lisible : --muted-foreground (7,5:1 en sombre), jamais --subtle-foreground
   // (4,3:1), réservé aux mentions accessoires (app/globals.css).
   assert.ok(classes.includes("text-muted-foreground"), `${lieu} : couleur de texte`);
-  // Affichée à toutes les largeurs : rien dans le fragment ne la masque.
-  assert.deepEqual(classesQuiMasquent(html), [], `${lieu} : classe qui masque`);
+  // Affichée à toutes les largeurs : rien dans le fragment ne la masque. La
+  // commande de thème voisine (BasculeTheme, pied de page de l'accueil) se
+  // masque, elle, à partir de 360 px : c'est voulu (tests/unit/theme-sous-360.test.ts).
+  const sansCommandeDeTheme = html.replace(/<button\b[^>]*>(?:(?!<\/button>)[\s\S])*Thème (?:clair|sombre)<\/button>/, "");
+  assert.deepEqual(classesQuiMasquent(sansCommandeDeTheme), [], `${lieu} : classe qui masque`);
 }
 
 const menuOuvert = () =>
