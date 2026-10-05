@@ -169,27 +169,28 @@ export function getScoreTier(score: number): ScoreTier {
 }
 
 /**
- * Palier intermédiaire = --warning et NON --verdict-inconclusive.
- * Le gris sert déjà, dans la grille du dashboard, à l'état « pas encore de
- * score » : un 60/100 en gris s'y lirait « données manquantes ». --warning
- * met en garde sans qualifier l'authenticité.
+ * Palier intermédiaire = --verdict-inconclusive, partout : pastille, jauge,
+ * barres et badge (décision d'Hector du 04/10 : jamais d'ambre pour un score).
+ * L'ambre (--warning) reste réservé aux avertissements de confiance faible.
+ * « Pas encore de score », au tableau de bord, a son propre traitement neutre
+ * (contour pointillé, sans teinte de verdict) pour ne pas se lire « non concluant ».
  */
 const TIER_TEXT: Record<ScoreTier, string> = {
   authentic: "text-verdict-authentic",
-  inconclusive: "text-warning",
+  inconclusive: "text-verdict-inconclusive",
   fake: "text-verdict-fake",
 };
 
 const TIER_BG: Record<ScoreTier, string> = {
   authentic: "bg-verdict-authentic/10 border-verdict-authentic/20",
-  inconclusive: "bg-warning/10 border-warning/20",
+  inconclusive: "bg-verdict-inconclusive/10 border-verdict-inconclusive/20",
   fake: "bg-verdict-fake/10 border-verdict-fake/20",
 };
 
 /** Variable CSS de la teinte d'un palier — pour le SVG, qui ne prend pas de classe. */
 const TIER_HSL: Record<ScoreTier, string> = {
   authentic: "var(--verdict-authentic)",
-  inconclusive: "var(--warning)",
+  inconclusive: "var(--verdict-inconclusive)",
   fake: "var(--verdict-fake)",
 };
 
@@ -204,7 +205,7 @@ export function getScoreBgColor(score: number): string {
 /** Aplat plein — remplissage d'une barre de progression, pas une teinte de fond. */
 const TIER_SOLID: Record<ScoreTier, string> = {
   authentic: "bg-verdict-authentic",
-  inconclusive: "bg-warning",
+  inconclusive: "bg-verdict-inconclusive",
   fake: "bg-verdict-fake",
 };
 

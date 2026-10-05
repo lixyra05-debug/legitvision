@@ -494,12 +494,13 @@ export function NavLinks() {
   );
 }
 
-// ── Hero trust signals (3 tags) ────────────────────────────────────────────
-const HERO_TAGS = [
-  "hero.tagFastResult",
-  "hero.tagGdpr",
-  "hero.tagEu",
-];
+// ── Hero trust signals (1 tag) ─────────────────────────────────────────────
+// Retirés le 04/10 (décisions d'Hector) :
+// - « Hébergé EU » : le site est servi par Vercel, aux États-Unis ; seules les
+//   photos sont stockées en UE (Irlande) ;
+// - « RGPD » : une affirmation de conformité que personne n'a vérifiée. Ne pas
+//   la remettre avant la relecture juridique.
+const HERO_TAGS = ["hero.tagFastResult"];
 
 export function HeroTrustTags() {
   const { t } = useTranslation();

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Marque } from "@/components/brand/Marque";
 import { buildCheckUrl } from "@/lib/seo/check-url";
 import { facts } from "@/lib/site-facts";
 
@@ -15,17 +15,7 @@ export function SeoNav({ checkUrl = buildCheckUrl({ ref: "seo-nav" }) }: { check
     <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 sm:h-16 sm:flex-row sm:items-center sm:justify-between sm:gap-0 sm:py-0">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-7">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={240}
-              height={64}
-              className="h-12 w-auto sm:h-16"
-              priority
-              fetchPriority="high"
-            />
-          </Link>
+          <Marque href="/" />
           {/* Maillage interne : liens horizontaux vers les 3 hubs SEO */}
           <div
             className="flex flex-wrap items-center gap-x-5 gap-y-1 text-ui"

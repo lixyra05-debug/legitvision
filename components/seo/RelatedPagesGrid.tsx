@@ -20,13 +20,13 @@ export function RelatedPagesGrid({ pages }: { pages: RelatedPage[] }) {
             href={page.href}
             className="group block rounded-lg border border-line-subtle bg-surface p-4 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
           >
-            <h3 className="font-heading text-ui font-semibold text-foreground transition-colors duration-fast group-hover:text-accent">
+            <h3 className="font-heading text-ui font-semibold text-foreground transition-colors duration-fast group-hover:text-accent-hover">
               {page.label}
             </h3>
             <p className="mt-1 text-caption text-muted-foreground">
               {page.sublabel}
             </p>
-            <div className="mt-3 flex items-center gap-1 text-caption font-medium text-accent opacity-0 transition-opacity duration-fast group-hover:opacity-100">
+            <div className="mt-3 flex items-center gap-1 text-caption font-medium text-accent-hover opacity-0 transition-opacity duration-fast group-hover:opacity-100">
               Lire le guide
               <svg
                 xmlns="http://www.w3.org/2000/svg"

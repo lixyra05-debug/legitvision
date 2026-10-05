@@ -33,6 +33,9 @@ const config: Config = {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    // Classes des paliers de score (TIER_* et getScore*), écrites seulement là :
+    // sans cette ligne, barres et pastilles sortaient sans couleur en production.
+    "./lib/types.ts",
   ],
   theme: {
     extend: {
@@ -113,6 +116,9 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         heading: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
+        // Le mot LEGITVISION seul (components/brand/Marque.tsx), qui pose
+        // lui-même la variable --font-marque.
+        marque: ["var(--font-marque)", "system-ui", "sans-serif"],
       },
 
       /**

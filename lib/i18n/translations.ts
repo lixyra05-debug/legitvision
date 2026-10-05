@@ -66,8 +66,6 @@ export const translations = {
       ctaSecondary: "Voir les marques",
       analyzeItem: "Analyser un article",
       tagFastResult: `Résultat : ${FACTS.median} s (médiane)`,
-      tagGdpr: "RGPD",
-      tagEu: "Hébergé EU",
     },
     landing: {
       brandsTitle: `${FACTS.models} modèles de luxe analysables`,
@@ -100,7 +98,8 @@ export const translations = {
       feature4Title: "Vos photos et vos données",
       feature4Desc:
         `Vos photos sont hébergées en Europe (Irlande) et servent uniquement à votre analyse. Pour la produire, elles sont transmises chiffrées à notre sous-traitant d'IA, Anthropic, qui les supprime sous 30 jours, sauf exceptions prévues par ses conditions, et ne s'en sert pas pour entraîner ses modèles. Nous les supprimons de notre espace de stockage ${FACTS.photoRetentionDays} jours après leur envoi : le rapport conservé dans votre compte ne contient aucune photo. Vous pouvez en demander l'effacement plus tôt.`,
-      feature4Tag: "Hébergé en EU 🇪🇺",
+      // Le site est servi par Vercel (États-Unis) : seules les photos sont stockées en UE.
+      feature4Tag: "Photos stockées en UE (Irlande)",
       pricingTitle: "Choisissez votre formule",
       pricingSubtitle: "Des tarifs clairs, adaptés à chaque usage.",
       faqTitle: "Questions fréquentes",
@@ -567,8 +566,6 @@ export const translations = {
       ctaSecondary: "View brands",
       analyzeItem: "Analyze an item",
       tagFastResult: `Result: ${FACTS_EN.median} s (median)`,
-      tagGdpr: "GDPR",
-      tagEu: "EU hosted",
     },
     landing: {
       brandsTitle: `${FACTS_EN.models} luxury models supported`,
@@ -600,7 +597,7 @@ export const translations = {
       feature4Title: "Your photos and data",
       feature4Desc:
         `Your photos are hosted in Europe (Ireland) and used only for your analysis. To produce it, they are sent encrypted to our AI subprocessor, Anthropic, which deletes them within 30 days, except as provided in its terms, and does not use them to train its models. We delete them from our storage ${FACTS_EN.photoRetentionDays} days after upload: the report kept in your account contains no photos. You can ask us to erase them sooner.`,
-      feature4Tag: "Hosted in EU 🇪🇺",
+      feature4Tag: "Photos stored in the EU (Ireland)",
       pricingTitle: "Choose your plan",
       pricingSubtitle: "Clear pricing, tailored to every use case.",
       faqTitle: "Frequently asked questions",

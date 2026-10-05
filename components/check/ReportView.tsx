@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
@@ -20,6 +19,7 @@ import {
 import { ScoreGauge } from "./ScoreGauge";
 import { FindingCard, type Finding } from "./FindingCard";
 import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
+import { Marque } from "@/components/brand/Marque";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
@@ -65,10 +65,11 @@ const VERDICT_VISUAL: Record<
     color: "text-verdict-authentic",
     bg: "border-verdict-authentic/30 bg-verdict-authentic/10",
   },
+  // Couleur du verdict non concluant, jamais l'ambre (décision du 04/10).
   inconclusive: {
     Icon: ShieldAlert,
-    color: "text-warning",
-    bg: "border-warning/30 bg-warning/10",
+    color: "text-verdict-inconclusive",
+    bg: "border-verdict-inconclusive/30 bg-verdict-inconclusive/10",
   },
   likely_fake: {
     Icon: ShieldX,
@@ -85,9 +86,11 @@ const CONFIDENCE_VISUAL: Record<
     color: "text-muted-foreground",
     bg: "border-line bg-surface-raised",
   },
+  // L'ambre est réservé à la confiance faible (décision du 04/10) : la
+  // confiance moyenne reste neutre.
   medium: {
-    color: "text-warning",
-    bg: "border-warning/20 bg-warning/[0.08]",
+    color: "text-muted-foreground",
+    bg: "border-line bg-surface-raised",
   },
   low: {
     color: "text-warning",
@@ -261,32 +264,25 @@ export function ReportView({ data }: { data: ReportData }) {
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4">
-          <Link href="/dashboard" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
-              priority
-              fetchPriority="high"
-            />
-          </Link>
+          <Marque href="/dashboard" />
           <div className="flex items-center gap-3">
             <LanguageToggle />
             <ThemeToggle />
+            {/* Sur téléphone, la flèche seule : son nom reste lu (sr-only) et sa
+                cible fait 36 px. Libellé en français (règle 16). */}
             <Link
               href="/dashboard"
-              className="flex items-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
+              className="flex min-h-9 min-w-9 items-center justify-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
             >
               <ArrowLeft className="size-4" />
-              <span className="hidden sm:inline">Dashboard</span>
+              <span className="sr-only sm:not-sr-only">Tableau de bord</span>
             </Link>
           </div>
         </div>
       </nav>
 
-      <main className="mx-auto max-w-3xl space-y-6 px-4 py-8 sm:py-12">
+      {/* pb-24 : la bulle de l'assistant ne couvre plus « Nouvelle analyse ». */}
+      <main className="mx-auto max-w-3xl space-y-6 px-4 pt-8 pb-24 sm:pt-12">
         {/* ── HEADER ── */}
         <div className="space-y-3">
           {/* Photos jugées insuffisantes : pas de badge de verdict (« Éléments suspects »
@@ -377,12 +373,15 @@ export function ReportView({ data }: { data: ReportData }) {
           </div>
         )}
 
-        {/* ── RÉSULTAT INCERTAIN (statut « expert_review » : aucune revue humaine n'existe) ── */}
-        {data.status === "expert_review" && data.confidence !== "low" && (
-          <div className="flex items-start gap-3 rounded-md border border-warning/20 bg-warning/[0.08] p-4">
-            <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" />
+        {/* ── RÉSULTAT INCERTAIN (statut « expert_review » : aucune revue humaine n'existe) ──
+            Seulement sous un verdict non concluant, jamais sous un verdict rouge
+            (scores 40 à 44), et à sa couleur : l'ambre est réservé à la confiance
+            faible, qui a son propre encadré plus bas (M20, décision du 04/10). */}
+        {data.status === "expert_review" && data.verdict === "inconclusive" && data.confidence !== "low" && !isInsufficient && (
+          <div className="flex items-start gap-3 rounded-md border border-verdict-inconclusive/20 bg-verdict-inconclusive/[0.08] p-4">
+            <AlertCircle className="mt-0.5 size-5 shrink-0 text-verdict-inconclusive" />
             <div>
-              <p className="text-ui font-semibold text-warning">
+              <p className="text-ui font-semibold text-verdict-inconclusive">
                 {t("results.uncertainResultTitle")}
               </p>
               <p className="mt-0.5 text-ui text-muted-foreground">

@@ -19,6 +19,14 @@ import type { Model } from "@/lib/types";
  */
 export const NO_AUTH_POINTS = "[]";
 
+/**
+ * Les montres ne sont pas analysées : la route d'analyse les refuse
+ * (lib/launch-check.ts, « montres non analysées »), et le site annonce le seul
+ * catalogue analysable (lib/site-facts.ts). La recherche de l'accueil et la
+ * présélection de /check/new les excluent donc aussi (lib/catalogue-recherche.ts).
+ */
+export const NON_ANALYZABLE_CATEGORY = "watch";
+
 export function hasAuthenticationPoints(model: Pick<Model, "authentication_points">): boolean {
   return Array.isArray(model.authentication_points) && model.authentication_points.length > 0;
 }
