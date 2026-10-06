@@ -1,5 +1,35 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 import tailwindAnimate from "tailwindcss-animate";
+
+/**
+ * Largeurs de fenêtre sous lesquelles une page peut demander le bouton de
+ * l'assistant dans le flux, à la fin de son contenu, au lieu du bouton
+ * flottant (décisions d'Hector des 05/10 et 06/10). La page le demande par
+ * data-assistant-flux="lg" ou "1360" sur son bloc ; voir la variante
+ * « assistant-flux: », en bas de ce fichier. Chaque marque est associée à sa
+ * largeur. Constante non exportée : le chargeur de Tailwind verserait un
+ * export nommé dans la configuration.
+ * - « lg », le rapport : le point de rupture du site, lu dans le thème
+ *   (1024 px). Sa colonne fait 768 px au plus (max-w-3xl), et le bouton
+ *   flottant la recouvre jusqu'à 896 px de large.
+ * - « 1360 », le tableau de bord : 1360 px, qui n'est pas un point de rupture
+ *   du site. 1360 = 1152 (largeur maximale du contenu, max-w-6xl) + 2 × 104
+ *   (56 px du bouton + 24 px entre lui et le bord de la fenêtre + 24 px
+ *   d'écart avec la colonne). À 1360 px, les cartes, en retrait de 16 px
+ *   dans la colonne (px-4), sont à 40 px du bouton ; à 31,5 px quand une
+ *   barre de défilement de 17 px prend de la place dans la fenêtre. Avec
+ *   « xl » (1280 px), le premier seuil essayé, le bouton flottant touchait à
+ *   1280 px la colonne de droite des cartes (0 px d'écart), et mordait dessus
+ *   quand une barre de défilement prenait de la place.
+ */
+const ASSISTANT_DANS_LE_FLUX: ReadonlyArray<{
+  marque: string;
+  largeur: (theme: (chemin: string) => string) => string;
+}> = [
+  { marque: "lg", largeur: (theme) => theme("screens.lg") },
+  { marque: "1360", largeur: () => "1360px" },
+];
 
 /**
  * SOCLE DESIGN SYSTEM — passe 1 (tokens uniquement, aucune surface reskinnée).
@@ -192,6 +222,27 @@ const config: Config = {
       },
     },
   },
-  plugins: [tailwindAnimate],
+  plugins: [
+    tailwindAnimate,
+    // « assistant-flux: » : sur une page qui demande le bouton de l'assistant
+    // dans le flux (elle pose data-assistant-flux="lg" ou "1360" sur son bloc),
+    // sous la largeur de cette marque. Le rapport le demande sous « lg »
+    // (1024 px), le tableau de bord sous 1360 px (ASSISTANT_DANS_LE_FLUX, plus
+    // haut). Sert au bouton de l'assistant, rendu à la fin de la page au lieu
+    // de flotter sur son contenu (components/chat/ChatWidget.tsx), et à la
+    // place que la page lui réservait. « assistant-flux-lg: » et
+    // « assistant-flux-1360: » ne valent que pour l'une des deux marques : la
+    // largeur de la colonne de la page.
+    // La condition est lue dans la page elle-même, pas dans son adresse : une
+    // page 404 ou d'erreur à l'adresse d'un rapport n'est pas un rapport. Un
+    // navigateur sans :has() ignore ces règles en bloc et garde le bouton
+    // flottant, avec la place réservée sous la page.
+    plugin(({ addVariant, theme }) => {
+      const sous = ({ marque, largeur }: (typeof ASSISTANT_DANS_LE_FLUX)[number]) =>
+        `@media not all and (min-width: ${largeur(theme)}) { body:has([data-assistant-flux="${marque}"]) & }`;
+      addVariant("assistant-flux", ASSISTANT_DANS_LE_FLUX.map(sous));
+      for (const seuil of ASSISTANT_DANS_LE_FLUX) addVariant(`assistant-flux-${seuil.marque}`, sous(seuil));
+    }),
+  ],
 };
 export default config;

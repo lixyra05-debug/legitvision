@@ -963,7 +963,7 @@ export default function NewCheckPage() {
             className="flex items-center gap-2 rounded-md border border-line px-5 py-2.5 text-ui font-medium transition-colors duration-fast hover:border-line-strong hover:bg-surface-hover disabled:opacity-40 disabled:hover:border-line disabled:hover:bg-transparent"
           >
             <ArrowLeft className="size-4" />
-            {step === 1 ? "Dashboard" : "Retour"}
+            {step === 1 ? t("nav.dashboard") : "Retour"}
           </button>
 
           {step === 3 && (

@@ -24,6 +24,40 @@ const pulseAnimation = {
   animation: "pulse-glow var(--dur-ambient) ease-in-out infinite",
 };
 
+/**
+ * Le bouton flottant recouvrait les notes des zones et le bouton du bas du
+ * rapport, puis, sur tablette, la colonne de droite des cartes du tableau de
+ * bord. Sur ces deux pages, tant que la fenêtre est trop étroite pour qu'il
+ * flotte à côté du contenu, il est rendu dans le flux, à la fin de la page
+ * (décisions d'Hector des 05/10 et 06/10) : sous 1024 px sur un rapport, sous
+ * 1360 px sur le tableau de bord (à 1360 px, il flotte à 40 px des cartes ;
+ * le calcul est dans tailwind.config.ts). Partout ailleurs, et à partir de ce
+ * seuil, il flotte en bas à droite de la fenêtre.
+ *
+ * « assistant-flux: » (tailwind.config.ts) ne s'applique que si la page le
+ * demande (elle pose data-assistant-flux="lg" ou "1360" sur son bloc : le
+ * rapport, le tableau de bord) et sous ce seuil. L'adresse ne suffit pas : une
+ * analyse introuvable ou une erreur gardent l'adresse du rapport, avec un
+ * écran qui occupe toute la fenêtre ; le bouton y reste flottant, comme sur
+ * les autres pages.
+ */
+// Le bouton, flottant : en bas à droite de la fenêtre.
+const BOUTON_FLOTTANT = "fixed bottom-6 right-6";
+// Panneau fermé, sur une page qui le demande et sous son seuil : dans le flux.
+// Panneau ouvert, le bouton reste flottant, sous le panneau, comme partout :
+// dans le flux d'une page plus courte que la fenêtre, il se poserait sur le
+// panneau et sur « Envoyer ».
+const BOUTON_DANS_LE_FLUX = "assistant-flux:static";
+// Son conteneur suit le contenu de la page (app/layout.tsx). Sur une page qui
+// demande le bouton dans le flux, sous son seuil : il prend la colonne de la
+// page (centrée, max-w-3xl pour le rapport, max-w-6xl pour le tableau de bord)
+// et sa marge (px-4), le bouton à droite, 24 px sous lui ; l'écart avec le
+// dernier bloc vient du bas de la page (son <main>). La hauteur minimale
+// (56 px du bouton + 24 px) garde la page à la même hauteur quand le panneau
+// s'ouvre et que le bouton quitte le flux. Ailleurs, le conteneur ne pèse rien.
+const CONTENEUR =
+  "assistant-flux:mx-auto assistant-flux:flex assistant-flux:min-h-20 assistant-flux:justify-end assistant-flux:px-4 assistant-flux:pb-6 assistant-flux-lg:max-w-3xl assistant-flux-1360:max-w-6xl";
+
 export function ChatWidget() {
   const { t, locale } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -31,6 +65,7 @@ export function ChatWidget() {
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const boutonRef = useRef<HTMLButtonElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const idCounterRef = useRef(0);
   const typingTimerRef = useRef<number | null>(null);
@@ -46,10 +81,14 @@ export function ChatWidget() {
 
   useEffect(() => {
     if (!open) return;
+    // Un clic hors du panneau et hors du bouton ferme le panneau. Le
+    // conteneur ne compte pas : dans le flux d'une page, il occupe toute la
+    // largeur de sa colonne, et un clic à côté du bouton doit fermer aussi.
     function handleClick(e: MouseEvent) {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
+      const cible = e.target as Node;
+      if (panelRef.current?.contains(cible)) return;
+      if (boutonRef.current?.contains(cible)) return;
+      setOpen(false);
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
@@ -95,9 +134,12 @@ export function ChatWidget() {
   }
 
   return (
-    <div ref={panelRef}>
+    <div className={CONTENEUR}>
       {open && (
-        <div className="fixed bottom-24 right-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-lg border border-line bg-popover shadow-2xl shadow-black/60">
+        <div
+          ref={panelRef}
+          className="fixed bottom-24 right-6 z-50 flex h-[500px] w-[380px] max-w-[calc(100vw-2rem)] flex-col overflow-hidden rounded-lg border border-line bg-popover shadow-2xl shadow-black/60"
+        >
           <div className="flex items-center justify-between border-b border-line px-4 py-3">
             <div className="flex items-center gap-2">
               <div className="flex size-8 items-center justify-center rounded-full bg-surface">
@@ -189,9 +231,10 @@ export function ChatWidget() {
       )}
 
       <button
+        ref={boutonRef}
         onClick={() => setOpen((v) => !v)}
         style={open ? undefined : pulseAnimation}
-        className="fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full bg-accent text-accent-foreground transition-[transform,background-color] duration-fast hover:scale-105 hover:bg-accent-hover active:scale-95"
+        className={`${BOUTON_FLOTTANT} ${open ? "" : BOUTON_DANS_LE_FLUX} z-50 flex size-14 items-center justify-center rounded-full bg-accent text-accent-foreground transition-[transform,background-color] duration-fast hover:scale-105 hover:bg-accent-hover active:scale-95`}
         aria-label={open ? "Fermer l'assistant" : "Ouvrir l'assistant"}
       >
         {open ? <X className="size-6" /> : <MessageCircle className="size-6" />}

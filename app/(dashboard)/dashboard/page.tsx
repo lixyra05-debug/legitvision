@@ -39,7 +39,7 @@ import {
 const DELETABLE_STATUSES = ["failed", "uploading", "pending"];
 
 export const metadata = {
-  title: "Dashboard",
+  title: "Tableau de bord",
 };
 
 type AnalysisRow = Omit<AnalysisWithDetails, "brand_name" | "brand_slug" | "model_name"> & {
@@ -148,7 +148,22 @@ export default async function DashboardPage(
     user.user_metadata?.full_name?.split(" ")[0] ?? user.email?.split("@")[0];
 
   return (
-    <div className="min-h-screen bg-background">
+    // data-assistant-flux="1360" : la page demande le bouton de l'assistant
+    // dans le flux sous 1360 px (variante « assistant-flux: »,
+    // tailwind.config.ts). Sous ce seuil, il est rendu après ce bloc
+    // (ChatWidget), et ce bloc n'a pas de hauteur minimale : le bouton suit le
+    // contenu, même quand la page est courte. Le fond de <body> est le même
+    // (bg-background, min-h-screen) : rien ne change à l'œil.
+    // 1360 = 1152 (largeur maximale du contenu, max-w-6xl) + 2 × 104 (56 px du
+    // bouton + 24 px entre lui et le bord de la fenêtre + 24 px d'écart avec
+    // la colonne). Flottant plus tôt, le bouton recouvrait la colonne de
+    // droite des cartes, et la touchait encore à 1280 px (0 px d'écart).
+    // Écart qui reste entre les cartes et le bouton flottant, à 1360 px
+    // (mesures du 06/10, tests/unit/rapport-navigateur.test.ts) : 40 px, et,
+    // quand la barre de défilement prend de la place dans la fenêtre (Windows :
+    // le seuil compte la barre, le contenu non), 32,5 px avec une barre de
+    // 15 px, 31,5 px avec une barre de 17 px. Il grandit avec la fenêtre.
+    <div data-assistant-flux="1360" className="min-h-screen bg-background assistant-flux:min-h-0">
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
@@ -177,7 +192,11 @@ export default async function DashboardPage(
         </div>
       </nav>
 
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+      {/* Sous 1360 px, le bouton de l'assistant est dans le flux, 24 px sous
+          le dernier bloc (pb-6), comme sur le rapport ; sous la même condition
+          que lui (assistant-flux), pour qu'un navigateur qui le garde flottant
+          garde aussi le bas de page d'avant. */}
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12 assistant-flux:pb-6">
         {/* Bandeau succès Stripe */}
         {searchParams.session_id && (
           <SuccessBanner variant={searchParams.purchased === "single" ? "single" : "purchase"} />
