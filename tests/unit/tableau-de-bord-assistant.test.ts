@@ -123,3 +123,14 @@ test("visiteur non connecté : la page redirige vers la connexion, sans rien ren
     connecte = true;
   }
 });
+
+test("cartes : un verdict non concluant se lit « Résultat non concluant », jamais « Éléments suspects » (décision d'Hector du 06/10)", async () => {
+  const html = await rendre(3);
+  const libelles = [...html.matchAll(/<p class="mt-3 text-ui font-medium (text-verdict-[a-z]+)">([^<]*)<\/p>/g)].map(([, classe, libelle]) => [classe, libelle]);
+  assert.deepEqual(libelles, [
+    ["text-verdict-authentic", "Probablement authentique"],
+    ["text-verdict-inconclusive", "Résultat non concluant"],
+    ["text-verdict-fake", "Probablement contrefait"],
+  ]);
+  assert.doesNotMatch(texte(html), /[ÉE]l[ée]ments\s+suspects/i);
+});

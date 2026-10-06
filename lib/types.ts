@@ -227,7 +227,7 @@ export function getVerdictLabel(verdict: Verdict, locale: Locale = "fr"): string
       case "likely_fake":
         return "Likely counterfeit";
       case "inconclusive":
-        return "Suspicious elements";
+        return "Inconclusive result";
     }
   }
   switch (verdict) {
@@ -235,8 +235,10 @@ export function getVerdictLabel(verdict: Verdict, locale: Locale = "fr"): string
       return "Probablement authentique";
     case "likely_fake":
       return "Probablement contrefait";
+    // Jamais « Éléments suspects » : un non concluant n'accuse pas l'article
+    // (décision d'Hector du 06/10). Même texte que le badge du rapport.
     case "inconclusive":
-      return "Éléments suspects";
+      return "Résultat non concluant";
   }
 }
 

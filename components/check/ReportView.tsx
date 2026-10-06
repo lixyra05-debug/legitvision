@@ -28,9 +28,13 @@ import type { Verdict, Confidence } from "@/lib/types";
 import { REPORT_REFRESH_SECONDS } from "@/lib/analysis-limits";
 import { zoneNameIn, zoneNamesForReport, type ZoneNames } from "@/lib/zone-names";
 
-const VERDICT_TO_KEY: Record<Verdict, "authentic" | "suspect" | "fake"> = {
+// Un verdict non concluant (score de 45 à 74) s'affiche « Résultat non
+// concluant », et plus « Éléments suspects » : un non concluant ne doit jamais
+// accuser l'article (décision d'Hector du 06/10). Même texte sur les cartes du
+// tableau de bord (getVerdictLabel, lib/types.ts).
+const VERDICT_TO_KEY: Record<Verdict, "authentic" | "inconclusive" | "fake"> = {
   likely_authentic: "authentic",
-  inconclusive: "suspect",
+  inconclusive: "inconclusive",
   likely_fake: "fake",
 };
 
@@ -314,8 +318,9 @@ export function ReportView({ data }: { data: ReportData }) {
       <main className="mx-auto max-w-3xl space-y-6 px-4 pt-8 pb-24 sm:pt-12 assistant-flux:pb-6">
         {/* ── HEADER ── */}
         <div className="space-y-3">
-          {/* Photos jugées insuffisantes : pas de badge de verdict (« Éléments suspects »
-              est un verdict facturé) ; le panneau dédié plus bas dit « non facturée ». */}
+          {/* Photos jugées insuffisantes : pas de badge de verdict (« Résultat non
+              concluant » est un verdict facturé) ; le panneau dédié plus bas dit
+              « non facturée ». */}
           {verdictCfg && !isInsufficient && (
             <div
               className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 ${verdictCfg.bg}`}

@@ -305,7 +305,6 @@ export const translations = {
     results: {
       score: "Score de confiance",
       authentic: "Probablement authentique",
-      suspect: "Éléments suspects",
       fake: "Probablement contrefait",
       inconclusive: "Résultat non concluant",
       confidenceHigh: "Haute confiance",
@@ -800,7 +799,6 @@ export const translations = {
     results: {
       score: "Confidence score",
       authentic: "Likely authentic",
-      suspect: "Suspicious elements",
       fake: "Likely counterfeit",
       inconclusive: "Inconclusive result",
       confidenceHigh: "High confidence",
