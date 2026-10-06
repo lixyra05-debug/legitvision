@@ -26,7 +26,7 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { getScoreColor, getScoreSolidBg } from "@/lib/types";
 import type { Verdict, Confidence } from "@/lib/types";
 import { REPORT_REFRESH_SECONDS } from "@/lib/analysis-limits";
-import { zoneNameIn, type ZoneNames } from "@/lib/zone-names";
+import { zoneNameIn, zoneNamesForReport, type ZoneNames } from "@/lib/zone-names";
 
 const VERDICT_TO_KEY: Record<Verdict, "authentic" | "suspect" | "fake"> = {
   likely_authentic: "authentic",
@@ -256,6 +256,16 @@ export function ReportView({ data }: { data: ReportData }) {
 
   const findings = data.findings ?? [];
 
+  // Une seule table des noms pour tout le rapport : barres et observations y
+  // lisent le nom de leur zone, et deux zones n'y portent jamais le même nom,
+  // même quand l'IA en a noté une hors des points du modèle (décision d'Hector
+  // du 06/10, lib/zone-names.ts). Toute zone que le rapport affiche doit
+  // entrer dans cette liste.
+  const zoneNames = zoneNamesForReport(data.zoneNames, [
+    ...subScoreEntries.map(([zone]) => zone),
+    ...findings.map((finding) => finding?.zone),
+  ]);
+
   const ocrEntries = data.ocrExtracted
     ? Object.entries(data.ocrExtracted).filter(([, v]) => v && v.trim() !== "")
     : [];
@@ -263,14 +273,20 @@ export function ReportView({ data }: { data: ReportData }) {
   const recommendations = (data.recommendations ?? []).filter(Boolean);
   const missingEvidence = (data.missingEvidence ?? []).filter(Boolean);
 
+  // Le panneau « Photos insuffisantes » est affiché : il porte le bouton vert
+  // de l'écran, « Reprendre de meilleures photos ».
+  const showsInsufficientPanel = isComplete && isInsufficient;
+
   return (
-    // data-rapport : la page affiche un rapport. C'est ce que lit la variante
-    // « rapport-mobile: » (tailwind.config.ts) : sous 640 px, le bouton de
-    // l'assistant est rendu dans le flux après ce bloc (ChatWidget). Ce bloc
-    // n'a alors pas de hauteur minimale : le bouton suit le contenu au lieu
-    // d'être repoussé sous l'écran quand le rapport est court. Le fond de
-    // <body> est le même (bg-background, min-h-screen) : rien ne change à l'œil.
-    <div data-rapport className="min-h-screen bg-background rapport-mobile:min-h-0">
+    // data-assistant-flux="lg" : la page affiche un rapport, et demande le
+    // bouton de l'assistant dans le flux sous 1024 px. C'est ce que lit la
+    // variante « assistant-flux: » (tailwind.config.ts) : sous ce seuil, le
+    // bouton est rendu après ce bloc (ChatWidget), au lieu de flotter sur la
+    // colonne du rapport. Ce bloc n'a alors pas de hauteur minimale : le
+    // bouton suit le contenu au lieu d'être repoussé sous l'écran quand le
+    // rapport est court. Le fond de <body> est le même (bg-background,
+    // min-h-screen) : rien ne change à l'œil.
+    <div data-assistant-flux="lg" className="min-h-screen bg-background assistant-flux:min-h-0">
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4">
@@ -292,10 +308,10 @@ export function ReportView({ data }: { data: ReportData }) {
       </nav>
 
       {/* pb-24 : la bulle de l'assistant, flottante, ne couvre pas « Nouvelle
-          analyse ». Sous 640 px, elle est dans le flux, 24 px sous le dernier
-          bouton (pb-6) ; sous la même condition qu'elle (rapport-mobile), pour
+          analyse ». Sous 1024 px, elle est dans le flux, 24 px sous le dernier
+          bouton (pb-6) ; sous la même condition qu'elle (assistant-flux), pour
           qu'un navigateur qui la garde flottante garde aussi sa place. */}
-      <main className="mx-auto max-w-3xl space-y-6 px-4 pt-8 pb-24 sm:pt-12 rapport-mobile:pb-6">
+      <main className="mx-auto max-w-3xl space-y-6 px-4 pt-8 pb-24 sm:pt-12 assistant-flux:pb-6">
         {/* ── HEADER ── */}
         <div className="space-y-3">
           {/* Photos jugées insuffisantes : pas de badge de verdict (« Éléments suspects »
@@ -405,7 +421,7 @@ export function ReportView({ data }: { data: ReportData }) {
         )}
 
         {/* ── INSUFFICIENT — photos insuffisantes (P1-3) ── */}
-        {isComplete && isInsufficient && (
+        {showsInsufficientPanel && (
           <div className="rounded-lg border border-verdict-inconclusive/30 bg-verdict-inconclusive/[0.08] p-6 text-center sm:p-8">
             <ShieldAlert className="mx-auto size-10 text-verdict-inconclusive" />
             <p className="mt-3 font-heading text-lead font-semibold text-verdict-inconclusive">
@@ -519,7 +535,7 @@ export function ReportView({ data }: { data: ReportData }) {
                           séparateurs, réponse de l'IA mal formée) : la note
                           reste affichée, sous un libellé neutre. */}
                       <SubScoreBar
-                        label={zoneNameIn(data.zoneNames, zone) || t("results.unnamedZone")}
+                        label={zoneNameIn(zoneNames, zone) || t("results.unnamedZone")}
                         score={score}
                       />
                     </RevealItem>
@@ -539,7 +555,7 @@ export function ReportView({ data }: { data: ReportData }) {
                 <RevealGroup className="space-y-3">
                   {findings.map((f, i) => (
                     <RevealItem key={i}>
-                      <FindingCard {...f} zoneNames={data.zoneNames} />
+                      <FindingCard {...f} zoneNames={zoneNames} />
                     </RevealItem>
                   ))}
                 </RevealGroup>
@@ -621,7 +637,11 @@ export function ReportView({ data }: { data: ReportData }) {
           </>
         )}
 
-        {/* ── ACTIONS ── */}
+        {/* ── ACTIONS ──
+            Un seul bouton vert sur l'écran « Photos insuffisantes » (décision
+            d'Hector du 06/10) : quand son panneau est affiché, le bouton
+            « Reprendre de meilleures photos » mène déjà à une nouvelle analyse.
+            « Nouvelle analyse » n'est pas répété ici, « Tableau de bord » reste. */}
         <div className="flex flex-col gap-3 pt-2 sm:flex-row">
           <Link
             href="/dashboard"
@@ -630,13 +650,15 @@ export function ReportView({ data }: { data: ReportData }) {
             <ArrowLeft className="size-4" />
             {t("nav.dashboard")}
           </Link>
-          <Link
-            href="/check/new"
-            className="flex flex-1 items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
-          >
-            <Plus className="size-4" />
-            {t("results.newAnalysis")}
-          </Link>
+          {!showsInsufficientPanel && (
+            <Link
+              href="/check/new"
+              className="flex flex-1 items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
+            >
+              <Plus className="size-4" />
+              {t("results.newAnalysis")}
+            </Link>
+          )}
         </div>
       </main>
     </div>

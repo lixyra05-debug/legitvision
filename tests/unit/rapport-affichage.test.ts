@@ -8,9 +8,13 @@
 //   score ; le bloc de confiance de la carte du score ne s'affiche plus ;
 // - la phrase « Cette analyse n'est pas facturée… » tient 4,5:1 sur le fond de
 //   son panneau, dans les deux thèmes ;
-// - sous 640 px, le rapport ne réserve plus la place d'une bulle flottante ;
+// - sous 1024 px, le rapport ne réserve plus la place d'une bulle flottante ;
 // - une note sans nom de zone reste affichée, sous un libellé neutre ;
 // - un nom de zone long garde un écart avec sa note.
+// Décisions du 06/10 : sept noms de zones revus, « Tab talon » devient
+// « Languette du talon » ; un seul bouton vert sur l'écran « Photos
+// insuffisantes » ; deux zones d'un rapport ne portent jamais le même nom,
+// même quand l'IA en note une hors des points du modèle.
 import { test, mock } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -123,16 +127,16 @@ test("« Scores par zone » : chaque barre porte le nom français de sa zone, pl
   const html = rendre();
   assert.deepEqual(barres(html), [
     ["Coutures", 90],
-    ["Étiquette de languette", 85],
+    ["Étiquette de taille", 85],
     ["Forme et placement du Swoosh", 80],
-    ["Tab talon", 78],
+    ["Languette du talon", 78],
     ["Forme et perforations de la toe box", 76],
     ["Code date / puce RFID", 88],
     // Zone notée par l'IA hors des points du modèle : identifiant rendu lisible.
     ["Insole print", 70],
   ]);
   const affiche = texte(html);
-  for (const identifiant of ["stitching", "tongue label", "tongue_label", "heel tab", "heel_tab", "date code", "Etiquette de langue"]) {
+  for (const identifiant of ["stitching", "tongue label", "tongue_label", "heel tab", "heel_tab", "date code", "Etiquette de langue", "Tab talon"]) {
     assert.ok(!affiche.includes(identifiant), `identifiant ou libellé brut affiché : ${identifiant}`);
   }
   assert.equal(compter(affiche, `${t("results.subScoresTitle")}(7)`), 1, "le compte des zones ne change pas");
@@ -149,11 +153,11 @@ test("le rapport ne met plus rien en capitales par le CSS : « Code date / puce 
 test("observation : le titre est le nom français de la zone, identifiant ou texte libre de l'IA", () => {
   const attendus: Array<[string, string]> = [
     ["stitching", "Coutures"],
-    ["tongue_label", "Étiquette de languette"],
-    ["Tongue Label", "Étiquette de languette"],
-    ["tongue-label", "Étiquette de languette"],
-    ["heel_tab", "Tab talon"],
-    ["Heel tab", "Tab talon"],
+    ["tongue_label", "Étiquette de taille"],
+    ["Tongue Label", "Étiquette de taille"],
+    ["tongue-label", "Étiquette de taille"],
+    ["heel_tab", "Languette du talon"],
+    ["Heel tab", "Languette du talon"],
     ["toe_box", "Forme et perforations de la toe box"],
     // Zone courante absente des points du modèle.
     ["zipper", "Fermeture éclair"],
@@ -178,8 +182,96 @@ test("le rapport transmet la table des noms à chaque observation", () => {
   const affiche = texte(html);
   // Une fois dans « Scores par zone », une fois en titre d'observation.
   assert.equal(compter(affiche, "Forme et placement du Swoosh"), 2);
-  assert.equal(compter(affiche, "Tab talon"), 2);
+  assert.equal(compter(affiche, "Languette du talon"), 2);
   assert.doesNotMatch(affiche, /swoosh|heel/, "identifiant affiché");
+});
+
+// ── J3, sur tout le rapport : deux zones ne portent jamais le même nom ──────
+
+/** Les titres des observations du rapport, dans l'ordre : le nom de zone placé devant le badge de chaque carte. */
+function titresDesObservations(html: string): string[] {
+  return [...html.matchAll(/<span class="[^"]*">([^<]*)<\/span><span class="[^"]*\buppercase\b[^"]*">/g)].map(([, nom]) => decoder(nom));
+}
+
+test("zone notée par l'IA hors des points du modèle, au nom déjà porté par une zone du modèle : deux barres et deux observations aux noms différents", () => {
+  // Libellé réel du catalogue pour outsole ; le nom de table de sole_pattern est aussi « Semelle extérieure ».
+  const zoneNames = zoneNamesForPoints([
+    { zone: "stitching", label: "Coutures (regularite, couleur du fil, tension)", weight: 0.5 },
+    { zone: "outsole", label: "Semelle extérieure (motif, couleur)", weight: 0.5 },
+  ]);
+  const html = rendre({
+    zoneNames,
+    subScores: { stitching: 90, outsole: 80, sole_pattern: 70 },
+    findings: [
+      { zone: "outsole", observation: "Motif net.", score: 80 },
+      // La même zone hors modèle, écrite en texte libre par l'IA.
+      { zone: "Sole Pattern", observation: "Chevrons réguliers.", score: 70 },
+    ],
+  });
+  assert.deepEqual(barres(html), [
+    ["Coutures", 90],
+    ["Semelle extérieure", 80],
+    ["Sole pattern", 70],
+  ]);
+  // Une barre et une observation de la même zone portent le même nom.
+  assert.deepEqual(titresDesObservations(html), ["Semelle extérieure", "Sole pattern"]);
+  assert.equal(compter(texte(html), "Semelle extérieure"), 2, "une barre et une observation, pas plus");
+});
+
+test("zone hors modèle notée avant la zone du modèle : c'est la zone du modèle qui garde son nom", () => {
+  const zoneNames = zoneNamesForPoints([{ zone: "tag_label", label: "Étiquette intérieure", weight: 1 }]);
+  const html = rendre({
+    zoneNames,
+    subScores: { interior_label: 60, tag_label: 85 },
+    findings: [
+      { zone: "interior_label", observation: "Police à contrôler.", score: 60 },
+      { zone: "tag_label", observation: "Étiquette conforme.", score: 85 },
+    ],
+  });
+  assert.deepEqual(barres(html), [
+    ["Interior label", 60],
+    ["Étiquette intérieure", 85],
+  ]);
+  assert.deepEqual(titresDesObservations(html), ["Interior label", "Étiquette intérieure"]);
+});
+
+test("zone hors modèle dont le nom est libre dans ce rapport : elle garde son nom français", () => {
+  // outsole est un point du modèle, mais ce rapport ne l'affiche pas.
+  const zoneNames = zoneNamesForPoints([
+    { zone: "stitching", label: "Coutures (regularite, couleur du fil, tension)", weight: 0.5 },
+    { zone: "outsole", label: "Semelle extérieure (motif, couleur)", weight: 0.5 },
+  ]);
+  const html = rendre({
+    zoneNames,
+    subScores: { stitching: 90, sole_pattern: 70 },
+    findings: [{ zone: "sole_pattern", observation: "Chevrons réguliers.", score: 70 }],
+  });
+  assert.deepEqual(barres(html), [["Coutures", 90], ["Semelle extérieure", 70]]);
+  assert.deepEqual(titresDesObservations(html), ["Semelle extérieure"]);
+});
+
+test("zone commentée sans être notée : son observation ne prend pas le nom d'une barre", () => {
+  const zoneNames = zoneNamesForPoints([{ zone: "outsole", label: "Semelle extérieure (motif, couleur)", weight: 1 }]);
+  const html = rendre({
+    zoneNames,
+    subScores: { outsole: 80 },
+    findings: [{ zone: "sole_pattern", observation: "Chevrons réguliers.", score: 70 }],
+  });
+  assert.deepEqual(barres(html), [["Semelle extérieure", 80]]);
+  assert.deepEqual(titresDesObservations(html), ["Sole pattern"]);
+});
+
+test("observation mal formée (sans zone, ou vide) : le rapport s'affiche, les autres zones gardent leur nom", () => {
+  const html = rendre({
+    findings: [
+      null as unknown as Finding,
+      { observation: "Sans zone.", score: 50 } as unknown as Finding,
+      { zone: "swoosh", observation: "Courbe conforme.", score: 80 },
+    ],
+  });
+  assert.deepEqual(titresDesObservations(html), ["Forme et placement du Swoosh"]);
+  assert.ok(texte(html).includes("Sans zone."));
+  assert.equal(barres(html).length, 7);
 });
 
 test("sans table des noms (modèle absent) : jamais d'erreur, zones courantes en français, les autres lisibles", () => {
@@ -190,7 +282,7 @@ test("sans table des noms (modèle absent) : jamais d'erreur, zones courantes en
     });
     assert.deepEqual(barres(html).map(([nom]) => nom), [
       "Coutures",
-      "Étiquette de languette",
+      "Étiquette de taille",
       "Swoosh",
       "Heel tab",
       "Toe box",
@@ -415,24 +507,88 @@ test("source du rapport : partout où elle s'affiche, la phrase « non facturée
   }
 });
 
-// ── B3, côté rapport : la bulle de l'assistant n'est plus flottante sous 640 px ──
+// ── B3, côté rapport : la bulle de l'assistant n'est plus flottante sous 1024 px ──
 
-test("le rapport se signale à l'assistant (data-rapport) et ne lui réserve sa place que s'il flotte", () => {
+test("le rapport demande à l'assistant un bouton dans le flux sous 1024 px (data-assistant-flux=\"lg\") et ne lui réserve sa place que s'il flotte", () => {
   for (const donnees of [{}, { status: "analyzing" }, { status: "failed" }, { aiConfidence: "insufficient" as const }]) {
     const html = rendre(donnees);
-    // La marque que lit « rapport-mobile: » (tailwind.config.ts), sur le bloc du rapport, dans tous ses états.
-    const bloc = html.match(/^<div data-rapport="[^"]*" class="([^"]*)">/)?.[1].split(/\s+/);
-    assert.ok(bloc, `bloc du rapport sans data-rapport : ${html.slice(0, 80)}`);
-    // Sur un rapport sous 640 px, pas de hauteur minimale : le bouton de
+    // La marque que lit « assistant-flux: » (tailwind.config.ts), sur le bloc du rapport, dans tous ses états.
+    const bloc = html.match(/^<div data-assistant-flux="lg" class="([^"]*)">/)?.[1].split(/\s+/);
+    assert.ok(bloc, `bloc du rapport sans data-assistant-flux="lg" : ${html.slice(0, 80)}`);
+    // Sur un rapport sous 1024 px, pas de hauteur minimale : le bouton de
     // l'assistant suit le contenu. Sinon, toute la fenêtre, comme avant.
-    assert.ok(bloc.includes("min-h-screen") && bloc.includes("rapport-mobile:min-h-0"), bloc.join(" "));
+    assert.ok(bloc.includes("min-h-screen") && bloc.includes("assistant-flux:min-h-0"), bloc.join(" "));
     const principal = html.match(/<main class="([^"]*)">/)?.[1].split(/\s+/) ?? [];
     // 96 px sous « Nouvelle analyse » quand la bulle flotte ; 24 px quand elle
     // est dans le flux, sous la même condition qu'elle.
-    assert.ok(principal.includes("pb-24") && principal.includes("rapport-mobile:pb-6"), principal.join(" "));
-    assert.deepEqual(principal.filter((c) => /^(sm:)?pb-/.test(c)), ["pb-24"], principal.join(" "));
+    assert.ok(principal.includes("pb-24") && principal.includes("assistant-flux:pb-6"), principal.join(" "));
+    assert.deepEqual(principal.filter((c) => /^(sm:|md:|lg:|xl:)?pb-/.test(c)), ["pb-24"], principal.join(" "));
   }
 });
+
+// ── J5 : un seul bouton vert sur l'écran « Photos insuffisantes » ───────────
+
+/** Les liens du rapport rendus en bouton plein à la couleur d'accent (le vert). */
+function boutonsVerts(html: string): string[] {
+  return [...html.matchAll(/<a\b[^>]*\bclass="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g)]
+    .filter(([, c]) => c.split(/\s+/).includes("bg-accent"))
+    .map(([, , contenu]) => texte(contenu));
+}
+
+/** La rangée d'actions du bas du rapport : le dernier bloc de <main>. Texte, adresse et classes de chaque bouton. */
+function actionsDuBas(html: string): Array<{ texte: string; vers: string; classes: string[] }> {
+  const principal = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
+  const rangee = principal.slice(principal.lastIndexOf('<div class="flex flex-col gap-3 pt-2 sm:flex-row">'));
+  assert.ok(rangee.startsWith("<div"), "rangée d'actions introuvable à la fin du rapport");
+  assert.match(rangee, /<\/a><\/div>$/, "la rangée d'actions n'est plus le dernier bloc du rapport");
+  return [...rangee.matchAll(/<a\b[^>]*\bclass="([^"]*)"[^>]*\bhref="([^"]*)"[^>]*>([\s\S]*?)<\/a>/g)].map(([, c, vers, contenu]) => ({
+    texte: texte(contenu),
+    vers,
+    classes: c.split(/\s+/),
+  }));
+}
+
+const INSUFFISANT = { aiConfidence: "insufficient" as const, confidence: "low" as const, verdict: "inconclusive" as const };
+
+test("photos insuffisantes : un seul bouton vert, « Reprendre de meilleures photos » ; en bas, « Tableau de bord » seul, en bouton secondaire", () => {
+  for (const status of ["completed", "expert_review"]) {
+    const html = rendre({ ...INSUFFISANT, status });
+    assert.ok(texte(html).includes(t("results.insufficientTitle")), "témoin : le panneau « Photos insuffisantes » est affiché");
+    assert.deepEqual(boutonsVerts(html), ["Reprendre de meilleures photos"], status);
+    const actions = actionsDuBas(html);
+    assert.deepEqual(actions.map((a) => [a.texte, a.vers]), [["Tableau de bord", "/dashboard"]], status);
+    // Secondaire : un contour, pas d'aplat d'accent ; il occupe la rangée.
+    const [tableau] = actions;
+    assert.ok(tableau.classes.includes("border") && tableau.classes.includes("border-line") && tableau.classes.includes("flex-1"), tableau.classes.join(" "));
+    assert.ok(!tableau.classes.some((c) => /(^|:)bg-accent/.test(c)), tableau.classes.join(" "));
+    // « Nouvelle analyse » n'est plus proposé deux fois : le bouton du panneau y mène déjà.
+    assert.equal(compter(texte(html), t("results.newAnalysis")), 0, status);
+    assert.equal(compter(html, 'href="/check/new"'), 1, status);
+  }
+});
+
+const AUTRES_ETATS: Array<[string, Partial<ReportData>]> = [
+  ["rapport avec verdict (authentique)", {}],
+  ["rapport avec verdict (non concluant, confiance faible)", { verdict: "inconclusive", confidence: "low", aiConfidence: "low", overallScore: 58, status: "expert_review" }],
+  ["rapport avec verdict (contrefait)", { verdict: "likely_fake", overallScore: 20 }],
+  ["analyse en échec", { status: "failed", verdict: null, confidence: null, aiConfidence: null, overallScore: null, subScores: null }],
+  // Photos jugées insuffisantes par l'IA, mais analyse en échec : le panneau « Photos insuffisantes » n'est pas affiché.
+  ["analyse en échec, photos jugées insuffisantes", { ...INSUFFISANT, status: "failed" }],
+  ["analyse en cours", { status: "analyzing", verdict: null, confidence: null, aiConfidence: null, overallScore: null, subScores: null }],
+  ["analyse en attente de lancement", { status: "pending", verdict: null, confidence: null, aiConfidence: null, overallScore: null, subScores: null }],
+  ["envoi des photos pas terminé", { status: "uploading", verdict: null, confidence: null, aiConfidence: null, overallScore: null, subScores: null }],
+];
+
+for (const [etat, donnees] of AUTRES_ETATS) {
+  test(`${etat} : la rangée du bas garde ses deux boutons, « Tableau de bord » et « Nouvelle analyse », seul bouton vert de l'écran`, () => {
+    const html = rendre(donnees);
+    assert.ok(!texte(html).includes(t("results.insufficientTitle")), "témoin : pas de panneau « Photos insuffisantes »");
+    const actions = actionsDuBas(html);
+    assert.deepEqual(actions.map((a) => [a.texte, a.vers]), [["Tableau de bord", "/dashboard"], ["Nouvelle analyse", "/check/new"]]);
+    assert.ok(actions[1].classes.includes("bg-accent") && !actions[0].classes.includes("bg-accent"));
+    assert.deepEqual(boutonsVerts(html), ["Nouvelle analyse"]);
+  });
+}
 
 // ── B2 : « Dashboard » traduit ───────────────────────────────────────────────
 

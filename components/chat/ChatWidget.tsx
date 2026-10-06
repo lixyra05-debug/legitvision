@@ -25,32 +25,38 @@ const pulseAnimation = {
 };
 
 /**
- * Sur téléphone, le bouton flottant recouvrait les notes des zones et le
- * bouton du bas du rapport. Sur un rapport affiché, sous 640 px, il est rendu
- * dans le flux, à la fin de la page (décision d'Hector du 05/10). Partout
- * ailleurs, et à partir de 640 px, il flotte en bas à droite de la fenêtre.
+ * Le bouton flottant recouvrait les notes des zones et le bouton du bas du
+ * rapport, puis, sur tablette, la colonne de droite des cartes du tableau de
+ * bord. Sur ces deux pages, tant que la fenêtre est trop étroite pour qu'il
+ * flotte à côté du contenu, il est rendu dans le flux, à la fin de la page
+ * (décisions d'Hector des 05/10 et 06/10) : sous 1024 px sur un rapport, sous
+ * 1360 px sur le tableau de bord (à 1360 px, il flotte à 40 px des cartes ;
+ * le calcul est dans tailwind.config.ts). Partout ailleurs, et à partir de ce
+ * seuil, il flotte en bas à droite de la fenêtre.
  *
- * « rapport-mobile: » (tailwind.config.ts) ne s'applique que si la page
- * affiche un rapport (ReportView pose data-rapport) et sous 640 px. L'adresse
- * ne suffit pas : une analyse introuvable ou une erreur gardent l'adresse du
- * rapport, avec un écran qui occupe toute la fenêtre ; le bouton y reste
- * flottant, comme sur les autres pages.
+ * « assistant-flux: » (tailwind.config.ts) ne s'applique que si la page le
+ * demande (elle pose data-assistant-flux="lg" ou "1360" sur son bloc : le
+ * rapport, le tableau de bord) et sous ce seuil. L'adresse ne suffit pas : une
+ * analyse introuvable ou une erreur gardent l'adresse du rapport, avec un
+ * écran qui occupe toute la fenêtre ; le bouton y reste flottant, comme sur
+ * les autres pages.
  */
 // Le bouton, flottant : en bas à droite de la fenêtre.
 const BOUTON_FLOTTANT = "fixed bottom-6 right-6";
-// Panneau fermé, sur un rapport sous 640 px : dans le flux. Panneau ouvert, le
-// bouton reste flottant, sous le panneau, comme partout : dans le flux d'un
-// rapport plus court que la fenêtre, il se poserait sur le panneau et sur
-// « Envoyer ».
-const BOUTON_DANS_LE_FLUX = "rapport-mobile:static";
-// Son conteneur suit le contenu de la page (app/layout.tsx). Sur un rapport
-// sous 640 px : bouton aligné à droite, avec la marge de la page (px-4, celle
-// du rapport) et 24 px sous lui ; l'écart avec le dernier bouton vient du bas
-// du rapport (ReportView). La hauteur minimale (56 px du bouton + 24 px) garde
-// la page à la même hauteur quand le panneau s'ouvre et que le bouton quitte
-// le flux. Ailleurs, le conteneur ne pèse rien.
+// Panneau fermé, sur une page qui le demande et sous son seuil : dans le flux.
+// Panneau ouvert, le bouton reste flottant, sous le panneau, comme partout :
+// dans le flux d'une page plus courte que la fenêtre, il se poserait sur le
+// panneau et sur « Envoyer ».
+const BOUTON_DANS_LE_FLUX = "assistant-flux:static";
+// Son conteneur suit le contenu de la page (app/layout.tsx). Sur une page qui
+// demande le bouton dans le flux, sous son seuil : il prend la colonne de la
+// page (centrée, max-w-3xl pour le rapport, max-w-6xl pour le tableau de bord)
+// et sa marge (px-4), le bouton à droite, 24 px sous lui ; l'écart avec le
+// dernier bloc vient du bas de la page (son <main>). La hauteur minimale
+// (56 px du bouton + 24 px) garde la page à la même hauteur quand le panneau
+// s'ouvre et que le bouton quitte le flux. Ailleurs, le conteneur ne pèse rien.
 const CONTENEUR =
-  "rapport-mobile:flex rapport-mobile:min-h-20 rapport-mobile:justify-end rapport-mobile:px-4 rapport-mobile:pb-6";
+  "assistant-flux:mx-auto assistant-flux:flex assistant-flux:min-h-20 assistant-flux:justify-end assistant-flux:px-4 assistant-flux:pb-6 assistant-flux-lg:max-w-3xl assistant-flux-1360:max-w-6xl";
 
 export function ChatWidget() {
   const { t, locale } = useTranslation();
@@ -76,8 +82,8 @@ export function ChatWidget() {
   useEffect(() => {
     if (!open) return;
     // Un clic hors du panneau et hors du bouton ferme le panneau. Le
-    // conteneur ne compte pas : dans le flux d'un rapport, il occupe toute la
-    // largeur de la page, et un clic à côté du bouton doit fermer aussi.
+    // conteneur ne compte pas : dans le flux d'une page, il occupe toute la
+    // largeur de sa colonne, et un clic à côté du bouton doit fermer aussi.
     function handleClick(e: MouseEvent) {
       const cible = e.target as Node;
       if (panelRef.current?.contains(cible)) return;

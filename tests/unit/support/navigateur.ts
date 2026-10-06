@@ -28,8 +28,9 @@ function fichier(chemin: string): string | null {
 
 /**
  * Un seul script pour le navigateur : `entree` et tout ce qu'elle importe, en
- * modules CommonJS. `remplacements` donne, par nom d'import, le fichier qui
- * tient lieu de ce que seul Next sait fournir (next/link, next/navigation…).
+ * modules CommonJS. `remplacements` donne, par nom d'import (next/link,
+ * next/navigation…) ou par fichier du dépôt (« lib/supabase/server.ts »), le
+ * fichier qui tient lieu de ce que seul Next ou le serveur sait fournir.
  * Un import introuvable est une erreur, sauf un module de Node, qui ne lève
  * que si le navigateur le demande vraiment.
  */
@@ -43,7 +44,9 @@ export function empaqueter(entree: string, remplacements: Record<string, string>
       const cible = nom.startsWith("@/") ? path.join(RACINE, nom.slice(2)) : path.resolve(path.dirname(depuis), nom);
       const trouve = fichier(cible);
       if (!trouve) throw new Error(`import introuvable : ${nom} depuis ${depuis}`);
-      return trouve;
+      // Un fichier du dépôt remplacé, quel que soit le nom sous lequel il est importé.
+      const remplace = remplacements[path.relative(RACINE, trouve).split(path.sep).join("/")];
+      return remplace ? path.resolve(RACINE, remplace) : trouve;
     }
     return createRequire(depuis).resolve(nom);
   }
@@ -101,10 +104,17 @@ export async function feuilleDeStyle(): Promise<string> {
   return css;
 }
 
-/** Le Chromium de Playwright, ou null s'il n'est pas installé sur la machine. */
-export async function lancerChromium(): Promise<Browser | null> {
+/**
+ * Le Chromium de Playwright, ou null s'il n'est pas installé sur la machine.
+ * `barreDeDefilement` : Playwright lance Chromium sans barre de défilement
+ * (--hide-scrollbars), comme sur un Mac ou un téléphone, où elle se pose sur
+ * la page. Avec cette option, la barre peut prendre de la place dans la
+ * fenêtre, comme sous Windows ; la page fixe ensuite sa largeur par la règle
+ * « ::-webkit-scrollbar { width } ».
+ */
+export async function lancerChromium(options: { barreDeDefilement?: boolean } = {}): Promise<Browser | null> {
   try {
-    return await chromium.launch();
+    return await chromium.launch(options.barreDeDefilement ? { ignoreDefaultArgs: ["--hide-scrollbars"] } : {});
   } catch (erreur) {
     if (/Executable doesn't exist/.test(String(erreur))) return null;
     throw erreur;

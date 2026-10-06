@@ -58,9 +58,11 @@ const STATUS_CONFIG: Record<
 };
 
 /**
- * `zoneNames` : table des noms des zones du modèle (lib/zone-names.ts). La zone
- * rendue par l'IA peut être un identifiant ou un texte libre : le titre est son
- * nom en français quand il est connu, sinon l'identifiant rendu lisible.
+ * `zoneNames` : table des noms des zones du rapport (zoneNamesForReport,
+ * lib/zone-names.ts), la même que celle des barres de « Scores par zone ». La
+ * zone rendue par l'IA peut être un identifiant ou un texte libre : le titre
+ * est son nom en français quand il est connu, sinon l'identifiant rendu
+ * lisible.
  */
 export function FindingCard({
   zoneNames,

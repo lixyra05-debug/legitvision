@@ -135,11 +135,24 @@ test("la page passe au rapport la table des noms des zones du modèle", async ()
   const { data } = await transmis({ name: "Air Force 1", authentication_points: POINTS });
   assert.deepEqual(data.zoneNames, {
     stitching: "Coutures",
-    tongue_label: "Étiquette de languette",
+    tongue_label: "Étiquette de taille",
     swoosh: "Forme et placement du Swoosh",
-    heel_tab: "Tab talon",
+    heel_tab: "Languette du talon",
   });
   assert.equal(data.modelName, "Air Force 1");
+});
+
+test("deux zones qui auraient le même nom : la page passe au rapport deux noms différents", async () => {
+  // Décision d'Hector du 06/10 : deux zones d'un rapport ne portent jamais le
+  // même nom. Ici, deux points au même libellé court, hors de la table.
+  const { data } = await transmis({
+    name: "Air Force 1",
+    authentication_points: [
+      { zone: "heel_tab", label: "Tab talon (forme, logo)", weight: 0.5 },
+      { zone: "heel_tab_back", label: "Tab talon (pull tab)", weight: 0.5 },
+    ],
+  });
+  assert.deepEqual(data.zoneNames, { heel_tab: "Languette du talon", heel_tab_back: "Heel tab back" });
 });
 
 test("ni les points, ni leurs libellés entiers, ni leurs poids ne partent vers le navigateur", async () => {
