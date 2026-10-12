@@ -22,8 +22,9 @@
 --      arrière la demande.
 --   4. Relancer ensuite « pnpm fiabilite verifier », avant la campagne de
 --      mesure.
---   Si une première ligne ne commence pas comme indiqué ici : s'arrêter là,
---   ne pas lancer l'étape 2, et transmettre cette ligne.
+--   Si une première ligne ne commence pas comme indiqué ici : ne pas lancer
+--   l'étape 2 et transmettre cette ligne (cas particuliers : voir « SI ÇA NE
+--   SE PASSE PAS COMME PRÉVU »).
 --   Jamais pendant la mesure des 60 paires. Retour arrière : le fichier
 --   2026-10-06-libelles-catalogue-retour.sql, mêmes trois étapes.
 --   État de la production vérifié le 2026-10-06 en lecture seule : 2713
@@ -37,9 +38,8 @@
 -- SI ÇA NE SE PASSE PAS COMME PRÉVU
 --   Rien n'est abîmé : les étapes 1 et 3 ne font que lire, l'étape 2 écrit
 --   tout ou rien. Si une première ligne commence autrement, ou si un message
---   d'erreur apparaît : ne pas lancer l'étape 2 (ni la relancer), relancer
---   l'étape 1 seule, et transmettre le texte de sa première ligne ou le
---   message d'erreur.
+--   d'erreur apparaît : ne pas lancer l'étape 2 (ni la relancer), et
+--   transmettre le texte de cette première ligne ou le message d'erreur.
 --   - « ATTENTION » dans une première ligne : continuer, et transmettre la
 --     phrase qui suit ce mot.
 --   - « PAS APPLIQUÉ » à l'étape 3 : rien n'a été écrit ; la ligne dit quoi

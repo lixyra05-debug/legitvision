@@ -5,7 +5,8 @@ Ce dossier garde ce qui a produit et vérifié les deux scripts de données :
 - `supabase/scripts/2026-10-06-libelles-catalogue.sql` (l'aller) ;
 - `supabase/scripts/2026-10-06-libelles-catalogue-retour.sql` (le retour arrière).
 
-Rien de ce dossier ne s'exécute en base. Les deux scripts, eux, sont lancés à la
+Rien de ce dossier n'écrit en base : seul `controle-prod.sql` s'y lance, en
+lecture seule. Les deux scripts, eux, sont lancés à la
 main par Hector dans l'éditeur SQL de Supabase, étape par étape : leur en-tête
 « EN BREF » dit comment.
 
@@ -70,9 +71,13 @@ ne bouge pas : relancer `controle-prod.sql` juste avant l'exécution.
 ## Limites connues
 
 - **Sélection à la main dans l'éditeur.** Lancer une étape, c'est lancer
-  exactement son texte. Une sélection qui s'arrête au milieu de l'étape 2 peut
-  passer sans erreur et sans rien écrire. La preuve est toujours l'étape 3 :
-  elle dit « APPLIQUÉ » ou « PAS APPLIQUÉ ».
+  exactement son texte. Une sélection qui part du bandeau de l'étape 2 et
+  s'arrête avant sa fin est une erreur de syntaxe : rien n'est lancé. Seule
+  une sélection qui ne prend que des commentaires, ou qu'un morceau du début
+  du bloc sans son « do $$ », passe sans erreur, et sans rien écrire. Deux
+  étapes lancées ensemble s'exécutent toutes les deux, mais l'éditeur n'en
+  affiche qu'un tableau. La preuve est toujours l'étape 3, lancée seule : elle
+  dit « APPLIQUÉ » ou « PAS APPLIQUÉ ».
 - **Retour arrière et empreinte.** Les comptes ne voient pas deux changements
   qui se compensent (un point retiré d'un modèle, le même ajouté à un autre).
   Seule l'empreinte des points suivis les voit, et c'est la personne qui lance
@@ -84,10 +89,10 @@ ne bouge pas : relancer `controle-prod.sql` juste avant l'exécution.
   « relevé adapté » de `generer.mjs` (`LV_RELEVE`) existe mais n'est pas
   validé de bout en bout : l'en-tête qu'il génère est à relire à la main, et
   aucun banc livré ne rejoue des scripts adaptés.
-- **Anciens libellés qui reviennent.** Les migrations 006, 008, 010, 012 et
-  014 écrivent encore les anciens libellés : un modèle créé en recopiant leurs
-  gabarits après l'aller les ramène. L'étape 1 de l'aller le dirait
-  (« ÉCARTS »), rien ne le corrige tout seul.
+- **Anciens libellés qui reviennent.** Les migrations 001, 003, 006, 008, 009,
+  010 et 012 écrivent encore les anciens libellés : un modèle créé en
+  recopiant leurs gabarits après l'aller les ramène. L'étape 1 de l'aller le
+  dirait (« ÉCARTS »), rien ne le corrige tout seul.
 - **Déclencheur sur `public.models`.** Aucun au relevé. S'il en apparaît un
   qui change une autre colonne à chaque écriture, l'étape 1 dit « PRÊT » puis
   l'étape 2 s'arrête sans rien écrire, en le nommant.

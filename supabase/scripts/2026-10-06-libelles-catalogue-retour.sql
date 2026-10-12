@@ -26,8 +26,9 @@
 --      l'aller.
 --   4. Relancer ensuite « pnpm fiabilite verifier », avant la campagne de
 --      mesure.
---   Si une première ligne ne commence pas comme indiqué ici : s'arrêter là,
---   ne pas lancer l'étape 2, et transmettre cette ligne.
+--   Si une première ligne ne commence pas comme indiqué ici : ne pas lancer
+--   l'étape 2 et transmettre cette ligne (cas particuliers : voir « SI ÇA NE
+--   SE PASSE PAS COMME PRÉVU »).
 --   Jamais pendant la mesure des 60 paires.
 --   D'après le relevé de production du 2026-10-06 (lecture seule) : 2713
 --   points à remettre dans 437 modèles sur les 530 lignes de la table (436
@@ -40,9 +41,8 @@
 -- SI ÇA NE SE PASSE PAS COMME PRÉVU
 --   Rien n'est abîmé : les étapes 1 et 3 ne font que lire, l'étape 2 écrit
 --   tout ou rien. Si une première ligne commence autrement, ou si un message
---   d'erreur apparaît : ne pas lancer l'étape 2 (ni la relancer), relancer
---   l'étape 1 seule, et transmettre le texte de sa première ligne ou le
---   message d'erreur.
+--   d'erreur apparaît : ne pas lancer l'étape 2 (ni la relancer), et
+--   transmettre le texte de cette première ligne ou le message d'erreur.
 --   - « PAS REVENU » à l'étape 3 : rien n'a été écrit ; la ligne dit quoi
 --     faire.
 --   - Erreur « syntax error » ou « unterminated dollar-quoted string » : la

@@ -831,13 +831,13 @@ const DEBUTS = {
   retour: { 1: `PRÊT POUR LE RETOUR : ${TOTAL} points à remettre`, 3: `À L'ÉTAT DE DÉPART : les anciens libellés des ${NB} corrections` },
 };
 const SELECTION = para(`Sur le projet de production, dans l'éditeur SQL de Supabase. Lancer une étape « seule » : sélectionner ses lignes, de son bandeau « ═══ ÉTAPE n » jusqu'au bandeau suivant (ou la fin du fichier) ; le bouton « Run » devient « Run selected ». Sans sélection, « Run » lance tout le fichier, écriture comprise.`);
-const AUTRES_NOMBRES = para(`Si une première ligne ne commence pas comme indiqué ici : s'arrêter là, ne pas lancer l'étape 2, et transmettre cette ligne.`);
+const AUTRES_NOMBRES = para(`Si une première ligne ne commence pas comme indiqué ici : ne pas lancer l'étape 2 et transmettre cette ligne (cas particuliers : voir « SI ÇA NE SE PASSE PAS COMME PRÉVU »).`);
 const GESTE_2 = geste(2, `Lancer l'ÉTAPE 2 seule (le bloc ${LE_BLOC}). Elle n'affiche aucune ligne (« Success. No rows returned ») : la preuve, c'est l'étape 3.`);
 const GESTE_4 = geste(4, `Relancer ensuite « pnpm fiabilite verifier », avant la campagne de mesure.`);
 // Ce qu'il faut faire quand un affichage s'écarte de « EN BREF » : court, sous « EN BREF ».
 const imprevus = (sens) => [
   "-- SI ÇA NE SE PASSE PAS COMME PRÉVU",
-  para(`Rien n'est abîmé : les étapes 1 et 3 ne font que lire, l'étape 2 écrit tout ou rien. Si une première ligne commence autrement, ou si un message d'erreur apparaît : ne pas lancer l'étape 2 (ni la relancer), relancer l'étape 1 seule, et transmettre le texte de sa première ligne ou le message d'erreur.`),
+  para(`Rien n'est abîmé : les étapes 1 et 3 ne font que lire, l'étape 2 écrit tout ou rien. Si une première ligne commence autrement, ou si un message d'erreur apparaît : ne pas lancer l'étape 2 (ni la relancer), et transmettre le texte de cette première ligne ou le message d'erreur.`),
   ...(sens === "aller" ? [puce(`« ATTENTION » dans une première ligne : continuer, et transmettre la phrase qui suit ce mot.`)] : []),
   puce(`« ${sens === "aller" ? "PAS APPLIQUÉ" : "PAS REVENU"} » à l'étape 3 : rien n'a été écrit ; la ligne dit quoi faire.`),
   puce(`Erreur « syntax error » ou « unterminated dollar-quoted string » : la sélection était incomplète, rien n'a été lancé ; refaire la sélection en entier.`),
