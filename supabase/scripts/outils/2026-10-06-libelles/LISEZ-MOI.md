@@ -58,6 +58,15 @@ ne bouge pas : relancer `controle-prod.sql` juste avant l'exécution.
   étapes de chaque fichier, donc tout le SQL exécuté, sont identiques à
   l'octet près à la version éprouvée (comparaison faite le 2026-10-12).
 - `banc-independant.mjs` : 43 contrôles, tout passe (2026-10-12).
+- Fenêtre d'avertissement de l'éditeur SQL de Supabase (« Potential issue
+  detected ») : les contrôles d'avant exécution du code public de Supabase
+  Studio (branche master, relevée le 2026-10-12 : opérations destructrices,
+  UPDATE sans WHERE, ALTER DATABASE, CREATE TABLE sans RLS) ont été rejoués
+  sur les six étapes, chacune seule. Aucune n'ouvre la fenêtre, et l'éditeur
+  n'ajoute de « limit » à aucune. La fenêtre s'ouvre si l'étape 2 est collée
+  sous un reste de requête (« delete », « update » sans « where ») ou coupée
+  avant son « end $$; » : dans ces cas, annuler. Ce contrôle vaut pour le code
+  relevé ce jour-là : l'éditeur évolue.
 - Relecture adverse, premier tour : 28 remarques confirmées, toutes
   traitées. Aucune ne concernait l'aller sur une base conforme au relevé.
   L'une montrait que le retour, après deux changements du catalogue qui se
