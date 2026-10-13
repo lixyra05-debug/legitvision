@@ -17,8 +17,8 @@
 --   commencer par « PRÊT : 284 noms de photos à corriger dans 71 lignes de
 --   marque », et son empreinte des noms doit être celle d'avant l'aller :
 --   5dd4011eb6d10aafc4dc4f645d2df213.
---   JAMAIS pendant la mesure des 60 paires : ces noms partent dans la
---   consigne envoyée à l'IA.
+--   À n'utiliser que pour annuler la correction : ces noms s'affichent à
+--   l'étape d'envoi des photos et partent dans la consigne envoyée à l'IA.
 --
 -- CE QUE FAIT CE BLOC
 --   Il remet, emplacement par emplacement, les 284 anciens noms relevés le

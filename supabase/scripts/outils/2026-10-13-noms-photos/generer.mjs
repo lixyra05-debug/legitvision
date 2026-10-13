@@ -276,7 +276,7 @@ const aller = `${BANDEAU}
 --   CE BLOC n'affiche aucune ligne (« Success. No rows returned »).
 --   APRÈS : relancer la requête d'état. Sa première ligne doit commencer par
 --   « APPLIQUÉ : les ${corrections.length} corrections sont en place ». C'est elle, la preuve.
---   Jamais pendant la mesure des 60 paires : ces noms partent dans la
+--   Ces noms s'affichent à l'étape d'envoi des photos et partent dans la
 --   consigne envoyée à l'IA.
 --
 -- CE QUE FAIT CE BLOC
@@ -404,8 +404,8 @@ const retour = `${BANDEAU}
 --   commencer par « PRÊT : ${TOTAL} noms de photos à corriger dans ${LIGNES} lignes de
 --   marque », et son empreinte des noms doit être celle d'avant l'aller :
 --   ${AVANT}.
---   JAMAIS pendant la mesure des 60 paires : ces noms partent dans la
---   consigne envoyée à l'IA.
+--   À n'utiliser que pour annuler la correction : ces noms s'affichent à
+--   l'étape d'envoi des photos et partent dans la consigne envoyée à l'IA.
 --
 -- CE QUE FAIT CE BLOC
 --   Il remet, emplacement par emplacement, les ${TOTAL} anciens noms relevés le

@@ -14,13 +14,17 @@ leur en-tête « EN BREF » dit comment.
 
 ## État : PAS ENCORE EXÉCUTÉ (2026-10-13)
 
-À exécuter par Hector avant la mesure des 60 paires, jamais pendant : ces noms
-partent dans la consigne envoyée à l'IA (`lib/ai/analyze.ts` : « nom
-(identifiant) » pour chaque photo). L'outil de mesure (`scripts/fiabilite`,
-branche `refonte/site`) refige sa copie du catalogue, noms des photos compris,
-à chaque `pnpm fiabilite verifier` lancé en ligne sans erreur ; `estimer` et
-`lancer` relisent cette copie. L'ordre est donc : aller, état « APPLIQUÉ »,
-puis un dernier `verifier` avant `lancer`.
+À exécuter par Hector, au planning après la migration 020 (les deux sont
+indépendantes : ces requêtes ne touchent que `public.brands.photo_protocol`).
+Ces noms s'affichent à l'étape d'envoi des photos (`components/check/
+PhotoUploader.tsx`) et partent dans la consigne envoyée à l'IA
+(`lib/ai/analyze.ts` : « nom (identifiant) » pour chaque photo) ; le rapport
+ne les affiche pas, il nomme les zones d'après `lib/zone-names.ts`.
+
+La mesure sur 60 paires, que ces requêtes devaient précéder, est abandonnée
+(décision d'Hector, 2026-10-13) : il n'y a plus de fenêtre à éviter. Les
+en-têtes des requêtes ont été corrigés en conséquence le soir même ; seuls des
+commentaires ont changé, les instructions sont les mêmes au caractère près.
 
 ## Ce que changent les requêtes
 

@@ -15,7 +15,7 @@
 --   CE BLOC n'affiche aucune ligne (« Success. No rows returned »).
 --   APRÈS : relancer la requête d'état. Sa première ligne doit commencer par
 --   « APPLIQUÉ : les 34 corrections sont en place ». C'est elle, la preuve.
---   Jamais pendant la mesure des 60 paires : ces noms partent dans la
+--   Ces noms s'affichent à l'étape d'envoi des photos et partent dans la
 --   consigne envoyée à l'IA.
 --
 -- CE QUE FAIT CE BLOC
