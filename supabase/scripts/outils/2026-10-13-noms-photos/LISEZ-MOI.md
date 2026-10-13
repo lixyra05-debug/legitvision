@@ -108,8 +108,8 @@ Trois calculs indépendants donnent les mêmes empreintes :
   recalculée depuis la base a l'empreinte de celle du script
   (`07a6f0dd6a91680d8a9a7df5b3074da8`). Un premier passage, avant la relecture,
   avait donné les mêmes valeurs.
-- La requête d'état elle-même, lancée ensuite telle quelle en lecture seule
-  sur la production : « PRÊT : 284 noms de photos à corriger dans 71 lignes de
+- L'instruction de la requête d'état (le fichier, sans son en-tête de
+  commentaires), lancée ensuite en lecture seule sur la production : « PRÊT : 284 noms de photos à corriger dans 71 lignes de
   marque (table : 80 lignes, 693 photos demandées). On peut lancer la
   correction. », les deux empreintes attendues, puis 34 lignes où
   `a_corriger` égale `au_releve`.
