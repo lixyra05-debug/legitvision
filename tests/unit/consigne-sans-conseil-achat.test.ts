@@ -22,6 +22,7 @@ import { BRAND_EXPERTISE_BRANDS, NO_PURCHASE_ADVICE_RULE, RECOMMENDATION_FORMAT,
 import { translations } from "@/lib/i18n/translations";
 import { PURCHASE_ADVICE_PATTERNS, isPurchaseAdvice, withoutPurchaseAdvice } from "@/lib/purchase-advice";
 import type { AuthenticationPoint } from "@/lib/types";
+import { CONSEILS_D_ACHAT, VERIFICATIONS } from "./support/phrases-formulations";
 
 const racine = new URL("../../", import.meta.url);
 const adresseDe = (chemin: string) => new URL(chemin, racine).href;
@@ -103,126 +104,6 @@ test("consigne : son empreinte. Elle ne change pas par mégarde, pour aucune mar
 });
 
 // ── 2. Reconnaître un conseil d'achat ou de paiement ───────
-
-const CONSEILS_D_ACHAT = [
-  // Relevé en production le 13/10.
-  "Éviter absolument cet achat - article clairement frauduleux",
-  // Ne pas acheter.
-  "Évitez cet achat.",
-  "Évitez l'achat tant que le vendeur n'a pas fourni la facture.",
-  "éviter l’achat de cette paire",
-  "Évitez d'acheter cette paire.",
-  "Mieux vaut éviter de l'acheter.",
-  "N'achetez pas cet article.",
-  "N’achetez pas cet article.",
-  "Ne l'achetez pas en l'état.",
-  "Ne pas acheter cette paire.",
-  "Ne surtout pas l'acheter.",
-  "Il vaut mieux ne pas l'acheter.",
-  "Article à ne surtout pas acheter.",
-  "À votre place, je n'achèterais pas cette paire.",
-  "Demandez la facture d'origine ; à défaut, n'achetez pas.",
-  "Je déconseille l'achat de ce sac.",
-  "Il est déconseillé d'acheter cette paire.",
-  "Je ne recommande pas l'achat de cette paire.",
-  "Achat déconseillé au vu des anomalies.",
-  "Achat non recommandé.",
-  "Achat à éviter.",
-  "L'achat est fortement déconseillé.",
-  "Transaction déconseillée.",
-  "Achat risqué.",
-  "Mieux vaut renoncer à l'achat.",
-  "Renoncez à acheter cette paire.",
-  "Ne finalisez pas la transaction.",
-  "Ne procédez pas à l'achat.",
-  "Si le vendeur refuse ou tarde, passez votre chemin.",
-  "Une annonce à fuir.",
-  "Fuyez cette annonce.",
-  "Mieux vaut s'abstenir.",
-  "Abstenez-vous d'acheter.",
-  // Acheter.
-  "Vous pouvez l'acheter les yeux fermés.",
-  "Vous pouvez acheter cette paire.",
-  "Vous pouvez procéder à l'achat en toute confiance.",
-  "N'hésitez pas à l'acheter.",
-  "Cet article peut être acheté en toute confiance.",
-  "Achetez-le sans hésiter.",
-  "Dans ce cas, achetez cette paire.",
-  "Cet article peut être acheté.",
-  "Une paire à acheter les yeux fermés.",
-  "Achat recommandé.",
-  "Achat sûr.",
-  "Achat sans risque.",
-  "Nous vous conseillons d'acheter cette paire.",
-  "Vous pouvez acheter en toute confiance.",
-  "C'est une bonne affaire à ce prix.",
-  "Foncez, c'est une belle pièce.",
-  // Payer ou ne pas payer.
-  "Ne payez pas en l'état.",
-  "Ne payez pas avant d'avoir levé ces doutes.",
-  "Payez par le paiement intégré de la plateforme, jamais par virement direct.",
-  "Payer uniquement via la plateforme.",
-  "Mieux vaut ne pas payer avant la vérification.",
-  "N'envoyez pas d'argent au vendeur.",
-  "Ne pas envoyer d'argent au vendeur.",
-  "Ne pas verser d'acompte.",
-  "Ne réglez rien avant d'avoir vu la paire.",
-  "Ne versez rien avant la remise en main propre.",
-  "Ne faites aucun virement.",
-  "N'effectuez aucun paiement avant d'avoir reçu ces photos.",
-  "Évitez tout paiement hors plateforme.",
-  "Privilégiez un paiement sécurisé.",
-  "Privilégiez le paiement de la plateforme.",
-  "Paiement uniquement via la plateforme.",
-];
-
-// Des vérifications à faire : elles parlent souvent d'achat ou de paiement sans rien conseiller.
-// Le format des recommandations demande justement un « document à demander au vendeur ».
-const VERIFICATIONS = [
-  "Demandez la preuve d'achat au vendeur : elle complète utilement ce résultat.",
-  "Conservez la facture d'achat et la boîte d'origine.",
-  "Comparez le code produit avec celui de la preuve d'achat.",
-  "Avant tout achat, faites contrôler l'article par un expert indépendant.",
-  "Demandez la date et le lieu d'achat au vendeur.",
-  "Déjà payé ? Ouvrez un litige sur la plateforme et joignez ce rapport comme élément d'appréciation.",
-  "Évitez de nettoyer la semelle avant de reprendre la photo.",
-  "Évitez le flash : il masque la gravure.",
-  "Ce résultat ne permet de conclure ni dans un sens ni dans l'autre.",
-  "Pour confirmer ce résultat, faites examiner l'article par un expert indépendant.",
-  // Relevées dans deux rapports de production, le 13/10.
-  "Fournir un cliché net de la boîte d'origine et de son étiquette (code S57WS...) pour recouper la référence",
-  "Ajouter une macro des 4 points de couture blancs du talon et de la languette pour confirmation finale",
-  "Vérifier la cohérence du numéro de série entre la semelle et l'étiquette intérieure",
-  "Noter que le code relevé (DC4457-001, release 2020) diffère du SKU déclaré HJ8463-001 (2024) : vérifier auprès du vendeur de quelle release il s'agit réellement.",
-  "Fournir des photos plus nettes du logo talon brodé et du data matrix de l'étiquette pour lever tout doute.",
-  "Faire vérifier le poids réel de la paire (l'unité Air authentique donne un amorti caractéristique).",
-  "Comparer la police et le contour des appliqués FLEA avec une référence officielle CPFM connue.",
-  // Relevées par la relecture du 13/10 : toutes étaient retirées à tort par la première version.
-  "Vérifier la date d'achat sur la facture ou le ticket de caisse.",
-  "Vérifier la cohérence entre la date d'achat sur la facture et le code date du sac.",
-  "Demander la preuve d'achat sur StockX ou GOAT si la paire en provient.",
-  "Demander la facture d'achat sur papier à en-tête de la boutique.",
-  "Preuve d'achat recommandée pour lever le doute sur l'étiquette.",
-  "Photo de la facture d'achat conseillée pour affiner le résultat.",
-  "Pour éviter tout doute, demandez la facture d'achat originale.",
-  "Évitez le flash et joignez la preuve d'achat.",
-  "Si vous achetez cette paire d'occasion, demandez la facture d'origine au vendeur.",
-  "Si vous n'achetez pas en boutique officielle, demandez systématiquement la facture.",
-  "Si vous l'achetez en ligne, demandez des photos datées.",
-  "Si le vendeur renonce à fournir la preuve d'achat, demandez une photo du code produit.",
-  "Le ticket de caisse indique un achat sur nike.com le 12/03/2024.",
-  // D'autres du même genre.
-  "Il est recommandé de demander la facture d'achat au vendeur.",
-  "Demandez une preuve de paiement de l'achat d'origine.",
-  "Le reçu de paiement par carte confirme la date d'achat.",
-  "Ne pas envoyer de photo prise au flash.",
-  "Régler la mise au point avant de reprendre la photo de l'étiquette.",
-  "Faites vérifier le sac en boutique avant toute décision.",
-  "Demandez au vendeur où et quand il a acheté la paire.",
-  "L'article a été acheté en 2021 selon l'étiquette.",
-  "Semelle intérieure d'une paire achetée d'occasion : usure cohérente.",
-  "Pays de fabrication illisible : reprendre la photo de l'étiquette.",
-];
 
 test("conseil d'achat ou de paiement : chaque formule est reconnue, dont celle relevée en production", () => {
   for (const conseil of CONSEILS_D_ACHAT) assert.equal(isPurchaseAdvice(conseil), true, `non reconnu : « ${conseil} »`);
