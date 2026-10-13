@@ -10,6 +10,23 @@ lecture seule. Les deux scripts, eux, sont lancés à la
 main par Hector dans l'éditeur SQL de Supabase, étape par étape : leur en-tête
 « EN BREF » dit comment.
 
+## État : aller exécuté en production le 2026-10-13
+
+Hector a lancé les trois étapes de l'aller le 2026-10-13 (étape 3 vers 9 h 35,
+heure de Paris). Étape 1 : « PRÊT », 2 713 points à corriger dans 437 modèles.
+Étape 3 : « APPLIQUÉ », les 46 corrections en place. Les empreintes qu'il a
+relevées sont celles prévues plus bas : libellés
+`5b7e6a6baa82bebe458bc74ea0ecbe98`, points suivis
+`b593f6408a170e90294df946144a440f`, autres colonnes inchangées
+(`00fcb5453bee84534e622f64c7e08897`). Relu en lecture seule le même jour à
+08 h 52 UTC : 530 lignes, même empreinte des libellés.
+
+- Ne pas relancer l'aller : son étape 1 répond « DÉJÀ APPLIQUÉ ».
+- Le retour arrière ne se lance jamais pendant la mesure des 60 paires : les
+  libellés partent dans la consigne envoyée à l'IA.
+- L'empreinte des points suivis à présenter au retour est
+  `b593f6408a170e90294df946144a440f`.
+
 ## Fichiers
 
 | Fichier | Rôle |
