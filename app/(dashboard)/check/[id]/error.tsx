@@ -6,6 +6,8 @@ import { useParams } from "next/navigation";
 import type { ErrorInfo } from "next/error";
 import { errorDigest, errorName } from "@/lib/error-digest";
 
+const CONTACT = "legitvision.contact@gmail.com";
+
 /**
  * Page de repli du rapport (décision d'Hector, 2026-10-13 : « le rapport ne
  * doit jamais s'afficher en erreur : dans le pire cas, une page de repli
@@ -24,6 +26,11 @@ import { errorDigest, errorName } from "@/lib/error-digest";
  * Il ne promet pas que l'analyse est enregistrée : la base peut être en
  * panne, et rien n'a lu cette analyse-ci.
  *
+ * L'adresse de contact suit le numéro (décision d'Hector, 2026-10-13 : « c'est
+ * là qu'un client qui a payé en a besoin »), sans promesse elle non plus.
+ * Elle s'affiche en clair, pour qui n'a pas de logiciel de messagerie ; le
+ * lien ouvre un message dont l'objet porte déjà le numéro.
+ *
  * Le détail de l'erreur ne s'affiche jamais ; seule sa référence (digest)
  * aide à la retrouver dans les journaux. Props : ErrorInfo de next/error
  * (Next 16.3) ; « Réessayer » appelle `retry`, qui redemande la page au
@@ -36,6 +43,7 @@ export default function ReportErrorPage({ error, retry }: ErrorInfo) {
   const params = useParams<{ id?: string | string[] }>();
   const id = typeof params?.id === "string" ? params.id : null;
   const numero = id ? id.slice(0, 8).toUpperCase() : null;
+  const objet = numero ? `?subject=${encodeURIComponent(`Analyse ${numero} : le rapport ne s'affiche pas`)}` : "";
 
   useEffect(() => {
     console.error("[rapport] affichage impossible", errorDigest(error) ?? errorName(error));
@@ -53,6 +61,16 @@ export default function ReportErrorPage({ error, retry }: ErrorInfo) {
             Numéro de l&apos;analyse : {numero}.
           </p>
         )}
+        <p className="mt-3 text-ui text-muted-foreground">
+          Si le rapport ne revient pas, écrivez-nous à{" "}
+          <a
+            href={`mailto:${CONTACT}${objet}`}
+            className="font-medium text-foreground underline underline-offset-2"
+          >
+            {CONTACT}
+          </a>
+          {numero ? " en indiquant ce numéro." : "."}
+        </p>
         {digest && (
           <p className="mt-1 text-caption text-muted-foreground">Référence : {digest}</p>
         )}
