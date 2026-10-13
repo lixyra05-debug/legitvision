@@ -1,19 +1,31 @@
-import { CheckCircle2, AlertTriangle, XCircle } from "lucide-react";
+import { CheckCircle2, AlertTriangle, XCircle, CircleDashed } from "lucide-react";
 import { zoneNameIn, type ZoneNames } from "@/lib/zone-names";
 
 export interface Finding {
   zone: string;
   observation: string;
-  score: number;
+  /** Absente quand l'IA n'a pas noté l'observation : elle s'affiche alors sans note. */
+  score?: number;
   severity?: "critical" | "important" | "minor";
 }
 
 type Status = "pass" | "warn" | "fail";
 
-function resolveStatus(f: Finding): Status {
+/** Une note lisible : un nombre fini. Rien ne valide les observations rendues par l'IA. */
+const hasScore = (f: Finding): f is Finding & { score: number } =>
+  typeof f.score === "number" && Number.isFinite(f.score);
+
+/**
+ * Le jugement d'une observation : la gravité rendue par l'IA, sinon sa note.
+ * Sans gravité ni note, null : rien ne permet de juger, et l'observation ne
+ * doit surtout pas tomber sur « Suspect » (avant le 13/10, une note absente
+ * se comparait à 40 et donnait « Suspect », en rouge, suivi de « /100 » seul).
+ */
+function resolveStatus(f: Finding): Status | null {
   if (f.severity === "critical") return "fail";
   if (f.severity === "important") return "warn";
   if (f.severity === "minor") return "pass";
+  if (!hasScore(f)) return null;
   if (f.score >= 70) return "pass";
   if (f.score >= 40) return "warn";
   return "fail";
@@ -58,6 +70,21 @@ const STATUS_CONFIG: Record<
 };
 
 /**
+ * Observation sans gravité ni note : un libellé et une icône qui ne jugent
+ * pas, sans vert, ambre ni rouge. Le commentaire de l'IA reste (décision
+ * d'Hector, 2026-10-13 : une observation sans note ne s'affiche pas
+ * « Suspect »).
+ */
+const UNSCORED = {
+  label: "Sans note",
+  labelColor: "text-muted-foreground",
+  labelBg: "bg-surface-raised",
+  icon: CircleDashed,
+  iconColor: "text-muted-foreground",
+  cardBg: "border-line-subtle bg-card",
+};
+
+/**
  * `zoneNames` : table des noms des zones du rapport (zoneNamesForReport,
  * lib/zone-names.ts), la même que celle des barres de « Scores par zone ». La
  * zone rendue par l'IA peut être un identifiant ou un texte libre : le titre
@@ -71,7 +98,7 @@ export function FindingCard({
   const status = resolveStatus(finding);
   const zoneName = zoneNameIn(zoneNames, finding.zone);
   const { label, labelColor, labelBg, icon: Icon, iconColor, cardBg } =
-    STATUS_CONFIG[status];
+    status === null ? UNSCORED : STATUS_CONFIG[status];
 
   return (
     <div className={`rounded-md border p-4 ${cardBg}`}>
@@ -96,9 +123,13 @@ export function FindingCard({
                 {label}
               </span>
             </div>
-            <span className="shrink-0 text-caption tabular-nums text-muted-foreground">
-              {finding.score}/100
-            </span>
+            {/* Sans note lisible, la place de la note reste vide : jamais
+                « /100 » seul. */}
+            {hasScore(finding) && (
+              <span className="shrink-0 text-caption tabular-nums text-muted-foreground">
+                {finding.score}/100
+              </span>
+            )}
           </div>
           <p className="mt-1.5 text-ui leading-relaxed text-muted-foreground">
             {finding.observation}
