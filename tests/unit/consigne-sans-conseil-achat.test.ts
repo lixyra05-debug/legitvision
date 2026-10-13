@@ -19,9 +19,9 @@ import { test, mock } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { createRequire } from "node:module";
-import { NO_PURCHASE_ADVICE_RULE, RECOMMENDATION_FORMAT, getAuthenticationPrompt } from "@/lib/ai/authentication-prompts";
+import { BRAND_EXPERTISE_BRANDS, NO_PURCHASE_ADVICE_RULE, RECOMMENDATION_FORMAT, getAuthenticationPrompt } from "@/lib/ai/authentication-prompts";
 import { translations } from "@/lib/i18n/translations";
-import { isPurchaseAdvice, withoutPurchaseAdvice } from "@/lib/purchase-advice";
+import { PURCHASE_ADVICE_PATTERNS, isPurchaseAdvice, withoutPurchaseAdvice } from "@/lib/purchase-advice";
 import type { AuthenticationPoint } from "@/lib/types";
 
 const racine = new URL("../../", import.meta.url);
@@ -86,14 +86,21 @@ test("consigne : le format ne demande plus un « conseil actionnable », mais un
   }
 });
 
-test("consigne : son empreinte. Elle ne change pas par mégarde, et jamais pendant une campagne de mesure", () => {
+test("consigne : son empreinte. Elle ne change pas par mégarde, pour aucune marque, et jamais pendant une campagne de mesure", () => {
   // Si ce test échoue, la consigne envoyée à l'IA a changé. C'est permis,
   // mais jamais pendant la mesure des paires (scripts/fiabilite) : la consigne
   // y est figée. Après un changement voulu : mettre cette empreinte à jour,
   // régénérer la requête figée de l'outil de fiabilité, et le dire à Hector.
-  const { systemPrompt, userPrompt } = getAuthenticationPrompt("Nike", "Dunk Low", "sneakers", POINTS, PHOTOS);
-  const empreinte = createHash("sha256").update(`${systemPrompt}\n\u0000\n${userPrompt}`).digest("hex");
-  assert.equal(empreinte, "c4406fa3b20c182380587dd301a82ccb8b11236f52abdecb1f25d254f4154700");
+  // Toutes les consignes entrent dans l'empreinte : une phrase ajoutée à
+  // l'expertise d'une seule marque la change aussi.
+  const toutes = [
+    ...BRAND_EXPERTISE_BRANDS.map((marque) => getAuthenticationPrompt(marque, "Modèle", "sneakers", POINTS, PHOTOS)),
+    ...CONSIGNES.map(([, consigne]) => consigne),
+  ];
+  assert.ok(toutes.length > 45, String(toutes.length));
+  const empreinte = createHash("sha256");
+  for (const { systemPrompt, userPrompt } of toutes) empreinte.update(`${systemPrompt}\n\u0000\n${userPrompt}\n\u0001\n`);
+  assert.equal(empreinte.digest("hex"), "f7fcfb2e9a134be0a5b8f98f765d524e91c3947e0c21acb76d7acd6687947791");
 });
 
 // ── 2. Reconnaître un conseil d'achat ou de paiement ───────
@@ -101,33 +108,77 @@ test("consigne : son empreinte. Elle ne change pas par mégarde, et jamais penda
 const CONSEILS_D_ACHAT = [
   // Relevé en production le 13/10.
   "Éviter absolument cet achat - article clairement frauduleux",
+  // Ne pas acheter.
   "Évitez cet achat.",
   "Évitez l'achat tant que le vendeur n'a pas fourni la facture.",
   "éviter l’achat de cette paire",
+  "Évitez d'acheter cette paire.",
+  "Mieux vaut éviter de l'acheter.",
   "N'achetez pas cet article.",
   "N’achetez pas cet article.",
   "Ne l'achetez pas en l'état.",
   "Ne pas acheter cette paire.",
+  "Ne surtout pas l'acheter.",
+  "Il vaut mieux ne pas l'acheter.",
   "Article à ne surtout pas acheter.",
+  "À votre place, je n'achèterais pas cette paire.",
+  "Demandez la facture d'origine ; à défaut, n'achetez pas.",
   "Je déconseille l'achat de ce sac.",
+  "Il est déconseillé d'acheter cette paire.",
+  "Je ne recommande pas l'achat de cette paire.",
   "Achat déconseillé au vu des anomalies.",
+  "Achat non recommandé.",
+  "Achat à éviter.",
+  "L'achat est fortement déconseillé.",
+  "Transaction déconseillée.",
+  "Achat risqué.",
   "Mieux vaut renoncer à l'achat.",
+  "Renoncez à acheter cette paire.",
+  "Ne finalisez pas la transaction.",
+  "Ne procédez pas à l'achat.",
   "Si le vendeur refuse ou tarde, passez votre chemin.",
   "Une annonce à fuir.",
+  "Fuyez cette annonce.",
+  "Mieux vaut s'abstenir.",
+  "Abstenez-vous d'acheter.",
+  // Acheter.
   "Vous pouvez l'acheter les yeux fermés.",
   "Vous pouvez acheter cette paire.",
+  "Vous pouvez procéder à l'achat en toute confiance.",
+  "N'hésitez pas à l'acheter.",
+  "Cet article peut être acheté en toute confiance.",
   "Achetez-le sans hésiter.",
+  "Dans ce cas, achetez cette paire.",
+  "Cet article peut être acheté.",
+  "Une paire à acheter les yeux fermés.",
   "Achat recommandé.",
+  "Achat sûr.",
+  "Achat sans risque.",
+  "Nous vous conseillons d'acheter cette paire.",
   "Vous pouvez acheter en toute confiance.",
   "C'est une bonne affaire à ce prix.",
+  "Foncez, c'est une belle pièce.",
+  // Payer ou ne pas payer.
   "Ne payez pas en l'état.",
   "Ne payez pas avant d'avoir levé ces doutes.",
   "Payez par le paiement intégré de la plateforme, jamais par virement direct.",
+  "Payer uniquement via la plateforme.",
   "Mieux vaut ne pas payer avant la vérification.",
   "N'envoyez pas d'argent au vendeur.",
+  "Ne pas envoyer d'argent au vendeur.",
+  "Ne pas verser d'acompte.",
+  "Ne réglez rien avant d'avoir vu la paire.",
+  "Ne versez rien avant la remise en main propre.",
+  "Ne faites aucun virement.",
+  "N'effectuez aucun paiement avant d'avoir reçu ces photos.",
+  "Évitez tout paiement hors plateforme.",
+  "Privilégiez un paiement sécurisé.",
+  "Privilégiez le paiement de la plateforme.",
+  "Paiement uniquement via la plateforme.",
 ];
 
-// Des vérifications à faire : elles parlent parfois d'achat ou de paiement sans rien conseiller.
+// Des vérifications à faire : elles parlent souvent d'achat ou de paiement sans rien conseiller.
+// Le format des recommandations demande justement un « document à demander au vendeur ».
 const VERIFICATIONS = [
   "Demandez la preuve d'achat au vendeur : elle complète utilement ce résultat.",
   "Conservez la facture d'achat et la boîte d'origine.",
@@ -147,6 +198,31 @@ const VERIFICATIONS = [
   "Fournir des photos plus nettes du logo talon brodé et du data matrix de l'étiquette pour lever tout doute.",
   "Faire vérifier le poids réel de la paire (l'unité Air authentique donne un amorti caractéristique).",
   "Comparer la police et le contour des appliqués FLEA avec une référence officielle CPFM connue.",
+  // Relevées par la relecture du 13/10 : toutes étaient retirées à tort par la première version.
+  "Vérifier la date d'achat sur la facture ou le ticket de caisse.",
+  "Vérifier la cohérence entre la date d'achat sur la facture et le code date du sac.",
+  "Demander la preuve d'achat sur StockX ou GOAT si la paire en provient.",
+  "Demander la facture d'achat sur papier à en-tête de la boutique.",
+  "Preuve d'achat recommandée pour lever le doute sur l'étiquette.",
+  "Photo de la facture d'achat conseillée pour affiner le résultat.",
+  "Pour éviter tout doute, demandez la facture d'achat originale.",
+  "Évitez le flash et joignez la preuve d'achat.",
+  "Si vous achetez cette paire d'occasion, demandez la facture d'origine au vendeur.",
+  "Si vous n'achetez pas en boutique officielle, demandez systématiquement la facture.",
+  "Si vous l'achetez en ligne, demandez des photos datées.",
+  "Si le vendeur renonce à fournir la preuve d'achat, demandez une photo du code produit.",
+  "Le ticket de caisse indique un achat sur nike.com le 12/03/2024.",
+  // D'autres du même genre.
+  "Il est recommandé de demander la facture d'achat au vendeur.",
+  "Demandez une preuve de paiement de l'achat d'origine.",
+  "Le reçu de paiement par carte confirme la date d'achat.",
+  "Ne pas envoyer de photo prise au flash.",
+  "Régler la mise au point avant de reprendre la photo de l'étiquette.",
+  "Faites vérifier le sac en boutique avant toute décision.",
+  "Demandez au vendeur où et quand il a acheté la paire.",
+  "L'article a été acheté en 2021 selon l'étiquette.",
+  "Semelle intérieure d'une paire achetée d'occasion : usure cohérente.",
+  "Pays de fabrication illisible : reprendre la photo de l'étiquette.",
 ];
 
 test("conseil d'achat ou de paiement : chaque formule est reconnue, dont celle relevée en production", () => {
@@ -154,6 +230,17 @@ test("conseil d'achat ou de paiement : chaque formule est reconnue, dont celle r
   // En capitales aussi, et au milieu d'une phrase.
   assert.equal(isPurchaseAdvice("ÉVITER ABSOLUMENT CET ACHAT"), true);
   assert.equal(isPurchaseAdvice("Au vu de ces anomalies, n'achetez pas cette paire avant un contrôle."), true);
+});
+
+test("chaque construction reconnue a sa phrase : en retirer une du fichier fait échouer ce test", () => {
+  // Pour chaque motif, une phrase au moins que lui seul reconnaît : sans cela, il pourrait disparaître ou être
+  // faussé sans qu'aucun test ne le voie.
+  PURCHASE_ADVICE_PATTERNS.forEach((motif, i) => {
+    const autres = PURCHASE_ADVICE_PATTERNS.filter((_, j) => j !== i);
+    const propres = CONSEILS_D_ACHAT.filter((conseil) => motif.test(conseil) && !autres.some((autre) => autre.test(conseil)));
+    assert.ok(propres.length > 0, `aucune phrase ne dépend du seul motif ${i + 1} : ${motif.source.slice(0, 100)}`);
+  });
+  assert.equal(PURCHASE_ADVICE_PATTERNS.length, 20);
 });
 
 test("vérification à faire : jamais prise pour un conseil d'achat, même quand elle parle d'achat ou de paiement", () => {
@@ -253,9 +340,16 @@ test("rapport déjà enregistré avec un conseil d'achat : il ne s'affiche pas, 
   for (const present of ["Nike", "Dunk Low", FR.fake, `${FR.recommendationsTitle} (2)`, "Demandez la preuve d'achat au vendeur.", "Faites contrôler la paire par un expert indépendant."]) {
     assert.ok(page.includes(present), `« ${present} » absent : ${page}`);
   }
-  for (const absent of ["Éviter absolument cet achat", "frauduleux", "N'achetez pas"]) {
+  for (const absent of ["Éviter absolument cet achat", "N'achetez pas"]) {
     assert.ok(!page.includes(absent), `« ${absent} » affiché : ${page}`);
   }
+});
+
+test("limite connue : le filtre ne retire que des recommandations ; un mot interdit ailleurs, ou sans conseil d'achat, s'affiche", async () => {
+  // « frauduleux » sans conseil d'achat reste dans la liste : seuls les conseils d'achat en sortent. Le résumé et les
+  // observations ne sont jamais réécrits à l'affichage : c'est la consigne qui les tient, et la mesure de fiabilité qui compte.
+  const page = await rapport(["Montage frauduleux probable : faites contrôler la paire."]);
+  assert.ok(page.includes(`${FR.recommendationsTitle} (1)`) && page.includes("Montage frauduleux probable"), page);
 });
 
 test("rapport dont toutes les recommandations sont des conseils d'achat : la section disparaît, le rapport reste", async () => {

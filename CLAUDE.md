@@ -57,7 +57,7 @@ Localisation : Paris, France
 │   │   └── config.ts       # Produits et prix
 │   ├── ai/
 │   │   ├── analyze.ts      # Fonction d'analyse vision
-│   │   ├── prompts.ts      # System + User prompts
+│   │   ├── authentication-prompts.ts  # La consigne envoyée à l'IA (system + user)
 │   │   └── scoring.ts      # Calcul score pondéré
 │   ├── utils.ts
 │   └── types.ts            # Types TypeScript globaux

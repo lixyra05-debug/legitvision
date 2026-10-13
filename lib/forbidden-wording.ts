@@ -14,10 +14,18 @@
  * fichier les reconnaît dans un texte : la mesure de fiabilité
  * (scripts/fiabilite) compte ainsi ce que l'IA écrit malgré la consigne.
  *
- * « probablement authentique », « probable contrefaçon », « 85/100 » et
- * « 100 % coton » ne sont pas des formulations interdites : le verdict se dit
- * avec « probablement », un score se cite sur 100, une étiquette de
- * composition se recopie.
+ * Ne sont pas des formulations interdites :
+ * - « probablement authentique », « probable contrefaçon » : le verdict se dit
+ *   avec « probablement » ;
+ * - « 85/100 » : un score se cite sur 100 ;
+ * - « 100 % coton », « semelle usée à 30 % » : un pourcentage ne compte que
+ *   dans une phrase qui parle d'authenticité, de score, de confiance ou de
+ *   risque (« authentique à 85 % », « score de confiance : 85 % ») ;
+ * - « certificat », le document fourni avec un article : le catalogue lui-même
+ *   demande d'examiner « Emballage (dust bag, boîte, certificat) » ;
+ * - un texte recopié d'une photo entre guillemets (« RDS Certified ») : la
+ *   consigne le permet, c'est une lecture d'étiquette, pas une affirmation ;
+ * - « par chance », « deuxième chance ».
  *
  * tests/unit/consigne-mots-interdits.test.ts.
  */
@@ -31,32 +39,51 @@ export type ForbiddenWording = (typeof FORBIDDEN_WORDINGS)[number];
 // L'apostrophe peut être droite ou typographique.
 const A = "['’]";
 // « 85 % », « 85% », « 85,5 % », « 85 pour cent ».
-const POURCENT = "\\d{1,3}(?:[.,]\\d+)?\\s*(?:%|pour\\s*cent)";
+const POURCENT = /\d{1,3}(?:[.,]\d+)?\s*(?:%|pour\s*cent)/i;
+// Ce dont parle une phrase quand son pourcentage est une chance ou une certitude. « sûr » porte son accent : « sur » n'en est pas un.
+const SUJET_D_UN_POURCENTAGE = new RegExp(
+  `authenti|contref|confiance|certitude|fiab|probab|\\brisque|\\bchances?\\b|\\bscore|\\bsûre?s?(?![a-zà-öø-ÿ])|\\bverdict`,
+  "i",
+);
+
+/** Le texte sans ce qu'il recopie entre guillemets : français, anglais ou droits. Une citation de plus de 120 caractères n'en est pas une. */
+function sansCitations(text: string): string {
+  return text.replace(/«[^«»]{0,120}»|“[^“”]{0,120}”|"[^"]{0,120}"/g, " ");
+}
+
+/** Les phrases d'un texte : un pourcentage et son sujet se cherchent dans la même. */
+function phrases(text: string): string[] {
+  return text.split(/(?<=[.!?…;])\s+/);
+}
 
 const MOTIFS: Record<Exclude<ForbiddenWording, "purchase_advice">, RegExp[]> = {
   probability: [
     /probabilit/i,
-    /\bchances?\b/i,
-    // Un pourcentage de chances ou de certitude : « 85 % de chances », « 100 % authentique », « 90 % sûr ».
-    new RegExp(`${POURCENT}\\s*(?:de\\s+|d${A}\\s*)?(?:risques?\\b|certitude|confiance|sûr|authenti|contref)`, "i"),
-    // Le même, dans l'autre sens : « authentique à 85 % », « authenticité estimée à 85 % », « certitude de 90 % ».
-    new RegExp(
-      `(?:authenti\\S*|contref\\S*|\\bsûre?s?|\\bcertaine?s?|\\bcertitude|\\bconfiance)\\s+(?:estim[ée]e?s?\\s+)?(?:à|de|d${A}environ)\\s+(?:environ\\s+)?${POURCENT}`,
-      "i",
-    ),
+    // « de fortes chances », « 9 chances sur 10 », « aucune chance que… ». Pas « par chance », « deuxième chance ».
+    /\bchances\b/i,
+    new RegExp(`\\bchance\\s+(?:que\\b|qu${A}|sur\\s+\\d|d${A}\\s*[êe]tre)`, "i"),
   ],
-  // « certification », « certifié », « certifier », « certificat » ; « garanti », « garantie », « garantir ».
-  certification: [/certifi/i, /garanti/i],
+  // « certification », « certifié », « certifier ». Pas « certificat », le document. « garanti », « garantie », « garantir ».
+  certification: [/certifi(?!cats?\b)/i, /garanti/i],
   // « frauduleux », « frauduleuse », « frauduleusement », « fraude ».
   fraud: [/fraud/i],
   // « arnaque », « arnaquer » ; « escroc », « escroquerie ».
   scam: [/arnaqu/i, /escro(?:c|qu)/i],
 };
 
+/** Une chance ou une certitude en pourcentage : « authentique à 85 % », « 85 % de chances », « score de confiance : 85 % ». */
+function probabilityAsPercentage(text: string): boolean {
+  return phrases(text).some((phrase) => POURCENT.test(phrase) && SUJET_D_UN_POURCENTAGE.test(phrase));
+}
+
 /** Les familles de formulations interdites que porte ce texte, dans l'ordre de FORBIDDEN_WORDINGS. Une valeur qui n'est pas un texte : aucune. */
 export function forbiddenWordings(text: unknown): ForbiddenWording[] {
   if (typeof text !== "string") return [];
-  return FORBIDDEN_WORDINGS.filter((famille) =>
-    famille === "purchase_advice" ? isPurchaseAdvice(text) : MOTIFS[famille].some((motif) => motif.test(text)),
-  );
+  // Un conseil d'achat reste un conseil entre guillemets ; les quatre autres familles ne se cherchent pas dans une citation.
+  const propos = sansCitations(text);
+  return FORBIDDEN_WORDINGS.filter((famille) => {
+    if (famille === "purchase_advice") return isPurchaseAdvice(text);
+    if (famille === "probability" && probabilityAsPercentage(propos)) return true;
+    return MOTIFS[famille].some((motif) => motif.test(propos));
+  });
 }

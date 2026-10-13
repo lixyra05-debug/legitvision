@@ -53,6 +53,9 @@ const BRAND_EXPERTISE: Record<string, string> = {
   default: "logos et monogrammes (alignement, symétrie, proportions), qualité des matériaux (grain, odeur, souplesse), coutures et finitions (régularité, tension), étiquettes intérieures (police, placement, typo), ferrures et accessoires (poids, gravure, finition)",
 };
 
+/** Les marques qui ont leur propre expertise : les tests construisent la consigne de chacune. */
+export const BRAND_EXPERTISE_BRANDS: readonly string[] = Object.keys(BRAND_EXPERTISE);
+
 function getBrandExpertise(brandName: string): string {
   const key = brandName.toLowerCase();
   // Direct match first
@@ -102,16 +105,25 @@ export const RECOMMENDATION_FORMAT =
  * ni une garantie (CLAUDE.md, règle 1), et un écart se décrit sans accuser
  * personne. lib/forbidden-wording.ts reconnaît ces formulations, et la
  * mesure de fiabilité compte celles que l'IA écrit malgré la consigne.
+ *
+ * « certificat » n'est pas interdit : c'est un document fourni avec un
+ * article, que le catalogue demande d'examiner (« Emballage (dust bag, boîte,
+ * certificat) », 175 points de sacs au relevé du 13/10). Et un texte lu sur
+ * une photo se recopie entre guillemets (« RDS Certified » sur une doudoune) :
+ * sans cette exception, l'IA ne pourrait plus citer une étiquette.
  * tests/unit/consigne-mots-interdits.test.ts.
  */
 export const NO_PROBABILITY_RULE =
-  `- Le score est une note de conformité de 0 à 100, JAMAIS une probabilité : dans aucun champ tu n'écris "probabilité", "chances", ni un pourcentage de chances ou de certitude ("85 % de chances", "authentique à 85 %"). Tu parles d'"estimation visuelle".`;
+  `- Le score est une note de conformité de 0 à 100, JAMAIS une probabilité : dans aucun champ tu n'écris "probabilité", "chances", ni un pourcentage de chances ou de certitude ("85 % de chances", "authentique à 85 %"). Un score se cite sur 100 ("85/100"), jamais en pourcentage. Tu parles d'"estimation visuelle".`;
 
 export const NO_CERTIFICATION_RULE =
-  `- Tu n'écris JAMAIS, dans aucun champ, "certification", "certifié", "certifier", "certificat", "garanti" ni "garantie", même à la négative : une analyse de photos ne certifie et ne garantit rien. Pour ce qu'il reste à établir, écris "confirmation" ou "vérification complémentaire" ; pour un document fourni avec l'article, "carte d'authenticité" ou "document de la marque".`;
+  `- Tu n'écris JAMAIS, dans aucun champ, "certification", "certifié", "certifier", "garanti" ni "garantie", même à la négative : une analyse de photos ne certifie et ne garantit rien. Pour ce qu'il reste à établir, écris "confirmation" ou "vérification complémentaire". Un document fourni avec l'article (certificat, carte d'authenticité, document de la marque) se décrit comme un objet à examiner, jamais comme une preuve.`;
 
 export const NO_ACCUSATION_RULE =
   `- Tu n'accuses personne : tu n'écris JAMAIS, dans aucun champ, "frauduleux", "frauduleusement", "fraude", "arnaque" ni "escroquerie". Un écart se décrit par "non conforme" ou "indices de contrefaçon".`;
+
+export const QUOTED_TEXT_EXCEPTION =
+  `- Ces interdictions de mots (probabilité, certification, garantie, accusation) portent sur ce que TU affirmes. Seule exception : un texte lisible sur une photo, recopié tel quel entre guillemets français, par exemple une étiquette « RDS Certified » ; hors des guillemets, ces mots restent interdits.`;
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
@@ -171,6 +183,7 @@ ${NO_PURCHASE_ADVICE_RULE}
 ${NO_PROBABILITY_RULE}
 ${NO_CERTIFICATION_RULE}
 ${NO_ACCUSATION_RULE}
+${QUOTED_TEXT_EXCEPTION}
 - Tu réponds UNIQUEMENT en JSON valide, sans texte avant ou après.
 
 MÉTHODOLOGIE :
@@ -179,7 +192,7 @@ MÉTHODOLOGIE :
 3. Cherche : logos mal positionnés, polices incorrectes, coutures irrégulières, matériaux non conformes
 4. Vérifie la cohérence entre les photos (même article, même coloris)
 5. Extrais les données OCR visibles (codes produit, numéros de série, pays de fabrication)
-6. Pondère ton score final en favor des zones les plus discriminantes pour ${brandName}
+6. Pondère ton score final en faveur des zones les plus discriminantes pour ${brandName}
 
 RÈGLE confidence_level — sois rigoureux et cohérent :
 - "insufficient" si tu NE PEUX PAS conclure de façon fiable, c'est-à-dire dans AU MOINS un de ces cas : (a) photos floues, trop sombres ou de trop basse résolution pour distinguer les détails d'authentification ; (b) angles critiques manquants (ex. pas de photo de la semelle, de l'étiquette intérieure, du logo en gros plan, du code/numéro de série) ; (c) trop peu de zones d'authentification clés réellement visibles pour trancher. Dans ce cas, liste précisément ce qui manque dans "missing_evidence" et NE donne PAS de verdict confiant.
