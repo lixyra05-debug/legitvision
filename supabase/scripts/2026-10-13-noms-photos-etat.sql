@@ -10,22 +10,24 @@
 --   après un éventuel retour arrière.
 --   La première ligne du tableau (n = 0) donne le verdict :
 --   - « PRÊT : 284 noms de photos à corriger dans 71 lignes de marque » :
---     la table est dans l'état du relevé. On peut lancer l'aller.
+--     les photos demandées sont celles du relevé. On peut lancer la
+--     correction (l'aller).
 --   - « APPLIQUÉ : les 34 corrections sont en place » : l'aller est passé.
---   - « ÉCARTS » : la table n'est dans aucun de ces deux états. Ne rien
---     lancer, transmettre cette première ligne.
---   Ses deux dernières colonnes sont les empreintes à noter :
---   « empreinte_noms » (tous les noms de photos de toutes les lignes de
---   marque) et « empreinte_autres_colonnes » (le reste de public.brands, qui
---   ne doit jamais changer).
+--   - « ÉCARTS » : les photos demandées ne sont dans aucun de ces deux
+--     états. Ne rien lancer, transmettre cette première ligne.
+--   Juste après le verdict, deux empreintes : « empreinte_noms » (toutes les
+--   photos demandées de toutes les lignes de marque : leurs noms, leur
+--   ordre, leurs autres clés), celle qui fait le verdict, et
+--   « empreinte_autres_colonnes » (le reste de public.brands, que ni l'aller
+--   ni le retour ne changent ; elle n'entre pas dans le verdict).
 --     empreinte_noms avant l'aller  : 5dd4011eb6d10aafc4dc4f645d2df213
 --     empreinte_noms après l'aller  : a7935327f8a1c045d2ef70267e238aca
 --     empreinte_autres_colonnes     : 7df0492cd93fb8e3c5c97d88401abf5c
 --       (au relevé du 2026-10-13, la même avant et après)
---   Les lignes 1 à 34 : une par correction. « a_corriger » : les
---   emplacements qui portent encore l'ancien nom (autant qu'« au_releve »
---   avant l'aller, 0 après) ; « portent_le_nouveau » : ceux qui portent déjà
---   le nouveau.
+--   Les lignes 1 à 34 : une par correction. « a_corriger » : les photos
+--   qui portent encore l'ancien nom (autant qu'« au_releve » avant l'aller,
+--   0 après) ; « portent_le_nouveau » : celles qui portent déjà le nouveau
+--   (d'autres lignes de marque l'avaient avant toute correction).
 --
 -- SI ÇA NE SE PASSE PAS COMME PRÉVU
 --   Cette requête ne peut rien abîmer : elle ne fait que lire.
@@ -99,24 +101,25 @@ totaux as (
 select 0 as n,
        case
          when t.empreinte_noms = '5dd4011eb6d10aafc4dc4f645d2df213'
-           then 'PRÊT : ' || t.a_corriger || ' noms de photos à corriger dans ' || t.lignes_a_corriger || ' lignes de marque (table : ' || t.lignes || ' lignes, ' || t.emplacements || ' emplacements). On peut lancer l''aller.'
+           then 'PRÊT : ' || t.a_corriger || ' noms de photos à corriger dans ' || t.lignes_a_corriger || ' lignes de marque (table : ' || t.lignes || ' lignes, ' || t.emplacements || ' photos demandées). On peut lancer la correction.'
          when t.empreinte_noms = 'a7935327f8a1c045d2ef70267e238aca'
            then 'APPLIQUÉ : les 34 corrections sont en place (284 noms corrigés dans 71 lignes de marque), ' || t.a_corriger || ' nom à corriger.'
-         else 'ÉCARTS : la table n''est ni dans l''état du relevé du 2026-10-13 ni dans l''état corrigé (' || t.a_corriger || ' nom(s) à corriger, 284 attendus avant l''aller et 0 après, table : ' || t.lignes || ' lignes, ' || t.emplacements || ' emplacements). Ne rien lancer : transmettre cette ligne.'
+         else 'ÉCARTS : les photos demandées ne sont ni celles du relevé du 2026-10-13 ni celles de l''état corrigé (' || t.a_corriger || ' nom(s) à corriger, 284 attendus avant la correction et 0 après, table : ' || t.lignes || ' lignes, ' || t.emplacements || ' photos demandées). Ne rien lancer : transmettre cette ligne.'
        end as resultat,
+       t.empreinte_noms,
+       t.empreinte_autres_colonnes,
        t.a_corriger,
        null::integer as au_releve,
-       null::integer as portent_le_nouveau,
-       t.empreinte_noms,
-       t.empreinte_autres_colonnes
+       null::integer as portent_le_nouveau
 from totaux t
 union all
 select p.n,
        p.nom || ' : « ' || p.ancien || ' » → « ' || p.nouveau || ' »',
+       null,
+       null,
        p.a_corriger,
        p.au_releve,
-       p.portent_le_nouveau,
-       null,
-       null
+       p.portent_le_nouveau
 from par_correction p
 order by n;
+-- FIN — noms des photos : requête d'état (lecture seule)

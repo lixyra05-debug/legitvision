@@ -56,6 +56,7 @@ for (const [i, c] of corrections.entries()) {
     if (typeof v !== "string" || v === "" || v !== v.trim() || v !== v.normalize("NFC")) refus(`correction ${c.n} : « ${champ} » vide, entouré d'espaces ou non normalisé`);
     // Ni guillemet, ni barre oblique inversée, ni dollar, ni caractère de contrôle : le texte entre tel quel dans du JSON, puis dans une chaîne SQL entre dollars.
     if (/["\\$\u0000-\u001f\u007f]/.test(v)) refus(`correction ${c.n} : caractère interdit dans « ${v} »`);
+    if (/[^\S ]|[\u00a0\u1680\u2000-\u200f\u2028-\u202f\u205f\u2060\u3000\ufeff]/.test(v)) refus(`correction ${c.n} : espace insécable ou invisible dans « ${v} »`);
   }
   if (c.ancien === c.nouveau) refus(`correction ${c.n} : ancien et nouveau identiques`);
   if (parAncien.has(cle(c.nom, c.ancien))) refus(`correction ${c.n} : (${c.nom}, ${c.ancien}) en double`);
@@ -154,6 +155,13 @@ const sqlAutres = (alias = "b") =>
   `md5(coalesce(string_agg(((to_jsonb(${alias}) - 'photo_protocol' - 'created_at') || jsonb_build_object('created_at', to_char(${alias}.created_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US')))::text, E'\\n' order by ${alias}.id), ''))`;
 
 const BANDEAU = "-- ============================================================================";
+// Dernière ligne de chaque fichier : après un collage, l'éditeur montre la fin du texte. Elle dit laquelle des trois
+// requêtes est collée, et qu'elle l'est en entier.
+const FIN = {
+  etat: "-- FIN — noms des photos : requête d'état (lecture seule)",
+  aller: "-- FIN — noms des photos : la correction (écriture)",
+  retour: "-- FIN — noms des photos : le retour arrière (écriture)",
+};
 
 // ── 1. La requête d'état ───────────────────────────────────────────────────────────────────────
 
@@ -169,22 +177,24 @@ const etat = `${BANDEAU}
 --   après un éventuel retour arrière.
 --   La première ligne du tableau (n = 0) donne le verdict :
 --   - « PRÊT : ${TOTAL} noms de photos à corriger dans ${LIGNES} lignes de marque » :
---     la table est dans l'état du relevé. On peut lancer l'aller.
+--     les photos demandées sont celles du relevé. On peut lancer la
+--     correction (l'aller).
 --   - « APPLIQUÉ : les ${corrections.length} corrections sont en place » : l'aller est passé.
---   - « ÉCARTS » : la table n'est dans aucun de ces deux états. Ne rien
---     lancer, transmettre cette première ligne.
---   Ses deux dernières colonnes sont les empreintes à noter :
---   « empreinte_noms » (tous les noms de photos de toutes les lignes de
---   marque) et « empreinte_autres_colonnes » (le reste de public.brands, qui
---   ne doit jamais changer).
+--   - « ÉCARTS » : les photos demandées ne sont dans aucun de ces deux
+--     états. Ne rien lancer, transmettre cette première ligne.
+--   Juste après le verdict, deux empreintes : « empreinte_noms » (toutes les
+--   photos demandées de toutes les lignes de marque : leurs noms, leur
+--   ordre, leurs autres clés), celle qui fait le verdict, et
+--   « empreinte_autres_colonnes » (le reste de public.brands, que ni l'aller
+--   ni le retour ne changent ; elle n'entre pas dans le verdict).
 --     empreinte_noms avant l'aller  : ${AVANT}
 --     empreinte_noms après l'aller  : ${APRES}
 --     empreinte_autres_colonnes     : ${AUTRES}
 --       (au relevé du ${DATE_RELEVE}, la même avant et après)
---   Les lignes 1 à ${corrections.length} : une par correction. « a_corriger » : les
---   emplacements qui portent encore l'ancien nom (autant qu'« au_releve »
---   avant l'aller, 0 après) ; « portent_le_nouveau » : ceux qui portent déjà
---   le nouveau.
+--   Les lignes 1 à ${corrections.length} : une par correction. « a_corriger » : les photos
+--   qui portent encore l'ancien nom (autant qu'« au_releve » avant l'aller,
+--   0 après) ; « portent_le_nouveau » : celles qui portent déjà le nouveau
+--   (d'autres lignes de marque l'avaient avant toute correction).
 --
 -- SI ÇA NE SE PASSE PAS COMME PRÉVU
 --   Cette requête ne peut rien abîmer : elle ne fait que lire.
@@ -223,33 +233,34 @@ totaux as (
 select 0 as n,
        case
          when t.empreinte_noms = '${AVANT}'
-           then 'PRÊT : ' || t.a_corriger || ' noms de photos à corriger dans ' || t.lignes_a_corriger || ' lignes de marque (table : ' || t.lignes || ' lignes, ' || t.emplacements || ' emplacements). On peut lancer l''aller.'
+           then 'PRÊT : ' || t.a_corriger || ' noms de photos à corriger dans ' || t.lignes_a_corriger || ' lignes de marque (table : ' || t.lignes || ' lignes, ' || t.emplacements || ' photos demandées). On peut lancer la correction.'
          when t.empreinte_noms = '${APRES}'
            then 'APPLIQUÉ : les ${corrections.length} corrections sont en place (${TOTAL} noms corrigés dans ${LIGNES} lignes de marque), ' || t.a_corriger || ' nom à corriger.'
-         else 'ÉCARTS : la table n''est ni dans l''état du relevé du ${DATE_RELEVE} ni dans l''état corrigé (' || t.a_corriger || ' nom(s) à corriger, ${TOTAL} attendus avant l''aller et 0 après, table : ' || t.lignes || ' lignes, ' || t.emplacements || ' emplacements). Ne rien lancer : transmettre cette ligne.'
+         else 'ÉCARTS : les photos demandées ne sont ni celles du relevé du ${DATE_RELEVE} ni celles de l''état corrigé (' || t.a_corriger || ' nom(s) à corriger, ${TOTAL} attendus avant la correction et 0 après, table : ' || t.lignes || ' lignes, ' || t.emplacements || ' photos demandées). Ne rien lancer : transmettre cette ligne.'
        end as resultat,
+       t.empreinte_noms,
+       t.empreinte_autres_colonnes,
        t.a_corriger,
        null::integer as au_releve,
-       null::integer as portent_le_nouveau,
-       t.empreinte_noms,
-       t.empreinte_autres_colonnes
+       null::integer as portent_le_nouveau
 from totaux t
 union all
 select p.n,
        p.nom || ' : « ' || p.ancien || ' » → « ' || p.nouveau || ' »',
+       null,
+       null,
        p.a_corriger,
        p.au_releve,
-       p.portent_le_nouveau,
-       null,
-       null
+       p.portent_le_nouveau
 from par_correction p
 order by n;
+${FIN.etat}
 `;
 
 // ── 2. L'aller ─────────────────────────────────────────────────────────────────────────────────
 
 const aller = `${BANDEAU}
--- LegitVision — noms des photos à l'envoi : L'ALLER (écriture)
+-- LegitVision — noms des photos à l'envoi : LA CORRECTION, ou « aller » (écriture)
 -- Préparé d'après le relevé de production du ${DATE_RELEVE} (lecture seule).
 -- Fichier généré : ne pas le retoucher (outils/${NOM}/generer.mjs).
 --
@@ -260,6 +271,8 @@ const aller = `${BANDEAU}
 --   AVANT : lancer la requête d'état (${NOM}-etat.sql). Sa
 --   première ligne doit commencer par « PRÊT : ${TOTAL} noms de photos à corriger
 --   dans ${LIGNES} lignes de marque ». Sinon, ne pas lancer ce bloc.
+--   Ne rien sélectionner dans l'éditeur : avec une sélection, « Run selected »
+--   ne lance que le morceau sélectionné.
 --   CE BLOC n'affiche aucune ligne (« Success. No rows returned »).
 --   APRÈS : relancer la requête d'état. Sa première ligne doit commencer par
 --   « APPLIQUÉ : les ${corrections.length} corrections sont en place ». C'est elle, la preuve.
@@ -279,23 +292,34 @@ const aller = `${BANDEAU}
 --   Aucun objet n'est créé.
 --
 -- TOUT OU RIEN
---   Le bloc vérifie d'abord que la table est exactement dans l'état du
---   relevé (empreinte ${AVANT}).
---   Il écrit, puis vérifie que le résultat est exactement l'état prévu
---   (empreinte ${APRES}), que ${LIGNES} lignes ont été
---   écrites et que les autres colonnes n'ont pas bougé. Au moindre écart,
---   avant ou après l'écriture, une erreur annule TOUT : rien n'est écrit.
---   Relancé sur une table déjà corrigée, il n'écrit rien.
+--   Le bloc vérifie d'abord que les photos demandées de toutes les lignes de
+--   marque sont exactement celles du relevé (empreinte des noms
+--   ${AVANT}). Il écrit, puis vérifie que le résultat
+--   est exactement l'état prévu (empreinte ${APRES}),
+--   que ${LIGNES} lignes ont été écrites et que les autres colonnes n'ont pas
+--   bougé pendant son écriture. Au moindre écart, avant ou après l'écriture,
+--   une erreur annule TOUT : rien n'est écrit. Relancé sur une table déjà
+--   corrigée, il n'écrit rien. Une autre colonne changée depuis le relevé (une
+--   marque désactivée, un logo ajouté) ne l'arrête pas : seuls les noms et
+--   les protocoles comptent.
 --
 -- SI ÇA NE SE PASSE PAS COMME PRÉVU
 --   - Erreur « syntax error » ou « unterminated dollar-quoted string » : le
 --     bloc a été collé incomplet. Rien n'a été lancé ; le recoller en entier.
 --   - Erreur « canceling statement due to lock timeout » : la table était
 --     occupée. Rien n'est écrit ; relancer le bloc.
---   - Erreur qui commence par « NOMS DES PHOTOS » : rien n'est écrit ; ne
---     pas relancer, transmettre le message.
+--   - Erreur qui contient « NOMS DES PHOTOS » : le bloc a refusé, rien n'est
+--     écrit ; ne pas relancer, transmettre le message.
+--   - Un tableau au lieu de « Success » : la requête contenait autre chose
+--     que ce bloc (la requête d'état, par exemple). Le bloc est peut-être
+--     parti quand même, après le calcul du tableau. Ne rien relancer : la
+--     requête d'état, lancée seule, dit ce qui est en place.
 --   - Une fenêtre de confirmation de Supabase (« Potential issue
 --     detected ») : annuler, vider l'éditeur, recoller le bloc seul.
+--   - Toute autre erreur (« permission denied », « read-only transaction »,
+--     délai dépassé) : un bloc qui échoue n'écrit rien. Ne pas relancer :
+--     lancer la requête d'état, puis transmettre le message et sa première
+--     ligne.
 --   Retour arrière : ${NOM}-retour.sql.
 ${BANDEAU}
 
@@ -313,15 +337,15 @@ begin
   -- Personne d'autre n'écrit dans la table entre le contrôle et l'écriture ; les lectures du site continuent.
   lock table public.brands in share row exclusive mode;
 
-  select ${sqlEmpreinteNoms("b")} into v_actuelle from public.brands b;
+  v_actuelle := (select ${sqlEmpreinteNoms("b")} from public.brands b);
   if v_actuelle = v_apres then
     raise notice 'NOMS DES PHOTOS : déjà appliqué, rien n''est écrit.';
     return;
   end if;
   if v_actuelle is distinct from v_avant then
-    raise exception 'NOMS DES PHOTOS : la table public.brands n''est plus dans l''état du relevé du ${DATE_RELEVE} (empreinte %, attendue %). Rien n''est écrit. Ne pas relancer : transmettre ce message.', v_actuelle, v_avant;
+    raise exception 'NOMS DES PHOTOS : les photos demandées de public.brands ne sont plus celles du relevé du ${DATE_RELEVE} (empreinte %, attendue %). Rien n''est écrit. Ne pas relancer : transmettre ce message.', v_actuelle, v_avant;
   end if;
-  select ${sqlAutres("b")} into v_autres_avant from public.brands b;
+  v_autres_avant := (select ${sqlAutres("b")} from public.brands b);
 
   with corrections as (
     select c.nom, c.ancien, c.nouveau
@@ -345,17 +369,18 @@ begin
   if v_lignes <> ${LIGNES} then
     raise exception 'NOMS DES PHOTOS : % lignes écrites, ${LIGNES} attendues. Tout est annulé, rien n''est écrit. Transmettre ce message.', v_lignes;
   end if;
-  select ${sqlEmpreinteNoms("b")} into v_actuelle from public.brands b;
+  v_actuelle := (select ${sqlEmpreinteNoms("b")} from public.brands b);
   if v_actuelle is distinct from v_apres then
     raise exception 'NOMS DES PHOTOS : le résultat n''est pas l''état prévu (empreinte %, attendue %). Tout est annulé, rien n''est écrit. Transmettre ce message.', v_actuelle, v_apres;
   end if;
-  select ${sqlAutres("b")} into v_autres_apres from public.brands b;
+  v_autres_apres := (select ${sqlAutres("b")} from public.brands b);
   if v_autres_apres is distinct from v_autres_avant then
     raise exception 'NOMS DES PHOTOS : une autre colonne de public.brands a changé pendant l''écriture (empreinte %, attendue %). Tout est annulé, rien n''est écrit. Transmettre ce message.', v_autres_apres, v_autres_avant;
   end if;
   raise notice 'NOMS DES PHOTOS : ${TOTAL} noms corrigés dans ${LIGNES} lignes de marque.';
 end
 $bloc$;
+${FIN.aller}
 `;
 
 // ── 3. Le retour arrière ───────────────────────────────────────────────────────────────────────
@@ -372,7 +397,8 @@ const retour = `${BANDEAU}
 --   cliquer « Run ».
 --   AVANT : lancer la requête d'état (${NOM}-etat.sql). Sa
 --   première ligne doit commencer par « APPLIQUÉ ». Sinon, ne pas lancer ce
---   bloc.
+--   bloc. Ne rien sélectionner dans l'éditeur : avec une sélection, « Run
+--   selected » ne lance que le morceau sélectionné.
 --   CE BLOC n'affiche aucune ligne (« Success. No rows returned »).
 --   APRÈS : relancer la requête d'état. Sa première ligne doit de nouveau
 --   commencer par « PRÊT : ${TOTAL} noms de photos à corriger dans ${LIGNES} lignes de
@@ -388,26 +414,35 @@ const retour = `${BANDEAU}
 --   revient où). Seule la clé « label » change.
 --
 -- TOUT OU RIEN
---   Le bloc vérifie d'abord que la table est exactement dans l'état laissé
---   par l'aller (empreinte ${APRES}). Il écrit, puis
---   vérifie que le résultat est exactement l'état du relevé (empreinte
+--   Le bloc vérifie d'abord que les photos demandées de toutes les lignes de
+--   marque sont exactement celles laissées par l'aller (empreinte des noms
+--   ${APRES}). Il écrit, puis vérifie que le résultat
+--   est exactement l'état du relevé (empreinte
 --   ${AVANT}), que ${LIGNES} lignes ont été écrites et que
---   les autres colonnes n'ont pas bougé. Au moindre écart, une erreur annule
---   TOUT : rien n'est écrit. Relancé sur une table déjà revenue, il n'écrit
---   rien.
---   Si la table a changé depuis l'aller (une marque ajoutée, un protocole
---   retouché), le bloc refuse : un retour adapté se prépare alors comme un
---   script neuf.
+--   les autres colonnes n'ont pas bougé pendant son écriture. Au moindre
+--   écart, une erreur annule TOUT : rien n'est écrit. Relancé sur une table
+--   déjà revenue, il n'écrit rien.
+--   Si une photo demandée a changé depuis l'aller (une ligne de marque
+--   ajoutée, un protocole retouché), le bloc refuse : un retour adapté se
+--   prépare alors comme un script neuf.
 --
 -- SI ÇA NE SE PASSE PAS COMME PRÉVU
 --   - Erreur « syntax error » ou « unterminated dollar-quoted string » : le
 --     bloc a été collé incomplet. Rien n'a été lancé ; le recoller en entier.
 --   - Erreur « canceling statement due to lock timeout » : la table était
 --     occupée. Rien n'est écrit ; relancer le bloc.
---   - Erreur qui commence par « NOMS DES PHOTOS » : rien n'est écrit ; ne
---     pas relancer, transmettre le message.
+--   - Erreur qui contient « NOMS DES PHOTOS » : le bloc a refusé, rien n'est
+--     écrit ; ne pas relancer, transmettre le message.
+--   - Un tableau au lieu de « Success » : la requête contenait autre chose
+--     que ce bloc (la requête d'état, par exemple). Le bloc est peut-être
+--     parti quand même, après le calcul du tableau. Ne rien relancer : la
+--     requête d'état, lancée seule, dit ce qui est en place.
 --   - Une fenêtre de confirmation de Supabase (« Potential issue
 --     detected ») : annuler, vider l'éditeur, recoller le bloc seul.
+--   - Toute autre erreur (« permission denied », « read-only transaction »,
+--     délai dépassé) : un bloc qui échoue n'écrit rien. Ne pas relancer :
+--     lancer la requête d'état, puis transmettre le message et sa première
+--     ligne.
 ${BANDEAU}
 
 do $bloc$
@@ -425,15 +460,15 @@ begin
   -- Personne d'autre n'écrit dans la table entre le contrôle et l'écriture ; les lectures du site continuent.
   lock table public.brands in share row exclusive mode;
 
-  select ${sqlEmpreinteNoms("b")} into v_actuelle from public.brands b;
+  v_actuelle := (select ${sqlEmpreinteNoms("b")} from public.brands b);
   if v_actuelle = v_avant then
     raise notice 'NOMS DES PHOTOS : déjà revenu à l''état du relevé, rien n''est écrit.';
     return;
   end if;
   if v_actuelle is distinct from v_apres then
-    raise exception 'NOMS DES PHOTOS : la table public.brands n''est pas dans l''état laissé par l''aller (empreinte %, attendue %). Rien n''est écrit. Ne pas relancer : transmettre ce message.', v_actuelle, v_apres;
+    raise exception 'NOMS DES PHOTOS : les photos demandées de public.brands ne sont pas celles laissées par l''aller (empreinte %, attendue %). Rien n''est écrit. Ne pas relancer : transmettre ce message.', v_actuelle, v_apres;
   end if;
-  select ${sqlAutres("b")} into v_autres_avant from public.brands b;
+  v_autres_avant := (select ${sqlAutres("b")} from public.brands b);
 
   with retours as (
     select r.id, r.pos, r.nom, r.ancien, r.nouveau
@@ -457,17 +492,18 @@ begin
   if v_lignes <> ${LIGNES} then
     raise exception 'NOMS DES PHOTOS : % lignes écrites, ${LIGNES} attendues. Tout est annulé, rien n''est écrit. Transmettre ce message.', v_lignes;
   end if;
-  select ${sqlEmpreinteNoms("b")} into v_actuelle from public.brands b;
+  v_actuelle := (select ${sqlEmpreinteNoms("b")} from public.brands b);
   if v_actuelle is distinct from v_avant then
     raise exception 'NOMS DES PHOTOS : le résultat n''est pas l''état du relevé (empreinte %, attendue %). Tout est annulé, rien n''est écrit. Transmettre ce message.', v_actuelle, v_avant;
   end if;
-  select ${sqlAutres("b")} into v_autres_apres from public.brands b;
+  v_autres_apres := (select ${sqlAutres("b")} from public.brands b);
   if v_autres_apres is distinct from v_autres_avant then
     raise exception 'NOMS DES PHOTOS : une autre colonne de public.brands a changé pendant l''écriture (empreinte %, attendue %). Tout est annulé, rien n''est écrit. Transmettre ce message.', v_autres_apres, v_autres_avant;
   end if;
   raise notice 'NOMS DES PHOTOS : ${TOTAL} anciens noms remis dans ${LIGNES} lignes de marque.';
 end
 $bloc$;
+${FIN.retour}
 `;
 
 // ── 4. Le contrôle de production (lecture seule) ───────────────────────────────────────────────
@@ -511,6 +547,7 @@ comptes as (
   from corrections c
 )
 select
+  to_char(now() at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') as controle_le,
   (select count(*) from public.brands)::integer as lignes,
   (select count(*) from emplacements)::integer as emplacements,
   (select count(*) from a_corriger)::integer as a_corriger,
@@ -558,7 +595,7 @@ for (const [chemin, contenu] of fichiers) {
   // Un fichier, une instruction : jamais de second point-virgule de fin d'instruction hors du bloc.
   writeFileSync(chemin, contenu, "utf8");
 }
-console.log(`${corrections.length} corrections, ${TOTAL} noms dans ${LIGNES} lignes de marque (table : ${NB_LIGNES} lignes, ${NB_EMPLACEMENTS} emplacements).`);
+console.log(`${corrections.length} corrections, ${TOTAL} noms dans ${LIGNES} lignes de marque (table : ${NB_LIGNES} lignes, ${NB_EMPLACEMENTS} photos demandées).`);
 console.log(`empreinte des noms avant : ${AVANT}`);
 console.log(`empreinte des noms après : ${APRES}`);
 console.log(`empreinte des autres colonnes (inchangée par l'aller comme par le retour) : ${AUTRES}`);

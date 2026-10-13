@@ -10,7 +10,8 @@
 --   cliquer « Run ».
 --   AVANT : lancer la requête d'état (2026-10-13-noms-photos-etat.sql). Sa
 --   première ligne doit commencer par « APPLIQUÉ ». Sinon, ne pas lancer ce
---   bloc.
+--   bloc. Ne rien sélectionner dans l'éditeur : avec une sélection, « Run
+--   selected » ne lance que le morceau sélectionné.
 --   CE BLOC n'affiche aucune ligne (« Success. No rows returned »).
 --   APRÈS : relancer la requête d'état. Sa première ligne doit de nouveau
 --   commencer par « PRÊT : 284 noms de photos à corriger dans 71 lignes de
@@ -26,26 +27,35 @@
 --   revient où). Seule la clé « label » change.
 --
 -- TOUT OU RIEN
---   Le bloc vérifie d'abord que la table est exactement dans l'état laissé
---   par l'aller (empreinte a7935327f8a1c045d2ef70267e238aca). Il écrit, puis
---   vérifie que le résultat est exactement l'état du relevé (empreinte
+--   Le bloc vérifie d'abord que les photos demandées de toutes les lignes de
+--   marque sont exactement celles laissées par l'aller (empreinte des noms
+--   a7935327f8a1c045d2ef70267e238aca). Il écrit, puis vérifie que le résultat
+--   est exactement l'état du relevé (empreinte
 --   5dd4011eb6d10aafc4dc4f645d2df213), que 71 lignes ont été écrites et que
---   les autres colonnes n'ont pas bougé. Au moindre écart, une erreur annule
---   TOUT : rien n'est écrit. Relancé sur une table déjà revenue, il n'écrit
---   rien.
---   Si la table a changé depuis l'aller (une marque ajoutée, un protocole
---   retouché), le bloc refuse : un retour adapté se prépare alors comme un
---   script neuf.
+--   les autres colonnes n'ont pas bougé pendant son écriture. Au moindre
+--   écart, une erreur annule TOUT : rien n'est écrit. Relancé sur une table
+--   déjà revenue, il n'écrit rien.
+--   Si une photo demandée a changé depuis l'aller (une ligne de marque
+--   ajoutée, un protocole retouché), le bloc refuse : un retour adapté se
+--   prépare alors comme un script neuf.
 --
 -- SI ÇA NE SE PASSE PAS COMME PRÉVU
 --   - Erreur « syntax error » ou « unterminated dollar-quoted string » : le
 --     bloc a été collé incomplet. Rien n'a été lancé ; le recoller en entier.
 --   - Erreur « canceling statement due to lock timeout » : la table était
 --     occupée. Rien n'est écrit ; relancer le bloc.
---   - Erreur qui commence par « NOMS DES PHOTOS » : rien n'est écrit ; ne
---     pas relancer, transmettre le message.
+--   - Erreur qui contient « NOMS DES PHOTOS » : le bloc a refusé, rien n'est
+--     écrit ; ne pas relancer, transmettre le message.
+--   - Un tableau au lieu de « Success » : la requête contenait autre chose
+--     que ce bloc (la requête d'état, par exemple). Le bloc est peut-être
+--     parti quand même, après le calcul du tableau. Ne rien relancer : la
+--     requête d'état, lancée seule, dit ce qui est en place.
 --   - Une fenêtre de confirmation de Supabase (« Potential issue
 --     detected ») : annuler, vider l'éditeur, recoller le bloc seul.
+--   - Toute autre erreur (« permission denied », « read-only transaction »,
+--     délai dépassé) : un bloc qui échoue n'écrit rien. Ne pas relancer :
+--     lancer la requête d'état, puis transmettre le message et sa première
+--     ligne.
 -- ============================================================================
 
 do $bloc$
@@ -348,15 +358,15 @@ begin
   -- Personne d'autre n'écrit dans la table entre le contrôle et l'écriture ; les lectures du site continuent.
   lock table public.brands in share row exclusive mode;
 
-  select md5(coalesce(string_agg(b.id::text || '=' || b.photo_protocol::text, E'\n' order by b.id), '')) into v_actuelle from public.brands b;
+  v_actuelle := (select md5(coalesce(string_agg(b.id::text || '=' || b.photo_protocol::text, E'\n' order by b.id), '')) from public.brands b);
   if v_actuelle = v_avant then
     raise notice 'NOMS DES PHOTOS : déjà revenu à l''état du relevé, rien n''est écrit.';
     return;
   end if;
   if v_actuelle is distinct from v_apres then
-    raise exception 'NOMS DES PHOTOS : la table public.brands n''est pas dans l''état laissé par l''aller (empreinte %, attendue %). Rien n''est écrit. Ne pas relancer : transmettre ce message.', v_actuelle, v_apres;
+    raise exception 'NOMS DES PHOTOS : les photos demandées de public.brands ne sont pas celles laissées par l''aller (empreinte %, attendue %). Rien n''est écrit. Ne pas relancer : transmettre ce message.', v_actuelle, v_apres;
   end if;
-  select md5(coalesce(string_agg(((to_jsonb(b) - 'photo_protocol' - 'created_at') || jsonb_build_object('created_at', to_char(b.created_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US')))::text, E'\n' order by b.id), '')) into v_autres_avant from public.brands b;
+  v_autres_avant := (select md5(coalesce(string_agg(((to_jsonb(b) - 'photo_protocol' - 'created_at') || jsonb_build_object('created_at', to_char(b.created_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US')))::text, E'\n' order by b.id), '')) from public.brands b);
 
   with retours as (
     select r.id, r.pos, r.nom, r.ancien, r.nouveau
@@ -380,14 +390,15 @@ begin
   if v_lignes <> 71 then
     raise exception 'NOMS DES PHOTOS : % lignes écrites, 71 attendues. Tout est annulé, rien n''est écrit. Transmettre ce message.', v_lignes;
   end if;
-  select md5(coalesce(string_agg(b.id::text || '=' || b.photo_protocol::text, E'\n' order by b.id), '')) into v_actuelle from public.brands b;
+  v_actuelle := (select md5(coalesce(string_agg(b.id::text || '=' || b.photo_protocol::text, E'\n' order by b.id), '')) from public.brands b);
   if v_actuelle is distinct from v_avant then
     raise exception 'NOMS DES PHOTOS : le résultat n''est pas l''état du relevé (empreinte %, attendue %). Tout est annulé, rien n''est écrit. Transmettre ce message.', v_actuelle, v_avant;
   end if;
-  select md5(coalesce(string_agg(((to_jsonb(b) - 'photo_protocol' - 'created_at') || jsonb_build_object('created_at', to_char(b.created_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US')))::text, E'\n' order by b.id), '')) into v_autres_apres from public.brands b;
+  v_autres_apres := (select md5(coalesce(string_agg(((to_jsonb(b) - 'photo_protocol' - 'created_at') || jsonb_build_object('created_at', to_char(b.created_at at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US')))::text, E'\n' order by b.id), '')) from public.brands b);
   if v_autres_apres is distinct from v_autres_avant then
     raise exception 'NOMS DES PHOTOS : une autre colonne de public.brands a changé pendant l''écriture (empreinte %, attendue %). Tout est annulé, rien n''est écrit. Transmettre ce message.', v_autres_apres, v_autres_avant;
   end if;
   raise notice 'NOMS DES PHOTOS : 284 anciens noms remis dans 71 lignes de marque.';
 end
 $bloc$;
+-- FIN — noms des photos : le retour arrière (écriture)

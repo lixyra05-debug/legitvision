@@ -72,6 +72,7 @@ comptes as (
   from corrections c
 )
 select
+  to_char(now() at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS"Z"') as controle_le,
   (select count(*) from public.brands)::integer as lignes,
   (select count(*) from emplacements)::integer as emplacements,
   (select count(*) from a_corriger)::integer as a_corriger,

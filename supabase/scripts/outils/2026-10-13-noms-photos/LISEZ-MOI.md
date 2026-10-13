@@ -16,9 +16,11 @@ leur en-tête « EN BREF » dit comment.
 
 À exécuter par Hector avant la mesure des 60 paires, jamais pendant : ces noms
 partent dans la consigne envoyée à l'IA (`lib/ai/analyze.ts` : « nom
-(identifiant) » pour chaque photo). L'outil de mesure fige le catalogue, noms
-des photos compris, au premier `pnpm fiabilite verifier` lancé avec des
-articles : l'ordre est donc aller, état « APPLIQUÉ », puis `verifier`.
+(identifiant) » pour chaque photo). L'outil de mesure (`scripts/fiabilite`,
+branche `refonte/site`) refige sa copie du catalogue, noms des photos compris,
+à chaque `pnpm fiabilite verifier` lancé en ligne sans erreur ; `estimer` et
+`lancer` relisent cette copie. L'ordre est donc : aller, état « APPLIQUÉ »,
+puis un dernier `verifier` avant `lancer`.
 
 ## Ce que changent les requêtes
 
@@ -31,9 +33,19 @@ plan) » partout. Seule la clé `label` change : l'ordre des emplacements, leur
 identifiant (`name`, qui nomme le fichier de la photo), `required`,
 `min_resolution` et les autres colonnes ne changent pas.
 
-Non corrigés, parce que la table validée ne les porte pas : « Vue de dos »
-(7 lignes de vêtements, à côté de « Vue arrière complète »), « Logo principal
-(gros plan) », « Coutures et broderie (gros plan) ».
+Cinq identifiants gardent deux noms après l'aller (vingt avant), parce que la
+table validée ne les rapproche pas : `back_full` (« Vue arrière complète » sur
+19 lignes, « Vue de dos » sur 7), `logo_closeup` (« Logo (gros plan) » 23,
+« Logo principal (gros plan) » 19), `stitching_detail` (« Coutures et broderie
+(gros plan) » 19, « Coutures (gros plan) » 8), `overall_side_lateral` (« Vue
+latérale » 11, « Vue latérale (côté extérieur) » 1) et `tag_size` (« Étiquette
+de taille » 5, « Étiquette de taille / QR code » 1).
+
+La photo `tongue_label` s'appelle « Étiquette de languette » (choix d'Hector),
+alors que la zone `tongue_label` du rapport s'appelle « Étiquette de taille »
+(`lib/zone-names.ts`) : 12 lignes de sneakers demandent aussi une photo
+`size_tag` ou `tag_size`, qui porte déjà ce nom, et deux photos d'une même
+ligne ne peuvent pas porter le même.
 
 ## Fichiers
 
@@ -54,8 +66,14 @@ Ne jamais retoucher un fichier SQL à la main : changer la table, puis
 - **Tout ou rien, sur un état exact.** L'aller n'écrit que si l'empreinte de
   tous les noms est celle du relevé, puis vérifie que le résultat a
   exactement l'empreinte prévue ; sinon une erreur annule tout. Le retour fait
-  de même dans l'autre sens. Une requête retouchée, coupée ou lancée sur une
-  table qui a bougé ne peut donc pas écrire un autre état que les deux prévus.
+  de même dans l'autre sens. Une requête retouchée, coupée ou lancée sur des
+  photos demandées qui ont bougé ne peut donc pas écrire un autre état que les
+  deux prévus.
+- **Le verdict ne regarde que les photos demandées.** Une autre colonne
+  changée depuis le relevé (une marque désactivée, un logo ajouté, un nom de
+  marque retouché) laisse le verdict à « PRÊT » et n'arrête pas les blocs :
+  seule l'empreinte des autres colonnes change. C'est voulu : la correction
+  des noms reste juste.
 - **L'empreinte des noms** est le `md5` de toutes les lignes, dans l'ordre des
   identifiants : `id=photo_protocol::text`. Elle couvre l'ordre des
   emplacements et toutes leurs clés.
@@ -66,6 +84,12 @@ Ne jamais retoucher un fichier SQL à la main : changer la table, puis
   noms ont reçu le même nouveau, la liste dit lequel revient où.
 - **Relancer** un bloc sur une table déjà dans l'état qu'il produit n'écrit
   rien.
+- **Un morceau de bloc lancé seul n'écrit rien et ne crée rien.** Les blocs
+  rangent leurs empreintes par affectation (`v := (select …)`) et non par
+  « select … into », qui, lancé hors du bloc, créerait une table.
+- **La dernière ligne de chaque fichier** est un commentaire « -- FIN — … »
+  propre à ce fichier : après un collage, l'éditeur montre la fin du texte,
+  et cette ligne dit laquelle des trois requêtes est collée, en entier.
 
 ## Vérifications du 2026-10-13
 
@@ -75,36 +99,71 @@ Trois calculs indépendants donnent les mêmes empreintes :
 |---|---|---|---|
 | Générateur (JavaScript, d'après le relevé) | `5dd4011eb6d10aafc4dc4f645d2df213` | `a7935327f8a1c045d2ef70267e238aca` | `7df0492cd93fb8e3c5c97d88401abf5c` |
 | Banc (PGlite 0.3.15, les vraies requêtes) | la même | la même | la même |
-| Production, `controle-prod.sql`, lecture seule, 11 h 50 UTC | la même | la même (aller simulé) | la même |
+| Production, `controle-prod.sql`, lecture seule, 12 h 25 UTC | la même | la même (aller simulé) | la même |
 
-- Production (lecture seule) : 80 lignes, 693 emplacements, 284 noms à
-  corriger dans 71 lignes ; 0 correction au mauvais compte ; 0 ligne avec deux
-  photos du même nom après l'aller simulé ; 0 identifiant en double dans une
-  ligne ; la liste du retour recalculée depuis la base a l'empreinte de celle
-  du script (`07a6f0dd6a91680d8a9a7df5b3074da8`).
+- Production (lecture seule, heure rendue par la base : 2026-10-13T12:25:16Z) :
+  80 lignes, 693 photos demandées, 284 noms à corriger dans 71 lignes ;
+  0 correction au mauvais compte ; 0 ligne avec deux photos du même nom après
+  l'aller simulé ; 0 identifiant en double dans une ligne ; la liste du retour
+  recalculée depuis la base a l'empreinte de celle du script
+  (`07a6f0dd6a91680d8a9a7df5b3074da8`). Un premier passage, avant la relecture,
+  avait donné les mêmes valeurs.
+- La requête d'état elle-même, lancée ensuite telle quelle en lecture seule
+  sur la production : « PRÊT : 284 noms de photos à corriger dans 71 lignes de
+  marque (table : 80 lignes, 693 photos demandées). On peut lancer la
+  correction. », les deux empreintes attendues, puis 34 lignes où
+  `a_corriger` égale `au_releve`.
 - `public.brands` au relevé : aucun déclencheur ; RLS active, non forcée ;
   propriétaire `postgres` (qui passe outre la RLS) ; PostgreSQL 17.6.
-- `banc.mjs` : 96 contrôles, tout passe. Aller, relance sans effet, retour au
+- `banc.mjs` : 113 contrôles, tout passe. Aller, relance sans effet, retour au
   caractère près, aller après retour ; huit états faussés refusés dans les
   deux sens sans rien écrire ; deux déclencheurs parasites qui annulent tout ;
   requêtes retouchées (une correction retirée, un nom changé) qui s'annulent ;
-  bloc coupé ou collé avec l'autre.
+  bloc coupé ; aller et retour collés ensemble ; requête d'état et aller
+  collés ensemble (le tableau affiché date d'avant l'écriture, qui a lieu) ;
+  autres colonnes changées ; 1 229 morceaux des deux blocs lancés seuls
+  (chaque ligne, chaque début, chaque fin) : la table ne change à aucun
+  moment, aucun objet n'est créé, et seuls passent sans erreur des
+  commentaires et quatre lignes sans effet (« begin », « end », le délai, le
+  verrou).
 - Fenêtre d'avertissement de l'éditeur SQL de Supabase (« Potential issue
   detected ») : les contrôles d'avant exécution du code public de Supabase
   Studio, relevé le 2026-10-12, rejoués sur les trois requêtes, chacune seule.
   Aucune n'ouvre la fenêtre, l'éditeur n'ajoute de « limit » à aucune. La
   fenêtre s'ouvre si un bloc est collé sous un reste de requête (« delete »,
-  « update » sans « where ») ou coupé avant sa fin : dans ces cas, annuler.
-  Ce contrôle vaut pour le code relevé ce jour-là.
+  « update » sans « where ») : dans ce cas, annuler. Un bloc coupé n'ouvre
+  pas la fenêtre : c'est le serveur qui répond par une erreur de syntaxe. Ce
+  contrôle vaut pour le code relevé ce jour-là.
+- Relecture poussée, un tour, deux relecteurs indépendants (les requêtes ; la
+  feuille d'exécution). Aucun n'a trouvé d'état où l'aller ou le retour
+  écrirait autre chose que les deux états prévus, ni de « APPLIQUÉ » à tort ;
+  le retour rend la table au caractère près, et sa liste, recalculée sans le
+  générateur, est celle du fichier. Corrigé à leur suite : les textes qui
+  disaient « la table » pour « les photos demandées » ; « select … into »
+  remplacé par une affectation ; les repères de fin ; l'ordre des colonnes de
+  l'état (les empreintes juste après le verdict) ; un contrôle du banc qui ne
+  lisait pas le corps des blocs ; trois phrases de ce fichier. Non vérifié
+  par eux ni par moi : le verrou sous concurrence (une seule connexion au
+  banc) et l'affichage réel de l'éditeur de Supabase.
 
 ## Limites connues
 
-- **La table ne doit pas bouger entre le relevé et l'aller.** Une marque
-  ajoutée, un protocole retouché, et l'état répond « ÉCARTS » : rien ne
-  s'écrit, il faut régénérer d'après un nouveau relevé
-  (`releve-2026-10-13.json` à refaire, puis `node generer.mjs`).
-- **Retour bloqué.** De même après l'aller : si la table change, le retour
-  refuse. Un retour adapté se prépare alors comme un script neuf.
+- **Les photos demandées ne doivent pas bouger entre le relevé et l'aller.**
+  Une ligne de marque ajoutée, un protocole retouché, et l'état répond
+  « ÉCARTS » : rien ne s'écrit, il faut régénérer d'après un nouveau relevé.
+  La date du relevé est écrite dans `generer.mjs` (`DATE_RELEVE`) et dans le
+  nom du fichier du relevé : les changer ensemble, puis `node generer.mjs`.
+- **Retour bloqué.** De même après l'aller : si une photo demandée change, le
+  retour refuse. Un retour adapté se prépare alors comme un script neuf.
+- **Sélection dans l'éditeur.** Avec du texte sélectionné, le bouton de
+  l'éditeur devient « Run selected » et ne lance que la sélection. Une
+  sélection faite de commentaires répond « Success. No rows returned » sans
+  rien écrire : la preuve d'une écriture est toujours la requête d'état,
+  lancée seule ensuite.
+- **Requête d'état et bloc dans la même requête.** Les deux partent, et
+  l'éditeur affiche le tableau de l'état, calculé avant l'écriture : il dit
+  « PRÊT » alors que la correction est faite. La requête d'état relancée
+  seule dit vrai.
 - **Anciens noms qui reviennent.** Les migrations qui ont créé les lignes de
   marque écrivent encore les anciens noms : une ligne créée en recopiant
   leurs gabarits les ramène. Rien ne le corrige tout seul.
