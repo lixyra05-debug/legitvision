@@ -1,6 +1,6 @@
 /**
  * Formulations que le rapport n'emploie jamais (décisions d'Hector du
- * 2026-10-13). Cinq familles :
+ * 2026-10-13). Six familles :
  * - conseil d'achat ou de paiement (lib/purchase-advice.ts) ;
  * - probabilité : le score est une note de conformité, jamais une chance en
  *   pourcentage ;
@@ -8,16 +8,19 @@
  *   règle 1, pour les deux) ;
  * - « frauduleux », « fraude » ;
  * - « arnaque », « escroquerie » : un écart se décrit (« non conforme »,
- *   « indices de contrefaçon »), il n'accuse personne.
+ *   « indices de contrefaçon »), il n'accuse personne ;
+ * - score cité dans un texte (« 85/100 », « score de 78 ») : le score affiché
+ *   est recalculé par le serveur, un chiffre écrit dans une phrase pourrait le
+ *   contredire. Il ne paraît que dans le champ prévu par l'interface.
  *
  * La consigne les interdit à l'IA (lib/ai/authentication-prompts.ts). Ce
- * fichier les reconnaît dans un texte : la mesure de fiabilité
- * (scripts/fiabilite) compte ainsi ce que l'IA écrit malgré la consigne.
+ * fichier les reconnaît dans un texte. Le compteur hebdomadaire des vrais
+ * rapports (supabase/checks/compteur-formulations.sql, lecture seule) suit les
+ * mêmes familles, écrites en SQL ; son banc les confronte à ce fichier.
  *
  * Ne sont pas des formulations interdites :
  * - « probablement authentique », « probable contrefaçon » : le verdict se dit
  *   avec « probablement » ;
- * - « 85/100 » : un score se cite sur 100 ;
  * - « 100 % coton », « semelle usée à 30 % » : un pourcentage ne compte que
  *   dans une phrase qui parle d'authenticité, de score, de confiance ou de
  *   risque (« authentique à 85 % », « score de confiance : 85 % ») ;
@@ -32,7 +35,7 @@
 import { isPurchaseAdvice } from "@/lib/purchase-advice";
 
 /** Les familles, dans l'ordre où elles se comptent et s'affichent. */
-export const FORBIDDEN_WORDINGS = ["purchase_advice", "probability", "certification", "fraud", "scam"] as const;
+export const FORBIDDEN_WORDINGS = ["purchase_advice", "probability", "certification", "fraud", "scam", "score"] as const;
 
 export type ForbiddenWording = (typeof FORBIDDEN_WORDINGS)[number];
 
@@ -69,6 +72,14 @@ const MOTIFS: Record<Exclude<ForbiddenWording, "purchase_advice">, RegExp[]> = {
   fraud: [/fraud/i],
   // « arnaque », « arnaquer » ; « escroc », « escroquerie ».
   scam: [/arnaqu/i, /escro(?:c|qu)/i],
+  score: [
+    // « 85/100 » ; pas une date (« 05/10/2026 »).
+    /(?<![/\d])\d{1,3}\s*\/\s*100\b/,
+    // « 40 sur 100 », « 7 sur 10 ».
+    /\b\d{1,3}\s+sur\s+(?:100|10|20)\b/i,
+    // « score de 78 », « score global de 85 », « score de confiance : 85 % ». Pas « le score reflète 3 anomalies ».
+    new RegExp(`\\bscores?\\b(?:\\s+[^\\s.!?;:=]+){0,4}?(?:\\s+(?:de|à|est\\s+de|atteint|vaut)\\s+|\\s*[:=]\\s*)\\d{1,3}(?!\\d)`, "i"),
+  ],
 };
 
 /** Une chance ou une certitude en pourcentage : « authentique à 85 % », « 85 % de chances », « score de confiance : 85 % ». */

@@ -84,8 +84,8 @@ const CATEGORY_LABEL: Record<string, string> = {
  * demande plus un « conseil actionnable » mais une vérification à faire.
  * Ce que la consigne ne peut pas garantir, lib/purchase-advice.ts le retire à
  * l'affichage. tests/unit/consigne-sans-conseil-achat.test.ts tient les deux,
- * et l'empreinte de la consigne entière : elle ne change pas pendant une
- * campagne de mesure (scripts/fiabilite).
+ * et l'empreinte de la consigne entière : elle ne change pas par mégarde, et
+ * tout changement est montré à Hector, en entier, avant d'aller en production.
  */
 export const NO_PURCHASE_ADVICE_RULE =
   `- Tu ne donnes JAMAIS de conseil d'achat ni de paiement, dans aucun champ ("recommendations", "analyst_summary", "findings", "missing_evidence") : pas de "n'achetez pas", "évitez cet achat", "éviter absolument cet achat", "passez votre chemin", "vous pouvez l'acheter", "ne payez pas", ni aucune formule équivalente. Acheter ou non est la décision de l'utilisateur : tu décris ce que tu observes et ce qu'il reste à vérifier.`;
@@ -103,8 +103,9 @@ export const RECOMMENDATION_FORMAT =
  * maintenant une estimation visuelle, et interdit ces mots dans tous les
  * champs. Le score n'est pas une probabilité, le rapport n'est ni un certificat
  * ni une garantie (CLAUDE.md, règle 1), et un écart se décrit sans accuser
- * personne. lib/forbidden-wording.ts reconnaît ces formulations, et la
- * mesure de fiabilité compte celles que l'IA écrit malgré la consigne.
+ * personne. lib/forbidden-wording.ts reconnaît ces formulations : un compteur
+ * hebdomadaire, en lecture seule, relève celles que l'IA écrit malgré la
+ * consigne (supabase/checks/compteur-formulations.sql).
  *
  * « certificat » n'est pas interdit : c'est un document fourni avec un
  * article, que le catalogue demande d'examiner (« Emballage (dust bag, boîte,
@@ -114,7 +115,17 @@ export const RECOMMENDATION_FORMAT =
  * tests/unit/consigne-mots-interdits.test.ts.
  */
 export const NO_PROBABILITY_RULE =
-  `- Le score est une note de conformité de 0 à 100, JAMAIS une probabilité : dans aucun champ tu n'écris "probabilité", "chances", ni un pourcentage de chances ou de certitude ("85 % de chances", "authentique à 85 %"). Un score se cite sur 100 ("85/100"), jamais en pourcentage. Tu parles d'"estimation visuelle".`;
+  `- Le score est une note de conformité de 0 à 100, JAMAIS une probabilité : dans aucun champ tu n'écris "probabilité", "chances", ni un pourcentage de chances ou de certitude ("85 % de chances", "authentique à 85 %"). Tu parles d'"estimation visuelle".`;
+
+/**
+ * Décision d'Hector du 13/10 : « l'IA ne cite JAMAIS un score (ni chiffre, ni
+ * pourcentage) dans le résumé ou les observations. Le score n'apparaît que dans
+ * le champ prévu par l'interface. » Le score affiché est recalculé par le
+ * serveur (lib/ai/scoring.ts) : au relevé du 13/10, il différait de celui que
+ * l'IA écrit elle-même dans 7 rapports sur 11, et un résumé citait « 85/100 ».
+ */
+export const NO_SCORE_IN_TEXT_RULE =
+  `- Tu ne cites JAMAIS un score dans un texte que tu rédiges, ni en chiffres ni en pourcentage ("85/100", "40 sur 100", "score de 78") : ni dans "analyst_summary", ni dans une "observation", ni dans "recommendations", ni dans "missing_evidence". Les scores vont UNIQUEMENT dans les champs numériques "overall_score", "sub_scores" et "score" : le score affiché à l'utilisateur est recalculé à partir de tes notes par zone, et un chiffre écrit dans une phrase pourrait le contredire.`;
 
 export const NO_CERTIFICATION_RULE =
   `- Tu n'écris JAMAIS, dans aucun champ, "certification", "certifié", "certifier", "garanti" ni "garantie", même à la négative : une analyse de photos ne certifie et ne garantit rien. Pour ce qu'il reste à établir, écris "confirmation" ou "vérification complémentaire". Un document fourni avec l'article (certificat, carte d'authenticité, document de la marque) se décrit comme un objet à examiner, jamais comme une preuve.`;
@@ -181,6 +192,7 @@ RÈGLES ABSOLUES :
 - Tu mentionnes les preuves visuelles spécifiques qui justifient chaque score.
 ${NO_PURCHASE_ADVICE_RULE}
 ${NO_PROBABILITY_RULE}
+${NO_SCORE_IN_TEXT_RULE}
 ${NO_CERTIFICATION_RULE}
 ${NO_ACCUSATION_RULE}
 ${QUOTED_TEXT_EXCEPTION}
@@ -212,7 +224,7 @@ FORMAT DE RÉPONSE (JSON strict) :
   "findings": [
     {
       "zone": "<zone_id>",
-      "observation": "<description factuelle précise en français>",
+      "observation": "<description factuelle précise en français, sans aucun score chiffré>",
       "score": <number 0-100>,
       "severity": "<critical|important|minor>"
     }
@@ -224,7 +236,7 @@ FORMAT DE RÉPONSE (JSON strict) :
     "manufacturing_info": "<pays, usine si visible ou vide>"
   },
   "recommendations": ["${RECOMMENDATION_FORMAT}"],
-  "analyst_summary": "<résumé 2-3 phrases en français — DOIT commencer par '${modelIdentity}' ou 'Ce ${modelIdentity}' — ne JAMAIS le requalifier en autre marque/modèle>"
+  "analyst_summary": "<résumé 2-3 phrases en français, sans aucun score chiffré — DOIT commencer par '${modelIdentity}' ou 'Ce ${modelIdentity}' — ne JAMAIS le requalifier en autre marque/modèle>"
 }`;
 
   const pointsList = authenticationPoints

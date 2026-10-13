@@ -7,8 +7,7 @@
 // 2. la page du rapport retire de la liste des recommandations celles qui en
 //    portent un quand même, pour les rapports déjà enregistrés comme pour les
 //    suivants (lib/purchase-advice.ts) ;
-// 3. la consigne entière a une empreinte : elle ne change pas par mégarde,
-//    et jamais pendant une campagne de mesure (scripts/fiabilite).
+// 3. la consigne entière a une empreinte : elle ne change pas par mégarde.
 // Ce test échoue si la règle quitte la consigne, si le format redemande un
 // conseil, si une formule d'achat ou de paiement n'est plus reconnue, si une
 // vérification légitime (« demandez la preuve d'achat ») est retirée à tort,
@@ -86,13 +85,13 @@ test("consigne : le format ne demande plus un « conseil actionnable », mais un
   }
 });
 
-test("consigne : son empreinte. Elle ne change pas par mégarde, pour aucune marque, et jamais pendant une campagne de mesure", () => {
-  // Si ce test échoue, la consigne envoyée à l'IA a changé. C'est permis,
-  // mais jamais pendant la mesure des paires (scripts/fiabilite) : la consigne
-  // y est figée. Après un changement voulu : mettre cette empreinte à jour,
-  // régénérer la requête figée de l'outil de fiabilité, et le dire à Hector.
-  // Toutes les consignes entrent dans l'empreinte : une phrase ajoutée à
-  // l'expertise d'une seule marque la change aussi.
+test("consigne : son empreinte. Elle ne change pas par mégarde, pour aucune marque", () => {
+  // Si ce test échoue, la consigne envoyée à l'IA a changé. Tout changement de
+  // la consigne est montré à Hector, en entier, avant d'aller en production
+  // (règle du 13/10). Après un changement voulu : mettre cette empreinte à
+  // jour, et régénérer la requête figée de l'outil de fiabilité (branche de la
+  // refonte). Toutes les consignes entrent dans l'empreinte : une phrase
+  // ajoutée à l'expertise d'une seule marque la change aussi.
   const toutes = [
     ...BRAND_EXPERTISE_BRANDS.map((marque) => getAuthenticationPrompt(marque, "Modèle", "sneakers", POINTS, PHOTOS)),
     ...CONSIGNES.map(([, consigne]) => consigne),
@@ -100,7 +99,7 @@ test("consigne : son empreinte. Elle ne change pas par mégarde, pour aucune mar
   assert.ok(toutes.length > 45, String(toutes.length));
   const empreinte = createHash("sha256");
   for (const { systemPrompt, userPrompt } of toutes) empreinte.update(`${systemPrompt}\n\u0000\n${userPrompt}\n\u0001\n`);
-  assert.equal(empreinte.digest("hex"), "f7fcfb2e9a134be0a5b8f98f765d524e91c3947e0c21acb76d7acd6687947791");
+  assert.equal(empreinte.digest("hex"), "997b84b5330a798d520d824011d91d9d960cdb1ee49cf48de483fa934989ef04");
 });
 
 // ── 2. Reconnaître un conseil d'achat ou de paiement ───────

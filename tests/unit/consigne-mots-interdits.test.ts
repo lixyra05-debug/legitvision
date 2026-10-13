@@ -2,9 +2,10 @@
 // consigne envoyée à l'IA interdit aussi « probabilité » (le score n'est pas
 // une probabilité : elle demande une « estimation visuelle »), « certification »,
 // « certifié », « garanti », et « frauduleux », « arnaque » (à la place : « non
-// conforme », « indices de contrefaçon »). lib/forbidden-wording.ts reconnaît
-// ces formulations, pour que la mesure de fiabilité compte celles que l'IA
-// écrit malgré la consigne.
+// conforme », « indices de contrefaçon »), et elle ne cite jamais un score dans
+// un texte (le score ne paraît que dans le champ prévu par l'interface).
+// lib/forbidden-wording.ts reconnaît ces formulations, pour le compteur qui
+// relève chaque semaine celles que l'IA écrit malgré la consigne.
 // Ce test échoue si une de ces règles quitte la consigne, si la consigne
 // emploie elle-même un de ces mots ailleurs que pour l'interdire (pour toute
 // marque, et avec les vrais libellés du catalogue), si une formulation relevée
@@ -21,6 +22,7 @@ import {
   NO_CERTIFICATION_RULE,
   NO_PROBABILITY_RULE,
   NO_PURCHASE_ADVICE_RULE,
+  NO_SCORE_IN_TEXT_RULE,
   QUOTED_TEXT_EXCEPTION,
   RECOMMENDATION_FORMAT,
   getAuthenticationPrompt,
@@ -57,6 +59,7 @@ const CONSIGNES: Array<[nom: string, consigne: { systemPrompt: string; userPromp
 
 const REGLES: Array<[nom: string, regle: string]> = [
   ["probabilité", NO_PROBABILITY_RULE],
+  ["score dans un texte", NO_SCORE_IN_TEXT_RULE],
   ["certification", NO_CERTIFICATION_RULE],
   ["accusation", NO_ACCUSATION_RULE],
   ["texte recopié", QUOTED_TEXT_EXCEPTION],
@@ -69,7 +72,7 @@ test("consigne : chaque marque du fichier a sa consigne ici, et la liste n'est p
   assert.ok(BRAND_EXPERTISE_BRANDS.includes("hermès") && BRAND_EXPERTISE_BRANDS.includes("default"));
 });
 
-test("consigne : les quatre règles sont dans les règles absolues, une fois chacune, pour tout article", () => {
+test("consigne : les cinq règles sont dans les règles absolues, une fois chacune, pour tout article", () => {
   for (const [nom, { systemPrompt }] of CONSIGNES) {
     const debut = systemPrompt.indexOf("RÈGLES ABSOLUES :");
     const fin = systemPrompt.indexOf("MÉTHODOLOGIE :");
@@ -105,7 +108,14 @@ test("consigne : chaque règle nomme les mots interdits et dit quoi écrire à l
     [NO_PROBABILITY_RULE, [
       "Le score est une note de conformité de 0 à 100, JAMAIS une probabilité",
       "dans aucun champ", '"probabilité"', '"chances"', "ni un pourcentage de chances ou de certitude",
-      '"85 % de chances"', '"authentique à 85 %"', 'Un score se cite sur 100 ("85/100"), jamais en pourcentage.', 'Tu parles d\'"estimation visuelle"',
+      '"85 % de chances"', '"authentique à 85 %"', 'Tu parles d\'"estimation visuelle"',
+    ]],
+    [NO_SCORE_IN_TEXT_RULE, [
+      "Tu ne cites JAMAIS un score dans un texte que tu rédiges, ni en chiffres ni en pourcentage",
+      '"85/100"', '"40 sur 100"', '"score de 78"',
+      'ni dans "analyst_summary", ni dans une "observation", ni dans "recommendations", ni dans "missing_evidence"',
+      'Les scores vont UNIQUEMENT dans les champs numériques "overall_score", "sub_scores" et "score"',
+      "le score affiché à l'utilisateur est recalculé à partir de tes notes par zone",
     ]],
     [NO_CERTIFICATION_RULE, [
       "Tu n'écris JAMAIS, dans aucun champ", '"certification"', '"certifié"', '"certifier"', '"garanti"', '"garantie"',
@@ -128,6 +138,19 @@ test("consigne : chaque règle nomme les mots interdits et dit quoi écrire à l
   }
   // « certificat » nomme un document : il n'est pas dans la liste des mots interdits (le catalogue demande de l'examiner).
   assert.doesNotMatch(NO_CERTIFICATION_RULE, /"certificat"/);
+  // La règle de la probabilité ne dit plus comment citer un score : il ne se cite plus.
+  assert.doesNotMatch(NO_PROBABILITY_RULE, /se cite|\/100/);
+});
+
+test("consigne : le format redit « sans aucun score chiffré » pour le résumé et pour chaque observation", () => {
+  for (const [nom, { systemPrompt }] of CONSIGNES) {
+    assert.ok(systemPrompt.includes('"observation": "<description factuelle précise en français, sans aucun score chiffré>",'), `${nom} : observation`);
+    assert.ok(systemPrompt.includes('"analyst_summary": "<résumé 2-3 phrases en français, sans aucun score chiffré — DOIT commencer par'), `${nom} : résumé`);
+    // Les champs numériques, eux, restent demandés.
+    for (const champ of ['"overall_score": <number 0-100>,', '"<zone_id>": <number 0-100>', '"score": <number 0-100>,']) {
+      assert.ok(systemPrompt.includes(champ), `${nom} : ${champ}`);
+    }
+  }
 });
 
 /** Un mot que la consigne interdit d'écrire. « certificat », le document, n'en est pas un. */
@@ -197,7 +220,7 @@ test("formulations relevées en production le 13/10 : chacune est reconnue, dans
   const relevees: Array<[texte: string, attendu: ForbiddenWording[]]> = [
     ["Seuls quelques détails mineurs nécessitent une vérification supplémentaire pour une certification complète.", ["certification"]],
     ["Cependant, l'absence de vues détaillées de l'étiquette intérieure et du numéro de série limite la certification définitive de l'authenticité.", ["certification"]],
-    ["Le code de fabrication FL03 et l'ensemble des détails observés suggèrent une forte probabilité d'authenticité, avec un score global de 85/100.", ["probability"]],
+    ["Le code de fabrication FL03 et l'ensemble des détails observés suggèrent une forte probabilité d'authenticité, avec un score global de 85/100.", ["probability", "score"]],
     ["Le code interne DC 07 22 43 et l'ensemble des détails observés suggèrent une forte probabilité d'authenticité malgré quelques zones nécessitant une vérification supplémentaire.", ["probability"]],
     ["Logo BALENCIAGA brodé sur mesh présent mais incohérent avec l'étiquette Puma - probable customisation ou montage frauduleux", ["fraud"]],
     ["Ces chaussures sont des Puma authentiques sur lesquelles ont été ajoutés frauduleusement des éléments Balenciaga (logo brodé, semelle intérieure).", ["fraud"]],
@@ -227,8 +250,6 @@ test("probabilité : le mot, « chances », et tout pourcentage dans une phrase 
     "Je suis sûr à 90 % de son authenticité.",
     "Niveau de certitude de 90 %.",
     "Niveau de confiance élevé (90 %).",
-    "Score de confiance : 85 %.",
-    "Score global de 85 %.",
     "Indice de confiance de 85,5 %.",
     "Résultat fiable à 95 %.",
     "Résultat fiable, avec 95 % de confiance.",
@@ -237,6 +258,34 @@ test("probabilité : le mot, « chances », et tout pourcentage dans une phrase 
     "Coutures régulières ; authenticité à 80 % selon moi.",
   ]) {
     assert.deepEqual(familles(texte), ["probability"], texte);
+  }
+});
+
+test("score cité dans un texte : sur 100, en toutes lettres ou en pourcentage ; jamais une date, une taille ou un code", () => {
+  for (const texte of [
+    "Score global de 85/100.",
+    "Zone notée 40 sur 100.",
+    "Note de 7 sur 10 pour les coutures.",
+    "Un score de 78 pour cette zone.",
+    "Le score atteint 80.",
+    "Score : 72",
+    "Les coutures obtiennent 85 / 100.",
+  ]) {
+    assert.deepEqual(familles(texte), ["score"], texte);
+  }
+  // En pourcentage, c'est aussi une probabilité.
+  for (const texte of ["Score de confiance : 85 %.", "Score global de 85 %."]) assert.deepEqual(familles(texte), ["probability", "score"], texte);
+  for (const texte of [
+    "Le score reflète plusieurs anomalies sur la semelle.",
+    "Le score est pénalisé par 2 coutures irrégulières.",
+    "Ticket de caisse daté du 05/10/2026.",
+    "Étiquette de taille : 42 EU, 8.5 US.",
+    "Code produit DC4457-001 lisible.",
+    "4 points de couture blancs sur le talon.",
+    "Numéro de série 123/1000 gravé sur la plaque.",
+    "Photo 3 sur 8 trop sombre.",
+  ]) {
+    assert.deepEqual(familles(texte), [], texte);
   }
 });
 
@@ -264,7 +313,7 @@ test("frauduleux, arnaque : tous les mots des deux familles", () => {
   for (const texte of ["Cette annonce est une arnaque.", "Vous vous faites arnaquer.", "C'est une escroquerie.", "Le vendeur est un escroc.", "ARNAQUE"]) {
     assert.deepEqual(familles(texte), ["scam"], texte);
   }
-  assert.deepEqual(familles("Arnaque certifiée : fraude garantie, 100 % de chances. N'achetez pas."), [...FORBIDDEN_WORDINGS]);
+  assert.deepEqual(familles("Arnaque certifiée : fraude garantie, 100 % de chances, noté 12/100. N'achetez pas."), [...FORBIDDEN_WORDINGS]);
 });
 
 test("textes permis : le verdict en « probablement », un score sur 100, une étiquette de composition, un certificat, une étiquette recopiée, ce que les règles disent d'écrire", () => {
@@ -273,8 +322,6 @@ test("textes permis : le verdict en « probablement », un score sur 100, une é
     "Au vu des coutures imprécises et de l'absence d'étiquettes lisibles, l'analyse penche vers une probable contrefaçon.",
     "Cette paire présente des marqueurs conformes et apparaît probablement authentique.",
     "Très probablement authentique.",
-    "Score global de 85/100.",
-    "Zone notée 40 sur 100.",
     // Un pourcentage qui ne dit rien de l'authenticité.
     "Étiquette de composition : 100 % coton.",
     "Composition lue : 80 % polyamide, 20 % élasthanne.",
@@ -338,7 +385,7 @@ test("une valeur qui n'est pas un texte ne porte aucune formulation", () => {
 test("les mots que chaque règle interdit sont reconnus, ceux qu'elle propose à la place ne le sont pas", () => {
   /** Les expressions entre guillemets droits d'une règle. */
   const cites = (regle: string) => [...regle.matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-  const aLaPlace = ["estimation visuelle", "85/100", "confirmation", "vérification complémentaire", "non conforme", "indices de contrefaçon"];
+  const aLaPlace = ["estimation visuelle", "confirmation", "vérification complémentaire", "non conforme", "indices de contrefaçon"];
   const famillesDesRegles: Array<[regle: string, famille: ForbiddenWording[]]> = [
     [NO_PROBABILITY_RULE, ["probability"]],
     [NO_CERTIFICATION_RULE, ["certification"]],
@@ -360,9 +407,14 @@ test("les mots que chaque règle interdit sont reconnus, ceux qu'elle propose à
       }
     }
   }
-  // 4 + 5 + 5 mots interdits nommés, 2 + 2 + 2 expressions proposées.
+  // 4 + 5 + 5 mots interdits nommés, 1 + 2 + 2 expressions proposées.
   assert.equal(interdits, 14);
   assert.equal(proposes, aLaPlace.length);
+  // Les trois exemples de score que la règle cite sont reconnus comme des scores cités.
+  for (const exemple of ["85/100", "40 sur 100", "score de 78"]) {
+    assert.ok(NO_SCORE_IN_TEXT_RULE.includes(`"${exemple}"`), exemple);
+    assert.deepEqual(familles(exemple), ["score"], exemple);
+  }
   // Les documents que la règle permet de nommer ne sont pas reconnus comme interdits.
   for (const document of ["certificat", "carte d'authenticité", "document de la marque"]) assert.deepEqual(familles(document), [], document);
 });
