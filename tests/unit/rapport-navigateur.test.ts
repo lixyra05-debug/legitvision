@@ -274,7 +274,8 @@ for (const [nom, donnees] of COURTS) {
   });
 }
 
-for (const ecran of ["introuvable", "erreur"] as const) {
+// « repli-rapport » : la page de repli du rapport (décision du 13/10), qui remplace l'écran d'erreur général à cette adresse.
+for (const ecran of ["introuvable", "erreur", "repli-rapport"] as const) {
   test(`écran « ${ecran} » à l'adresse d'un rapport : ce n'est pas un rapport, le bouton flotte et reste visible`, { skip }, async () => {
     const { page, erreurs, fermer } = await ouvrir({ ecran }, 320, 568);
     for (const [largeur, hauteur] of [[320, 568], [390, 844], [639, 800], [640, 800], [834, 1112], [1023, 768], [1024, 768], [1359, 800], [1360, 800]]) {
@@ -283,6 +284,27 @@ for (const ecran of ["introuvable", "erreur"] as const) {
       flottant(m, `${largeur} × ${hauteur}`);
       assert.equal(m.page.hauteur, hauteur, `${largeur} × ${hauteur} : la page gagne du défilement`);
     }
+    assert.deepEqual(erreurs, []);
+    await fermer();
+  });
+}
+
+for (const [ecran, journalAttendu] of [["erreur", "[page] erreur inattendue essai"], ["repli-rapport", "[rapport] affichage impossible essai"]] as const) {
+  test(`écran « ${ecran} » : « Réessayer » redemande la page au serveur, et le détail de l'erreur ne part ni à l'écran ni au journal`, { skip }, async () => {
+    const { page, erreurs, fermer } = await ouvrir({ ecran }, 390, 844);
+    // À l'écran : la référence, jamais le message de l'erreur.
+    const affiche = (await page.locator("main").innerText()).replace(/\s+/g, " ");
+    assert.ok(affiche.includes("Référence : essai"), affiche);
+    assert.ok(!affiche.includes("détail interne"), affiche);
+    // Au journal : une ligne de l'écran, avec la référence, sans le message.
+    const journal = await page.evaluate(() => window.__JOURNAL);
+    assert.ok(journal.includes(journalAttendu), JSON.stringify(journal));
+    assert.deepEqual(journal.filter((ligne) => ligne.includes("détail interne")), []);
+    // « Réessayer » appelle retry (la page est redemandée au serveur), pas reset
+    // (qui réafficherait la même erreur venue du serveur).
+    assert.equal(await page.locator("body").getAttribute("data-relance"), null);
+    await page.getByRole("button", { name: "Réessayer" }).click();
+    assert.equal(await page.locator("body").getAttribute("data-relance"), "retry");
     assert.deepEqual(erreurs, []);
     await fermer();
   });

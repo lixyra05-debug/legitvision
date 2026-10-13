@@ -602,7 +602,10 @@ export function ReportView({ data }: { data: ReportData }) {
                       className="flex items-start justify-between gap-4 px-4 py-3"
                     >
                       <span className="text-ui text-muted-foreground">
-                        {OCR_LABEL_KEY[key]
+                        {/* hasOwnProperty : la clé vient de la réponse de l'IA. « constructor »
+                            ou « toString » trouveraient une fonction héritée d'Object
+                            à la place d'un libellé, et l'écran lèverait une erreur. */}
+                        {Object.prototype.hasOwnProperty.call(OCR_LABEL_KEY, key)
                           ? t(OCR_LABEL_KEY[key])
                           : key.replace(/_/g, " ")}
                       </span>

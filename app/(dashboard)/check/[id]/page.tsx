@@ -2,19 +2,24 @@ import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { ReportView, type ReportData } from "@/components/check/ReportView";
-import type { Finding } from "@/components/check/FindingCard";
 import type { Verdict, Confidence } from "@/lib/types";
 import { staleKind } from "@/lib/analysis-limits";
 import { expireStaleAnalyses } from "@/lib/analysis-stale";
 import { lookupCatalogNames } from "@/lib/analysis-history";
 import { zoneNamesForPoints } from "@/lib/zone-names";
+import { readAiConfidence, readFindings, readOcr, readProse, readSubScores, readTextList } from "@/lib/report-data";
 
+/**
+ * La réponse du modèle, telle qu'elle est enregistrée : JSONB, forme non
+ * garantie. Chaque champ est relu par lib/report-data.ts avant d'être
+ * transmis à l'écran.
+ */
 interface AIRawResponse {
-  analyst_summary?: string;
-  missing_evidence?: string[];
-  ocr_extracted?: Record<string, string>;
-  recommendations?: string[];
-  confidence_level?: "high" | "medium" | "low" | "insufficient";
+  analyst_summary?: unknown;
+  missing_evidence?: unknown;
+  ocr_extracted?: unknown;
+  recommendations?: unknown;
+  confidence_level?: unknown;
 }
 
 interface AnalysisRow {
@@ -23,8 +28,10 @@ interface AnalysisRow {
   verdict: Verdict | null;
   confidence: Confidence | null;
   overall_score: number | null;
-  sub_scores: Record<string, number> | null;
-  findings: Finding[] | null;
+  // JSONB écrits par la route à partir de la réponse du modèle : forme non
+  // garantie pour les observations, relue par lib/report-data.ts.
+  sub_scores: unknown;
+  findings: unknown;
   ai_raw_response: AIRawResponse | null;
   created_at: string;
   updated_at: string;
@@ -80,6 +87,15 @@ export default async function CheckReportPage(props: PageProps) {
   if (!user) redirect("/auth");
   const userId = user.id;
 
+  /**
+   * L'analyse du client, ou null si elle n'existe pas (ou n'est pas la sienne).
+   * Une lecture en erreur n'est pas une analyse absente : la base injoignable
+   * affichait « 404, cette page n'existe pas » à la place d'un rapport payé.
+   * Elle lève désormais une erreur, et la page de repli du rapport (error.tsx)
+   * propose de réessayer. Deux erreurs veulent bien dire « absente » :
+   * PGRST116 (aucune ligne pour .single()) et 22P02 (l'identifiant de
+   * l'adresse n'est pas un UUID).
+   */
   async function readRow(): Promise<AnalysisRow | null> {
     const { data, error } = await supabase
       .from("analyses")
@@ -87,7 +103,10 @@ export default async function CheckReportPage(props: PageProps) {
       .eq("id", id)
       .eq("user_id", userId)
       .single();
-    return error || !data ? null : (data as unknown as AnalysisRow);
+    if (error && error.code !== "PGRST116" && error.code !== "22P02") {
+      throw new Error("lecture de l'analyse impossible");
+    }
+    return data ? (data as unknown as AnalysisRow) : null;
   }
 
   let row = await readRow();
@@ -114,13 +133,19 @@ export default async function CheckReportPage(props: PageProps) {
     } else if (stale) {
       // Rien écrit : la route a enregistré le rapport entre-temps, ou
       // l'écriture a échoué. On relit l'analyse telle qu'elle est.
-      row = (await readRow()) ?? current;
+      // Cette relecture est un mieux : si elle échoue, on garde la ligne lue.
+      row = (await readRow().catch(() => null)) ?? current;
     }
     brandName = brandName ?? names?.brands.get(current.brand_id)?.name ?? null;
     modelName = modelName ?? names?.models.get(current.model_id)?.name ?? null;
   }
 
-  const raw = row.ai_raw_response;
+  // Un objet, sinon rien : une réponse enregistrée sous une autre forme (un
+  // texte, une liste) ne porte aucun de ces champs.
+  const raw: AIRawResponse | null =
+    typeof row.ai_raw_response === "object" && row.ai_raw_response !== null && !Array.isArray(row.ai_raw_response)
+      ? row.ai_raw_response
+      : null;
 
   const report: ReportData = {
     id: row.id,
@@ -130,13 +155,16 @@ export default async function CheckReportPage(props: PageProps) {
     verdict: row.verdict ?? null,
     confidence: row.confidence ?? null,
     overallScore: row.overall_score ?? null,
-    subScores: row.sub_scores ?? null,
-    findings: row.findings ?? null,
-    analystSummary: raw?.analyst_summary ?? null,
-    missingEvidence: raw?.missing_evidence ?? null,
-    ocrExtracted: raw?.ocr_extracted ?? null,
-    recommendations: raw?.recommendations ?? null,
-    aiConfidence: raw?.confidence_level ?? null,
+    // Tout ce qui vient de la réponse du modèle est ramené à sa forme avant
+    // l'écran : une liste rendue autrement, ou un texte rendu en objet, ne
+    // doit jamais faire planter un rapport payé (lib/report-data.ts).
+    subScores: readSubScores(row.sub_scores),
+    findings: readFindings(row.findings),
+    analystSummary: readProse(raw?.analyst_summary),
+    missingEvidence: readTextList(raw?.missing_evidence),
+    ocrExtracted: readOcr(raw?.ocr_extracted),
+    recommendations: readTextList(raw?.recommendations),
+    aiConfidence: readAiConfidence(raw?.confidence_level),
     createdAt: row.created_at,
     // Seulement les noms des zones : ni les points, ni leurs poids. Modèle
     // désactivé depuis (jointure vide) : table vide, le rapport nomme alors
