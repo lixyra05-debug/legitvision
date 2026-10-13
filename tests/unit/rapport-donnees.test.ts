@@ -515,19 +515,20 @@ function repli(error: unknown, params: Record<string, unknown>): string {
   }
 }
 
-test("page de repli du rapport : l'analyse est enregistrée, son numéro, l'adresse de contact, « Réessayer » et le tableau de bord", () => {
+test("page de repli du rapport : le texte fixé par Hector, le numéro de l'analyse, « Réessayer » et le tableau de bord", () => {
   const html = repli(Object.assign(new Error("détail interne à ne pas afficher"), { digest: "1234567890" }), { id: ANALYSE });
   const page = texte(html);
-  for (const present of [
-    "Ce rapport ne peut pas s'afficher pour le moment",
-    "Rien n'est perdu : vos analyses restent enregistrées.",
-    "legitvision.contact@gmail.com",
-    "Analyse #0F8FAD5B",
-    "Référence : 1234567890",
-    "Réessayer",
-    "Tableau de bord",
-  ]) {
+  // Décision d'Hector du 13/10, mot pour mot, dans cet ordre.
+  assert.ok(
+    page.includes("Ce rapport ne s'affiche pas pour le moment. Réessayez dans quelques instants. Numéro de l'analyse : 0F8FAD5B."),
+    page,
+  );
+  for (const present of ["Référence : 1234567890", "Réessayer", "Tableau de bord"]) {
     assert.ok(page.includes(present), `« ${present} » absent : ${page}`);
+  }
+  // Aucune promesse sur l'analyse : la base peut être en panne, et rien ne l'a lue.
+  for (const promesse of ["enregistr", "perdu", "sauvegard", "conserv"]) {
+    assert.ok(!page.toLowerCase().includes(promesse), `« ${promesse} » : promesse affichée : ${page}`);
   }
   // Jamais le détail de l'erreur.
   assert.ok(!page.includes("détail interne"), page);
@@ -536,7 +537,6 @@ test("page de repli du rapport : l'analyse est enregistrée, son numéro, l'adre
   assert.match(html, /<button type="button"[^>]*>Réessayer<\/button>/);
   assert.match(html, /<a [^>]*href="\/dashboard"[^>]*>Tableau de bord<\/a>/);
   assert.doesNotMatch(html, /href="\/"/);
-  assert.match(html, /href="mailto:legitvision\.contact@gmail\.com"/);
 });
 
 test("page de repli du rapport : sans référence ni numéro lisibles, elle s'affiche quand même, quelle que soit la valeur levée", () => {
@@ -548,9 +548,10 @@ test("page de repli du rapport : sans référence ni numéro lisibles, elle s'af
     ["identifiant d'un autre type", new Error("x"), { id: ["a", "b"] }],
   ] as const) {
     const page = texte(repli(error, params));
-    assert.ok(page.includes("Ce rapport ne peut pas s'afficher pour le moment") && page.includes("Réessayer"), `${cas} : ${page}`);
+    assert.ok(page.includes("Ce rapport ne s'affiche pas pour le moment. Réessayez dans quelques instants.") && page.includes("Réessayer"), `${cas} : ${page}`);
     assert.ok(!page.includes("Référence :"), `${cas} : ${page}`);
-    assert.equal(page.includes("Analyse #"), "id" in params && typeof params.id === "string", `${cas} : ${page}`);
+    // Sans identifiant lisible dans l'adresse, la phrase du numéro n'est pas affichée (jamais un numéro vide).
+    assert.equal(page.includes("Numéro de l'analyse :"), "id" in params && typeof params.id === "string", `${cas} : ${page}`);
     for (const trace of ["undefined", "[object Object]", "texte levé"]) assert.ok(!page.includes(trace), `${cas} : « ${trace} » affiché`);
   }
 });

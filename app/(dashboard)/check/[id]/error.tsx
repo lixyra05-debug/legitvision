@@ -16,9 +16,13 @@ import { errorDigest, errorName } from "@/lib/error-digest";
  * écran prend ce qui reste : une erreur inattendue à l'affichage, ou une
  * lecture de l'analyse en erreur (base injoignable : la page lève alors une
  * erreur au lieu de répondre « introuvable »). Il remplace, pour le rapport
- * seulement, l'écran général app/error.tsx : il dit que rien n'est perdu,
- * donne le numéro lu dans l'adresse, et ramène au tableau de bord plutôt qu'à
- * l'accueil. Il ne dit rien de cette analyse-ci : rien ne l'a lue.
+ * seulement, l'écran général app/error.tsx : il donne le numéro lu dans
+ * l'adresse et ramène au tableau de bord plutôt qu'à l'accueil.
+ *
+ * Texte fixé par Hector le 13/10 : « Ce rapport ne s'affiche pas pour le
+ * moment. Réessayez dans quelques instants. Numéro de l'analyse : [numéro]. »
+ * Il ne promet pas que l'analyse est enregistrée : la base peut être en
+ * panne, et rien n'a lu cette analyse-ci.
  *
  * Le détail de l'erreur ne s'affiche jamais ; seule sa référence (digest)
  * aide à la retrouver dans les journaux. Props : ErrorInfo de next/error
@@ -41,21 +45,13 @@ export default function ReportErrorPage({ error, retry }: ErrorInfo) {
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-background px-4 text-center text-foreground">
       <div className="max-w-md">
         <h1 className="font-heading text-h3 font-bold">
-          Ce rapport ne peut pas s&apos;afficher pour le moment
+          Ce rapport ne s&apos;affiche pas pour le moment.
         </h1>
-        <p className="mt-2 text-ui text-muted-foreground">
-          Rien n&apos;est perdu : vos analyses restent enregistrées. Réessayez dans un
-          instant ; si le rapport ne revient pas, écrivez-nous à{" "}
-          <a
-            href="mailto:legitvision.contact@gmail.com"
-            className="font-medium text-foreground underline underline-offset-2"
-          >
-            legitvision.contact@gmail.com
-          </a>{" "}
-          en indiquant le numéro de l&apos;analyse.
-        </p>
+        <p className="mt-2 text-ui text-muted-foreground">Réessayez dans quelques instants.</p>
         {numero && (
-          <p className="mt-3 text-ui font-medium text-foreground">Analyse #{numero}</p>
+          <p className="mt-3 text-ui font-medium text-foreground">
+            Numéro de l&apos;analyse : {numero}.
+          </p>
         )}
         {digest && (
           <p className="mt-1 text-caption text-muted-foreground">Référence : {digest}</p>
