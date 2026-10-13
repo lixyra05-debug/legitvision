@@ -8,6 +8,7 @@ import { expireStaleAnalyses } from "@/lib/analysis-stale";
 import { lookupCatalogNames } from "@/lib/analysis-history";
 import { zoneNamesForPoints } from "@/lib/zone-names";
 import { readAiConfidence, readFindings, readOcr, readProse, readSubScores, readTextList } from "@/lib/report-data";
+import { withoutPurchaseAdvice } from "@/lib/purchase-advice";
 
 /**
  * La réponse du modèle, telle qu'elle est enregistrée : JSONB, forme non
@@ -163,7 +164,10 @@ export default async function CheckReportPage(props: PageProps) {
     analystSummary: readProse(raw?.analyst_summary),
     missingEvidence: readTextList(raw?.missing_evidence),
     ocrExtracted: readOcr(raw?.ocr_extracted),
-    recommendations: readTextList(raw?.recommendations),
+    // Jamais de conseil d'achat ou de paiement à l'écran (décision du 13/10) :
+    // la consigne l'interdit à l'IA, ceci retire ce qui passerait quand même,
+    // dans les rapports déjà enregistrés aussi (lib/purchase-advice.ts).
+    recommendations: withoutPurchaseAdvice(readTextList(raw?.recommendations)),
     aiConfidence: readAiConfidence(raw?.confidence_level),
     createdAt: row.created_at,
     // Seulement les noms des zones : ni les points, ni leurs poids. Modèle
