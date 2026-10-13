@@ -538,7 +538,14 @@ test("page de repli du rapport : le texte fixé par Hector, le numéro de l'anal
   for (const present of ["Réessayer", "Tableau de bord"]) {
     assert.ok(page.includes(present), `« ${present} » absent : ${page}`);
   }
-  // Aucune promesse, ni sur l'analyse (la base peut être en panne, et rien ne l'a lue), ni sur une réponse.
+  // Aucune promesse, ni sur l'analyse (la base peut être en panne, et rien ne l'a lue), ni sur une réponse : la page
+  // dit ces phrases, dans cet ordre, et rien d'autre. Une phrase ajoutée, quelle qu'elle soit, fait échouer ce test.
+  assert.equal(
+    page,
+    "Ce rapport ne s'affiche pas pour le moment. Réessayez dans quelques instants. Numéro de l'analyse : 0F8FAD5B. " +
+      "Si le rapport ne revient pas, écrivez-nous à legitvision.contact@gmail.com en indiquant ce numéro. " +
+      "Référence : 1234567890 Réessayer Tableau de bord",
+  );
   for (const promesse of ["enregistr", "perdu", "sauvegard", "conserv", "répond", "sous 24", "rembours", "garanti"]) {
     assert.ok(!page.toLowerCase().includes(promesse), `« ${promesse} » : promesse affichée : ${page}`);
   }
@@ -562,6 +569,15 @@ test("page de repli du rapport : sans référence ni numéro lisibles, elle s'af
     const html = repli(error, params);
     const page = texte(html);
     assert.ok(page.includes("Ce rapport ne s'affiche pas pour le moment. Réessayez dans quelques instants.") && page.includes("Réessayer"), `${cas} : ${page}`);
+    // Le texte entier, sans référence : avec le numéro quand l'adresse en porte un, sans lui sinon. (L'espace devant le
+    // point final vient de la lecture du texte, qui sépare l'adresse de ce qui la suit ; à l'écran il n'y en a pas : voir plus bas.)
+    assert.equal(
+      page,
+      "id" in params && typeof params.id === "string"
+        ? "Ce rapport ne s'affiche pas pour le moment. Réessayez dans quelques instants. Numéro de l'analyse : 0F8FAD5B. Si le rapport ne revient pas, écrivez-nous à legitvision.contact@gmail.com en indiquant ce numéro. Réessayer Tableau de bord"
+        : "Ce rapport ne s'affiche pas pour le moment. Réessayez dans quelques instants. Si le rapport ne revient pas, écrivez-nous à legitvision.contact@gmail.com . Réessayer Tableau de bord",
+      cas,
+    );
     assert.ok(!page.includes("Référence :"), `${cas} : ${page}`);
     // Sans identifiant lisible dans l'adresse, la phrase du numéro n'est pas affichée (jamais un numéro vide).
     const avecNumero = "id" in params && typeof params.id === "string";
