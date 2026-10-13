@@ -57,7 +57,7 @@ Localisation : Paris, France
 │   │   └── config.ts       # Produits et prix
 │   ├── ai/
 │   │   ├── analyze.ts      # Fonction d'analyse vision
-│   │   ├── prompts.ts      # System + User prompts
+│   │   ├── authentication-prompts.ts  # La consigne envoyée à l'IA (system + user)
 │   │   └── scoring.ts      # Calcul score pondéré
 │   ├── utils.ts
 │   └── types.ts            # Types TypeScript globaux
@@ -116,7 +116,7 @@ PURGE_HEARTBEAT_URL=
 - Pas de console.log en production — utiliser un logger
 
 ## Règles Critiques
-1. JAMAIS écrire "certifié authentique" ou "garanti" — toujours "estimation", "probabilité", "score de confiance"
+1. JAMAIS écrire "certifié authentique", "garanti" ni "certificat" pour décrire le rapport ou le service — toujours "estimation", "probablement" (pour un verdict), "score de confiance" ; jamais "probabilité" : le score n'en est pas une (décisions d'Hector, 2026-09-30 et 2026-10-04). "Certificat" et "garantie" ne s'emploient qu'en négation dans les textes du site (« ce n'est pas un certificat »). Jamais non plus de formulation qui ressemble à un conseil d'achat (« n'achetez pas », « ne payez pas », « vous pouvez l'acheter ») : le rapport propose de vérifier davantage, la décision reste au client (décision d'Hector, 2026-10-13). La consigne envoyée à l'IA (`lib/ai/authentication-prompts.ts`) lui interdit, dans tous les champs et même à la négative : les conseils d'achat, « probabilité », « chances », « certification », « certifié », « garanti », « garantie », « frauduleux », « fraude », « arnaque » et « escroquerie » ; elle écrit à la place « estimation visuelle », « non conforme », « indices de contrefaçon ». « Certificat » reste permis comme nom de document ; un texte recopié d'une photo, entre « », peut porter ces mots tel quel ; l'IA ne cite JAMAIS un score (ni chiffre, ni pourcentage) dans un texte : le score n'apparaît que dans le champ prévu par l'interface (décisions d'Hector, 2026-10-13). `lib/forbidden-wording.ts` reconnaît ces formulations ; `lib/purchase-advice.ts` retire du rapport une recommandation qui porte un conseil d'achat. Tests : `tests/unit/consigne-sans-conseil-achat.test.ts` (dont l'empreinte de la consigne) et `tests/unit/consigne-mots-interdits.test.ts`. Suivi : chaque semaine, `supabase/checks/compteur-formulations.sql` (une requête, lecture seule) compte ces formulations dans les vrais rapports et liste à part celles qui sont entre guillemets ; `tests/unit/compteur-formulations.test.ts` la tient alignée sur `lib/forbidden-wording.ts`.
 2. TOUJOURS vérifier les crédits avant de lancer une analyse
 3. TOUJOURS valider la qualité des photos avant envoi à l'API (résolution min 800x800, format JPEG/PNG/WebP)
 4. Les photos sont stockées dans Supabase Storage bucket "analysis-photos" avec path: {user_id}/{analysis_id}/{photo_type}.{extension} (un seul nom simple : `lib/photo-path.ts`, vérifié aussi en base)
