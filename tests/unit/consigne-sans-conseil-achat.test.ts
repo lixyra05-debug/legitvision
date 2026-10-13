@@ -13,6 +13,8 @@
 // conseil, si une formule d'achat ou de paiement n'est plus reconnue, si une
 // vérification légitime (« demandez la preuve d'achat ») est retirée à tort,
 // si un conseil d'achat s'affiche dans un rapport, ou si la consigne change.
+// Les autres mots interdits à l'IA (probabilité, certification, frauduleux,
+// arnaque) : tests/unit/consigne-mots-interdits.test.ts.
 import { test, mock } from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
@@ -91,7 +93,7 @@ test("consigne : son empreinte. Elle ne change pas par mégarde, et jamais penda
   // régénérer la requête figée de l'outil de fiabilité, et le dire à Hector.
   const { systemPrompt, userPrompt } = getAuthenticationPrompt("Nike", "Dunk Low", "sneakers", POINTS, PHOTOS);
   const empreinte = createHash("sha256").update(`${systemPrompt}\n\u0000\n${userPrompt}`).digest("hex");
-  assert.equal(empreinte, "2cb6ccf674b4518fc03e9570537f8c4349b023888f90673824a6dcaba46c8b23");
+  assert.equal(empreinte, "c4406fa3b20c182380587dd301a82ccb8b11236f52abdecb1f25d254f4154700");
 });
 
 // ── 2. Reconnaître un conseil d'achat ou de paiement ───────
