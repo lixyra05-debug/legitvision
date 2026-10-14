@@ -196,11 +196,11 @@ export const CHATBOT_RULES: ChatbotRule[] = [
       fr:
         "Vous pouvez nous contacter par email :\n" +
         `📧 ${CONTACT_EMAIL}\n\n` +
-        "Nous répondons sous 24h du lundi au vendredi. N'hésitez pas à nous envoyer des captures d'écran si vous rencontrez un problème technique.",
+        "Nous répondons dès que possible. N'hésitez pas à nous envoyer des captures d'écran si vous rencontrez un problème technique.",
       en:
         "You can reach us by email:\n" +
         `📧 ${CONTACT_EMAIL}\n\n` +
-        "We reply within 24 hours, Monday to Friday. Don't hesitate to send screenshots if you encounter a technical issue.",
+        "We reply as soon as possible. Don't hesitate to send screenshots if you encounter a technical issue.",
     },
   },
   {
