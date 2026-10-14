@@ -16,7 +16,8 @@
  * La consigne les interdit à l'IA (lib/ai/authentication-prompts.ts). Ce
  * fichier les reconnaît dans un texte. Le compteur hebdomadaire des vrais
  * rapports (supabase/checks/compteur-formulations.sql, lecture seule) suit les
- * mêmes familles, écrites en SQL ; son banc les confronte à ce fichier.
+ * mêmes familles : ses motifs sont la traduction en SQL de ceux de ce fichier
+ * et de lib/purchase-advice.ts, réécrite par son test (COMPTEUR_MAJ=oui).
  *
  * Ne sont pas des formulations interdites :
  * - « probablement authentique », « probable contrefaçon » : le verdict se dit
@@ -41,10 +42,10 @@ export type ForbiddenWording = (typeof FORBIDDEN_WORDINGS)[number];
 
 // L'apostrophe peut être droite ou typographique.
 const A = "['’]";
-// « 85 % », « 85% », « 85,5 % », « 85 pour cent ».
-const POURCENT = /\d{1,3}(?:[.,]\d+)?\s*(?:%|pour\s*cent)/i;
+// « 85 % », « 85% », « 85,5 % », « 85 pour cent ». Exporté pour le compteur hebdomadaire, qui le traduit en SQL.
+export const POURCENT = /\d{1,3}(?:[.,]\d+)?\s*(?:%|pour\s*cent)/i;
 // Ce dont parle une phrase quand son pourcentage est une chance ou une certitude. « sûr » porte son accent : « sur » n'en est pas un.
-const SUJET_D_UN_POURCENTAGE = new RegExp(
+export const SUJET_D_UN_POURCENTAGE = new RegExp(
   `authenti|contref|confiance|certitude|fiab|probab|\\brisque|\\bchances?\\b|\\bscore|\\bsûre?s?(?![a-zà-öø-ÿ])|\\bverdict`,
   "i",
 );
@@ -59,7 +60,8 @@ function phrases(text: string): string[] {
   return text.split(/(?<=[.!?…;])\s+/);
 }
 
-const MOTIFS: Record<Exclude<ForbiddenWording, "purchase_advice">, RegExp[]> = {
+/** Les motifs des cinq autres familles. Exportés pour le compteur hebdomadaire, qui les traduit en SQL. */
+export const MOTIFS: Record<Exclude<ForbiddenWording, "purchase_advice">, readonly RegExp[]> = {
   probability: [
     /probabilit/i,
     // « de fortes chances », « 9 chances sur 10 », « aucune chance que… ». Pas « par chance », « deuxième chance ».

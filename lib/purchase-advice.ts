@@ -41,6 +41,8 @@ const NE = `\\bn(?:e\\s+|${A}\\s*)(?:(?:surtout\\s+)?(?:pas|jamais|plus|rien)\\s
 const PAS_UNE_CONDITION = `(?<!\\b(?:si|quand|lorsque)\\s+(?:vous|tu|on|l${A}on)\\s+(?:n${A}\\s*|ne\\s+)?(?:l${A}\\s*|les\\s+|le\\s+|la\\s+)?)`;
 /** Ni après un sujet : « vous achetez », « que vous n'achetez pas » décrivent, ils ne conseillent pas. */
 const PAS_UN_CONSTAT = `(?<!\\b(?:vous|tu)\\s+(?:n${A}\\s*|ne\\s+)?(?:l${A}\\s*|les\\s+|le\\s+|la\\s+)?)`;
+/** Ni dans un but : « pour acheter en confiance, demandez la facture », « pour un achat sûr, faites authentifier la paire » disent quoi vérifier. */
+const PAS_UN_BUT = `(?<!\\b(?:pour\\s+|afin\\s+d${A}\\s*|avant\\s+d${A}\\s*|de\\s+quoi\\s+|permet\\w*\\s+d${A}\\s*)(?:un\\s+|une\\s+|l${A}\\s*|cet\\s+|cette\\s+|votre\\s+)?)`;
 /** L'achat comme objet : « cet achat », « l'achat », « tout paiement », « la transaction ». */
 const OBJET = `(?:cet\\s+|cette\\s+|l${A}\\s*|la\\s+|le\\s+|tout\\s+|toute\\s+|aucun\\s+|aucune\\s+|un\\s+tel\\s+|une\\s+telle\\s+|votre\\s+|son\\s+|ce\\s+type\\s+d${A}\\s*)(?:achat|acquisition|transaction|paiement|r[èe]glement|virement)`;
 /** « achat », mais pas dans « preuve d'achat », « date d'achat », « facture d'achat ». */
@@ -68,10 +70,10 @@ export const PURCHASE_ADVICE_PATTERNS: readonly RegExp[] = [
 
   // ── L'achat conseillé, déconseillé, évité ──
   // « achat à éviter », « achat déconseillé », « achat non recommandé », « transaction déconseillée », « l'achat est déconseillé »,
-  // « achat recommandé », « achat sûr », « achat sans risque ». Jamais « preuve d'achat recommandée ».
+  // « achat recommandé », « achat sûr », « achat sans risque ». Jamais « preuve d'achat recommandée », ni « pour un achat sûr, demandez… ».
   new RegExp(
-    `${ACHAT}(?:\\s+(?:est|reste|semble|para[îi]t|serait)(?:\\s+donc)?)?\\s+(?:(?:fortement|vivement|clairement|vraiment|très|tout\\s+à\\s+fait|non|peu|pas)\\s+)*` +
-      `(?:à\\s+[ée]viter|à\\s+proscrire|à\\s+fuir|d[ée]conseill${SUITE}|recommand[ée]e?s?${FIN}|conseill[ée]e?s?${FIN}|sûre?s?${FIN}|risqu[ée]e?s?${FIN}|sans\\s+risque|possible\\s+sans|en\\s+toute\\s+(?:confiance|s[ée]curit[ée]|s[ée]r[ée]nit[ée]))`,
+    `${PAS_UN_BUT}${ACHAT}(?:\\s+(?:est|reste|semble|para[îi]t|serait)(?:\\s+donc)?)?\\s+(?:(?:fortement|vivement|clairement|vraiment|très|tout\\s+à\\s+fait|non|peu|pas)\\s+)*` +
+      `(?:à\\s+[ée]viter|à\\s+proscrire|à\\s+fuir|d[ée]conseill${SUITE}|recommand[ée]e?s?${FIN}|conseill[ée]e?s?${FIN}|sûre?s?${FIN}|risqu[ée]e?s?${FIN}|sans\\s+risque|possible\\s+sans|en\\s+(?:toute\\s+)?(?:confiance|s[ée]curit[ée]|s[ée]r[ée]nit[ée]))`,
     "i",
   ),
   // « je déconseille l'achat », « je ne recommande pas l'achat », « nous conseillons d'acheter ». Jamais « il est recommandé de demander la facture d'achat ».
@@ -91,9 +93,11 @@ export const PURCHASE_ADVICE_PATTERNS: readonly RegExp[] = [
   new RegExp(`\\bpeut\\s+être\\s+achet[ée]e?s?${FIN}`, "i"),
   // « n'hésitez pas à l'acheter ».
   new RegExp(`h[ée]sit\\w*\\s+(?:pas\\s+)?à\\s+(?:l${A}\\s*|les\\s+|le\\s+|la\\s+)?(?:acheter|acqu[ée]rir|payer)`, "i"),
-  // « acheter en toute confiance », « achetez les yeux fermés », « achat en toute confiance ».
+  // « acheter en toute confiance », « achetez en confiance », « achetez les yeux fermés », « achat en confiance ».
+  // Jamais dans un but (« pour acheter en confiance, demandez la facture »), une condition (« si vous achetez en confiance… »)
+  // ni un constat (« vous achetez en confiance », « article acheté en confiance selon le vendeur »).
   new RegExp(
-    `(?:\\b(?:acheter|achetez|achet[ée]e?s?|acqu[ée]rir)${FIN}|${ACHAT})[^.!?]{0,20}\\b(?:en\\s+toute\\s+(?:confiance|s[ée]curit[ée]|s[ée]r[ée]nit[ée])|sans\\s+(?:crainte|risque|h[ée]siter|h[ée]sitation)|les\\s+yeux\\s+ferm[ée]s)`,
+    `(?:${PAS_UNE_CONDITION}${PAS_UN_CONSTAT}${PAS_UN_BUT}\\b(?:acheter|achetez|acqu[ée]rir)${FIN}|${PAS_UN_BUT}${ACHAT})[^.!?]{0,20}\\b(?:en\\s+(?:toute\\s+)?(?:confiance|s[ée]curit[ée]|s[ée]r[ée]nit[ée])|sans\\s+(?:crainte|risque|h[ée]siter|h[ée]sitation)|les\\s+yeux\\s+ferm[ée]s)`,
     "i",
   ),
   // « bonne affaire », « foncez ».
