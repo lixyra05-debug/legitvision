@@ -50,7 +50,7 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
         {SUBSCRIPTIONS_ON_SALE && (
           <a
             href="/checkout?plan=business"
-            className="flex items-center gap-1.5 rounded-md bg-accent/10 px-3 py-1.5 text-caption font-medium text-accent transition-colors duration-fast hover:bg-accent/20"
+            className="flex items-center gap-1.5 rounded-md bg-accent/10 px-3 py-1.5 text-caption font-medium text-accent transition-colors duration-fast hover:bg-accent/20 hover:text-accent-hover"
           >
             <Crown className="size-3" />
             {t("planBanner.upgradeToBusiness")}
@@ -72,7 +72,7 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
         </div>
         <a
           href="/checkout?plan=single"
-          className="flex items-center justify-center gap-1.5 rounded-md border border-accent/30 bg-accent/10 px-3 py-1.5 text-caption font-semibold text-accent transition-colors duration-fast hover:bg-accent/20"
+          className="flex items-center justify-center gap-1.5 rounded-md border border-accent/30 bg-accent/10 px-3 py-1.5 text-caption font-semibold text-accent transition-colors duration-fast hover:bg-accent/20 hover:text-accent-hover"
         >
           <Zap className="size-3" />
           {t("planBanner.singleCta")}
@@ -92,7 +92,7 @@ export function PlanBanner({ plan, creditsRemaining }: PlanBannerProps) {
       <div className="flex gap-2">
         <a
           href="/checkout?plan=pro"
-          className="flex items-center gap-1.5 rounded-md border border-accent/30 bg-accent/10 px-3 py-1.5 text-caption font-semibold text-accent transition-colors duration-fast hover:bg-accent/20"
+          className="flex items-center gap-1.5 rounded-md border border-accent/30 bg-accent/10 px-3 py-1.5 text-caption font-semibold text-accent transition-colors duration-fast hover:bg-accent/20 hover:text-accent-hover"
         >
           <Zap className="size-3" />
           {t("planBanner.proCta")}

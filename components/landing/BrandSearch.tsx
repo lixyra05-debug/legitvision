@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { Search } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
-import { NO_AUTH_POINTS } from "@/lib/analyzable";
+import { chargerCatalogueRecherche } from "@/lib/catalogue-recherche";
 
 /**
  * Design system : surfaces et bordures opaques. L'emerald reste dosé : il ne
@@ -58,36 +58,11 @@ export function BrandSearch() {
 
   useEffect(() => {
     async function load() {
-      const supabase = createClient();
-      // Seuls les modèles analysables, et les marques qui en ont au moins un :
-      // voir lib/analyzable.ts
-      const [{ data: brandsData }, { data: modelsData }] = await Promise.all([
-        supabase
-          .from("brands")
-          .select("id, name, category, models!inner()")
-          .eq("models.is_active", true)
-          .neq("models.authentication_points", NO_AUTH_POINTS)
-          .order("name"),
-        supabase
-          .from("models")
-          .select("id, name, brands(name, category)")
-          .eq("is_active", true)
-          .neq("authentication_points", NO_AUTH_POINTS)
-          .order("name"),
-      ]);
-
-      if (brandsData) setBrands(brandsData);
-      if (modelsData) {
-        setModels(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (modelsData as any[]).map((m) => ({
-            id: m.id,
-            name: m.name,
-            brand_name: m.brands?.name ?? "",
-            category: m.brands?.category ?? "",
-          }))
-        );
-      }
+      // Seuls les modèles analysables, hors montres, et les marques qui en ont
+      // au moins un : voir lib/catalogue-recherche.ts
+      const { marques, modeles } = await chargerCatalogueRecherche(createClient());
+      setBrands(marques);
+      setModels(modeles);
     }
     load();
   }, []);

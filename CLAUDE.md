@@ -57,7 +57,7 @@ Localisation : Paris, France
 │   │   └── config.ts       # Produits et prix
 │   ├── ai/
 │   │   ├── analyze.ts      # Fonction d'analyse vision
-│   │   ├── prompts.ts      # System + User prompts
+│   │   ├── authentication-prompts.ts  # La consigne envoyée à l'IA (system + user)
 │   │   └── scoring.ts      # Calcul score pondéré
 │   ├── utils.ts
 │   └── types.ts            # Types TypeScript globaux
@@ -78,6 +78,13 @@ Tables principales :
 - `analyses` : chaque analyse (scores, verdict, findings JSONB, status)
 - `analysis_photos` : photos par analyse (storage_path, photo_type, quality_check)
 - `credits_transactions` : historique crédits (type, amount, balance_after)
+- `analysis_costs` : coût de chaque appel au modèle (jetons, tarif catalogue, issue) ; fermée aux utilisateurs, le serveur lit et ajoute (migration 020)
+- `first_purchase_offers` : registre des analyses offertes au premier achat, automatiques ou accordées à la main, une par compte et une par carte (empreinte Stripe ; nulle : offre accordée à la main sans empreinte connue), gardé après remboursement ; fermée aux utilisateurs (migration 020)
+
+Fonctions réservées au serveur (service_role seulement, migration 020) :
+- `credit_single_purchase` : crédite un achat à l'unité et décide l'analyse offerte, en une transaction, une seule fois par paiement (appelée par le webhook Stripe).
+- `grant_first_purchase_offer` : accorde à la main l'analyse offerte d'un premier achat que le paiement n'a pas pu décider (empreinte absente, retour arrière), aux mêmes règles (un compte, une carte si l'empreinte est connue), jamais par des écritures directes ; Hector l'appelle sous `set local role service_role` et colle lui-même l'empreinte s'il l'a (Claude ne la recopie jamais).
+- `withdraw_first_purchase_offer` : retire l'analyse offerte non utilisée d'un premier achat remboursé, automatique ou accordée à la main ; Hector l'appelle sous `set local role service_role`.
 
 RLS OBLIGATOIRE sur toutes les tables. Un user ne voit que ses propres données.
 
@@ -90,11 +97,18 @@ ANTHROPIC_API_KEY=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+CRON_SECRET=
+RESEND_API_KEY=
+# Facultatives : alertes de la purge des photos (règle 12)
+PURGE_ALERT_EMAIL=
+PURGE_HEARTBEAT_URL=
 ```
 
 ## Design System
 - **Thème** : Dark mode premium (fond #0A0A0B, cartes #141416, accent emerald-500)
 - **Typographie** : Inter pour le body, Space Grotesk pour les titres
+  - **Marque** : le mot LEGITVISION, en texte (composant `Marque`, `components/brand/`), au style « Marque » de Figma : Archivo, graisse 800, largeur 125, espacement des lettres 0,02 em, interligne 100 %, 17 px sur téléphone et 20 px dès 640 px. Police locale réduite aux lettres du mot (`components/brand/police-marque.ts`) : changer le texte impose de régénérer le sous-ensemble, ce que `tests/unit/marque.test.ts` vérifie.
+  - **Logo** : aucune image du logo dans l'interface jusqu'au nouveau logo d'Hector. Hors de l'interface, quatre visuels différents (relevé du 2026-10-05) : les e-mails (`lib/emails/base-template.ts`, et `supabase/emails/confirm-signup.html`, modèle de la confirmation d'inscription que rien ne déploie depuis le dépôt : il se reporte à la main dans Supabase) gardent l'ancien logo, le monogramme LV de `public/images/legitvision-logo.png` ; le logo des données structurées (`Organization.logo` : `app/layout.tsx`, `lib/seo/schema-parts.ts`) est `public/logo.png`, un bouclier coché ; les images de partage (`lib/seo/og-template.tsx`) dessinent un carré « L » suivi du nom, sans image de logo ; l'icône d'onglet (`app/favicon.ico`), celle que Google affiche aussi à côté du site dans ses résultats, est l'icône par défaut de Next.js (triangle blanc sur disque noir, fichier de create-next-app jamais remplacé).
 - **Couleurs de score** : emerald (90-100), yellow (70-89), orange (50-69), red (0-49)
 - **Style** : inspiration StockX/GOAT — propre, minimal, premium
 - **Mobile-first** : 80% des utilisateurs seront sur mobile
@@ -109,7 +123,7 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 - Pas de console.log en production — utiliser un logger
 
 ## Règles Critiques
-1. JAMAIS écrire "certifié authentique" ou "garanti" — toujours "estimation", "probabilité", "score de confiance"
+1. JAMAIS écrire "certifié authentique", "garanti" ni "certificat" pour décrire le rapport ou le service — toujours "estimation", "probablement" (pour un verdict), "score de confiance" ; jamais "probabilité" : le score n'en est pas une (décisions d'Hector, 2026-09-30 et 2026-10-04). "Certificat" et "garantie" ne s'emploient qu'en négation dans les textes du site (« ce n'est pas un certificat »). Jamais non plus de formulation qui ressemble à un conseil d'achat (« n'achetez pas », « ne payez pas », « vous pouvez l'acheter ») : le rapport propose de vérifier davantage, la décision reste au client (décision d'Hector, 2026-10-13). La consigne envoyée à l'IA (`lib/ai/authentication-prompts.ts`) lui interdit, dans tous les champs et même à la négative : les conseils d'achat, « probabilité », « chances », « certification », « certifié », « garanti », « garantie », « frauduleux », « fraude », « arnaque » et « escroquerie » ; elle écrit à la place « estimation visuelle », « non conforme », « indices de contrefaçon ». « Certificat » reste permis comme nom de document ; un texte recopié d'une photo, entre « », peut porter ces mots tel quel ; l'IA ne cite JAMAIS un score (ni chiffre, ni pourcentage) dans un texte : le score n'apparaît que dans le champ prévu par l'interface (décisions d'Hector, 2026-10-13). `lib/forbidden-wording.ts` reconnaît ces formulations ; `lib/purchase-advice.ts` retire du rapport une recommandation qui porte un conseil d'achat. Tests : `tests/unit/consigne-sans-conseil-achat.test.ts` (dont l'empreinte de la consigne) et `tests/unit/consigne-mots-interdits.test.ts`. Suivi : chaque semaine, `supabase/checks/compteur-formulations.sql` (une requête, lecture seule) compte ces formulations dans les vrais rapports et liste à part celles qui sont entre guillemets ; `tests/unit/compteur-formulations.test.ts` la tient alignée sur `lib/forbidden-wording.ts`.
 2. TOUJOURS vérifier les crédits avant de lancer une analyse
 3. TOUJOURS valider la qualité des photos avant envoi à l'API (résolution min 800x800, format JPEG/PNG/WebP)
 4. Les photos sont stockées dans Supabase Storage bucket "analysis-photos" avec path: {user_id}/{analysis_id}/{photo_type}.{extension} (un seul nom simple : `lib/photo-path.ts`, vérifié aussi en base)
@@ -120,11 +134,11 @@ NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 9. Les chiffres affichés — marques et modèles analysables, durée d'analyse, prix, quotas des formules, zones, points — viennent de `lib/site-facts.ts`, la source unique. Ne jamais les écrire à la main dans un texte : les lire depuis ce fichier (`facts()` pour les textes, `PRICES` / `CATALOG` pour les valeurs brutes). Une valeur ne change qu'après une nouvelle mesure, datée dans ce fichier.
 10. Les comptes des guides SEO (guides modèle, signal, plateforme × marque, plateformes, marques, étapes, signaux par guide) sont CALCULÉS depuis `lib/seo/data` par `lib/seo/seo-facts.ts`. Jamais écrits à la main, même dans un titre ou une image OG.
 11. Aucune statistique sans source dans le contenu (SEO compris) : proportion ou probabilité de contrefaçons, efficacité d'un signal, taux, volumes, chiffres d'affaires, évolutions de prix en %, classements « les plus contrefaits / populaires ». « Selon les estimations » ou « selon les douanes » ne sont pas des sources. Le 2026-09-25, toutes celles du contenu SEO ont été retirées ; n'en remettre une qu'avec sa source citée et vérifiée. Restent permis : mesures d'objet, prix, règles publiées par une plateforme ou une marque, seuils de conseil.
-12. Les photos d'analyse sont supprimées `PHOTO_RETENTION_DAYS` jours (30) après leur envoi par la purge quotidienne (`lib/purge-photos.ts`, route `/api/cron/purge-photos` appelée par Vercel Cron, `CRON_SECRET` requis). La politique de confidentialité le promet : ne jamais afficher de photo dans un rapport ni en garder de copie ailleurs ; quand la revue expert existera, la faire avant l'échéance.
+12. Les photos d'analyse sont supprimées `PHOTO_RETENTION_DAYS` jours (30) après leur envoi par la purge lancée toutes les 6 heures (`lib/purge-photos.ts`, route `/api/cron/purge-photos` appelée par Vercel Cron, `CRON_SECRET` requis ; sa marge de 13 h, calculée dans ce fichier, tient les 30 jours même si une passe échoue). La politique de confidentialité le promet : ne jamais afficher de photo dans un rapport ni en garder de copie ailleurs ; quand la revue expert existera, la faire avant l'échéance. Alertes de la route : un e-mail part à `PURGE_ALERT_EMAIL`, sinon à legitvision.contact@gmail.com (envoi par Resend, `RESEND_API_KEY` requise), quand un passage lève une erreur ou trouve une photo de plus de 30 jours ; après chaque passage réussi, un battement part vers `PURGE_HEARTBEAT_URL` si elle est posée (sonde externe). Un passage coupé par la limite de 300 s (`maxDuration`) n'envoie ni e-mail ni battement, pas plus qu'un passage qui n'a pas eu lieu : seule la sonde le signale avant que les 30 jours soient dépassés, d'où la nécessité de poser `PURGE_HEARTBEAT_URL`. Un passage `?dry=1` ne signale rien.
 13. Le nombre de photos affiché vient du protocole de la ligne de marque (`brands.photo_protocol` : emplacements obligatoires, puis au total), jamais de `models.min_photos` / `max_photos`, qui ne sont pas tenus à jour.
 14. Contenu d'authentification : une couleur, une date, une gravure ou un résultat de scan présentés comme obligatoires font soupçonner des articles authentiques. N'en écrire qu'avec une source vérifiée (corrigés le 2026-09-25 : fermoir du 2.55 et du Classic Flap, pieds du GST, codes millésime Hermès, puce LV).
 15. Une analyse n'est écrite que par le serveur (clé service_role, route `/api/analyze`) : statut « analyzing » et suivants, score, verdict, observations, réponse du modèle. Le navigateur crée une analyse vide, ne la fait avancer qu'avant son lancement (uploading → pending, → failed), et n'ajoute une photo qu'à une analyse encore « uploading », dans son propre dossier. En base : déclencheur `guard_analyses` et règle `analysis_photos_insert_own` (migration 018). Correction à la main : `set local role service_role;` dans la transaction, comme pour les profils (`guard_profiles`).
-16. Toute fonction, tout déclencheur, toute règle RLS et tout droit de la base vivent dans `supabase/migrations/` : rien ne se crée à la main dans l'éditeur SQL. Un changement passe par une migration testée et relue, qu'Hector exécute. Chaque migration s'inscrit dans `private.migrations` et refuse de se rejouer après une plus récente (modèle : la 019) ; son contrôle tourne dans sa transaction, son retour arrière est dans `supabase/scripts/`. Dérive : `supabase/checks/etat_base.sql`, exécuté en lecture seule, doit reproduire `supabase/checks/etat_base.attendu.tsv` ; après chaque migration exécutée, relever la sortie en production et committer le nouvel attendu. Les droits par défaut de postgres sont fermés : une nouvelle table ou fonction n'est ouverte à anon ou authenticated que par un `grant` écrit dans sa migration.
+16. Toute fonction, tout déclencheur, toute règle RLS, tout droit et toute structure de table (colonnes, contraintes, index) de la base vivent dans `supabase/migrations/` : rien ne se crée ni ne se modifie à la main dans l'éditeur SQL. Les migrations reconstruisent une base neuve de bout en bout (vérifié le 2026-09-28 : la 010 a été réécrite pour cela, une contrainte de `brands` ayant été changée à la main en 2026-04). Un changement passe par une migration testée et relue, qu'Hector exécute. Chaque migration s'inscrit dans `private.migrations` et refuse de se rejouer après une plus récente (modèle : la 019) ; son contrôle tourne dans sa transaction, son retour arrière est dans `supabase/scripts/`. Dérive : `supabase/checks/etat_base.sql` (sécurité et structure des tables), exécuté en lecture seule, doit reproduire `supabase/checks/etat_base.attendu.tsv` ; après chaque migration exécutée, relever la sortie en production et committer le nouvel attendu. Les droits par défaut de postgres sont fermés : une nouvelle table ou fonction n'est ouverte à anon ou authenticated que par un `grant` écrit dans sa migration.
 
 ## Flux Principal (Happy Path)
 1. User se connecte → /dashboard

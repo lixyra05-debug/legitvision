@@ -1,0 +1,384 @@
+[
+ {
+  "zone": "box_label",
+  "ancien": "Boite et emballage (etiquette, code-barres)",
+  "nouveau": "Étiquette de la boîte (boîte et emballage : étiquette, code-barres)",
+  "points": 84,
+  "ids": null
+ },
+ {
+  "zone": "box_label",
+  "ancien": "Étiquette boîte",
+  "nouveau": "Étiquette de la boîte",
+  "points": 1,
+  "ids": [
+   "e889525e-f5f2-41d2-8ef1-8abbf5db36a4"
+  ]
+ },
+ {
+  "zone": "box_label",
+  "ancien": "Étiquette boîte (code barre, SKU)",
+  "nouveau": "Étiquette de la boîte (code-barres, SKU)",
+  "points": 1,
+  "ids": [
+   "7c83ee59-3f09-481d-b10d-b7df61f3226b"
+  ]
+ },
+ {
+  "zone": "eyelets",
+  "ancien": "Oeillets et lacets",
+  "nouveau": "Œillets et lacets",
+  "points": 84,
+  "ids": null
+ },
+ {
+  "zone": "hardware",
+  "ancien": "Hardware/ferrures (gravure, poids, finition)",
+  "nouveau": "Pièces métalliques (gravure, poids, finition)",
+  "points": 175,
+  "ids": null
+ },
+ {
+  "zone": "heart_on_back",
+  "ancien": "Broderie coeur dos du sac",
+  "nouveau": "Broderie cœur dos du sac",
+  "points": 1,
+  "ids": null
+ },
+ {
+  "zone": "heel_tab",
+  "ancien": "Tab talon",
+  "nouveau": "Languette du talon",
+  "points": 1,
+  "ids": null
+ },
+ {
+  "zone": "heel_tab",
+  "ancien": "Tab talon (forme, coutures)",
+  "nouveau": "Languette du talon (forme, coutures)",
+  "points": 2,
+  "ids": null
+ },
+ {
+  "zone": "heel_tab",
+  "ancien": "Tab talon (forme, logo)",
+  "nouveau": "Languette du talon (forme, logo)",
+  "points": 1,
+  "ids": null
+ },
+ {
+  "zone": "heel_tab",
+  "ancien": "Tab talon (pull tab)",
+  "nouveau": "Languette du talon (pull tab)",
+  "points": 1,
+  "ids": null
+ },
+ {
+  "zone": "heel_tab_stitching",
+  "ancien": "Coutures du tab talon",
+  "nouveau": "Coutures de la languette du talon",
+  "points": 1,
+  "ids": null
+ },
+ {
+  "zone": "hot_stamp",
+  "ancien": "Stamp/marquage a chaud",
+  "nouveau": "Marquage à chaud",
+  "points": 175,
+  "ids": null
+ },
+ {
+  "zone": "interior_label",
+  "ancien": "Etiquette interieure (police, numero de serie)",
+  "nouveau": "Étiquette intérieure (police, numéro de série)",
+  "points": 175,
+  "ids": null
+ },
+ {
+  "zone": "jumpman_logo",
+  "ancien": "Logo Jumpman (langue)",
+  "nouveau": "Logo Jumpman (languette)",
+  "points": 1,
+  "ids": null
+ },
+ {
+  "zone": "leather",
+  "ancien": "Cuir/materiau (grain, odeur, souplesse)",
+  "nouveau": "Cuir et matières (grain, odeur, souplesse)",
+  "points": 175,
+  "ids": null
+ },
+ {
+  "zone": "logo_monogram",
+  "ancien": "Logo et monogramme (alignement, symetrie)",
+  "nouveau": "Logo et monogramme (alignement, symétrie)",
+  "points": 175,
+  "ids": null
+ },
+ {
+  "zone": "logo_placement",
+  "ancien": "Logo (placement, taille, symetrie)",
+  "nouveau": "Logo (placement, taille, symétrie)",
+  "points": 84,
+  "ids": null
+ },
+ {
+  "zone": "logo_placement",
+  "ancien": "Logo placement",
+  "nouveau": "Placement du logo",
+  "points": 31,
+  "ids": null
+ },
+ {
+  "zone": "materials",
+  "ancien": "Materiaux",
+  "nouveau": "Matériaux",
+  "points": 31,
+  "ids": null
+ },
+ {
+  "zone": "materials",
+  "ancien": "Materiaux (cuir, mesh, daim)",
+  "nouveau": "Matériaux (cuir, mesh, daim)",
+  "points": 84,
+  "ids": null
+ },
+ {
+  "zone": "neck_label",
+  "ancien": "Etiquette col",
+  "nouveau": "Étiquette de col",
+  "points": 28,
+  "ids": null
+ },
+ {
+  "zone": "neck_label",
+  "ancien": "Etiquette col (marque, taille, composition)",
+  "nouveau": "Étiquette de col (marque, taille, composition)",
+  "points": 98,
+  "ids": null
+ },
+ {
+  "zone": "packaging",
+  "ancien": "Emballage (dust bag, boite, certificat)",
+  "nouveau": "Emballage (dust bag, boîte, certificat)",
+  "points": 175,
+  "ids": null
+ },
+ {
+  "zone": "packaging",
+  "ancien": "Emballage et packaging",
+  "nouveau": "Emballage",
+  "points": 98,
+  "ids": null
+ },
+ {
+  "zone": "print_embroidery",
+  "ancien": "Print/Broderie",
+  "nouveau": "Imprimé et broderie",
+  "points": 28,
+  "ids": null
+ },
+ {
+  "zone": "print_embroidery",
+  "ancien": "Print/Broderie (qualite, alignement)",
+  "nouveau": "Imprimé et broderie (qualité, alignement)",
+  "points": 98,
+  "ids": null
+ },
+ {
+  "zone": "product_code",
+  "ancien": "Code produit interieur",
+  "nouveau": "Code produit intérieur",
+  "points": 84,
+  "ids": null
+ },
+ {
+  "zone": "sole_pattern",
+  "ancien": "Motif de la semelle",
+  "nouveau": "Semelle extérieure (motif)",
+  "points": 1,
+  "ids": [
+   "2493896c-fd12-4a4b-840e-33ad4279ef52"
+  ]
+ },
+ {
+  "zone": "sole_pattern",
+  "ancien": "Motif semelle extérieure",
+  "nouveau": "Semelle extérieure (motif)",
+  "points": 1,
+  "ids": [
+   "b772eebb-fb12-4591-b40e-ef75c1a28719"
+  ]
+ },
+ {
+  "zone": "sole_pattern",
+  "ancien": "Semelle",
+  "nouveau": "Semelle extérieure",
+  "points": 31,
+  "ids": null
+ },
+ {
+  "zone": "sole_pattern",
+  "ancien": "Semelle (motif, texture, logo)",
+  "nouveau": "Semelle extérieure (motif, texture, logo)",
+  "points": 84,
+  "ids": null
+ },
+ {
+  "zone": "stitching",
+  "ancien": "Coutures (regularite, couleur du fil, tension)",
+  "nouveau": "Coutures (régularité, couleur du fil, tension)",
+  "points": 175,
+  "ids": null
+ },
+ {
+  "zone": "tags",
+  "ancien": "Tags",
+  "nouveau": "Étiquettes volantes",
+  "points": 28,
+  "ids": [
+   "0104836a-2e18-4ad8-b4cd-b6bf462bc2cd",
+   "072ff902-9dd1-451e-96b7-ba5268d47f0d",
+   "1a9c8307-b7f0-44d2-a3ba-3550e6d9b668",
+   "2f829421-4576-4eee-ae8c-609b42950b46",
+   "36bf299d-d39b-4d84-b01c-69c5efba84cd",
+   "430a4e47-42a5-4143-b87c-d019e8dea7d5",
+   "478af667-ce04-4774-aa6d-5a4427c28811",
+   "55f36efc-f5e1-48fc-8b1b-5fa5c7c14a42",
+   "5b556ebf-715c-45b2-9387-049d0a64a618",
+   "670f31cc-b4dd-4a87-8973-0022094edd8f",
+   "7377f678-acbc-4dc4-9be2-780ecebe0ec5",
+   "79fb0a08-04c3-4c80-98a1-efd0e17896f4",
+   "818055ed-3e6e-48a8-a45b-e29a3feb8229",
+   "8278982c-3cbf-457b-b28f-2aef92c844d7",
+   "8447cae2-3515-4fbb-b6f9-c3e40fc0c930",
+   "8b1431f4-438b-4db3-94d9-6c7ab45cb536",
+   "9d3be398-3245-4b5e-b40a-4b24bb3059c4",
+   "a3920bbd-69a1-4b3e-9891-8bec17a4c3d5",
+   "a68606c3-bfef-4c43-9489-8bacac036b79",
+   "a81fa359-f733-4477-aba5-de1331f3f3d0",
+   "b454c08b-daa9-4f60-a038-15afcf4bf166",
+   "c5abacf0-fbe7-461c-b46b-5819e39a47df",
+   "d31e42f6-70d4-4ce6-865e-ef203211c3a5",
+   "d94c24d1-f757-47d3-8e3d-dfefb32b3a1a",
+   "da03c1bd-9753-4286-8201-e36b2e2ecbf8",
+   "dc05da45-d7af-4b93-8e91-899b37638e52",
+   "e43ffcce-a1b2-4341-9ae5-5ca911bef059",
+   "f3737cac-2f66-4c08-b08a-cfa105840a5b"
+  ]
+ },
+ {
+  "zone": "tags",
+  "ancien": "Tags et etiquettes volantes",
+  "nouveau": "Étiquettes volantes",
+  "points": 98,
+  "ids": null
+ },
+ {
+  "zone": "tongue_label",
+  "ancien": "Etiquette de langue (taille, code produit, pays)",
+  "nouveau": "Étiquette de taille (languette : taille, code produit, pays)",
+  "points": 84,
+  "ids": null
+ },
+ {
+  "zone": "tongue_label",
+  "ancien": "Etiquette langue",
+  "nouveau": "Étiquette de taille (languette)",
+  "points": 31,
+  "ids": null
+ },
+ {
+  "zone": "tongue_label",
+  "ancien": "Patch Nike + étiquette taille avec SKU cohérent (HJ8463-001)",
+  "nouveau": "Étiquette de taille et patch Nike (SKU cohérent : HJ8463-001)",
+  "points": 1,
+  "ids": [
+   "1409f652-e22d-4b2f-b8de-6082d92988b1"
+  ]
+ },
+ {
+  "zone": "tongue_label",
+  "ancien": "Étiquette de languette",
+  "nouveau": "Étiquette de taille (languette)",
+  "points": 4,
+  "ids": [
+   "2cb54ed1-3481-4005-bacc-15835932f0be",
+   "3acb9017-3827-44a9-a9ef-0816a931e217",
+   "4f054073-97ea-4f19-afbb-19abbee48b61",
+   "ec9160c1-8c5f-4de4-ac0d-9f6e2ac34bc8"
+  ]
+ },
+ {
+  "zone": "tongue_tag",
+  "ancien": "Étiquette Nike Air de la languette",
+  "nouveau": "Badge de languette (Nike Air)",
+  "points": 1,
+  "ids": [
+   "f39bcc6e-e20f-445d-8aa4-5ec240204edf"
+  ]
+ },
+ {
+  "zone": "tongue_tag",
+  "ancien": "Étiquette de langue",
+  "nouveau": "Badge de languette",
+  "points": 3,
+  "ids": [
+   "2493896c-fd12-4a4b-840e-33ad4279ef52",
+   "acd520c0-aee1-49fd-b481-77dbf222c99d",
+   "db223881-394d-4f79-9d6e-bb7dbf35c113"
+  ]
+ },
+ {
+  "zone": "tongue_tag",
+  "ancien": "Étiquette de langue NB",
+  "nouveau": "Badge de languette (NB)",
+  "points": 1,
+  "ids": [
+   "b772eebb-fb12-4591-b40e-ef75c1a28719"
+  ]
+ },
+ {
+  "zone": "tongue_tag",
+  "ancien": "Étiquette de langue Nike Air",
+  "nouveau": "Badge de languette (Nike Air)",
+  "points": 1,
+  "ids": [
+   "de0eff69-8d02-49cc-a486-80ec8d2f0587"
+  ]
+ },
+ {
+  "zone": "tongue_tag",
+  "ancien": "Étiquette de languette",
+  "nouveau": "Badge de languette",
+  "points": 3,
+  "ids": [
+   "733ca653-636c-41db-992f-21795b50b4ba",
+   "ce12af11-4765-47d3-99f8-8d4a53c8d97f",
+   "d7e3e987-0922-48ca-8d74-7aad32f0e439"
+  ]
+ },
+ {
+  "zone": "tongue_tag",
+  "ancien": "Étiquette de languette (paragraphe net, centré, sans faute)",
+  "nouveau": "Badge de languette (paragraphe net, centré, sans faute)",
+  "points": 1,
+  "ids": [
+   "302aeaa6-ac01-465b-8a99-355f1b809396"
+  ]
+ },
+ {
+  "zone": "wash_label",
+  "ancien": "Etiquette de lavage",
+  "nouveau": "Étiquette d'entretien",
+  "points": 98,
+  "ids": null
+ },
+ {
+  "zone": "zipper",
+  "ancien": "Fermeture eclair (YKK/Lampo, fluidite)",
+  "nouveau": "Fermeture éclair (YKK/Lampo, fluidité)",
+  "points": 175,
+  "ids": null
+ }
+]

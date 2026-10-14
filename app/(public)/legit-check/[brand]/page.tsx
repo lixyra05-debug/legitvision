@@ -160,7 +160,7 @@ export default async function BrandLegitCheckHub(props: Props) {
                 href={`/legit-check/${brand.slug}/${model.slug}`}
                 className="group block rounded-lg border border-line-subtle bg-surface p-5 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
               >
-                <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
+                <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent-hover transition-colors duration-fast">
                   {model.name}
                 </h3>
                 <p className="mt-1 text-caption text-muted-foreground">

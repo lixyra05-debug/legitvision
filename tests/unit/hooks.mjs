@@ -5,7 +5,8 @@
 // Les paquets nommés (sharp, @anthropic-ai/sdk) gardent la résolution normale ;
 // un sous-chemin sans carte « exports » (next/server) essaie aussi « .js »,
 // comme le fait le bundler de Next.
-import { existsSync, statSync } from "node:fs";
+// Et un crochet de chargement : un fichier .tsx est transpilé par TypeScript.
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const RACINE = new URL("../../", import.meta.url);
@@ -41,4 +42,24 @@ export async function resolve(specifier, context, nextResolve) {
     }
     throw erreur;
   }
+}
+
+// Node retire les types d'un .ts, mais ne lit pas le JSX d'un .tsx. TypeScript
+// (déjà en devDependencies) le transpile en JSX automatique (react/jsx-runtime),
+// comme le compilateur de Next ; les .ts gardent le chargement natif.
+export async function load(url, context, nextLoad) {
+  if (!url.startsWith("file:") || !new URL(url).pathname.endsWith(".tsx")) {
+    return nextLoad(url, context);
+  }
+  const { default: ts } = await import("typescript");
+  const chemin = fileURLToPath(url);
+  const { outputText } = ts.transpileModule(readFileSync(chemin, "utf8"), {
+    fileName: chemin,
+    compilerOptions: {
+      jsx: ts.JsxEmit.ReactJSX,
+      module: ts.ModuleKind.ESNext,
+      target: ts.ScriptTarget.ES2022,
+    },
+  });
+  return { format: "module", source: outputText, shortCircuit: true };
 }
