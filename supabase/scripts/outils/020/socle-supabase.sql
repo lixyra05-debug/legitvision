@@ -25,9 +25,9 @@ create extension pgcrypto schema extensions;
 grant usage on schema extensions to anon, authenticated, service_role;
 
 grant usage on schema public to anon, authenticated, service_role;
-alter default privileges for role postgres in schema public grant all on tables to anon, authenticated, service_role;
-alter default privileges for role postgres in schema public grant all on functions to anon, authenticated, service_role;
-alter default privileges for role postgres in schema public grant all on sequences to anon, authenticated, service_role;
+alter default privileges for role postgres in schema public grant all on tables to postgres, anon, authenticated, service_role;
+alter default privileges for role postgres in schema public grant all on functions to postgres, anon, authenticated, service_role;
+alter default privileges for role postgres in schema public grant all on sequences to postgres, anon, authenticated, service_role;
 
 -- moddatetime : met la colonne nommée à now() avant chaque mise à jour.
 -- search_path fixé : en production, la vraie est une fonction d'extension, que les contrôles des migrations écartent.

@@ -41,7 +41,7 @@ function verifie(intitule, condition, detail = "") {
 }
 
 /** Une base neuve : socle, migrations 001 à 019, et quelques données qui ressemblent à la production. */
-async function baseNeuve() {
+async function baseNeuve({ production = true } = {}) {
   const db = new PGlite({ extensions: { uuid_ossp, pgcrypto } });
   await db.exec(SOCLE);
   for (const f of MIGRATIONS) {
@@ -65,15 +65,17 @@ async function baseNeuve() {
       ('00000000-0000-4000-8000-0000000000a2', 'bonus', 1, 2, 'Bonus', null),
       ('00000000-0000-4000-8000-0000000000a3', 'usage', -1, 0, 'Analyse', null);
     commit;`);
+  // Le repère de la production : l'heure à laquelle la 019 y a été appliquée (relevée le 2026-10-14). Sans lui, la requête d'état répond ÉCARTS.
+  if (production) await db.exec(`update private.migrations set appliquee_le = '2026-09-27T14:52:30.546896+00' where numero = 19;`);
   return db;
 }
 
 const derniere = (resultats) => resultats.at(-1)?.rows ?? [];
 
 /** La requête d'état, sous un réglage de search_path donné. */
-async function etat(db, searchPath = `"$user", public, extensions`) {
+async function etat(db, searchPath = `"$user", public, extensions`, texte = ETAT) {
   await db.exec(`set search_path = ${searchPath};`);
-  const lignes = derniere(await db.exec(ETAT));
+  const lignes = derniere(await db.exec(texte));
   await db.exec(`set search_path = "$user", public, extensions;`);
   return { verdict: String(lignes[0]?.resultat ?? ""), empreinte: String(lignes[0]?.empreinte_base ?? ""), lignes };
 }
@@ -85,9 +87,13 @@ async function etatBase(db) {
   await db.exec(`set search_path = "$user", public, extensions;`);
   return lignes.filter(garde);
 }
+/** Ce que le socle reproduit : les schémas public et private, les droits par défaut de postgres (public et global), les déclencheurs de auth.users. */
 function garde(ligne) {
-  const objet = ligne.split("\t")[1];
-  return (objet.startsWith("public.") || objet.startsWith("private.")) && !objet.startsWith("public.moddatetime(");
+  const [type, objet] = ligne.split("\t");
+  if (objet.startsWith("public.moddatetime(")) return false;
+  if (type === "droit-defaut") return objet.startsWith("postgres.public.") || objet.startsWith("postgres.global.");
+  if (type === "declencheur" && objet.startsWith("auth.users.")) return true;
+  return objet.startsWith("public.") || objet.startsWith("private.");
 }
 
 /** Les écritures et les comptes qui ne doivent pas bouger quand une étape est refusée. */
@@ -116,7 +122,7 @@ async function erreur(db, sql) {
   const l = new Set(local);
   const manque = attendu.filter((x) => !l.has(x));
   const enTrop = local.filter((x) => !a.has(x));
-  verifie(`base rejouée (001 à 019) = production : ${attendu.length} lignes des schémas public et private identiques`,
+  verifie(`base rejouée (001 à 019) = production : ${attendu.length} lignes identiques (schémas public et private, droits par défaut de postgres, déclencheurs de auth.users)`,
     manque.length === 0 && enTrop.length === 0 && attendu.length > 150, `manque ${manque.length}, en trop ${enTrop.length} : ${[...manque, ...enTrop].slice(0, 3).join(" || ")}`);
   await db.close();
 }
@@ -125,13 +131,18 @@ async function erreur(db, sql) {
 const mesure = {};
 {
   const db = await baseNeuve();
+  // D'abord le corps de la fonction qui remplace l'extension moddatetime : la requête l'écarte par lui.
+  mesure.doublure = String(derniere(await db.exec(`select md5(prosrc) as m from pg_proc where proname = 'moddatetime' and pronamespace = 'public'::regnamespace`))[0].m);
+  const pourMesurer = ETAT.replace(/md5\(p\.prosrc\) = '(CORPS_DOUBLURE|[0-9a-f]{32})'/, `md5(p.prosrc) = '${mesure.doublure}'`);
+  // L'empreinte seule : le verdict est encore ÉCARTS tant que les valeurs attendues ne sont pas dans le fichier.
+  const seule = (e) => e.replace(/^ÉCARTS /, "");
   const avant = [];
-  for (const reglage of REGLAGES) avant.push((await etat(db, reglage)).empreinte);
+  for (const reglage of REGLAGES) avant.push(seule((await etat(db, reglage, pourMesurer)).empreinte));
   mesure.avant = avant[0];
   verifie("empreinte d'avant : la même sous les trois réglages de l'éditeur", new Set(avant).size === 1 && /^[0-9a-f]{32}$/.test(avant[0]), avant.join(" "));
   await db.exec(M020);
   const apres = [];
-  for (const reglage of REGLAGES) apres.push((await etat(db, reglage)).empreinte);
+  for (const reglage of REGLAGES) apres.push(seule((await etat(db, reglage, pourMesurer)).empreinte));
   mesure.apres = apres[0];
   verifie("empreinte d'après : la même sous les trois réglages, et différente d'avant", new Set(apres).size === 1 && apres[0] !== avant[0], apres.join(" "));
   const corps = derniere(await db.exec(`select proname, md5(prosrc) as m from pg_proc where pronamespace = 'public'::regnamespace
@@ -145,6 +156,7 @@ const VALEURS = {
   CORPS_CREDIT: mesure.corps.credit_single_purchase,
   CORPS_GRANT: mesure.corps.grant_first_purchase_offer,
   CORPS_WITHDRAW: mesure.corps.withdraw_first_purchase_offer,
+  CORPS_DOUBLURE: mesure.doublure,
 };
 {
   // Les valeurs sont écrites à la place des repères, ou des valeurs précédentes (32 caractères hexadécimaux, dans l'ordre).
@@ -154,6 +166,7 @@ const VALEURS = {
     [/'credit_single_purchase', '(CORPS_CREDIT|[0-9a-f]{32})'/, (v) => `'credit_single_purchase', '${v}'`, VALEURS.CORPS_CREDIT],
     [/'grant_first_purchase_offer', '(CORPS_GRANT|[0-9a-f]{32})'/, (v) => `'grant_first_purchase_offer', '${v}'`, VALEURS.CORPS_GRANT],
     [/'withdraw_first_purchase_offer', '(CORPS_WITHDRAW|[0-9a-f]{32})'/, (v) => `'withdraw_first_purchase_offer', '${v}'`, VALEURS.CORPS_WITHDRAW],
+    [/md5\(p\.prosrc\) = '(CORPS_DOUBLURE|[0-9a-f]{32})'/, (v) => `md5(p.prosrc) = '${v}'`, VALEURS.CORPS_DOUBLURE],
   ];
   let neuf = ETAT;
   for (const [motif, ecrire, valeur] of motifs) {
@@ -224,7 +237,8 @@ const VALEURS = {
     values ('00000000-0000-4000-8000-0000000000a1', 'purchase', 1, 2, 'Achat crédité deux fois', 'pi_essai_1');
     commit;`);
   const e = await etat(db);
-  verifie("état avec un paiement crédité deux fois : ÉCARTS, 1 doublon", e.verdict.startsWith("ÉCARTS : ") && e.lignes[4].resultat.includes(": 1 "), e.verdict);
+  verifie("état avec un paiement crédité deux fois : ÉCARTS, 1 doublon, et la cellule d'empreinte commence par « ÉCARTS » (l'empreinte, elle, est celle d'avant)",
+    e.verdict.startsWith("ÉCARTS : ") && e.lignes[4].resultat.includes(": 1 ") && e.empreinte === `ÉCARTS ${VALEURS.EMPREINTE_AVANT}`, `${e.verdict} | ${e.empreinte}`);
   const d0 = await donnees(db);
   const refus = await erreur(db, M020);
   verifie("migration avec un paiement crédité deux fois : refusée, rien d'appliqué",
@@ -242,11 +256,20 @@ const VALEURS = {
   await db.close();
 }
 
-// ── 5. La migration coupée : rien n'est appliqué ──────────────────────────────
 {
-  // Coupée au milieu de chaque instruction de premier niveau (et en son début) : l'instruction incomplète
-  // échoue, la transaction est annulée. Coupée juste avant « commit » : la transaction reste ouverte et
-  // n'est jamais validée ; la fin de la session l'annule (ici : rollback explicite).
+  const db = await baseNeuve({ production: false });
+  const e = await etat(db);
+  verifie("état sur une copie qui n'est pas la production (019 appliquée à une autre heure) : ÉCARTS, et la ligne 1 le dit",
+    e.verdict.startsWith("ÉCARTS : ") && e.empreinte === `ÉCARTS ${VALEURS.EMPREINTE_AVANT}` && /ce n'est pas la base de production/.test(e.lignes[1].resultat), `${e.verdict} | ${e.lignes[1].resultat}`);
+  await db.close();
+}
+
+// ── 5. La migration coupée : aucune validation avant la fin du texte ──────────
+{
+  // Ce que ce contrôle prouve, et rien de plus : la migration ne valide rien avant son « commit » final.
+  // Coupée au milieu d'une instruction, PostgreSQL refuse tout le texte avant d'en exécuter une ligne ;
+  // coupée entre deux instructions, ce qui a tourné reste dans une transaction jamais validée, que le banc
+  // annule (rollback), comme le ferait la fin de la session. Il ne dit rien du comportement de l'éditeur.
   const db = await baseNeuve();
   const d0 = await donnees(db);
   const fin = M020.lastIndexOf("\ncommit;");
@@ -260,7 +283,7 @@ const VALEURS = {
     const e = await etat(db);
     if (!e.verdict.startsWith("PRÊT : ") || (await donnees(db)) !== d0) appliquees++;
   }
-  verifie(`migration coupée à ${coupes.length} endroits (dont juste avant « commit ») : rien d'appliqué, état PRÊT`, appliquees === 0, `${appliquees} coupe(s) ont laissé une trace`);
+  verifie(`migration coupée à ${coupes.length} endroits (dont juste avant « commit ») : aucune validation, état PRÊT après annulation`, appliquees === 0, `${appliquees} coupe(s) ont laissé une trace`);
   await db.close();
 }
 

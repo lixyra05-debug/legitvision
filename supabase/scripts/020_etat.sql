@@ -23,11 +23,20 @@
 --   3. les paiements crédités deux fois (la 020 refuse de s'appliquer s'il y
 --      en a) ;
 --   4. la garde des profils de la 019 ;
---   5. l'empreinte de tout ce qui protège les données dans les schémas public
---      et private (fonctions, déclencheurs, règles RLS, droits, structure des
---      tables), calculée comme supabase/checks/etat_base.sql, noms de schéma
---      public et extensions retirés pour ne pas dépendre du réglage de
---      l'éditeur. Les tables de stockage de Supabase n'en font pas partie.
+--   5. l'empreinte de ce qui protège les données dans les schémas public et
+--      private (fonctions et texte de leur corps, déclencheurs, règles RLS,
+--      droits, structure des tables), calculée comme
+--      supabase/checks/etat_base.sql. Pour ne pas dépendre du réglage de
+--      l'éditeur, les noms de schéma public et extensions en sont retirés :
+--      « public.f », « extensions.f » et « f » y comptent pour un même nom.
+--      Les tables de stockage de Supabase, les fonctions du schéma extensions
+--      et les droits par défaut n'en font pas partie : supabase/checks/
+--      etat_base.sql, relu après l'exécution, les couvre ;
+--   6. le repère de la production : l'heure exacte, à la microseconde, à
+--      laquelle la 019 y a été appliquée. Une copie de la base, ou un autre
+--      projet, répond « ÉCARTS ».
+--   Quand le verdict est « ÉCARTS », la cellule empreinte_base commence par
+--   « ÉCARTS » : la feuille d'exécution la refuse.
 --   Les valeurs attendues (empreintes avant et après, texte des fonctions)
 --   viennent du banc d'essai (supabase/scripts/outils/020/banc.mjs), qui
 --   rejoue les migrations 001 à 020 sur une base locale identique à la
@@ -51,6 +60,8 @@ fonctions as (
    where n.nspname in ('public', 'private')
      and not exists (select 1 from pg_depend d
                       where d.classid = 'pg_proc'::regclass and d.objid = p.oid and d.deptype = 'e')
+     -- La seule fonction du banc d'essai qui remplace une extension (moddatetime), reconnue au texte exact de son corps.
+     and not (n.nspname = 'public' and p.proname = 'moddatetime' and md5(p.prosrc) = '106c2b31fe27306af6e9ce4cd01af272')
 ),
 declencheurs as (
   select 'declencheur', n.nspname || '.' || c.relname || '.' || t.tgname,
@@ -131,8 +142,6 @@ base as (
           union all select * from structure
           union all select * from contraintes
           union all select * from index_) as t
-   -- moddatetime : extension en production, le banc la remplace par une fonction du même nom.
-   where t.objet not like 'public.moddatetime(%'
 ),
 attendu as (
   select '996d63cf501e1c39bc0d8ea0cbd8d4a9'::text as avant,
@@ -147,6 +156,9 @@ etat as (
     (select count(*) from private.migrations) as migrations,
     (select coalesce(max(numero), 0) from private.migrations) as derniere,
     (select count(*) from private.migrations where numero = 19) = 1 as a_019,
+    -- Repère de la production : l'heure exacte à laquelle Hector y a exécuté la 019 (relevée le 2026-10-14).
+    coalesce((select to_char(m.appliquee_le at time zone 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US')
+                from private.migrations m where m.numero = 19), 'absente') as heure_019,
     (select count(*) from private.migrations where numero = 20) = 1 as a_020,
     (select count(*) from pg_class c
       where c.relnamespace = 'public'::regnamespace
@@ -168,22 +180,24 @@ etat as (
     (select b.empreinte from base b) as empreinte
 ),
 verdict as (
-  select e.*, a.avant, a.apres,
+  select e.*, a.avant, a.apres, e.heure_019 = '2026-09-27T14:52:30.546896' as production,
          case
-           when e.a_019 and not e.a_020 and e.derniere = 19 and e.objets = 0 and e.doublons = 0
+           when e.heure_019 = '2026-09-27T14:52:30.546896' and e.a_019 and not e.a_020 and e.derniere = 19 and e.objets = 0 and e.doublons = 0
                 and e.garde = 'active, hors service_role' and e.empreinte = a.avant
              then 'PRÊT : la base est dans l''état relevé le 2026-10-14 avant la 020 (019 en place, aucun objet de la 020, aucun paiement crédité deux fois). On peut lancer la migration.'
-           when e.a_019 and e.a_020 and e.derniere = 20 and e.objets = 6 and e.fonctions_conformes = 3
+           when e.heure_019 = '2026-09-27T14:52:30.546896' and e.a_019 and e.a_020 and e.derniere = 20 and e.objets = 6 and e.fonctions_conformes = 3
                 and e.garde = 'active, hors service_role' and e.empreinte = a.apres
              then 'APPLIQUÉE : la 020 est en place, à l''identique de l''essai (6 objets, 3 fonctions conformes au fichier).'
            else 'ÉCARTS : la base n''est ni dans l''état d''avant la 020 ni dans celui d''après (détail dans les lignes suivantes). Ne rien lancer : me transmettre ce résultat.'
          end as resultat
     from etat e cross join attendu a
 )
-select 0 as n, v.resultat, v.empreinte as empreinte_base
+select 0 as n, v.resultat,
+       case when v.resultat like 'ÉCARTS%' then 'ÉCARTS ' || v.empreinte else v.empreinte end as empreinte_base
   from verdict v
 union all
-select 1, 'Migrations enregistrées : ' || v.migrations || ', la dernière est la ' || v.derniere || ' (avant la 020 : 19, après : 20).', null from verdict v
+select 1, 'Migrations enregistrées : ' || v.migrations || ', la dernière est la ' || v.derniere || ' (avant la 020 : 19, après : 20). 019 appliquée le ' || v.heure_019
+          || case when v.production then ' UTC : la base de production.' else ' : ce n''est pas la base de production (019 appliquée le 2026-09-27T14:52:30.546896 UTC).' end, null from verdict v
 union all
 select 2, 'Objets de la 020 présents : ' || v.objets || ' sur 6 (avant : 0, après : 6).', null from verdict v
 union all

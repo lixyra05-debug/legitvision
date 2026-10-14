@@ -28,10 +28,13 @@ changement de la migration ou d'une migration antérieure) ; sans lui, le banc
 
 ## Vérifications du 2026-10-14
 
-- Base rejouée (001 à 019, socle) : identique à la production pour les 169
-  lignes des schémas public et private de `supabase/checks/etat_base.sql`
-  (fonctions et leur texte, déclencheurs, règles RLS, droits, structure,
-  contraintes, index), comparées à `etat_base.attendu.tsv`.
+- Base rejouée (001 à 019, socle) : identique à la production pour 174
+  lignes de `supabase/checks/etat_base.sql` comparées à
+  `etat_base.attendu.tsv` : schémas public et private (fonctions et leur
+  texte, déclencheurs, règles RLS, droits, structure, contraintes, index),
+  droits par défaut de postgres (public et global), déclencheur de
+  `auth.users`. Les droits par défaut que Supabase donne à supabase_admin et
+  le stockage ne sont pas reproduits.
 - Production, en lecture seule le 2026-10-14 : `etat_base.sql` reproduit
   l'attendu sur 186 lignes de 196. Les 10 autres sont les lignes « table » ;
   l'écart porte sur deux d'entre elles, `storage.buckets` et
@@ -41,20 +44,35 @@ changement de la migration ou d'une migration antérieure) ; sans lui, le banc
   020, l'intégrera.
 - Production, en lecture seule le 2026-10-14 : `020_etat.sql` répond
   « PRÊT », empreinte `996d63cf501e1c39bc0d8ea0cbd8d4a9`, celle que le banc
-  calcule. 019 en place, 19 migrations, aucun objet de la 020, aucun paiement
-  crédité deux fois (2 lignes « purchase »), garde des profils active.
+  calcule. 019 en place (appliquée le 2026-09-27T14:52:30.546896 UTC : c'est
+  le repère de la production, une copie répond « ÉCARTS »), 19 migrations,
+  aucun objet de la 020, aucun paiement crédité deux fois (2 lignes
+  « purchase »), garde des profils active.
 - La requête d'état donne la même empreinte quel que soit le réglage de
   l'éditeur (`"$user", public, extensions` pour Hector, `"$user", public`
   pour le connecteur en lecture seule, `pg_catalog`) : les noms de schéma
-  public et extensions sont retirés avant l'empreinte.
-- Banc : 28 contrôles, tout passe. La migration rend les 60 lignes de son
+  public et extensions sont retirés avant l'empreinte. Conséquence assumée :
+  « public.f », « extensions.f » et « f » y comptent pour un même nom ; les
+  fonctions du schéma extensions, le stockage et les droits par défaut ne
+  sont pas dans l'empreinte (`etat_base.sql`, relu après l'exécution, les
+  couvre).
+- Quand le verdict est « ÉCARTS », la cellule `empreinte_base` commence par
+  « ÉCARTS » : la feuille d'exécution refuse alors de passer au vert, même si
+  l'empreinte seule est celle d'avant (un doublon de paiement, par exemple,
+  n'est pas dans l'empreinte).
+- Banc : 29 contrôles, tout passe. La migration rend les 60 lignes de son
   contrôle interne toutes « ok » ; données intactes ; état « APPLIQUÉE »
   (empreinte `180a07c7d29172014a6d8a866ba927bd`) ; `020_controle.sql` tout
   « ok » ; rejeu identique ; retour arrière, puis état « PRÊT » au caractère
   près, puis migration de nouveau ; retour refusé quand le registre a une
   offre ; migration refusée avec un paiement crédité deux fois, ou après une
-  migration plus récente, sans rien appliquer ; migration coupée à 110
-  endroits, dont juste avant « commit » : rien d'appliqué.
+  migration plus récente, sans rien appliquer ; requête d'état sur une copie
+  qui n'est pas la production : « ÉCARTS » ; migration coupée à 110
+  endroits, dont juste avant « commit » : aucune validation avant la fin du
+  texte (ce contrôle ne dit rien du comportement de l'éditeur : une coupe au
+  milieu d'une instruction est refusée par PostgreSQL avant toute exécution,
+  une coupe entre deux instructions laisse une transaction jamais validée,
+  que le banc annule).
 - Fenêtre « Potential issue detected » de l'éditeur (contrôles d'avant
   exécution de Supabase Studio, code public relevé le 2026-10-12, rejoués
   hors ligne) : la requête d'état ne l'ouvre pas ; la migration l'ouvre, à
@@ -63,6 +81,15 @@ changement de la migration ou d'une migration antérieure) ; sans lui, le banc
   (il supprime les objets de la 020). Aucune n'ajoute de « limit ».
 
 ## Limites connues
+
+- Pendant les quelques secondes de la migration, ses contrôles verrouillent
+  en écriture `credits_transactions`, `auth.users` et `analyses` : un achat,
+  une inscription ou une analyse qui arrive à ce moment attend la fin.
+- Relecture poussée du 2026-10-14 (un relecteur, un tour) : aucun défaut qui
+  rende l'exécution dangereuse ; ses six remarques sont appliquées (cellule
+  d'empreinte en « ÉCARTS », repère de la production, socle aux droits par
+  défaut de la production, exclusion exacte de la doublure de moddatetime,
+  formulation du contrôle de la coupe, feuille : rôle postgres et retour).
 
 - PGlite n'a qu'une connexion : les verrous (profil, carte probable,
   `lock_timeout` de 5 s) ne sont pas éprouvés par ce banc.
