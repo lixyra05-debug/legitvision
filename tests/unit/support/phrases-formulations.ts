@@ -75,6 +75,11 @@ export const CONSEILS_D_ACHAT = [
   "Privilégiez un paiement sécurisé.",
   "Privilégiez le paiement de la plateforme.",
   "Paiement uniquement via la plateforme.",
+  // Règle d'Hector du 14/10 : dire quoi faire de l'achat, y compris l'encourager.
+  "Achetez en confiance.",
+  "Achat en confiance.",
+  "Vous pouvez l'acheter en confiance.",
+  "N\u2019achetez pas cette paire.",
 ];
 
 // Des vérifications à faire : elles parlent souvent d'achat ou de paiement sans rien conseiller.
@@ -123,6 +128,9 @@ export const VERIFICATIONS = [
   "L'article a été acheté en 2021 selon l'étiquette.",
   "Semelle intérieure d'une paire achetée d'occasion : usure cohérente.",
   "Pays de fabrication illisible : reprendre la photo de l'étiquette.",
+  // Règle d'Hector du 14/10 : ce qui dit quoi vérifier ou demander n'est pas un conseil d'achat.
+  "Demander une photo de la boîte.",
+  "Demandez au vendeur une photo de la boîte et de son étiquette.",
 ];
 
 /**
@@ -211,4 +219,10 @@ export const AUTRES_TEXTES = [
   "Vue sur la semelle extérieure.",
   "Niveau de confiance élevé.",
   "Photo nette de la semelle extérieure.",
+  // Espace insécable de la typographie française, devant « : » et « % ».
+  "Score de confiance\u00a0: 85\u00a0%.",
+  "Authenticité\u00a0: 85\u00a0%.",
+  "Score global de 85\u00a0/\u00a0100.",
+  "Composition\u00a0: 100\u00a0% coton.",
+  "Risque de contrefaçon\u202f: 30\u202f%.",
 ];
