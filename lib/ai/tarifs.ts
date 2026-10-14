@@ -16,6 +16,9 @@
  * - skill claude-api, tableau « Current Models » (relevé du 2026-09-25) :
  *   Opus 4.8 à 5 $ en entrée et 25 $ en sortie ; écriture en cache ×1,25
  *   (5 min) et ×2 (1 h), lecture ×0,1.
+ * Revérifié le 2026-10-14 sur la même page : ligne Claude Opus 4.8 inchangée
+ * (5 $ / 6,25 $ / 10 $ / 0,50 $ / 25 $), multiplicateur « us » de 1,1 pour les
+ * modèles 4.6 et suivants, contexte long au tarif standard.
  * La réflexion est facturée en sortie et déjà comptée dans output_tokens :
  * elle n'a pas de tarif propre.
  */
