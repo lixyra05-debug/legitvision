@@ -11,14 +11,20 @@
  *   [a-z0-9_] (la requête compare sans tenir compte de la casse).
  * - « \w » et « \s » dépendent en PostgreSQL du réglage de langue. « \w »
  *   devient [a-z0-9_], comme en JavaScript sans le drapeau « u » ; « \s »
- *   reçoit les espaces que JavaScript y met aussi, dont l'espace insécable de
- *   la typographie française (« 85 % », « Score : 85 »).
+ *   devient la liste exacte des espaces de JavaScript, dont l'espace insécable
+ *   de la typographie française (« 85 % », « Score : 85 »), et rien d'autre
+ *   (pas U+0085, que la classe [[:space:]] de PostgreSQL accepte selon la langue).
+ * - « . » devient « tout sauf un saut de ligne », comme en JavaScript.
+ * - Seuls les drapeaux « i » (ou aucun, pour un motif sans lettre) sont admis :
+ *   la requête compare toujours sans tenir compte de la casse.
  * Toute autre séquence inconnue arrête la traduction : mieux vaut un test
  * rouge qu'un compteur qui compte autre chose que le site.
  */
 
 /** Les espaces de « \s » en JavaScript, sans les classes de PostgreSQL qui dépendent de la langue. */
-const ESPACES = "\\s\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff";
+const ESPACES = "\\u0009-\\u000d\\u0020\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff";
+/** « . » en JavaScript : tout sauf les fins de ligne. */
+const POINT = "[^\\u000a\\u000d\\u2028\\u2029]";
 const MOT = "a-z0-9_";
 /** « \b » : entre un caractère de mot et un autre qui n'en est pas un, dans un sens ou dans l'autre. */
 const LIMITE = `(?:(?<![${MOT}])(?=[${MOT}])|(?<=[${MOT}])(?![${MOT}]))`;
@@ -27,6 +33,10 @@ const LIMITE_DANS_ARRIERE = `(?:^|[^${MOT}])`;
 
 export function versPostgres(motif: RegExp): string {
   const source = motif.source;
+  // La requête compare toujours sans la casse (« ~* ») : un motif sensible à la casse, ou à d'autres drapeaux, n'y aurait pas le même sens.
+  if (!(motif.flags === "i" || (motif.flags === "" && !/[a-z]/i.test(source.replace(/\\./g, ""))))) {
+    throw new Error(`drapeaux « ${motif.flags} » non traduits : ${source}`);
+  }
   let sortie = "";
   let dansClasse = false;
   // Profondeur des conditions « (?<! … ) » et « (?<= … ) » ouvertes, avec la profondeur de parenthèses où chacune s'ouvre.
@@ -47,7 +57,9 @@ export function versPostgres(motif: RegExp): string {
       }
       if (suivant === "b") {
         if (dansArriere()) {
-          if (!/[a-z(]/i.test(source[i + 1] ?? "")) throw new Error(`« \\b » non suivi d'un mot dans une condition arrière : ${source}`);
+          // La limite y précède forcément une lettre : directement, ou au début d'un groupe « (?: ».
+          const apres = source.slice(i + 1).replace(/^\((?:\?:)?/, "");
+          if (!/^[a-z]/i.test(apres)) throw new Error(`« \\b » non suivi d'une lettre dans une condition arrière : ${source}`);
           sortie += LIMITE_DANS_ARRIERE;
         } else sortie += LIMITE;
       } else if (suivant === "w") sortie += `[${MOT}]`;
@@ -68,6 +80,10 @@ export function versPostgres(motif: RegExp): string {
       sortie += c;
       if (source[i + 1] === "^") sortie += source[++i];
       if (source[i + 1] === "]") throw new Error(`classe commençant par « ] » : ${source}`);
+      continue;
+    }
+    if (c === ".") {
+      sortie += POINT;
       continue;
     }
     if (c === "(") {

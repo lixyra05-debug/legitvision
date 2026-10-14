@@ -79,6 +79,28 @@ test("compteur : les motifs de la requête sont la traduction exacte de ceux du 
   assert.equal(SQL.slice(debut, SQL.indexOf(FIN_BLOC)).replace(/\n$/, ""), blocAttendu());
 });
 
+test("compteur, sur une base d'essai : chaque motif traduit, seul, reconnaît exactement les phrases que reconnaît le motif du site", { skip: !process.env.LV_PGLITE }, async () => {
+  const { PGlite } = (await import(process.env.LV_PGLITE as string)) as { PGlite: new () => { query(sql: string, params?: unknown[]): Promise<{ rows: Array<Record<string, unknown>> }>; close(): Promise<void> } };
+  const db = new PGlite();
+  try {
+    const phrases = [...new Set([...CONSEILS_D_ACHAT, ...VERIFICATIONS, ...AUTRES_TEXTES])];
+    // Les phrases telles quelles, puis en capitales (la requête ramène les capitales accentuées en minuscules, comme elle le fait).
+    const essais = [...phrases, ...phrases.map((p) => p.toUpperCase())];
+    const enMinuscules = (t: string) => t.replace(/[ÀÂÄÇÉÈÊËÎÏÔÖÙÛÜ]/g, (c) => c.toLowerCase());
+    const motifs = [...PURCHASE_ADVICE_PATTERNS, ...Object.values(MOTIFS).flat(), POURCENT, SUJET_D_UN_POURCENTAGE];
+    const ecarts: string[] = [];
+    for (const [n, motif] of motifs.entries()) {
+      const { rows } = await db.query("select t ~* $1 as vu from unnest($2::text[]) with ordinality as x(t, i) order by i", [versPostgres(motif), essais.map(enMinuscules)]);
+      rows.forEach((r, i) => {
+        if (Boolean(r.vu) !== motif.test(essais[i])) ecarts.push(`motif ${n} : site ${motif.test(essais[i])}, SQL ${r.vu} « ${essais[i]} »`);
+      });
+    }
+    assert.deepEqual(ecarts, []);
+  } finally {
+    await db.close();
+  }
+});
+
 test("compteur : le fichier ne contient qu'une requête, qui ne fait que lire public.analyses", () => {
   const nu = SQL.replace(/^\s*--.*$/gm, "").replace(/\$re\$[\s\S]*?\$re\$/g, "''").trim();
   assert.equal((nu.match(/;/g) ?? []).length, 1, "une seule instruction");
