@@ -26,6 +26,28 @@ LV_PGLITE=/chemin/vers/@electric-sql/pglite/dist/index.js node banc.mjs
 changement de la migration ou d'une migration antérieure) ; sans lui, le banc
 échoue si le fichier ne les porte pas.
 
+## Exécution en production : 2026-10-14
+
+Exécutée par Hector dans l'éditeur SQL, une étape par requête vide :
+- étape 1 : « PRÊT », empreinte `996d63cf501e1c39bc0d8ea0cbd8d4a9` ;
+- étape 2 : tableau de 60 lignes, toutes « ok » ; la 020 est inscrite au
+  registre à 13 h 25 min 44 s, heure de Paris ;
+- étape 3, à 13 h 27 : « APPLIQUÉE », empreinte
+  `180a07c7d29172014a6d8a866ba927bd`.
+
+Relu ensuite en lecture seule (connecteur supabase-lecture) :
+- `020_etat.sql` : APPLIQUÉE (20 migrations, 6 objets sur 6, 3 fonctions
+  conformes, aucun doublon, garde des profils active, repère de la
+  production reconnu) ;
+- `supabase/checks/020_controle.sql` : 29 lignes, 27 « ok », 2 « info »
+  (registre des offres et coûts IA vides), aucun écart ;
+- `supabase/checks/etat_base.sql` : 255 lignes, identiques famille par
+  famille à la nouvelle référence `etat_base.attendu.tsv` : l'ancienne (196
+  lignes), les 59 lignes de la 020 mesurées sur le banc (3 fonctions, 2
+  tables, 29 colonnes, 16 contraintes, 9 index), et la dérive de Supabase
+  sur `storage.buckets` et `storage.objects` (anon et authenticated : `arwd`
+  au lieu de `arwdDxtm`).
+
 ## Vérifications du 2026-10-14
 
 - Base rejouée (001 à 019, socle) : identique à la production pour 174
