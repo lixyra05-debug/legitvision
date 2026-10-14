@@ -11,6 +11,8 @@ import {
   type ImageInput,
   type AnalysisOutput,
 } from "@/lib/ai/analyze";
+import { coutIaDe, ligneCoutIa, type CoutIa, type IssueCoutIa } from "@/lib/ai/cout-ia";
+import { apresReponse } from "@/lib/apres-reponse";
 import { analysisModelDeadline, ANALYSIS_MAX_SECONDS } from "@/lib/analysis-limits";
 import { releaseReservedCredit } from "@/lib/credit-release";
 import { isOwnPhotoPath } from "@/lib/photo-path";
@@ -371,6 +373,9 @@ export async function POST(request: NextRequest) {
   // décompté » que si le remboursement a réussi.
   let result: AnalysisOutput;
   let finalStatus: "completed" | "expert_review";
+  // Coût de l'appel au modèle, connu dès sa réponse : enregistré en dernier,
+  // avec l'issue de l'analyse (enregistrerCoutIa), même si la suite échoue.
+  let coutObtenu: CoutIa | null = null;
   try {
     // 11. Run AI analysis
     result = await runAnalysis({
@@ -384,6 +389,7 @@ export async function POST(request: NextRequest) {
       specificAuthPoints: model.specific_auth_points ?? null,
       deadline: analysisModelDeadline(requestStartedAt),
     });
+    coutObtenu = result.coutIa;
 
     // 12. Determine if expert review is needed
     // P1-3 : "insufficient" ne déclenche PAS de revue expert (un expert ne corrige
@@ -448,16 +454,24 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("[analyze] Error during analysis:", error);
     const issue = await closeFailedAnalysis(admin, analysisId);
+    // Coût de l'appel au modèle : mesuré s'il a répondu, non mesuré si la
+    // requête est partie sans réponse lisible (échéance, connexion perdue,
+    // corps coupé). Aucun si rien n'est parti (photo illisible, échéance
+    // passée avant l'envoi) ou si chaque tentative a reçu une erreur HTTP.
+    const cout = coutObtenu ?? coutIaDe(error);
+    const codeEchec = error instanceof AnalysisError ? error.code : "UNKNOWN";
 
     // L'écriture du rapport a abouti malgré l'erreur reçue (réponse perdue) :
     // le rapport est là, le client est envoyé vers lui. Rapport complet : il
     // est dû. Photos insuffisantes : non décompté, le crédit est rendu.
     if (issue === "report") {
       await markReservation(admin, launch, "rapport enregistré");
+      enregistrerCoutIa(admin, analysisId, cout, "report");
       return NextResponse.json({ success: true, analysisId });
     }
     if (issue === "report_insufficient") {
       await refundLaunch(admin, launch, "photos insuffisantes", refundDeadline);
+      enregistrerCoutIa(admin, analysisId, cout, "insufficient");
       return NextResponse.json({ success: true, analysisId });
     }
 
@@ -470,6 +484,7 @@ export async function POST(request: NextRequest) {
         console.error("[analyze] issue inconnue après un échec : rapport et solde à vérifier", { analysisId });
         await markReservation(admin, launch, "issue inconnue : vérifier le rapport et le solde");
       }
+      enregistrerCoutIa(admin, analysisId, cout, "failed", codeEchec);
       return NextResponse.json(
         {
           error:
@@ -483,6 +498,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { message, code } = handleAnalysisError(error);
+    enregistrerCoutIa(admin, analysisId, cout, "failed", codeEchec);
     return NextResponse.json({ error: message, code }, { status: 500 });
   }
 
@@ -495,6 +511,7 @@ export async function POST(request: NextRequest) {
   } else {
     await markReservation(admin, launch, "rapport enregistré");
   }
+  enregistrerCoutIa(admin, analysisId, result.coutIa, result.insufficient ? "insufficient" : "report");
 
   return NextResponse.json({
     success: true,
@@ -617,4 +634,36 @@ async function markReservation(admin: Admin, launch: Launch, mention: string): P
   if (error) {
     console.error("[analyze] ligne « usage » non annotée", { analysisId: launch.analysisId, mention });
   }
+}
+
+/**
+ * Enregistre le coût de l'appel au modèle dans analysis_costs (migration 020),
+ * table fermée aux utilisateurs. Appelée en dernier dans chaque chemin, et
+ * exécutée APRÈS la réponse au client (apresReponse) : elle ne peut retarder
+ * ni empêcher l'enregistrement du rapport, le remboursement du crédit ou la
+ * réponse. Ne lève jamais : un échec est journalisé, avec l'analyse et le coût
+ * seulement. Tant que la 020 n'est pas exécutée, la table n'existe pas :
+ * l'insertion échoue et l'analyse se déroule comme avant.
+ * `cout` nul : aucune requête n'est partie, ou chaque tentative a reçu une
+ * erreur HTTP du service (non facturée) : rien à écrire.
+ */
+function enregistrerCoutIa(
+  admin: Admin,
+  analysisId: string,
+  cout: CoutIa | null,
+  issue: IssueCoutIa,
+  codeEchec: string | null = null
+): void {
+  if (!cout) return;
+  apresReponse(async () => {
+    try {
+      const { error } = await admin
+        .from("analysis_costs")
+        .insert(ligneCoutIa(cout, analysisId, issue, codeEchec));
+      if (!error) return;
+    } catch {
+      // Journalisé ci-dessous, comme une erreur renvoyée par la base.
+    }
+    console.warn("[analyze] coût IA non enregistré", { analysisId, cost_usd: cout.cost_usd });
+  });
 }
