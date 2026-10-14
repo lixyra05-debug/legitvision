@@ -616,6 +616,9 @@ on conflict (numero) do update set nom = excluded.nom, appliquee_le = now();
 -- carte fictive : ils ne rencontrent aucune offre réelle. Un seul écart annule
 -- toute la migration, et le message le dit. Objets temporaires seulement.
 
+-- La table du contrôle d'une exécution précédente dans la même session de l'éditeur. Cette ligne, la
+-- seule suppression de la migration, ouvre la fenêtre « Potential issue detected » de l'éditeur : elle ne
+-- supprime qu'une table temporaire, propre à la session, jamais une donnée.
 drop table if exists pg_temp.controle_020;
 create temp table controle_020 (
   ordre    int primary key,
@@ -1114,3 +1117,4 @@ select ordre, controle, attendu, observe,
        case when attendu = observe then 'ok' else 'ÉCART' end as resultat
   from controle_020
  order by ordre;
+-- FIN — migration 020 : offre de premier achat et coût IA

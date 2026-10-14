@@ -75,3 +75,4 @@ select 'fonctions de la 020',
        'aucune'
 union all
 select 'dernière migration enregistrée', (select max(numero)::text from private.migrations), '19';
+-- FIN — migration 020 : retour arrière
