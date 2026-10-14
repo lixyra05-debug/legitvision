@@ -10,6 +10,12 @@ import { useTranslation } from "@/lib/i18n/LanguageProvider";
  * async avec stripe API). Permet l'i18n FR/EN.
  */
 
+/** Libellé du lien de retour de l'en-tête : « Tableau de bord ». */
+export function SubscriptionBackLabel() {
+  const { t } = useTranslation();
+  return t("nav.dashboard");
+}
+
 export function SubscriptionPageHeader() {
   const { t } = useTranslation();
   return (

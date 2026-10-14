@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import {
+  SubscriptionBackLabel,
   SubscriptionPageHeader,
   SubscriptionNoActive,
   SubscriptionActive,
@@ -68,7 +69,7 @@ export default async function SubscriptionPage() {
             className="flex items-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
           >
             <ArrowLeft className="size-4" />
-            Dashboard
+            <SubscriptionBackLabel />
           </Link>
           <div className="flex items-center gap-3">
             <LanguageToggle />

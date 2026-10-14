@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import {
   ShieldCheck,
   BarChart3,
@@ -8,6 +7,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { Reveal } from "@/components/landing/Reveal";
+import { Marque } from "@/components/brand/Marque";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -130,23 +130,18 @@ export default async function LandingPage() {
       {/* ── Navigation ── */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={240}
-              height={64}
-              className="h-16 w-auto"
-              priority
-              fetchPriority="high"
-            />
-          </Link>
-          <div className="flex items-center gap-6">
-            <nav className="hidden items-center gap-6 md:flex">
+          <Marque href="/" />
+          {/* Écarts resserrés sous 1024 px : le mot (146 px sur téléphone,
+              172 px au-delà) tient avec les liens et les boutons, de 320 px
+              (sans débordement) à la tablette. Sous 360 px, le bouton de thème
+              ne s'affiche pas (option B, décision d'Hector du 05/10) : le mot
+              et « Se connecter » tiennent sur une ligne. */}
+          <div className="flex items-center gap-3 lg:gap-6">
+            <nav className="hidden items-center gap-4 md:flex lg:gap-6">
               <NavLinks />
             </nav>
             <LanguageToggle />
-            <ThemeToggle />
+            <ThemeToggle masqueSous360 />
             <UserMenu />
           </div>
         </div>
@@ -625,7 +620,8 @@ export default async function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="border-t border-line-subtle py-12">
+      {/* pb-24 : « Contact » et « CGU » restent hors de la bulle de l'assistant. */}
+      <footer className="border-t border-line-subtle pt-12 pb-24">
         <div className="mx-auto max-w-6xl px-4">
           {/* Maillage interne SEO : liens vers les hubs d'authentification */}
           <div className="mb-8 flex justify-center sm:justify-start">
@@ -635,22 +631,18 @@ export default async function LandingPage() {
             className="flex flex-col items-center gap-6 border-t pt-8 sm:flex-row sm:justify-between"
             style={{ borderColor: "hsl(var(--line-subtle))" }}
           >
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/legitvision-logo.png"
-                alt="LegitVision"
-                width={90}
-                height={24}
-                className="h-6 w-auto"
-              />
+            <div className="flex items-baseline gap-3">
+              <Marque />
               <span
                 className="text-ui text-subtle"
               >
                 © {new Date().getFullYear()}
               </span>
             </div>
+            {/* items-center : la commande de langue (24 px de haut) reste
+                alignée sur les liens (21 px). */}
             <div
-              className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-ui sm:justify-end text-subtle"
+              className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-ui sm:justify-end text-subtle"
             >
               <Link href="#faq" className="transition-colors hover:text-foreground">FAQ</Link>
               <Link href="#team" className="transition-colors hover:text-foreground">À propos</Link>

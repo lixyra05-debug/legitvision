@@ -143,10 +143,10 @@
   }
 
   /* ── Mode clair ──────────────────────────────────────────────────────
-     DÉRIVÉ, PAS ARBITRÉ. La palette validée ne couvrait que le sombre ;
-     ces valeurs sont ma transposition (mêmes teintes, clartés inversées,
-     emerald assombri pour tenir le contraste sur fond pâle). Le thème
-     clair reste donc fonctionnel, mais il attend ta validation. */
+     DÉRIVÉ, PAS ARBITRÉ, sauf l'accent. La palette validée ne couvrait que
+     le sombre ; ces valeurs sont ma transposition (mêmes teintes, clartés
+     inversées). Le thème clair reste donc fonctionnel, mais il attend ta
+     validation. L'accent, lui, est arbitré (décision d'Hector du 04/10). */
   .light {
     --background: 220 14% 96.5%;
     --surface: 0 0% 100%;
@@ -160,9 +160,15 @@
     --line: 219 12% 83%;
     --line-strong: 218 12% 70%;
 
-    /* Emerald assombri : #10B981 ne tient que 2,5:1 sur fond clair. */
-    --accent: 160.1 84.1% 30%; /* ≈ #0C8D62 */
-    --accent-hover: 160 84% 24%;
+    /* Accent : #047857, valeur du mode jour dans Figma (décision d'Hector du
+       04/10). #10B981 ne tient que 2,5:1 sur fond clair, et l'ancien #0C8D62
+       4,2:1 sous un texte blanc. Texte blanc (--accent-foreground) sur
+       l'accent : 5,48:1. En texte : 5,07:1 sur --background, 5,48:1 sur une
+       carte, 4,65:1 sur --surface-raised.
+       Le survol fonce au lieu d'éclaircir : texte blanc à 7,68:1.
+       --ring, --primary et --verdict-authentic en dérivent (var(--accent)). */
+    --accent: 162.9 93.5% 24.3%; /* #047857 */
+    --accent-hover: 163.1 88.1% 19.8%; /* #065F46 */
     --accent-muted: 160 60% 45%;
 
     --verdict-fake: 358.1 65% 47%;

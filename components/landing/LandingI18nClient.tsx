@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
+import { BasculeLangue } from "@/components/BasculeLangue";
+import { BasculeTheme } from "@/components/BasculeTheme";
 
 /**
  * Composants client qui rendent les zones i18n-isées de la landing.
@@ -162,6 +164,12 @@ export function DisclaimerI18n() {
   return <>{t("footer.disclaimer")}</>;
 }
 
+/**
+ * Liens légaux du pied de page de l'accueil, puis la commande de langue
+ * (BasculeLangue), affichée à toutes les largeurs : sur téléphone, le bouton
+ * FR/EN de l'en-tête est masqué. Puis la commande de thème (BasculeTheme),
+ * affichée sous 360 px seulement, où le bouton de thème de l'en-tête est masqué.
+ */
 export function FooterLinksI18n() {
   const { t } = useTranslation();
   return (
@@ -181,6 +189,8 @@ export function FooterLinksI18n() {
       >
         {t("footer.privacy")}
       </Link>
+      <BasculeLangue variante="pied-de-page" />
+      <BasculeTheme />
     </>
   );
 }

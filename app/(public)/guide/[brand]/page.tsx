@@ -157,7 +157,7 @@ export default async function BrandGuideHub(props: Props) {
                 href={`/guide/${brand.slug}/${signal.slug}`}
                 className="group block rounded-lg border border-line-subtle bg-surface p-5 transition-colors duration-fast hover:border-line hover:bg-surface-hover"
               >
-                <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent transition-colors duration-fast">
+                <h3 className="font-heading text-h4 font-semibold text-foreground group-hover:text-accent-hover transition-colors duration-fast">
                   {signal.name}
                 </h3>
                 <p className="mt-2 text-caption text-muted-foreground line-clamp-3">

@@ -2,8 +2,8 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { Coins, Trash2 } from "lucide-react";
+import { Marque } from "@/components/brand/Marque";
 import { UserMenu } from "@/components/auth/UserMenu";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
@@ -39,7 +39,7 @@ import {
 const DELETABLE_STATUSES = ["failed", "uploading", "pending"];
 
 export const metadata = {
-  title: "Dashboard",
+  title: "Tableau de bord",
 };
 
 type AnalysisRow = Omit<AnalysisWithDetails, "brand_name" | "brand_slug" | "model_name"> & {
@@ -148,41 +148,55 @@ export default async function DashboardPage(
     user.user_metadata?.full_name?.split(" ")[0] ?? user.email?.split("@")[0];
 
   return (
-    <div className="min-h-screen bg-background">
+    // data-assistant-flux="1360" : la page demande le bouton de l'assistant
+    // dans le flux sous 1360 px (variante « assistant-flux: »,
+    // tailwind.config.ts). Sous ce seuil, il est rendu après ce bloc
+    // (ChatWidget), et ce bloc n'a pas de hauteur minimale : le bouton suit le
+    // contenu, même quand la page est courte. Le fond de <body> est le même
+    // (bg-background, min-h-screen) : rien ne change à l'œil.
+    // 1360 = 1152 (largeur maximale du contenu, max-w-6xl) + 2 × 104 (56 px du
+    // bouton + 24 px entre lui et le bord de la fenêtre + 24 px d'écart avec
+    // la colonne). Flottant plus tôt, le bouton recouvrait la colonne de
+    // droite des cartes, et la touchait encore à 1280 px (0 px d'écart).
+    // Écart qui reste entre les cartes et le bouton flottant, à 1360 px
+    // (mesures du 06/10, tests/unit/rapport-navigateur.test.ts) : 40 px, et,
+    // quand la barre de défilement prend de la place dans la fenêtre (Windows :
+    // le seuil compte la barre, le contenu non), 32,5 px avec une barre de
+    // 15 px, 31,5 px avec une barre de 17 px. Il grandit avec la fenêtre.
+    <div data-assistant-flux="1360" className="min-h-screen bg-background assistant-flux:min-h-0">
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-          <Link href="/" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={240}
-              height={64}
-              className="h-16 w-auto"
-              priority
-              fetchPriority="high"
-            />
-          </Link>
-          <div className="flex items-center gap-4">
+          <Marque href="/" />
+          {/* Le mot mesure 146 px sur téléphone. Sous 360 px, le solde perd son
+              icône et les écarts se resserrent ; sous 640 px, le bouton FR/EN
+              ne s'affiche pas, même en anglais. Le mot et le groupe tiennent
+              ainsi dès 320 px, à 8 px l'un de l'autre au moins, avec un solde
+              à trois chiffres, en français comme en anglais (mesures du 05/10). */}
+          <div className="flex items-center gap-2 min-[360px]:gap-3 sm:gap-4">
             {profile && (
-              <div className="flex items-center gap-1.5 rounded-md border border-line px-3 py-1.5 text-ui">
+              <div className="flex items-center gap-1.5 rounded-md border border-line px-2 py-1.5 text-ui min-[360px]:px-3">
                 {/* Icône neutre : le vert était constant, y compris à 0 crédit —
                     il ne signalait donc pas le solde, il le décorait. */}
-                <Coins className="size-4 text-muted-foreground" />
+                <Coins className="hidden size-4 text-muted-foreground min-[360px]:block" />
                 <span className="font-medium">
                   {profile.credits_remaining}
                 </span>
                 <DashboardCreditsLabel />
               </div>
             )}
-            <LanguageToggle />
+            <LanguageToggle masqueSurTelephone />
             <ThemeToggle />
-            <UserMenu />
+            <UserMenu connecte />
           </div>
         </div>
       </nav>
 
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+      {/* Sous 1360 px, le bouton de l'assistant est dans le flux, 24 px sous
+          le dernier bloc (pb-6), comme sur le rapport ; sous la même condition
+          que lui (assistant-flux), pour qu'un navigateur qui le garde flottant
+          garde aussi le bas de page d'avant. */}
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:py-12 assistant-flux:pb-6">
         {/* Bandeau succès Stripe */}
         {searchParams.session_id && (
           <SuccessBanner variant={searchParams.purchased === "single" ? "single" : "purchase"} />
@@ -267,11 +281,13 @@ export default async function DashboardPage(
                             </span>
                           </div>
                         ) : (
+                          // Pas encore de score : contour pointillé neutre, sans teinte de
+                          // verdict, pour ne pas se confondre avec un score non concluant.
                           <div
                             className={`flex h-7 shrink-0 items-center rounded-full px-3 text-caption ${
                               analysis.status === "failed"
                                 ? "bg-destructive/10 text-destructive"
-                                : "bg-surface-raised text-muted-foreground"
+                                : "border border-dashed border-line-strong text-muted-foreground"
                             }`}
                           >
                             <StatusLabel status={analysis.status} />

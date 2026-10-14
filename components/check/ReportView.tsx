@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
@@ -20,16 +19,22 @@ import {
 import { ScoreGauge } from "./ScoreGauge";
 import { FindingCard, type Finding } from "./FindingCard";
 import { RevealGroup, RevealItem } from "@/components/landing/Reveal";
+import { Marque } from "@/components/brand/Marque";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { getScoreColor, getScoreSolidBg } from "@/lib/types";
 import type { Verdict, Confidence } from "@/lib/types";
 import { REPORT_REFRESH_SECONDS } from "@/lib/analysis-limits";
+import { zoneNameIn, zoneNamesForReport, type ZoneNames } from "@/lib/zone-names";
 
-const VERDICT_TO_KEY: Record<Verdict, "authentic" | "suspect" | "fake"> = {
+// Un verdict non concluant (score de 45 à 74) s'affiche « Résultat non
+// concluant », et plus « Éléments suspects » : un non concluant ne doit jamais
+// accuser l'article (décision d'Hector du 06/10). Même texte sur les cartes du
+// tableau de bord (getVerdictLabel, lib/types.ts).
+const VERDICT_TO_KEY: Record<Verdict, "authentic" | "inconclusive" | "fake"> = {
   likely_authentic: "authentic",
-  inconclusive: "suspect",
+  inconclusive: "inconclusive",
   likely_fake: "fake",
 };
 
@@ -51,6 +56,8 @@ export interface ReportData {
   ocrExtracted: Record<string, string> | null;
   recommendations: string[] | null;
   createdAt: string;
+  /** Noms affichés des zones du modèle, par identifiant normalisé (lib/zone-names.ts). */
+  zoneNames: ZoneNames | null;
 }
 
 // ── Constants ──
@@ -65,10 +72,11 @@ const VERDICT_VISUAL: Record<
     color: "text-verdict-authentic",
     bg: "border-verdict-authentic/30 bg-verdict-authentic/10",
   },
+  // Couleur du verdict non concluant, jamais l'ambre (décision du 04/10).
   inconclusive: {
     Icon: ShieldAlert,
-    color: "text-warning",
-    bg: "border-warning/30 bg-warning/10",
+    color: "text-verdict-inconclusive",
+    bg: "border-verdict-inconclusive/30 bg-verdict-inconclusive/10",
   },
   likely_fake: {
     Icon: ShieldX,
@@ -85,9 +93,11 @@ const CONFIDENCE_VISUAL: Record<
     color: "text-muted-foreground",
     bg: "border-line bg-surface-raised",
   },
+  // L'ambre est réservé à la confiance faible (décision du 04/10) : la
+  // confiance moyenne reste neutre.
   medium: {
-    color: "text-warning",
-    bg: "border-warning/20 bg-warning/[0.08]",
+    color: "text-muted-foreground",
+    bg: "border-line bg-surface-raised",
   },
   low: {
     color: "text-warning",
@@ -151,11 +161,12 @@ function SubScoreBar({ label, score }: { label: string; score: number }) {
 
   return (
     <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-ui capitalize text-muted-foreground">
-          {label.replace(/_/g, " ")}
-        </span>
-        <span className={`text-ui font-semibold tabular-nums ${textColor}`}>
+      {/* gap-3 : un nom long passe à la ligne avant de toucher sa note. */}
+      <div className="flex items-center justify-between gap-3">
+        {/* Le nom de la zone, déjà en français : pas de « capitalize », qui
+            écrirait « Code Date / Puce Rfid ». */}
+        <span className="text-ui text-muted-foreground">{label}</span>
+        <span className={`shrink-0 text-ui font-semibold tabular-nums ${textColor}`}>
           {score}
         </span>
       </div>
@@ -249,6 +260,16 @@ export function ReportView({ data }: { data: ReportData }) {
 
   const findings = data.findings ?? [];
 
+  // Une seule table des noms pour tout le rapport : barres et observations y
+  // lisent le nom de leur zone, et deux zones n'y portent jamais le même nom,
+  // même quand l'IA en a noté une hors des points du modèle (décision d'Hector
+  // du 06/10, lib/zone-names.ts). Toute zone que le rapport affiche doit
+  // entrer dans cette liste.
+  const zoneNames = zoneNamesForReport(data.zoneNames, [
+    ...subScoreEntries.map(([zone]) => zone),
+    ...findings.map((finding) => finding?.zone),
+  ]);
+
   const ocrEntries = data.ocrExtracted
     ? Object.entries(data.ocrExtracted).filter(([, v]) => v && v.trim() !== "")
     : [];
@@ -256,41 +277,50 @@ export function ReportView({ data }: { data: ReportData }) {
   const recommendations = (data.recommendations ?? []).filter(Boolean);
   const missingEvidence = (data.missingEvidence ?? []).filter(Boolean);
 
+  // Le panneau « Photos insuffisantes » est affiché : il porte le bouton vert
+  // de l'écran, « Reprendre de meilleures photos ».
+  const showsInsufficientPanel = isComplete && isInsufficient;
+
   return (
-    <div className="min-h-screen bg-background">
+    // data-assistant-flux="lg" : la page affiche un rapport, et demande le
+    // bouton de l'assistant dans le flux sous 1024 px. C'est ce que lit la
+    // variante « assistant-flux: » (tailwind.config.ts) : sous ce seuil, le
+    // bouton est rendu après ce bloc (ChatWidget), au lieu de flotter sur la
+    // colonne du rapport. Ce bloc n'a alors pas de hauteur minimale : le
+    // bouton suit le contenu au lieu d'être repoussé sous l'écran quand le
+    // rapport est court. Le fond de <body> est le même (bg-background,
+    // min-h-screen) : rien ne change à l'œil.
+    <div data-assistant-flux="lg" className="min-h-screen bg-background assistant-flux:min-h-0">
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-line-subtle bg-background">
         <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-4">
-          <Link href="/dashboard" className="flex items-center">
-            <Image
-              src="/images/legitvision-logo.png"
-              alt="LegitVision"
-              width={120}
-              height={32}
-              className="h-8 w-auto"
-              priority
-              fetchPriority="high"
-            />
-          </Link>
+          <Marque href="/dashboard" />
           <div className="flex items-center gap-3">
             <LanguageToggle />
             <ThemeToggle />
+            {/* Sur téléphone, la flèche seule : son nom reste lu (sr-only) et sa
+                cible fait 36 px. Libellé en français (règle 16). */}
             <Link
               href="/dashboard"
-              className="flex items-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
+              className="flex min-h-9 min-w-9 items-center justify-center gap-1.5 text-ui text-muted-foreground transition-colors duration-fast hover:text-foreground"
             >
               <ArrowLeft className="size-4" />
-              <span className="hidden sm:inline">Dashboard</span>
+              <span className="sr-only sm:not-sr-only">Tableau de bord</span>
             </Link>
           </div>
         </div>
       </nav>
 
-      <main className="mx-auto max-w-3xl space-y-6 px-4 py-8 sm:py-12">
+      {/* pb-24 : la bulle de l'assistant, flottante, ne couvre pas « Nouvelle
+          analyse ». Sous 1024 px, elle est dans le flux, 24 px sous le dernier
+          bouton (pb-6) ; sous la même condition qu'elle (assistant-flux), pour
+          qu'un navigateur qui la garde flottante garde aussi sa place. */}
+      <main className="mx-auto max-w-3xl space-y-6 px-4 pt-8 pb-24 sm:pt-12 assistant-flux:pb-6">
         {/* ── HEADER ── */}
         <div className="space-y-3">
-          {/* Photos jugées insuffisantes : pas de badge de verdict (« Éléments suspects »
-              est un verdict facturé) ; le panneau dédié plus bas dit « non facturée ». */}
+          {/* Photos jugées insuffisantes : pas de badge de verdict (« Résultat non
+              concluant » est un verdict facturé) ; le panneau dédié plus bas dit
+              « non facturée ». */}
           {verdictCfg && !isInsufficient && (
             <div
               className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 ${verdictCfg.bg}`}
@@ -377,12 +407,15 @@ export function ReportView({ data }: { data: ReportData }) {
           </div>
         )}
 
-        {/* ── RÉSULTAT INCERTAIN (statut « expert_review » : aucune revue humaine n'existe) ── */}
-        {data.status === "expert_review" && data.confidence !== "low" && (
-          <div className="flex items-start gap-3 rounded-md border border-warning/20 bg-warning/[0.08] p-4">
-            <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" />
+        {/* ── RÉSULTAT INCERTAIN (statut « expert_review » : aucune revue humaine n'existe) ──
+            Seulement sous un verdict non concluant, jamais sous un verdict rouge
+            (scores 40 à 44), et à sa couleur : l'ambre est réservé à la confiance
+            faible, qui a son propre encadré plus bas (M20, décision du 04/10). */}
+        {data.status === "expert_review" && data.verdict === "inconclusive" && data.confidence !== "low" && !isInsufficient && (
+          <div className="flex items-start gap-3 rounded-md border border-verdict-inconclusive/20 bg-verdict-inconclusive/[0.08] p-4">
+            <AlertCircle className="mt-0.5 size-5 shrink-0 text-verdict-inconclusive" />
             <div>
-              <p className="text-ui font-semibold text-warning">
+              <p className="text-ui font-semibold text-verdict-inconclusive">
                 {t("results.uncertainResultTitle")}
               </p>
               <p className="mt-0.5 text-ui text-muted-foreground">
@@ -393,7 +426,7 @@ export function ReportView({ data }: { data: ReportData }) {
         )}
 
         {/* ── INSUFFICIENT — photos insuffisantes (P1-3) ── */}
-        {isComplete && isInsufficient && (
+        {showsInsufficientPanel && (
           <div className="rounded-lg border border-verdict-inconclusive/30 bg-verdict-inconclusive/[0.08] p-6 text-center sm:p-8">
             <ShieldAlert className="mx-auto size-10 text-verdict-inconclusive" />
             <p className="mt-3 font-heading text-lead font-semibold text-verdict-inconclusive">
@@ -402,7 +435,9 @@ export function ReportView({ data }: { data: ReportData }) {
             <p className="mt-1 text-ui text-muted-foreground">
               {t("results.insufficientDesc")}
             </p>
-            <p className="mt-2 text-caption text-muted-foreground/80">
+            {/* Sans opacité : à 80 %, cette phrase tombait à 3,56:1 en thème
+                clair sur le fond du panneau (5,38:1 désormais ; 6,87:1 en sombre). */}
+            <p className="mt-2 text-caption text-muted-foreground">
               {t("results.insufficientNoCredit")}
             </p>
             {missingEvidence.length > 0 && (
@@ -455,7 +490,10 @@ export function ReportView({ data }: { data: ReportData }) {
             <div className="rounded-lg border border-line-subtle bg-card p-6">
               <ScoreGauge score={data.overallScore} size={220} />
 
-              {confidenceCfg && (
+              {/* Confiance faible : un seul encadré ambre, le bandeau placé
+                  avant le score (décision d'Hector du 05/10). Ce bloc ne
+                  s'affiche qu'en confiance haute ou modérée. */}
+              {confidenceCfg && data.confidence !== "low" && (
                 <div
                   className={`mt-6 rounded-md border p-4 ${confidenceCfg.bg}`}
                 >
@@ -498,7 +536,13 @@ export function ReportView({ data }: { data: ReportData }) {
                 <RevealGroup className="mt-2 grid gap-4 sm:grid-cols-2">
                   {subScoreEntries.map(([zone, score]) => (
                     <RevealItem key={zone} className="h-full">
-                      <SubScoreBar label={zone} score={score} />
+                      {/* Note sans nom de zone (clé vide ou faite de
+                          séparateurs, réponse de l'IA mal formée) : la note
+                          reste affichée, sous un libellé neutre. */}
+                      <SubScoreBar
+                        label={zoneNameIn(zoneNames, zone) || t("results.unnamedZone")}
+                        score={score}
+                      />
                     </RevealItem>
                   ))}
                 </RevealGroup>
@@ -516,7 +560,7 @@ export function ReportView({ data }: { data: ReportData }) {
                 <RevealGroup className="space-y-3">
                   {findings.map((f, i) => (
                     <RevealItem key={i}>
-                      <FindingCard {...f} />
+                      <FindingCard {...f} zoneNames={zoneNames} />
                     </RevealItem>
                   ))}
                 </RevealGroup>
@@ -558,7 +602,10 @@ export function ReportView({ data }: { data: ReportData }) {
                       className="flex items-start justify-between gap-4 px-4 py-3"
                     >
                       <span className="text-ui text-muted-foreground">
-                        {OCR_LABEL_KEY[key]
+                        {/* hasOwnProperty : la clé vient de la réponse de l'IA. « constructor »
+                            ou « toString » trouveraient une fonction héritée d'Object
+                            à la place d'un libellé, et l'écran lèverait une erreur. */}
+                        {Object.prototype.hasOwnProperty.call(OCR_LABEL_KEY, key)
                           ? t(OCR_LABEL_KEY[key])
                           : key.replace(/_/g, " ")}
                       </span>
@@ -598,7 +645,11 @@ export function ReportView({ data }: { data: ReportData }) {
           </>
         )}
 
-        {/* ── ACTIONS ── */}
+        {/* ── ACTIONS ──
+            Un seul bouton vert sur l'écran « Photos insuffisantes » (décision
+            d'Hector du 06/10) : quand son panneau est affiché, le bouton
+            « Reprendre de meilleures photos » mène déjà à une nouvelle analyse.
+            « Nouvelle analyse » n'est pas répété ici, « Tableau de bord » reste. */}
         <div className="flex flex-col gap-3 pt-2 sm:flex-row">
           <Link
             href="/dashboard"
@@ -607,13 +658,15 @@ export function ReportView({ data }: { data: ReportData }) {
             <ArrowLeft className="size-4" />
             {t("nav.dashboard")}
           </Link>
-          <Link
-            href="/check/new"
-            className="flex flex-1 items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
-          >
-            <Plus className="size-4" />
-            {t("results.newAnalysis")}
-          </Link>
+          {!showsInsufficientPanel && (
+            <Link
+              href="/check/new"
+              className="flex flex-1 items-center justify-center gap-2 rounded-md bg-accent px-5 py-3 text-ui font-semibold text-accent-foreground transition-colors duration-fast hover:bg-accent-hover hover:shadow-card"
+            >
+              <Plus className="size-4" />
+              {t("results.newAnalysis")}
+            </Link>
+          )}
         </div>
       </main>
     </div>

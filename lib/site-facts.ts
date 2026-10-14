@@ -91,8 +91,9 @@ export const MONTHLY_ANALYSES = {
 
 /**
  * Conservation des photos d'analyse, en jours après leur envoi (décision
- * d'Hector, 2026-09-25). La purge quotidienne (lib/purge-photos.ts) applique
- * cette valeur ; la politique de confidentialité l'affiche.
+ * d'Hector, 2026-09-25). La purge, lancée toutes les 6 heures
+ * (lib/purge-photos.ts), applique cette valeur ; la politique de
+ * confidentialité l'affiche.
  */
 export const PHOTO_RETENTION_DAYS = 30;
 
