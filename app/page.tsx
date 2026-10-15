@@ -16,8 +16,7 @@ import { FAQ_ITEMS } from "@/components/landing/faq-data";
 import { BrandSearch } from "@/components/landing/BrandSearch";
 import { BrandsTabs } from "@/components/landing/BrandsTabs";
 import { getAnalyzableCountsByBrandRow } from "@/lib/catalog-counts";
-import { AuthenticityCompare } from "@/components/landing/AuthenticityCompare";
-import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { MentionIllustration } from "@/components/ui/mention-illustration";
 import { ScrollExpandMedia } from "@/components/landing/ScrollExpandMedia";
 import {
   HeroI18n,
@@ -147,76 +146,62 @@ export default async function LandingPage() {
         </div>
       </nav>
 
-      {/* ── Hero ──
-          Le texte devient l'en-tête de la ContainerScroll (il remonte au scroll),
-          et la carte 3D qui se redresse contient le comparateur. Le mouvement
-          amène, puis rend la main : la poignée ne devient active qu'une fois la
-          carte posée — sa géométrie inclinée fausserait le calcul de position. */}
+      {/* ── Hero ── (comparateur retiré le 15/10, décision d'Hector) */}
       <section className="relative overflow-hidden">
-        <ContainerScroll
-          titleComponent={
-            <div className="px-4">
+        <div className="mx-auto max-w-5xl px-4 py-16 text-center md:py-24">
+          <span
+            className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-caption font-medium uppercase"
+            style={{
+              border: "1px solid hsl(var(--line))",
+              background: "hsl(var(--surface))",
+              color: "hsl(var(--muted-foreground))",
+            }}
+          >
+            <span className="relative flex size-2">
               <span
-                className="mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-caption font-medium uppercase"
-                style={{
-                  border: "1px solid hsl(var(--line))",
-                  background: "hsl(var(--surface))",
-                  color: "hsl(var(--muted-foreground))",
-                }}
-              >
-                <span className="relative flex size-2">
-                  <span
-                    className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
-                    style={{ background: "hsl(var(--line-strong))" }}
-                  />
-                  <span
-                    className="relative inline-flex size-2 rounded-full"
-                    style={{ background: "hsl(var(--accent))" }}
-                  />
-                </span>
-                <HeroPoweredByI18n />
-              </span>
+                className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
+                style={{ background: "hsl(var(--line-strong))" }}
+              />
+              <span
+                className="relative inline-flex size-2 rounded-full"
+                style={{ background: "hsl(var(--accent))" }}
+              />
+            </span>
+            <HeroPoweredByI18n />
+          </span>
 
-              <HeroI18n />
+          <HeroI18n />
 
-              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Link
-                  href="/auth?redirect=%2Fcheck%2Fnew"
-                  className="group inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-body font-semibold transition-[background-color,box-shadow]"
-                  style={{
-                    background: "hsl(var(--accent))",
-                    color: "hsl(var(--accent-foreground))",
-                    animation:
-                      "pulse-glow var(--dur-ambient) ease-in-out infinite",
-                  }}
-                >
-                  <LandingLabel tkey="hero.analyzeItem" />
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-                <Link
-                  href="#how-it-works"
-                  className="inline-flex h-12 items-center justify-center rounded-md px-8 text-body font-medium transition-[border-color,color]"
-                  style={{
-                    border: "1px solid hsl(var(--line-strong))",
-                    color: "hsl(var(--muted-foreground))",
-                  }}
-                >
-                  <LandingLabel tkey="nav.howItWorks" />
-                </Link>
-              </div>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Link
+              href="/auth?redirect=%2Fcheck%2Fnew"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-body font-semibold transition-[background-color,box-shadow]"
+              style={{
+                background: "hsl(var(--accent))",
+                color: "hsl(var(--accent-foreground))",
+                animation:
+                  "pulse-glow var(--dur-ambient) ease-in-out infinite",
+              }}
+            >
+              <LandingLabel tkey="hero.analyzeItem" />
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link
+              href="#how-it-works"
+              className="inline-flex h-12 items-center justify-center rounded-md px-8 text-body font-medium transition-[border-color,color]"
+              style={{
+                border: "1px solid hsl(var(--line-strong))",
+                color: "hsl(var(--muted-foreground))",
+              }}
+            >
+              <LandingLabel tkey="nav.howItWorks" />
+            </Link>
+          </div>
 
-              <div className="mt-8 flex flex-wrap justify-center gap-6">
-                <HeroTrustTags />
-              </div>
-
-              <p className="mt-8 text-caption text-muted-foreground">
-                Faites glisser la poignée. Vous ne verrez pas la différence — l&apos;IA, si.
-              </p>
-            </div>
-          }
-        >
-          <AuthenticityCompare className="h-full" />
-        </ContainerScroll>
+          <div className="mt-8 flex flex-wrap justify-center gap-6">
+            <HeroTrustTags />
+          </div>
+        </div>
       </section>
 
       {/* ── Stats band ── */}
@@ -286,16 +271,19 @@ export default async function LandingPage() {
             <SectionSub tkey="landing.videoSubtitle" />
           </Reveal>
           <ScrollExpandMedia className="mt-12 flex justify-center">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/images/hero-poster.webp"
-              className="w-full max-w-3xl rounded-lg border border-line-subtle shadow-card"
-            >
-              <source src="/videos/hero-video.mp4" type="video/mp4" />
-            </video>
+            <div className="relative w-full max-w-3xl">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/images/hero-poster.webp"
+                className="w-full rounded-lg border border-line-subtle shadow-card"
+              >
+                <source src="/videos/hero-video.mp4" type="video/mp4" />
+              </video>
+              <MentionIllustration type="video" />
+            </div>
           </ScrollExpandMedia>
         </div>
       </section>

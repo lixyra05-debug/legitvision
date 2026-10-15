@@ -4,6 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { brandRowKey } from "@/lib/catalog-counts";
+import { MentionIllustration } from "@/components/ui/mention-illustration";
+import { IMAGES_CATEGORIES } from "@/lib/images-categories";
 
 type BrandEntry = {
   name: string;
@@ -105,13 +107,7 @@ const BRANDS: Record<Category, BrandEntry[]> = {
   ],
 };
 
-// ── Category banner images ───────────────────────────────────────────────────
-
-const CATEGORY_BANNER: Record<Category, string> = {
-  sneakers: "/images/sneakers.webp",
-  vetements: "/images/clothing.webp",
-  sacs: "/images/bags.webp",
-};
+// ── Category images : lib/images-categories.ts (entières, cadre 4:5) ─────────
 
 const CATEGORY_ALT_KEY: Record<Category, string> = {
   sneakers: "brandsTabs.sneakers",
@@ -204,40 +200,43 @@ export function BrandsTabs({ counts }: { counts: Record<string, number> }) {
 
   return (
     <div>
-      {/* ── Category banner (image swap) ── */}
-      <div className="relative mb-6 h-[140px] overflow-hidden rounded-lg sm:h-[200px]">
-        {(Object.keys(CATEGORY_BANNER) as Category[]).map((key) => (
-          <Image
-            key={key}
-            src={CATEGORY_BANNER[key]}
-            alt={t(CATEGORY_ALT_KEY[key])}
-            fill
-            priority={key === "sneakers"}
-            fetchPriority={key === "sneakers" ? "high" : undefined}
-            sizes="(max-width: 640px) 100vw, 1200px"
-            className={`object-cover transition-opacity duration-slow ${
-              active === key ? "opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-      </div>
+      {/* ── Vitrine : l'image de la catégorie choisie, entière, à côté des onglets ── */}
+      <div className="flex items-center justify-center gap-6 sm:gap-8">
+        <div className="relative aspect-[4/5] w-32 shrink-0 overflow-hidden rounded-lg border border-line-subtle bg-surface sm:w-56">
+          {(Object.keys(IMAGES_CATEGORIES) as Category[]).map((key) => (
+            <Image
+              key={key}
+              src={IMAGES_CATEGORIES[key].src}
+              alt={t(CATEGORY_ALT_KEY[key])}
+              fill
+              priority={key === "sneakers"}
+              fetchPriority={key === "sneakers" ? "high" : undefined}
+              sizes="(max-width: 640px) 128px, 224px"
+              className={`object-cover transition-opacity duration-slow ${
+                active === key ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+          {IMAGES_CATEGORIES[active].ia && <MentionIllustration type="image" />}
+        </div>
 
-      {/* ── Tab buttons ── */}
-      <div className="flex flex-wrap justify-center gap-2">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActive(tab.id)}
-            className={`flex items-center gap-2 rounded-full px-6 py-2 text-ui font-medium transition-[background-color,border-color,color] duration-fast ${
-              active === tab.id
-                ? "bg-accent text-accent-foreground shadow-lg"
-                : "border border-line bg-surface text-muted-foreground hover:border-line-strong hover:text-foreground"
-            }`}
-          >
-            <span aria-hidden="true">{tab.emoji}</span>
-            {t(tab.labelKey)}
-          </button>
-        ))}
+        {/* ── Tab buttons ── */}
+        <div className="flex flex-col gap-2">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActive(tab.id)}
+              className={`flex w-full items-center gap-2 rounded-full px-6 py-2 text-ui font-medium transition-[background-color,border-color,color] duration-fast ${
+                active === tab.id
+                  ? "bg-accent text-accent-foreground shadow-lg"
+                  : "border border-line bg-surface text-muted-foreground hover:border-line-strong hover:text-foreground"
+              }`}
+            >
+              <span aria-hidden="true">{tab.emoji}</span>
+              {t(tab.labelKey)}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* ── Brand grid ── */}
