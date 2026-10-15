@@ -5,34 +5,35 @@ import { Footprints, ShoppingBag, Shirt } from "lucide-react";
 import type { Category } from "@/lib/types";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { MentionIllustration } from "@/components/ui/mention-illustration";
+import { IMAGES_CATEGORIES, type ImageCategorie } from "@/lib/images-categories";
 
 const CATEGORIES: {
   value: Category;
   labelKey: string;
   descKey: string;
   icon: typeof Footprints;
-  image: string;
+  image: ImageCategorie;
 }[] = [
   {
     value: "sneakers",
     labelKey: "check.sneakers",
     descKey: "check.sneakersDesc",
     icon: Footprints,
-    image: "/images/categories/sneakers.webp",
+    image: IMAGES_CATEGORIES.sneakers,
   },
   {
     value: "bag",
     labelKey: "check.bags",
     descKey: "check.bagsDesc",
     icon: ShoppingBag,
-    image: "/images/categories/sacs.webp",
+    image: IMAGES_CATEGORIES.sacs,
   },
   {
     value: "clothing",
     labelKey: "check.clothing",
     descKey: "check.clothingDesc",
     icon: Shirt,
-    image: "/images/categories/vetements.webp",
+    image: IMAGES_CATEGORIES.vetements,
   },
 ];
 
@@ -64,13 +65,13 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
           >
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-t-md bg-surface-raised">
               <Image
-                src={cat.image}
+                src={cat.image.src}
                 alt={t(cat.labelKey)}
                 fill
                 sizes="(max-width: 640px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <MentionIllustration type="image" />
+              {cat.image.ia && <MentionIllustration type="image" />}
             </div>
             <div className="flex flex-col items-center p-6">
               <div

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { brandRowKey } from "@/lib/catalog-counts";
 import { MentionIllustration } from "@/components/ui/mention-illustration";
+import { IMAGES_CATEGORIES } from "@/lib/images-categories";
 
 type BrandEntry = {
   name: string;
@@ -106,15 +107,7 @@ const BRANDS: Record<Category, BrandEntry[]> = {
   ],
 };
 
-// ── Category images ──────────────────────────────────────────────────────────
-// Images générées par ChatGPT (choix d'Hector du 15/10/2026), en portrait 4:5 :
-// affichées entières dans un cadre 4:5, jamais recadrées.
-
-const CATEGORY_IMAGE: Record<Category, string> = {
-  sneakers: "/images/categories/sneakers.webp",
-  vetements: "/images/categories/vetements.webp",
-  sacs: "/images/categories/sacs.webp",
-};
+// ── Category images : lib/images-categories.ts (entières, cadre 4:5) ─────────
 
 const CATEGORY_ALT_KEY: Record<Category, string> = {
   sneakers: "brandsTabs.sneakers",
@@ -210,10 +203,10 @@ export function BrandsTabs({ counts }: { counts: Record<string, number> }) {
       {/* ── Vitrine : l'image de la catégorie choisie, entière, à côté des onglets ── */}
       <div className="flex items-center justify-center gap-6 sm:gap-8">
         <div className="relative aspect-[4/5] w-32 shrink-0 overflow-hidden rounded-lg border border-line-subtle bg-surface sm:w-56">
-          {(Object.keys(CATEGORY_IMAGE) as Category[]).map((key) => (
+          {(Object.keys(IMAGES_CATEGORIES) as Category[]).map((key) => (
             <Image
               key={key}
-              src={CATEGORY_IMAGE[key]}
+              src={IMAGES_CATEGORIES[key].src}
               alt={t(CATEGORY_ALT_KEY[key])}
               fill
               priority={key === "sneakers"}
@@ -224,7 +217,7 @@ export function BrandsTabs({ counts }: { counts: Record<string, number> }) {
               }`}
             />
           ))}
-          <MentionIllustration type="image" />
+          {IMAGES_CATEGORIES[active].ia && <MentionIllustration type="image" />}
         </div>
 
         {/* ── Tab buttons ── */}
