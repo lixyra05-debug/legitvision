@@ -36,7 +36,8 @@ import { useContainerScrollSettled } from "@/components/ui/container-scroll-anim
  * authentique et une contrefaite, cadrées à l'identique.
  */
 
-const PLACEHOLDER_SRC = "/images/sneakers.webp";
+// Recadrage paysage de l'image ChatGPT de la sneaker (catégories), qui garde la paire entière.
+const PLACEHOLDER_SRC = "/images/categories/sneakers-paysage.webp";
 
 const GRAB_STRIP =
   "pointer-events-auto relative w-px flex-1 bg-accent " +
@@ -96,6 +97,8 @@ export function AuthenticityCompare({ className }: { className?: string }) {
         className ?? "aspect-[4/3]",
       )}
     >
+      {/* L'article s'affiche entier (contain) sur le fond de la carte, même
+          quand le cadre est plus large que la photo. */}
       <ReactCompareSlider
         handle={<CompareHandle active={active} />}
         defaultPosition={50}
@@ -107,7 +110,7 @@ export function AuthenticityCompare({ className }: { className?: string }) {
           <ReactCompareSliderImage
             src={PLACEHOLDER_SRC}
             alt="Article présenté comme authentique"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "contain" }}
           />
         }
         itemTwo={
@@ -115,7 +118,7 @@ export function AuthenticityCompare({ className }: { className?: string }) {
             src={PLACEHOLDER_SRC}
             alt="Même article, variante générée pour l'aperçu"
             style={{
-              objectFit: "cover",
+              objectFit: "contain",
               filter: "hue-rotate(-16deg) saturate(0.8) brightness(0.93)",
             }}
           />

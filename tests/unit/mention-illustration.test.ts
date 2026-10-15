@@ -5,9 +5,9 @@
 // components/ui/mention-illustration.tsx.
 //
 // Médias IA du site, avec leur provenance (un nouveau média IA s'ajoute ici) :
-// - images de catégories : générées par Gemini ; leurs originaux sont signés
-//   C2PA par Google et le filigrane ✦ de Gemini est dans l'image (relevé du
-//   14/10/2026) ;
+// - images de catégories : générées par ChatGPT ; leurs originaux sont signés
+//   C2PA par OpenAI (relevé du 14/10/2026). Choisies par Hector le 15/10/2026
+//   à la place des images Gemini, qui portaient le filigrane ✦ de Gemini ;
 // - vidéo de présentation de l'accueil et son image d'attente : générées par IA
 //   (Hector, 14/10/2026).
 import { test } from "node:test";
@@ -17,9 +17,10 @@ import { join } from "node:path";
 
 const RACINE = new URL("../../", import.meta.url).pathname;
 const MEDIAS_IA = [
-  "/images/sneakers.webp",
-  "/images/bags.webp",
-  "/images/clothing.webp",
+  "/images/categories/sneakers.webp",
+  "/images/categories/sacs.webp",
+  "/images/categories/vetements.webp",
+  "/images/categories/sneakers-paysage.webp",
   "/images/hero-poster.webp",
   "/videos/hero-video.mp4",
 ];

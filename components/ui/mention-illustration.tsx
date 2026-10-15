@@ -17,7 +17,7 @@ export function MentionIllustration({
   return (
     <span
       className={cn(
-        "pointer-events-none absolute bottom-2 left-2 z-10 rounded-full bg-background/80 px-2 py-0.5 text-caption font-medium text-foreground",
+        "pointer-events-none absolute bottom-2 left-2 z-10 rounded bg-background/60 px-2 py-1 text-[0.6875rem] font-normal leading-none text-foreground/90",
         className,
       )}
     >
