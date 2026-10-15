@@ -17,6 +17,7 @@ import { BrandSearch } from "@/components/landing/BrandSearch";
 import { BrandsTabs } from "@/components/landing/BrandsTabs";
 import { getAnalyzableCountsByBrandRow } from "@/lib/catalog-counts";
 import { AuthenticityCompare } from "@/components/landing/AuthenticityCompare";
+import { MentionIllustration } from "@/components/ui/mention-illustration";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { ScrollExpandMedia } from "@/components/landing/ScrollExpandMedia";
 import {
@@ -286,16 +287,19 @@ export default async function LandingPage() {
             <SectionSub tkey="landing.videoSubtitle" />
           </Reveal>
           <ScrollExpandMedia className="mt-12 flex justify-center">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/images/hero-poster.webp"
-              className="w-full max-w-3xl rounded-lg border border-line-subtle shadow-card"
-            >
-              <source src="/videos/hero-video.mp4" type="video/mp4" />
-            </video>
+            <div className="relative w-full max-w-3xl">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster="/images/hero-poster.webp"
+                className="w-full rounded-lg border border-line-subtle shadow-card"
+              >
+                <source src="/videos/hero-video.mp4" type="video/mp4" />
+              </video>
+              <MentionIllustration type="video" />
+            </div>
           </ScrollExpandMedia>
         </div>
       </section>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Footprints, ShoppingBag, Shirt } from "lucide-react";
 import type { Category } from "@/lib/types";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
+import { MentionIllustration } from "@/components/ui/mention-illustration";
 
 const CATEGORIES: {
   value: Category;
@@ -69,6 +70,7 @@ export function CategoryPicker({ selected, onSelect }: CategoryPickerProps) {
                 sizes="(max-width: 640px) 50vw, 33vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              <MentionIllustration type="image" />
             </div>
             <div className="flex flex-col items-center p-6">
               <div

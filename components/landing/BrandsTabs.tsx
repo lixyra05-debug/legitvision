@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTranslation } from "@/lib/i18n/LanguageProvider";
 import { brandRowKey } from "@/lib/catalog-counts";
+import { MentionIllustration } from "@/components/ui/mention-illustration";
 
 type BrandEntry = {
   name: string;
@@ -220,6 +221,7 @@ export function BrandsTabs({ counts }: { counts: Record<string, number> }) {
             }`}
           />
         ))}
+        <MentionIllustration type="image" />
       </div>
 
       {/* ── Tab buttons ── */}

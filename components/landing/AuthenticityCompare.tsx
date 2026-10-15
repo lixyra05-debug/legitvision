@@ -139,7 +139,7 @@ export function AuthenticityCompare({ className }: { className?: string }) {
           borderTop: "1px solid hsl(var(--line))",
         }}
       >
-        Aperçu — photos réelles à venir
+        {"Image d'illustration — photos réelles à venir"}
       </figcaption>
     </figure>
   );
