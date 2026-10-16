@@ -1,0 +1,14 @@
+{
+  "releve_le": "2026-10-13",
+  "corrections": 34,
+  "noms_a_corriger": 284,
+  "lignes_a_corriger": 71,
+  "lignes": 80,
+  "emplacements": 693,
+  "empreinte_noms_avant": "5dd4011eb6d10aafc4dc4f645d2df213",
+  "empreinte_noms_apres": "a7935327f8a1c045d2ef70267e238aca",
+  "empreinte_autres_colonnes": "7df0492cd93fb8e3c5c97d88401abf5c",
+  "empreinte_liste_du_retour": "07a6f0dd6a91680d8a9a7df5b3074da8",
+  "verdict_avant": "PRÊT : 284 noms de photos à corriger dans 71 lignes de marque",
+  "verdict_apres": "APPLIQUÉ : les 34 corrections sont en place"
+}
