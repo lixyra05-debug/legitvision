@@ -12,11 +12,30 @@ base : seul `controle-prod.sql` s'y lance, en lecture seule. Les requêtes sont
 lancées à la main par Hector dans l'éditeur SQL de Supabase, une par une :
 leur en-tête « EN BREF » dit comment.
 
-## État : PAS ENCORE EXÉCUTÉ (2026-10-13)
+## État : exécuté en production le 2026-10-17
 
-À exécuter par Hector, au planning après la migration 020 (les deux sont
-indépendantes : ces requêtes ne touchent que `public.brands.photo_protocol`).
-Ces noms s'affichent à l'étape d'envoi des photos (`components/check/
+Hector a lancé les trois étapes dans la nuit du 16 au 17 octobre 2026, vers
+0 h 55, heure de Paris (exports CSV des étapes 1 et 3 à 0 h 54 et 0 h 56).
+Étape 1 : « PRÊT : 284 noms de photos à corriger dans 71 lignes de marque
+(table : 80 lignes, 693 photos demandées). On peut lancer la correction. »
+Étape 2 : « Success. No rows returned ». Étape 3 : « APPLIQUÉ : les 34
+corrections sont en place (284 noms corrigés dans 71 lignes de marque), 0 nom
+à corriger. » Empreinte des noms : `5dd4011eb6d10aafc4dc4f645d2df213` avant,
+`a7935327f8a1c045d2ef70267e238aca` après ; autres colonnes inchangées
+(`7df0492cd93fb8e3c5c97d88401abf5c`). Le retour arrière n'a pas été lancé.
+Les deux CSV, relus par Claude le 2026-10-17 (verdicts, empreintes, totaux,
+et pour chacune des 34 corrections : avant, le compte du relevé ; après,
+0 à corriger et le nouveau nom porté par autant de photos en plus) : aucun
+écart. Base relue en lecture seule la veille, à 20 h 08 UTC : état « PRÊT »,
+empreintes attendues. Aucune requête relancée depuis l'exécution.
+
+- Ne pas relancer la correction : sur l'état corrigé, elle n'écrirait rien,
+  et la requête d'état répond « APPLIQUÉ ».
+- Le retour arrière ne se lance que sur décision d'Hector ; il exige
+  l'empreinte des noms `a7935327f8a1c045d2ef70267e238aca`.
+
+Ces requêtes ne touchent que `public.brands.photo_protocol`. Ces noms
+s'affichent à l'étape d'envoi des photos (`components/check/
 PhotoUploader.tsx`) et partent dans la consigne envoyée à l'IA
 (`lib/ai/analyze.ts` : « nom (identifiant) » pour chaque photo) ; le rapport
 ne les affiche pas, il nomme les zones d'après `lib/zone-names.ts`.
